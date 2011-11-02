@@ -17,8 +17,23 @@
  * 
  */
 
+	.album_clear_both {
+		clear: both;
+	}
+	
+	.album_clear_left {
+		clear: left;
+	}
+	
+	.album_clear_right {
+		clear: right;
+	}
+ 
 	.album {
 		margin: 1.5em auto;
+		display: table;
+		width: 100%;
+		padding: 5px;
 	}
 	
 	.album_indeximage {
@@ -40,8 +55,18 @@
 	}
 	.album_titel {
 		float: left;
+		margin-top: .5em;
+		margin-bottom: 1em;
+		padding-left:1em;
 	}
 	.album_dsc {
+		font-size: .9em;
+		padding: 5px 15px 0 45px;
+	}
+	.album_info {
+		font-size: .8em;
+		font-weight: normal;
+		
 	}
 	
 	

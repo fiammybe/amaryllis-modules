@@ -25,13 +25,13 @@ function editalbum($album_id = 0) {
 
 	if (!$albumObj->isNew()){
 		$albumObj->hideFieldFromForm(array( 'album_published_date', 'album_updated_date' ) );
-		$albumObj->setVar( 'album_updated_date', date( _DATESTRING ) );
+		$albumObj->setVar( 'album_updated_date', (time() - 100) );
 		album_adminmenu( 0, _MI_ALBUM_MENU_ALBUM . ' > ' . _MI_ALBUM_ALBUM_EDITING);
 		$sform = $albumObj->getForm(_AM_ALBUM_ALBUM_EDIT, 'addalbum');
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$albumObj->hideFieldFromForm(array( 'album_published_date', 'album_updated_date' ) );
-		$albumObj->setVar( 'album_published_date', date( _DATESTRING ) );
+		$albumObj->setVar( 'album_published_date', (time() - 100) );
 		album_adminmenu( 0, _MI_ALBUM_MENU_ALBUM . " > " . _MI_ALBUM_ALBUM_CREATINGNEW);
 		$sform = $albumObj->getForm(_AM_ALBUM_ALBUM_CREATE, 'addalbum');
 		$sform->assign($icmsAdminTpl);

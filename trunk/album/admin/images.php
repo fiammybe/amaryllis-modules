@@ -24,13 +24,13 @@ function editimages($images_id = 0) {
 
 	if (!$imagesObj->isNew()){
 		$imagesObj->hideFieldFromForm(array( 'img_published_date', 'img_updated_date' ) );
-		$imagesObj->setVar( 'img_published_date', date( _DATESTRING ) );
+		$imagesObj->setVar( 'img_published_date', (time() - 300) );
 		album_adminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT);
 		$sform = $imagesObj->getForm(_AM_ALBUM_IMAGES_EDIT, "addimages");
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$imagesObj->hideFieldFromForm(array( 'img_published_date', 'img_updated_date' ) );
-		$imagesObj->setVar( 'img_published_date', date( _DATESTRING ) );
+		$imagesObj->setVar( 'img_published_date', (time() - 600) );
 		album_adminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_UPLOADNEW);
 		$sform = $imagesObj->getForm(_MI_ALBUM_IMAGES_UPLOADNEW, "addimages");
 		$sform->assign($icmsAdminTpl);

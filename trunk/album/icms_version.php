@@ -28,7 +28,7 @@ $modversion = array(
 					'version'					=> 1.0,
 					'description'				=> _MI_ALBUM_DSC,
 					'author'					=> "QM-B &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';",
-					'credits'					=> "",
+					'credits'					=> "Thanks to McDonald for the nice index layer and also thanks to Madfish and the developers of Content-Module for the code snippets, where I could see how to develope a Module using IPF!",
 					'help'						=> "",
 					'license'					=> "GNU General Public License (GPL)",
 					'official'					=> 0,
@@ -200,6 +200,16 @@ $modversion['config'][$i] = array(
 								'valuetype'		=> 'array',
 								'default'		=> '1'
 							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'album_dateformat',
+								'title' 		=> '_MI_ALBUM_DATE_FORMAT',
+								'description' 	=> '_MI_ALBUM_DATE_FORMAT_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'string',
+								'default' 		=> 'j/n/Y'
+							);
+
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'show_breadcrumbs',

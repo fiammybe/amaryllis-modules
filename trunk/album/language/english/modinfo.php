@@ -36,6 +36,9 @@ define("_MI_ALBUM_BLOCK_RECENT_ALBUMS_DSC", "List the latest published albums");
 define("_MI_ALBUM_AUTHORIZED_UPLOADER", "Groups allowed to add albums");
 define("_MI_ALBUM_AUTHORIZED_UPLOADER_DSC", "Select the groups which are allowed to create new albums. Please note that a user belonging to one of these groups will be able to create albums directly on the site. The module currently has no moderation feature.");
 
+define("_MI_ALBUM_DATEFORMAT", "Date format");
+define("_MI_ALBUM_DATEFORMAT_DSC", "For more informations: <a href=\"http://php.net/manual/en/function.date.php\" target=\"blank\">see php.net manual</a>");
+
 define("_MI_ALBUM_SHOW_BREADCRUMBS", "show breadcrumb");
 define("_MI_ALBUM_SHOW_BREADCRUMBS_DSC", "choose 'YES' to show breadcrumb in frontend");
 
