@@ -1,0 +1,87 @@
+<?php
+/**
+* 'Album' is a light weight gallery module
+*
+* File: /language/english/modinfo.php
+*
+* English language constants related to module information
+* 
+* @copyright	Copyright QM-B (Steffen Flohrer) 2011
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* ----------------------------------------------------------------------------------------------------------
+* 				album
+* @since		1.00
+* @author		QM-B
+* @version		$Id$
+* @package		album
+* @version		$Id$
+*/
+
+// general informations
+define("_MI_ALBUM_NAME", "Album");
+define("_MI_ALBUM_DSC", "'Album' is a light weight photo-album module, which can handle image-uploads and categorize them to albums.");
+
+// templates
+define("_MI_ALBUM_INDEX_TPL", "'Album' index page in frontend");
+define("_MI_ALBUM_HEADER_TPL", "'Album' header contains breadcrumb");
+define("_MI_ALBUM_ADMIN_FORM_TPL", "'Album' Admin form");
+define("_AM_ALBUM_REQUIREMENTS_TPL", "'Album' Requirements check");
+define("_MI_ALBUM_FOOTER_TPL", "'Album' footer contains notifications and comment rules");
+define("_MI_ALBUM_ALBUM_TPL", "'Album' view in frontend");
+
+// config
+define("_MI_ALBUM_SHOW_BREADCRUMBS", "show breadcrumb");
+define("_MI_ALBUM_SHOW_BREADCRUMBS_DSC", "choose 'YES' to show breadcrumb in frontend");
+
+define("_MI_ALBUM_SHOW_ALBUMS", "show Albums");
+define("_MI_ALBUM_SHOW_ALBUMS_DSC", "How many Albums should be displayed on indexpage before using page navigation?");
+
+define("_MI_ALBUM_SHOW_IMAGES", "Show Images");
+define("_MI_ALBUM_SHOW_IMAGES_DSC", "How many Images should be displayed at one page");
+
+define("_MI_ALBUM_THUMBNAIL_WIDTH", "Thumbnail width");
+define("_MI_ALBUM_THUMBNAIL_WIDTH_DSC", "choose width of thumbnails");
+
+define("_MI_ALBUM_THUMBNAIL_HEIGHT", "Thumbnail height");
+define("_MI_ALBUM_THUMBNAIL_HEIGHT_DSC", "choose width of thumbnails");
+
+define("_MI_ALBUM_THUMBNAIL_MARGIN_TOP", "margin top");
+define("_MI_ALBUM_THUMBNAIL_MARGIN_BOTTOM", "margin bottom");
+define("_MI_ALBUM_THUMBNAIL_MARGIN_LEFT", "margin left");
+define("_MI_ALBUM_THUMBNAIL_MARGIN_RIGHT", "margin right");
+define("_MI_ALBUM_THUMBNAIL_MARGIN_DSC", "set margin for thumbnails");
+
+define("_MI_ALBUM_IMAGE_WIDTH", "image width");
+define("_MI_ALBUM_IMAGE_WIDTH_DSC", "set width of displayed images");
+
+define("_MI_ALBUM_IMAGE_HEIGHT", "image height");
+define("_MI_ALBUM_IMAGE_HEIGHT_DSC", "set height of displayed images");
+
+define("_MI_ALBUM_IMAGE_UPLOAD_WIDTH", "image upload width");
+define("_MI_ALBUM_IMAGE_UPLOAD_WIDTH_DSC", "set max width for uploading images");
+
+define("_MI_ALBUM_IMAGE_UPLOAD_HEIGHT", "image upload height");
+define("_MI_ALBUM_IMAGE_UPLOAD_HEIGHT_DSC", "set max height for uploading images");
+
+define("_MI_ALBUM_IMAGE_FILE_SIZE", "image file size");
+define("_MI_ALBUM_IMAGE_FILE_SIZE_DSC", "set max file size for uploading");
+
+// ACP menu
+define("_MI_ALBUM_INDEX", "Indexview");
+define("_MI_ALBUM_ALBUMS", "Albums");
+define("_MI_ALBUM_IMAGEUPLOAD", "Imageupload");
+define("_MI_ALBUM_INDEXPAGE", "Edit Indexpage");
+define("_MI_ALBUM_TEMPLATES", "Templates");
+
+
+/**
+define("_AM_ALBUM_NAME", "Album");
+define("_AM_ALBUM_NAME", "Album");
+
+define("_AM_ALBUM_NAME", "Album");
+define("_AM_ALBUM_NAME", "Album");
+
+define("_AM_ALBUM_NAME", "Album");
+define("_AM_ALBUM_NAME", "Album");
+ */
+

@@ -1,0 +1,18 @@
+<link href="<{$icms_url}>/modules/<{$dirname}>/module_album.css" rel="stylesheet" type="text/css" />
+
+<{if $album_show_breadcrumb}>
+	<div class="album_headertable">
+		<{if $album_module_home}>
+			<span class="album_modulename"><{$album_module_home}></span>
+		<{/if}>
+		<{if $album_category_path}>
+			<span class="album_breadcrumb">
+			<{if $album_module_home}>
+				&nbsp;:&nbsp;
+			<{/if}>
+			<{$album_album_path}></span>
+		<{/if}>
+	</div>
+<{/if}>
+
+<{$album_indexarray.index_image}>

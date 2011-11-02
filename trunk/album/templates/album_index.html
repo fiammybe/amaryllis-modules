@@ -1,0 +1,29 @@
+<{includeq file='db:album_header.html'}>
+
+<!-- display index header -->
+<{$album_indexarray.index_header}>
+<!-- display index heading -->
+<{$album_indexarray.index_heading}>
+
+	<div>
+		<!-- pagination control -->
+		<{if $album_pagenav }><{$album_pagenav}><{/if}>
+
+			<{foreach item=album_album from=$album_array}>
+				<div class="album">				
+					<div class="album_img">
+						<img src="<{$album_album.album_img}>" title="<{$album_album.album_title}>" />
+					</div>
+					<div class="album_title">
+						<h2><{$album_album.itemLink}></h2>
+					</div>
+					<div class="album_dsc">
+						<{$album_album.album_description}>
+					</div>
+					<div style: "clear: both">&nbsp;</div>
+				</div>
+			<{/foreach}>
+	</div>
+
+<!-- display indexfooter -->		
+<{$album_indexarray.index_footer}>
