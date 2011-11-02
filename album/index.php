@@ -111,7 +111,7 @@ $icmsTpl->assign('album_indexarray', $album_indexarray);
 	
 	
 	$album = $album_album_handler->getAlbums($clean_start, icms::$module->config['show_albums'], $clean_album_uid,  false, $clean_album_pid);
-	$icmsTpl->assign('album_array', $album);
+	$icmsTpl->assign('album_album', $album);
 	
 	
 	
@@ -142,6 +142,6 @@ if ($albumConfig['show_breadcrumbs'] == true) {
 	$icmsTpl->assign('album_show_breadcrumb', false);
 }
 
-$icmsTpl->assign('album_module_home', album_getModuleName(true, true));
+$icmsTpl->assign('album_url', ALBUM_URL);
 
 include_once 'footer.php';

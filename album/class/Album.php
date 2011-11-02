@@ -21,26 +21,26 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	public function __construct(&$handler) {
 		icms_ipf_object::__construct($handler);
 
-		$this->quickInitVar('album_id', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('album_title', XOBJ_DTYPE_TXTBOX, TRUE);
+		$this->quickInitVar('album_id', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('album_title', XOBJ_DTYPE_TXTBOX, true);
 		$this->initCommonVar('short_url');
-		$this->quickInitVar('album_pid', XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar('album_img', XOBJ_DTYPE_TXTAREA, FALSE);
-		$this->quickInitVar('album_published_date', XOBJ_DTYPE_LTIME, FALSE);
-		$this->quickInitVar('album_updated_date', XOBJ_DTYPE_LTIME, FALSE);
-		$this->quickInitVar('album_description', XOBJ_DTYPE_TXTAREA, FALSE);
-		$this->quickInitVar('album_active', XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar('album_inblocks', XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar('album_grpperm', XOBJ_DTYPE_TXTBOX, TRUE);
-		$this->quickInitVar('album_uid', XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar('album_comments', XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar('album_pid', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('album_img', XOBJ_DTYPE_TXTAREA, false);
+		$this->quickInitVar('album_published_date', XOBJ_DTYPE_LTIME, false);
+		$this->quickInitVar('album_updated_date', XOBJ_DTYPE_LTIME, false);
+		$this->quickInitVar('album_description', XOBJ_DTYPE_TXTAREA, false);
+		$this->quickInitVar('album_active', XOBJ_DTYPE_INT, false, false, false, 1);
+		$this->quickInitVar('album_inblocks', XOBJ_DTYPE_INT, false, false, false, 1);
+		$this->quickInitVar('album_grpperm', XOBJ_DTYPE_TXTBOX, true );
+		$this->quickInitVar('album_uid', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('album_comments', XOBJ_DTYPE_INT, false);
 		$this->initCommonVar('weight');
 		$this->initCommonVar('counter');
-		$this->initCommonVar('dohtml', FALSE, 1);
-		$this->initCommonVar('dobr', TRUE, 1);
-		$this->initCommonVar('doimage', TRUE, 1);
-		$this->initCommonVar('dosmiley', TRUE, 1);
-		$this->initCommonVar('docxode', TRUE, 1);
+		$this->initCommonVar('dohtml', false, 1);
+		$this->initCommonVar('dobr', true, 1);
+		$this->initCommonVar('doimage', true, 1);
+		$this->initCommonVar('dosmiley', true, 1);
+		$this->initCommonVar('docxode', true, 1);
 		$this->initNonPersistableVar('album_sub', XOBJ_DTYPE_INT);
 		// set controls
 		$this->setControl('album_pid', array('itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
@@ -78,7 +78,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		}
 		return $ret;
 	}
-	
+	// get sub album
 	function album_sub() {
 		$ret = $this->handler->getAlbumSubCount($this->getVar('album_id', 'e'));
 
@@ -97,6 +97,45 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		return icms_member_user_Handler::getUserLink($this->getVar('album_uid', 'e'));
 	}
 	
+	// get publisher for frontend
+	function getPublisher($link = false) {
+		
+			$publisher_uid = $this->getVar('album_uid', 'e');
+			$userinfo = array();
+			$userObj = icms::handler('icms_member')->getuser($publisher_uid);
+			if (is_object($userObj)) {
+				$userinfo['uid'] = $publisher_uid;
+				$userinfo['uname'] = $userObj->getVar('uname');
+				$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
+			} else {
+				global $icmsConfig;
+				$userinfo['uid'] = 0;
+				$userinfo['uname'] = $icmsConfig['anonymous'];
+			}
+		
+		if ($link && $userinfo['uid']) {
+			return $userinfo['link'];
+		} else {
+			return $userinfo['uname'];
+		}
+	}
+	
+	public function getPublishedDate() {
+		global $albumConfig;
+		$date = '';
+		$date = $this->getVar('album_published_date', 'e');
+		
+		return date($albumConfig['album_dateformat'], $date);
+	}
+	
+	public function getUpdatedDate() {
+		global $albumConfig;
+		$date = '';
+		$date = $this->getVar('album_updated_date', 'e');
+		
+		return date($albumConfig['album_dateformat'], $date);
+	}
+	
 	public function album_active() {
 		$active = $this->getVar('album_active', 'e');
 		if ($active == false) {
@@ -110,7 +149,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	
 	public function album_inblocks() {
 		$show = $this->getVar('album_inblocks', 'e');
-		if ($show == 0) {
+		if ($show == false) {
 			return '<a href="' . ALBUM_ADMIN_URL . 'album.php?album_id=' . $this->getVar('album_id') . '&amp;op=changeShow">
 				<img src="' . ALBUM_IMAGES_URL . 'off.png" alt="Hidden" /></a>';
 		} else {
@@ -201,14 +240,16 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	
 	function toArray() {
 		$ret = parent::toArray();
-		$ret['album_published_date'] = $this->getVar('album_published_date');
-		//$ret['album_img'] = $this->get_albumimage_tag();
-		//$ret['album_img'] = $this->get_albumimage_tag();
+		$ret['album_published_on'] = $this->getPublishedDate();
+		$ret['album_updated_on'] = $this->getUpdatedDate();
+		$ret['album_publisher'] = $this->getPublisher(true);
+		$ret['id'] = $this->getVar('album_id');
+		$ret['title'] = $this->getVar('album_title');
 		
-		$ret['album_img'] = $this->get_albumimage_tag();
+		$ret['img'] = $this->get_albumimage_tag();
 		$ret['album_dsc'] = $this->getVar('album_description');
-		$ret['album_sub'] = $this->getAlbumSub($this->getVar('album_id', 'e'), true);
-		$ret['album_hassub'] = (count($ret['album_sub']) > 0) ? true : false;
+		$ret['sub'] = $this->getAlbumSub($this->getVar('album_id', 'e'), true);
+		$ret['hassub'] = (count($ret['album_sub']) > 0) ? true : false;
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
