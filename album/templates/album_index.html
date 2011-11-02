@@ -31,12 +31,12 @@
 				<!-- Album description -->
 				<div class="album_dsc">
 					<{$album.album_dsc}>
-				</div>  
+				</div>
 
 				<{if $album.hassub}>
 					<div style="float: right; font-size: .8em; padding-right: 45px;">
 						<ul>
-						<{foreach item=sub from=$album}>
+						<{foreach item=sub from=$album.sub}>
 							<li><{$sub.itemLink}></li>
 						<{/foreach}>
 						</ul>
