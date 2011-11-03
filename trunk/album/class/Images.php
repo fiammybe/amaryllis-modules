@@ -39,9 +39,9 @@ class AlbumImages extends icms_ipf_Object {
 		$this -> setControl( 'img_description', 'dhtmltextarea' );
 		
 		$this->setControl( 'img_url', array( 'name' => 'image' ) );
-		$url = ALBUM_UPLOAD_URL . 'albums/';
-		$path = ALBUM_UPLOAD_ROOT . 'albums/';
-		$this -> setImageDir( $url, $path );
+		$url = ICMS_URL . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
+		$path = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
+		$this->setImageDir($url, $path);
 		
 		$this->hideFieldFromForm( array( 'weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
 		$this->hideFieldFromSingleView( array( 'weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );

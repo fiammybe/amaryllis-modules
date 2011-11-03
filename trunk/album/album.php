@@ -42,7 +42,7 @@ $clean_img_id = ($clean_img_id == 0 && isset($_POST['img_id'])) ? filter_input(I
 // this is required to call the image correctly if ICMS is installed in a subdirectory
 $directory_name = basename( dirname( __FILE__ ) );
 $script_name = getenv("SCRIPT_NAME");
-$document_root = str_replace('modules/' . $directory_name . '/index.php', '', $script_name);
+$document_root = str_replace('modules/' . $directory_name . '/album.php', '', $script_name);
 
 $album_album_handler = icms_getModuleHandler( 'album', icms::$module -> getVar( 'dirname' ), 'album' );
 $album_images_handler = icms_getModuleHandler( 'images', icms::$module -> getVar( 'dirname' ), 'album' );
@@ -94,10 +94,11 @@ unset($criteria);
 
 foreach ( $imagesObjects as $imagesObj ) {
 	$image = $imagesObj -> toArray();
-	$image['img_url'] = ALBUM_UPLOAD_URL . 'images/' . $imagesObj -> getVar( 'img_url', 'e' );
+	$image['img_url'] = $document_root . 'uploads/' . $directory_name . '/images/'
+				. $imagesObj->getVar('img_url', 'e');
 	$image['show_images'] = $albumConfig['show_images'];
-	$image['thumbnail_width'] = $albumConfig['thumbnail_width'] . "%";
-	$image['thumbnail_height'] = $albumConfig['thumbnail_height'] . "%" ;
+	$image['thumbnail_width'] = $albumConfig['thumbnail_width'];
+	$image['thumbnail_height'] = $albumConfig['thumbnail_height'];
 	$image['image_width'] = $albumConfig['image_width'];
 	$image['image_height'] = $albumConfig['image_height'];
 	$album_images[] = $image;
