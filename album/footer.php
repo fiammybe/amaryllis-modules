@@ -18,7 +18,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-$icmsTpl->assign('album_adminpage', ALBUM_ADMIN_URL);
+$icmsTpl->assign('album_adminpage', '<a href="' . ALBUM_ADMIN_URL . '" title="admin-link" class="album_admin_link" >' . _MD_ALBUM_ADMIN_PAGE . '</a>' );
 $icmsTpl->assign('album_is_admin', icms_userIsAdmin(ALBUM_DIRNAME));
 $icmsTpl->assign('album_url', ALBUM_URL);
 $icmsTpl->assign('album_images_url', ALBUM_IMAGES_URL);
