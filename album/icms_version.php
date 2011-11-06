@@ -11,7 +11,7 @@
  * --------------------------------------------------------------------------------------------------------
  * 				album
  * @since		1.00
- * @author		QM-B
+ * @author		QM-B <qm-b@hotmail.de>
  * @package		album
  * @version		$Id$
  * 
@@ -28,7 +28,7 @@ $modversion = array(
 					'version'					=> 1.0,
 					'description'				=> _MI_ALBUM_DSC,
 					'author'					=> "QM-B &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';",
-					'credits'					=> "Thanks to McDonald for the nice index layer and also thanks to Madfish and the developers of Content-Module for the code snippets, where I could see how to develope a Module using IPF!",
+					'credits'					=> "Thanks to McDonald for the nice index layer and also thanks to Madfish and the developers of ALBUM-Module for the code snippets, where I could see how to develope a Module using IPF!",
 					'help'						=> "",
 					'license'					=> "GNU General Public License (GPL)",
 					'official'					=> 0,
@@ -163,9 +163,9 @@ $modversion['blocks'][$i]['can_clone']		= true ;
 
 
 /** Search information */
-$modversion['hasSearch'] = 0;
-//$modversion['search'] ['file'] = 'include/search.inc.php';
-//$modversion['search'] ['func'] = 'album_search';
+$modversion['hasSearch'] = 1;
+$modversion['search'] ['file'] = 'include/search.inc.php';
+$modversion['search'] ['func'] = 'album_search';
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +174,7 @@ $modversion['hasSearch'] = 0;
 
 
 // Comments
-$modversion['hasComments'] = 0;
+$modversion['hasComments'] = 1;
 $modversion['comments']['pageName'] = 'album.php';
 $modversion['comments']['itemName'] = 'album_id';
 
@@ -192,6 +192,7 @@ global $icmsConfig;
 
 $i=0;
 $i++;
+/** prepared for later use
 $modversion['config'][$i] = array(
 								'name'			=> 'uploader_groups',
 								'title'			=> '_MI_ALBUM_AUTHORIZED_UPLOADER',
@@ -199,7 +200,7 @@ $modversion['config'][$i] = array(
 								'formtype'		=> 'group_multi',
 								'valuetype'		=> 'array',
 								'default'		=> '1'
-							);
+							); **/
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'album_dateformat',
@@ -302,24 +303,6 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
-								'name' 			=> 'image_width',
-								'title' 		=> '_MI_ALBUM_IMAGE_WIDTH',
-								'description' 	=> '_MI_ALBUM_IMAGE_WIDTH_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> '1024'
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'image_height',
-								'title' 		=> '_MI_ALBUM_IMAGE_HEIGHT',
-								'description' 	=> '_MI_ALBUM_IMAGE_HEIGHT_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> '768'
-							);
-$i++;
-$modversion['config'][$i] = array(
 								'name' 			=> 'image_upload_width',
 								'title' 		=> '_MI_ALBUM_IMAGE_UPLOAD_WIDTH',
 								'description' 	=> '_MI_ALBUM_IMAGE_UPLOAD_WIDTH_DSC',
@@ -352,56 +335,22 @@ $modversion['config'][$i] = array(
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-$modversion['hasNotification'] = 0;
+$modversion['hasNotification'] = 1;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';
 $modversion['notification']['lookup_func'] = 'album_notify_iteminfo';
-/**
-$modversion['notification']['category'][1] = array(
+
+$modversion['notification']['category'][] = array (
 													'name'				=> 'global',
 													'title'				=> _MI_ALBUM_GLOBAL_NOTIFY,
-													'description'		=> '',
-													'subscribe_from'	=> array('index.php')
+													'description'		=> _MI_ALBUM_GLOBAL_NOTIFY_DSC,
+													'subscribe_from'	=> array('index.php', 'album.php')
 												);
-$modversion['notification']['category'][] = array(
-													'name'				=> 'album',
-													'title'				=> _MI_ALBUM_ALBUM_NOTIFY,
-													'item_name'			=> 'album',
-													'description'		=> '',
-													'subscribe_from'	=> array('index.php')
-												);
-$modversion['notification']['category'][] = array(
-													'name'				=> 'picture',
-													'title'				=> _MI_ALBUM_PICTURE_NOTIFY,
-													'description'		=> '',
-													'item_name'			=> 'id',
-													'subscribe_from'	=> array('album.php')
-												);
-$modversion['notification']['event'][1] = array(
-													'name'				=> 'new',
+$modversion['notification']['event'][] = array(
+													'name'				=> 'album_published',
 													'category'			=> 'global',
-													'admin_only'		=> 1,
-													'title'				=> _MI_ALBUM_NEWPOST_NOTIFY,
-													'caption'			=> _MI_ALBUM_NEWPOST_NOTIFY_CAP,
-													'description'		=> '',
-													'mail_template'		=> 'notify',
-													'mail_subject'		=> _MI_ALBUM_NEWPOST_SUBJECT
+													'title'				=> _MI_ALBUM_GLOBAL_ALBUM_PUBLISHED_NOTIFY,
+													'caption'			=> _MI_ALBUM_GLOBAL_ALBUM_PUBLISHED_NOTIFY_CAP,
+													'description'		=> _MI_ALBUM_GLOBAL_ALBUM_PUBLISHED_NOTIFY_DSC,
+													'mail_template'		=> 'global_album_published',
+													'mail_subject'		=> _MI_ALBUM_GLOBAL_ALBUM_PUBLISHED_NOTIFY_SBJ
 												);
-$modversion['notification']['event'][] = array(
-													'name'				=> 'new',
-													'category'			=> 'ALBUM',
-													'title'				=> _MI_ALBUM_NEWPOST_NOTIFY,
-													'caption'			=> _MI_ALBUM_NEWPOST_NOTIFY_CAP,
-													'description'		=> '',
-													'mail_template'		=> 'notify',
-													'mail_subject'		=> _MI_ALBUM_NEWPOST_SUBJECT
-											);
-$modversion['notification']['event'][] = array(
-													'name'				=> 'PICTURE',
-													'category'			=> 'picture',
-													'title'				=> _MI_ALBUM_STATUS_NOTIFY,
-													'caption'			=> _MI_ALBUM_STATUS_NOTIFY_CAP,
-													'description'		=> '',
-													'mail_template'		=> 'picture_notify',
-													'mail_subject'		=> _MI_ALBUM_STATUS_SUBJECT
-											);
-**/

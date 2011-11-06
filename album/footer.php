@@ -10,7 +10,7 @@
  * ----------------------------------------------------------------------------------------------------------
  * 				album
  * @since		1.00
- * @author		QM-B
+ * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
  * @package		album
  *
@@ -22,7 +22,5 @@ $icmsTpl->assign('album_adminpage', '<a href="' . ALBUM_ADMIN_URL . '" title="ad
 $icmsTpl->assign('album_is_admin', icms_userIsAdmin(ALBUM_DIRNAME));
 $icmsTpl->assign('album_url', ALBUM_URL);
 $icmsTpl->assign('album_images_url', ALBUM_IMAGES_URL);
-
-$xoTheme->addStylesheet(ALBUM_URL . 'module_album' . ((defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? '_rtl' : '') . '.css');
 
 include_once ICMS_ROOT_PATH . '/footer.php';

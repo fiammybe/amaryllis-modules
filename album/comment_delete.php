@@ -1,15 +1,20 @@
 <?php
 /**
- * Comment delete
- *
- * This file holds the configuration information of this module
- *
+ * 'Album' is a light weight gallery module
+ * 
+ * File: /comment_delete.php
+ * 
+ * delete comments
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * --------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @package		album
  * @version		$Id$
+ * 
  */
 
 include_once "header.php";

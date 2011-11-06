@@ -11,10 +11,10 @@
  * ----------------------------------------------------------------------------------------------------------
  * 				album
  * @since		1.00
- * @author		QM-B
+ * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
  * @package		album
- * @version		$Id$
+ * 
  */
 
  if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");

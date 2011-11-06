@@ -1,7 +1,12 @@
+<!-- display admin link -->
 <{if $album_is_admin}>
 	<div class="album_adminlinks"><{$album_adminpage}></div>
 <{/if}>
 
+<!-- display indexfooter -->		
+<{$album_indexarray.index_footer}>
+
+<!-- comment loop -->
 <{if $album_album_comment}>
  	<table id="comments_container" border="0" width="100%" cellspacing="1" cellpadding="0" align="center" >
    		<tr>
@@ -23,5 +28,5 @@
   </table>
 <{/if}>
 
-
+<!-- include notifications -->
 <{includeq file='db:system_notification_select.html'}>

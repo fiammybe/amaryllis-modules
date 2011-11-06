@@ -1,11 +1,20 @@
 <?php
 /**
+ * 'Album' is a light weight gallery module
+ *
+ * File: /include/notification_update.php
+ * 
+ * notifivation updates
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		album
  * @version		$Id$
+ * @package		album
+ *
  */
 
 include_once '../../mainfile.php';

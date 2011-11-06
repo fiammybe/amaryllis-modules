@@ -1,15 +1,22 @@
 <?php
 /**
- * Classes responsible for managing album album objects
+ * 'Album' is a light weight gallery module
  *
+ * File: /class/AlbumHandler.php
+ * 
+ * Classes responsible for managing album album objects
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		album
  * @version		$Id$
+ * @package		album
+ *
  */
-
+ 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 class AlbumAlbumHandler extends icms_ipf_Handler {
@@ -21,7 +28,6 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		$this->addPermission('album_grpperm', _CO_ALBUM_ALBUM_ALBUM_GRPPERM, _CO_ALBUM_ALBUM_ALBUM_GRPPERM_DSC);
 
 	}
-	
 	
 	// retrieve a list of Albums
 	public function getList($album_active = null) {
@@ -170,17 +176,16 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	
 	public function getAlbumList() {
 		
-			$albumObj = $this->get($album_id);
-			$criteria = new icms_db_criteria_Compo();
-			if (isset($album_id)) {
-				$criteria->add( new icms_db_criteria_Item( 'album_id', (int)$album_id ) );
-				$criteria->add( new icms_db_criteria_Item( 'album_active', true ) );
-			}
-			$albums = & $this -> getObjects( $criteria, true );
-			foreach( array_keys( $albums ) as $i ) {
-				$ret[$albums[$i]->getVar( 'album_id' )] = $albums[$i] -> getVar( 'album_title' );
-			}
-			return $ret;
+		$criteria = new icms_db_criteria_Compo();
+		if (isset($album_id)) {
+			$criteria->add( new icms_db_criteria_Item( 'album_id', (int)$album_id ) );
+			$criteria->add( new icms_db_criteria_Item( 'album_active', true ) );
+		}
+		$albums = & $this -> getObjects( $criteria, true );
+		foreach( array_keys( $albums ) as $i ) {
+			$ret[$albums[$i]->getVar( 'album_id' )] = $albums[$i] -> getVar( 'album_title' );
+		}
+		return $ret;
 	}
 	
 	public function album_active_filter() {
@@ -220,6 +225,38 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return count(array_intersect($module->config['uploader_groups'], $user_groups)) > 0;
 	}
 	
+	// get breadcrumb
+	public function getBreadcrumbForPid($album_id, $userside=false){
+		$url = $_SERVER['PHP_SELF'];
+		$ret = false;
+		if ($album_id == false) {
+			return $ret;
+		} else {
+			if ($album_id > 0) {
+				$album = $this->get($album_id);
+				if ($album->getVar('album_id', 'e') > 0) {
+					if (!$userside) {
+						$ret = "<a href='" . $url . "?album_id=" . $album->getVar('album_id', 'e') . "&amp;album_pid=" . $album->getVar('album_id', 'e') . "'>" . $album->getVar('album_title', 'e') . "</a>";
+					} else {
+						$ret = "<a href='" . $url . "?album_id=" . $album->getVar('album_id', 'e') . "&amp;page=" . $this->makeLink($album) . "'>" . $album->getVar('album_title', 'e') . "</a>";
+					}
+					if ($album->getVar('album_pid', 'e') == 0) {
+						if (!$userside){
+							return "<a href='" . $url . "?album_id=" . $album->getVar('album_id', 'e') . "&amp;album_pid=0'>" . _MI_ALBUM_ALBUMS . "</a> &gt; " . $ret;
+						} else {
+							return $ret;
+						}
+					} elseif ($album->getVar('album_pid','e') > 0) {
+						$ret = $this->getBreadcrumbForPid($album->getVar('album_pid', 'e'), $userside) . " &gt; " . $ret;
+					}
+				}
+			} else {
+				return $ret;
+			}
+		}
+		return $ret;
+	}
+	
 	//update hit-counter
 	public function updateCounter($id) {
 		global $album_isAdmin;
@@ -234,11 +271,40 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return true;
 	}
 	
+	// some fuctions related to icms core functions
+	public function getAlbumsForSearch($queryarray, $andor, $limit, $offset, $userid) {
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->setStart($offset);
+		$criteria->setLimit($limit);
+		if ($userid != 0) $criteria->add(new icms_db_criteria_Item('album_uid', $userid));
+
+		if ($queryarray) {
+			$criteriaKeywords = new icms_db_criteria_Compo();
+			for($i = 0; $i < count($queryarray); $i ++) {
+				$criteriaKeyword = new icms_db_criteria_Compo();
+				$criteriaKeyword->add(new icms_db_criteria_Item('album_title', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+				$criteriaKeyword->add(new icms_db_criteria_Item('album_description', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+				$criteriaKeywords->add($criteriaKeyword, $andor);
+				unset($criteriaKeyword);
+			}
+			$criteria->add($criteriaKeywords);
+		}
+		$criteria->add(new icms_db_criteria_Item('album_active', true));
+		return $this->getObjects($criteria, true, false);
+	}
+	
+	public function updateComments($album_id, $total_num) {
+		$albumObj = $this->get($album_id);
+		if ($albumObj && !$albumObj->isNew()) {
+			$albumObj->setVar('album_comments', $total_num);
+			$this->insert($albumObj, true);
+		}
+	}
+	
+	// some related functions for storing
 	protected function beforeSave(&$obj) {
 		if ($obj->updating_counter)
 		return true;
-		//$obj->setVar('dobr', $obj->need_do_br ());
-		//Prevent that the page is defined as parent page of yourself.
 		if ($obj->getVar('album_pid','e') == $obj->getVar('album_id','e')){
 			$obj->setVar('album_pid', 0);
 		}

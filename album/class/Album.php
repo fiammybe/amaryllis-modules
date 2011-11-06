@@ -1,13 +1,20 @@
 <?php
 /**
- * Class representing album album objects
+ * 'Album' is a light weight gallery module
  *
+ * File: /class/Album.php
+ * 
+ * Class representing album album objects
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		album
  * @version		$Id$
+ * @package		album
+ *
  */
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
@@ -58,26 +65,12 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	}
 
 	public function getVar($key, $format = 's') {
-		if ($format == 's' && in_array($key, array('album_pid', 'album_uid', 'album_active', 'album_grpperm'))) {
+		if ($format == 's' && in_array($key, array('album_uid', 'album_active', 'album_grpperm'))) {
 			return call_user_func(array ($this,	$key));
 		}
 		return parent::getVar($key, $format);
 	}
 
-	// get the names of parent albums
-	function album_pid() {
-		static $album_pidArray;
-		if (!is_array($album_pidArray)) {
-			$album_pidArray = $this->handler->getAlbumListForPid();
-		}
-		$ret = $this->getVar('album_pid', 'e');
-		if ($ret > 0) {
-			$ret = '<a href="' . ALBUM_URL . 'index.php?album_id=' . $ret . '">' . str_replace('-', '', $album_pidArray[$ret]) . '</a>';
-		} else {
-			$ret = $album_pidArray[$ret];
-		}
-		return $ret;
-	}
 	// get sub album
 	function album_sub() {
 		$ret = $this->handler->getAlbumSubCount($this->getVar('album_id', 'e'));
@@ -204,7 +197,8 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	}
 
 	function getItemLink($onlyUrl = false) {
-		$url = ALBUM_URL . 'album.php?album_id=' . $this -> getVar( 'album_id' );
+		$seo = $this->handler->makelink($this);
+		$url = ALBUM_URL . 'album.php?album_id=' . $this -> getVar( 'album_id' ) . '&amp;album=' . $seo;
 		if ($onlyUrl) return $url;
 		return '<a href="' . $url . '" title="' . $this -> getVar( 'album_title' ) . ' ">' . $this -> getVar( 'album_title' ) . '</a>';
 	}
@@ -229,12 +223,12 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	}
 	
 	public function getEditItemLink() {
-		$ret = '<a href="' . ALBUM_ADMIN_URL . 'album.php?op=changedField&amp;album_id=' . $this->getVar('album_id', 'e') . '" title="' . _MD_ALBUM_ALBUM_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
+		$ret = '<a href="' . ALBUM_ADMIN_URL . 'album.php?op=changedField&amp;album_id=' . $this->getVar('album_id', 'e') . '" title="' . _AM_ALBUM_ALBUM_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
 		return $ret;
 	}
 	
 	public function getDeleteItemLink() {
-		$ret = '<a href="' . ALBUM_ADMIN_URL . 'album.php?op=del&amp;album_id=' . $this->getVar('album_id', 'e') . '" title="' . _MD_ALBUM_ALBUM_DELETE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
+		$ret = '<a href="' . ALBUM_ADMIN_URL . 'album.php?op=del&amp;album_id=' . $this->getVar('album_id', 'e') . '" title="' . _AM_ALBUM_ALBUM_DELETE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
 		return $ret;
 	}
 	

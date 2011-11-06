@@ -10,7 +10,7 @@
  * ----------------------------------------------------------------------------------------------------------
  * 				album
  * @since		1.00
- * @author		QM-B
+ * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
  * @package		album
  *
@@ -28,5 +28,3 @@ include_once ALBUM_ROOT_PATH . 'include/requirements.php';
 global $icmsConfig;
 icms_loadLanguageFile("album", "common");
 icms_loadLanguageFile("album", "modinfo");
-
- 
