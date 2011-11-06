@@ -42,14 +42,14 @@ function editalbum($album_id = 0) {
 
 include_once 'admin_header.php';
 
-$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
-
-$clean_op = '';
+$clean_op = $clean_album_id = $valid_op = $album_album_handler = '';
 
 $valid_op = array ('mod', 'changedField', 'addalbum', 'del', 'view', 'visible', 'changeShow', 'changeWeight', '');
 
 if (isset($_GET['op'])) $clean_op = htmlentities($_GET['op']);
 if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
+
+$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
 
 $clean_album_id = isset($_GET['album_id']) ? (int)$_GET['album_id'] : 0 ;
 
@@ -77,7 +77,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$albumObj->displaySingleObject();
 			break;
 
-		case "visible":
+		case 'visible':
 			$visibility = $album_album_handler -> changeVisible( $clean_album_id );
 			$ret = 'album.php';
 			if ($visibility == 0) {
@@ -87,7 +87,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			}
 			break;
 			
-		case "changeShow":
+		case 'changeShow':
 			$show = $album_album_handler -> changeShow( $clean_album_id );
 			$ret = 'album.php';
 			if ($show == 0) {
@@ -131,16 +131,16 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable = new icms_ipf_view_Table($album_album_handler, $criteria);
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_active', 'center', true ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_title', false, false, 'getPreviewItemLink' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'album_sub', 'center', 100));
+			$objectTable->addColumn( new icms_ipf_view_Column( 'album_pid', false, false, 'album_pid' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'counter', 'center', 100));
-			$objectTable->addColumn( new icms_ipf_view_Column( 'album_inblocks', 'center', true ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'album_published_date', 'center', true ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'album_inblocks', 'center', 100, 'album_inblocks' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'album_published_date', 'center', 100, true ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_uid', 'center', true, 'album_uid' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getWeightControl' ) );
 			
 			$objectTable->addFilter( 'album_active', 'album_active_filter' );
-			$objectTable->addFilter( 'album_inblocks', 'album_active_filter' );
-			$objectTable->addFilter('album_pid', 'getAlbumListForPid');
+			$objectTable->addFilter( 'album_inblocks', 'album_inblocks_filter' );
+			$objectTable->addFilter( 'album_pid', 'getAlbumListForPid' );
 			
 			$objectTable->addIntroButton( 'addalbum', 'album.php?op=mod', _AM_ALBUM_ALBUM_ADD );
 			$objectTable->addActionButton( 'changeWeight', false, _SUBMIT );

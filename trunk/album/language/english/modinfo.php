@@ -65,7 +65,7 @@ define("_MI_ALBUM_IMAGE_FILE_SIZE_DSC", "set max file size for uploading");
 define("_MI_ALBUM_BLOCK_RECENT", "Recent Albums");
 
 // Notifications
-define("_MI_ALBUM_GLOBAL_NOTIFY", "All ALBUMs");
+define("_MI_ALBUM_GLOBAL_NOTIFY", "All Albums");
 define("_MI_ALBUM_GLOBAL_NOTIFY_DSC", "Notifications related to all Albums in the module");
 define("_MI_ALBUM_GLOBAL_ALBUM_PUBLISHED_NOTIFY", "New Album published");
 define("_MI_ALBUM_GLOBAL_ALBUM_PUBLISHED_NOTIFY_CAP", "Notify me when a new Album is published");

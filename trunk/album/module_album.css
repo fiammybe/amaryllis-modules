@@ -64,6 +64,11 @@
 		margin: 1em 0;
 	}
 	
+	.album_album_desc {
+		font-size: 1em;
+		margin: 1em .9375em;
+	}
+	
 	.album_headertable {}
 	
 	.album_album_title {
