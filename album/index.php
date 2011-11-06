@@ -81,6 +81,7 @@ if ( $indexpageArray['index_footer'] ) {
 
 	$album_album_handler = icms_getModuleHandler('album', basename(dirname(__FILE__)), 'album');
 	
+	$album_album_handler->updateCounter($clean_album_id);	
 	$album = $album_album_handler->getAlbums($clean_start, icms::$module->config['show_albums'], $clean_album_uid,  false, $clean_album_pid);
 
 	

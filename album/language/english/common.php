@@ -62,6 +62,8 @@ define("_CO_ALBUM_INDEXPAGE_INDEXFOOTER_DSC", " Set the footer displayed on Inde
 define("_CO_ALBUM_IMAGES_IMG_TITLE", "Title");
 define("_CO_ALBUM_IMAGES_A_ID", "Album");
 define("_CO_ALBUM_IMAGES_A_ID_DSC", "Set the Album of the image");
+define("_CO_ALBUM_IMAGES_IMG_PUBLISHED_DATE", "Published Date");
+define("_CO_ALBUM_IMAGES_IMG_PUBLISHED_DATE_DSC", "  ");
 define("_CO_ALBUM_IMAGES_IMG_URL", "Select the image");
 define("_CO_ALBUM_IMAGES_IMG_URL_DSC", "You can upload a new image");
 define("_CO_ALBUM_IMG_DESCRIPTION", "Description");

@@ -116,8 +116,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		}
 		
 		$objectTable = new icms_ipf_view_Table($album_images_handler, $criteria);
-		$objectTable->addColumn( new icms_ipf_view_Column( 'img_active', 'center', true ) );
-  		$objectTable->addColumn( new icms_ipf_view_Column( 'a_id', false, false, 'a_id' ) );
+		$objectTable->addColumn( new icms_ipf_view_Column( 'img_active', 'center', true, 'img_active' ) );
 		$objectTable->addColumn( new icms_ipf_view_Column( 'img_title', false, false ) );
 		$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getWeightControl' ) );
 		$objectTable->addColumn( new icms_ipf_view_Column( 'img_published_date', 'center', true ) );

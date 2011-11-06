@@ -227,7 +227,6 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	
 	// get breadcrumb
 	public function getBreadcrumbForPid($album_id, $userside=false){
-		$url = $_SERVER['PHP_SELF'];
 		$ret = false;
 		if ($album_id == false) {
 			return $ret;
@@ -236,18 +235,18 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 				$album = $this->get($album_id);
 				if ($album->getVar('album_id', 'e') > 0) {
 					if (!$userside) {
-						$ret = "<a href='" . $url . "?album_id=" . $album->getVar('album_id', 'e') . "&amp;album_pid=" . $album->getVar('album_id', 'e') . "'>" . $album->getVar('album_title', 'e') . "</a>";
+						$ret = "<a href='" . ALBUM_URL . "album.php?album_id=" . $album->getVar('album_id', 'e') . "&amp;album_pid=" . $album->getVar('album_id', 'e') . "'>" . $album->getVar('album_title', 'e') . "</a>";
 					} else {
-						$ret = "<a href='" . $url . "?album_id=" . $album->getVar('album_id', 'e') . "&amp;page=" . $this->makeLink($album) . "'>" . $album->getVar('album_title', 'e') . "</a>";
+						$ret = "<a href='" . ALBUM_URL . "album.php?album_id=" . $album->getVar('album_id', 'e') . "&amp;album=" . $this->makeLink($album) . "'>" . $album->getVar('album_title', 'e') . "</a>";
 					}
 					if ($album->getVar('album_pid', 'e') == 0) {
 						if (!$userside){
-							return "<a href='" . $url . "?album_id=" . $album->getVar('album_id', 'e') . "&amp;album_pid=0'>" . _MI_ALBUM_ALBUMS . "</a> &gt; " . $ret;
+							return "<a href='" . ALBUM_URL . "album.php?album_id=" . $album->getVar('album_id', 'e') . "'>" . _MI_ALBUM_ALBUMS . "</a> &nbsp;:&nbsp; " . $ret;
 						} else {
 							return $ret;
 						}
 					} elseif ($album->getVar('album_pid','e') > 0) {
-						$ret = $this->getBreadcrumbForPid($album->getVar('album_pid', 'e'), $userside) . " &gt; " . $ret;
+						$ret = $this->getBreadcrumbForPid($album->getVar('album_pid', 'e'), $userside) . " &nbsp;:&nbsp; " . $ret;
 					}
 				}
 			} else {
@@ -258,12 +257,12 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	}
 	
 	//update hit-counter
-	public function updateCounter($id) {
+	public function updateCounter($album_id) {
 		global $album_isAdmin;
-		$albumObj = $this->get($id);
+		$albumObj = $this->get($album_id);
 		if (!is_object($albumObj)) return false;
 
-		if (!is_object(icms::$user) || (!$album_isAdmin && $albumObj->getVar('content_uid', 'e') != icms::$user->uid ())) {
+		if (!is_object(icms::$user) || (!$album_isAdmin && $albumObj->getVar('album_uid', 'e') != icms::$user->uid ())) {
 			$albumObj->updating_counter = true;
 			$albumObj->setVar('counter', $albumObj->getVar('counter', 'n') + 1);
 			$this->insert($albumObj, true);

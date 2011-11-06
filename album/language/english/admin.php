@@ -44,8 +44,6 @@ define("_AM_ALBUM_IMAGES_ADDED", "Image Added");
 
 define("_AM_ALBUM_PREVIEW", "Preview");
 define("_AM_ALBUM_ALBUM_VIEW", "View");
-define("_AM_ALBUM_ALBUM_EDIT", "Edit");
-define("_AM_ALBUM_ALBUM_DELETE", "Delete");
 define("_AM_ALBUM_IMAGES_EDIT", "Edit");
 define("_AM_ALBUM_IMAGES_MODIFIED", "Album modified");
 
@@ -55,5 +53,6 @@ define("_AM_ALBUM_FUPLOAD_INDEXIMAGE", "Indeximage");
 define("_AM_ALBUM_FUPLOAD", "Select Image");
 define("_AM_ALBUM_MODIMGUPLOAD", "Upload new module Images");
 
-
+define("_AM_ALBUM_ALBUM_INBLOCK_TRUE", "Album will be displayed in blocks");
+define("_AM_ALBUM_ALBUM_INBLOCK_FALSE", "Album will be hidden in blocks");
 

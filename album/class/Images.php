@@ -63,21 +63,6 @@ class AlbumImages extends icms_ipf_Object {
 		return parent::getVar($key, $format);
 	}
 	
-	public function album_id() {
-		static $album_idArray;
-		$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
-		if (!is_array($album_idArray)) {
-			$album_idArray = $this->handler->getAlbumList();
-		}
-		$ret = $this->getVar('a_id', 'e');
-		if ($ret > 0) {
-			$ret = '<a href="' . ALBUM_URL . 'album.php?album_id=' . $ret . '">' . str_replace('-', '', $album_idArray[$ret]) . '</a>';
-		} else {
-			$ret = $album_idArray[$ret];
-		}
-		return $ret;
-	}
-	
 	public function img_active() {
 		$img_active = $this->getVar('img_active', 'e');
 		if ($img_active == false) {

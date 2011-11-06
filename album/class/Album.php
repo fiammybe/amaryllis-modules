@@ -20,6 +20,8 @@
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
 class AlbumAlbum extends icms_ipf_seo_Object {
+
+	public $updating_counter = false;
 	/**
 	 * Constructor
 	 *
@@ -85,6 +87,20 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		return $this->handler->getAlbumSub($this->getVar('album_id', 'e'), $toarray);
 	}
 	
+	function album_pid() {
+		static $album_pidArray;
+		if (!is_array($album_pidArray)) {
+			$album_pidArray = $this->handler->getAlbumListForPid();
+		}
+		$ret = $this->getVar('album_pid', 'e');
+		if ($ret > 0) {
+			$ret = '<a href="' . ALBUM_URL . 'album.php?album_id=' . $ret . '">' . str_replace('-', '', $album_pidArray[$ret]) . '</a>';
+		} else {
+			$ret = $album_pidArray[$ret];
+		}
+		return $ret;
+	}
+	
 	// get uname instead of id for publisher
 	function album_uid() {
 		return icms_member_user_Handler::getUserLink($this->getVar('album_uid', 'e'));
@@ -141,8 +157,8 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	}
 	
 	public function album_inblocks() {
-		$show = $this->getVar('album_inblocks', 'e');
-		if ($show == false) {
+		$active = $this->getVar('album_inblocks', 'e');
+		if ($active == false) {
 			return '<a href="' . ALBUM_ADMIN_URL . 'album.php?album_id=' . $this->getVar('album_id') . '&amp;op=changeShow">
 				<img src="' . ALBUM_IMAGES_URL . 'off.png" alt="Hidden" /></a>';
 		} else {
@@ -261,4 +277,17 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'album_published', $tags, array(), $module->getVar('mid'));
 	}
 
+	function getReads() {
+		return $this->getVar('counter');
+	}
+
+	function setReads($qtde = null) {
+		$t = $this->getVar('counter');
+		if (isset($qtde)) {
+			$t += $qtde;
+		} else {
+			$t++;
+		}
+		$this->setVar('counter', $t);
+	}
 }
