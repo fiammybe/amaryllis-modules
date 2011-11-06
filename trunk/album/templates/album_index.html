@@ -9,7 +9,7 @@
 		<!-- pagination control -->
 		<{if $album_pagenav }><{$album_pagenav}><{/if}>
 		
-		<div class="album">
+		<div class="album_album">
 			<!-- album rule -->
 			<{foreach item=album from=$album_album}>
 				
@@ -23,13 +23,13 @@
 				<!-- Album title -->
 				<span style="float: left; font-size: 1.1em; font-weight: bold;">
 					<{$album.itemLink}>&nbsp;&nbsp;
-						<p class="album_info">
+						<p class="album_album_info">
 							(&nbsp;<{$smarty.const._MD_ALBUM_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$album.album_publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_ALBUM_ALBUM_PUBLISHED_ON}>&nbsp;:&nbsp;<{$album.album_published_on}>&nbsp;)
 						</p>
 				</span>
 <br /><br />
 				<!-- Album description -->
-				<div class="album_dsc">
+				<div class="album_album_dsc">
 					<{$album.album_dsc}>
 				</div>
 
@@ -47,6 +47,3 @@
 			<{/foreach}>
 		</div>
 	</div>
-
-<!-- display indexfooter -->		
-<{$album_indexarray.index_footer}>

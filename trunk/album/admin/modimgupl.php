@@ -11,51 +11,112 @@
  * ----------------------------------------------------------------------------------------------------------
  * 				album
  * @since		1.00
- * @author		QM-B
+ * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
  * @package		album
- * @version		$Id$
+ * 
  */
 
- include_once("admin_header.php");
+ include_once 'admin_header.php';
  
- 
- $allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png');
- $maxfilesize = 100000;
- $maxfilewidth = 500;
- $maxfileheight = 500;
- $url = ALBUM_UPLOAD_ROOT . 'albumimages';
- $uploader = new icms_file_MediaUploadHandler($url, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
- if($uploader->fetchMedia($_POST['uploade_file_name'])) {
- 	if(!$uploader->upload()) {
-		echo $uploader->getErrors();
-	} else {
-		echo '<h4>File uploaded successfully!</h4>';
-		echo 'Saved as: ' . $uploader->getSavedFileName() . '<br />';
-    	echo 'Full path: ' . $uploader->getSavedDestination();
+ $clean_op = $valdid_op = '';
+
+ $valid_op = array ('mod', 'upload', 'albumimageupload', 'formSelect', '');
+
+ if (isset($_GET['op'])) $clean_op = htmlentities($_GET['op']);
+ if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
+
+ if(in_array($clean_op, $valid_op, true)) {
+ 	switch ($clean_op) {
+		case 'delete':
+			 
+			 break;
+		case 'albumimageupload':
+			if ( $_FILES['albumimage']['name'] != '' ) {
+				$allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png');
+				$maxfilesize = 100000;
+				$maxfilewidth = 500;
+				$maxfileheight = 500;
+				$url = ALBUM_UPLOAD_ROOT . 'albumimages';
+			
+				$uploader = new icms_file_MediaUploadHandler($url, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+				if($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {		//if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
+					$uploader->setPrefix('album');
+					if(!$uploader->upload()) {
+						icms_cp_header();
+						album_adminmenu( 3, _MI_ALBUM_MENU_IMAGEUPLOAD );
+						echo $uploader->getErrors();
+					} else {
+						icms_cp_header();
+						album_adminmenu( 3, _MI_ALBUM_MENU_IMAGEUPLOAD );
+						echo '<h4>File uploaded successfully!</h4>';
+						echo 'Saved as: ' . $uploader->getSavedFileName() . '<br />';
+						echo 'Full path: ' . $uploader->getSavedDestination();
+					}
+				} else {
+					icms_cp_header();
+					album_adminmenu( 3, _MI_ALBUM_MENU_IMAGEUPLOAD );
+					echo $uploader->getErrors();
+				}
+			} else {
+				redirect_header( 'modimgupl.php', 2 , _AM_ALBUM_ALBUM_NOIMAGEEXIST );
+				exit();
+			} 
+			 
+			break;
+		case 'indeximageupload':
+			if ( $_FILES['indeximage']['name'] != '' ) {
+				$allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png');
+				$maxfilesize = 100000;
+				$maxfilewidth = 500;
+				$maxfileheight = 500;
+				$url = ALBUM_UPLOAD_ROOT . 'indeximages';
+			
+				$uploader = new icms_file_MediaUploadHandler($url, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+				if($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {		//if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
+					$uploader->setPrefix('indeximage');
+					if(!$uploader->upload()) {
+						icms_cp_header();
+						album_adminmenu( 3, _MI_ALBUM_MENU_IMAGEUPLOAD );
+						echo $uploader->getErrors();
+					} else {
+						icms_cp_header();
+						album_adminmenu( 3, _MI_ALBUM_MENU_IMAGEUPLOAD );
+						echo '<h4>File uploaded successfully!</h4>';
+						echo 'Saved as: ' . $uploader->getSavedFileName() . '<br />';
+						echo 'Full path: ' . $uploader->getSavedDestination();
+					}
+				} else {
+					icms_cp_header();
+					album_adminmenu( 3, _MI_ALBUM_MENU_IMAGEUPLOAD );
+					echo $uploader->getErrors();
+				}
+			} else {
+				redirect_header( 'modimgupl.php', 2 , _AM_ALBUM_ALBUM_NOIMAGEEXIST );
+				exit();
+			} 
+			break;
+		 
+		 default:
+			icms_cp_header();
+			album_adminmenu( 3, _MI_ALBUM_MENU_IMAGEUPLOAD );
+			// upload albumimages
+			$sform = new icms_form_Theme(_AM_ALBUM_MODIMGUPLOAD, 'op', ALBUM_ADMIN_URL . 'modimgupl.php', 'post', true);
+			$sform->setExtra('enctype="multipart/form-data"');
+			$sform->addElement(new icms_form_elements_File(_AM_ALBUM_FUPLOAD, 'albumimage', 0), true);
+			$sform->addElement(new icms_form_elements_Hidden('op', 'albumimageupload'));
+			$sform->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
+			$sform->display();
+			// upload indeximages
+			$sform = new icms_form_Theme(_AM_ALBUM_MODIMGUPLOAD, 'op', ALBUM_ADMIN_URL . 'modimgupl.php', 'post', true);
+			$sform->setExtra('enctype="multipart/form-data"');
+			$sform->addElement(new icms_form_elements_File(_AM_ALBUM_FUPLOAD, 'indeximage', 0), true);
+			$sform->addElement(new icms_form_elements_Hidden('op', 'indeximageupload'));
+			$sform->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
+			$sform->display();
+			break;
 	}
- } else {
-	echo $uploader->getErrors();
- }
- $icmsAdminTpl->assign( 'album_media_uploader_folder', $uploader );
- $icmsAdminTpl->display( 'db:album_admin_form.html' );
+	icms_cp_footer();
  
- $allowed_mimetypes2 = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png');
- $maxfilesize2 = 100000;
- $maxfilewidth2 = 500;
- $maxfileheight2 = 500;
- $url2 = ALBUM_UPLOAD_ROOT . 'indeximages';
- $uploader2 = new icms_file_MediaUploadHandler($url2, $allowed_mimetypes2, $maxfilesize2, $maxfilewidth2, $maxfileheight2);
- if($uploader2->fetchMedia($_POST['uploade_file_name'])) {
- 	if(!$uploader2->upload()) {
-		echo $uploader2->getErrors();
-	} else {
-		echo '<h4>File uploaded successfully!</h4>';
-		echo 'Saved as: ' . $uploader2->getSavedFileName() . '<br />';
-    	echo 'Full path: ' . $uploader2->getSavedDestination();
-	}
- } else {
-	echo $uploader2->getErrors();
- }
- $icmsAdminTpl->assign( 'album_media_uploader_index', $uploader2 );
- $icmsAdminTpl->display( 'db:album_admin_form.html' );
+}
+ 

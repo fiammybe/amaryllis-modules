@@ -1,15 +1,23 @@
 <?php
 /**
- * Class representing album images objects
+ * 'Album' is a light weight gallery module
  *
+ * File: /class/Image.php
+ * 
+ * Class representing album images objects
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		album
  * @version		$Id$
+ * @package		album
+ *
  */
 
+ 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
 class AlbumImages extends icms_ipf_Object {
@@ -24,7 +32,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->quickInitVar('img_updated_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_description', XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar('img_url', XOBJ_DTYPE_IMAGE, TRUE);
-		$this->quickInitVar('img_active', XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar('img_active', XOBJ_DTYPE_INT, true, '', '', 1);
 		$this -> initCommonVar( 'weight', XOBJ_DTYPE_INT );
 		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE);
 		$this->initCommonVar('dohtml', FALSE, 1);

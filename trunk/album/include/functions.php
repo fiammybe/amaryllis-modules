@@ -11,7 +11,7 @@
  * ----------------------------------------------------------------------------------------------------------
  * 				album
  * @since		1.00
- * @author		QM-B
+ * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
  * @package		album
  * 
@@ -55,14 +55,3 @@ function prepareIndexpageForDisplay($indexpageObj, $with_overrides = true) {
 	return $indexpageArray;
 }
 
-function prepareAlbumsForDisplay($albumObj, $with_overrides = true) {
-	global $albumConfig;
-		$albumArray = array();
-		if ($with_overrides ) {
-			$albumArray = $albumObj->toArray();
-		} else {
-			$albumArray = $albumObj->toArrayWithoutOverrides();
-		}
-		$albumArray['album_img'] = $albumObj->get_albumimage_tag();
-		return $albumArray;
-}

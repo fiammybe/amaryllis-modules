@@ -1,29 +1,34 @@
 <?php
 /**
- * New comment form
- *
- * This file holds the configuration information of this module
- *
+ * 'Album' is a light weight gallery module
+ * 
+ * File: /icms_version.php
+ * 
+ * add new comments
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * --------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @package		album
  * @version		$Id$
+ * 
  */
 
-include_once "header.php";
-$com_itemid = isset($_GET["com_itemid"]) ? (int)$_GET["com_itemid"] : 0;
+include_once 'header.php';
+$com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
 if ($com_itemid > 0) {
-	$album_post_handler = icms_getModuleHandler("post", basename(dirname(__FILE__)), "album");
-	$postObj = $album_post_handler->get($com_itemid);
-	if ($postObj && !$postObj->isNew()) {
-		$com_replytext = "test...";
-		$bodytext = $postObj->getPostLead();
-		if ($bodytext != "") {
-			$com_replytext .= "<br /><br />".$bodytext;
+	$album_album_handler = icms_getModuleHandler('item', basename(dirname(__FILE__)),
+		'catalogue');
+	$albumObj = $album_album_handler->get($com_itemid);
+	if ($albumObj && !$albumObj->isNew()) {
+		$bodytext = $albumObj->getVar('album_description');
+		if ($bodytext != '') {
+			$com_replytext .= $bodytext;
 		}
-		$com_replytitle = $postObj->getVar("post_title");
-		include_once ICMS_ROOT_PATH . "/include/comment_new.php";
+		$com_replytitle = $albumObj->getVar('album_title');
+		include_once ICMS_ROOT_PATH .'/include/comment_new.php';
 	}
 }

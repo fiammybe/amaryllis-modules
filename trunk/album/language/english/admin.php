@@ -11,10 +11,10 @@
  * ----------------------------------------------------------------------------------------------------------
  * 				album
  * @since		1.00
- * @author		QM-B
+ * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
  * @package		album
- * @version		$Id$
+ * 
  */
 
 // Requirements
@@ -40,7 +40,7 @@ define("_AM_ALBUM_IMAGE_ADD", "Add Image");
 define("_AM_ALBUM_IMAGES_WEIGHTS_UPDATED", "Add Image");
 define("_AM_ALBUM_IMAGE_ONLINE", "Image Online");
 define("_AM_ALBUM_IMAGE_OFFLINE", "Image Offline");
-define("_AM_ALBUM_IMAGE_ADDED", "Image Added");
+define("_AM_ALBUM_IMAGES_ADDED", "Image Added");
 
 define("_AM_ALBUM_PREVIEW", "Preview");
 define("_AM_ALBUM_ALBUM_VIEW", "View");
@@ -48,4 +48,12 @@ define("_AM_ALBUM_ALBUM_EDIT", "Edit");
 define("_AM_ALBUM_ALBUM_DELETE", "Delete");
 define("_AM_ALBUM_IMAGES_EDIT", "Edit");
 define("_AM_ALBUM_IMAGES_MODIFIED", "Album modified");
+
+define("_AM_ALBUM_ALBUM_NOIMAGEEXIST", "Preview");
+define("_AM_ALBUM_FUPLOAD_ALBUMIMAGE", "Albumimage");
+define("_AM_ALBUM_FUPLOAD_INDEXIMAGE", "Indeximage");
+define("_AM_ALBUM_FUPLOAD", "Select Image");
+define("_AM_ALBUM_MODIMGUPLOAD", "Upload new module Images");
+
+
 

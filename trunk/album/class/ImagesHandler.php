@@ -1,13 +1,20 @@
 <?php
 /**
- * Classes responsible for managing album images objects
+ * 'Album' is a light weight gallery module
  *
+ * File: /class/ImagesHandler.php
+ * 
+ * Classes responsible for managing album images objects
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		album
  * @version		$Id$
+ * @package		album
+ *
  */
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
@@ -24,7 +31,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes,	$albumConfig['image_file_size'], $albumConfig['image_upload_width'], $albumConfig['image_upload_height']);
 	}
-	
+
 	function getAlbumList() {
 		
 		$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
@@ -57,6 +64,5 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	public function img_active_filter() {
 		return array(0 => 'Offline', 1 => 'Online');
 	}
-
 
 }

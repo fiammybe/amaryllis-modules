@@ -10,7 +10,7 @@
  * ----------------------------------------------------------------------------------------------------------
  * 				album
  * @since		1.00
- * @author		QM-B
+ * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
  * @package		album
  * @version		$Id$
@@ -53,7 +53,7 @@ $indexpageObj = $album_indexpage_handler->get($clean_index_key, TRUE, FALSE, $cr
 $indexpageArray = prepareIndexpageForDisplay($indexpageObj, true); // with DB overrides
 
 if ( $indexpageArray['index_image'] ) { 
-	$album_indexarray['index_image'] = '<div class="album_indeximage"><img src="' . $indexpageObj->get_indeximage_tag() . '" class="index_image"></div>';
+	$album_indexarray['index_image'] = '<div class="album_indeximage"><img src="' . $indexpageObj->get_indeximage_tag() . '" /></div>';
 } 
 if ( $indexpageArray['index_heading'] ) {
 	$album_indexarray['index_heading'] = '<div class="album_indexheading">' . $indexpageArray['index_heading'] . '</div>';
@@ -64,8 +64,6 @@ if ( $indexpageArray['index_header'] ) {
 if ( $indexpageArray['index_footer'] ) {
 	$album_indexarray['index_footer'] = '<div class="album_indexfooter">' . $indexpageArray['index_footer'] . '</div>';
 }
-
-$icmsTpl->assign('album_indexarray', $album_indexarray);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,66 +80,38 @@ $icmsTpl->assign('album_indexarray', $album_indexarray);
 	$clean_album_pid = isset($_GET['pid']) ? (int)$_GET['pid'] : ($clean_album_uid ? false : 0);
 
 	$album_album_handler = icms_getModuleHandler('album', basename(dirname(__FILE__)), 'album');
-/**	
-	$album_object_array = array();
-	
-	$criteria = new icms_db_criteria_Compo();
-
-	$criteria->setStart($clean_start);
-	$criteria->setLimit($albumConfig['show_albums']);
-	$criteria->setSort('weight');
-	$criteria->setOrder('ASC');
-	$criteria->add(new icms_db_criteria_Item('album_active', true));
-	
-	$album_object_array = $album_album_handler->getObjects($criteria, true, true);
-
-
-	unset($criteria);
-	
-	// prepare articles for display
-	if (!empty($album_object_array)) {
-
-		foreach($album_object_array as &$album) {
-			$album = prepareAlbumsForDisplay($album, true); // without DB overrides
-		}
-	}
-
-	$icmsTpl->assign('album_array', $album_object_array);
-	**/
-	
 	
 	$album = $album_album_handler->getAlbums($clean_start, icms::$module->config['show_albums'], $clean_album_uid,  false, $clean_album_pid);
-	$icmsTpl->assign('album_album', $album);
-	
-	
+
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	
 $criteria = new icms_db_criteria_Compo();
 $criteria->add(new icms_db_criteria_Item('album_active', true));
 // adjust for tag, if present
 $album_count = $album_album_handler->getCount($criteria);
 	
 $pagenav = new icms_view_PageNav($album_count, $albumConfig['show_albums'], $clean_start, 'start', false);
-	
-$icmsTpl->assign('pagenav', $pagenav->renderNav());
-$icmsTpl->assign('dirname', icms::$module -> getVar( 'dirname' ) );
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////// BREADCRUMBS ////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// not needed yet, maybe in later versions
 
-// check if the module's breadcrumb should be displayed
-if ($albumConfig['show_breadcrumbs'] == true) {
-	$icmsTpl->assign('album_show_breadcrumb', $albumConfig['show_breadcrumbs']);
-} else {
-	$icmsTpl->assign('album_show_breadcrumb', false);
-}
 
-$icmsTpl->assign('album_url', ALBUM_URL);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////// ASSIGN //////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	$icmsTpl->assign('album_indexarray', $album_indexarray);
+	$icmsTpl->assign('album_album', $album);
+	$icmsTpl->assign('album_module_home', album_getModuleName(true, true));
+	$icmsTpl->assign('album_show_breadcrumb', $albumConfig['show_breadcrumbs'] == true);
+	$icmsTpl->assign('pagenav', $pagenav->renderNav());
+	$icmsTpl->assign('dirname', icms::$module -> getVar( 'dirname' ) );
+
 
 include_once 'footer.php';

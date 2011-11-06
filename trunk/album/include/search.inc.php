@@ -1,37 +1,41 @@
 <?php
 /**
- * album version infomation
+ * 'Album' is a light weight gallery module
  *
- * This file holds the configuration information of this module
- *
+ * File: /class/Album.php
+ * 
+ * This file holds the search information of this module
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		album
  * @version		$Id$
+ * @package		album
+ *
  */
-
+ 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-function album_search($queryarray, $andor, $limit, $offset, $userid) {
-/** To come soon in imBuilding...
 
-	$album_post_handler = icms_getModuleHandler("post", basename(dirname(dirname(__FILE__))), "album");
-	$postsArray = $album_post_handler->getPostsForSearch($queryarray, $andor, $limit, $offset, $userid);
+include_once ICMS_ROOT_PATH . '/modules/' . basename(dirname(dirname(__FILE__))) . '/include/common.php';
+
+function album_search($queryarray, $andor, $limit, $offset, $userid) {
+	$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
+	$albumsArray = $album_album_handler->getAlbumsForSearch($queryarray, $andor, $limit, $offset, $userid);
 
 	$ret = array();
 
-	foreach ($postsArray as $postArray) {
-		$item['image'] = "images/post.png";
-		$item['link'] = str_replace(ALBUM_URL, '', $postArray['itemUrl']);
-		$item['title'] = $postArray['post_title'];
-		$item['time'] = strtotime($postArray['post_published_date']);
-		$item['uid'] = $postArray['post_posterid'];
+	foreach ($albumsArray as $albumArray) {
+		$item['image'] = "images/album_icon.png";
+		$item['link'] = $albumArray['itemUrl'];
+		$item['title'] = $albumArray['album_title'];
+		$item['time'] = strtotime($albumArray['album_published_date']);
+		$item['uid'] = $albumArray['album_uid'];
 		$ret[] = $item;
 		unset($item);
 	}
-
 	return $ret;
-*/
 }
