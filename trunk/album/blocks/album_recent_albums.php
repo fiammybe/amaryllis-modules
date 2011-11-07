@@ -20,22 +20,14 @@
  if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
 function b_album_album_recent_show($options) {
+	global $albumConfig;
+	
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
-	$criteria = new icms_db_criteria_Compo();
-	$criteria->add(new icms_db_criteria_Item('album_active', true));
-	$criteria->add(new icms_db_criteria_Item('album_inblocks', true));
-	$criteria->setStart(0);
-	$criteria->setLimit($options[0]);
-	$criteria->setSort('album_published_date');
-	$criteria->setOrder('DESC');
-	$block['album_album'] = $album_album_handler->getObjects($criteria, true, true);
-	foreach ($block['album_album'] as $key => &$value) {
-		$date = $value->getVar('album_published_date', 'e');
-		$value = $value->toArray();
-		$value['date'] = date('j/n/Y', $date);
-	}
+
+	$block['album_album'] = $album_album_handler->getAlbumsForBlocks(0, $options[0]);
+	
 	return $block;
 }
 
