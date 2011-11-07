@@ -151,8 +151,15 @@ $album_image_margins = 'align="center" style="display:inline-block; margin: 0px 
 /////////////////////////////////////////////// SUB ALBUM ////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	$album_album_handler->updateCounter($clean_album_id);
+	
+	$clean_album_id = isset($_GET['album_id']) ? intval($_GET['album_id']) : 0 ;
+	$clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+	$clean_album_uid = isset($_GET['uid']) ? (int)$_GET['uid'] : false;
+	$clean_album_pid = isset($_GET['pid']) ? (int)$_GET['pid'] : ($clean_album_uid ? false : 0);
+	
+	
 	$albumObj = $album_album_handler->get($clean_album_id);
+	$album_album_handler->updateCounter($clean_album_id);
 	$album = $albumObj->toArray();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

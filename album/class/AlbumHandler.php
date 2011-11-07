@@ -109,6 +109,25 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	public function getAlbumsForBlocks($start = 0, $limit = 0, $order = 'weight', $sort = 'ASC') {
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item('album_active', true));
+		$criteria->add(new icms_db_criteria_Item('album_inblocks', true));
+	
+		$criteria->setStart(0);
+		$criteria->setLimit($limit);
+		$criteria->setSort('album_published_date');
+		$criteria->setOrder('DESC');
+		$albums = $this->getObjects($criteria, true, false);
+		$ret = array();
+		foreach ($albums as $key => &$album){
+			if ($album['accessgranted']){
+				$ret[$album['album_id']] = $album;
+			}
+		}
+		return $ret;
+	}
+	
 	//set album online/offline
 	public function changeVisible($album_id) {
 		$visibility = '';
@@ -262,10 +281,11 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		$albumObj = $this->get($album_id);
 		if (!is_object($albumObj)) return false;
 
-		if (!is_object(icms::$user) || (!$album_isAdmin && $albumObj->getVar('album_uid', 'e') != icms::$user->uid ())) {
-			$albumObj->updating_counter = true;
-			$albumObj->setVar('counter', $albumObj->getVar('counter', 'n') + 1);
-			$this->insert($albumObj, true);
+		if (isset($albumObj->vars['counter']) && !is_object(icms::$user) || (!$album_isAdmin && $albumObj->getVar('album_uid', 'e') != icms::$user->uid ()) ) {
+			$new_counter = $albumObj->getVar('counter') + 1;
+			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
+				. ' WHERE ' . $this->keyName . '=' . $albumObj->id();
+			$this->query($sql, null, true);
 		}
 		return true;
 	}
@@ -310,7 +330,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return true;
 	}
 	
-	protected function afterSave(& $obj) {
+/**	protected function afterSave(& $obj) {
 		if($obj->getVar('album_published_date') < time()) {
 			if (!$obj->getVar('album_notification_sent') && $obj->getVar ('album_active', 'e') == 1) {
 			$obj->sendNotifAlbumPublished();
@@ -319,7 +339,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 			}
 		}
 		return true;
-	}
+	}**/
 	
 	protected function afterDelete(& $obj) {
 		$notification_handler = icms::handler( 'icms_data_notification' );
