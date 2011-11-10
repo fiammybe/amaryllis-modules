@@ -49,7 +49,7 @@ if ( in_array( $clean_op, $valid_op, true ) ) {
   switch ($clean_op) {
   	case "mod":
 		icms_cp_header();
-		album_adminmenu( 3, _MI_ALBUM_MENU_INDEXPAGE );
+		album_adminmenu( 2, _MI_ALBUM_MENU_INDEXPAGE );
 		editform($indexkey=1, false);
 		break;
   	case "addindexpage":

@@ -20,6 +20,11 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 class AlbumIndexpageHandler extends icms_ipf_Handler {
+
+	public $_moduleName;
+	
+	public $_uploadPath;
+
 	/**
 	 * Constructor
 	 *
@@ -28,7 +33,20 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		parent::__construct($db, "indexpage", "index_key", "index_header", "index_heading", "album");
 
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . icms::$module->getVar('dirname') . '/indeximages/';
+		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
+		$this->enableUpload($mimetypes, 2000000, 500, 500);
+		
 	}
+	public function getImagePath() {
+		$dir = $this->_uploadPath;
+		if (!file_exists($dir)) {
+			icms_core_Filesystem::mkdir($dir);
+		}
+		return $dir . "/";
+	}
+	
+	
 	
 	static public function getImageList() {
 		$indeximages = array();
@@ -39,6 +57,15 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 			$ret[$i] = $indeximages[$i];
 		}
 		return $ret;
+	}
+	
+	// some related functions for storing
+	protected function beforeSave(&$obj) {
+		
+		if ($obj->getVar('index_img_upload') != '') {
+			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
+		}
+		return true;
 	}
 
 

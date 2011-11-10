@@ -30,9 +30,6 @@ $i++;
 $adminmenu[$i]['title'] = _MI_ALBUM_MENU_INDEXPAGE;
 $adminmenu[$i]['link'] = 'admin/indexpage.php?op=mod&indexkey=1';
 
-$i++;
-$adminmenu[$i]['title'] = _MI_ALBUM_MENU_IMAGEUPLOAD;
-$adminmenu[$i]['link'] = 'admin/modimgupl.php';
 
 global $icmsConfig;
 $albumModule = icms_getModuleInfo( basename( dirname( dirname( __FILE__) ) ) );

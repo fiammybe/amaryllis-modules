@@ -34,7 +34,10 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->quickInitVar('album_title', XOBJ_DTYPE_TXTBOX, true);
 		$this->initCommonVar('short_url');
 		$this->quickInitVar('album_pid', XOBJ_DTYPE_INT, false);
+		
 		$this->quickInitVar('album_img', XOBJ_DTYPE_TXTAREA, false);
+		$this->initVar('album_img_upload', XOBJ_DTYPE_IMAGE);
+		
 		$this->quickInitVar('album_published_date', XOBJ_DTYPE_LTIME, false);
 		$this->quickInitVar('album_updated_date', XOBJ_DTYPE_LTIME, false);
 		$this->quickInitVar('album_description', XOBJ_DTYPE_TXTAREA, false);
@@ -52,6 +55,9 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->initCommonVar('docxode', true, 1);
 		$this->initNonPersistableVar('album_sub', XOBJ_DTYPE_INT);
 		// set controls
+		$this->setControl( 'album_img_upload', array( 'name' => 'imageupload' ) );
+		
+		
 		$this->setControl('album_pid', array('itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
 		$this->setControl('album_description', 'dhtmltextarea');
 		$this->setControl('album_active', 'yesno');
