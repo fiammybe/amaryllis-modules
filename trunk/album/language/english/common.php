@@ -49,14 +49,15 @@ define("_CO_ALBUM_ALBUM_ALBUM_GRPPERM", "View Permission");
 define("_CO_ALBUM_ALBUM_ALBUM_GRPPERM_DSC", " Select which groups will have view permission for this album. This means that a user belonging to one of these groups will be able to view the album when it is activated in the site.' ");
 
 // language constants for editing indexpage
-define("_CO_ALBUM_INDEXPAGE_INDEXHEADER", "Title");
-define("_CO_ALBUM_INDEXPAGE_INDEXHEADER_DSC", " Set Title displayed in the index at frontend ");
-define("_CO_ALBUM_INDEXPAGE_INDEXHEADING", "Description for Indexpage");
-define("_CO_ALBUM_INDEXPAGE_INDEXHEADING_DSC", "  ");
-define("_CO_ALBUM_INDEXPAGE_INDEXIMAGE", "Indeximage");
-define("_CO_ALBUM_INDEXPAGE_INDEXIMAGE_DSC", " Set indeximage ");
-define("_CO_ALBUM_INDEXPAGE_INDEXFOOTER", "footer on indexpage");
-define("_CO_ALBUM_INDEXPAGE_INDEXFOOTER_DSC", " Set the footer displayed on Indexpage ");
+define("_CO_ALBUM_INDEXPAGE_INDEX_HEADER", "Title");
+define("_CO_ALBUM_INDEXPAGE_INDEX_HEADER_DSC", " Set Title displayed in the index at frontend ");
+define("_CO_ALBUM_INDEXPAGE_INDEX_HEADING", "Description for Indexpage");
+define("_CO_ALBUM_INDEXPAGE_INDEX_HEADING_DSC", "  ");
+define("_CO_ALBUM_INDEXPAGE_INDEX_IMAGE", "Indeximage");
+define("_CO_ALBUM_INDEXPAGE_INDEX_IMAGE_DSC", " Set indeximage ");
+define("_CO_ALBUM_INDEXPAGE_INDEX_IMG_UPLOAD", " Upload new indeximage ");
+define("_CO_ALBUM_INDEXPAGE_INDEX_FOOTER", "footer on indexpage");
+define("_CO_ALBUM_INDEXPAGE_INDEX_FOOTER_DSC", " Set the footer displayed on Indexpage ");
 
 // language constants for adding new images
 define("_CO_ALBUM_IMAGES_IMG_TITLE", "Title");

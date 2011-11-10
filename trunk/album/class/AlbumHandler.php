@@ -22,13 +22,28 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 class AlbumAlbumHandler extends icms_ipf_Handler {
 
 	private $_album_grpperm = array();
+	
+	public $_moduleName;
+	
+	public $_uploadPath;
 
 	public function __construct(&$db) {
 		parent::__construct($db, "album", "album_id", "album_title", "album_description", "album");
 		$this->addPermission('album_grpperm', _CO_ALBUM_ALBUM_ALBUM_GRPPERM, _CO_ALBUM_ALBUM_ALBUM_GRPPERM_DSC);
+		
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . icms::$module->getVar('dirname') . '/albumimages/';
+		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
+		$this->enableUpload($mimetypes, 2000000, 500, 500);
+	
 
 	}
-	
+	public function getImagePath() {
+		$dir = $this->_uploadPath;
+		if (!file_exists($dir)) {
+			icms_core_Filesystem::mkdir($dir);
+		}
+		return $dir . "/";
+	}
 	// retrieve a list of Albums
 	public function getList($album_active = null) {
 		$criteria = new icms_db_criteria_Compo();
@@ -326,6 +341,9 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return true;
 		if ($obj->getVar('album_pid','e') == $obj->getVar('album_id','e')){
 			$obj->setVar('album_pid', 0);
+		}
+		if ($obj->getVar('album_img_upload') != '') {
+			$obj->setVar('album_img', $obj->getVar('album_img_upload') );
 		}
 		return true;
 	}
