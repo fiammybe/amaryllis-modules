@@ -1,32 +1,27 @@
 <?php
 /**
- * File containing onUpdate and onInstall functions for the module
+ * 'Album' is a light weight gallery module
  *
- * This file is included by the core in order to trigger onInstall or onUpdate functions when needed.
- * Of course, onUpdate function will be triggered when the module is updated, and onInstall when
- * the module is originally installed. The name of this file needs to be defined in the
- * icms_version.php
- *
- * <code>
- * $modversion['onInstall'] = "include/onupdate.inc.php";
- * $modversion['onUpdate'] = "include/onupdate.inc.php";
- * </code>
- *
+ * File: /class/AlbumHandler.php
+ * 
+ * File containing onupdate and oninstall functions of album module
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * ---------------------------------------------------------------------------------------------------------
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		album
  * @version		$Id$
- * 
+ * @package		album
+ *
  */
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////// DEFINE SOME FOLDERS /////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+ 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
+ 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// DEFINE SOME PATHS //////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(__FILE__))));
 
@@ -69,7 +64,7 @@ function album_authorise_mimetypes() {
 		$allowed_modules = array();
 		$mimetypeObj = '';
 
-		$criteria = new icms_db_criteria_Compo;
+		$criteria = new icms_db_criteria_Compo();
 		$criteria->add( new icms_db_criteria_Item('extension', $extension));
 		$mimetypeObj = array_shift($system_mimetype_handler->getObjects($criteria));
 
@@ -137,7 +132,7 @@ function album_indexpage() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// UPDATE CCENTER MODULE ////////////////////////////////////////////////
+/////////////////////////////////////// UPDATE ALBUM MODULE /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
