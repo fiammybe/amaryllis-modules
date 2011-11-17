@@ -20,8 +20,7 @@
 include_once 'header.php';
 $com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
 if ($com_itemid > 0) {
-	$album_album_handler = icms_getModuleHandler('item', basename(dirname(__FILE__)),
-		'catalogue');
+	$album_album_handler = icms_getModuleHandler('album', basename(dirname(__FILE__)),'album');
 	$albumObj = $album_album_handler->get($com_itemid);
 	if ($albumObj && !$albumObj->isNew()) {
 		$bodytext = $albumObj->getVar('album_description');
