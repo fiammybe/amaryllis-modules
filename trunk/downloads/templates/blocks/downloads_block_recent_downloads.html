@@ -1,0 +1,5 @@
+<ul>
+	<{foreach item=downloads_download from=$block.downloads_download}>
+		<li><{$downloads_download.itemLink}> (<{$downloads_download.download_published_date}>)</li>
+	<{/foreach}>
+</ul>
