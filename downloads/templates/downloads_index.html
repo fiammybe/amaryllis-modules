@@ -1,0 +1,164 @@
+<{includeq file='db:downloads_header.html'}>
+
+	<div>
+	<{if $downloads_cat}>
+		
+		<!-- display index header -->
+		<{$downloads_index.header}>
+		<!-- display index heading -->
+		<{$downloads_index.heading}>
+		
+		<div class="downloads_cats"><!-- START category index view -->
+		
+			<!-- pagination control -->
+			<{if $category_pagenav }><{$category_pagenav}><{/if}>
+		
+			<!-- category rule -->
+			<{foreach item=category from=$downloads_cat}>
+				
+				<!-- category image -->
+				<span class="downloads_cat_img">
+					<a href="<{$category.itemLink}>">
+						<img src="<{$category.img}>" alt="" title="<{$category.title}>" />
+					</a>
+				</span>
+				
+				<!-- Category title -->
+				<span class="downloads_cat_title">
+					<a href="<{$category.itemLink}>" title="<{$category.title}>"><{$category.title}></a> &nbsp;&nbsp;<{if $category.userCanEditAndDelete}><{$category.editItemLink}><{$category.deleteItemLink}><{/if}>
+						<p class="downloads_category_info">
+							(&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_BY}>&nbsp;:&nbsp;<{$category.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_ON}>&nbsp;:&nbsp;<{$category.published_date}>&nbsp;)
+						</p>
+				</span>
+<br /><br />
+				<!-- Category description -->
+				<div class="downloads_cat_dsc">
+					<{$category.dsc}>
+				</div>
+
+				<{if $category.hassub}>
+					<!-- Category subcats -->
+					<div class="downloads_cat_subs">
+						<ul>
+						<{foreach item=sub from=$category.sub}>
+							<li><a href="<{$sub.itemLink}>" title="<{$sub.title}>"><{$sub.title}></a></li>
+						<{/foreach}>
+						</ul>
+					</div>	
+				<{/if}>
+	
+				<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
+			<{/foreach}>
+			
+			<!-- pagination control -->
+			<{if $category_pagenav }><{$category_pagenav}><{/if}>
+			
+		</div>
+	<{/if}>
+	
+	<{if $downloads_single_cat}>
+	
+		<div class="downloads_scat_title"><{$downloads_single_cat.title}></div>
+
+		<div class="downloads_cat_desc"> <{$downloads_single_cat.dsc}> </div>
+	
+		<h2><{$smarty.const._MD_DOWNLOADS_DOWNLOAD_FILELIST}></h2>
+		
+		<div class="downloads_filelist">
+		
+			<!-- pagination control -->
+			<{if $download_pagenav }><{$download_pagenav}><{/if}>
+		
+			<!-- File rule -->
+			<{foreach item=download from=$downloads_files}>
+				
+				<!-- File image -->
+				<span class="downloads_cat_img">
+					<a href="<{$download.itemLink}>">
+						<img src="<{$download.img}>" alt="" title="<{$download.title}>" />
+					</a>
+				</span>
+				
+				<!-- File title -->
+				<span class="downloads_cat_title">
+					<a href="<{$download.itemLink}>" title="<{$download.title}>"><{$download.title}></a> &nbsp;&nbsp;<{if $download.userCanEditAndDelete}><{$download.editItemLink}><{$download.deleteItemLink}><{/if}>
+						<p class="downloads_category_info">
+							(&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_BY}>&nbsp;:&nbsp;<{$download.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_ON}>&nbsp;:&nbsp;<{$download.published_date}>&nbsp;)
+						</p>
+				</span>
+<br /><br />
+				<!-- File description -->
+				<div class="downloads_cat_dsc">
+					<{$download.dsc}>
+				</div>
+	
+				<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
+			<{/foreach}>
+			
+			<!-- pagination control -->
+			<{if $download_pagenav }><{$download_pagenav}><{/if}>
+	
+		</div>
+		
+		<!-- subcategories -->
+		<{if $downloads_single_cat.hassub}>
+			<h2><{$smarty.const._MD_DOWNLOADS_CATEGORY_SUBCATLIST}></h2>
+			
+			<!-- pagination control -->
+			<{if $category_pagenav }><{$category_pagenav}><{/if}>
+			
+			<{foreach item=category from=$downloads_single_cat.sub}>
+
+					<!-- category image -->
+				<span class="downloads_cat_img">
+					<a href="<{$category.itemLink}>">
+						<img src="<{$category.img}>" alt="" title="<{$category.title}>" />
+					</a>
+				</span>
+				
+				<!-- category title -->
+				<span class="downloads_cat_title">
+					<a href="<{$category.itemLink}>"><{$category.title}></a>&nbsp;&nbsp;<{if $category.userCanEditAndDelete}><{$category.editItemLink}><{$category.deleteItemLink}><{/if}>
+						<p class="downloads_category_info">
+							(&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_BY}>&nbsp;:&nbsp;<{$category.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_ON}>&nbsp;:&nbsp;<{$category.published_date}>&nbsp;)
+						</p>
+				</span>
+				<br /><br />
+				<!-- category description -->
+				<div class="downloads_cat_dsc">
+					<{$category.dsc}>
+				</div>
+
+				<{if $category.hassub}>
+					<div style="float: right; font-size: .8em; padding-right: 45px;">
+						<ul>
+						<{foreach item=sub from=$category.sub}>
+							<li><a href="<{$sub.itemLink}>" title="<{$sub.title}>"><{$sub.title}></a></li>
+						<{/foreach}>
+						</ul>
+					</div>	
+				<{/if}>
+				<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>	
+			<{/foreach}>
+			
+			<!-- pagination control -->
+			<{if $category_pagenav }><{$category_pagenav}><{/if}>
+			
+		<{/if}>
+	<{/if}>
+	
+	<{if $downloads_category_form}>
+		<{includeq file='db:system_common_form.html' form=$downloads_category_form}>
+	<{/if}>
+	
+	<{if $downloads_download_form}>
+		<{includeq file='db:system_common_form.html' form=$downloads_download_form}>
+	<{/if}>
+	
+	<{if $icmspersistable_delete_confirm}>
+		<{$icmspersistable_delete_confirm}>
+	<{/if}>
+		
+	</div>
+
+<{includeq file='db:downloads_footer.html'}>

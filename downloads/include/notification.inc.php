@@ -2,9 +2,9 @@
 /**
  * 'Downloads' is a light weight download handling module for ImpressCMS
  *
- * File: /class/Disclaimer.php
+ * File: /include/notification.inc.php
  * 
- * Class representing Downloads disclaimer objects
+ * File holding functions used by the module to hook with the search system of ImpressCMS
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -17,4 +17,12 @@
  *
  */
 
-defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
+function downloads_notify_iteminfo($category, $item_id){
+    global $icmsModule, $icmsModuleConfig, $icmsConfig;
+
+    if ($category == 'global') {
+        $item['name'] = '';
+        $item['url'] = '';
+        return $item;
+    }
+}

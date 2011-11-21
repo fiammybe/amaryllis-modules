@@ -1,0 +1,70 @@
+<!-- admin index page -->
+<{if $downloads_index_title}>
+	<h1><{$downloads_index_title}></h1>
+<{/if}>
+<{if $downloads_index_info}>
+	<p><{$downloads_index_info}></p>
+<{/if}>
+<{if $downloads_index_table}>
+	<{$downloads_index_table}>
+<{/if}>
+<{if $addindex}>
+	<{includeq file='db:system_common_form.html' form=$addindex}>
+<{/if}>
+
+
+<!-- admin download page -->
+<{if $downloads_download_title}>
+	<h1><{$downloads_download_title}></h1>
+<{/if}>
+<{if $downloads_download_info}>
+	<p><{$downloads_download_info}></p>
+<{/if}>
+<{if $downloads_download_table}>
+	<{$downloads_download_table}>
+<{/if}>
+<{if $adddownload}>
+	<{includeq file='db:system_common_form.html' form=$adddownload}>
+<{/if}>
+
+<!-- admin category page -->
+<{if $downloads_category_title}>
+	<h1><{$downloads_category_title}></h1>
+<{/if}>
+<{if $downloads_category_info}>
+	<p><{$downloads_category_info}></p>
+<{/if}>
+<{if $downloads_category_table}>
+	<{$downloads_category_table}>
+<{/if}>
+<{if $addcategory}>
+	<{includeq file='db:system_common_form.html' form=$addcategory}>
+<{/if}>
+
+<!-- admin index page -->
+<{if $downloads_indexpage_title}>
+	<h1><{$downloads_indexpage_title}></h1>
+<{/if}>
+<{if $downloads_indexpage_info}>
+	<p><{$downloads_indexpage_info}></p>
+<{/if}>
+<{if $downloads_indexpage_table}>
+	<{$downloads_indexpage_table}>
+<{/if}>
+<{if $addindexpage}>
+	<{includeq file='db:system_common_form.html' form=$addindexpage}>
+<{/if}>
+
+<!-- admin mirror page -->
+<{if $downloads_mirror_title}>
+	<h1><{$downloads_mirror_title}></h1>
+<{/if}>
+<{if $downloads_mirror_info}>
+	<p><{$downloads_mirror_info}></p>
+<{/if}>
+<{if $downloads_mirror_table}>
+	<{$downloads_mirror_table}>
+<{/if}>
+<{if $addmirror}>
+	<{includeq file='db:system_common_form.html' form=$addmirror}>
+<{/if}>

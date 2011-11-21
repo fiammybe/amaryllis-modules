@@ -2,9 +2,9 @@
 /**
  * 'Downloads' is a light weight download handling module for ImpressCMS
  *
- * File: /class/DisclaimerHandler.php
+ * File: /admin/about.php
  * 
- * Classes responsible for managing Downloads disclaimer objects
+ * About page of the module
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -18,3 +18,7 @@
  */
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
+
+include_once "admin_header.php";
+$aboutObj = new icms_ipf_About();
+$aboutObj->render();

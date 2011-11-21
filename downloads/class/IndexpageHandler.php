@@ -19,7 +19,7 @@
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
-class mod_downloads_IndexpageHandler extends icms_ipf_Handler {
+class DownloadsIndexpageHandler extends icms_ipf_Handler {
 	
 	public $_moduleName;
 	

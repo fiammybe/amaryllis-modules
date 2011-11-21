@@ -1,0 +1,107 @@
+/**
+ * 'Downloads' is a light weight download handling module for ImpressCMS
+ *
+ * File: /module_downloads.css
+ * 
+ * some module related styles
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Downloads
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		downloads
+ *
+ */
+
+
+	.downloads_clear_both {
+		clear: both;
+		height: 1px;
+	}
+	
+	.downloads_clear_left {
+		clear: left;
+		height: 1px;
+	}
+	
+	.downloads_clear_right {
+		clear: right;
+		height: 1px;
+	}
+
+	.downloads_indeximage {
+		text-align: center;
+	}
+	
+	.downloads_indexheader {
+		text-align: center;
+		font-size: 2em;
+		margin: 2em auto;
+	}
+	
+	.downloads_indexheading, .downloads_indexfooter {
+		margin: 1em auto;
+	}
+
+	.downloads_cats {
+		margin: 1.5em auto;
+		display: table;
+		width: 100%;
+		padding: 5px;
+	}
+	
+	.downloads_cat_img {
+		float: left;
+		padding-right: 10px;
+		vertical-align: top;
+	}
+	
+	.downloads_cat_title {
+		float: left;
+		font-size: 1.1em;
+		font-weight: bold;
+	}
+	
+	.downloads_category_info {
+		font-size: .8em;
+		font-weight: normal;
+		margin: .5em 0;
+	}
+	
+	.downloads_cat_dsc {
+		font-size: .9em;
+		margin: 1em 0;
+	}
+	
+	.downloads_cat_desc {
+		font-size: 1em;
+		margin: 1em .9375em;
+	}
+	
+	.downloads_cat_subs {
+		float: right;
+		font-size: .8em;
+		padding-right: 45px;
+	}
+	
+	.downloads_headertable {}
+	
+	.downloads_downloads_title {
+		font-size: 1.5em;
+		margin: 2em 0;
+		text-align: center;
+	}
+	
+	.downloads_images {
+		margin: 1.5em auto;
+		display: table;
+		width: 100%;
+		padding: 5px;
+	}
+	
+	.downloads_adminlinks {
+		text-align: center;
+	}
