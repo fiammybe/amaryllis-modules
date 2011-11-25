@@ -45,6 +45,8 @@
 	.downloads_indexheading, .downloads_indexfooter {
 		margin: 1em auto;
 	}
+	
+	
 
 	.downloads_cats {
 		margin: 1.5em auto;
@@ -104,4 +106,150 @@
 	
 	.downloads_adminlinks {
 		text-align: center;
+	}
+	
+	
+	.downloads_file {
+		padding: 1em;
+	}
+	
+	.file_boxes {
+		float: right;
+		width: 35%;
+	}
+	
+	.file_contents {
+		float: left;
+		width: 60%;
+	}
+	
+	.file_header {
+		display: block;
+	}
+	
+	.file_image {
+		float: left;
+		padding-right: 10px;
+		vertical-align: top;
+	}
+	
+	.file_title {
+		float: left;
+		font-size: 1.1em;
+		font-weight: bold;
+	}
+	
+	.file_info {
+		font-size: .8em;
+		font-weight: normal;
+		margin: .5em 0;
+	}
+	
+	.file_links {
+		position: relative;
+		background-color: #ccc;
+		width: 200px;
+		
+		padding: .750em;
+		border-color: #FF7F2A;
+		border-width: 2px;
+		margin: .750em auto;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+	}
+	
+	
+	.down_link {
+		position: relative;
+		background: #FFAA2A url(images/download.png) left center no-repeat;
+		padding: 15px 20px 15px 40px;
+		margin: 1em auto;
+		display: block;
+		font-size: 1.5em;
+		-webkit-border-radius: .5em;
+		-moz-border-radius: .5em;
+		border-radius: .5em;
+	}
+	
+	.file_dsc{
+		
+		margin: 1em auto 2em auto;
+		display: inline;
+		position: relative;
+		
+	}
+	
+	.file_descriptions {
+		width: auto;
+		background: #ccc;
+		padding: 1em 1em;
+		margin: .750em auto;;
+	}
+	
+	.file_image_row {
+		margin: 1em auto;
+	}
+	
+	.file_informations {
+		display: table;
+		width: auto;
+		
+		background: #ccc;
+		padding: 1em .5em;
+		margin: 0 auto .5em auto;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+	}
+	
+	.table_row {
+		display: table-row;
+		padding: .250em;
+	}
+	
+	.table_cell {
+		display: table-cell;
+		width: 45%;
+		padding-left: 1em;
+	}
+	
+	.file_dev, .file_dev_hp, .file_version, .file_version_status, .file_limits, .file_platform, .file_license {
+		display: table-cell;
+		background-repeat: no-repeat;
+		padding-left: 30px;
+	}
+	
+	.file_dev {
+		
+	}
+	.file_dev_hp {
+		
+	}
+	.file_version {
+		
+	}
+	
+	.file_version_status {
+		
+	}
+	.file_limits{
+		
+	}
+	
+	.file_platform {
+		
+	}
+	
+	.file_screens {
+		margin-right: 15px;
+	}
+	
+	.file_footer {
+		background-color: #ccc;
+		width: 100%;
+		line-height: 1.1em;
+		margin: 1.5em auto;
+		padding: .5em;
+		
 	}

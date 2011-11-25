@@ -41,18 +41,28 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($allowedMimeTypes = true, $downloadsConfig['image_file_size'], $downloadsConfig['image_upload_width'], $downloadsConfig['image_upload_height']);
 		
-		$mimetypes = array("image/png","image/xpng","image/gif","image/jpg","image/jpeg","application/zip","application/pdf", "application/octet-stream");
+		$mimetypes = $this->checkMimeType();
 		$filesize = $downloadsConfig['downloads_file_size'];
 		$this->enableUpload($mimetypes,	$filesize);
 	}
 	
-	public function getMimeTypes() {
-		global $downloadsConfig;
-		$mimetypes_array = explode(',', $downloadsConfig['downloads_mimetypes']);
-		foreach (array_keys($mimetypes_array) as $i) {
-			$mimetypes[$mimetypes_array[$i]] = $mimetypes_array[$i];
+	public function checkMimeType() {
+		global $icmsModule;
+		$mimetypeHandler = icms_getModulehandler('mimetype', 'system');
+		$modulename = icms::$module->getVar('dirname');
+		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
+			icms_file_MediaUploadHandler::setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
+			return false;
 		}
-		return $mimetypes;
+		$AllowedMimeTypes = $mimetypeHandler->AllowedModules($this->mediaRealType, $modulename);
+		if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes))
+				|| (!empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes))
+				|| (empty($this->allowedMimeTypes) && !$AllowedMimeTypes))
+			{
+			icms_file_MediaUploadHandler::setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
+			return false;
+		}
+		return true;
 	}
 	
 	public function getList($download_active = null) {
@@ -330,6 +340,31 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$seo = str_replace(" ", "-", $download->getVar('short_url'));
 			return $seo;
 		}
+	}
+	
+	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $download_cid = false) {
+		$criteria = new icms_db_criteria_Compo();
+		if (is_array($groups) && !empty($groups)) {
+			$criteriaTray = new icms_db_criteria_Compo();
+			foreach($groups as $gid) {
+				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
+			}
+			$criteria->add($criteriaTray);
+			if ($perm == 'download_grpperm' || $perm == 'downloads_admin') {
+				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
+				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
+			}
+		}
+		if (isset($active)) {
+			$criteria->add(new icms_db_criteria_Item('download_active', true));
+		}
+		if (isset($approve)) {
+			$criteria->add(new icms_db_criteria_Item('download_approve', true));
+		}
+		if (is_null($download_cid)) $download_cid = 0;
+		$criteria->add(new icms_db_criteria_Item('download_cid', $download_cid));
+		return $criteria;
+	
 	}
 	
 	//update hit-counter

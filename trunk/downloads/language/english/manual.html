@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Downloads Manual</title>
+    </head>
+    <body>
+        <h1>Downloads Manual</h1>
+        <p>Downloads is a small, light weight file download handling module. You can upload a file, describe it and add some images (currently 4 screenshots) to present the key functionalities. Also you have the posibility to link the module with 'Album' module and/or 'Catalogue' module. Here are some instructions how to use 'Downloads' module.</p>
+        <h2>First Start</h2>
+		<p>There are some things you should do <b>before</b> you try to upload a new file. Please, follow the instructions.</p>
+		<h3>Allow the necessary Filetypes</h3>
+		<ul>
+			<li>Go to <a href="<{$icms_url}>/system/admin.php?fct=mimetype" title="system mimetypes">System &gt; Media &gt; Mime Types</a></li>
+			<li>Choose the Mimetypes you want to allow for File upload. If you like to use fileupload from frontend beware of the group permissions per file.</li>
+			<li>Remember the image upload, too. Actually the mime type permissions are used by the image uploaf, too. So please allow also jpeg, jpg, png and whatever you like to use.</li>
+			<li>Done! Now you can upload all filetypes.</li>
+		</ul>
+		<h3>Check out the module preferences</h3>
+		<ul>
+			<li>Go to <a href="<{$downloads_pref_url}>" title="Module Preferences">Modules &gt; Downloads &gt; Preferences</a></li>
+			<li>Choose the preferences like prefered</li>
+			<li>Done! Next step.</li>
+		</ul>
+		<h3>Create a category</h3>
+        <p>Go to Tab 'Manage categories' &gt; Add Category. Just Fill out the fields. Done.</p>
+        <h3>Upload Files</h3>
+        <p>Now you can start uploading files. Go to Tab 'Manage Files' and fill out the fields. If you have allowed using the album module you will see a field where you can select an album. All the images from the Album will be shown. You like to upload images too? Well, so use the image upload to add more images.</p>
+        <p>If you have allowed using catalogue module, the result is dependent on catalogue settings. If you have allowed to show prices, you will see a Price on two Places in Frontend: behind the title of the file and in the information-box. Mirrors are not visible for catalogue items and the download link will redirect to the catalogue item to buy it.</p>
+		<p>Requirements and Keyfeatures of the file are displayed in a list</p>
+		<div class="downloas_footer">
+			<p>Thank you for using 'Downloads' module. If you have some trouble while using downloads module, please visit <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a></p>
+			<p>You might also like to follow the recent changes in downloads module? Please, have a look at <a href="http://code.google.com/p/amaryllis-modules/" title="Module home" >'Downloads' SVN </a></p>
+		</div>
+    </body>
+</html>
+

@@ -58,6 +58,10 @@ $i = 0;
 	$i++;
 	$headermenu[$i]['title'] = _MI_DOWNLOADS_MENU_RATINGS;
 	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/ratings.php';
+	
+	$i++;
+	$headermenu[$i]['title'] = _MI_DOWNLOADS_MENU_MANUAL;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/manual.php';
 
 	$i++;
 	$headermenu[$i]['title'] = _MODABOUT_ABOUT;

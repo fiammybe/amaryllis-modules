@@ -28,8 +28,8 @@ $modversion = array(
 					'version'					=> 1.0,
 					'description'				=> _MI_DOWNLOADS_DSC,
 					'author'					=> "QM-B &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';",
-					'credits'					=> "",
-					'help'						=> "",
+					'credits'					=> "Thanks to Phoenyx for his great help while developing the module and McDonald for the nice layer for my Indeximage.",
+					'help'						=> "admin/manual.php",
 					'license'					=> "GNU General Public License (GPL)",
 					'official'					=> 0,
 					'dirname'					=> basename( dirname( __FILE__ ) ),
@@ -50,7 +50,8 @@ $modversion = array(
 					/** Contributors */
 					'developer_website_url' 	=> "http://code.google.com/p/amaryllis-modules/",
 					'developer_website_name' 	=> "Amaryllis Modules",
-					'developer_email' 			=> "qm-b@hotmail.de");
+					'developer_email' 			=> "qm-b@hotmail.de"
+				);
 
 $modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';";
 $modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=462' target='_blank'>David</a>";
@@ -91,6 +92,8 @@ $i++;
 $modversion['object_items'][$i] = 'ratings';
 $i++;
 $modversion['object_items'][$i] = 'indexpage';
+$i++;
+$modversion['object_items'][$i] = 'log';
 
 $modversion['tables'] = icms_getTablesArray( $modversion['dirname'], $modversion['object_items'] );
 
@@ -309,15 +312,6 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> '2097152' // 2MB default max upload size
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'downloads_mimetypes',
-								'title' 		=> '_MI_DOWNLOADS_MIMETYPES',
-								'description' 	=> '_MI_DOWNLOADS_MIMETYPES_DSC',
-								'formtype' 		=> 'textsarea',
-								'valuetype' 	=> 'text',
-								'default' 		=> '"image/png","image/xpng","image/gif","image/jpg","image/jpeg","application/zip","application/pdf"'
 							);
 $i++;
 $modversion['config'][$i] = array(

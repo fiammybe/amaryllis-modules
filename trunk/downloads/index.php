@@ -157,7 +157,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$controller = new icms_ipf_Controller($downloads_download_handler);
 			$controller->storeFromDefaultForm(_MD_DOWNLOADS_DOWNLOAD_CREATED, _MD_DOWNLOADS_DOWNLOAD_MODIFIED);
 			break;
-				
 		
 		case 'del':
 			if (!$categoryObj->userCanEditAndDelete()) {

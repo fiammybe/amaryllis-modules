@@ -126,11 +126,10 @@ define("_MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_SBJ", "[{X_SITENAME}] {X_
 define("_MI_DOWNLOADS_MENU_INDEX", "Index");
 define("_MI_DOWNLOADS_MENU_DOWNLOAD", "Manage Files");
 define("_MI_DOWNLOADS_MENU_CATEGORY", "Manage Categories");
-define("_MI_DOWNLOADS_MENU_BROKEN", "Manage Broken Files");
 define("_MI_DOWNLOADS_MENU_INDEXPAGE", "Edit Indexpage");
-define("_MI_DOWNLOADS_MENU_MIRROR", "Manage Mirrors");
 define("_MI_DOWNLOADS_MENU_TEMPLATES", "Templates");
 define("_MI_DOWNLOADS_MENU_RATINGS", "Ratings");
+define("_MI_DOWNLOADS_MENU_MANUAL", "Manual");
 // Submenu while calling a tab
 define("_MI_DOWNLOADS_DOWNLOAD_EDIT", "Edit your File");
 define("_MI_DOWNLOADS_DOWNLOAD_CREATINGNEW", "Upload a new File");

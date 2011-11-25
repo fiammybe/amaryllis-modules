@@ -34,12 +34,12 @@ $clean_category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0
 
 icms_cp_header();
 downloads_adminmenu(0, _MI_DOWNLOADS_MENU_INDEX);
-
+global $downloadsConfig;
 //check broken downloads
 $criteria = '';
 $criteria = new icms_db_criteria_Compo();
 $criteria->add(new icms_db_criteria_Item('download_broken', true));
-$broken = $downloads_download_handler->getCount($criteria);
+$broken = $downloads_download_handler->getCount($criteria, true, false);
 
 unset($criteria);
 
@@ -69,14 +69,32 @@ if ($downloadsConfig['use_mirror']== 1 && $downloadsConfig['mirror_needs_approve
 unset($criteria);
 
 //check categories to approve
-if ($downloadsConfig['category_needs_approve']) {
+if ($downloadsConfig['category_needs_approve'] == 1) {
 	$criteria = '';
 	$criteria = new icms_db_criteria_Compo();
 	$criteria -> add(new icms_db_criteria_Item('category_approve', false));
 	$category_approve = $downloads_category_handler->getCount($criteria);
 }
+unset($criteria);
 
-$mimetypes = ($downloadsConfig['downloads_mimetypes']);
+function getMimeTypes() {
+	$mimetype_handler = icms_getModuleHandler('mimetype', 'system');
+	$criteria = "";
+	$criteria = new icms_db_criteria_Compo();
+	$criteria->add(new icms_db_criteria_Item('dirname', icms::$module->getVar('dirname') ));
+	$mimetypeObjects = $mimetype_handler->getObjects($criteria, true, false);
+	$mimetypes = implode(" ", $mimetypeObjects);
+	$mimetypeObj = array();
+	foreach(array_keys($mimetypeObjects) as $mimetypeObj => $i) {
+		$mimetypeObjects[$mimetypeObj['extension']] = $mimetypeObj['extension'];
+	}
+	return $mimetypeObj;
+}
+
+$mimetypes = getMimeTypes();
+$mimetype = array_chunk( $mimetypes, 1);
+
+//$mimetypes = $downloads_download_handler->checkMimeType();
 
 echo '	<fieldset style="border: #E8E8E8 1px solid;">
 			<legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_DOWNLOADS_INDEX . '</legend>
@@ -88,7 +106,7 @@ echo '	<fieldset style="border: #E8E8E8 1px solid;">
 						. _AM_DOWNLOADS_INDEX_TOTAL .
 					'</div>
 					<div style="display: table-cell;">'
-						. $mimetypes .
+						. $mimetype .
 					'</div>
 				</div>
 				
