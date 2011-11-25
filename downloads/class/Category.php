@@ -266,14 +266,24 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		return $ret;
 	}
 	
-	public function getEditItemLink() {
-		$ret = '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?op=changedField&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
-		return $ret;
+	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
+		$retadmin = '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?op=changedField&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
+		$retuser = '<a href="' . DOWNLOADS_URL . 'index.php?op=mod&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
+		if(!$userSide) {
+			return $retadmin;
+		} else {
+			return $retuser;
+		}
 	}
 	
-	public function getDeleteItemLink() {
-		$ret = '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?op=del&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_DELETE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
-		return $ret;
+	public function getDeleteItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
+		$retadmin = '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?op=del&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_DELETE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
+		$retuser = '<a href="' . DOWNLOADS_URL . 'index.php?op=del&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_DELETE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
+		if(!$userSide) {
+			return $retadmin;
+		} else {
+			return $retuser;
+		}
 	}
 	
 	function toArray() {

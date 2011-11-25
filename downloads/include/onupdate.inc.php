@@ -55,12 +55,13 @@ define('DOWNLOADS_DB_VERSION', 1);
 function downloads_authorise_mimetypes() {
 	$dirname = icms::$module -> getVar( 'dirname' );
 	$extension_list = array(
-		'png',
-		'gif',
-		'jpg',
-		'zip',
-		'rar',
-		'7z',
+		"png",
+		"gif",
+		"jpg",
+		"zip",
+		"jpeg",
+		"pdf",
+		"bmp"
 		
 	);
 	$system_mimetype_handler = icms_getModuleHandler('mimetype', 'system');
@@ -143,7 +144,9 @@ function downloads_indexpage() {
 
 function icms_module_update_downloads($module) {
 	$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
-	$icmsDatabaseUpdater -> moduleUpgrade($module); 
+	$icmsDatabaseUpdater -> moduleUpgrade($module);
+	
+	downloads_authorise_mimetypes();
     return TRUE;
 }
 
