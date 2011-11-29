@@ -40,7 +40,7 @@ $downloads_indexpage_handler = icms_getModuleHandler('indexpage', basename(dirna
 $op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $op = filter_input(INPUT_POST, 'op');
 
-$valid_op = array ( 'mod','changedField','addindexpage', '' );
+$valid_op = array ( 'mod','addindexpage' );
 
 if (isset($_GET['op'])) $clean_op = htmlentities($_GET['op']);
 if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
@@ -51,7 +51,7 @@ if ( in_array( $clean_op, $valid_op, true ) ) {
   switch ($clean_op) {
   	case "mod":
 		icms_cp_header();
-		album_adminmenu( 3, _MI_DOWNLOADS_MENU_INDEXPAGE );
+		downloads_adminmenu( 3, _MI_DOWNLOADS_MENU_INDEXPAGE );
 		editform($indexkey=1, false);
 		break;
   	case "addindexpage":

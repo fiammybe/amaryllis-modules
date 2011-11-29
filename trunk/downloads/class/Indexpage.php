@@ -73,7 +73,7 @@ class DownloadsIndexpage extends icms_ipf_seo_Object {
 	
 	public function getIndexFooter() {
 		$indexfooter = '';
-		$indexfooter = $this->getVar('index_footer', 'e');
+		$indexfooter = icms_core_DataFilter::checkVar($this->getVar('index_footer', 's'), 'str', 'encodelow');
 		return '<div class="downloads_indexfooter">' . $indexfooter . '</div>';
 	}
 

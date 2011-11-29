@@ -25,9 +25,11 @@ define("_MD_DOWNLOADS_PUBLISHED_ON", "Published on:");
 define("_MD_DOWNLOADS_ADMIN_PAGE", ":: Admin page ::");
 define("_MD_DOWNLOADS_DOWNLOAD_FILELIST", "Files in this category");
 define("_MD_DOWNLOADS_CATEGORY_SUBCATLIST", "Subcategories");
-
+define("_MD_DOWNLOADS_CATEGORY_CREATE", "Create a new Category");
+define("_MD_DOWNLOADS_CATEGORY_EDIT", "Edit the Category");
 // constants on single file view
 define("_MD_DOWNLOADS_DOWNLOAD", "Download");
+define("_MD_DOWNLOADS_GOTO_ITEM", "Go to buy");
 define("_MD_DOWNLOADS_DOWNLOAD_USE_MIRROR", "Or use our download mirror:");
 define("_MD_DOWNLOADS_FILE_KEYFEATURES", "Keyfeatures:");
 define("_MD_DOWNLOADS_FILE_REQUIREMENTS", "Requirements:");
@@ -40,6 +42,12 @@ define("_MD_DOWNLOADS_FILE_LICENSE", "License:");
 define("_MD_DOWNLOADS_FILE_LIMITS", "Limitations:");
 define("_MD_DOWNLOADS_SURE_BROKEN", "Are you sure, the download link is broken?");
 define("_MD_DOWNLOADS_REPORT_BROKEN", "Report Broken Link");
+
+define("_MD_DOWNLOADS_DOWNLOAD_INPROGRESS", "Download in progress...");
+define("_MD_DOWNLOADS_DOWNLOAD_START_IN", "Your download should start in 3 seconds...<b>please wait</b>.");
+define("_MD_DOWNLOADS_DOWNLOAD_START_NOT", "If your download does not start, ");
+define("_MD_DOWNLOADS_CLICK_HERE", "please click here");
+
 
 define("_MD_DOWNLOADS_MAILTO", "Mailto"); // @TODO better constant to advise a file?
 define("_MD_DOWNLOADS_MAILTO_SBJ", ""); // @TODO Please have a look for Mail subject

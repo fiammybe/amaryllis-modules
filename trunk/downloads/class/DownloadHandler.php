@@ -142,11 +142,11 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$catalogue_item_handler = icms_getModuleHandler ('item', $catalogueModule->getVar('dirname'), 'catalogue');
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add (new icms_db_criteria_Item('online_status', true));
-		$catalogueObjects = $catalogue_item_handler->getObjects($criteria, true);
+		$catalogueObjects = $catalogue_item_handler->getObjects($criteria, true, false);
 		$ret = array();
 		$ret[0] = '--None--';
-		foreach(($catalogueObjects) as $catalogueObj => $i) {
-			$ret[$catalogueObj[$i]['item_id']] = $catalogueObj[$i]['title'];
+		foreach(array_keys($catalogueObjects) as $i) {
+			$ret[$catalogueObjects[$i]['item_id']] = $catalogueObjects[$i]['title'];
 		}
 		return $ret;
 	}
@@ -158,7 +158,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$ret = array();
 		$ret[0] = '--None--';
 		foreach(array_keys($albumObjects) as $i) {
-			$ret[$albumObjects[$i]['album_title']] = $albumObjects[$i]['album_title'];
+			$ret[$albumObjects[$i]['album_id']] = $albumObjects[$i]['album_title'];
 		}
 		return $ret;
 	}

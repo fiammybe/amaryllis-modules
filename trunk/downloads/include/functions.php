@@ -24,3 +24,51 @@ function downloads_adminmenu( $currentoption = 0, $header = '', $menu = '', $ext
 	icms::$module -> displayAdminMenu( $currentoption, icms::$module -> getVar( 'name' ) . ' | ' . $header );
 	echo '<h3 style="color: #2F5376;">' . $header . '</h3>';
 }
+
+function downloads_display_new($time) {
+	global $downloadsConfig;
+	$new = ( time() - ( 86400 * intval( $downloadsConfig['downloads_daysnew'] ) ) );
+	if ( icms::$module->config['downloads_daysnew'] !== 0) {
+		if ( $new > $time ) {
+			$new = DOWNLOADS_IMAGES_URL . 'new.png';
+			
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+	return $new;
+}
+
+function downloads_display_updated($time) {
+	global $downloadsConfig;
+	$updated = ( time() - ( 86400 * intval( $downloadsConfig['downloads_daysupdated'] ) ) );
+	if ( icms::$module->config['downloads_daysupdated'] !== 0) {
+		if ( $updated > $time ) {
+			$updated = DOWNLOADS_IMAGES_URL . 'updated.png';
+			
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+	return $updated;
+}
+
+function downloads_display_popular($counter) {
+	global $downloadsConfig;
+	$popular = $downloadsConfig['downloads_popular'];
+	if ( $popular !== 0) {
+		if ( $popular > $counter ) {
+			$popular = DOWNLOADS_IMAGES_URL . 'popular.png';
+			
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+	return $popular;
+}

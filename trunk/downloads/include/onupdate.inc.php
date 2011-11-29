@@ -17,31 +17,9 @@
  *
  */
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////// DEFINE SOME PATHS /////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
-if(!defined("DOWNLOADS_DIRNAME")) define("DOWNLOADS_DIRNAME", basename(dirname(dirname(__FILE__))));
-
-if(!defined("DOWNLOADS_URL")) define("DOWNLOADS_URL", ICMS_URL . '/modules/' . DOWNLOADS_DIRNAME . '/');
-
-if(!defined("DOWNLOADS_ROOT_PATH")) define("DOWNLOADS_ROOT_PATH", ICMS_ROOT_PATH.'/modules/' . DOWNLOADS_DIRNAME . '/');
-
-if(!defined("DOWNLOADS_IMAGES_URL")) define("DOWNLOADS_IMAGES_URL", DOWNLOADS_URL . 'images/');
-
-if(!defined("DOWNLOADS_ADMIN_URL")) define("DOWNLOADS_ADMIN_URL", DOWNLOADS_URL . 'admin/');
-
-if(!defined("DOWNLOADS_TEMPLATES_URL")) define("DOWNLOADS_TEMPLATES_URL", DOWNLOADS_URL . 'templates/');
-
-if(!defined("DOWNLOADS_IMAGES_ROOT")) define("DOWNLOADS_IMAGES_ROOT", DOWNLOADS_ROOT_PATH . 'images/');
-
-if(!defined("DOWNLOADS_UPLOAD_ROOT")) define("DOWNLOADS_UPLOAD_ROOT", ICMS_ROOT_PATH . '/uploads/' . DOWNLOADS_DIRNAME . '/');
-
-if(!defined("DOWNLOADS_UPLOAD_URL")) define("DOWNLOADS_UPLOAD_URL", ICMS_URL . '/uploads/' . DOWNLOADS_DIRNAME . '/');
-
-
+include_once ICMS_ROOT_PATH . "/modules/" . icms::$module -> getVar( 'dirname' ) . "/include/common.php";
 
 // this needs to be the latest db version
 define('DOWNLOADS_DB_VERSION', 1);
@@ -109,7 +87,7 @@ function downloads_upload_paths() {
 	}
 	if ( !is_dir( $downloads . '/indeximages' ) ) {
 		mkdir( $downloads . '/indeximages', 0777, true );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/downloads/indeximages/index.html' );
+		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/' . $moddir . '/indeximages/index.html' );
 		$contentx =@file_get_contents( ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/downloads_indeximage.png' );
 		$openedfile = fopen( $downloads . '/indeximages/downloads_indeximage.png', "w" ); 
 		fwrite( $openedfile, $contentx ); 
@@ -143,10 +121,8 @@ function downloads_indexpage() {
 
 
 function icms_module_update_downloads($module) {
-	$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 	$icmsDatabaseUpdater -> moduleUpgrade($module);
-	
-	downloads_authorise_mimetypes();
     return TRUE;
 }
 

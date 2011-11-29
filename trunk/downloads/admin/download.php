@@ -45,13 +45,15 @@ function editdownload($download_id = 0) {
 }
 
 include_once 'admin_header.php';
+$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
+$count = $downloads_category_handler -> getCount(false, true, false);
+if( $count <= 0 ) {
+	redirect_header (DOWNLOADS_ADMIN_URL, 3, _AM_DOWNLOADS_NO_CAT_FOUND);
+} else {
+$valid_op = array ('mod', 'changedField', 'adddownload', 'del', 'view', 'visible', 'changeShow','changeBroken','changeApprove','changeMirrorApprove', 'changeWeight', '');
 
-$clean_op = $clean_download_id = $valid_op = $downloads_download_handler = '';
-
-$valid_op = array ('mod', 'changedField', 'adddownload', 'del', 'view', 'visible', 'changeShow','changeApprove','changeMirrorApprove', 'changeWeight', '');
-
-if (isset($_GET['op'])) $clean_op = htmlentities($_GET['op']);
-if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
+$clean_op = (isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '');
+$clean_op = (isset($_POST['op']) ? filter_input(INPUT_POST, 'op') : '');
 
 $downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
 
@@ -99,6 +101,16 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_INBLOCK_FALSE );
 			} else {
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_INBLOCK_TRUE );
+			}
+			break;
+		
+		case 'changeBroken':
+			$show = $downloads_download_handler -> changeBroken( $clean_download_id );
+			$ret = 'download.php';
+			if ($show == 0) {
+				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_OFFLINE );
+			} else {
+				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_ONLINE );
 			}
 			break;
 		
@@ -182,4 +194,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 	}
 	icms_cp_footer();
+}
+
 }

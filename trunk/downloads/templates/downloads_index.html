@@ -1,8 +1,8 @@
 <{includeq file='db:downloads_header.html'}>
 
 	<div>
-	<{if $downloads_cat}>
-		
+	<{if $downloads_cat}><{if $user_submit}><a href="<{$user_submit_link}>" title="submit"> <img src="<{$downloads_images_url}>/add_cat.png" title="submit" alt="submit" /></a><{/if}>
+			
 		<!-- display index header -->
 		<{$downloads_index.header}>
 		<!-- display index heading -->
@@ -27,7 +27,7 @@
 				<span class="downloads_cat_title">
 					<a href="<{$category.itemLink}>" title="<{$category.title}>"><{$category.title}></a> &nbsp;&nbsp;<{if $category.userCanEditAndDelete}><{$category.editItemLink}><{$category.deleteItemLink}><{/if}>
 						<p class="downloads_category_info">
-							(&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_BY}>&nbsp;:&nbsp;<{$category.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_ON}>&nbsp;:&nbsp;<{$category.published_date}>&nbsp;)
+							(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$category.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$category.published_date}>&nbsp;)
 						</p>
 				</span>
 <br /><br />
@@ -83,7 +83,7 @@
 				<span class="downloads_cat_title">
 					<a href="<{$download.itemLink}>" title="<{$download.title}>"><{$download.title}></a> &nbsp;&nbsp;<{if $download.userCanEditAndDelete}><{$download.editItemLink}><{$download.deleteItemLink}><{/if}>
 						<p class="downloads_category_info">
-							(&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_BY}>&nbsp;:&nbsp;<{$download.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_ON}>&nbsp;:&nbsp;<{$download.published_date}>&nbsp;)
+							(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$download.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$download.published_date}>&nbsp;)
 						</p>
 				</span>
 <br /><br />
@@ -120,7 +120,7 @@
 				<span class="downloads_cat_title">
 					<a href="<{$category.itemLink}>"><{$category.title}></a>&nbsp;&nbsp;<{if $category.userCanEditAndDelete}><{$category.editItemLink}><{$category.deleteItemLink}><{/if}>
 						<p class="downloads_category_info">
-							(&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_BY}>&nbsp;:&nbsp;<{$category.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_CATEGORY_PUBLISHED_ON}>&nbsp;:&nbsp;<{$category.published_date}>&nbsp;)
+							(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$category.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$category.published_date}>&nbsp;)
 						</p>
 				</span>
 				<br /><br />
@@ -146,19 +146,6 @@
 			
 		<{/if}>
 	<{/if}>
-	
-	<{if $downloads_category_form}>
-		<{includeq file='db:system_common_form.html' form=$downloads_category_form}>
-	<{/if}>
-	
-	<{if $downloads_download_form}>
-		<{includeq file='db:system_common_form.html' form=$downloads_download_form}>
-	<{/if}>
-	
-	<{if $icmspersistable_delete_confirm}>
-		<{$icmspersistable_delete_confirm}>
-	<{/if}>
-		
 	</div>
 
 <{includeq file='db:downloads_footer.html'}>
