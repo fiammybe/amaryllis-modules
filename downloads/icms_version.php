@@ -130,16 +130,12 @@ $modversion['templates'][] = array(
 										'description'	=> _MI_DOWNLOADS_CATEGORY_TPL
 								);
 $modversion['templates'][] = array(
-										'file'			=> 'downloads_singledownload.html',
+										'file'			=> 'downloads_download.html',
 										'description'	=> _MI_DOWNLOADS_DOWNLOAD_TPL
 								);
 $modversion['templates'][] = array(
-										'file'			=> 'downloads_disclaimer.html',
-										'description'	=> _AM_DOWNLOADS_DISCLAIMER_TPL
-								);
-$modversion['templates'][] = array(
-										'file'			=> 'downloads_broken.html',
-										'description'	=> _AM_DOWNLOADS_BROKEN_TPL
+										'file'			=> 'downloads_singledownload.html',
+										'description'	=> _MI_DOWNLOADS_DOWNLOAD_TPL
 								);
 $modversion['templates'][] = array(
 										'file'			=> 'downloads_admin.html',
@@ -478,7 +474,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '',
 								'formtype' 		=> 'select',
 								'valuetype' 	=> 'int',
-								'options' 		=> array('5' => 5, '10' => 10, '50' => 50, '100' => 100, '200' => 200, '500' => 500, '1000' => 1000),
+								'options' 		=> array('0' => 0, '5' => 5, '10' => 10, '50' => 50, '100' => 100, '200' => 200, '500' => 500, '1000' => 1000),
 								'default' 		=> 100
 							);
 $i++;

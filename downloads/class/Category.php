@@ -265,7 +265,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret = '<a href="' . DOWNLOADS_URL . 'index.php?category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_PREVIEW . '" target="_blank">' . $this->getVar('category_title') . '</a>';
 		return $ret;
 	}
-	
+	/**
 	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
 		$retadmin = '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?op=changedField&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
 		$retuser = '<a href="' . DOWNLOADS_URL . 'index.php?op=mod&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
@@ -285,7 +285,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 			return $retuser;
 		}
 	}
-	
+	**/
 	function toArray() {
 		$ret = parent::toArray();
 		$ret['published_date'] = $this->getCategoryPublishedDate();

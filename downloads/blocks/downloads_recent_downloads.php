@@ -26,7 +26,7 @@ function b_downloads_recent_downloads_show($options) {
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
 
-	$block['album_album'] = $downloads_download_handler->getAlbumsForBlocks(0, $options[0]);
+	$block['downloads_download'] = $downloads_download_handler->getDownloadsForBlocks(0, $options[0]);
 	
 	return $block;
 }

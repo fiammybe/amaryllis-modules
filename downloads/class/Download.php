@@ -33,7 +33,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_cid', XOBJ_DTYPE_INT, true, false, false, 1);
 		$this->quickInitVar('download_file', XOBJ_DTYPE_FILE);
 		
-		$this->quickInitVar("download_file_descriptions", XOBJ_DTYPE_FORM_SECTION);
+		$this->quickInitVar("download_file_descriptions", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS);
 		$this->quickInitVar('download_description', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('download_keyfeatures', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('download_requirements', XOBJ_DTYPE_TXTAREA);
@@ -51,25 +51,25 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('catalogue_item', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("download_file_descriptions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
 		
-		$this->quickInitVar("download_mirror_handling", XOBJ_DTYPE_FORM_SECTION);
+		$this->quickInitVar("download_mirror_handling", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING);
 		$this->quickInitVar('download_mirror_url',XOBJ_DTYPE_URLLINK);
 		$this->quickInitVar('download_mirror_approve', XOBJ_DTYPE_INT);
 		$this->quickInitVar('download_has_mirror', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar("download_mirror_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
 		
-		$this->quickInitVar("download_developer_info", XOBJ_DTYPE_FORM_SECTION);
+		$this->quickInitVar("download_developer_info", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEVELOPER_INFO);
 		$this->quickInitVar("download_dev", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("download_dev_hp", XOBJ_DTYPE_URLLINK);
 		$this->quickInitVar("download_developer_information_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
 		
-		$this->quickInitVar("download_publish_info", XOBJ_DTYPE_FORM_SECTION);
+		$this->quickInitVar("download_publish_info", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISH_INFO);
 		$this->quickInitVar('download_submitter', XOBJ_DTYPE_INT);
 		$this->quickInitVar('download_publisher', XOBJ_DTYPE_INT);
 		$this->quickInitVar('download_published_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('download_updated_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar("download_publish_info_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
 		
-		$this->quickInitVar("download_view_section", XOBJ_DTYPE_FORM_SECTION);
+		$this->quickInitVar("download_view_section", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VIEW_SECTION);
 		$this->quickInitVar('download_grpperm', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_active', XOBJ_DTYPE_INT,false, false, false, 1);
 		$this->quickInitVar('download_inblocks', XOBJ_DTYPE_INT,false, false, false, 1);
@@ -78,6 +78,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_broken', XOBJ_DTYPE_INT, false, false, false, 0);
 		$this->quickInitVar("download_view_section_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
 		
+		$this->quickInitVar("download_static_section", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_STATIC_SECTION);
 		$this->quickInitVar('download_comments', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_notification_sent', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_fb_like', XOBJ_DTYPE_INT, false);
@@ -90,6 +91,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->initCommonVar('doimage', true, 1);
 		$this->initCommonVar('dosmiley', true, 1);
 		$this->initCommonVar('docxode', true, 1);
+		$this->quickInitVar("download_static_section_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
 		
 		// set controls
 		$this->setControl('download_cid', array('name' => 'select', 'itemHandler' => 'category', 'method' => 'getCategoryList', 'module' => 'downloads'));
@@ -317,7 +319,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$download_screen_1 = $image_tag = '';
 		$directory_name = basename(dirname( dirname( __FILE__ ) ));
 		$script_name = getenv("SCRIPT_NAME");
-		$document_root = str_replace('modules/' . $directory_name . '/download.php', '', $script_name);
+		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$download_screen_1 = $this->getVar('download_screen_1', 'e');
 		if (!empty($download_screen_1)) {
 			$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_screen_1;
@@ -329,7 +331,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$download_screen_2 = $image_tag = '';
 		$directory_name = basename(dirname( dirname( __FILE__ ) ));
 		$script_name = getenv("SCRIPT_NAME");
-		$document_root = str_replace('modules/' . $directory_name . '/download.php', '', $script_name);
+		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$download_screen_2 = $this->getVar('download_screen_2', 'e');
 		if (!empty($download_screen_2)) {
 			$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_screen_2;
@@ -341,7 +343,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$download_screen_3 = $image_tag = '';
 		$directory_name = basename(dirname( dirname( __FILE__ ) ));
 		$script_name = getenv("SCRIPT_NAME");
-		$document_root = str_replace('modules/' . $directory_name . '/download.php', '', $script_name);
+		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$download_screen_3 = $this->getVar('download_screen_3', 'e');
 		if (!empty($download_screen_3)) {
 			$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_screen_3;
@@ -353,7 +355,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$download_screen_4 = $image_tag = '';
 		$directory_name = basename(dirname( dirname( __FILE__ ) ));
 		$script_name = getenv("SCRIPT_NAME");
-		$document_root = str_replace('modules/' . $directory_name . '/download.php', '', $script_name);
+		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$download_screen_4 = $this->getVar('download_screen_4', 'e');
 		if (!empty($download_screen_4)) {
 			$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_screen_4;
@@ -364,21 +366,21 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	public function getDownloadKeyfeatures() {
 		$keyfeature_array = $this->getVar('download_keyfeatures');
 		$keyfeatures = explode("|", $keyfeature_array);
-		$ret = array();
-		foreach ($keyfeatures as $key => &$keyfeature) {
-			$ret[$keyfeature[$key]] = '<li>' . $keyfeature . '</li>';
+		$result = '';
+		foreach ($keyfeatures as $key => $keyfeature) {
+			$result .= '<li>' . $keyfeature . '</li>';
 		}
-		return (implode (" ", $ret));
+		return $result;
 	}
 	
 	public function getDownloadRequirements() {
 		$requirements_array = $this->getVar('download_requirements');
 		$requirements = explode("|", $requirements_array);
-		$ret = array();
-		foreach ($requirements as $key => &$requirement) {
-			$ret[$requirement[$key]] = '<li>' . $requirement . '</li>';
+		$result = '';
+		foreach ($requirements as $requirement) {
+			$result .= '<li>' . $requirement . '</li>';
 		}
-		return (implode (" ", $ret));
+		return $result;
 	}
 
 	public function getDevHpLink() {
@@ -388,25 +390,11 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		return $url;
 	}
 	
-	
-	function getAlbumImages() {
-		$images_aid = $this->getVar('download_album');
-		$albumModule = icms_getModuleInfo('album');
-		$album_images_handler = icms_getModuleHandler('images', $albumModule->getVar('dirname'), 'album');
-		$directory_name = $albumModule->getVar('dirname');;
-		$script_name = getenv("SCRIPT_NAME");
-		$document_root = str_replace('modules/' . $directory_name . '/download.php', '', $script_name);
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('img_active', true));
-		$criteria->add(new icms_db_criteria_Item('a_id', $images_aid));
-		$imagesObjects = $album_images_handler->getObjects($criteria, true, true);
-		$ret = array();
-		foreach ($imagesObjects as $imagesObj) {
-			$ret[$imagesObj['img_title']] = $image['img_title'];
-			$ret[$imagesObj['img_url']] = $document_root . 'uploads/' . $directory_name . '/images/' . $image['img_url'];
-			$ret[$imagesObj['img_description']] = $image['description'];
-		}
-		return $ret;
+	public function getDownloadTag() {
+		$file = 'download_file';
+		$fileObj = $this->getFileObj($file);
+		$url = $fileObj->getVar('url');
+		return $url;
 	}
 	
 	function accessGranted() {
@@ -462,7 +450,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 
 	function getItemLink($onlyUrl = false) {
 		$seo = $this->handler->makelink($this);
-		$url = DOWNLOADS_URL . 'download.php?download_id=' . $this -> getVar( 'download_id' ) . '&amp;file=' . $seo;
+		$url = DOWNLOADS_URL . 'singledownload.php?download_id=' . $this -> getVar( 'download_id' ) . '&amp;file=' . $seo;
 		if ($onlyUrl) return $url;
 		return '<a href="' . $url . '" title="' . $this -> getVar( 'download_title' ) . ' ">' . $this -> getVar( 'download_title' ) . '</a>';
 	}
@@ -473,29 +461,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 	
 	function getPreviewItemLink() {
-		$ret = '<a href="' . DOWNLOADS_URL . 'download.php?download_id=' . $this->getVar('download_id', 'e') . '" title="' . _CO_DOWNLOADS_PREVIEW . '" target="_blank">' . $this->getVar('download_title') . '</a>';
+		$ret = '<a href="' . DOWNLOADS_URL . 'singledownload.php?download_id=' . $this->getVar('download_id', 'e') . '" title="' . _CO_DOWNLOADS_PREVIEW . '" target="_blank">' . $this->getVar('download_title') . '</a>';
 		return $ret;
-	}
-	
-	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		$retadmin = '<a href="' . DOWNLOADS_ADMIN_URL . 'download.php?op=changedField&amp;download_id=' . $this->getVar('download_id', 'e') . '" title="' . _CO_DOWNLOADS_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
-		$retuser = '<a href="' . DOWNLOADS_URL . 'index.php?op=moddownload&amp;download_id=' . $this->getVar('download_id', 'e') . '" title="' . _CO_DOWNLOADS_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
-		if(!$userSide) {
-			return $retadmin;
-		} else {
-			return $retuser;
-		}
-	}
-	
-	public function getDeleteItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		$retadmin = '<a href="' . DOWNLOADS_ADMIN_URL . 'download.php?op=del&amp;download_id=' . $this->getVar('download_id', 'e') . '" title="' . _CO_DOWNLOADS_DELETE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
-		$retuser = '<a href="' . DOWNLOADS_URL . 'index.php?op=deldownload&amp;download_id=' . $this->getVar('download_id', 'e') . '" title="' . _CO_DOWNLOADS_DELETE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
-		if(!$userSide) {
-			return $retadmin;
-		} else {
-			return $retuser;
-		}
-		
 	}
 	
 	public function toArray() {
@@ -507,6 +474,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['id'] = $this->getVar('download_id');
 		$ret['title'] = $this->getVar('download_title');
 		$ret['img'] = $this->getDownloadImageTag();
+		$ret['file'] = $this->getDownloadTag();
 		$ret['dsc'] = $this->getVar('download_description');
 		$ret['keyfeatures'] = $this->getDownloadKeyfeatures();
 		$ret['requirements'] = $this->getDownloadRequirements();
@@ -524,7 +492,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		
 		$albumModule = icms_getModuleInfo('album');
 		if ($downloadsConfig['use_album'] == true && $albumModule){
-			$ret['album_images'] = $this->getAlbumImages();
+			$ret['album_images'] = $this->getVar('download_album');
 		} 
 		$ret['screen_1'] = $this->getDownloadScreen1Tag();
 		$ret['screen_2'] = $this->getDownloadScreen2Tag();

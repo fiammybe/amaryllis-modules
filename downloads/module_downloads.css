@@ -16,6 +16,9 @@
  *
  */
 
+	.downloads_headertable {
+		margin-bottom: 2em;
+	}
 
 	.downloads_clear_both {
 		clear: both;
@@ -180,11 +183,30 @@
 		
 	}
 	
-	.file_descriptions {
-		width: auto;
+	.file_req, .file_keys {
+		position: relative;
+		display: inline-block;
 		background: #ccc;
 		padding: 1em 1em;
-		margin: .750em auto;;
+		width: auto;
+		height: auto;
+		text-align: left;
+		vertical-align: middle;
+	}
+	
+	ul.downloads_check {
+		list-style-type: none !important;
+	}
+	
+	.downloads_check li {
+		background: url(images/check.png) left center no-repeat;
+		padding-left: 20px;
+	}
+	
+	.file_descriptions {
+		padding: 1em 1em;
+		margin: .750em auto;
+		text-align: center;
 	}
 	
 	.file_image_row {
@@ -206,39 +228,43 @@
 	.table_row {
 		display: table-row;
 		padding: .250em;
+		line-height: 2em;
 	}
 	
 	.table_cell {
 		display: table-cell;
-		width: 45%;
+		width: 60%;
 		padding-left: 1em;
 	}
 	
 	.file_dev, .file_dev_hp, .file_version, .file_version_status, .file_limits, .file_platform, .file_license {
 		display: table-cell;
-		background-repeat: no-repeat;
 		padding-left: 30px;
 	}
 	
 	.file_dev {
-		
+		background: url(images/dev.png) left center no-repeat;
 	}
 	.file_dev_hp {
-		
+		background: url(images/dev_hp.png) left center no-repeat;
 	}
 	.file_version {
-		
+		background: url(images/version.png) left center no-repeat;
 	}
 	
 	.file_version_status {
-		
+		background: url(images/version_status.png) left center no-repeat;
 	}
 	.file_limits{
-		
+		background: url(images/limits.png) left center no-repeat;
+	}
+	
+	.file_license{
+		background: url(images/license.png) left center no-repeat;
 	}
 	
 	.file_platform {
-		
+		background: url(images/platform.png) left center no-repeat;
 	}
 	
 	.file_screens {
@@ -251,5 +277,17 @@
 		line-height: 1.1em;
 		margin: 1.5em auto;
 		padding: .5em;
-		
+	}
+	
+	.download_file {
+		margin: 3em auto;
+		width: 75%;
+	}
+	.download_progress {
+		font-size: 2em;
+		text-align: center;
+	}
+	.download_wait {
+		font-size: 1.1em;
+		margin-top: 2em;
 	}

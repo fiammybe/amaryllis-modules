@@ -22,7 +22,9 @@ define("_CO_DOWNLOADS_PREVIEW", "preview");
 define("_CO_DOWNLOADS_EDIT", "edit");
 define("_CO_DOWNLOADS_DELETE", "delete");
 define("_CO_DOWNLOADS_VIEW", "view");
+
 define("_CO_DOWNLOADS_MODIFIED", "Modified");
+define("_ER_UP_UNKNOWNFILETYPEREJECTED", "unknown Filetype");
 // language constants for adding new file
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TITLE", "Title");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TITLE_DSC", " Set Title of the File ");
@@ -90,6 +92,7 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING", "Download Mirror");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEVELOPER_INFO", "Developer informations");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISH_INFO", "Publishe informations");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VIEW_SECTION", "Public permissions");
+define("_CO_DOWNLOADS_DOWNLOAD_STATIC_SECTION", "Some additional informations");
 // language constants for editing indexpage
 define("_CO_DOWNLOADS_INDEXPAGE_INDEX_HEADER", "Title");
 define("_CO_DOWNLOADS_INDEXPAGE_INDEX_HEADER_DSC", " Set Title displayed in the index at frontend ");

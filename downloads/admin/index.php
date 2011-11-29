@@ -41,7 +41,6 @@ $criteria = new icms_db_criteria_Compo();
 $criteria->add(new icms_db_criteria_Item('download_broken', true));
 $broken = $downloads_download_handler->getCount($criteria, true, false);
 
-unset($criteria);
 
 // get all files count
 $totalfiles = $downloads_download_handler->getCount();
@@ -49,33 +48,27 @@ $totalfiles = $downloads_download_handler->getCount();
 $totalcats = $downloads_category_handler->getCount();
 
 // check files to approve
-if ($downloadsConfig['downloads_needs_approve']) {
-	$criteria = '';
-	$criteria = new icms_db_criteria_Compo();
-	$criteria -> add(new icms_db_criteria_Item('download_approve', false));
-	$download_approve = $downloads_download_handler->getCount($criteria);
+if ($downloadsConfig['downloads_needs_approve'] == 1) {
+	$criteria2 = '';
+	$criteria2 = new icms_db_criteria_Compo();
+	$criteria2 -> add(new icms_db_criteria_Item('download_approve', 0));
+	$download_approve = $downloads_download_handler->getCount($criteria2, true, false);
 }
-
-unset($criteria);
 
 // check mirrors to approve
-if ($downloadsConfig['use_mirror']== 1 && $downloadsConfig['mirror_needs_approve'] == 1) {
-	$criteria = '';
-	$criteria = new icms_db_criteria_Compo();
-	$criteria->add(new icms_db_criteria_Item('download_mirror_approve', false));
-	$mirrors = $downloads_download_handler->getCount($criteria);
-}
+	$criteria3 = '';
+	$criteria3 = new icms_db_criteria_Compo();
+	$criteria3->add(new icms_db_criteria_Item('download_mirror_approve', 0));
+	$mirrors = $downloads_download_handler->getCount($criteria3, true, false);
 
-unset($criteria);
 
 //check categories to approve
 if ($downloadsConfig['category_needs_approve'] == 1) {
-	$criteria = '';
-	$criteria = new icms_db_criteria_Compo();
-	$criteria -> add(new icms_db_criteria_Item('category_approve', false));
-	$category_approve = $downloads_category_handler->getCount($criteria);
+	$criteria4 = '';
+	$criteria4 = new icms_db_criteria_Compo();
+	$criteria4 -> add(new icms_db_criteria_Item('category_approve', 0));
+	$category_approve = $downloads_category_handler->getCount($criteria4, true, false);
 }
-unset($criteria);
 
 function getMimeTypes() {
 	$mimetype_handler = icms_getModuleHandler('mimetype', 'system');
