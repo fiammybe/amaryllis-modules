@@ -93,8 +93,9 @@
 		});
 
 		$(".upl_disclaimer").click(function(e) {
+			pos = this.id,
 			e.preventDefault();
-			var targetUrl = $(this).attr("href");
+			var targetUrl = $(pos).attr("href");
 
 
 			$("#dialog-confirm-upl-disclaimer").dialog('option', 'buttons', {

@@ -171,6 +171,10 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		return $control->render();
 	}
 	
+	function getSubsCount(){
+		$count = $this->handler->getCategorySubCount($groups = array(), $perm = 'category_grpperm', true, true, $this->id());
+		return $count;
+	}
 	// get sub category
 	function category_sub() {
 		$ret = $this->handler->getCategorySubCount($this->getVar('category_id', 'e'));
@@ -301,6 +305,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret['category_posterid'] = $this->getVar('category_publisher', 'e');
 		$ret['itemLink'] = $this->getItemLink(true, true);
 		$ret['accessgranted'] = $this->accessGranted();
+		$ret['cat_count'] = $this->getSubsCount();
 		$ret['files_count'] = $this->getFilesCount();
 		$ret['user_upload'] = $this->getEditAndDelete();
 		return $ret;

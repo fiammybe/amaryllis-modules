@@ -111,7 +111,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('category_active', true));
 		}
 		if (isset($approved)) {
-			$criteria->add(new icms_db_criteria_Item('category_approved', true));
+			$criteria->add(new icms_db_criteria_Item('category_approve', true));
 		}
 		if (isset($inblocks)) {
 			$criteria->add(new icms_db_criteria_Item('category_inblocks', true));
@@ -133,11 +133,9 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getCategoryListForMenu($start = 0, $limit = 0, $order = 'weight', $sort = 'ASC',$groups = array(), $perm = 'category_grpperm', $status = null,$approved = null,$inblocks = null, $category_id = null) {
+	public function getCategoryListForMenu($order = 'weight', $sort = 'ASC',$groups = array(), $perm = 'category_grpperm', $status = null,$approved = null,$inblocks = null, $category_id = null) {
 	
 		$criteria = new icms_db_criteria_Compo();
-		$criteria->setStart($start);
-		$criteria->setLimit($limit);
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
 		if (is_array($groups) && !empty($groups)) {
@@ -155,18 +153,18 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('category_active', true));
 		}
 		if (isset($approved)) {
-			$criteria->add(new icms_db_criteria_Item('category_approved', true));
+			$criteria->add(new icms_db_criteria_Item('category_approve', true));
 		}
 		if (isset($inblocks)) {
 			$criteria->add(new icms_db_criteria_Item('category_inblocks', true));
 		}
 		if (is_null($category_id)) $category_id = 0;
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
-		$categories = & $this->getObjects($criteria, true);
+		$categories = & $this->getObjects($criteria, true, true);
 		$ret = array();
 		foreach(array_keys($categories) as $i) {
 			$ret[$i] = $categories[$i]->getVar('category_title');
-			$subcategories = $this->getCategoryListForMenu($start, $limit, $order, $sort, $groups, $perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'));
+			$subcategories = $this->getCategoryListForMenu($order, $sort, $groups, $perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'));
 			foreach(array_keys($subcategories) as $j) {
 				$ret[$j] = $subcategories[$j];
 			}
@@ -231,8 +229,25 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 	}
 	
 	// count sub-categories
-	public function getCategorySubCount($category_id = 0) {
-		$criteria = $this->getCategoryCriteria();
+	public function getCategorySubCount($groups = array(), $perm = 'category_grpperm', $status = null,$approved = null, $category_id = 0) {
+		$criteria = new icms_db_criteria_Compo();
+		if (is_array($groups) && !empty($groups)) {
+			$criteriaTray = new icms_db_criteria_Compo();
+			foreach($groups as $gid) {
+				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
+			}
+			$criteria->add($criteriaTray);
+			if ($perm == 'category_grpperm' || $perm == 'downloads_admin') {
+				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
+				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
+			}
+		}
+		if (isset($status)) {
+			$criteria->add(new icms_db_criteria_Item('category_active', true));
+		}
+		if (isset($approved)) {
+			$criteria->add(new icms_db_criteria_Item('category_approve', true));
+		}
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
 		return $this->getCount($criteria);
 	}
