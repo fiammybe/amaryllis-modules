@@ -45,9 +45,10 @@ function editcategory($category_id = 0) {
 
 include_once 'admin_header.php';
 
-$clean_op = $clean_category_id = $valid_op = $downloads_category_handler = '';
-
 $valid_op = array ('mod', 'changedField', 'addcategory', 'del', 'view', 'visible', 'changeShow','changeApprove', 'changeWeight', '');
+
+$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+if (isset($_POST['op'])) $op = filter_input(INPUT_POST, 'op');
 
 if (isset($_GET['op'])) $clean_op = htmlentities($_GET['op']);
 if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);

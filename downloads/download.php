@@ -30,7 +30,7 @@ function editdownload($downloadObj) {
 	} else {
 		$downloadObj->hideFieldFromForm(array('download_updated', 'download_broken','download_mirror_approve', 'meta_description', 'meta_keywords', 'download_updated', 'download_publisher', 'download_submitter', 'download_approve', 'download_published_date', 'download_updated_date' ) );
 		$downloadObj->setVar('download_published_date', (time() - 100) );
-		if($downloadsConfig['download_needs_approve'] == 1) {
+		if($downloadsConfig['downloads_needs_approve'] == 1) {
 			$downloadObj->setVar('download_approve', FALSE );
 		} else {
 			$downloadObj->setVar('download_approve', TRUE );
@@ -75,8 +75,9 @@ $clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
 
 $valid_op = array ('mod', 'adddownload', 'del');
 
-if (isset($_GET['op'])) $clean_op = $_GET['op'];
-if (isset($_POST['op'])) $clean_op = $_POST['op'];
+$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
+
 
 $downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 
@@ -111,6 +112,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$icmsTpl->assign('downloads_cat_path', $downloads_download_handler->getBreadcrumbForPid($downloadObj->getVar('category_id', 'e'), 1) . ' > ' . _DELETE);
 			break;
 	}
+} else {
+	redirect_header(DOWNLOADS_URL, 3, _NOPERM);
 }
 
 if( $downloadsConfig['show_breadcrumbs'] == true ) {

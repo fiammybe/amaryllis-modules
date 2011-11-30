@@ -11,4 +11,7 @@
  */
 
 include_once "../../mainfile.php";
-include_once dirname(__FILE__) . '/include/common.php';
+include_once ICMS_ROOT_PATH . '/modules/' . icms::$module -> getVar( 'dirname' ) . '/include/common.php';
+
+// Include the main language file of the module
+icms_loadLanguageFile('downloads', 'main');

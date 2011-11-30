@@ -53,7 +53,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$this->initCommonVar('doimage', true, 1);
 		$this->initCommonVar('dosmiley', true, 1);
 		$this->initCommonVar('docxode', true, 1);
-		$this->initNonPersistableVar('category_sub', XOBJ_DTYPE_INT);
+		$this->quickInitVar('category_sub', XOBJ_DTYPE_INT);
 		// set controls
 		$this->setControl('category_pid', 'parentcategory');
 		$this->setControl('category_description', 'dhtmltextarea');
@@ -185,6 +185,14 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		return $this->handler->getCategorySub($this->getVar('category_id', 'e'), $toarray);
 	}
 	
+	function getFilesCount() {
+		$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
+		$files_count_criteria = $downloads_download_handler->getCountCriteria(true, true, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $this->id());
+		$files_count = $downloads_download_handler -> getCount($files_count_criteria, true, false);
+		return $files_count;
+	
+	}
+	
 	function category_pid() {
 		static $category_pidArray;
 		if (!is_array($category_pidArray)) {
@@ -265,27 +273,17 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret = '<a href="' . DOWNLOADS_URL . 'index.php?category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_PREVIEW . '" target="_blank">' . $this->getVar('category_title') . '</a>';
 		return $ret;
 	}
-	/**
-	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		$retadmin = '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?op=changedField&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
-		$retuser = '<a href="' . DOWNLOADS_URL . 'index.php?op=mod&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
-		if(!$userSide) {
-			return $retadmin;
+	
+	function getEditAndDelete() {
+		$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
+		if($downloads_download_handler->userCanSubmit($this->id())) {
+			return DOWNLOADS_URL . 'download.php?op=mod&amp;category_id=' . $this->id();
 		} else {
-			return $retuser;
+			return false;
 		}
+	
 	}
 	
-	public function getDeleteItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		$retadmin = '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?op=del&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_DELETE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
-		$retuser = '<a href="' . DOWNLOADS_URL . 'index.php?op=del&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_DOWNLOADS_DELETE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
-		if(!$userSide) {
-			return $retadmin;
-		} else {
-			return $retuser;
-		}
-	}
-	**/
 	function toArray() {
 		$ret = parent::toArray();
 		$ret['published_date'] = $this->getCategoryPublishedDate();
@@ -296,13 +294,15 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret['img'] = $this->getCategoryImageTag();
 		$ret['dsc'] = $this->getVar('category_description');
 		$ret['sub'] = $this->getCategorySub($this->getVar('category_id', 'e'), true);
-		$ret['hassub'] = (count($ret['category_sub']) > 0) ? true : false;
+		$ret['hassub'] = (count($ret['sub']) > 0) ? true : false;
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['category_posterid'] = $this->getVar('category_publisher', 'e');
 		$ret['itemLink'] = $this->getItemLink(true, true);
 		$ret['accessgranted'] = $this->accessGranted();
+		$ret['files_count'] = $this->getFilesCount();
+		$ret['user_upload'] = $this->getEditAndDelete();
 		return $ret;
 	}
 

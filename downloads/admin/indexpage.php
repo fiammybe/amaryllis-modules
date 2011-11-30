@@ -37,8 +37,8 @@ $clean_indexkey = $clean_op = $valid_op = '';
 
 $downloads_indexpage_handler = icms_getModuleHandler('indexpage', basename(dirname(dirname(__FILE__))), "downloads");
 
-$op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
-if (isset($_POST['op'])) $op = filter_input(INPUT_POST, 'op');
+$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 $valid_op = array ( 'mod','addindexpage' );
 

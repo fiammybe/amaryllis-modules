@@ -80,8 +80,8 @@ $downloads_category_handler = icms_getModuleHandler( 'category', icms::$module -
  */
 $valid_op = array ('mod', 'addcategory', 'del');
 
-if (isset($_GET['op'])) $clean_op = $_GET['op'];
-if (isset($_POST['op'])) $clean_op = $_POST['op'];
+$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 /**
  * Only proceed if the supplied operation is a valid operation

@@ -26,7 +26,7 @@ class DownloadsIndexpage extends icms_ipf_seo_Object {
 
 		$this->quickInitVar("index_key", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("index_image", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->initVar('index_img_upload', XOBJ_DTYPE_IMAGE);
+		$this->quickInitVar('index_img_upload', XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar("index_header", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("index_heading", XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar("index_footer", XOBJ_DTYPE_TXTAREA, FALSE);
@@ -67,7 +67,7 @@ class DownloadsIndexpage extends icms_ipf_seo_Object {
 
 	public function getIndexHeading() {
 		$indexheading = '';
-		$indexheading = $this->getVar('index_heading', 'e');
+		$indexheading = icms_core_DataFilter::checkVar($this->getVar('index_heading', 's'), 'str', 'encodelow');
 		return '<div class="downloads_indexheading">' . $indexheading . '</div>';
 	}
 	
