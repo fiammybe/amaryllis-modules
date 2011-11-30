@@ -4,7 +4,7 @@
  *
  * File: /blocks/downloads_category_menu.php
  * 
- * block to show recent albums
+ * block to show category menu
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -26,7 +26,7 @@ function b_downloads_category_menu_show($options) {
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 
-	$block['downloads_category'] = $downloads_category_handler->getCategoryListForMenu($start = 0, $limit = 0, $order = $options[0], $sort = $options[1],$groups = array(), $perm = 'category_grpperm', $status = true,$approved = true,$inblocks = true, $category_id = $options[3]);
+	$block['downloads_category'] = $downloads_category_handler->getCategoryListForMenu($options[0], $options[1],$groups = array(), 'category_grpperm', true, true, true, $options[3]);
 	
 	return $block;
 }
@@ -44,7 +44,7 @@ function b_downloads_category_menu_edit($options) {
 	$selorder->addOptionArray($order);
 	$showsubs = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
 	$selcats = new icms_form_elements_Select('', 'options[3]', $options[3]);
-	$selcats->addOptionArray($downloads_category_handler->getCategoryListForPid($groups = array(), $perm = 'category_grpperm', $status = true,$approved = true,$inblocks = true, false, $showNull = true));
+	$selcats->addOptionArray($downloads_category_handler->getCategoryListForPid($groups = array(), 'category_grpperm', true, true, true, null, true));
 	
 	$form = '<table width="100%">';
 	$form .= '<tr>';

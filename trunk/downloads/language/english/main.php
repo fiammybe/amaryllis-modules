@@ -26,6 +26,8 @@ define("_MD_DOWNLOADS_ADMIN_PAGE", ":: Admin page ::");
 define("_MD_DOWNLOADS_DOWNLOAD_FILELIST", "Files in this category");
 define("_MD_DOWNLOADS_CATEGORY_SUBCATLIST", "Subcategories");
 define("_MD_DOWNLOADS_FILES", "Files");
+define("_MD_DOWNLOADS_SUBCATS", "Subcategories");
+define("_MD_DOWNLOADS_SUBMIT_CAT", "Submit a new category");
 define("_MD_DOWNLOADS_UPLOAD", "Upload a new File");
 define("_MD_DOWNLOADS_NOFILES", "Sorry, currently there are no files in this category.");
 // constants on single file view
