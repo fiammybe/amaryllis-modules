@@ -17,13 +17,11 @@
  *
  */
 
-include_once "admin_header.php";
-
 function editdownload($download_id = 0) {
-	global $downloads_download_handler, $icmsAdminTpl;
-
+	global $downloads_download_handler, $icmsAdminTpl, $downloadsConfig;
+	
 	$downloadObj = $downloads_download_handler->get($download_id);
-
+	
 	if (!$downloadObj->isNew()){
 		$downloadObj->hideFieldFromForm(array( 'download_published_date', 'download_updated_date', 'download_approve' ) );
 		$downloadObj->setVar( 'download_updated_date', (time() - 100) );
@@ -44,6 +42,8 @@ function editdownload($download_id = 0) {
 	$icmsAdminTpl->display('db:downloads_admin.html');
 }
 
+include_once "admin_header.php";
+
 include_once 'admin_header.php';
 $downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 $count = $downloads_category_handler -> getCount(false, true, false);
@@ -52,8 +52,8 @@ if( $count <= 0 ) {
 } else {
 $valid_op = array ('mod', 'changedField', 'adddownload', 'del', 'view', 'visible', 'changeShow','changeBroken','changeApprove','changeMirrorApprove', 'changeWeight', '');
 
-$clean_op = (isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '');
-$clean_op = (isset($_POST['op']) ? filter_input(INPUT_POST, 'op') : '');
+$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 $downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
 

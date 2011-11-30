@@ -50,11 +50,6 @@ if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted()) {
 	$icmsTpl->assign("file", $file);
 	$down_link = DOWNLOADS_URL . 'ajax.php?op=getFile&download_id=' . $downloadObj->id();
 	$icmsTpl->assign('down_link', $down_link);
-	if($downloadsConfig['downloads_show_down_disclaimer'] == 1) {
-		
-	} else {
-		
-	}
 	$icmsTpl->assign("broken_link", DOWNLOADS_URL . "ajax.php?op=report_broken&download_id=" . $downloadObj->id() );
 	$newfile = downloads_display_new( $downloadObj->getVar( 'download_published_date' ) );
 	if($newfile) {
@@ -78,7 +73,7 @@ if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted()) {
 		$icmsTpl->assign('show_mirror', false);
 	}
 	if($downloadsConfig['downloads_show_down_disclaimer'] == 1) {
-		$icmsTpl->assign('show_down_disclaimer', $downloadsConfig['downloads_show_down_disclaimer'] );
+		$icmsTpl->assign('show_down_disclaimer', true );
 		$icmsTpl->assign('down_disclaimer', $downloadsConfig['downloads_down_disclaimer']);
 	} else {
 		$icmsTpl->assign('show_down_disclaimer', false);

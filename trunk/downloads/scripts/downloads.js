@@ -56,7 +56,7 @@
 			width: 800,
 			height: 600,
 			autoOpen: false,
-			resizable: false,
+			resizable: true,
 			draggable: true
 		});
 
@@ -79,6 +79,40 @@
 		});
 
 	});
+	
+	// call disclaimer for upload-confirmation
+	$(document).ready(function(){
+
+		$("#dialog-confirm-upl-disclaimer").dialog({
+			modal: true,
+			width: 800,
+			height: 600,
+			autoOpen: false,
+			resizable: true,
+			draggable: true
+		});
+
+		$(".upl_disclaimer").click(function(e) {
+			e.preventDefault();
+			var targetUrl = $(this).attr("href");
+
+
+			$("#dialog-confirm-upl-disclaimer").dialog('option', 'buttons', {
+				"I Agree" : function() {
+					window.location.href = targetUrl;
+				},
+				"Cancel" : function() {
+					$(this).dialog("close");
+				}
+			});
+
+			$("#dialog-confirm-upl-disclaimer").dialog("open");
+
+		});
+
+	});
+	
+	
 	// use colorbox for screenshots
 	$(document).ready(function(){
 		$('a.file_screens').colorbox({transition:'fade', speed:500});

@@ -65,18 +65,37 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
 	}else{
 		$icmsTpl->assign('downloads_cat_path',false);
 	}
+	if($downloads_category_handler->userCanSubmit()) {
+		$icmsTpl->assign('user_submit', true);
+		$icmsTpl->assign('user_submit_link', DOWNLOADS_URL . 'category.php?op=mod&category_id=' . $categoryObj->id());
+	} else {
+		$icmsTpl->assign('user_submit', false);
+	}
+	
 } elseif ($clean_category_id == 0) {
-	$category = $downloads_category_handler->getCategories($clean_start, icms::$module->config['show_categories'], $clean_category_uid,  false, $clean_category_pid);
-	$icmsTpl->assign('downloads_cat', $category);
+	$categories = $downloads_category_handler->getCategories($clean_start, icms::$module->config['show_categories'], $clean_category_uid,  false, $clean_category_pid);
+	$icmsTpl->assign('downloads_cat', $categories);
 } else {
 	redirect_header(DOWNLOADS_URL, 3, _NOPERM);
 }
-if($downloads_category_handler->userCanSubmit()) {
-	$icmsTpl->assign('user_submit', true);
-	$icmsTpl->assign('user_submit_link', DOWNLOADS_URL . 'category.php?op=mod');
+if($downloadsConfig['downloads_show_upl_disclaimer'] == 1) {
+	$icmsTpl->assign('downloads_upl_disclaimer', true );
+	$icmsTpl->assign('up_disclaimer', $downloadsConfig['downloads_upl_disclaimer']);
 } else {
-	$icmsTpl->assign('user_submit', false);
+	$icmsTpl->assign('downloads_upl_disclaimer', false);
 }
+
+	if($downloads_category_handler->userCanSubmit()) {
+		$icmsTpl->assign('user_submit', true);
+		$icmsTpl->assign('user_submit_link', DOWNLOADS_URL . 'category.php?op=mod&category_id=' . $clean_category_id);
+	} else {
+		$icmsTpl->assign('user_submit', false);
+	}
+	
+	
+
+$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/downloads.js', array('type' => 'text/javascript'));
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////
@@ -90,14 +109,11 @@ $category_count = $downloads_category_handler->getCount($criteria);
 unset($criteria);
 $category_pagenav = new icms_view_PageNav($category_count, $downloadsConfig['show_categories'], $clean_start, 'start', false);
 
-$criteria ='';
-$criteria = new icms_db_criteria_Compo();
-$criteria->add(new icms_db_criteria_Item('download_active', true));
-$criteria->add(new icms_db_criteria_Item('download_approve', true));
-// adjust for tag, if present
-$file_count = $downloads_download_handler->getCount($criteria);
-	
-$download_pagenav = new icms_view_PageNav($file_count, $downloadsConfig['show_categories'], $clean_start, 'start', false);
+
+$files_count_criteria = $downloads_download_handler->getCountCriteria(true, true, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $clean_category_id);
+$files_count = $downloads_download_handler -> getCount($files_count_criteria, true, false);
+$icmsTpl->assign('files_count', $files_count);
+$download_pagenav = new icms_view_PageNav($files_count, $downloadsConfig['show_downloads'], $clean_start, 'start', false);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// ASSIGN //////////////////////////////////////////////////////
