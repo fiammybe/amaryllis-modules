@@ -54,6 +54,14 @@ define("_MD_DOWNLOADS_CLICK_HERE", "please click here");
 define("_MD_DOWNLOADS_MAILTO", "Mailto"); // @DAVID better constant to advise a file?
 define("_MD_DOWNLOADS_MAILTO_SBJ", ""); // @DAVID Please have a look for Mail subject
 define("_MD_DOWNLOADS_MAILTO_BDY", ""); // @DAVID Please have a look for Mail body
+
+
+define("_MD_DOWNLOADS_FILE_DESCRIPTION", "Description");
+define("_MD_DOWNLOADS_FILE_IMAGES", "Images");
+define("_MD_DOWNLOADS_FILE_INSTRUCTIONS", "Instructions");
+define("_MD_DOWNLOADS_FILE_HISTORY", "History");
+define("_MD_DOWNLOADS_FILE_STAT", "Statistics");
+
 // used in ajax.php
 define("_MD_DOWNLOADS_BROKEN_REPORTED", "Thank you for submitting! File was reported as broken.");
 define("_MD_DOWNLOADS_DOWNLOAD_START", "Download will start shortly"); //@DAVID -> this is the redirect message from ajax.php after clicking the download-link

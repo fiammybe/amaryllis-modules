@@ -19,8 +19,6 @@
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
-include_once ICMS_ROOT_PATH . "/modules/" . icms::$module -> getVar( 'dirname' ) . "/include/common.php";
-
 // this needs to be the latest db version
 define('DOWNLOADS_DB_VERSION', 1);
 

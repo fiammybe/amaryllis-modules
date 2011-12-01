@@ -33,52 +33,57 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_cid', XOBJ_DTYPE_INT, true, false, false, 1);
 		$this->quickInitVar('download_file', XOBJ_DTYPE_FILE);
 		
-		$this->quickInitVar("download_file_descriptions", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS);
+		$this->initVar("download_file_descriptions", XOBJ_DTYPE_FORM_SECTION);
+		$this->quickInitVar('download_teaser', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('download_description', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('download_keyfeatures', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('download_requirements', XOBJ_DTYPE_TXTAREA);
+		$this->quickInitVar('download_version', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_version_status', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_limitations', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_license', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_platform', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_history', XOBJ_DTYPE_TXTAREA);
+		$this->quickInitVar("download_file_descriptions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
+		
+		$this->quickInitVar("download_file_images", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar('download_img',XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar('download_screen_1',XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar('download_screen_2',XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar('download_screen_3',XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar('download_screen_4',XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar('download_album', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('download_version', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('download_version_status', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('download_limitations', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('download_license', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('download_platform', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('catalogue_item', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar("download_file_descriptions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
+		$this->quickInitVar("download_file_images_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
-		$this->quickInitVar("download_mirror_handling", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING);
+		$this->quickInitVar("download_mirror_handling", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar('download_mirror_url',XOBJ_DTYPE_URLLINK);
 		$this->quickInitVar('download_mirror_approve', XOBJ_DTYPE_INT);
 		$this->quickInitVar('download_has_mirror', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar("download_mirror_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
+		$this->quickInitVar("download_mirror_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
-		$this->quickInitVar("download_developer_info", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEVELOPER_INFO);
+		$this->quickInitVar("download_developer_info", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar("download_dev", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("download_dev_hp", XOBJ_DTYPE_URLLINK);
-		$this->quickInitVar("download_developer_information_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
+		$this->quickInitVar("download_developer_information_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
-		$this->quickInitVar("download_publish_info", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISH_INFO);
+		$this->quickInitVar("download_publish_info", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar('download_submitter', XOBJ_DTYPE_INT);
 		$this->quickInitVar('download_publisher', XOBJ_DTYPE_INT);
 		$this->quickInitVar('download_published_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('download_updated_date', XOBJ_DTYPE_LTIME);
-		$this->quickInitVar("download_publish_info_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
+		$this->quickInitVar("download_publish_info_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
-		$this->quickInitVar("download_view_section", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VIEW_SECTION);
+		$this->quickInitVar("download_view_section", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar('download_grpperm', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_active', XOBJ_DTYPE_INT,false, false, false, 1);
 		$this->quickInitVar('download_inblocks', XOBJ_DTYPE_INT,false, false, false, 1);
 		$this->quickInitVar('download_approve', XOBJ_DTYPE_INT);
 		$this->quickInitVar('download_updated', XOBJ_DTYPE_INT,false, false, false, 0);
 		$this->quickInitVar('download_broken', XOBJ_DTYPE_INT, false, false, false, 0);
-		$this->quickInitVar("download_view_section_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
+		$this->quickInitVar("download_view_section_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
-		$this->quickInitVar("download_static_section", XOBJ_DTYPE_FORM_SECTION, FALSE, FALSE, FALSE, _CO_DOWNLOADS_DOWNLOAD_STATIC_SECTION);
+		$this->quickInitVar("download_static_section", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar('download_comments', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_notification_sent', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_fb_like', XOBJ_DTYPE_INT, false);
@@ -91,11 +96,13 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->initCommonVar('doimage', true, 1);
 		$this->initCommonVar('dosmiley', true, 1);
 		$this->initCommonVar('docxode', true, 1);
-		$this->quickInitVar("download_static_section_close", XOBJ_DTYPE_FORM_SECTION_CLOSE, FALSE);
+		$this->quickInitVar("download_static_section_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		// set controls
 		$this->setControl('download_cid', array('name' => 'select', 'itemHandler' => 'category', 'method' => 'getCategoryList', 'module' => 'downloads'));
 		$this->setControl('download_description', 'dhtmltextarea');
+		$this->setControl('download_teaser', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
+		$this->setControl('download_history', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl('download_keyfeatures', 'textarea');
 		$this->setControl('download_requirements', 'textarea');
 		$this->setControl('download_file', 'file');
@@ -115,7 +122,6 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->setControl('download_approve', 'yesno');
 		$this->setControl('download_updated', 'yesno');
 		$this->setControl('download_broken', 'yesno');
-		$this->setControl('download_mirror_approve', 'yesno');
 		// hide static fields from form
 		$this->hideFieldFromForm(array( 'download_submitter', 'download_has_mirror', 'download_comments','download_notification_sent','download_fb_like', 'download_fb_dislike','download_g_like', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
 		// hide fields from single view
@@ -138,9 +144,23 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		}
 
 		if ($downloadsConfig['use_mirror'] == 0){
-			$this->hideFieldFromForm(array('download_mirror_approve','download_mirror_close','download_mirror_handling','download_mirror_url', 'download_mirror_title'));
-			$this->hideFieldFromSingleView(array('download_mirror_approve','download_mirror_close','download_mirror_handling','download_mirror_url', 'download_mirror_title'));
+			$this->hideFieldFromForm(array('download_mirror_approve','download_mirror_handling','download_mirror_url', 'download_mirror_title'));
+			$this->hideFieldFromSingleView(array('download_mirror_approve','download_mirror_handling','download_mirror_url', 'download_mirror_title'));
+		} else {
+			$this->openFormSection('download_mirror_handling', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING);
+			$this->setControl('download_mirror_approve', 'yesno');
 		}
+			
+			
+		$this->openFormSection('download_file_descriptions', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS);
+		$this->openFormSection('download_file_images', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_IMAGES);
+		$this->openFormSection('download_developer_info', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEVELOPER_INFO);
+		$this->openFormSection('download_publish_info', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISH_INFO);
+		$this->openFormSection('download_view_section', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VIEW_SECTION);
+		$this->openFormSection('download_static_section', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_STATIC_SECTION);
+		
+		
+		
 		//make use of seo
 		$this->initiateSEO();
 
@@ -382,6 +402,16 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		}
 		return $result;
 	}
+	
+	public function getDownloadHistory() {
+		$history = icms_core_Datafilter::checkVar($this->getVar('download_history'), 'str', 'encodehigh');
+		return $history;
+	}
+	
+	public function getDownloadTeaser() {
+		$teaser = icms_core_Datafilter::checkVar($this->getVar('download_teaser'), 'str', 'encodehigh');
+		return $teaser;
+	}
 
 	public function getDevHpLink() {
 		$dev_hp = 'download_dev_hp';
@@ -471,6 +501,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['published_date'] = $this->getDownloadPublishedDate();
 		$ret['updated_date'] = $this->getDownloadUpdatedDate();
 		$ret['publisher'] = $this->getDownloadPublisher(true);
+		$ret['teaser'] = $this->getDownloadTeaser();
+		$ret['history'] = $this->getDownloadHistory();
 		$ret['id'] = $this->getVar('download_id');
 		$ret['title'] = $this->getVar('download_title');
 		$ret['img'] = $this->getDownloadImageTag();

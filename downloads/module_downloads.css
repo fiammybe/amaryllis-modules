@@ -79,6 +79,7 @@
 	.downloads_cat_dsc {
 		font-size: .9em;
 		margin: 1em 0;
+		display: block;
 	}
 	
 	.downloads_cat_desc {
@@ -118,7 +119,6 @@
 	
 	.file_boxes {
 		float: right;
-		width: 35%;
 	}
 	
 	.file_contents {
@@ -152,7 +152,7 @@
 		position: relative;
 		background-color: #ccc;
 		width: 200px;
-		
+		float: right;
 		padding: .750em;
 		border-color: #FF7F2A;
 		border-width: 2px;
@@ -216,7 +216,7 @@
 	.file_informations {
 		display: table;
 		width: auto;
-		
+		font-size: .8em;
 		background: #ccc;
 		padding: 1em .5em;
 		margin: 0 auto .5em auto;
@@ -228,7 +228,7 @@
 	.table_row {
 		display: table-row;
 		padding: .250em;
-		line-height: 2em;
+		line-height: 2.5em;
 	}
 	
 	.table_cell {
