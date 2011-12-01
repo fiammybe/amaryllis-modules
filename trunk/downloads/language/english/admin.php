@@ -35,9 +35,8 @@ define("_AM_DOWNLOADS_INDEX_NEED_APPROVAL_CATS", "Categories to approve: &nbsp;"
 // 
 define("_AM_DOWNLOADS_DOWNLOAD_ADD", "Add File");
 define("_AM_DOWNLOADS_CREATE", "New");
-define("_AM_DOWNLOADS_DOWNLOAD_CLONE", "Clone File");
-define("_AM_DOWNLOADS_DOWNLOAD_CREATED", "New file uploaded");
-define("_AM_DOWNLOADS_DOWNLOAD_MODIFIED", "File modified");
+define("_AM_DOWNLOADS_CREATED", "Successful created");
+define("_AM_DOWNLOADS__MODIFIED", "Successfull modified");
 define("_AM_DOWNLOADS_DOWNLOAD_ONLINE", "Online");
 define("_AM_DOWNLOADS_DOWNLOAD_OFFLINE", "Offline");
 define("_AM_DOWNLOADS_DOWNLOAD_WEIGHTS_UPDATED", "Weights updated");
@@ -60,3 +59,5 @@ define("_AM_DOWNLOADS_ONLINE", "Offline");
 
 define("_AM_DOWNLOADS_MIRROR_FALSE", "Mirror denied");
 define("_AM_DOWNLOADS_MIRROR_TRUE", "Mirror approved");
+
+define("_AM_DOWNLOADS_NO_CAT_FOUND", "No category was found. Please create a category first. For questions read manual first.");

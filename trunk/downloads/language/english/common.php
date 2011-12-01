@@ -50,6 +50,12 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM", "View Permission");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM_DSC", " Select which groups will have view permission for this File. This means that a user belonging to one of these groups will be able to view the File when it is activated in the site.' ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE", "Fileupload");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DSC", "  ");
+
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY", "Filehistory");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY_DSC", "Insert the history from the file. Minimalistic html will be allowed.");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER", "Teaser");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER_DSC", "Descripe the file using 1 or 2 sentences.");
+
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES", "Keyfeatures");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES_DSC", " Enter the keyfeatures of the file.");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_REQUIREMENTS", "Requirements");
@@ -87,12 +93,13 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_BROKEN_DSC", "This will be 'YES' if the 
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HAS_MIRROR", "Has Mirror?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_APPROVE", "Mirror approved?");
 
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_IMAGES", "Add some images for visual description");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS", "Descripe the file");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING", "Download Mirror");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEVELOPER_INFO", "Developer informations");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISH_INFO", "Publishe informations");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISH_INFO", "Publish informations");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VIEW_SECTION", "Public permissions");
-define("_CO_DOWNLOADS_DOWNLOAD_STATIC_SECTION", "Some additional informations");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_STATIC_SECTION", "Some additional informations");
 // language constants for editing indexpage
 define("_CO_DOWNLOADS_INDEXPAGE_INDEX_HEADER", "Title");
 define("_CO_DOWNLOADS_INDEXPAGE_INDEX_HEADER_DSC", " Set Title displayed in the index at frontend ");
