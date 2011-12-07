@@ -20,7 +20,7 @@
 include_once "../../mainfile.php";
 include_once dirname(__FILE__) . '/include/common.php';
 
-$valid_op = array ('report_broken', 'getFile');
+$valid_op = array ('report_broken', 'getFile', 'addreview');
 $clean_op = (isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '');
 
 if (in_array($clean_op, $valid_op, TRUE)) {
@@ -50,6 +50,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$downloads_log_handler = icms_getModuleHandler('log', basename(dirname(__FILE__)),'downloads');
 			$logObj = $downloads_log_handler->create();
 			$logObj->setVar('log_item_id', $download_id );
+			$logObj->setVar('log_date', (time()-200) );
 			$logObj->setVar('download_publisher', $log_uid);
 			$logObj->setVar('log_item', 0 );
 			$logObj->setVar('log_case', 0 );
@@ -60,6 +61,31 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				return redirect_header (DOWNLOADS_URL . 'download.php?op=downfile&amp;download_id=' . $download_id, 3, _MD_DOWNLOADS_DOWNLOAD_START);
 			} else {
 				return redirect_header (DOWNLOADS_URL . 'download.php', 3, _NO_PERM);
+			}
+			break;
+			
+		case 'addreview':
+			global $downloadsConfig;
+			$download_id = (int)filter_input(INPUT_GET, 'download_id');
+			if ($download_id <= 0) return FALSE;
+			$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(__FILE__)),'downloads');
+			$downloadObj = $downloads_download_handler->get($download_id);
+			if ($downloadObj->isNew()) return FALSE;
+			$clean_review_id = isset($_GET['review_id']) ? filter_input(INPUT_GET, 'review_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+			$downloads_review_handler = icms_getModuleHandler("review", basename(dirname(__FILE__)), "downloads");
+			$reviewObj = $downloads_review_handler->get($clean_review_id);
+			if($reviewObj->isNew() ) {
+				$reviewObj->setVar('review_uid', icms::$user->getVar("uid"));
+				$reviewObj->setVar('review_date', (time()-200) );
+				$reviewObj->setVar('review_ip', $_SERVER['REMOTE_ADDR'] );
+				if (!icms::$security->check()) {
+					redirect_header('singledownload.php', 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
+				}
+				$controller = new icms_ipf_Controller($downloads_review_handler);
+				$controller->storeFromDefaultForm(_MD_DOWNLOADS_REVIEW_SUBMITTED, _MD_DOWNLOADS_REVIEW_SUBMITTED);
+				return redirect_header(DOWNLOADS_URL, 3, _THANKS_SUBMISSION);
+			} else {
+				redirect_header(DOWNLOADS_URL, 3, _NO_PERM);
 			}
 			break;
 	}

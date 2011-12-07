@@ -22,6 +22,7 @@ define("_MD_DOWNLOADS_PUBLISHED_BY", "Published by:");
 define("_MD_DOWNLOADS_PUBLISHED_ON", "Published on:");
 define("_MD_DOWNLOADS_SECURITY_CHECK_FAILED", "Security check failed.");
 define("_MD_DOWNLOADS_ADMIN_PAGE", ":: Admin page ::");
+define("_MD_DOWNLOADS_SUBMIT", "Submit");
 // constants on index view
 define("_MD_DOWNLOADS_DOWNLOAD_FILELIST", "Files in this category");
 define("_MD_DOWNLOADS_CATEGORY_SUBCATLIST", "Subcategories");
@@ -54,8 +55,9 @@ define("_MD_DOWNLOADS_CLICK_HERE", "please click here");
 define("_MD_DOWNLOADS_MAILTO", "Mailto"); // @DAVID better constant to advise a file?
 define("_MD_DOWNLOADS_MAILTO_SBJ", ""); // @DAVID Please have a look for Mail subject
 define("_MD_DOWNLOADS_MAILTO_BDY", ""); // @DAVID Please have a look for Mail body
+define("_MD_DOWNLOADS_REVIEW", "Review");
 
-
+define("_MD_DOWNLOADS_FILE_GENERAL_INFORMATIONS", "General Informations");
 define("_MD_DOWNLOADS_FILE_DESCRIPTION", "Description");
 define("_MD_DOWNLOADS_FILE_IMAGES", "Images");
 define("_MD_DOWNLOADS_FILE_INSTRUCTIONS", "Instructions");
@@ -75,3 +77,8 @@ define("_MD_DOWNLOADS_CATEGORY_CREATE", "Create a new Category");
 define("_MD_DOWNLOADS_CATEGORY_EDIT", "Edit the Category");
 define("_MD_DOWNLOADS_CATEGORY_CREATED", "Category successfully created. Thanks for submit.");
 define("_MD_DOWNLOADS_CATEGORY_MODIFIED", "Category successfully modified. Thanks for submit");
+// for review form
+define("_MD_DOWNLOADS_REVIEW_ADD", "Submit Review");
+define('_MD_DOWNLOADS_REVIEW_SUBMITTED', 'Review submitted');
+define('_THANKS_SUBMISSION', 'Thank you for submitting your review!');
+

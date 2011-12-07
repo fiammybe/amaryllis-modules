@@ -24,7 +24,7 @@ include_once ICMS_ROOT_PATH . '/modules/' . basename(dirname(dirname(__FILE__)))
 
 function downloads_search($queryarray, $andor, $limit, $offset, $userid) {
 	$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
-	$downloadssArray = $downloads_download_handler->getDownloadsForSearch($queryarray, $andor, $limit, $offset, $userid);
+	$downloadsArray = $downloads_download_handler->getDownloadsForSearch($queryarray, $andor, $limit, $offset, $userid);
 
 	$ret = array();
 

@@ -24,9 +24,13 @@ function b_downloads_category_menu_show($options) {
 	
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
+	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+	$uid = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
+	$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+	
 	$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 
-	$block['downloads_category'] = $downloads_category_handler->getCategoryListForMenu($options[0], $options[1],$groups = array(), 'category_grpperm', true, true, true, $options[3]);
+	$block['downloads_category'] = $downloads_category_handler->getCategoryListForMenu($options[0], $options[1], true, true, true, $options[3], $options[2]);
 	
 	return $block;
 }

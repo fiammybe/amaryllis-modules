@@ -34,6 +34,11 @@ $i++;
 $adminmenu[$i]['title'] = _MI_DOWNLOADS_MENU_INDEXPAGE;
 $adminmenu[$i]['link'] = 'admin/indexpage.php?op=mod&indexkey=1';
 
+$i++;
+$adminmenu[$i]['title'] = _MI_DOWNLOADS_MENU_REVIEW;
+$adminmenu[$i]['link'] = 'admin/review.php';
+
+
 global $icmsConfig;
 $downloadsModule = icms_getModuleInfo( basename( dirname( dirname( __FILE__) ) ) );
 $moddir = basename( dirname( dirname( __FILE__) ) );
@@ -63,6 +68,10 @@ $i = 0;
 	$headermenu[$i]['title'] = _MI_DOWNLOADS_MENU_MANUAL;
 	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/manual.php';
 
+	$i++;
+	$headermenu[$i]['title'] = _MI_DOWNLOADS_MENU_LOG;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/log.php';
+	
 	$i++;
 	$headermenu[$i]['title'] = _MODABOUT_ABOUT;
 	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/about.php';

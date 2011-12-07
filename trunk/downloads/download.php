@@ -46,8 +46,8 @@ function editdownload($downloadObj) {
 		$sform->assign($icmsTpl, 'downloads_download_form');
 		$icmsTpl->assign('downloads_cat_path', _SUBMIT);
 	}
-} 
- 
+}
+
 include_once 'header.php';
 
 $xoopsOption['template_main'] = 'downloads_download.html';
