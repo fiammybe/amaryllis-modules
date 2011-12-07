@@ -192,6 +192,9 @@
 		height: auto;
 		text-align: left;
 		vertical-align: middle;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
 	}
 	
 	ul.downloads_check {

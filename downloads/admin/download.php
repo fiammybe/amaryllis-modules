@@ -44,7 +44,6 @@ function editdownload($download_id = 0) {
 
 include_once "admin_header.php";
 
-include_once 'admin_header.php';
 $downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 $count = $downloads_category_handler -> getCount(false, true, false);
 if( $count <= 0 ) {

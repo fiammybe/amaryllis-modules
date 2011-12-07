@@ -17,6 +17,24 @@
  *
  */
 
+function addreview($clean_review_id = 0, $clean_download_id = 0){
+	global $downloads_review_handler, $downloadsConfig, $icmsTpl;
+	
+	$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
+	$downloadObj = $downloads_download_handler->get($clean_download_id);
+	$downloads_review_handler = icms_getModuleHandler("review", basename(dirname(__FILE__)), "downloads");
+	$reviewObj = $downloads_review_handler->get($clean_review_id);
+	
+	if ($reviewObj->isNew()){
+		$reviewObj->setVar("review_date", (time()-200));
+		$sform = $reviewObj->getSecureForm(_MD_DOWNLOADS_REVIEW_ADD, 'addreview', DOWNLOADS_URL . "ajax.php?op=addreview&download_id=" . $downloadObj->id() , '_CO_SUBMIT', FALSE, TRUE);
+		$sform->assign($icmsTpl, 'downloads_review_form');
+	} else {
+		exit;
+	}
+	
+}
+
 include_once "header.php";
 
 $xoopsOption["template_main"] = "downloads_singledownload.html";
@@ -83,7 +101,7 @@ if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted()) {
 		$icmsTpl->assign('album_module', true);
 		$directory_name = basename(dirname( __FILE__ ) );
 		$script_name = getenv("SCRIPT_NAME");
-		$document_root = str_replace('modules/' . $directory_name . '/download.php', '', $script_name);
+		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$albumConfig = icms_getModuleConfig ($albumModule->getVar('name') );
 		$album_id = $downloadObj->getVar('download_album');
 		$album_images_handler = icms_getModuleHandler( 'images', $albumModule -> getVar( 'dirname' ), 'album' );
@@ -137,6 +155,15 @@ if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted()) {
 	} else {
 		$icmsTpl->assign('downloads_cat_path', false);
 	}
+
+	addreview(0, $clean_download_id);
+	$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&download_id=" . $downloadObj->id() );
+	
+	if ($downloadsConfig['com_rule']) {
+		$icmsTpl->assign('downloads_download_comment', true);
+		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
+	}
+	
 	$icms_metagen = new icms_ipf_Metagen($downloadObj->getVar("download_title"), $downloadObj->getVar("meta_keywords", "n"), $downloadObj->getVar("meta_description", "n"));
 	$icms_metagen->createMetaTags();
 } else {

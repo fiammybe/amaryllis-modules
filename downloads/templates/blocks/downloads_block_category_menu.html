@@ -1,12 +1,12 @@
 <div class="downloads_menu">
 	<ul class="primary-nav blue">
-		<{foreach from=$block.downloads_category item=categories}>
+		<{foreach from=$block.downloads_category item=category}>
 			<li>
-				<a class="menuMain" href="<{$icms_url}>/modules/downloads/category.php?category_id=<{$categories.category_id}>"><{$categories.category_title}></a>
+				<a class="menuMain" href="<{$icms_url}>/modules/downloads/category.php?category_id=<{$category.category_id}>"><{$category.category_title}></a>
 				
-				<{if $block.showsubs && $subcategories == true}>
+				<{if $block.showsubs && $category.hassub == 1}>
 					<ul>
-						<{foreach item=subcategories from=$categories}>
+						<{foreach item=subcategories from=$category}>
 							<li>
 								<a class="menuMain" href="<{$icms_url}>/modules/downloads/category.php?cat=<{$subcategories.category_id}>"><{$subcategories.category_title}></a>
 							</li>

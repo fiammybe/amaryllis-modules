@@ -132,7 +132,13 @@ define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPDATED_DATE", "Updated on");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_SUBMITTER", "Submitter");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM", "View Permission");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM_DSC", "Select which groups will have upload permission for this Category. This means that a user belonging to one of these groups will be able to uload new Files to the Category when it is activated in the site.' ");
-
+// review system
+define("_CO_DOWNLOADS_REVIEW_REVIEW_ITEM_ID", "item");
+define("_CO_DOWNLOADS_REVIEW_REVIEW_UID", "user");
+define("_CO_DOWNLOADS_REVIEW_REVIEW_NAME", "Name");
+define("_CO_DOWNLOADS_REVIEW_REVIEW_EMAIL", "E-Mail");
+define("_CO_DOWNLOADS_REVIEW_REVIEW_MESSAGE", "Message");
+define("_CO_DOWNLOADS_REVIEW_REVIEW_DATE", "Date");
 // ratings
 define("_CO_DOWNLOADS_RATINGS_ITEM", "Rated item");
 define("_CO_DOWNLOADS_RATINGS_RATING_RATE", "Rate");

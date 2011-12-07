@@ -20,7 +20,7 @@
 include_once 'header.php';
 $com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
 if ($com_itemid > 0) {
-	$downloads_download_handler = icms_getModuleHandler('item', basename(dirname(__FILE__)),'downloads');
+	$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(__FILE__)),'downloads');
 	$downloadObj = $downloads_download_handler->get($com_itemid);
 	if ($downloadObj && !$downloadObj->isNew()) {
 		$bodytext = $downloadObj->getVar('download_description');

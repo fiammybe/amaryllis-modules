@@ -1,4 +1,4 @@
-<!-- admin index page -->
+<!-- admin index view -->
 <{if $downloads_index_title}>
 	<h1><{$downloads_index_title}></h1>
 <{/if}>
@@ -11,7 +11,6 @@
 <{if $addindex}>
 	<{includeq file='db:system_common_form.html' form=$addindex}>
 <{/if}>
-
 
 <!-- admin download page -->
 <{if $downloads_download_title}>
@@ -55,16 +54,24 @@
 	<{includeq file='db:system_common_form.html' form=$addindexpage}>
 <{/if}>
 
-<!-- admin mirror page -->
-<{if $downloads_mirror_title}>
-	<h1><{$downloads_mirror_title}></h1>
+<!-- admin review page -->
+<{if $downloads_review_title}>
+	<h1><{$downloads_review_title}></h1>
 <{/if}>
-<{if $downloads_mirror_info}>
-	<p><{$downloads_mirror_info}></p>
+<{if $downloads_review_info}>
+	<p><{$downloads_review_info}></p>
 <{/if}>
-<{if $downloads_mirror_table}>
-	<{$downloads_mirror_table}>
+<{if $downloads_review_table}>
+	<{$downloads_review_table}>
 <{/if}>
-<{if $addmirror}>
-	<{includeq file='db:system_common_form.html' form=$addmirror}>
+
+<!-- admin log page -->
+<{if $downloads_log_title}>
+	<h1><{$downloads_log_title}></h1>
+<{/if}>
+<{if $downloads_log_info}>
+	<p><{$downloads_log_info}></p>
+<{/if}>
+<{if $downloads_log_table}>
+	<{$downloads_log_table}>
 <{/if}>

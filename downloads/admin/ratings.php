@@ -1,22 +1,22 @@
 <?php
 /**
- * Admin page to manage ratingss
+ * 'Downloads' is a light weight download handling module for ImpressCMS
  *
- * List, add, edit and delete ratings objects
- *
+ * File: /admin/ratings.php
+ * 
+ * edit Downloads ratings
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Downloads
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		downloads
  * @version		$Id$
+ * @package		downloads
+ *
  */
 
-/**
- * Edit a Ratings
- *
- * @param int $ratings_id Ratingsid to be edited
-*/
 function editratings($ratings_id = 0) {
 	global $downloads_ratings_handler, $icmsModule, $icmsAdminTpl;
 

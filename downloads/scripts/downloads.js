@@ -102,3 +102,28 @@
 	$(document).ready(function(){
 		$("#file_tabs").tabs();
 	});
+	
+	// initiate review form
+	$(document).ready(function(){
+		$(".review_form").dialog({
+			modal: true,
+			width: 700,
+			height: 350,
+			autoOpen: false,
+			resizable: false,
+			draggable: true
+		});
+		$(".review_link").click(function(e) {
+			e.preventDefault();
+			var targetUrl = $(this).attr("href");
+			$(".file_review").dialog('option', 'buttons', {
+				"Submit" : function() {
+					window.location.href = targetUrl;
+				},
+				"Cancel" : function() {
+					$(this).dialog("close");
+				}
+			});
+			$(".review_form").dialog("open");
+		});
+	});

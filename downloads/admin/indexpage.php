@@ -17,8 +17,6 @@
  *
  */
 
-include_once "admin_header.php";
-
 function editform($indexkey = 1, $indeximage = true) {
 
 	global $downloads_indexpage_handler, $icmsAdminTpl;
@@ -31,7 +29,7 @@ function editform($indexkey = 1, $indeximage = true) {
 	
 }
 
-include 'admin_header.php';
+include_once "admin_header.php";
 
 $clean_indexkey = $clean_op = $valid_op = '';
 

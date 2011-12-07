@@ -133,22 +133,12 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getCategoryListForMenu($order = 'weight', $sort = 'ASC',$groups = array(), $perm = 'category_grpperm', $status = null,$approved = null,$inblocks = null, $category_id = null) {
+	public function getCategoryListForMenu($order = 'weight', $sort = 'ASC', $status = null,$approved = null,$inblocks = null, $category_id = null, $showSubs = null) {
 	
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
-		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
-			foreach($groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
-			}
-			$criteria->add($criteriaTray);
-			if ($perm == 'category_grpperm' || $perm == 'downloads_admin') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
-			}
-		}
+		
 		if (isset($status)) {
 			$criteria->add(new icms_db_criteria_Item('category_active', true));
 		}
@@ -160,13 +150,21 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		}
 		if (is_null($category_id)) $category_id = 0;
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
-		$categories = & $this->getObjects($criteria, true, true);
+		$categories = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
-		foreach(array_keys($categories) as $i) {
-			$ret[$i] = $categories[$i]->getVar('category_title');
-			$subcategories = $this->getCategoryListForMenu($order, $sort, $groups, $perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'));
-			foreach(array_keys($subcategories) as $j) {
-				$ret[$j] = $subcategories[$j];
+		foreach ($categories as $category){
+			if ($category['accessgranted']){
+				$ret[$category['category_id']] = $category;
+				if ($showSubs) {
+					$subcategories = $this->getCategoryListForMenu($order, $sort,$status, $approved, $inblocks, $category['category_id'], $showSubs);
+					if(count($subcategories > 0)) {
+						$ret[$category['hassub']] = 1;
+						$ret[$category['subcategories']] = $subcategories;
+					} else {
+						$ret[$category['hassub']] = 0;
+					}
+				}
+				
 			}
 		}
 		return $ret;

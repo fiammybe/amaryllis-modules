@@ -23,6 +23,6 @@ function downloads_com_update($item_id, $total_num) {
     $downloads_download_handler->updateComments($item_id, $total_num);
 }
 
-function album_com_approve(&$comment) {
+function downloads_com_approve(&$comment) {
     // notification mail here
 }

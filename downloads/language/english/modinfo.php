@@ -29,8 +29,6 @@ define("_AM_DOWNLOADS_REQUIREMENTS_TPL", "'Downloads' Requirements check");
 define("_MI_DOWNLOADS_FOOTER_TPL", "'Downloads' footer contains notifications and comment rules");
 define("_MI_DOWNLOADS_CATEGORY_TPL", "'Downloads' category view in frontend");
 define("_MI_DOWNLOADS_DOWNLOAD_TPL", "'Downloads' single file view in frontend");
-define("_AM_DOWNLOADS_DISCLAIMER_TPL", "'Downloads' DISCLAIMER view in frontend");
-define("_AM_DOWNLOADS_BROKEN_TPL", "'Downloads' report broken files in frontend");
 
 // blocks
 define("_MI_DOWNLOADS_BLOCK_RECENT_DOWNLOADS", "Download List");
@@ -125,6 +123,8 @@ define("_MI_DOWNLOADS_MENU_INDEXPAGE", "Edit Indexpage");
 define("_MI_DOWNLOADS_MENU_TEMPLATES", "Templates");
 define("_MI_DOWNLOADS_MENU_RATINGS", "Ratings");
 define("_MI_DOWNLOADS_MENU_MANUAL", "Manual");
+define("_MI_DOWNLOADS_MENU_REVIEW", "Review");
+define("_MI_DOWNLOADS_MENU_LOG", "Log");
 // Submenu while calling a tab
 define("_MI_DOWNLOADS_DOWNLOAD_EDIT", "Edit your File");
 define("_MI_DOWNLOADS_DOWNLOAD_CREATINGNEW", "Upload a new File");
