@@ -371,7 +371,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		if ($obj->getVar('category_pid','e') == $obj->getVar('category_id','e')){
 			$obj->setVar('category_pid', 0);
 		}
-		if (!$obj->getVar('category_img_upload') OR !$obj->getVar('category_img_upload' == 0) ) {
+		if (!$obj->getVar('category_img_upload') == "") {
 			$obj->setVar('category_img', $obj->getVar('category_img_upload') );
 		}
 		$obj->setVar( 'category_published_date', (time() - 300) );
