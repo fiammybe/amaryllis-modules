@@ -341,8 +341,10 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$script_name = getenv("SCRIPT_NAME");
 		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$download_screen_1 = $this->getVar('download_screen_1', 'e');
-		if (!empty($download_screen_1)) {
+		if (!$download_screen_1 == "") {
 			$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_screen_1;
+		}else {
+			$image_tag=false;
 		}
 		return $image_tag;
 	}
@@ -353,8 +355,10 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$script_name = getenv("SCRIPT_NAME");
 		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$download_screen_2 = $this->getVar('download_screen_2', 'e');
-		if (!empty($download_screen_2)) {
+		if (!$download_screen_2 == "") {
 			$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_screen_2;
+		}else {
+			$image_tag=false;
 		}
 		return $image_tag;
 	}
@@ -365,8 +369,10 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$script_name = getenv("SCRIPT_NAME");
 		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$download_screen_3 = $this->getVar('download_screen_3', 'e');
-		if (!empty($download_screen_3)) {
+		if (!$download_screen_3 == "") {
 			$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_screen_3;
+		}else {
+			$image_tag=false;
 		}
 		return $image_tag;
 	}
@@ -377,8 +383,10 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$script_name = getenv("SCRIPT_NAME");
 		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$download_screen_4 = $this->getVar('download_screen_4', 'e');
-		if (!empty($download_screen_4)) {
+		if (!$download_screen_4 == "") {
 			$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_screen_4;
+		} else {
+			$image_tag=false;
 		}
 		return $image_tag;
 	}
