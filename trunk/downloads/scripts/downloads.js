@@ -68,19 +68,12 @@
 	
 	// call disclaimer for upload-confirmation
 	$(document).ready(function(){
-
-		$("#dialog-confirm-upl-disclaimer").dialog({
-			modal: true,
-			width: 800,
-			height: 600,
-			autoOpen: false,
-			resizable: true,
-			draggable: true
-		});
+	
 		$(".upl_disclaimer").click(function(e) {
-			pos = this.id,
+			var $link = $(this);
+			
 			e.preventDefault();
-			var targetUrl = $(pos).attr("href");
+			var targetUrl = $link.attr("href");
 			$("#dialog-confirm-upl-disclaimer").dialog('option', 'buttons', {
 				"I Agree" : function() {
 					window.location.href = targetUrl;
@@ -90,7 +83,20 @@
 				}
 			});
 			$("#dialog-confirm-upl-disclaimer").dialog("open");
+		
 		});
+		
+		
+		$("#dialog-confirm-upl-disclaimer").dialog({
+			modal: true,
+			width: 800,
+			height: 600,
+			autoOpen: false,
+			resizable: true,
+			draggable: true
+		});
+		
+		
 	});
 	
 	// use colorbox for screenshots

@@ -33,7 +33,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$this->quickInitVar('category_title', XOBJ_DTYPE_TXTBOX, true);
 		$this->initCommonVar('short_url');
 		$this->quickInitVar('category_pid', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('category_img', XOBJ_DTYPE_TXTAREA, false);
+		$this->quickInitVar('category_img', XOBJ_DTYPE_TXTBOX, false);
 		$this->quickInitVar('category_img_upload', XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar('category_description', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('category_active', XOBJ_DTYPE_INT, false, false,false, 1);
@@ -240,17 +240,11 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 			return true;
 		}
 		
-		if ($viewperm && $this->getVar('category_active', 'e') == true) {
-			return true;
-		}
-		
-		if ($viewperm && $this->getVar('category_approve', 'e') == true) {
+		if ($viewperm && $this->getVar('category_active', 'e') == true && $this->getVar('category_approve', 'e') == true && count($allowed_groups) > 0) {
 			return true;
 		}
 
-		if ($viewperm && count($allowed_groups) > 0) {
-			return true;
-		}
+		
 		return false;
 	}
 

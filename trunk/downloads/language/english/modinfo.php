@@ -115,6 +115,10 @@ define("_MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY", "New Category published
 define("_MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_CAP", "Notify me when a new Category has been published");
 define("_MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_DSC", "Receive notification when any new Category is published.");
 define("_MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_SBJ", "[{X_SITENAME}] {X_MODULE} auto-notify : New Category published");
+
+define("_MI_DOWNLOADS_FILE_NOTIFY", "File");
+define('_MI_DOWNLOADS_FILE_NOTIFY_DSC', 'Notification options which apply to the current file');
+
 // ACP menu
 define("_MI_DOWNLOADS_MENU_INDEX", "Index");
 define("_MI_DOWNLOADS_MENU_DOWNLOAD", "Manage Files");

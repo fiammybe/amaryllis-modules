@@ -75,8 +75,10 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return $criteria;
 	}
 	
-	public function getCategories($start = 0, $limit = 0, $category_publisher = false, $category_id = false,  $category_pid = false, $order = 'weight', $sort = 'ASC') {
+	public function getCategories($approved= null, $active = null, $start = 0, $limit = 0, $category_publisher = false, $category_id = false,  $category_pid = false, $order = 'weight', $sort = 'ASC') {
 		$criteria = $this->getCategoryCriteria($start, $limit, $category_publisher, $category_id,  $category_pid, $order, $sort);
+		$criteria->add(new icms_db_criteria_Item("category_approve", true));
+		$criteria->add(new icms_db_criteria_Item("category_active", true));
 		$categories = $this->getObjects($criteria, true, false);
 		$ret = array();
 		foreach ($categories as $category){
@@ -156,15 +158,15 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 			if ($category['accessgranted']){
 				$ret[$category['category_id']] = $category;
 				if ($showSubs) {
-					$subcategories = $this->getCategoryListForMenu($order, $sort,$status, $approved, $inblocks, $category['category_id'], $showSubs);
-					if(count($subcategories > 0)) {
+					$subcategories = $this->getCategoryListForMenu($order, $sort,$status, $approved, $inblocks, $category['category_id'], $showSubs);					
+					if(!count($subcategories) == 0) {
+						
 						$ret[$category['hassub']] = 1;
 						$ret[$category['subcategories']] = $subcategories;
 					} else {
 						$ret[$category['hassub']] = 0;
 					}
 				}
-				
 			}
 		}
 		return $ret;
@@ -369,7 +371,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		if ($obj->getVar('category_pid','e') == $obj->getVar('category_id','e')){
 			$obj->setVar('category_pid', 0);
 		}
-		if (!$obj->getVar('category_img_upload') OR $obj->getVar('category_img_upload' == 0) ) {
+		if (!$obj->getVar('category_img_upload') OR !$obj->getVar('category_img_upload' == 0) ) {
 			$obj->setVar('category_img', $obj->getVar('category_img_upload') );
 		}
 		$obj->setVar( 'category_published_date', (time() - 300) );
@@ -398,6 +400,21 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		// delete global notifications
 		$notification_handler->unsubscribeByItem($module_id, $category, $category_id);
 		return true;
+		
+		$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "downloads");
+		if (!is_object(icms::$user)) {
+			$log_uid = 0;
+		} else {
+			$log_uid = icms::$user->getVar("uid");
+		}
+		$logObj = $downloads_log_handler->create();
+		$logObj->setVar('log_item_id', $obj->id() );
+		$logObj->setVar('log_date', (time()-200) );
+		$logObj->setVar('log_uid', $log_uid);
+		$logObj->setVar('log_item', 1 );
+		$logObj->setVar('log_case', 2 );
+		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->store(TRUE);
 	}
 
 }

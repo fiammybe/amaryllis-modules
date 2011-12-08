@@ -22,12 +22,31 @@ function editdownload($download_id = 0) {
 	
 	$downloadObj = $downloads_download_handler->get($download_id);
 	
+	$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "downloads");
+	if (!is_object(icms::$user)) {
+		$log_uid = 0;
+	} else {
+		$log_uid = icms::$user->getVar("uid");
+	}
+	
+	
 	if (!$downloadObj->isNew()){
 		$downloadObj->hideFieldFromForm(array( 'download_published_date', 'download_updated_date', 'download_approve' ) );
 		$downloadObj->setVar( 'download_updated_date', (time() - 100) );
+		
+		$logObj = $downloads_log_handler->create();
+		$logObj->setVar('log_item_id', $downloadObj->id() );
+		$logObj->setVar('log_date', (time()-200) );
+		$logObj->setVar('log_uid', $log_uid);
+		$logObj->setVar('log_item', 0 );
+		$logObj->setVar('log_case', 3 );
+		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->store(TRUE);
+		
 		downloads_adminmenu( 1, _MI_DOWNLOADS_MENU_DOWNLOAD . ' > ' . _MI_DOWNLOADS_DOWNLOAD_EDIT);
 		$sform = $downloadObj->getForm(_AM_DOWNLOADS_EDIT, 'adddownload');
 		$sform->assign($icmsAdminTpl);
+		
 	} else {
 		$downloadObj->hideFieldFromForm(array( 'download_published_date', 'download_updated_date', 'download_approve' ) );
 		$downloadObj->setVar('download_approve', true);
@@ -38,6 +57,15 @@ function editdownload($download_id = 0) {
 		downloads_adminmenu( 1, _MI_DOWNLOADS_MENU_DOWNLOAD . " > " . _MI_DOWNLOADS_DOWNLOAD_CREATINGNEW);
 		$sform = $downloadObj->getForm(_AM_DOWNLOADS_CREATE, 'adddownload');
 		$sform->assign($icmsAdminTpl);
+
+		$logObj = $downloads_log_handler->create();
+		$logObj->setVar('log_item_id', $downloadObj->id() );
+		$logObj->setVar('log_date', (time()-200) );
+		$logObj->setVar('log_uid', $log_uid);
+		$logObj->setVar('log_item', 0 );
+		$logObj->setVar('log_case', 1 );
+		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->store(TRUE);
 	}
 	$icmsAdminTpl->display('db:downloads_admin.html');
 }

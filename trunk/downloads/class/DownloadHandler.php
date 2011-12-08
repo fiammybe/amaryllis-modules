@@ -454,6 +454,22 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		// delete global notifications
 		$notification_handler->unsubscribeByItem($module_id, $category, $download_id);
 		return true;
+		
+		$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "downloads");
+		if (!is_object(icms::$user)) {
+			$log_uid = 0;
+		} else {
+			$log_uid = icms::$user->getVar("uid");
+		}
+		$logObj = $downloads_log_handler->create();
+		$logObj->setVar('log_item_id', $obj->id() );
+		$logObj->setVar('log_date', (time()-200) );
+		$logObj->setVar('download_publisher', $log_uid);
+		$logObj->setVar('log_item', 0 );
+		$logObj->setVar('log_case', 2	 );
+		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->store(TRUE);
+			
 	}
 	
 }
