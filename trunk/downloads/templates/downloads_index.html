@@ -111,9 +111,11 @@
 				
 				<!-- File image -->
 				<span class="downloads_cat_img">
-					<a href="<{$download.itemLink}>">
-						<img src="<{$download.img}>" alt="" title="<{$download.title}>" />
+					<{if $file.img}>
+					<a class="file_screens" href="<{$download.img}>" title="file image">
+						<{resized_image file=$download.img width=$download.file_thumbnail_width height=$download.file_thumbnail_height fit="inside"}>
 					</a>
+				<{/if}>
 				</span>
 				
 				<!-- File title -->

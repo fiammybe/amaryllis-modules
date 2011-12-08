@@ -17,8 +17,6 @@
  *
  */
 
-defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
-
 include_once "admin_header.php";
 $aboutObj = new icms_ipf_About();
 $aboutObj->render();
