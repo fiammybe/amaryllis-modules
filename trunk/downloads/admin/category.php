@@ -111,9 +111,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$visibility = $downloads_category_handler -> changeVisible( $clean_category_id );
 			$ret = 'downloads.php';
 			if ($visibility == 0) {
-				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_DOWNLOADS_OFFLINE );
+				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_OFFLINE );
 			} else {
-				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_DOWNLOADS_ONLINE );
+				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_ONLINE );
 			}
 			break;
 			

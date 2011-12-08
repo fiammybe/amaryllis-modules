@@ -35,10 +35,11 @@ define("_AM_DOWNLOADS_INDEX_NEED_APPROVAL_CATS", "Categories to approve: &nbsp;"
 // 
 define("_AM_DOWNLOADS_DOWNLOAD_ADD", "Add File");
 define("_AM_DOWNLOADS_CREATE", "New");
+define("_AM_DOWNLOADS_EDIT", "Edit");
 define("_AM_DOWNLOADS_CREATED", "Successful created");
-define("_AM_DOWNLOADS__MODIFIED", "Successfull modified");
-define("_AM_DOWNLOADS_DOWNLOAD_ONLINE", "Online");
-define("_AM_DOWNLOADS_DOWNLOAD_OFFLINE", "Offline");
+define("_AM_DOWNLOADS_MODIFIED", "Successfull modified");
+define("_AM_DOWNLOADS_ONLINE", "Online");
+define("_AM_DOWNLOADS_OFFLINE", "Offline");
 define("_AM_DOWNLOADS_DOWNLOAD_WEIGHTS_UPDATED", "Weights updated");
 define("_AM_DOWNLOADS_DOWNLOAD_NOFILEEXIST", "File not found");
 
