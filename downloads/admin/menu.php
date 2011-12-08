@@ -46,7 +46,7 @@ $moddir = basename( dirname( dirname( __FILE__) ) );
 $i = 0;
 	
 	$headermenu[$i]['title'] = _CO_ICMS_GOTOMODULE;
-	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir '/';
 
 	$i++;
 	$headermenu[$i]['title'] = _PREFERENCES;
