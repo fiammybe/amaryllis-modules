@@ -17,16 +17,31 @@
  *
  */
 
-include_once "admin_header.php";
-
 function editcategory($category_id = 0) {
 	global $downloads_category_handler, $icmsAdminTpl;
 
 	$categoryObj = $downloads_category_handler->get($category_id);
-
+	
+	$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "downloads");
+	if (!is_object(icms::$user)) {
+		$log_uid = 0;
+	} else {
+		$log_uid = icms::$user->getVar("uid");
+	}
+	
 	if (!$categoryObj->isNew()){
 		$categoryObj->hideFieldFromForm(array( 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar( 'category_updated_date', (time() - 100) );
+		
+		$logObj = $downloads_log_handler->create();
+		$logObj->setVar('log_item_id', $categoryObj->id() );
+		$logObj->setVar('log_date', (time()-200) );
+		$logObj->setVar('log_uid', $log_uid);
+		$logObj->setVar('log_item', 1 );
+		$logObj->setVar('log_case', 3 );
+		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->store(TRUE);
+		
 		downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_CATEGORY . ' > ' . _MI_DOWNLOADS_CATEGORY_EDIT);
 		$sform = $categoryObj->getForm(_AM_DOWNLOADS_EDIT, 'addcategory');
 		$sform->assign($icmsAdminTpl);
@@ -35,6 +50,17 @@ function editcategory($category_id = 0) {
 		$categoryObj->setVar('category_published_date', (time() - 100) );
 		$categoryObj->setVar('category_approve', true );
 		$categoryObj->setVar('category_submitter', icms::$user->getVar("uid"));
+		
+		$logObj = $downloads_log_handler->create();
+		$logObj->setVar('log_item_id', $categoryObj->id() );
+		$logObj->setVar('log_date', (time()-200) );
+		$logObj->setVar('log_uid', $log_uid);
+		$logObj->setVar('log_item', 1 );
+		$logObj->setVar('log_case', 1 );
+		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->store(TRUE);
+		
+		
 		downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_CATEGORY . " > " . _MI_DOWNLOADS_CATEGORY_CREATINGNEW);
 		$sform = $categoryObj->getForm(_AM_DOWNLOADS_CREATE, 'addcategory');
 		$sform->assign($icmsAdminTpl);

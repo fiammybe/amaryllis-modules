@@ -34,11 +34,6 @@
 						<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$category.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
 							<img src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
 						</a>
-						<{if $downloads_upl_disclaimer}>
-							<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
-								<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
-							</div>
-						<{/if}>
 					<{/if}>
 						<p class="downloads_category_info">
 							(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$category.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$category.published_date}>&nbsp;)
@@ -73,6 +68,13 @@
 				<img src="<{$downloads_images_url}>add_cat.png" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" alt="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" />
 			</a>
 		<{/if}>
+		
+		<{if $downloads_upl_disclaimer}>
+			<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
+				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
+			</div>
+		<{/if}>
+		
 	<{/if}>
 	
 	<{if $downloads_single_cat}>

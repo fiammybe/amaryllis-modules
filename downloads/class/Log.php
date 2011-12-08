@@ -33,7 +33,7 @@ class DownloadsLog extends icms_ipf_Object {
 		$this->quickInitVar('log_item_id', XOBJ_DTYPE_INT);
 		$this->quickInitVar('log_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('log_item', XOBJ_DTYPE_INT); // file = 0; category = 1
-		$this->quickInitVar('log_case', XOBJ_DTYPE_INT); // download = 0; upload/create = 1; delete = 2;
+		$this->quickInitVar('log_case', XOBJ_DTYPE_INT); // download = 0; upload/create = 1; delete = 2; updated: 3;
 		
 	}
 }

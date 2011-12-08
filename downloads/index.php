@@ -73,7 +73,7 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
 	}
 	
 } elseif ($clean_category_id == 0) {
-	$categories = $downloads_category_handler->getCategories($clean_start, icms::$module->config['show_categories'], $clean_category_uid,  false, $clean_category_pid);
+	$categories = $downloads_category_handler->getCategories(TRUE, TRUE, $clean_start, icms::$module->config['show_categories'], $clean_category_uid,  false, $clean_category_pid);
 	$icmsTpl->assign('downloads_cat', $categories);
 } else {
 	redirect_header(DOWNLOADS_URL, 3, _NOPERM);
@@ -87,7 +87,7 @@ if($downloadsConfig['downloads_show_upl_disclaimer'] == 1) {
 
 	if($downloads_category_handler->userCanSubmit()) {
 		$icmsTpl->assign('user_submit', true);
-		$icmsTpl->assign('user_submit_link', DOWNLOADS_URL . 'category.php?op=mod&category_id=' . $clean_category_id);
+		$icmsTpl->assign('user_submit_link', DOWNLOADS_URL . 'category.php?op=mod&amp;category_id=' . $clean_category_id);
 	} else {
 		$icmsTpl->assign('user_submit', false);
 	}

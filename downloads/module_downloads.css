@@ -114,16 +114,8 @@
 	
 	
 	.downloads_file {
-		padding: 1em;
-	}
-	
-	.file_boxes {
-		float: right;
-	}
-	
-	.file_contents {
-		float: left;
-		width: 60%;
+		width: 100%;
+		margin: 2em auto;
 	}
 	
 	.file_header {
