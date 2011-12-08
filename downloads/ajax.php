@@ -51,16 +51,16 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$logObj = $downloads_log_handler->create();
 			$logObj->setVar('log_item_id', $download_id );
 			$logObj->setVar('log_date', (time()-200) );
-			$logObj->setVar('download_publisher', $log_uid);
+			$logObj->setVar('log_uid', $log_uid);
 			$logObj->setVar('log_item', 0 );
 			$logObj->setVar('log_case', 0 );
 			$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
 			$logObj->store(TRUE);
 			
 			if((strpos($_SERVER['HTTP_REFERER'], ICMS_URL) !== FALSE) ) {
-				return redirect_header (DOWNLOADS_URL . 'download.php?op=downfile&amp;download_id=' . $download_id, 3, _MD_DOWNLOADS_DOWNLOAD_START);
+				return redirect_header (DOWNLOADS_URL . 'singledownload.php?op=downfile&amp;download_id=' . $download_id, 3, _MD_DOWNLOADS_DOWNLOAD_START);
 			} else {
-				return redirect_header (DOWNLOADS_URL . 'download.php', 3, _NO_PERM);
+				return redirect_header (DOWNLOADS_URL . 'singledownload.php', 3, _NO_PERM);
 			}
 			break;
 			

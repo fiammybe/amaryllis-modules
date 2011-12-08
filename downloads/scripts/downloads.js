@@ -43,17 +43,11 @@
 	
 	// call disclaimer for download-confirmation
 	$(document).ready(function(){
-		$("#dialog-confirm-disclaimer").dialog({
-			modal: true,
-			width: 800,
-			height: 600,
-			autoOpen: false,
-			resizable: true,
-			draggable: true
-		});
+		
 		$(".down_disclaimer").click(function(e) {
+			var $link = $(this);
 			e.preventDefault();
-			var targetUrl = $(this).attr("href");
+			var targetUrl = $link.attr("href");
 			$("#dialog-confirm-disclaimer").dialog('option', 'buttons', {
 				"I Agree" : function() {
 					window.location.href = targetUrl;
@@ -63,6 +57,16 @@
 				}
 			});
 			$("#dialog-confirm-disclaimer").dialog("open");
+		});
+		
+		
+		$("#dialog-confirm-disclaimer").dialog({
+			modal: true,
+			width: 800,
+			height: 600,
+			autoOpen: false,
+			resizable: true,
+			draggable: true
 		});
 	});
 	
