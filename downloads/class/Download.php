@@ -393,22 +393,26 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	
 	public function getDownloadKeyfeatures() {
 		$keyfeature_array = $this->getVar('download_keyfeatures');
-		$keyfeatures = explode("|", $keyfeature_array);
-		$result = '';
-		foreach ($keyfeatures as $key => $keyfeature) {
-			$result .= '<li>' . $keyfeature . '</li>';
+		if (!$keyfeature_array == "") {
+			$keyfeatures = explode("|", $keyfeature_array);
+			$result = '';
+			foreach ($keyfeatures as $key => $keyfeature) {
+				$result .= '<li>' . $keyfeature . '</li>';
+			}
+			return $result;
 		}
-		return $result;
 	}
 	
 	public function getDownloadRequirements() {
 		$requirements_array = $this->getVar('download_requirements');
-		$requirements = explode("|", $requirements_array);
-		$result = '';
-		foreach ($requirements as $requirement) {
-			$result .= '<li>' . $requirement . '</li>';
+		if (!$requirements_array == "") {
+			$requirements = explode("|", $requirements_array);
+			$result = '';
+			foreach ($requirements as $requirement) {
+				$result .= '<li>' . $requirement . '</li>';
+			}
+			return $result;
 		}
-		return $result;
 	}
 	
 	public function getDownloadHistory() {
