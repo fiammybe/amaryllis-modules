@@ -60,6 +60,12 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
 	$icmsTpl->assign('downloads_single_cat', $category);
 	$downloads = $downloads_download_handler->getDownloads(0, icms::$module->config['show_downloads'], $clean_category_uid, false,  $clean_category_id);
 	$icmsTpl->assign('downloads_files', $downloads);
+	$directory_name = basename( dirname( __FILE__ ) );
+	$script_name = getenv("SCRIPT_NAME");
+	$document_root = str_replace('modules/' . $directory_name . '/index.php', '', $script_name);
+	foreach ($downloads as $download){
+			$icmsTpl->assign("image_path",  $document_root . 'uploads/' . $directory_name . '/download/' . $download['download_img']);
+	}
 	if ($downloadsConfig['show_breadcrumbs']){
 		$icmsTpl->assign('downloads_cat_path', $downloads_category_handler->getBreadcrumbForPid($categoryObj->getVar('category_id', 'e'), 1));
 	}else{
