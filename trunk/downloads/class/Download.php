@@ -328,9 +328,14 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	
 	public function getDownloadImageTag() {
 		$download_img = $image_tag = '';
+		$directory_name = basename(dirname( dirname( __FILE__ ) ));
+		$script_name = getenv("SCRIPT_NAME");
+		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$download_img = $this->getVar('download_img', 'e');
-		if (!empty($download_img)) {
-			$image_tag = DOWNLOADS_UPLOAD_URL . 'download/' . $download_img;
+		if (!$download_img == "") {
+			$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_img;
+		}else {
+			$image_tag=false;
 		}
 		return $image_tag;
 	}
@@ -533,6 +538,9 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['catalogue_item'] = $this->getVar('catalogue_item');
 		$ret['thumbnail_width'] = $downloadsConfig['thumbnail_width'];
 		$ret['thumbnail_height'] = $downloadsConfig['thumbnail_height'];
+		
+		$ret['file_thumbnail_width'] = $downloadsConfig['file_img_thumbnail_width'];
+		$ret['file_thumbnail_height'] = $downloadsConfig['file_img_thumbnail_height'];
 		
 		$albumModule = icms_getModuleInfo('album');
 		if ($downloadsConfig['use_album'] == true && $albumModule){

@@ -55,6 +55,7 @@ $modversion = array(
 
 $modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';";
 $modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=462' target='_blank'>David</a>";
+$modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=10' target='_blank'>Sato-San</a>";
 
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';";
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=462' target='_blank'>David</a>";
@@ -310,6 +311,24 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> '2097152' // 2MB default max upload size
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'file_img_thumbnail_width',
+								'title' 		=> '_MI_DOWNLOADS_FILE_THUMBNAIL_WIDTH',
+								'description' 	=> '_MI_DOWNLOADS_FILE_THUMBNAIL_WIDTH_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> '110'
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'file_img_thumbnail_height',
+								'title' 		=> '_MI_DOWNLOADS_FILE_THUMBNAIL_HEIGHT',
+								'description'	=> '_MI_DOWNLOADS_FILE_THUMBNAIL_HEIGHT_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> '150'
 							);
 $i++;
 $modversion['config'][$i] = array(
