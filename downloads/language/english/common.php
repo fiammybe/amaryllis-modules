@@ -20,6 +20,7 @@
 //some general language constants
 define("_CO_DOWNLOADS_PREVIEW", "preview");
 define("_CO_DOWNLOADS_EDIT", "edit");
+define("_CO_SUBMIT", "submit");
 define("_CO_DOWNLOADS_DELETE", "delete");
 define("_CO_DOWNLOADS_VIEW", "view");
 
@@ -112,6 +113,7 @@ define("_CO_DOWNLOADS_INDEXPAGE_INDEX_FOOTER", "footer on indexpage");
 define("_CO_DOWNLOADS_INDEXPAGE_INDEX_FOOTER_DSC", " Set the footer displayed on Indexpage ");
 // language constants for adding new categories
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_TITLE", "Title");
+define("_CO_DOWNLOADS_CATEGORY_WEIGHT", "weight");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_PID", "Parent category");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_PID_DSC", "Select a parent category");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_IMG", "Select an image");

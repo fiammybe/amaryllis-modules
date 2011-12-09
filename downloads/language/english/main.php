@@ -62,7 +62,7 @@ define("_MD_DOWNLOADS_FILE_DESCRIPTION", "Description");
 define("_MD_DOWNLOADS_FILE_IMAGES", "Images");
 define("_MD_DOWNLOADS_FILE_INSTRUCTIONS", "Instructions");
 define("_MD_DOWNLOADS_FILE_HISTORY", "History");
-define("_MD_DOWNLOADS_FILE_STAT", "Statistics");
+define("_MD_DOWNLOADS_FILE_REVIEWS", "Reviews");
 
 // used in ajax.php
 define("_MD_DOWNLOADS_BROKEN_REPORTED", "Thank you for submitting! File was reported as broken.");

@@ -18,6 +18,4 @@ $icmsTpl->assign('downloads_url', DOWNLOADS_URL);
 $icmsTpl->assign('downloads_module_home', '<a href="' . DOWNLOADS_URL . '" title="' . icms::$module->getVar('name') . '">' . icms::$module->getVar('name') . '</a>');
 $icmsTpl->assign('downloads_images_url', DOWNLOADS_IMAGES_URL);
 
-$xoTheme->addStylesheet(DOWNLOADS_URL . 'module' . ((defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? '_rtl' : '') . '.css');
-
 include_once ICMS_ROOT_PATH . '/footer.php';

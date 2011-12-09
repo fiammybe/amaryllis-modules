@@ -491,6 +491,43 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'show_reviews',
+								'title' 		=> '_MI_DOWNLOADS_SHOW_REVIEWS',
+								'description' 	=> '_MI_DOWNLOADS_SHOW_REVIEWS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'show_reviews_email',
+								'title' 		=> '_MI_DOWNLOADS_SHOW_REVIEWS_EMAIL',
+								'description' 	=> '_MI_DOWNLOADS_SHOW_REVIEWS_EMAIL_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 0
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'show_reviews_count',
+								'title' 		=> '_MI_DOWNLOADS_REVIEWS_COUNT',
+								'description' 	=> '',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> 10
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'review_order',
+								'title' 		=> '_MI_DOWNLOADS_REVIEWS_ORDER',
+								'description' 	=> '',
+								'formtype' 		=> 'select',
+								'valuetype' 	=> 'text',
+								'options' 		=> array("DESC" => 1, "ASC" => 2),
+								'default'		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'downloads_popular',
 								'title' 		=> '_MI_DOWNLOADS_POPULAR',
 								'description' 	=> '',

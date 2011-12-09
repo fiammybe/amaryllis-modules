@@ -108,6 +108,14 @@ define("_MI_DOWNLOADS_DOWNLOAD_APPROVE", "Do you need approvals for new files?")
 define("_MI_DOWNLOADS_DOWNLOAD_APPROVE_DSC", "Select 'YES' if you prefer to approve the files uploaded in frontend first, before providing the file");
 define("_MI_DOWNLOADS_CATEGORY_APPROVE", "Do you need approvals for new categories?");
 define("_MI_DOWNLOADS_CATEGORY_APPROVE_DSC", "Select 'YES' if you prefer to approve the new categories created on frontend first, before providing the link");
+define("_MI_DOWNLOADS_SHOW_REVIEWS", "show reviews?");
+define("_MI_DOWNLOADS_SHOW_REVIEWS_DSC", "Do you like to show reviews in Frontend, select 'YES'. A new tab in single-file-view will show the reviews.");
+define("_MI_DOWNLOADS_SHOW_REVIEWS_EMAIL", "show reviews email?");
+define("_MI_DOWNLOADS_SHOW_REVIEWS_EMAIL_DSC", "Select'YES' to show email address in reviews on file-single-view");
+define("_MI_DOWNLOADS_REVIEWS_COUNT", "How many reviews should be shown in one page?");
+define("_MI_DOWNLOADS_REVIEWS_ORDER", "Order reviews date");
+
+
 define("_MI_DOWNLOADS_POPULAR", "How many downloads of one file before it's popular");
 define("_MI_DOWNLOADS_DAYSNEW", "How many days to provide one file as new");
 define("_MI_DOWNLOADS_DAYSUPDATED", "How many days to provide one file as updated after editing");
