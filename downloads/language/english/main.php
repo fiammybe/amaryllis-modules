@@ -64,6 +64,8 @@ define("_MD_DOWNLOADS_FILE_INSTRUCTIONS", "Instructions");
 define("_MD_DOWNLOADS_FILE_HISTORY", "History");
 define("_MD_DOWNLOADS_FILE_REVIEWS", "Reviews");
 
+define("_MD_DOWNLOADS_PUBLISHER_MAIL", "E-Mail");
+
 // used in ajax.php
 define("_MD_DOWNLOADS_BROKEN_REPORTED", "Thank you for submitting! File was reported as broken.");
 define("_MD_DOWNLOADS_DOWNLOAD_START", "Download will start shortly"); //@DAVID -> this is the redirect message from ajax.php after clicking the download-link

@@ -34,7 +34,7 @@ class DownloadsReviewHandler extends icms_ipf_Handler {
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
 		$criteria->add(new icms_db_criteria_Item('review_item_id', $review_item_id));
-		$reviews = $this->getObjectsD($criteria, TRUE, FALSE);
+		$reviews = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($reviews as $review){
 			$ret[$review['review_id']] = $review;
