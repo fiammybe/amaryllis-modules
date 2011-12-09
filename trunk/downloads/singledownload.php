@@ -91,6 +91,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 		default:
 			$clean_download_id = isset($_GET['download_id']) ? filter_input(INPUT_GET, 'download_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+			$clean_review_start = isset($_GET['rev_nav']) ? intval($_GET['rev_nav']) : 0;
+			$clean_files_start = isset($_GET['file_nav']) ? intval($_GET['file_nav']) : 0;
 			$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			
@@ -107,11 +109,11 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				} else {
 					$icmsTpl->assign('file_is_new', FALSE );
 				}
-				if( $downloadObj->getVar('download_updated') == true && $downloadObj-getVar('download_updated_date' !== 0)) {
+				if( $downloadObj->getVar('download_updated') == true && $downloadObj->getVar('download_updated_date') !== 0) {
 					$newfile = downloads_display_updated( $downloadObj->getVar( 'download_published_date' ) );
 					if($newfile) {
 						$icmsTpl->assign('file_is_updated', TRUE );
-						$icmsTpl->assign('file_is_updatedimg', $newfile );
+						$icmsTpl->assign('file_is_updated_img', $newfile );
 					} else {
 						$icmsTpl->assign('file_is_new', FALSE );
 					}
@@ -211,9 +213,32 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			} else {
 				redirect_header (DOWNLOADS_URL, 3, _NO_PERM);
 			}
+			
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item('review_item_id', $downloadObj->getVar("download_id")));
+			// adjust for tag, if present
+			$review_count = $downloads_review_handler->getCount($criteria);
+			
+			$extra_arg = 'download_id=' . $clean_download_id . '&file=' . $downloadObj->getVar("short_url");
+			
+			$review_pagenav = new icms_view_PageNav($review_count, $downloadsConfig['show_reviews_count'], $clean_review_start, 'rev_nav', $extra_arg);
+			$icmsTpl->assign('review_pagenav', $review_pagenav->renderImageNav());
+			
+			$files_count_criteria = $downloads_download_handler->getCountCriteria(true, true, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $clean_category_id);
+			$files_count = $downloads_download_handler -> getCount($files_count_criteria, true, false);
+			$icmsTpl->assign('files_count', $files_count);
+			if (!empty($clean_download_id)) {
+				$extra_arg = 'download_id=' . $clean_download_id;
+			} else {
+				$extra_arg = false;
+			}
+			$download_pagenav = new icms_view_PageNav($files_count, $downloadsConfig['show_downloads'], $clean_files_start, 'file_nav', $extra_arg);
+			$icmsTpl->assign('download_pagenav', $download_pagenav->renderNav());
+			
 			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == true);
 			
 			$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/downloads.js', array('type' => 'text/javascript'));
+			
 	}
 } else {
 	redirect_header (DOWNLOADS_URL, 3, _NO_PERM);

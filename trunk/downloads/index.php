@@ -38,9 +38,9 @@ $icmsTpl->assign('downloads_index', $index);
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start', FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_category_id = ($clean_category_id == 0 && isset($_POST['category_id'])) ? filter_input(INPUT_POST, 'category_id', FILTER_SANITIZE_NUMBER_INT) : $clean_category_id;
+$clean_category_start = isset($_GET['cat_nav']) ? intval($_GET['cat_nav']) : 0;
+$clean_files_start = isset($_GET['file_nav']) ? intval($_GET['file_nav']) : 0;
+$clean_category_id = isset($_GET['category_id']) ? intval($_GET['category_id']) : 0;
 
 $clean_download_id = isset($_GET['download_id']) ? filter_input(INPUT_GET, 'download_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
@@ -58,7 +58,7 @@ if ($clean_category_id != 0) {
 if (is_object($categoryObj) && $categoryObj->accessGranted()) {
 	$category = $categoryObj->toArray();
 	$icmsTpl->assign('downloads_single_cat', $category);
-	$downloads = $downloads_download_handler->getDownloads(0, icms::$module->config['show_downloads'], $clean_category_uid, false,  $clean_category_id);
+	$downloads = $downloads_download_handler->getDownloads($clean_files_start, icms::$module->config['show_downloads'], $clean_category_uid, false,  $clean_category_id);
 	$icmsTpl->assign('downloads_files', $downloads);
 	$directory_name = basename( dirname( __FILE__ ) );
 	$script_name = getenv("SCRIPT_NAME");
@@ -79,7 +79,7 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
 	}
 	
 } elseif ($clean_category_id == 0) {
-	$categories = $downloads_category_handler->getCategories(TRUE, TRUE, $clean_start, icms::$module->config['show_categories'], $clean_category_uid,  false, $clean_category_pid);
+	$categories = $downloads_category_handler->getCategories(TRUE, TRUE, $clean_category_start, icms::$module->config['show_categories'], $clean_category_uid,  false, $clean_category_pid);
 	$icmsTpl->assign('downloads_cat', $categories);
 } else {
 	redirect_header(DOWNLOADS_URL, 3, _NOPERM);
@@ -111,18 +111,28 @@ $criteria = new icms_db_criteria_Compo();
 $criteria->add(new icms_db_criteria_Item('category_active', true));
 $criteria->add(new icms_db_criteria_Item('category_approve', true));
 // adjust for tag, if present
-$category_count = $downloads_category_handler->getCount($criteria);
-unset($criteria);
-$category_pagenav = new icms_view_PageNav($category_count, $downloadsConfig['show_categories'], $clean_start, 'start', false);
+$category_count = $downloads_category_handler->getCount();
 
+if (!empty($clean_category_id)) {
+	$extra_arg = 'category_id=' . $clean_category_id;
+} else {
+	$extra_arg = false;
+}
+$category_pagenav = new icms_view_PageNav($category_count, $downloadsConfig['show_categories'], $clean_category_start, 'cat_nav', $extra_arg);
+$icmsTpl->assign('category_pagenav', $category_pagenav->renderImageNav());
 
 $files_count_criteria = $downloads_download_handler->getCountCriteria(true, true, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $clean_category_id);
 $files_count = $downloads_download_handler -> getCount($files_count_criteria, true, false);
 $icmsTpl->assign('files_count', $files_count);
-$download_pagenav = new icms_view_PageNav($files_count, $downloadsConfig['show_downloads'], $clean_start, 'start', false);
-
+if (!empty($clean_download_id)) {
+	$extra_arg = 'download_id=' . $clean_download_id;
+} else {
+	$extra_arg = false;
+}
+$download_pagenav = new icms_view_PageNav($files_count, $downloadsConfig['show_downloads'], $clean_files_start, 'file_nav', $extra_arg);
+$icmsTpl->assign('download_pagenav', $download_pagenav->renderNav());
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////// ASSIGN //////////////////////////////////////////////////////
+////////////////////////////////////////////// BREADCRUMB ////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	if( $downloadsConfig['show_breadcrumbs'] == true ) {
@@ -130,7 +140,5 @@ $download_pagenav = new icms_view_PageNav($files_count, $downloadsConfig['show_d
 	} else {
 		$icmsTpl->assign('downloads_show_breadcrumb', false);
 	}
-	$icmsTpl->assign('category_pagenav', $category_pagenav->renderNav());
-	$icmsTpl->assign('download_pagenav', $download_pagenav->renderNav());
 
 include_once 'footer.php';
