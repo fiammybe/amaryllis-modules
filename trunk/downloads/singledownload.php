@@ -80,11 +80,13 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					header("Pragma: no-cache");
 					header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 					header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-					header("Refresh: 3; url=$url");	
+					header("Refresh: 3; url=$url");
+					
 				} else {
 					return redirect_header (DOWNLOADS_URL . 'singledownload.php', 3, _NO_PERM);
 				}
-			}			
+			}
+			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == true);	
 			break;
 			
 		default:

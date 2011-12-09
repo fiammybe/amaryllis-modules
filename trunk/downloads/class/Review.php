@@ -46,7 +46,7 @@ class DownloadsReview extends icms_ipf_Object {
 	
 		public function getReviewEmail(){
 		$email = $this->getVar("review_email", "s");
-		$email = icms_core_DataFilter::checkVar($email, 'email', 1);
+		$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
 		return $email;
 	}
 	
@@ -61,9 +61,10 @@ class DownloadsReview extends icms_ipf_Object {
 	function toArray() {
 		$ret = parent::toArray();
 		$ret['date'] = $this->getReviewPublishedDate();
-		$ret['message'] = $this->getVar("review_message");
+		$ret['message'] = $this->getReviewMessage();
 		$ret['name'] = $this->getVar("review_name", "s");
-		$ret['email'] = $this->getVar("review_email");
+		$ret['email'] = $this->getReviewEmail();
+		return $ret;
 	}
 	
 }
