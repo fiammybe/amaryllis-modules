@@ -76,16 +76,15 @@ function getMimeTypes() {
 	$criteria = new icms_db_criteria_Compo();
 	$criteria->add(new icms_db_criteria_Item('dirname', icms::$module->getVar('dirname') ));
 	$mimetypeObjects = $mimetype_handler->getObjects($criteria, true, false);
-	$mimetypes = implode(" ", $mimetypeObjects);
-	$mimetypeObj = array();
-	foreach(array_keys($mimetypeObjects) as $mimetypeObj => $i) {
-		$mimetypeObjects[$mimetypeObj['extension']] = $mimetypeObj['extension'];
+	$mimetype = '';
+	foreach ($mimetypeObjects as $key => $mimetypeObj) {
+		$mimetype .= $mimetypeObj . ', ';
 	}
-	return $mimetypeObj;
+	return $mimetype;
+	
 }
 
 $mimetypes = getMimeTypes();
-$mimetype = array_chunk( $mimetypes, 1);
 
 //$mimetypes = $downloads_download_handler->checkMimeType();
 
@@ -99,7 +98,7 @@ echo '	<fieldset style="border: #E8E8E8 1px solid;">
 						. _AM_DOWNLOADS_INDEX_TOTAL .
 					'</div>
 					<div style="display: table-cell;">'
-						. $mimetype .
+						. $mimetypes .
 					'</div>
 				</div>
 				

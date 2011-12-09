@@ -44,7 +44,7 @@ class DownloadsReview extends icms_ipf_Object {
 		return $message;
 	}
 	
-		public function getReviewEmail(){
+	public function getReviewEmail(){
 		$email = $this->getVar("review_email", "s");
 		$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
 		return $email;
@@ -56,6 +56,17 @@ class DownloadsReview extends icms_ipf_Object {
 		$date = $this->getVar('review_date', 'e');
 		
 		return date($downloadsConfig['downloads_dateformat'], $date);
+	}
+	
+	public function getReviewItem() {
+		$item_id = $this->getVar("review_item_id", "e");
+		$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(dirname(__FILE__))), "downloads");
+		$file = $downloads_download_handler->get($item_id);
+		$filename = $file->getVar("download_title", "s");
+		$url = DOWNLOADS_URL . 'singledownload.php?download_id=' . $item_id;
+		//$controller = new icms_ipf_Controller($downloads_download_handler);
+		//$itemLink = $controller->getItemLink($file, false);
+		return '<a href="' . $url . '" title="' . $filename . '">' . $filename . '</a>';
 	}
 	
 	function toArray() {

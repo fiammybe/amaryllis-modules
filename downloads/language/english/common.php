@@ -51,6 +51,8 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM", "View Permission");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM_DSC", " Select which groups will have view permission for this File. This means that a user belonging to one of these groups will be able to view the File when it is activated in the site.' ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE", "Fileupload");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DSC", "  ");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_ALT", "OR define a file");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_ALT_DSC", " You can also upload a file to 'upload/downloads/download/' and enter the file here. example 'file.zip' ");
 
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY", "Filehistory");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY_DSC", "Insert the history from the file. Minimalistic html will be allowed.");
