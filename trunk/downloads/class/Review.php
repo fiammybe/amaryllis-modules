@@ -44,6 +44,26 @@ class DownloadsReview extends icms_ipf_Object {
 		return $message;
 	}
 	
+		public function getReviewEmail(){
+		$email = $this->getVar("review_email", "s");
+		$email = icms_core_DataFilter::checkVar($email, 'email', 1);
+		return $email;
+	}
 	
+	public function getReviewPublishedDate() {
+		global $downloadsConfig;
+		$date = '';
+		$date = $this->getVar('review_date', 'e');
+		
+		return date($downloadsConfig['downloads_dateformat'], $date);
+	}
+	
+	function toArray() {
+		$ret = parent::toArray();
+		$ret['date'] = $this->getReviewPublishedDate();
+		$ret['message'] = $this->getVar("review_message");
+		$ret['name'] = $this->getVar("review_name", "s");
+		$ret['email'] = $this->getVar("review_email");
+	}
 	
 }

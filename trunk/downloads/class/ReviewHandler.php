@@ -26,6 +26,21 @@ class DownloadsReviewHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		parent::__construct($db, "review", "review_id", "review_item_id", "review_message", "downloads");
 	}
+	
+	public function getReviews($start = 0, $limit = 0, $order = 'review_date', $sort = 'DESC' , $review_item_id = null) {
+		$criteria = new icms_db_criteria_Compo();
+		if ($start) $criteria->setStart($start);
+		if ($limit) $criteria->setLimit((int)$limit);
+		$criteria->setSort($order);
+		$criteria->setOrder($sort);
+		$criteria->add(new icms_db_criteria_Item('review_item_id', $review_item_id));
+		$reviews = $this->getObjectsD($criteria, TRUE, FALSE);
+		$ret = array();
+		foreach ($reviews as $review){
+			$ret[$review['review_id']] = $review;
+		}
+		return $ret;
+	}
 
 	protected function beforeSafe(& $obj) {
 		$message = icms_core_DataFilter::checkVar($obj->getVar("review-message"), "str", "striplow");

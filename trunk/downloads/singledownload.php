@@ -27,6 +27,9 @@ function addreview($clean_review_id = 0, $clean_download_id = 0){
 	
 	if ($reviewObj->isNew()){
 		$reviewObj->setVar("review_date", (time()-200));
+		$reviewObj->setVar("review_item_id", $clean_download_id);
+		$reviewObj->setVar('review_ip', $_SERVER['REMOTE_ADDR'] );
+		$reviewObj->setVar('review_uid', icms::$user->getVar("uid"));
 		$sform = $reviewObj->getSecureForm(_MD_DOWNLOADS_REVIEW_ADD, 'addreview', DOWNLOADS_URL . "ajax.php?op=addreview&download_id=" . $downloadObj->id() , '_CO_SUBMIT', FALSE, TRUE);
 		$sform->assign($icmsTpl, 'downloads_review_form');
 	} else {
@@ -183,13 +186,24 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				}
 			
 				addreview(0, $clean_download_id);
-				$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&download_id=" . $downloadObj->id() );
+				$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->id() );
 				
 				if ($downloadsConfig['com_rule']) {
 					$icmsTpl->assign('downloads_download_comment', true);
 					include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 				}
-				
+				if($downloadsConfig['show_reviews'] == 1) {
+					$downloads_review_handler = icms_getModuleHandler("review", basename(dirname(__FILE__)), "downloads");
+					$reviews = $downloads_review_handler->getReviews(0, $downloadsConfig['show_reviews_count'], 'review_date', $downloadsConfig['review_order'], $downloadObj->getVar("download_id") );
+					$icmsTpl->assign("show_reviews", TRUE);
+					$icmsTpl->assign('file_reviews', $reviews);
+					
+					if($downloadsConfig['show_reviews_email'] == 1) {
+						$icmsTpl->assign("show_reviews_email", TRUE);
+					}
+				} else {
+					$icmsTpl->assign("show_reviews", FALSE);
+				}
 				$icms_metagen = new icms_ipf_Metagen($downloadObj->getVar("download_title"), $downloadObj->getVar("meta_keywords", "n"), $downloadObj->getVar("meta_description", "n"));
 				$icms_metagen->createMetaTags();
 			} else {
