@@ -32,6 +32,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->initCommonVar('short_url');
 		$this->quickInitVar('download_cid', XOBJ_DTYPE_INT, true, false, false, 1);
 		$this->quickInitVar('download_file', XOBJ_DTYPE_FILE);
+		$this->quickInitVar('download_file_alt', XOBJ_DTYPE_TXTBOX);
 		
 		$this->initVar("download_file_descriptions", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar('download_teaser', XOBJ_DTYPE_TXTAREA);
@@ -438,9 +439,14 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 	
 	public function getDownloadTag() {
-		$file = 'download_file';
-		$fileObj = $this->getFileObj($file);
-		$url = $fileObj->getVar('url');
+		$file_alt = $this->getVar("download_file", "e");
+		if(!$file_alt == "") {
+			$url = DOWNLOADS_UPLOAD_URL . 'download/' . $file_alt;
+		} else {
+			$file = 'download_file';
+			$fileObj = $this->getFileObj($file);
+			$url = $fileObj->getVar('url');
+		}
 		return $url;
 	}
 	

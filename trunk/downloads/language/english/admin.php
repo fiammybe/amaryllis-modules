@@ -55,9 +55,6 @@ define("_AM_DOWNLOADS_INBLOCK_FALSE", "Hidden in blocks");
 define("_AM_DOWNLOADS_APPROVE_TRUE", "Approved");
 define("_AM_DOWNLOADS_APPROVE_FALSE", "Denied");
 
-define("_AM_DOWNLOADS_OFFLINE", "online");
-define("_AM_DOWNLOADS_ONLINE", "Offline");
-
 define("_AM_DOWNLOADS_MIRROR_FALSE", "Mirror denied");
 define("_AM_DOWNLOADS_MIRROR_TRUE", "Mirror approved");
 
