@@ -34,7 +34,7 @@ if (in_array($clean_op, $valid_op, TRUE)){
 			$controller->handleObjectDeletion();
 			break;
 
-		case 'view' :
+		case 'view':
 			$logObj = $downloads_log_handler->get($clean_log_id);
 			icms_cp_header();
 			downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_LOG );
@@ -54,7 +54,7 @@ if (in_array($clean_op, $valid_op, TRUE)){
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item_id', 'center', 50, 'getLogItemId' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item', FALSE, FALSE, 'getLogItem' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_case',FALSE, FALSE, 'getLogCase'));
-			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', 50, 'getLogPublishedDate' ) );			
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', 50, 'getLogDate' ) );			
 			$icmsAdminTpl->assign( 'downloads_log_table', $objectTable->fetch() );
 			$icmsAdminTpl->display( 'db:downloads_admin.html' );
 			break;

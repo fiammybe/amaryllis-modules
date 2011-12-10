@@ -60,7 +60,7 @@ if (in_array($clean_op, $valid_op, TRUE)){
 			$controller->storeFromDefaultForm(_AM_DOWNLOADS_CREATED, _AM_DOWNLOADS_MODIFIED);
 			break;
 		
-		case 'view' :
+		case 'view':
 			$reviewObj = $downloads_review_handler->get($clean_review_id);
 			icms_cp_header();
 			downloads_adminmenu( 4, _MI_DOWNLOADS_MENU_REVIEW );

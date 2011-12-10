@@ -151,16 +151,13 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 			$this->openFormSection('download_mirror_handling', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING);
 			$this->setControl('download_mirror_approve', 'yesno');
 		}
-			
-			
+
 		$this->openFormSection('download_file_descriptions', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS);
 		$this->openFormSection('download_file_images', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_IMAGES);
 		$this->openFormSection('download_developer_info', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEVELOPER_INFO);
 		$this->openFormSection('download_publish_info', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISH_INFO);
 		$this->openFormSection('download_view_section', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VIEW_SECTION);
 		$this->openFormSection('download_static_section', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_STATIC_SECTION);
-		
-		
 		
 		//make use of seo
 		$this->initiateSEO();

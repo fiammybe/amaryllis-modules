@@ -24,6 +24,6 @@ class DownloadsLogHandler extends icms_ipf_Handler {
 	 * constructor
 	 */	
 	public function __construct(&$db) {
-		parent::__construct($db, "log", "log_id", "", "", "downloads");
+		parent::__construct($db, "log", "log_id", "log_item_id", "log_case", "downloads");
 	}
 }

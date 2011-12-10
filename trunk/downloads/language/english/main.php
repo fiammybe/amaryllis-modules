@@ -56,7 +56,8 @@ define("_MD_DOWNLOADS_MAILTO", "Mailto"); // @DAVID better constant to advise a 
 define("_MD_DOWNLOADS_MAILTO_SBJ", ""); // @DAVID Please have a look for Mail subject
 define("_MD_DOWNLOADS_MAILTO_BDY", ""); // @DAVID Please have a look for Mail body
 define("_MD_DOWNLOADS_REVIEW", "Review");
-
+define("_MD_DOWNLOADS_FILE_DOWNLOADED", "File downloaded");
+// tabs
 define("_MD_DOWNLOADS_FILE_GENERAL_INFORMATIONS", "General Informations");
 define("_MD_DOWNLOADS_FILE_DESCRIPTION", "Description");
 define("_MD_DOWNLOADS_FILE_IMAGES", "Images");
