@@ -38,11 +38,16 @@ class DownloadsReview extends icms_ipf_Object {
 		$this->hideFieldFromForm(array("review_item_id", "review_uid", "review_ip", "review_date" ));
 		
 	}
-	
+	/**
+	 * message output -> filter again
+	 */
 	public function getReviewMessage(){
 		$message = icms_core_DataFilter::checkVar($this->getVar("review_message", "s"), "str", "encodelow");
 		return $message;
 	}
+	/**
+	 * 
+	 */
 	
 	public function getReviewEmail(){
 		$email = $this->getVar("review_email", "s");
@@ -64,8 +69,6 @@ class DownloadsReview extends icms_ipf_Object {
 		$file = $downloads_download_handler->get($item_id);
 		$filename = $file->getVar("download_title", "s");
 		$url = DOWNLOADS_URL . 'singledownload.php?download_id=' . $item_id;
-		//$controller = new icms_ipf_Controller($downloads_download_handler);
-		//$itemLink = $controller->getItemLink($file, false);
 		return '<a href="' . $url . '" title="' . $filename . '">' . $filename . '</a>';
 	}
 	
