@@ -46,7 +46,7 @@ class DownloadsReview extends icms_ipf_Object {
 		return $message;
 	}
 	/**
-	 * 
+	 * output of email should be qm-b at hotmail dot com, using no banned list
 	 */
 	
 	public function getReviewEmail(){

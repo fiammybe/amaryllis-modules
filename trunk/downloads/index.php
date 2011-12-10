@@ -55,6 +55,9 @@ if ($clean_category_id != 0) {
 } else {
 	$categoryObj = false;
 }
+/**
+ * retrieve a single category including files of the category and subcategories
+ */
 if (is_object($categoryObj) && $categoryObj->accessGranted()) {
 	$category = $categoryObj->toArray();
 	$icmsTpl->assign('downloads_single_cat', $category);
@@ -77,20 +80,32 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
 	} else {
 		$icmsTpl->assign('user_submit', false);
 	}
-	
+/**
+ * if there's no valid category, retrieve a list of all primary categories
+ */
 } elseif ($clean_category_id == 0) {
-	$categories = $downloads_category_handler->getCategories(TRUE, TRUE, $clean_category_start, icms::$module->config['show_categories'], $clean_category_uid,  false, $clean_category_pid);
+	$categories = $downloads_category_handler->getCategories($clean_category_start, icms::$module->config['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
 	$icmsTpl->assign('downloads_cat', $categories);
+/**
+ * if not valid single category or no permissions -> redirect to module home
+ */
 } else {
 	redirect_header(DOWNLOADS_URL, 3, _NOPERM);
 }
+
+/**
+ * check, if upload disclaimer is necessary and retrieve the link
+ */
+
 if($downloadsConfig['downloads_show_upl_disclaimer'] == 1) {
 	$icmsTpl->assign('downloads_upl_disclaimer', true );
 	$icmsTpl->assign('up_disclaimer', $downloadsConfig['downloads_upl_disclaimer']);
 } else {
 	$icmsTpl->assign('downloads_upl_disclaimer', false);
 }
-
+/**
+ * check, if user can submit
+ */
 	if($downloads_category_handler->userCanSubmit()) {
 		$icmsTpl->assign('user_submit', true);
 		$icmsTpl->assign('user_submit_link', DOWNLOADS_URL . 'category.php?op=mod&amp;category_id=' . $clean_category_id);
@@ -98,7 +113,9 @@ if($downloadsConfig['downloads_show_upl_disclaimer'] == 1) {
 		$icmsTpl->assign('user_submit', false);
 	}
 	
-	
+/**
+ * force downloads.js to header
+ */
 
 $xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/downloads.js', array('type' => 'text/javascript'));
 
