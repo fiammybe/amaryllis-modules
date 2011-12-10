@@ -97,11 +97,23 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			
 			if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted()) {
+				/**
+				 * Get the requested file and send it to Array
+				 */	
 				$file = $downloadObj->toArray();
 				$icmsTpl->assign("file", $file);
-				$down_link = DOWNLOADS_URL . 'ajax.php?op=getFile&download_id=' . $downloadObj->id();
+				/**
+				 * forwarding download_requests to ajax.php
+				 */
+				$down_link = DOWNLOADS_URL . 'ajax.php?op=getFile&download_id=' . $downloadObj->getVar("download_id");
 				$icmsTpl->assign('down_link', $down_link);
+				/**
+				 * forwarding new reports for broken links
+				 */
 				$icmsTpl->assign("broken_link", DOWNLOADS_URL . "ajax.php?op=report_broken&download_id=" . $downloadObj->id() );
+				/**
+				 * display image if file is new or updated
+				 */
 				$newfile = downloads_display_new( $downloadObj->getVar( 'download_published_date' ) );
 				if($newfile) {
 					$icmsTpl->assign('file_is_new', TRUE );
@@ -118,17 +130,26 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 						$icmsTpl->assign('file_is_new', FALSE );
 					}
 				}
+				/**
+				 * mirror yes/no?
+				 */
 				if($downloadsConfig['use_mirror'] == 1) {
 					$icmsTpl->assign('show_mirror', true);
 				} else {
 					$icmsTpl->assign('show_mirror', false);
 				}
+				/**
+				 * display disclaimer yes/no?
+				 */
 				if($downloadsConfig['downloads_show_down_disclaimer'] == 1) {
 					$icmsTpl->assign('show_down_disclaimer', true );
 					$icmsTpl->assign('down_disclaimer', $downloadsConfig['downloads_down_disclaimer']);
 				} else {
 					$icmsTpl->assign('show_down_disclaimer', false);
 				}
+				/**
+				 * check, if album module is used
+				 */
 				$albumModule = icms_getModuleInfo('album');
 				if ($downloadsConfig['use_album'] == 1 && $albumModule){
 					$icmsTpl->assign('album_module', true);
@@ -161,6 +182,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				} else {
 					$icmsTpl->assign('album_module', false );
 				}
+				/**
+				 * check if catalogue module is installed and link to item
+				 */
 				$catalogueModule = icms_getModuleInfo('catalogue');
 				if ($downloadsConfig['use_catalogue'] == 1 && $catalogueModule){
 					$item_id = $downloadObj->getVar('catalogue_item');
@@ -188,14 +212,22 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				} else {
 					$icmsTpl->assign('downloads_cat_path', false);
 				}
-			
+				/**
+				 * review form
+				 */
 				addreview(0, $clean_download_id);
 				$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->id() );
 				
+				/**
+				 * include the comment rules
+				 */
 				if ($downloadsConfig['com_rule']) {
 					$icmsTpl->assign('downloads_download_comment', true);
 					include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 				}
+				/**
+				 * fetch reviews to display
+				 */
 				if($downloadsConfig['show_reviews'] == 1) {
 					$downloads_review_handler = icms_getModuleHandler("review", basename(dirname(__FILE__)), "downloads");
 					$reviews = $downloads_review_handler->getReviews(0, $downloadsConfig['show_reviews_count'], 'review_date', $downloadsConfig['review_order'], $downloadObj->getVar("download_id") );
@@ -205,35 +237,39 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					if($downloadsConfig['show_reviews_email'] == 1) {
 						$icmsTpl->assign("show_reviews_email", TRUE);
 					}
+					/**
+					 * Reviews Page navigation
+					 * 
+					 */
+					$criteria = new icms_db_criteria_Compo();
+					$criteria->add(new icms_db_criteria_Item('review_item_id', $downloadObj->getVar("download_id")));
+					$review_count = $downloads_review_handler->getCount($criteria);
+					$extra_arg = 'download_id=' . $clean_download_id . '&file=' . $downloadObj->getVar("short_url");
+					$review_pagenav = new icms_view_PageNav($review_count, $downloadsConfig['show_reviews_count'], $clean_review_start, 'rev_nav', $extra_arg);
+					$icmsTpl->assign('review_pagenav', $review_pagenav->renderImageNav());
+				
 				} else {
 					$icmsTpl->assign("show_reviews", FALSE);
 				}
+				/**
+				 * Download Counter
+				 */
+				$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(__FILE__)), "downloads");
+				$criteria = new icms_db_criteria_Compo();
+				$criteria->add(new icms_db_criteria_Item("log_item_id", $downloadObj->getVar("download_id", "e")));
+				$criteria->add(new icms_db_criteria_Item("log_item", 0));
+				$criteria->add(new icms_db_criteria_Item("log_case", 0));
+				$downloaded = $downloads_log_handler->getCount($criteria);
+				$icmsTpl->assign("download_counter", $downloaded);
+			
+				/**
+				 * get the meta informations
+				 */
 				$icms_metagen = new icms_ipf_Metagen($downloadObj->getVar("download_title"), $downloadObj->getVar("meta_keywords", "n"), $downloadObj->getVar("meta_description", "n"));
 				$icms_metagen->createMetaTags();
 			} else {
 				redirect_header (DOWNLOADS_URL, 3, _NO_PERM);
 			}
-			
-			$criteria = new icms_db_criteria_Compo();
-			$criteria->add(new icms_db_criteria_Item('review_item_id', $downloadObj->getVar("download_id")));
-			// adjust for tag, if present
-			$review_count = $downloads_review_handler->getCount($criteria);
-			
-			$extra_arg = 'download_id=' . $clean_download_id . '&file=' . $downloadObj->getVar("short_url");
-			
-			$review_pagenav = new icms_view_PageNav($review_count, $downloadsConfig['show_reviews_count'], $clean_review_start, 'rev_nav', $extra_arg);
-			$icmsTpl->assign('review_pagenav', $review_pagenav->renderImageNav());
-			
-			$files_count_criteria = $downloads_download_handler->getCountCriteria(true, true, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $downloadObj->getVar("download_cid"));
-			$files_count = $downloads_download_handler -> getCount($files_count_criteria, true, false);
-			$icmsTpl->assign('files_count', $files_count);
-			if (!empty($clean_download_id)) {
-				$extra_arg = 'download_id=' . $clean_download_id;
-			} else {
-				$extra_arg = false;
-			}
-			$download_pagenav = new icms_view_PageNav($files_count, $downloadsConfig['show_downloads'], $clean_files_start, 'file_nav', $extra_arg);
-			$icmsTpl->assign('download_pagenav', $download_pagenav->renderNav());
 			
 			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == true);
 			

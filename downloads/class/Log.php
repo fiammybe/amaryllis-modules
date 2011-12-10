@@ -37,7 +37,7 @@ class DownloadsLog extends icms_ipf_Object {
 		
 	}
 	
-	public function getLogPublishedDate() {
+	public function getLogDate() {
 		global $downloadsConfig;
 		$date = '';
 		$date = $this->getVar('log_date', 'e');
@@ -97,4 +97,12 @@ class DownloadsLog extends icms_ipf_Object {
 		}
 	}
 	
+	function toArray() {
+		$ret = parent::toArray();
+		$ret['date'] = $this->getLogDate();
+		$ret['item_id'] = $this->getLogItemId();
+		$ret['item'] = $this->getLogItem();
+		$ret['case'] = $this->getLogCase();
+		return $ret;
+	}
 }
