@@ -72,3 +72,44 @@ function downloads_display_popular($counter) {
 	}
 	return $popular;
 }
+
+function downloadsConvertFileSize( $size, $type = 'byte', $decimal = 2 ) {
+	$size = intval( $size );
+	switch ($type) {
+		case 'kb':
+			return round( ($size / pow( 1024, 1 )), $decimal );
+			break;
+			
+		case 'mb':
+			return round( ($size / pow( 1024, 2 )), $decimal );
+			break;
+ 
+		case 'gb':
+			return round( ($size / pow( 1024, 3 )), $decimal );
+			break;
+
+		default:
+			return $size;
+			break;
+	}
+}
+
+function downloadsFileSizeType ($type) {
+	switch ($type) {
+		case '1':
+			return 'byte';
+			break;
+			
+		case '2':
+			return 'kb';
+			break;
+			
+		case '3':
+			return 'mb';
+			break;
+			
+		case '4':
+			return 'gb';
+			break;
+	}
+}

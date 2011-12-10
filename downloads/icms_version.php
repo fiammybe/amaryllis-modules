@@ -314,6 +314,16 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'display_file_size',
+								'title' 		=> '_MI_DOWNLOADS_DISPLAY_FILE_SIZE',
+								'description' 	=> '_MI_DOWNLOADS_DISPLAY_FILE_SIZE_DSC',
+								'formtype' 		=> 'select',
+								'valuetype' 	=> 'text',
+								'options'		=> array("byte" => 1, "kb" => 2, "mb" => 3, "gb" => 4),
+								'default' 		=> "kb"
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'file_img_thumbnail_width',
 								'title' 		=> '_MI_DOWNLOADS_FILE_THUMBNAIL_WIDTH',
 								'description' 	=> '_MI_DOWNLOADS_FILE_THUMBNAIL_WIDTH_DSC',

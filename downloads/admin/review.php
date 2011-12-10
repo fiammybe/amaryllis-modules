@@ -39,7 +39,7 @@ $clean_review_id = isset($_GET['review_id']) ? (int)$_GET['review_id'] : 0 ;
 
 $downloads_review_handler = icms_getModuleHandler("review", basename(dirname(dirname(__FILE__))), "downloads");
 
-$valid_op = array ('mod', 'del', 'view', '');
+$valid_op = array ('mod', 'del', 'view','addreview', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
@@ -55,6 +55,11 @@ if (in_array($clean_op, $valid_op, TRUE)){
 			$controller->handleObjectDeletion();
 			break;
 
+		case 'addreview':
+			$controller = new icms_ipf_Controller($downloads_review_handler);
+			$controller->storeFromDefaultForm(_AM_DOWNLOADS_CREATED, _AM_DOWNLOADS_MODIFIED);
+			break;
+		
 		case 'view' :
 			$reviewObj = $downloads_review_handler->get($clean_review_id);
 			icms_cp_header();

@@ -48,13 +48,6 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	
 	public function checkMimeType() {
 		global $icmsModule;
-		/**
-		 *
-		 * still have some trouble using icms::$module->getVar('dirname');
-		 * will give an fatal error calling the ACP
-		 * @TODO : rechange in later icms-version
-		 *
-		 */
 		$mimetypeHandler = icms_getModulehandler('mimetype', 'system');
 		$modulename = basename(dirname(dirname(__FILE__)));
 		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {

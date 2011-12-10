@@ -65,6 +65,7 @@ define("_MD_DOWNLOADS_FILE_HISTORY", "History");
 define("_MD_DOWNLOADS_FILE_REVIEWS", "Reviews");
 
 define("_MD_DOWNLOADS_PUBLISHER_MAIL", "E-Mail");
+define("_MD_DOWNLOADS_FILESIZE", "Filesize");
 
 // used in ajax.php
 define("_MD_DOWNLOADS_BROKEN_REPORTED", "Thank you for submitting! File was reported as broken.");

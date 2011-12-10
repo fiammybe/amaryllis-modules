@@ -224,7 +224,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$review_pagenav = new icms_view_PageNav($review_count, $downloadsConfig['show_reviews_count'], $clean_review_start, 'rev_nav', $extra_arg);
 			$icmsTpl->assign('review_pagenav', $review_pagenav->renderImageNav());
 			
-			$files_count_criteria = $downloads_download_handler->getCountCriteria(true, true, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $clean_category_id);
+			$files_count_criteria = $downloads_download_handler->getCountCriteria(true, true, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $downloadObj->getVar("download_cid"));
 			$files_count = $downloads_download_handler -> getCount($files_count_criteria, true, false);
 			$icmsTpl->assign('files_count', $files_count);
 			if (!empty($clean_download_id)) {

@@ -4,7 +4,7 @@
  *
  * File: /admin/indexpage.php
  * 
- * edit, view Downloads log
+ * view Downloads log
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -45,21 +45,16 @@ if (in_array($clean_op, $valid_op, TRUE)){
 			icms_cp_header();
 			downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_LOG );
 			$criteria = '';
-			if ($clean_log_id) {
-				$logObj = $downloads_log_handler->get($clean_log_id);
-				if ($logObj->id()) {
-					$logObj->displaySingleObject();
-				}
-			}
+			
 			if (empty($criteria)) {
 				$criteria = null;
 			}
 			// create downloads table
 			$objectTable = new icms_ipf_view_Table($downloads_log_handler, $criteria);
-			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item_id', 'center', 50, 'log_item_id' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item_id', 'center', 50, 'getLogItemId' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item', FALSE, FALSE, 'getLogItem' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_case',FALSE, FALSE, 'getLogCase'));
-			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', 50, 'getLogDate' ) );			
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', 50, 'getLogPublishedDate' ) );			
 			$icmsAdminTpl->assign( 'downloads_log_table', $objectTable->fetch() );
 			$icmsAdminTpl->display( 'db:downloads_admin.html' );
 			break;
