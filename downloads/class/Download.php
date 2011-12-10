@@ -500,19 +500,23 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	public function getMirrorLink() {
 		global $downloadsConfig;
 		$mirror = $this->getVar('download_mirror_url');
-		if ($downloadsConfig['use_mirror'] == 1 && !empty($mirror)) {
+		if ($downloadsConfig['use_mirror'] == 1 && !$mirror == "") {
 			$mirror_approve = $this->getVar('download_mirror_approve', 'e');
 			$mirror_url = 'download_mirror_url';
 			$linkObj = $this-> getUrlLinkObj($mirror_url);
-			$url = $linkObj->render();
+			$onlyurl = $linkObj->getVar("url", "e");
+			//$urltitle = $linkObj->getVar("caption", "e");
+			//$urldsc = $linkObj->getVar("description", "e");
+			//$url = '<a href="' . $onlyurl . '" title="' . $urlsdsc . '">' . $urltitle . '</a>';
+			//$url = $linkObj->render();
 			if($downloadsConfig['mirror_needs_approve'] == 1 ){
 				if ($mirror_approve == true) {
-					return $url;
+					return $onlyurl;
 				} else {
 					return false;
 				}
 			} else {
-				return $url;
+				return $onlyurl;
 			}
 		} else {
 			return false;

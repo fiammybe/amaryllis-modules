@@ -60,7 +60,7 @@ $icmsTpl->assign('downloads_index', $index);
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$valid_op = array ('downfile', '');
+$valid_op = array ('downfile', 'downfileMirror', '');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
 if (in_array($clean_op, $valid_op, TRUE)) {
@@ -72,6 +72,30 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted() ) {
 				if((strpos($_SERVER['HTTP_REFERER'], ICMS_URL) !== FALSE) ) {
 					$url = $downloadObj->getDownloadTag();
+					$icmsTpl->assign("download_get_link", $url);
+					$icmsTpl->assign("download_file", TRUE);
+					// force header
+					header("Cache-Control: no-store, no-cache, must-revalidate");
+					header("Cache-Control: post-check=0, pre-check=0", false);
+					header("Pragma: no-cache");
+					header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+					header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+					header("Refresh: 3; url=$url");
+					
+				} else {
+					return redirect_header (DOWNLOADS_URL . 'singledownload.php', 3, _NO_PERM);
+				}
+			}
+			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == true);	
+			break;
+			
+		case('downfileMirror'):
+			$clean_download_id = isset($_GET['download_id']) ? filter_input(INPUT_GET, 'download_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+			$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
+			$downloadObj = $downloads_download_handler->get($clean_download_id);
+			if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted() ) {
+				if((strpos($_SERVER['HTTP_REFERER'], ICMS_URL) !== FALSE) ) {
+					$url = $downloadObj->getMirrorLink();
 					$icmsTpl->assign("download_get_link", $url);
 					$icmsTpl->assign("download_file", TRUE);
 					// force header
@@ -133,8 +157,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				/**
 				 * mirror yes/no?
 				 */
-				if($downloadsConfig['use_mirror'] == 1) {
+				if($downloadsConfig['use_mirror'] == 1 && !$downloadObj->getVar("download_mirror_url", "e") == 0 ) {
 					$icmsTpl->assign('show_mirror', true);
+					$icmsTpl->assign('down_mirror_link', DOWNLOADS_URL . 'ajax.php?op=getFileMirror&download_id=' . $downloadObj->getVar("download_id") );
 				} else {
 					$icmsTpl->assign('show_mirror', false);
 				}
@@ -259,6 +284,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$criteria->add(new icms_db_criteria_Item("log_item_id", $downloadObj->getVar("download_id", "e")));
 				$criteria->add(new icms_db_criteria_Item("log_item", 0));
 				$criteria->add(new icms_db_criteria_Item("log_case", 0));
+				$criteria->add(new icms_db_criteria_Item("log_case", 4));
 				$downloaded = $downloads_log_handler->getCount($criteria);
 				$icmsTpl->assign("download_counter", $downloaded);
 			
