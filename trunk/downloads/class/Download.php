@@ -438,16 +438,37 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		return $url;
 	}
 	
-	public function getDownloadTag() {
-		$file_alt = $this->getVar("download_file", "e");
-		if(!$file_alt == "") {
-			$url = DOWNLOADS_UPLOAD_URL . 'download/' . $file_alt;
-		} else {
-			$file = 'download_file';
-			$fileObj = $this->getFileObj($file);
-			$url = $fileObj->getVar('url');
+	public function getDownloadTag($url = TRUE, $path = FALSE ) {
+		$file_alt = $this->getVar("download_file_alt", "e");
+		if($url){
+			if(!$file_alt == "") {
+				$url = DOWNLOADS_UPLOAD_URL . 'download/' . $file_alt;
+			} else {
+				$file = 'download_file';
+				$fileObj = $this->getFileObj($file);
+				$url = $fileObj->getVar('url');
+			}
+			return $url;
+		} elseif ($path){
+			if(!$file_alt == "") {
+				$path = DOWNLOADS_UPLOAD_ROOT . 'download/' . $file_alt;
+			} else {
+				$file = 'download_file';
+				$fileObj = $this->getFileObj($file);
+				$url = $fileObj->getVar('url', 's');
+				$filename = basename($url);
+				$path = ICMS_ROOT_PATH . '/uploads/downloads/download/' . $filename;
+			}
+			return $path;
 		}
-		return $url;
+	}
+	
+	public function getFileSize() {
+		global $downloadsConfig;
+		$myfile = $this->getDownloadTag(FALSE, TRUE);
+		$bytes = filesize($myfile);
+		$filesize = downloadsConvertFileSize($bytes, downloadsFileSizeType($downloadsConfig['display_file_size']), 2);
+		return $filesize . '&nbsp;' . downloadsFileSizeType($downloadsConfig['display_file_size']) ;
 	}
 	
 	function accessGranted() {
@@ -529,7 +550,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['id'] = $this->getVar('download_id');
 		$ret['title'] = $this->getVar('download_title');
 		$ret['img'] = $this->getDownloadImageTag();
-		$ret['file'] = $this->getDownloadTag();
+		$ret['file'] = $this->getDownloadTag(TRUE, FALSE);
 		$ret['dsc'] = $this->getVar('download_description');
 		$ret['keyfeatures'] = $this->getDownloadKeyfeatures();
 		$ret['requirements'] = $this->getDownloadRequirements();
@@ -544,7 +565,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['catalogue_item'] = $this->getVar('catalogue_item');
 		$ret['thumbnail_width'] = $downloadsConfig['thumbnail_width'];
 		$ret['thumbnail_height'] = $downloadsConfig['thumbnail_height'];
-		
+		$ret['filesize'] = $this->getFileSize();
 		$ret['file_thumbnail_width'] = $downloadsConfig['file_img_thumbnail_width'];
 		$ret['file_thumbnail_height'] = $downloadsConfig['file_img_thumbnail_height'];
 		

@@ -77,7 +77,7 @@ function getMimeTypes() {
 	$criteria->add(new icms_db_criteria_Item('dirname', icms::$module->getVar('dirname') ));
 	$mimetypeObjects = $mimetype_handler->getObjects($criteria, true, false);
 	$mimetype = '';
-	foreach ($mimetypeObjects as $key => $mimetypeObj) {
+	foreach (array_keys($mimetypeObjects) as $key => $mimetypeObj) {
 		$mimetype .= $mimetypeObj . ', ';
 	}
 	return $mimetype;

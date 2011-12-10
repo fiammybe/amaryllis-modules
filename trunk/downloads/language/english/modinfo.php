@@ -115,6 +115,9 @@ define("_MI_DOWNLOADS_SHOW_REVIEWS_EMAIL_DSC", "Select'YES' to show email addres
 define("_MI_DOWNLOADS_REVIEWS_COUNT", "How many reviews should be shown in one page?");
 define("_MI_DOWNLOADS_REVIEWS_ORDER", "Order reviews date");
 
+define("_MI_DOWNLOADS_DISPLAY_FILE_SIZE", "How to display the file size?");
+define("_MI_DOWNLOADS_DISPLAY_FILE_SIZE_DSC", "Select 'byte' to display in byte, 'mb' to display in megabyte, 'gb' to display in gigabyte");
+
 
 define("_MI_DOWNLOADS_POPULAR", "How many downloads of one file before it's popular");
 define("_MI_DOWNLOADS_DAYSNEW", "How many days to provide one file as new");

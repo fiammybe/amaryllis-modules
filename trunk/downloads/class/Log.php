@@ -36,6 +36,65 @@ class DownloadsLog extends icms_ipf_Object {
 		$this->quickInitVar('log_case', XOBJ_DTYPE_INT); // download = 0; upload/create = 1; delete = 2; updated: 3;
 		
 	}
+	
+	public function getLogPublishedDate() {
+		global $downloadsConfig;
+		$date = '';
+		$date = $this->getVar('log_date', 'e');
+		
+		return date($downloadsConfig['downloads_dateformat'], $date);
+	}
+	
+	public function getLogItemId() {
+		$item_id = $this->getVar("log_item_id", "e");
+		$item = $this->getVar("log_item", "e");
+		$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(dirname(__FILE__))), "downloads");
+		$downloads_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "downloads");
+		if($item = 0){
+			$file = $downloads_download_handler->get($item_id);
+			$filename = $file->getVar("download_title", "s");
+			$url = DOWNLOADS_URL . 'singledownload.php?download_id=' . $item_id;
+			return '<a href="' . $url . '" title="' . $filename . '">' . $filename . '</a>';
+		} elseif ($item = 1) {
+			$cat = $downloads_category_handler->get($item_id);
+			$catname = $cat->getVar("category_title", "s");
+			$url = DOWNLOADS_URL . 'index.php?category_id=' . $item_id;
+			return '<a href="' . $url . '" title="' . $catname . '">' . $catname . '</a>';
+		}
+	}
+	
+	public function getLogItem() {
+		$item = $this->getVar("log_item", "e");
+		switch ($item) {
+			case '0':
+				return 'file';
+				break;
+			
+			case '1':
+				return 'category';
+				break;
+		}
+	}
+	
+	public function getLogCase() {
+		$item = $this->getVar("log_item", "e");
+		switch ($item) {
+			case '0':
+				return 'download';
+				break;
+			
+			case '1':
+				return 'create';
+				break;
+				
+			case '2':
+				return 'delete';
+				break;
+			
+			case '3':
+				return 'updated';
+				break;
+		}
+	}
+	
 }
-
-
