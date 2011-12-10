@@ -24,12 +24,16 @@ function addreview($clean_review_id = 0, $clean_download_id = 0){
 	$downloadObj = $downloads_download_handler->get($clean_download_id);
 	$downloads_review_handler = icms_getModuleHandler("review", basename(dirname(__FILE__)), "downloads");
 	$reviewObj = $downloads_review_handler->get($clean_review_id);
-	
+	if(is_object(icms::$user)){
+		$review_uid = icms::$user->getVar("uid");
+	} else {
+		$review_uid = 0;
+	}
 	if ($reviewObj->isNew()){
 		$reviewObj->setVar("review_date", (time()-200));
 		$reviewObj->setVar("review_item_id", $clean_download_id);
 		$reviewObj->setVar('review_ip', $_SERVER['REMOTE_ADDR'] );
-		$reviewObj->setVar('review_uid', icms::$user->getVar("uid"));
+		$reviewObj->setVar('review_uid', $review_uid);
 		$sform = $reviewObj->getSecureForm(_MD_DOWNLOADS_REVIEW_ADD, 'addreview', DOWNLOADS_URL . "ajax.php?op=addreview&download_id=" . $downloadObj->id() , '_CO_SUBMIT', FALSE, TRUE);
 		$sform->assign($icmsTpl, 'downloads_review_form');
 	} else {

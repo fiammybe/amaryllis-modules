@@ -240,10 +240,13 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 			return true;
 		}
 		
-		if ($viewperm && $this->getVar('category_active', 'e') == true && $this->getVar('category_approve', 'e') == true && count($allowed_groups) > 0) {
+		if ($viewperm && $this->getVar('category_active', 'e') == true && $this->getVar('category_approve', 'e') == true) {
 			return true;
 		}
 
+		if ($viewperm && count($allowed_groups) > 0) {
+			return true;
+		}
 		
 		return false;
 	}

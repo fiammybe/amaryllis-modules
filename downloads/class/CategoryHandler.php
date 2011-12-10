@@ -75,10 +75,10 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return $criteria;
 	}
 	
-	public function getCategories($approved= null, $active = null, $start = 0, $limit = 0, $category_publisher = false, $category_id = false,  $category_pid = false, $order = 'weight', $sort = 'ASC') {
+	public function getCategories($start = 0, $limit = 0, $category_publisher = false, $category_id = false,  $category_pid = false, $order = 'weight', $sort = 'ASC', $approved= null, $active = null) {
 		$criteria = $this->getCategoryCriteria($start, $limit, $category_publisher, $category_id,  $category_pid, $order, $sort);
-		$criteria->add(new icms_db_criteria_Item("category_approve", true));
-		$criteria->add(new icms_db_criteria_Item("category_active", true));
+		if($approved) $criteria->add(new icms_db_criteria_Item("category_approve", true));
+		if ($active) $criteria->add(new icms_db_criteria_Item("category_active", true));
 		$categories = $this->getObjects($criteria, true, false);
 		$ret = array();
 		foreach ($categories as $category){
