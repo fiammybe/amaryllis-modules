@@ -119,8 +119,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 		default:
 			$clean_download_id = isset($_GET['download_id']) ? filter_input(INPUT_GET, 'download_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$clean_review_start = isset($_GET['rev_nav']) ? intval($_GET['rev_nav']) : 0;
-			$clean_files_start = isset($_GET['file_nav']) ? intval($_GET['file_nav']) : 0;
+			$clean_review_start = isset($_GET['rev_nav']) ? filter_input(INPUT_GET, 'rev_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			
@@ -259,12 +258,16 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 */
 				if($downloadsConfig['show_reviews'] == 1) {
 					$downloads_review_handler = icms_getModuleHandler("review", basename(dirname(__FILE__)), "downloads");
-					$reviews = $downloads_review_handler->getReviews(0, $downloadsConfig['show_reviews_count'], 'review_date', $downloadsConfig['review_order'], $downloadObj->getVar("download_id") );
+					$reviews = $downloads_review_handler->getReviews($clean_review_start, $downloadsConfig['show_reviews_count'], 'review_date', $downloadsConfig['review_order'], $downloadObj->getVar("download_id") );
 					$icmsTpl->assign("show_reviews", TRUE);
 					$icmsTpl->assign('file_reviews', $reviews);
 					
 					if($downloadsConfig['show_reviews_email'] == 1) {
 						$icmsTpl->assign("show_reviews_email", TRUE);
+					}
+					
+					if($downloadsConfig['show_reviews_avatar'] == 1) {
+						$icmsTpl->assign("show_reviews_avatar", TRUE);
 					}
 					/**
 					 * Reviews Page navigation
@@ -273,7 +276,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					$criteria = new icms_db_criteria_Compo();
 					$criteria->add(new icms_db_criteria_Item('review_item_id', $downloadObj->getVar("download_id")));
 					$review_count = $downloads_review_handler->getCount($criteria);
-					$extra_arg = 'download_id=' . $clean_download_id . '&file=' . $downloadObj->getVar("short_url");
+					$extra_arg = 'download_id=' . $clean_download_id . '&amp;file=' . $downloadObj->getVar("short_url");
 					$review_pagenav = new icms_view_PageNav($review_count, $downloadsConfig['show_reviews_count'], $clean_review_start, 'rev_nav', $extra_arg);
 					$icmsTpl->assign('review_pagenav', $review_pagenav->renderImageNav());
 				

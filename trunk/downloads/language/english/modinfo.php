@@ -112,6 +112,8 @@ define("_MI_DOWNLOADS_SHOW_REVIEWS", "show reviews?");
 define("_MI_DOWNLOADS_SHOW_REVIEWS_DSC", "Do you like to show reviews in Frontend, select 'YES'. A new tab in single-file-view will show the reviews.");
 define("_MI_DOWNLOADS_SHOW_REVIEWS_EMAIL", "show reviews email?");
 define("_MI_DOWNLOADS_SHOW_REVIEWS_EMAIL_DSC", "Select'YES' to show email address in reviews on file-single-view");
+define("_MI_DOWNLOADS_SHOW_REVIEWS_AVATAR", "show user avatar in reviews?");
+define("_MI_DOWNLOADS_SHOW_REVIEWS_AVATAR_DSC", "select 'YES' to display users avatar in reviews");
 define("_MI_DOWNLOADS_REVIEWS_COUNT", "How many reviews should be shown in one page?");
 define("_MI_DOWNLOADS_REVIEWS_ORDER", "Order reviews date");
 define("_MI_DOWNLOADS_DISPLAY_REVIEWS_EMAIL", "How to display the email-address in frontend?");

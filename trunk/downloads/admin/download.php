@@ -113,7 +113,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		case 'visible':
 			$visibility = $downloads_download_handler -> changeVisible( $clean_download_id );
-			$ret = 'downloads.php';
+			$ret = 'download.php';
 			if ($visibility == 0) {
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_OFFLINE );
 			} else {

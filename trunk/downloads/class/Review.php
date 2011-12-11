@@ -33,7 +33,7 @@ class DownloadsReview extends icms_ipf_Object {
 		$this->quickInitVar("review_ip", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("review_date",XOBJ_DTYPE_LTIME);
 		
-		$this->setVar("review_message", array("name" => "textarea", "form_editor" => "htmlarea"));
+		$this->setVar("review_message", array("name" => "textarea", "form_editor" => "textarea"));
 		
 		$this->hideFieldFromForm(array("review_item_id", "review_uid", "review_ip", "review_date" ));
 		
@@ -72,6 +72,20 @@ class DownloadsReview extends icms_ipf_Object {
 		return date($downloadsConfig['downloads_dateformat'], $date);
 	}
 	
+	public function getReviewAvatar() {
+		$review_uid = $this->getVar("review_uid", "e");
+		if(intval($review_uid > 0)) {
+			$review_user = icms::handler("icms_member")->getUser($review_uid);
+			$review_avatar = $review_user->getVar("user_avatar");
+			$avatar_image = "<img src='" . ICMS_UPLOAD_URL . "/" . $review_user->user_avatar() . "' alt='avatar' />";
+			return $avatar_image;
+		} else {
+			$review_avatar = "blank.gif";
+			$avatar_image = "<img src='" . ICMS_UPLOAD_URL . "/" . $review_avatar . "' alt='avatar' />";
+			return $avatar_image;
+		}
+	}
+	
 	public function getReviewItem() {
 		$item_id = $this->getVar("review_item_id", "e");
 		$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(dirname(__FILE__))), "downloads");
@@ -87,6 +101,7 @@ class DownloadsReview extends icms_ipf_Object {
 		$ret['message'] = $this->getReviewMessage();
 		$ret['name'] = $this->getVar("review_name", "s");
 		$ret['email'] = $this->getReviewEmail();
+		$ret['avatar'] = $this->getReviewAvatar();
 		return $ret;
 	}
 	
