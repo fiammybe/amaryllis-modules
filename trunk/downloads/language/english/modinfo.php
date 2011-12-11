@@ -114,6 +114,12 @@ define("_MI_DOWNLOADS_SHOW_REVIEWS_EMAIL", "show reviews email?");
 define("_MI_DOWNLOADS_SHOW_REVIEWS_EMAIL_DSC", "Select'YES' to show email address in reviews on file-single-view");
 define("_MI_DOWNLOADS_REVIEWS_COUNT", "How many reviews should be shown in one page?");
 define("_MI_DOWNLOADS_REVIEWS_ORDER", "Order reviews date");
+define("_MI_DOWNLOADS_DISPLAY_REVIEWS_EMAIL", "How to display the email-address in frontend?");
+define("_MI_DOWNLOADS_DISPLAY_REVIEWS_EMAIL_DSC", "The first option 'Text spam protected' will display the email like 'mymail at example dot com', the second will display a usual email 'myemail@example.com', which can be protected from core by creating an image from email.");
+define("_MI_DOWNLOADS_DISPLAY_REVEMAIL_SPAMPROT", "Text spam protected without checking banned list");
+define("_MI_DOWNLOADS_DISPLAY_REVEMAIL_IMGPROT", "usual email without checking banned list");
+define("_MI_DOWNLOADS_DISPLAY_REVEMAIL_SPAMPROT_BANNED", "Text spam protected with checking banned list");
+define("_MI_DOWNLOADS_DISPLAY_REVEMAIL_IMGPROT_BANNED", "usual email with checking banned list");
 
 define("_MI_DOWNLOADS_DISPLAY_FILE_SIZE", "How to display the file size?");
 define("_MI_DOWNLOADS_DISPLAY_FILE_SIZE_DSC", "Select 'byte' to display in byte, 'mb' to display in megabyte, 'gb' to display in gigabyte");
@@ -125,15 +131,100 @@ define("_MI_DOWNLOADS_DAYSUPDATED", "How many days to provide one file as update
 define("_MI_DOWNLOADS_MIMETYPES", "Allowed Mimetypes");
 define("_MI_DOWNLOADS_MIMETYPES_DSC", "Enter the Mimetypes you want to allow for file/imageupload. For more Informations about the system mimetypes go to system->media->mime types");
 // Notifications
-define("_MI_DOWNLOADS_GLOBAL_NOTIFY", "All Categories");
-define("_MI_DOWNLOADS_GLOBAL_NOTIFY_DSC", "Notifications related to all Categories in the module");
-define("_MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY", "New Category published");
-define("_MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_CAP", "Notify me when a new Category has been published");
-define("_MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_DSC", "Receive notification when any new Category is published.");
-define("_MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_SBJ", "[{X_SITENAME}] {X_MODULE} auto-notify : New Category published");
+define('_MI_DOWNLOADS_GLOBAL_NOTIFY', 'Global');
+define('_MI_DOWNLOADS_GLOBAL_NOTIFY_DSC', 'Global Downloads notification options.');
 
-define("_MI_DOWNLOADS_FILE_NOTIFY", "File");
-define('_MI_DOWNLOADS_FILE_NOTIFY_DSC', 'Notification options which apply to the current file');
+define('_MI_DOWNLOADS_CATEGORY_NOTIFY', 'Category');
+define('_MI_DOWNLOADS_CATEGORY_NOTIFY_DSC', 'Notification options that apply to the current file category.');
+
+define('_MI_DOWNLOADS_FILE_NOTIFY', 'File');
+define('_MI_DOWNLOADS_FILE_NOTIFY_DSC', 'Notification options that apply to the current file.');
+
+define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY', 'New Category');
+define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_CAP', 'Notify me when a new file category is created.');
+define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_DSC', 'Receive notification when a new file category is created.');
+define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file category');                              
+
+define('_MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY', 'Modify File Requested');
+define('_MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY_CAP', 'Notify me of any file modification request.');
+define('_MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY_DSC', 'Receive notification when any file modification request is submitted.');
+define('_MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : File Modification Requested');
+
+define('_MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY', 'Broken File Submitted');
+define('_MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY_CAP', 'Notify me of any broken file report.');
+define('_MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY_DSC', 'Receive notification when any broken file report is submitted.');
+define('_MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Broken File Reported');
+
+define('_MI_DOWNLOADS_GLOBAL_FILESUBMIT_NOTIFY', 'File Submitted');
+define('_MI_DOWNLOADS_GLOBAL_FILESUBMIT_NOTIFY_CAP', 'Notify me when any new file is submitted (awaiting approval).');
+define('_MI_DOWNLOADS_GLOBAL_FILESUBMIT_NOTIFY_DSC', 'Receive notification when any new file is submitted (awaiting approval).');
+define('_MI_DOWNLOADS_GLOBAL_FILESUBMIT_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file submitted');
+
+define('_MI_DOWNLOADS_GLOBAL_NEWFILE_NOTIFY', 'New File');
+define('_MI_DOWNLOADS_GLOBAL_NEWFILE_NOTIFY_CAP', 'Notify me when any new file is posted.');
+define('_MI_DOWNLOADS_GLOBAL_NEWFILE_NOTIFY_DSC', 'Receive notification when any new file is posted.');
+define('_MI_DOWNLOADS_GLOBAL_NEWFILE_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file');
+
+define('_MI_DOWNLOADS_CATEGORY_FILESUBMIT_NOTIFY', 'File Submitted');
+define('_MI_DOWNLOADS_CATEGORY_FILESUBMIT_NOTIFY_CAP', 'Notify me when a new file is submitted (awaiting approval) to the current category.');   
+define('_MI_DOWNLOADS_CATEGORY_FILESUBMIT_NOTIFY_DSC', 'Receive notification when a new file is submitted (awaiting approval) to the current category.');      
+define('_MI_DOWNLOADS_CATEGORY_FILESUBMIT_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file submitted in category'); 
+
+define('_MI_DOWNLOADS_CATEGORY_NEWFILE_NOTIFY', 'New File');
+define('_MI_DOWNLOADS_CATEGORY_NEWFILE_NOTIFY_CAP', 'Notify me when a new file is posted to the current category.');   
+define('_MI_DOWNLOADS_CATEGORY_NEWFILE_NOTIFY_DSC', 'Receive notification when a new file is posted to the current category.');      
+define('_MI_DOWNLOADS_CATEGORY_NEWFILE_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file in category'); 
+
+define('_MI_DOWNLOADS_FILE_APPROVE_NOTIFY', 'File Approved');
+define('_MI_DOWNLOADS_FILE_APPROVE_NOTIFY_CAP', 'Notify me when this file is approved.');
+define('_MI_DOWNLOADS_FILE_APPROVE_NOTIFY_DSC', 'Receive notification when this file is approved.');
+define('_MI_DOWNLOADS_FILE_APPROVE_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : File Approved');
+
+define('_MI_DOWNLOADS_FILE_FILEMODIFIED_NOTIFY', 'File Modified');
+define('_MI_DOWNLOADS_FILE_FILEMODIFIED_NOTIFY_CAP', 'Notify me when this file is modified.');
+define('_MI_DOWNLOADS_FILE_FILEMODIFIED_NOTIFY_DSC', 'Receive notification when this file is modified.');
+define('_MI_DOWNLOADS_FILE_FILEMODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : File Modified');
+
+define('_MI_DOWNLOADS_CATEGORY_FILEMODIFIED_NOTIFY', 'File Modified');
+define('_MI_DOWNLOADS_CATEGORY_FILEMODIFIED_NOTIFY_CAP', 'Notify me when a file in this category is modified.');
+define('_MI_DOWNLOADS_CATEGORY_FILEMODIFIED_NOTIFY_DSC', 'Receive notification when a file in this category is modified.');
+define('_MI_DOWNLOADS_CATEGORY_FILEMODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : File Modified');
+
+define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY', 'File Modified');
+define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_CAP', 'Notify me when any file is modified.');
+define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_DSC', 'Receive notification when any file is modified.');
+define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : File Modified');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ACP menu
 define("_MI_DOWNLOADS_MENU_INDEX", "Index");

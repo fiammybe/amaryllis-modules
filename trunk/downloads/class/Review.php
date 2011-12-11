@@ -50,8 +50,17 @@ class DownloadsReview extends icms_ipf_Object {
 	 */
 	
 	public function getReviewEmail(){
+		global $downloadsConfig;
 		$email = $this->getVar("review_email", "s");
-		$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
+		if($downloadsConfig['display_reviews_email'] == 1) {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
+		} elseif($downloadsConfig['display_reviews_email'] == 2) {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
+		} elseif($downloadsConfig['display_reviews_email'] == 3) {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 1);
+		} elseif($downloadsConfig['display_reviews_email'] == 4) {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
+		}
 		return $email;
 	}
 	

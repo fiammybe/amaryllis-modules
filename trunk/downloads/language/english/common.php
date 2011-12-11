@@ -57,7 +57,7 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_ALT_DSC", " You can also upload a f
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY", "Filehistory");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY_DSC", "Insert the history from the file. Minimalistic html will be allowed.");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER", "Teaser");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER_DSC", "Descripe the file using 1 or 2 sentences.");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER_DSC", "Descripe the file using 1 or 2 sentences. This will be displayed on index view.");
 
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES", "Keyfeatures");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES_DSC", " Enter the keyfeatures of the file.");
@@ -134,8 +134,8 @@ define("_CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM_DSC", "Select which groups will 
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_PUBLISHED_DATE", "Published on");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPDATED_DATE", "Updated on");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_SUBMITTER", "Submitter");
-define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM", "View Permission");
-define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM_DSC", "Select which groups will have upload permission for this Category. This means that a user belonging to one of these groups will be able to uload new Files to the Category when it is activated in the site.' ");
+define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM", "Upload Permission");
+define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM_DSC", "Select which groups will have upload permission for this Category. This means that a user belonging to one of these groups will be able to upload new Files to the Category when it is activated in the site.' ");
 // review system
 define("_CO_DOWNLOADS_REVIEW_REVIEW_ITEM_ID", "item");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_UID", "user");

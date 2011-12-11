@@ -1,15 +1,20 @@
 <?php
 /**
- * Comment delete
+ * 'Downloads' is a light weight category handling module for ImpressCMS
  *
- * This file holds the configuration information of this module
- *
+ * File: /comment_reply.php
+ * 
+ * comments reply
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Downloads
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		album
  * @version		$Id$
+ * @package		downloads
+ *
  */
 
 include_once "header.php";

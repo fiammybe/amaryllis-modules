@@ -21,23 +21,23 @@ defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
 class DownloadsCategory extends icms_ipf_seo_Object {
 
-	public $updating_counter = false;
+	public $updating_counter = FALSE;
 	
-	public $categories = true;
+	public $categories = TRUE;
 	
 	public function __construct(&$handler) {
 		
 		icms_ipf_object::__construct($handler);
 		
-		$this->quickInitVar('category_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('category_title', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('category_id', XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar('category_title', XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->initCommonVar('short_url');
-		$this->quickInitVar('category_pid', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('category_img', XOBJ_DTYPE_TXTBOX, false);
+		$this->quickInitVar('category_pid', XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar('category_img', XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar('category_img_upload', XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar('category_description', XOBJ_DTYPE_TXTAREA);
-		$this->quickInitVar('category_active', XOBJ_DTYPE_INT, false, false,false, 1);
-		$this->quickInitVar('category_inblocks',XOBJ_DTYPE_INT, false, false,false, 1);
+		$this->quickInitVar('category_active', XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
+		$this->quickInitVar('category_inblocks',XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
 		$this->quickInitVar('category_approve',XOBJ_DTYPE_INT);
 		$this->quickInitVar('category_grpperm', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('category_uplperm', XOBJ_DTYPE_TXTBOX);
@@ -45,14 +45,14 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$this->quickInitVar('category_updated_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('category_publisher', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('category_submitter', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('category_notification_sent', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('category_notification_sent', XOBJ_DTYPE_INT, FALSE);
 		$this->initCommonVar('weight');
 		$this->initCommonVar('counter');
-		$this->initCommonVar('dohtml', false, 1);
-		$this->initCommonVar('dobr', true, 1);
-		$this->initCommonVar('doimage', true, 1);
-		$this->initCommonVar('dosmiley', true, 1);
-		$this->initCommonVar('docxode', true, 1);
+		$this->initCommonVar('dohtml', FALSE, 1);
+		$this->initCommonVar('dobr', TRUE, 1);
+		$this->initCommonVar('doimage', TRUE, 1);
+		$this->initCommonVar('dosmiley', TRUE, 1);
+		$this->initCommonVar('docxode', TRUE, 1);
 		$this->quickInitVar('category_sub', XOBJ_DTYPE_INT);
 		// set controls
 		$this->setControl('category_pid', 'parentcategory');
@@ -87,7 +87,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	}
 	
 	// get publisher for frontend
-	function getCategoryPublisher($link = false) {		
+	function getCategoryPublisher($link = FALSE) {		
 		$publisher_uid = $this->getVar('category_publisher', 'e');
 		$userinfo = array();
 		$userObj = icms::handler('icms_member')->getuser($publisher_uid);
@@ -134,7 +134,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	
 	public function category_active() {
 		$active = $this->getVar('category_active', 'e');
-		if ($active == false) {
+		if ($active == FALSE) {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
 				<img src="' . DOWNLOADS_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
@@ -145,7 +145,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	
 	public function category_inblocks() {
 		$active = $this->getVar('category_inblocks', 'e');
-		if ($active == false) {
+		if ($active == FALSE) {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeShow">
 				<img src="' . DOWNLOADS_IMAGES_URL . 'denied.png" alt="Hidden" /></a>';
 		} else {
@@ -156,7 +156,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	
 	public function category_approve() {
 		$active = $this->getVar('category_approve', 'e');
-		if ($active == false) {
+		if ($active == FALSE) {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeApprove">
 				<img src="' . DOWNLOADS_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
 		} else {
@@ -172,7 +172,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	}
 	
 	function getSubsCount(){
-		$count = $this->handler->getCategorySubCount($groups = array(), $perm = 'category_grpperm', true, true, $this->id());
+		$count = $this->handler->getCategorySubCount($groups = array(), $perm = 'category_grpperm', TRUE, TRUE, $this->id());
 		return $count;
 	}
 	// get sub category
@@ -191,8 +191,8 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	
 	function getFilesCount() {
 		$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
-		$files_count_criteria = $downloads_download_handler->getCountCriteria(true, true, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $this->id());
-		$files_count = $downloads_download_handler -> getCount($files_count_criteria, true, false);
+		$files_count_criteria = $downloads_download_handler->getCountCriteria(TRUE, TRUE, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $this->id());
+		$files_count = $downloads_download_handler -> getCount($files_count_criteria, TRUE, FALSE);
 		return $files_count;
 	
 	}
@@ -237,24 +237,28 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$viewperm = $gperm_handler->checkRight('category_grpperm', $this->getVar('category_id', 'e'), $groups, $module->getVar("mid"));
 
 		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('category_publisher', 'e')) {
-			return true;
+			return TRUE;
 		}
 		
-		if ($viewperm && $this->getVar('category_active', 'e') == true && $this->getVar('category_approve', 'e') == true) {
-			return true;
+		if ($viewperm && ($this->getVar('category_active', 'e') == TRUE)) {
+			return TRUE;
+		}
+		
+		if ($viewperm && ($this->getVar('category_approve', 'e') == TRUE)) {
+			return TRUE;
 		}
 
-		if ($viewperm && count($allowed_groups) > 0) {
-			return true;
+		if ($viewperm && (count($allowed_groups) > 0)) {
+			return TRUE;
 		}
 		
-		return false;
+		return FALSE;
 	}
 
 	function userCanEditAndDelete() {
 		global $downloads_isAdmin;
-		if (!is_object(icms::$user)) return false;
-		if ($downloads_isAdmin) return true;
+		if (!is_object(icms::$user)) return FALSE;
+		if ($downloads_isAdmin) return TRUE;
 		return $this->getVar('category_publisher', 'e') == icms::$user->getVar("uid");
 	}
 	
@@ -263,7 +267,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		return $ret;
 	}
 	
-	function getItemLink($onlyUrl = false) {
+	function getItemLink($onlyUrl = FALSE) {
 		$seo = $this->handler->makelink($this);
 		$url = DOWNLOADS_URL . 'index.php?category_id=' . $this -> getVar( 'category_id' ) . '&amp;cat=' . $seo;
 		if ($onlyUrl) return $url;
@@ -280,7 +284,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		if($downloads_download_handler->userCanSubmit($this->id())) {
 			return DOWNLOADS_URL . 'download.php?op=mod&amp;category_id=' . $this->id();
 		} else {
-			return false;
+			return FALSE;
 		}
 	
 	}
@@ -289,18 +293,18 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret = parent::toArray();
 		$ret['published_date'] = $this->getCategoryPublishedDate();
 		$ret['updated_date'] = $this->getCategoryUpdatedDate();
-		$ret['publisher'] = $this->getCategoryPublisher(true);
+		$ret['publisher'] = $this->getCategoryPublisher(TRUE);
 		$ret['id'] = $this->getVar('category_id');
 		$ret['title'] = $this->getVar('category_title');
 		$ret['img'] = $this->getCategoryImageTag();
 		$ret['dsc'] = $this->getVar('category_description');
-		$ret['sub'] = $this->getCategorySub($this->getVar('category_id', 'e'), true);
-		$ret['hassub'] = (count($ret['sub']) > 0) ? true : false;
-		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
-		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
+		$ret['sub'] = $this->getCategorySub($this->getVar('category_id', 'e'), TRUE);
+		$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
+		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
+		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['category_posterid'] = $this->getVar('category_publisher', 'e');
-		$ret['itemLink'] = $this->getItemLink(true, true);
+		$ret['itemLink'] = $this->getItemLink(TRUE, TRUE);
 		$ret['accessgranted'] = $this->accessGranted();
 		$ret['cat_count'] = $this->getSubsCount();
 		$ret['files_count'] = $this->getFilesCount();
@@ -311,7 +315,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	function sendNotifCategoryPublished() {
 		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
 		$tags ['CATEGORY_TITLE'] = $this->getVar('category_title');
-		$tags ['CATEGORY_URL'] = $this->getItemLink(true, true);
+		$tags ['CATEGORY_URL'] = $this->getItemLink(TRUE, TRUE);
 		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'category_published', $tags, array(), $module->getVar('mid'));
 	}
 

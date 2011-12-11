@@ -82,7 +82,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		$categories = $this->getObjects($criteria, true, false);
 		$ret = array();
 		foreach ($categories as $category){
-			if ($category['accessgranted']){
+			if ($category['accessgranted'] === TRUE){
 				$ret[$category['category_id']] = $category;
 			}
 		}
@@ -290,6 +290,26 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 			$ret[$i] = $categoryimages[$i];
 		}
 		return $ret;
+	}
+	
+	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'download_grpperm', $category_publisher = false, $category_id = false, $category_pid = false) {
+		$criteria = new icms_db_criteria_Compo();
+		
+		if (isset($active)) {
+			$criteria->add(new icms_db_criteria_Item('category_active', true));
+		}
+		if (isset($approve)) {
+			$criteria->add(new icms_db_criteria_Item('category_approve', true));
+		}
+		if (is_null($category_id)) $category_id = 0;
+		$criteria->add(new icms_db_criteria_Item('category_id', $category_id));
+		if (is_null($category_pid)) $category_pid = 0;
+		$criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
+		
+		if($this->setGrantedObjectsCriteria($criteria, $perm)){
+			return $criteria;
+		}
+	
 	}
 
 	public function getGroups($criteria = null) {
