@@ -292,7 +292,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'download_grpperm', $category_publisher = false, $category_id = false, $category_pid = false) {
+	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'download_grpperm', $category_publisher = false, $category_id = null, $category_pid = null) {
 		$criteria = new icms_db_criteria_Compo();
 		
 		if (isset($active)) {

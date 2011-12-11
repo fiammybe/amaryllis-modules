@@ -529,6 +529,15 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'show_reviews_avatar',
+								'title' 		=> '_MI_DOWNLOADS_SHOW_REVIEWS_AVATAR',
+								'description' 	=> '_MI_DOWNLOADS_SHOW_REVIEWS_AVATAR_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 0
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'show_reviews_count',
 								'title' 		=> '_MI_DOWNLOADS_REVIEWS_COUNT',
 								'description' 	=> '',

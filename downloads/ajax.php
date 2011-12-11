@@ -102,8 +102,13 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$clean_review_id = isset($_GET['review_id']) ? filter_input(INPUT_GET, 'review_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$downloads_review_handler = icms_getModuleHandler("review", basename(dirname(__FILE__)), "downloads");
 			$reviewObj = $downloads_review_handler->get($clean_review_id);
+			if(is_object(icms::$user)){
+				$review_uid = icms::$user->getVar("uid");
+			} else {
+				$review_uid = 0;
+			}
 			if($reviewObj->isNew() ) {
-				$reviewObj->setVar('review_uid', icms::$user->getVar("uid"));
+				$reviewObj->setVar('review_uid', $review_uid);
 				$reviewObj->setVar('review_item_id', $download_id );
 				$reviewObj->setVar('review_date', (time()-200) );
 				$reviewObj->setVar('review_ip', $_SERVER['REMOTE_ADDR'] );
