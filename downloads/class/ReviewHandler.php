@@ -44,9 +44,9 @@ class DownloadsReviewHandler extends icms_ipf_Handler {
 
 	protected function beforeSafe(& $obj) {
 		global $downloadsConfig;
-		//$message = icms_core_DataFilter::checkVar($obj->getVar("review-message"), "str", "striplow");
-		$message = strip_tags(htmlspecialchars_decode($obj->getVar("guestbook_entry"), ENT_NOQUOTES), '<b><i><p><a>');
-		$obj->setVar("review_message", icms_core_DataFilter::addSlashes($message, ENT_QUOTES));
+		$message = icms_core_DataFilter::checkVar($obj->getVar("review-message"), "str", "striplow");
+		
+		$obj->setVar("review_message", $message);
 
 		$email = $this->getVar("review_email", "s");
 		if($downloadsConfig['display_reviews_email'] == 1) {
@@ -60,6 +60,6 @@ class DownloadsReviewHandler extends icms_ipf_Handler {
 		}
 		return $email;
 		$obj->setVar("review_email", $email);
-		
+		return TRUE;
 	}
 }

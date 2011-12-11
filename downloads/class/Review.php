@@ -33,7 +33,7 @@ class DownloadsReview extends icms_ipf_Object {
 		$this->quickInitVar("review_ip", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("review_date",XOBJ_DTYPE_LTIME);
 		
-		$this->setVar("review_message", array("name" => "textarea", "form_editor" => "textarea"));
+		$this->setVar("review_message", array("name" => "textarea", "form_editor" => "htmlarea"));
 		
 		$this->hideFieldFromForm(array("review_item_id", "review_uid", "review_ip", "review_date" ));
 		
