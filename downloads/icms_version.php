@@ -519,6 +519,16 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'display_reviews_email',
+								'title' 		=> '_MI_DOWNLOADS_DISPLAY_REVIEWS_EMAIL',
+								'description' 	=> '_MI_DOWNLOADS_DISPLAY_REVIEWS_EMAIL_DSC',
+								'formtype' 		=> 'select',
+								'valuetype' 	=> 'int',
+								'options'		=> array("_MI_DOWNLOADS_DISPLAY_REVEMAIL_SPAMPROT" => 1, "_MI_DOWNLOADS_DISPLAY_REVEMAIL_IMGPROT" => 2, "_MI_DOWNLOADS_DISPLAY_REVEMAIL_SPAMPROT_BANNED" => 3, "_MI_DOWNLOADS_DISPLAY_REVEMAIL_IMGPROT_BANNED" => 4),
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'show_reviews_count',
 								'title' 		=> '_MI_DOWNLOADS_REVIEWS_COUNT',
 								'description' 	=> '',
@@ -571,7 +581,7 @@ $modversion['config'][$i] = array(
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-$modversion['hasNotification'] = 0;
+$modversion['hasNotification'] = 1;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';
 $modversion['notification']['lookup_func'] = 'downloads_notify_iteminfo';
 
@@ -584,8 +594,8 @@ $modversion['notification']['category'][$i]['item_name'] = '';
 $modversion['notification']['category'][$i]['subscribe_from'] = array('index.php', 'singledownload.php');
 $i++;
 $modversion['notification']['category'][$i]['name'] = 'category';
-$modversion['notification']['category'][$i]['title'] = _MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY;
-$modversion['notification']['category'][$i]['description'] = _MI_DOWNLOADS_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_DSC;
+$modversion['notification']['category'][$i]['title'] = _MI_DOWNLOADS_CATEGORY_NOTIFY;
+$modversion['notification']['category'][$i]['description'] = _MI_DOWNLOADS_CATEGORY_NOTIFY_DSC;
 $modversion['notification']['category'][$i]['subscribe_from'] = array('index.php');
 $modversion['notification']['category'][$i]['item_name'] = 'category_id';
 $modversion['notification']['category'][$i]['allow_bookmark'] = 1;
@@ -596,99 +606,98 @@ $modversion['notification']['category'][$i]['description'] = _MI_DOWNLOADS_FILE_
 $modversion['notification']['category'][$i]['subscribe_from'] = 'singledownload.php';
 $modversion['notification']['category'][$i]['item_name'] = 'download_id';
 $modversion['notification']['category'][$i]['allow_bookmark'] = 1;
-/**
+
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'new_category';
 $modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'global_newcategory_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'file_modify';
 $modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['admin_only'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'global_filemodify_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'file_broken';
 $modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['admin_only'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'global_filebroken_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'file_submit';
 $modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['admin_only'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_GLOBAL_FILESUBMIT_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_FILESUBMIT_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_FILESUBMIT_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_GLOBAL_FILESUBMIT_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'global_filesubmit_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_FILESUBMIT_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_FILESUBMIT_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'new_file';
 $modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_GLOBAL_NEWFILE_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_NEWFILE_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_NEWFILE_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_GLOBAL_NEWFILE_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'global_newfile_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_NEWFILE_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_NEWFILE_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'file_submit';
 $modversion['notification']['event'][$i]['category'] = 'category';
 $modversion['notification']['event'][$i]['admin_only'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_CATEGORY_FILESUBMIT_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_CATEGORY_FILESUBMIT_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_CATEGORY_FILESUBMIT_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_CATEGORY_FILESUBMIT_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'category_filesubmit_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_CATEGORY_FILESUBMIT_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_CATEGORY_FILESUBMIT_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'new_file';
 $modversion['notification']['event'][$i]['category'] = 'category';
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_CATEGORY_NEWFILE_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_CATEGORY_NEWFILE_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_CATEGORY_NEWFILE_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_CATEGORY_NEWFILE_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'category_newfile_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_CATEGORY_NEWFILE_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_CATEGORY_NEWFILE_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'approve';
 $modversion['notification']['event'][$i]['category'] = 'file';
 $modversion['notification']['event'][$i]['invisible'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_FILE_APPROVE_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_FILE_APPROVE_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_FILE_APPROVE_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_FILE_APPROVE_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'file_approve_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_FILE_APPROVE_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_FILE_APPROVE_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'filemodified';
 $modversion['notification']['event'][$i]['category'] = 'file';
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_FILE_FILEMODIFIED_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_FILE_FILEMODIFIED_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_FILE_FILEMODIFIED_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_FILE_FILEMODIFIED_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'file_filemodified_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_FILE_FILEMODIFIED_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_FILE_FILEMODIFIED_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'filemodified';
 $modversion['notification']['event'][$i]['category'] = 'category';
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_CATEGORY_FILEMODIFIED_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_CATEGORY_FILEMODIFIED_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_CATEGORY_FILEMODIFIED_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_CATEGORY_FILEMODIFIED_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'category_filemodified_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_CATEGORY_FILEMODIFIED_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_CATEGORY_FILEMODIFIED_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'filemodified';
 $modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['title'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFYCAP;
+$modversion['notification']['event'][$i]['caption'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'global_filemodified_notify';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFYSBJ;
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_SBJ;
 
- **/

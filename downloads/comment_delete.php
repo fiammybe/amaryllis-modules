@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Album' is a light weight gallery module
+ * 'Downloads' is a light weight category handling module for ImpressCMS
  * 
  * File: /comment_delete.php
  * 
@@ -9,10 +9,10 @@
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * --------------------------------------------------------------------------------------------------------
- * 				album
+ * 				Downloads
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		album
+ * @package		downloads
  * @version		$Id$
  * 
  */

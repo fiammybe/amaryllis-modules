@@ -84,8 +84,10 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
  * if there's no valid category, retrieve a list of all primary categories
  */
 } elseif ($clean_category_id == 0) {
-	$categories = $downloads_category_handler->getCategories($clean_category_start, icms::$module->config['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
+	$categories = $downloads_category_handler->getCategories($clean_category_start, $downloadsConfig['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
 	$icmsTpl->assign('downloads_cat', $categories);
+	$countcategories = $downloads_category_handler->getCategories(0, FALSE, $clean_category_uid, FALSE, $clean_category_pid, FALSE, FALSE, TRUE, TRUE );
+	
 /**
  * if not valid single category or no permissions -> redirect to module home
  */
@@ -124,12 +126,15 @@ $xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/downloads.js', a
 ////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 $criteria = new icms_db_criteria_Compo();
-$criteria->add(new icms_db_criteria_Item('category_active', true));
-$criteria->add(new icms_db_criteria_Item('category_approve', true));
-// adjust for tag, if present
-$category_count = $downloads_category_handler->getCount();
+$criteria->add(new icms_db_criteria_Item("category_pid", $clean_category_id));
+$criteria->add(new icms_db_criteria_Item("category_approve", TRUE));
+$criteria->add(new icms_db_criteria_Item("category_active", TRUE));
+$categoryObjects = $downloads_category_handler->getObjects($criteria, TRUE, FALSE);
 
+$category_count_crit = $downloads_category_handler->getCountCriteria(true, true, $groups,'category_grpperm',false,false, $clean_category_id);;
+$category_count = $downloads_category_handler->getCount($criteria);
 if (!empty($clean_category_id)) {
 	$extra_arg = 'category_id=' . $clean_category_id;
 } else {
@@ -138,7 +143,7 @@ if (!empty($clean_category_id)) {
 $category_pagenav = new icms_view_PageNav($category_count, $downloadsConfig['show_categories'], $clean_category_start, 'cat_nav', $extra_arg);
 $icmsTpl->assign('category_pagenav', $category_pagenav->renderImageNav());
 
-$files_count_criteria = $downloads_download_handler->getCountCriteria(true, true, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $clean_category_id);
+$files_count_criteria = $downloads_download_handler->getCountCriteria(true, true, $groups,'download_grpperm',false,false, $clean_category_id);
 $files_count = $downloads_download_handler -> getCount($files_count_criteria, true, false);
 $icmsTpl->assign('files_count', $files_count);
 if (!empty($clean_download_id)) {

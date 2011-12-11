@@ -169,7 +169,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if ($downloads_isAdmin) return true;
 		$user_groups = icms::$user->getGroups();
 		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
-		return count(array_intersect($categoryObject->getVar('category_uplperm'), $user_groups)) > 0;
+		return count(array_intersect(array($categoryObject->getVar('category_uplperm')), $user_groups)) > 0;
 		
 	}
 

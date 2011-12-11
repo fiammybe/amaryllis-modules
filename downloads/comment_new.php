@@ -1,20 +1,20 @@
 <?php
 /**
- * 'Album' is a light weight gallery module
+ * 'Downloads' is a light weight category handling module for ImpressCMS
+ *
+ * File: /comment_new.php
  * 
- * File: /icms_version.php
- * 
- * add new comments
+ * Add new comments
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * --------------------------------------------------------------------------------------------------------
- * 				download
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Downloads
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		download
  * @version		$Id$
- * 
+ * @package		downloads
+ *
  */
 
 include_once 'header.php';
