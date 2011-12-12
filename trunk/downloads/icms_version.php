@@ -320,7 +320,7 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'select',
 								'valuetype' 	=> 'text',
 								'options'		=> array("byte" => 1, "kb" => 2, "mb" => 3, "gb" => 4),
-								'default' 		=> "kb"
+								'default' 		=> 2
 							);
 $i++;
 $modversion['config'][$i] = array(

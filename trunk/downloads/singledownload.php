@@ -290,8 +290,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$criteria = new icms_db_criteria_Compo();
 				$criteria->add(new icms_db_criteria_Item("log_item_id", $downloadObj->getVar("download_id", "e")));
 				$criteria->add(new icms_db_criteria_Item("log_item", 0));
-				$criteria->add(new icms_db_criteria_Item("log_case", 0));
-				$criteria->add(new icms_db_criteria_Item("log_case", 4));
+				$critTray = new icms_db_criteria_Compo();
+				$critTray -> add(new icms_db_criteria_Item("log_case", 4), "OR");
+				$critTray->add(new icms_db_criteria_Item("log_case", 0), "OR");
+				$criteria->add($critTray);
 				$downloaded = $downloads_log_handler->getCount($criteria);
 				$icmsTpl->assign("download_counter", $downloaded);
 			
