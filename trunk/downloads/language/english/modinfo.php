@@ -108,6 +108,8 @@ define("_MI_DOWNLOADS_DOWNLOAD_APPROVE", "Do you need approvals for new files?")
 define("_MI_DOWNLOADS_DOWNLOAD_APPROVE_DSC", "Select 'YES' if you prefer to approve the files uploaded in frontend first, before providing the file");
 define("_MI_DOWNLOADS_CATEGORY_APPROVE", "Do you need approvals for new categories?");
 define("_MI_DOWNLOADS_CATEGORY_APPROVE_DSC", "Select 'YES' if you prefer to approve the new categories created on frontend first, before providing the link");
+define("_MI_DOWNLOADS_GUEST_CAN_REVIEW", "do you like to allow guests to submit reviews?");
+define("_MI_DOWNLOADS_GUEST_CAN_REVIEW_DSC", "Select 'YES' to allow guests to send reviews.");
 define("_MI_DOWNLOADS_SHOW_REVIEWS", "show reviews?");
 define("_MI_DOWNLOADS_SHOW_REVIEWS_DSC", "Do you like to show reviews in Frontend, select 'YES'. A new tab in single-file-view will show the reviews.");
 define("_MI_DOWNLOADS_SHOW_REVIEWS_EMAIL", "show reviews email?");
