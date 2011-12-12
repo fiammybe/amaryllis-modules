@@ -244,8 +244,15 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 * review form
 				 */
 				addreview(0, $clean_download_id);
-				$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->id() );
-				
+				if($downloadsConfig['guest_review'] == 1) {
+					$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->id() );
+				} else {
+					if(is_object(icms::$user)){
+						$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->id() );
+					} else {
+						redirect_header($_SERVER['PHP_SELF'], 3, _MD_DOWNLOADS_REVIEW_PERM );
+					}
+				}
 				/**
 				 * include the comment rules
 				 */

@@ -483,6 +483,15 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'guest_review',
+								'title' 		=> '_MI_DOWNLOADS_GUEST_CAN_REVIEW',
+								'description' 	=> '_MI_DOWNLOADS_GUEST_CAN_REVIEW_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'downloads_needs_approve',
 								'title' 		=> '_MI_DOWNLOADS_DOWNLOAD_APPROVE',
 								'description' 	=> '_MI_DOWNLOADS_DOWNLOAD_APPROVE_DSC',
