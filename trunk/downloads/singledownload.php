@@ -34,7 +34,7 @@ function addreview($clean_review_id = 0, $clean_download_id = 0){
 		$reviewObj->setVar("review_item_id", $clean_download_id);
 		$reviewObj->setVar('review_ip', $_SERVER['REMOTE_ADDR'] );
 		$reviewObj->setVar('review_uid', $review_uid);
-		$sform = $reviewObj->getSecureForm(_MD_DOWNLOADS_REVIEW_ADD, 'addreview', DOWNLOADS_URL . "ajax.php?op=addreview&download_id=" . $downloadObj->id() , '_CO_SUBMIT', FALSE, TRUE);
+		$sform = $reviewObj->getSecureForm(_MD_DOWNLOADS_REVIEW_ADD, 'addreview', DOWNLOADS_URL . "ajax.php?op=addreview&download_id=" . $downloadObj->id() , '_CO_SUBMIT', TRUE, TRUE);
 		$sform->assign($icmsTpl, 'downloads_review_form');
 	} else {
 		exit;

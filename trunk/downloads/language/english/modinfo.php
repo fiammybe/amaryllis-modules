@@ -33,6 +33,8 @@ define("_MI_DOWNLOADS_DOWNLOAD_TPL", "'Downloads' single file view in frontend")
 // blocks
 define("_MI_DOWNLOADS_BLOCK_RECENT_DOWNLOADS", "Download List");
 define("_MI_DOWNLOADS_BLOCK_RECENT_DOWNLOADS_DSC", "List the latest published downloads");
+define("_MI_DOWNLOADS_BLOCK_RECENT_UPDATED", "recent updated files");
+define("_MI_DOWNLOADS_BLOCK_RECENT_UPDATED_DSC", "List recent updated files");
 define("_MI_DOWNLOADS_BLOCK_CATEGORY_MENU", "Category Menu");
 define("_MI_DOWNLOADS_BLOCK_CATEGORY_MENU_DSC", "List all categories or select one to display subcategories");
 // config
