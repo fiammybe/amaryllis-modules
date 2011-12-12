@@ -117,6 +117,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	}
 	
 	public function getDownloadsForBlocks($start = 0, $limit = 0,$updated = FALSE,$popular = FALSE, $order = 'download_published_date', $sort = 'DESC') {
+		global $downloadsConfig;
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->setStart(0);
 		$criteria->setLimit($limit);
@@ -128,7 +129,10 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if($updated == TRUE) $criteria->add(new icms_db_criteria_Item('download_updated', TRUE));
 		if($popular == TRUE) {
 			$pop = $downloadsConfig['downloads_popular'];
-			$criteria->add(new icms_db_criteria_Item('counter', $pop), ">=");
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item('counter', $pop, ">="));
+			$criteria->add($critTray);
+			
 		}
 		$downloads = $this->getObjects($criteria, true, false);
 		$ret=array();
