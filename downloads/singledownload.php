@@ -122,7 +122,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$clean_review_start = isset($_GET['rev_nav']) ? filter_input(INPUT_GET, 'rev_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
-			
+			$downloads_download_handler->updateCounter($clean_download_id);
 			if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted()) {
 				/**
 				 * Get the requested file and send it to Array
@@ -157,6 +157,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 						$icmsTpl->assign('file_is_new', FALSE );
 					}
 				}
+				if($downloadObj->getVar('download_updated_date') > 0) {
+					$icmsTpl->assign("show updated", TRUE);
+				}
 				/**
 				 * mirror yes/no?
 				 */
@@ -180,33 +183,36 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 */
 				$albumModule = icms_getModuleInfo('album');
 				if ($downloadsConfig['use_album'] == 1 && $albumModule){
-					$icmsTpl->assign('album_module', true);
-					$directory_name = basename(dirname( __FILE__ ) );
-					$script_name = getenv("SCRIPT_NAME");
-					$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
-					$albumConfig = icms_getModuleConfig ($albumModule->getVar('name') );
-					$album_id = $downloadObj->getVar('download_album');
-					$album_images_handler = icms_getModuleHandler( 'images', $albumModule -> getVar( 'dirname' ), 'album' );
-					$criteria = new icms_db_criteria_Compo();
-					$criteria->add(new icms_db_criteria_Item('img_active', 1));
-					$criteria->add(new icms_db_criteria_Item('a_id', $album_id ));
-					$imagesObjects = $album_images_handler->getObjects($criteria, true, true);
-					$album_images = array();
-					foreach ( $imagesObjects as $imagesObj ) {
-						$image = $imagesObj -> toArray();
-						$image['img_url'] = $document_root . 'uploads/' . $albumModule->getVar('dirname') . '/images/' . $imagesObj->getVar('img_url', 'e');
-						$image['show_images_per_row'] = $albumConfig['show_images_per_row'];
-						$image['thumbnail_width'] = $albumConfig['thumbnail_width'];
-						$image['thumbnail_height'] = $albumConfig['thumbnail_height'];
-						$album_images[] = $image;
+					$album_id = $downloadObj-> getVar("download_album");
+					if($album_id > 0){
+						$icmsTpl->assign('album_module', true);
+						$directory_name = basename(dirname( __FILE__ ) );
+						$script_name = getenv("SCRIPT_NAME");
+						$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
+						$albumConfig = icms_getModuleConfig ($albumModule->getVar('name') );
+						$album_id = $downloadObj->getVar('download_album');
+						$album_images_handler = icms_getModuleHandler( 'images', $albumModule -> getVar( 'dirname' ), 'album' );
+						$criteria = new icms_db_criteria_Compo();
+						$criteria->add(new icms_db_criteria_Item('img_active', 1));
+						$criteria->add(new icms_db_criteria_Item('a_id', $album_id ));
+						$imagesObjects = $album_images_handler->getObjects($criteria, true, true);
+						$album_images = array();
+						foreach ( $imagesObjects as $imagesObj ) {
+							$image = $imagesObj -> toArray();
+							$image['img_url'] = $document_root . 'uploads/' . $albumModule->getVar('dirname') . '/images/' . $imagesObj->getVar('img_url', 'e');
+							$image['show_images_per_row'] = $albumConfig['show_images_per_row'];
+							$image['thumbnail_width'] = $albumConfig['thumbnail_width'];
+							$image['thumbnail_height'] = $albumConfig['thumbnail_height'];
+							$album_images[] = $image;
+						}
+						$album_image_rows = array_chunk($album_images, $albumConfig['show_images_per_row']);
+						$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
+						$album_image_margins = 'align="center" style="display:inline-block; margin: 0px ' . $albumConfig['thumbnail_margin_right'] . 'px 0px ' . $albumConfig['thumbnail_margin_left'] . 'px;"';
+						$icmsTpl->assign('album_images', $album_images);
+						$icmsTpl->assign('album_image_rows', $album_image_rows);
+						$icmsTpl->assign('album_row_margins', $album_row_margins);
+						$icmsTpl->assign('album_image_margins', $album_image_margins);
 					}
-					$album_image_rows = array_chunk($album_images, $albumConfig['show_images_per_row']);
-					$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
-					$album_image_margins = 'align="center" style="display:inline-block; margin: 0px ' . $albumConfig['thumbnail_margin_right'] . 'px 0px ' . $albumConfig['thumbnail_margin_left'] . 'px;"';
-					$icmsTpl->assign('album_images', $album_images);
-					$icmsTpl->assign('album_image_rows', $album_image_rows);
-					$icmsTpl->assign('album_row_margins', $album_row_margins);
-					$icmsTpl->assign('album_image_margins', $album_image_margins);
 				} else {
 					$icmsTpl->assign('album_module', false );
 				}
@@ -297,12 +303,17 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$criteria = new icms_db_criteria_Compo();
 				$criteria->add(new icms_db_criteria_Item("log_item_id", $downloadObj->getVar("download_id", "e")));
 				$criteria->add(new icms_db_criteria_Item("log_item", 0));
-				$critTray = new icms_db_criteria_Compo();
-				$critTray -> add(new icms_db_criteria_Item("log_case", 4), "OR");
-				$critTray->add(new icms_db_criteria_Item("log_case", 0), "OR");
-				$criteria->add($critTray);
+				$criteria->add(new icms_db_criteria_Item("log_case", 0));
 				$downloaded = $downloads_log_handler->getCount($criteria);
-				$icmsTpl->assign("download_counter", $downloaded);
+				
+				$criteria2 = new icms_db_criteria_Compo();
+				$criteria2->add(new icms_db_criteria_Item("log_item_id", $downloadObj->getVar("download_id", "e")));
+				$criteria2->add(new icms_db_criteria_Item("log_item", 0));
+				$criteria2->add(new icms_db_criteria_Item("log_case", 4));
+				$downloaded_mirror = $downloads_log_handler->getCount($criteria2);
+				$download_counter = intval($downloaded) + intval($downloaded_mirror);
+				
+				$icmsTpl->assign("download_counter", $download_counter);
 			
 				/**
 				 * get the meta informations

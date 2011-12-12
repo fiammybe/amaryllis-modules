@@ -18,8 +18,9 @@
  */
 
 // general used constants
-define("_MD_DOWNLOADS_PUBLISHED_BY", "Published by:");
-define("_MD_DOWNLOADS_PUBLISHED_ON", "Published on:");
+define("_MD_DOWNLOADS_PUBLISHED_BY", "Published by");
+define("_MD_DOWNLOADS_PUBLISHED_ON", "Published on");
+define("_MD_DOWNLOADS_UPDATED_ON", "Published on");
 define("_MD_DOWNLOADS_SECURITY_CHECK_FAILED", "Security check failed.");
 define("_MD_DOWNLOADS_ADMIN_PAGE", ":: Admin page ::");
 define("_MD_DOWNLOADS_SUBMIT", "Submit");

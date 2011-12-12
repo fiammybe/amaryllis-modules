@@ -59,6 +59,7 @@ if ($clean_category_id != 0) {
  * retrieve a single category including files of the category and subcategories
  */
 if (is_object($categoryObj) && $categoryObj->accessGranted()) {
+	$downloads_category_handler->updateCounter($clean_category_id);
 	$category = $categoryObj->toArray();
 	$icmsTpl->assign('downloads_single_cat', $category);
 	$downloads = $downloads_download_handler->getDownloads($clean_files_start, icms::$module->config['show_downloads'], $clean_category_uid, false,  $clean_category_id);
@@ -83,7 +84,7 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
 /**
  * if there's no valid category, retrieve a list of all primary categories
  */
-} elseif ($clean_category_id == 0) {
+} elseif ($clean_category_id == 0) {	
 	$categories = $downloads_category_handler->getCategories($clean_category_start, $downloadsConfig['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
 	$icmsTpl->assign('downloads_cat', $categories);
 	$countcategories = $downloads_category_handler->getCategories(0, FALSE, $clean_category_uid, FALSE, $clean_category_pid, FALSE, FALSE, TRUE, TRUE );
