@@ -61,7 +61,7 @@ function downloads_display_popular($counter) {
 	global $downloadsConfig;
 	$popular = $downloadsConfig['downloads_popular'];
 	if ( $popular !== 0) {
-		if ( $popular > $counter ) {
+		if ( $popular < $counter ) {
 			$popular = DOWNLOADS_IMAGES_URL . 'popular.png';
 			
 		} else {
