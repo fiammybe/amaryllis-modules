@@ -60,7 +60,6 @@ function editcategory($category_id = 0) {
 		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
 		$logObj->store(TRUE);
 		
-		
 		downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_CATEGORY . " > " . _MI_DOWNLOADS_CATEGORY_CREATINGNEW);
 		$sform = $categoryObj->getForm(_AM_DOWNLOADS_CREATE, 'addcategory');
 		$sform->assign($icmsAdminTpl);
