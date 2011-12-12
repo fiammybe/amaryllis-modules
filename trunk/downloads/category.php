@@ -20,6 +20,13 @@
 function editcategory($categoryObj = 0) {
 	global $downloads_category_handler, $icmsTpl, $downloadsConfig;
 	
+	$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "downloads");
+	if (!is_object(icms::$user)) {
+		$log_uid = 0;
+	} else {
+		$log_uid = icms::$user->getVar("uid");
+	}
+	
 	if (!$categoryObj->isNew()){
 		if (!$categoryObj->userCanEditAndDelete()) {
 			redirect_header($categoryObj->getItemLink(true), 3, _NOPERM);
@@ -27,6 +34,16 @@ function editcategory($categoryObj = 0) {
 		$categoryObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'category_updated', 'category_publisher', 'category_submitter', 'category_approve', 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar( 'category_updated_date', (time() - 100) );
 		$categoryObj->setVar('category_updated', TRUE );
+		
+		$logObj = $downloads_log_handler->create();
+		$logObj->setVar('log_item_id', $categoryObj->id() );
+		$logObj->setVar('log_date', (time()-200) );
+		$logObj->setVar('log_uid', $log_uid);
+		$logObj->setVar('log_item', 1 );
+		$logObj->setVar('log_case', 3 );
+		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->store(TRUE);
+		
 		$sform = $categoryObj->getSecureForm(_MD_DOWNLOADS_CATEGORY_EDIT, 'addcategory');
 		$sform->assign($icmsTpl, 'downloads_category_form');
 		$icmsTpl->assign('downloads_cat_path', $categoryObj->getVar('category_title') . ' : ' . _EDIT);
@@ -40,6 +57,16 @@ function editcategory($categoryObj = 0) {
 		}
 		$categoryObj->setVar('category_submitter', icms::$user->getVar("uid"));
 		$categoryObj->setVar('category_publisher', icms::$user->getVar("uid"));
+		
+		$logObj = $downloads_log_handler->create();
+		$logObj->setVar('log_item_id', $categoryObj->id() );
+		$logObj->setVar('log_date', (time()-200) );
+		$logObj->setVar('log_uid', $log_uid);
+		$logObj->setVar('log_item', 1 );
+		$logObj->setVar('log_case', 1 );
+		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->store(TRUE);
+		
 		$sform = $categoryObj->getSecureForm(_MD_DOWNLOADS_CATEGORY_CREATE, 'addcategory');
 		$sform->assign($icmsTpl, 'downloads_category_form');
 		$icmsTpl->assign('downloads_cat_path', _SUBMIT);
@@ -119,9 +146,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$controller->handleObjectDeletionFromUserSide();
 			$icmsTpl->assign('downloads_cat_path', $downloads_category_handler->getBreadcrumbForPid($categoryObj->getVar('category_id', 'e'), 1) . ' > ' . _DELETE);
 			break;
-		
 	}
 }
+
 if( $downloadsConfig['show_breadcrumbs'] == 1 ) {
 	$icmsTpl->assign('downloads_show_breadcrumb', true);
 } else {
