@@ -30,8 +30,8 @@ function b_downloads_category_menu_show($options) {
 	
 	$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 
-	$block['downloads_category'] = $downloads_category_handler->getCategoryListForMenu($options[0], $options[1], true, true, true, $options[3], $options[2]);
-	
+	//$block['downloads_category'] = $downloads_category_handler->getCategoryListForMenu($options[0], $options[1], true, true, true, $options[3], $options[2]);
+	$block['downloads_category'] = getcategories($options[2],$options[0],$options[1],$options[3]);
 	return $block;
 }
 
@@ -70,4 +70,46 @@ function b_downloads_category_menu_edit($options) {
 	$form .= '</table>';
 
 	return $form;
+}
+/**
+ * original by content menu
+ */
+
+
+function getCategories($showsubs = true, $sort='weight', $order='ASC', $category_id = 0 ) {
+	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+	$uid = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
+	$downloads_category_handler =& icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
+	$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('category_inblocks', 1));
+	
+	$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
+	
+	$criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
+	$crit = new icms_db_criteria_Compo();
+	$crit->add(new icms_db_criteria_Item('category_active', true));
+	$criteria->add($crit);
+	$criteria->setSort($sort);
+	$criteria->setOrder($order);
+	$impress_category = $downloads_category_handler->getObjects($criteria);
+	$i = 0;
+	$categories = array();
+	foreach ($impress_category as $category){
+		if (icms::handler('icms_member_groupperm')->checkRight('category_read', $category->getVar('category_id'), $groups, $module->getVar('mid'))){
+			$categories[$i]['title'] = $category->getVar('category_title');
+			$categories[$i]['itemLink'] = $downloads_category_handler->makeLink($category);
+			if ($showsubs){
+				$subs = getCategories($showsubs, $sort, $order, $category->getVar('category_id'));
+				if (count($subs) > 0){
+					$categories[$i]['hassubs'] = 1;
+					$categories[$i]['subcategories'] = $subs;
+				}else{
+					$categories[$i]['hassubs'] = 0;
+				}
+			}
+			$i++;
+		}
+	}
+
+	return $categories;
 }

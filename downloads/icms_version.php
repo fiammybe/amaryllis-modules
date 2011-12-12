@@ -156,7 +156,7 @@ $modversion['templates'][] = array(
 
 $i=0;
 
-// Recent albums block
+// Recent files block
 $i++;
 $modversion['blocks'][$i]['file']			= 'downloads_recent_downloads.php';
 $modversion['blocks'][$i]['name']			= _MI_DOWNLOADS_BLOCK_RECENT_DOWNLOADS;
@@ -166,6 +166,7 @@ $modversion['blocks'][$i]['edit_func']		= 'b_downloads_recent_downloads_edit';
 $modversion['blocks'][$i]['options']		= '10';
 $modversion['blocks'][$i]['template']		= 'downloads_block_recent_downloads.html';
 $modversion['blocks'][$i]['can_clone']		= true ;
+// recent updated block
 $i++;
 $modversion['blocks'][$i]['file']			= 'downloads_recent_updated.php';
 $modversion['blocks'][$i]['name']			= _MI_DOWNLOADS_BLOCK_RECENT_UPDATED;
@@ -175,6 +176,7 @@ $modversion['blocks'][$i]['edit_func']		= 'b_downloads_recent_updated_edit';
 $modversion['blocks'][$i]['options']		= '10';
 $modversion['blocks'][$i]['template']		= 'downloads_block_recent_updated.html';
 $modversion['blocks'][$i]['can_clone']		= true ;
+// most popular block
 $i++;
 $modversion['blocks'][$i]['file']			= 'downloads_most_popular.php';
 $modversion['blocks'][$i]['name']			= _MI_DOWNLOADS_BLOCK_MOST_POPULAR;
@@ -184,7 +186,7 @@ $modversion['blocks'][$i]['edit_func']		= 'b_downloads_most_popular_edit';
 $modversion['blocks'][$i]['options']		= '10';
 $modversion['blocks'][$i]['template']		= 'downloads_block_most_popular.html';
 $modversion['blocks'][$i]['can_clone']		= true ;
-$i++;
+// category menu block
 $i++;
 $modversion['blocks'][$i]['file']			= 'downloads_category_menu.php';
 $modversion['blocks'][$i]['name']			= _MI_DOWNLOADS_BLOCK_CATEGORY_MENU;
