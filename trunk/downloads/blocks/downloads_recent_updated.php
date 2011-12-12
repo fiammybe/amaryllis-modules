@@ -4,7 +4,7 @@
  *
  * File: /blocks/downloads_recent_downloads.php
  * 
- * block to show recent albums
+ * block to show recent updated files
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -26,7 +26,7 @@ function b_downloads_recent_updated_show($options) {
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
 
-	$block['downloads_updated'] = $downloads_download_handler->getDownloadsForBlocks(0, $options[0], TRUE, "downloads_updated_date", "DESC");
+	$block['downloads_updated'] = $downloads_download_handler->getDownloadsForBlocks(0, $options[0], TRUE, FALSE, "download_updated_date", "DESC");
 	
 	return $block;
 }
