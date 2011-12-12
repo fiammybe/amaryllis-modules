@@ -20,7 +20,7 @@
 function editcategory($categoryObj = 0) {
 	global $downloads_category_handler, $icmsTpl, $downloadsConfig;
 	
-	$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "downloads");
+	$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(__FILE__)), "downloads");
 	if (!is_object(icms::$user)) {
 		$log_uid = 0;
 	} else {
