@@ -138,6 +138,12 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 * forwarding new reports for broken links
 				 */
 				$icmsTpl->assign("broken_link", DOWNLOADS_URL . "ajax.php?op=report_broken&download_id=" . $downloadObj->id() );
+				
+				$popular = downloads_display_popular($downloadObj->getVar("counter"));
+				if($popular) {
+					$icmsTpl->assign('file_is_popular', TRUE );
+					$icmsTpl->assign('file_is_popular_img', $popular );
+				}
 				/**
 				 * display image if file is new or updated
 				 */
