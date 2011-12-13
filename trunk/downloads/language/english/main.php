@@ -73,7 +73,7 @@ define("_MD_DOWNLOADS_FILESIZE", "Filesize");
 
 // used in ajax.php
 define("_MD_DOWNLOADS_BROKEN_REPORTED", "Thank you for submitting! File was reported as broken.");
-define("_MD_DOWNLOADS_DOWNLOAD_START", "Download will start shortly"); //@DAVID -> this is the redirect message from ajax.php after clicking the download-link
+define("_MD_DOWNLOADS_DOWNLOAD_START", "Please be patient, and your download will start shortly."); 
 //for new file form
 define("_MD_DOWNLOADS_DOWNLOAD_EDIT", "Edit the File");
 define("_MD_DOWNLOADS_DOWNLOAD_CREATE", "Upload a new file");
