@@ -34,7 +34,7 @@ function addreview($clean_review_id = 0, $clean_download_id = 0){
 		$reviewObj->setVar("review_item_id", $clean_download_id);
 		$reviewObj->setVar('review_ip', $_SERVER['REMOTE_ADDR'] );
 		$reviewObj->setVar('review_uid', $review_uid);
-		$sform = $reviewObj->getSecureForm(_MD_DOWNLOADS_REVIEW_ADD, 'addreview', DOWNLOADS_URL . "ajax.php?op=addreview&download_id=" . $downloadObj->id() , '_CO_SUBMIT', TRUE, TRUE);
+		$sform = $reviewObj->getSecureForm(_MD_DOWNLOADS_REVIEW_ADD, 'addreview', DOWNLOADS_URL . "ajax.php?op=addreview&download_id=" . $downloadObj->id() , 'OK', TRUE, TRUE);
 		$sform->assign($icmsTpl, 'downloads_review_form');
 	} else {
 		exit;
@@ -263,7 +263,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 						$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->getVar("download_id") );
 						$icmsTpl->assign("review_perm_denied", FALSE);
 					} else {
-						$icmsTpl->assign("review_link", ICMS_URL . "/register.php");
+						$icmsTpl->assign("review_link", ICMS_URL . "/user.php");
 						$icmsTpl->assign("review_perm_denied", TRUE);
 					}
 				}
