@@ -58,6 +58,7 @@ define("_MD_DOWNLOADS_MAILTO_SBJ", "I%20found%20a%20nice%20File%20to%20download"
 define("_MD_DOWNLOADS_MAILTO_BDY", "I%20found%20a%20nice%20File%20to%20download"); // @DAVID Please have a look for Mail body
 define("_MD_DOWNLOADS_REVIEW", "Review");
 define("_MD_DOWNLOADS_REVIEW_PERM", "You don't have permissions to submit reviews. Please login or register to submit a review.");
+define("_MD_DOWNLOADS_REV_PERM", "Sorry, no permissions");
 define("_MD_DOWNLOADS_FILE_DOWNLOADED", "File downloaded");
 // tabs
 define("_MD_DOWNLOADS_FILE_GENERAL_INFORMATIONS", "General Informations");

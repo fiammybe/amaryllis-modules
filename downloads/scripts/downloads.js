@@ -89,6 +89,31 @@
 		});
 	});
 	
+	//review permission denied
+	$(document).ready(function(){
+		$("#dialog-confirm-perm").dialog({
+			modal: true,
+			width: 500,
+			height: 200,
+			autoOpen: false,
+			resizable: false,
+			draggable: true
+		});
+		$(".review_link_perm").click(function(e) {
+			e.preventDefault();
+			var targetUrl = $(this).attr("href");
+			$("#dialog-confirm-perm").dialog('option', 'buttons', {
+				"Register Now" : function() {
+					window.location.href = targetUrl;
+				},
+				"Cancel" : function() {
+					$(this).dialog("close");
+				}
+			});
+			$("#dialog-confirm-perm").dialog("open");
+		});
+	});
+	
 	// call disclaimer for download-confirmation
 	$(document).ready(function(){
 		
@@ -150,41 +175,19 @@
 		
 		
 	});
-	
-	$(document).ready(function() {
-	//Tooltips
-	$(".tip_trigger").hover(function(){
-		tip = $(this).find('.tip');
-		tip.show(); //Show tooltip
-	}, function() {
-		tip.hide(); //Hide tooltip		  
-	}).mousemove(function(e) {
-		var mousex = e.pageX + 8; //Get X coodrinates
-		var mousey = e.pageY + 8; //Get Y coordinates
-		var tipWidth = tip.width(); //Find width of tooltip
-		var tipHeight = tip.height(); //Find height of tooltip
-		
-		//Distance of element from the right edge of viewport
-		var tipVisX = $(window).width() - (mousex + tipWidth);
-		//Distance of element from the bottom of viewport
-		var tipVisY = $(window).height() - (mousey + tipHeight);
-		  
-		if ( tipVisX < 20 ) { //If tooltip exceeds the X coordinate of viewport
-			mousex = e.pageX - tipWidth - 20;
-		} if ( tipVisY < 20 ) { //If tooltip exceeds the Y coordinate of viewport
-			mousey = e.pageY - tipHeight - 20;
-		} 
-		tip.css({  top: mousey, left: mousex });
-	});
-});
 
-	
-	
 	$(document).ready(function(){
 		// use colorbox for screenshots
 		$('a.file_screens').colorbox({transition:'fade', speed:500});
 		// initiate the tabs for single file view
 		$("#file_tabs").tabs({ cookie: { expires: 7 } });
+		
+		$('.tip_trigger').tipsy({
+			gravity: 'sw',
+			html: true
+		
+		});
+
 	});
 	
 	// initiate review form
