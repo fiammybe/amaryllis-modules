@@ -96,7 +96,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		case 'adddownload':
 			$controller = new icms_ipf_Controller($downloads_download_handler);
-			$controller->storeFromDefaultForm(_AM_DOWNLOADS_DOWNLOAD_CREATED, _AM_DOWNLOADS_DOWNLOAD_MODIFIED);
+			$controller->storeFromDefaultForm(_AM_DOWNLOADS_CREATED, _AM_DOWNLOADS_MODIFIED);
 			
 			break;
 
