@@ -113,7 +113,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case('mod'):
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			if ($clean_download_id > 0 && $downloadObj->isNew()) {
-				redirect_header(DOWNLOADS_URL, 3, _NOPERM);
+				redirect_header(DOWNLOADS_URL, 3, _NO_PERM);
 			}
 			editdownload($downloadObj);
 			break;
