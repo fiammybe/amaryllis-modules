@@ -15,7 +15,7 @@
 		
 			<!-- category rule -->
 			<{foreach item=category from=$downloads_cat}>
-				
+				<div class="tip_trigger"> <div class="tip" ><{$category.dsc}></div>
 				<!-- category image -->
 				<span class="downloads_cat_img">
 					<a href="<{$category.itemLink}>">
@@ -25,7 +25,7 @@
 				
 				<!-- Category title -->
 				<span class="downloads_cat_title">
-					<a href="<{$category.itemLink}>" title="<{$category.title}>"><{$category.title}></a>
+					<a href="<{$category.itemLink}>" title=""><{$category.title}></a>
 					<span style="font-size: small; font-weight: normal;"> &nbsp;(&nbsp;<{$category.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;|&nbsp;<{$category.cat_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_SUBCATS}>&nbsp;)&nbsp;</span>
 					<{if $category.userCanEditAndDelete}>
 						<{$category.editItemLink}><{$category.deleteItemLink}>
@@ -40,11 +40,6 @@
 						</p>
 				</span>
 <br /><br />
-				<!-- Category description -->
-				<div class="downloads_cat_dsc">
-					<{$category.dsc}>
-				</div>
-
 				<{if $category.hassub}>
 					<!-- Category subcats -->
 					<div class="downloads_cat_subs">
@@ -55,6 +50,7 @@
 						</ul>
 					</div>	
 				<{/if}>
+				</div><!-- E N D .downloads_category -->
 	
 				<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
 			<{/foreach}>

@@ -286,3 +286,16 @@
 		font-size: 1.1em;
 		margin-top: 2em;
 	}
+	
+	.tip {
+	color: #fff;
+	background:#1d1d1d;
+	display:none; /*--Hides by default--*/
+	padding:10px;
+	position:absolute;
+	z-index:1000;
+	width: 250px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}

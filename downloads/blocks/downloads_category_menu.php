@@ -31,7 +31,7 @@ function b_downloads_category_menu_show($options) {
 	$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 
 	//$block['downloads_category'] = $downloads_category_handler->getCategoryListForMenu($options[0], $options[1], true, true, true, $options[3], $options[2]);
-	$block['downloads_category'] = getcategories($options[2],$options[0],$options[1],$options[3]);
+	$block['downloads_category'] = getCategories($options[2],$options[0],$options[1],$options[3]);
 	return $block;
 }
 
@@ -97,7 +97,7 @@ function getCategories($showsubs = true, $sort='weight', $order='ASC', $category
 	foreach ($impress_category as $category){
 		if (icms::handler('icms_member_groupperm')->checkRight('category_read', $category->getVar('category_id'), $groups, $module->getVar('mid'))){
 			$categories[$i]['title'] = $category->getVar('category_title');
-			$categories[$i]['itemLink'] = $downloads_category_handler->makeLink($category);
+			$categories[$i]['itemLink'] = DOWNLOADS_URL . "index.php?category_id=" . $category->getVar("category_id");
 			if ($showsubs){
 				$subs = getCategories($showsubs, $sort, $order, $category->getVar('category_id'));
 				if (count($subs) > 0){

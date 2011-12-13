@@ -84,7 +84,7 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
 /**
  * if there's no valid category, retrieve a list of all primary categories
  */
-} elseif ($clean_category_id == 0) {	
+} elseif ($clean_category_id == 0) {
 	$categories = $downloads_category_handler->getCategories($clean_category_start, $downloadsConfig['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
 	$icmsTpl->assign('downloads_cat', $categories);
 	$countcategories = $downloads_category_handler->getCategories(0, FALSE, $clean_category_uid, FALSE, $clean_category_pid, FALSE, FALSE, TRUE, TRUE );
@@ -119,9 +119,10 @@ if($downloadsConfig['downloads_show_upl_disclaimer'] == 1) {
 /**
  * force downloads.js to header
  */
-
+$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jQuery.toolTip.js', array('type' => 'text/javascript'));
 $xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/downloads.js', array('type' => 'text/javascript'));
 
+$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/tipsy.css', array('type' => 'text/css'));
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////
