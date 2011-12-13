@@ -7,7 +7,7 @@
 					<ul>
 						<{foreach item=subcategory from=$category.subcategories}>
 							<li>
-								<a class="menuMain" href="<{$icms_url}>/modules/downloads/index.php?cat=<{$subcategory.category_id}>"><{$subcategory.title}></a>
+								<a class="menuMain" href="<{$subcategory.itemLink}>"><{$subcategory.title}></a>
 							</li>
 						<{/foreach}>
 					</ul>
