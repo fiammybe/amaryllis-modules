@@ -69,7 +69,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar("download_developer_information_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->quickInitVar("download_publish_info", XOBJ_DTYPE_FORM_SECTION);
-		$this->quickInitVar('download_submitter', XOBJ_DTYPE_INT);
+		$this->quickInitVar('download_submitter', XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
 		$this->quickInitVar('download_publisher', XOBJ_DTYPE_INT);
 		$this->quickInitVar('download_published_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('download_updated_date', XOBJ_DTYPE_LTIME);
@@ -165,7 +165,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 	
 	public function getVar($key, $format = 's') {
-		if ($format == 's' && in_array($key, array('download_grpperm', 'download_cid'))) {
+		if ($format == 's' && in_array($key, array('download_publisher','download_grpperm', 'download_cid'))) {
 			return call_user_func(array($this,$key));
 		}
 		return parent::getVar($key, $format);
