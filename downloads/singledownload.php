@@ -257,10 +257,11 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 */
 				addreview(0, $clean_download_id);
 				if($downloadsConfig['guest_review'] == 1) {
-					$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->id() );
+					$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->getVar("download_id") );
 				} else {
 					if(is_object(icms::$user)){
-						$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->id() );
+						$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->getVar("download_id") );
+						$icmsTpl->assign("review_perm_denied", FALSE);
 					} else {
 						$icmsTpl->assign("review_link", ICMS_URL . "/register.php");
 						$icmsTpl->assign("review_perm_denied", TRUE);
