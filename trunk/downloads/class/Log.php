@@ -50,12 +50,12 @@ class DownloadsLog extends icms_ipf_Object {
 		$item = $this->getVar("log_item", "e");
 		$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(dirname(__FILE__))), "downloads");
 		$downloads_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "downloads");
-		if($item = 0){
+		if($item == 0){
 			$file = $downloads_download_handler->get($item_id);
 			$filename = $file->getVar("download_title", "s");
 			$url = DOWNLOADS_URL . 'singledownload.php?download_id=' . $item_id;
 			return '<a href="' . $url . '" title="' . $filename . '">' . $filename . '</a>';
-		} elseif ($item = 1) {
+		} elseif ($item == 1) {
 			$cat = $downloads_category_handler->get($item_id);
 			$catname = $cat->getVar("category_title", "s");
 			$url = DOWNLOADS_URL . 'index.php?category_id=' . $item_id;
