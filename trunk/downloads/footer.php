@@ -18,4 +18,12 @@ $icmsTpl->assign('downloads_url', DOWNLOADS_URL);
 $icmsTpl->assign('downloads_module_home', '<a href="' . DOWNLOADS_URL . '" title="' . icms::$module->getVar('name') . '">' . icms::$module->getVar('name') . '</a>');
 $icmsTpl->assign('downloads_images_url', DOWNLOADS_IMAGES_URL);
 
+/**
+ * force downloads.js to header
+ */
+
+$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.qtip.js', array('type' => 'text/javascript'));
+$xoTheme->addStylesheet('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.qtip.css');
+$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/downloads.js', array('type' => 'text/javascript'));
+
 include_once ICMS_ROOT_PATH . '/footer.php';

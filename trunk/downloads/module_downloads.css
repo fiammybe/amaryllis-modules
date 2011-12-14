@@ -288,7 +288,27 @@
 	
 	.popup  {
 		display: none;
-	
 	}
 	
+	.file_reviews {
+		display: table;
+	}
+	
+	.review_poster {
+		width: 25%;
+		height: auto;
+		float: left;
+	}
+	
+	.review_name, .review_email, .review_date {
+		display: block;
+		padding: 0;
+		margin: 0;
+	}
+	
+	.review_message {
+		float: left;
+		width: 70%;
+		margin: 1em auto;
+	}
 	

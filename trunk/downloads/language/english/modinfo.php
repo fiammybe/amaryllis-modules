@@ -50,6 +50,8 @@ define("_MI_DOWNLOADS_SHOW_DOWNLOADS", "show Files");
 define("_MI_DOWNLOADS_SHOW_DOWNLOADS_DSC", "How many Files should be displayed before using page navigation?");
 define("_MI_DOWNLOADS_SHOW_CATEGORIES", "Show Categories");
 define("_MI_DOWNLOADS_SHOW_CATEGORIES_DSC", "How many Categories should be displayed at one page");
+define("_MI_DOWNLOADS_SHOW_CATEGORY_COLUMNS", "Select category columns");
+define("_MI_DOWNLOADS_SHOW_CATEGORY_COLUMNS_DSC", "You can select, how many columns you want to see in the frontpage to sort categories");
 define("_MI_DOWNLOADS_THUMBNAIL_WIDTH", "Screenshot Thumbnail width");
 define("_MI_DOWNLOADS_THUMBNAIL_WIDTH_DSC", "choose width of screenshot thumbnails");
 define("_MI_DOWNLOADS_THUMBNAIL_HEIGHT", "Screenshot Thumbnail height");
