@@ -74,11 +74,12 @@ function getMimeTypes() {
 	$mimetype_handler = icms_getModuleHandler('mimetype', 'system');
 	$criteria = "";
 	$criteria = new icms_db_criteria_Compo();
-	$criteria->add(new icms_db_criteria_Item('dirname', icms::$module->getVar('dirname') ));
 	$mimetypeObjects = $mimetype_handler->getObjects($criteria, true, false);
 	$mimetype = '';
 	foreach (array_keys($mimetypeObjects) as $key => $mimetypeObj) {
-		$mimetype .= $mimetypeObj . ', ';
+		if(in_array(icms::$module->getVar("dirname"), array($mimetypeObj['dirname'])))	{
+			$mimetype .= $mimetypeObj . ', ';
+		}
 	}
 	return $mimetype;
 	

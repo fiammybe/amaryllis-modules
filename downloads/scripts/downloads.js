@@ -27,7 +27,6 @@
 	 */
 	
 	jQuery.cookie = function (key, value, options) {
-	
 	    // key and at least value given, set cookie...
 	    if (arguments.length > 1 && String(value) !== "[object Object]") {
 	        options = jQuery.extend({}, options);
@@ -52,7 +51,6 @@
 	            options.secure ? '; secure' : ''
 	        ].join(''));
 	    }
-	
 	    // key and possibly options given, get cookie...
 	    options = value || {};
 	    var result, decode = options.raw ? function (s) { return s; } : decodeURIComponent;
@@ -114,7 +112,6 @@
 		});
 	});
 
-	
 	//review permission denied
 	$(document).ready(function(){
 		$("#dialog-confirm-perm").dialog({
@@ -142,7 +139,6 @@
 	
 	// call disclaimer for download-confirmation
 	$(document).ready(function(){
-		
 		$(".down_disclaimer").click(function(e) {
 			var $link = $(this);
 			e.preventDefault();
@@ -157,8 +153,6 @@
 			});
 			$("#dialog-confirm-disclaimer").dialog("open");
 		});
-		
-		
 		$("#dialog-confirm-disclaimer").dialog({
 			modal: true,
 			width: 800,
@@ -171,7 +165,6 @@
 	
 	// call disclaimer for upload-confirmation
 	$(document).ready(function(){
-	
 		$(".upl_disclaimer").click(function(e) {
 			var $link = $(this);
 			
@@ -186,10 +179,7 @@
 				}
 			});
 			$("#dialog-confirm-upl-disclaimer").dialog("open");
-		
 		});
-		
-		
 		$("#dialog-confirm-upl-disclaimer").dialog({
 			modal: true,
 			width: 800,
@@ -198,8 +188,6 @@
 			resizable: true,
 			draggable: true
 		});
-		
-		
 	});
 
 	$(document).ready(function(){
@@ -208,10 +196,26 @@
 		// initiate the tabs for single file view
 		$("#file_tabs").tabs({ cookie: { expires: 7 } });
 		
-		$('.tip_trigger').tipsy({
-			gravity: 'sw',
-			html: true
-		
+		$('div.downloads_category').each(function(){
+			$(this).qtip({
+				content: {
+					text: $(this).next('div.popup').html(),
+					title: $(this).attr('original-title')
+				},
+				style: {
+					width:500,
+					viewport: $(window), // Keep it on-screen at all times if possible
+					textAlign:'left',
+					tip:'bottomLeft',
+					classes: 'ui-tooltip-plain ui-tooltip-rounded ui-tooltip-shadow',
+				},
+				position:   {
+					target: 'mouse',
+					my:'bottomLeft',
+					adjust: {
+						x: 10,  y: 10
+					}
+				},
+			});
 		});
-
 	});

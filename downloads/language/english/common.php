@@ -143,6 +143,13 @@ define("_CO_DOWNLOADS_REVIEW_REVIEW_NAME", "Name");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_EMAIL", "E-Mail");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_MESSAGE", "Message");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_DATE", "Date");
+// LOG system
+define("_CO_DOWNLOADS_LOG_LOG_ITEM_ID", "Item Name");
+define("_CO_DOWNLOADS_LOG_LOG_ITEM", "Item");
+define("_CO_DOWNLOADS_LOG_LOG_IP", "IP");
+define("_CO_DOWNLOADS_LOG_LOG_UID", "user");
+define("_CO_DOWNLOADS_LOG_LOG_CASE", "Log case");
+define("_CO_DOWNLOADS_LOG_LOG_DATE", "Date");
 // ratings
 define("_CO_DOWNLOADS_RATINGS_ITEM", "Rated item");
 define("_CO_DOWNLOADS_RATINGS_RATING_RATE", "Rate");

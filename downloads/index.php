@@ -119,11 +119,10 @@ if($downloadsConfig['downloads_show_upl_disclaimer'] == 1) {
 /**
  * force downloads.js to header
  */
-$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jQuery.toolTip.js', array('type' => 'text/javascript'));
+
+$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.qtip.js', array('type' => 'text/javascript'));
+$xoTheme->addStylesheet('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.qtip.css');
 $xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/downloads.js', array('type' => 'text/javascript'));
-
-$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/tipsy.css', array('type' => 'text/css'));
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

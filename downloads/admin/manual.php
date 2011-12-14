@@ -25,7 +25,7 @@ $dirname = icms::$module -> getVar( 'dirname' );
 
 icms_cp_header();
 downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_MANUAL);
-$file = isset($_GET['file']) ? icms_core_DataFilter::stripSlashesGPC($_GET['file']) : "manual.html";
+$file = isset($_GET['file']) ? icms_core_DataFilter::checkVar($_GET['file'], "html", "output") : "manual.html";
 display_lang_file($file);
 icms_cp_footer();
 exit;
