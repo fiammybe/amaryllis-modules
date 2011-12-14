@@ -94,14 +94,6 @@ echo '	<fieldset style="border: #E8E8E8 1px solid;">
 			
 			<div style="display: table; padding: 8px;">
 				
-				<div style="display: table-row;">
-					<div style="display: table-cell">'
-						. _AM_DOWNLOADS_INDEX_TOTAL .
-					'</div>
-					<div style="display: table-cell;">'
-						. $mimetypes .
-					'</div>
-				</div>
 				
 				<div style="display: table-row;">
 					<div style="display: table-cell">'
