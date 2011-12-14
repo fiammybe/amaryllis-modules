@@ -272,6 +272,16 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name'			=> 'show_category_columns',
+								'title'			=> '_MI_DOWNLOADS_SHOW_CATEGORy_COLUMNS',
+								'description' 	=> '_MI_DOWNLOADS_SHOW_CATEGORY_COLUMNS_DSC',
+								'formtype' 		=> 'select',
+								'valuetype'		=> 'int',
+								'options'		=> array('1' => 1, '2' => 2, '3' => 3, '4' => 4),
+								'default' 		=> 2
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'show_downloads',
 								'title' 		=> '_MI_DOWNLOADS_SHOW_DOWNLOADS',
 								'description'	=> '_MI_DOWNLOADS_SHOW_DOWNLOADS_DSC',

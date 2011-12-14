@@ -86,8 +86,12 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
  */
 } elseif ($clean_category_id == 0) {
 	$categories = $downloads_category_handler->getCategories($clean_category_start, $downloadsConfig['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
-	$icmsTpl->assign('downloads_cat', $categories);
-	$countcategories = $downloads_category_handler->getCategories(0, FALSE, $clean_category_uid, FALSE, $clean_category_pid, FALSE, FALSE, TRUE, TRUE );
+	//$icmsTpl->assign('downloads_cat', $categories);
+	
+	$downloads_category_columns = array_chunk($categories, $downloadsConfig['show_category_columns']);
+	$icmsTpl->assign('category_columns', $downloads_category_columns);
+	$icmsTpl->assign('columns', $downloadsConfig['show_category_columns']);
+	
 	
 /**
  * if not valid single category or no permissions -> redirect to module home
