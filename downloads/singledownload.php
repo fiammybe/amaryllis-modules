@@ -334,8 +334,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == true);
 			
-			$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/downloads.js', array('type' => 'text/javascript'));
-			
 	}
 } else {
 	redirect_header (DOWNLOADS_URL, 3, _NO_PERM);

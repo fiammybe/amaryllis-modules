@@ -119,14 +119,7 @@ if($downloadsConfig['downloads_show_upl_disclaimer'] == 1) {
 	} else {
 		$icmsTpl->assign('user_submit', false);
 	}
-	
-/**
- * force downloads.js to header
- */
 
-$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.qtip.js', array('type' => 'text/javascript'));
-$xoTheme->addStylesheet('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.qtip.css');
-$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/downloads.js', array('type' => 'text/javascript'));
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

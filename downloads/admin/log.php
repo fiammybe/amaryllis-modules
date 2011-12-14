@@ -51,10 +51,10 @@ if (in_array($clean_op, $valid_op, TRUE)){
 			}
 			// create downloads table
 			$objectTable = new icms_ipf_view_Table($downloads_log_handler, $criteria, array());
-			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item_id', 'center', 50, 'getLogItemId' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item_id', FALSE, FALSE, 'getLogItemId' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item', FALSE, FALSE, 'getLogItem' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_case',FALSE, FALSE, 'getLogCase'));
-			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', 100, 'getLogDate', FALSE, TRUE ) );			
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', FALSE, 'getLogDate' ) );			
 			$icmsAdminTpl->assign( 'downloads_log_table', $objectTable->fetch() );
 			$objectTable->setDefaultSort('log_date'); 
 			$objectTable->setDefaultOrder('DESC');

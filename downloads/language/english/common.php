@@ -149,7 +149,7 @@ define("_CO_DOWNLOADS_LOG_LOG_ITEM", "Item");
 define("_CO_DOWNLOADS_LOG_LOG_IP", "IP");
 define("_CO_DOWNLOADS_LOG_LOG_UID", "user");
 define("_CO_DOWNLOADS_LOG_LOG_CASE", "Log case");
-define("_CO_DOWNLOADS_LOG_LOG_DATE", "Date");
+define("_CO_DOWNLOADS_LOG_LOG_DATE", "Log Date");
 // ratings
 define("_CO_DOWNLOADS_RATINGS_ITEM", "Rated item");
 define("_CO_DOWNLOADS_RATINGS_RATING_RATE", "Rate");
