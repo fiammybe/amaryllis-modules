@@ -7,31 +7,78 @@
     </head>
     <body>
         <h1>Downloads Manual</h1>
-        <p>Downloads is a small, light weight file download handling module. You can upload a file, describe it and add some images (currently 4 screenshots) to present the key functionalities. Also you have the posibility to link the module with 'Album' module and/or 'Catalogue' module. Here are some instructions how to use 'Downloads' module.</p>
+        	<p>Downloads is a small, light-weight file download handling module.</p>
+        <h2>Keyfeatures</h2>
+			<ul>
+				<li>You can upload files</li>
+				<li>You can categorize your files</li>
+				<li>Describe your file: key features, requirements, history, license, some screenshots and a lot more!</li>
+				<li>Bind "Downloads" to use with other modules (Currently: Album to include image sets and Catalogue to sell your files.</li>
+			</ul>
         <h2>First Start</h2>
-		<p>There are some things you should do <b>before</b> you try to upload a new file. Please, follow the instructions.</p>
-		<h3>Allow the necessary Filetypes</h3>
-		<ul>
-			<li>Go to <a href="<{$icms_url}>/system/admin.php?fct=mimetype" title="system mimetypes">System &gt; Media &gt; Mime Types</a></li>
-			<li>Choose the Mimetypes you want to allow for File upload. If you like to use fileupload from frontend beware of the group permissions per file.</li>
-			<li>Remember the image upload, too. Actually the mime type permissions are used by the image uploaf, too. So please allow also jpeg, jpg, png and whatever you like to use.</li>
-			<li>Done! Now you can upload all filetypes.</li>
-		</ul>
-		<h3>Check out the module preferences</h3>
-		<ul>
-			<li>Go to <a href="<{$downloads_pref_url}>" title="Module Preferences">Modules &gt; Downloads &gt; Preferences</a></li>
-			<li>Choose the preferences like prefered</li>
-			<li>Done! Next step.</li>
-		</ul>
-		<h3>Create a category</h3>
-        <p>Go to Tab 'Manage categories' &gt; Add Category. Just Fill out the fields. Done.</p>
-        <h3>Upload Files</h3>
-        <p>Now you can start uploading files. Go to Tab 'Manage Files' and fill out the fields. If you have allowed using the album module you will see a field where you can select an album. All the images from the Album will be shown. You like to upload images too? Well, so use the image upload to add more images.</p>
-        <p>If you have allowed using catalogue module, the result is dependent on catalogue settings. If you have allowed to show prices, you will see a Price on two Places in Frontend: behind the title of the file and in the information-box. Mirrors are not visible for catalogue items and the download link will redirect to the catalogue item to buy it.</p>
-		<p>Requirements and Keyfeatures of the file are displayed in a list</p>
+			<p>There are several things you should do <b>before</b> you try to upload a new file. Please, follow the instructions.</p>
+			
+			<h3>Allow the necessary File types</h3>
+			
+				<p>At first we need to allow the Mime types, which can be uploaded. Go to System > Media > Mime Types</p>
+				<p>Choose the Mime types you want to allow for File upload. If you like to use file upload from frontend beware of the group permissions per file.</p>
+				<p>Remember the image upload, too. Actually the mime type permissions are used by the image upload, too. So please allow also jpeg, jpg, png and whatever you like to use.</p>
+				<p>Done! Now you can upload all file types.</p>
+		
+			<h3>Check out the module preferences</h3>
+				<p>There might be some preferences, you'd like to change before using the module first time. Go to Modules > Downloads > Preferences</p>
+				<p>Choose the preferences like preferred. Think, most preferences should be explained enough. So I'll list just a few here, which can be important to explain:</p>
+				<ul>
+					<li>The group selection Field is just for adding categories in frontend. The file upload can be set inside the categories. You can decide for each category, which groups have view permissions and which will have upload permission. Beware, not to allow file upload, if the group have no view permission.</li>
+					<li>The Date format will be used for displaying the date throughout the module frontend. You need help to get the preferred date format? Look here for a detailed instruction.</li>
+					<li>Show Categories and Show Files will be used for page navigation in frontend. You can select, how many categories/files will be displayed at one page, before using a page navigation.</li>
+					<li>The next few settings will be used, to configure the image upload for screenshots. The screenshots will be displayed in frontend to make a visual description of your file. Here you can select now the scales of your thumbnail, the maximum allowed image size and the maximum allowed file size. Also select, in which units the file size of the uploaded file should be displayed.</li>
+					<li>Now you'll be asked again for thumbnail scales. These are for the file image. This image is a bit different to the other screenshot images. It's displayed on index file view.</li>
+					<li>The next two steps (file limitations and file version status) will give a select field in file upload. You can change the values if you need other limitations or version types. Just separate the single items with a comma.</li>
+					<li>Now will follow four more important steps. Select, if you like to use an upload/download disclaimer. You will find an example disclaimer for each type, but beware: I can't guarantee, that they are strong enough. It's just an example and you should change the disclaimer to your needed laws.</li>
+					<li>The next more important steps to explain would be "use Album Module" and "use Catalogue Module". In first Line both means: You NEED TO HAVE INSTALLED THE SELECTED MODULE TO GET SURE IT'S WORKING! If you have selected "use Album Module" you can select an Album in file upload to display more than the 4 screenshots on file single view. Album has it's own way of thumbnail width and height. So please, beware it's compatible with your chosen scales for image uploads (If you like to use an Album and the 4 screenshots). If you have selected "use Catalogue Module" there will be some more changes: you will see the catalogue price and the base currency from catalogue module. Mirrors will be disabled and you'll get an Link to catalogue module instead of a download link. This means, direct download will not work! You just will see an button "Got to buy". All other (payment, shopping cart) is part of catalogue module. All these just if you have selected an item. If no item is selected, you get the standard download procedure.</li>
+					<li>Use mirror system means: Mirrors will be enabled and you'll see a new field in file upload for mirror link. In Module ACP you'll also get a yes/no field to approve a new mirror. This is dependent on the following option field: mirror needs approval. If you have selected yes, you will need to approve new mirrors before they can be used in frontend. These fields (the same for the next two option fields "category needs approval" and "files needs approval") means, that each new mirror, file, category which is created in FRONTEND needs approval. Downloads will set the to not approved as long as it's not approved by a webmaster. If you have selected "No", no approvals will be needed and created categories, files, mirrors will directly be displayed in frontend.</li>
+					<li>Next part: The review system in "Downloads". There's an review system implemented to get reviews of the file. The Reviews can be displayed in an Tab in single file view or be private to the webmasters. If you like to make reviews public, they will be displayed without approvals (yet). You can also select, if you like to display the requesters email in frontend, you can select this. The E-Mail can currently displayed in different modes: default mode is "qm-b at hotmail dot de" and not checking against banned list. 2nd mode would be usual display, which can be converted in frontend to an spam protected image by core. To be more protected from spammers you can choose mode 3 and 4: 3rd mode will display like 1st one, but checked against banned list. 4th mode will display usual mode again but check against banned list.</li>
+					<li>The following options are for some small buttons to display an item as new, updated or popular. If you set them to "0", the function will be turned off.  For these options are additional blocks available. Most popular block will show popular files, further a block for updated and a block for new files.</li>
+				</ul>
+				<p>Done! Next step.</p>
+			<h3>Create a category</h3>
+				<p>The next important will be creating a category. Otherwise you can not see the file upload page. Go to Tab 'Manage categories' > Add Category. Just Fill out the fields. You can select an image for the category or upload a new one. You also can upload a set of new category images to /uploads/downloads/categoryimages/. The module will read the image files inside the folder and show them inside the select box. Done.</p>
+			<h3>Upload Files</h3>
+				<p>Finally you can start uploading files. Go to Tab 'Manage Files' > 'Add File' and fill out the fields. Done! Now you should see your first category and file inside the frontend.</p>
+			<h3>Reviews and Log</h3>
+				<p>The review system is just to add reviews in frontend. You can edit them, if necessary in module ACP, but you will not be allowed to add new one. Please, use frontend to add reviews. Also the reviews doesn't have a real permission controll. You may disable adding for guests, so they will get a popup-message to register or login for submitting a review.</p>
+				<p>For Log System it's a bit more strange: You cannot add Log items and you'll be not allowed to change fields. It's just for logging and statistics. If you have an spammer problem you can get the IP to bann the sammer from your site.</p>
+		<h2>Blocks</h2>
+			<p>Currently you have 4 blocks for 'Downloads' module:</p>
+			<ul>
+				<li>Recent files
+					<ul>
+						<li>The "Recent Files" block will display the recently uploaded files and sort them by published date, DESC.</li>
+					</ul>
+				</li>
+				<li>Recent updated files
+					<ul>
+						<li>This block will display recently updated files and sort them by updated date, DESC.</li>
+					</ul>
+				</li>
+				<li>Most popular files
+					<ul>
+						<li>This block content will be dependent from your preferences. Only files, which where called more about the selected number will be shown inside the block.</li>
+					</ul>
+				</li>
+				<li>Category Menu block
+					<ul>
+						<li>Here you c an see the category like a menu. You also can select one special category to display all subcategories of this one.</li>
+					</ul>
+				</li>
+			</ul>
+			<p>You can clone all blocks, if needed.</p>
+ 
 		<div class="downloas_footer">
-			<p>Thank you for using 'Downloads' module. If you have some trouble while using downloads module, please visit <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a></p>
-			<p>You might also like to follow the recent changes in downloads module? Please, have a look at <a href="http://code.google.com/p/amaryllis-modules/" title="Module home" >'Downloads' SVN </a></p>
+		<h2>Conclusion</h2>
+			<p>Thank you for using 'Downloads' module. If you have some trouble while using downloads module, please visit <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>. You have some suggestions, what you'd like to change or add to the module? No problem! We can talk about. Please, use also <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a> for this!</p>  
+			<p>You might also like to follow the recent changes in downloads module? Please, have a look at <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/downloads/trunk/" title="'Downloads' SVN on Assembla" rel="external">'Downloads' SVN on Assembla</a> or make a checkout of my <a href="http://code.google.com/p/amaryllis-modules/" title="Downloads" rel="external">module svn on google code</a>.</p>
 		</div>
     </body>
 </html>
