@@ -108,7 +108,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		case 'visible':
 			$visibility = $downloads_category_handler -> changeVisible( $clean_category_id );
-			$ret = 'downloads.php';
+			$ret = 'category.php';
 			if ($visibility == 0) {
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_OFFLINE );
 			} else {
