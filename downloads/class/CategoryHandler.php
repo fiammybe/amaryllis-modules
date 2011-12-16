@@ -258,6 +258,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		$criteria = $this->getCategoryCriteria();
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
 		$criteria->add(new icms_db_criteria_Item('category_active', true ) );
+		$criteria->add(new icms_db_criteria_Item('category_approve', true ) );
 		$categories = $this->getObjects($criteria);
 		if (!$toarray) return $categories;
 		$ret = array();
