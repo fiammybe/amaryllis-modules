@@ -18,7 +18,7 @@
  */
 
 include_once "../../mainfile.php";
-include_once "header.php";
+include_once ICMS_ROOT_PATH . 'header.php';
 include_once dirname(__FILE__) . '/include/common.php';
 
 $valid_op = array ('report_broken', 'getFile', 'getFileMirror', 'addreview', 'vote_down', 'vote_up');
@@ -132,7 +132,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$criteria->add(new icms_db_criteria_Item("log_item", 0));
 			$criteria->add(new icms_db_criteria_Item("log_ip", xoops_getenv('REMOTE_ADDR')));
 			$count= $downloads_log_handler->getcount($criteria);
-			//if($count == 0){
+			if($count == 0){
 				if(is_object(icms::$user)){
 					$log_uid = icms::$user->getVar("uid");
 				} else {
@@ -153,9 +153,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$downloadObj->setVar('download_like', (intval($like) + 1));
 				$downloadObj->store(TRUE);
 				return redirect_header(icms_getPreviousPage(), 3, _MD_DOWNLOADS_THANKS_VOTING);
-			//} else {
-			//	return redirect_header(icms_getPreviousPage(), 3, _MD_DOWNLOADS_ALLREADY_VOTED);
-			//}
+			} else {
+				return redirect_header(icms_getPreviousPage(), 3, _MD_DOWNLOADS_ALLREADY_VOTED);
+			}
 			break;
 			
 		case 'vote_down':
@@ -167,7 +167,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$criteria->add(new icms_db_criteria_Item("log_item", 0));
 			$criteria->add(new icms_db_criteria_Item("log_ip", xoops_getenv('REMOTE_ADDR')));
 			$count= $downloads_log_handler->getcount($criteria);
-			//if($count == 0){
+			if($count == 0){
 				if(is_object(icms::$user)){
 					$log_uid = icms::$user->getVar("uid");
 				} else {
@@ -188,9 +188,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$downloadObj->setVar('download_dislike', $dislike + 1);
 				$downloadObj->store(TRUE);
 				return redirect_header(icms_getPreviousPage(), 3, _MD_DOWNLOADS_THANKS_VOTING);
-			//} else {
-			//	return redirect_header(icms_getPreviousPage(), 3, _MD_DOWNLOADS_ALLREADY_VOTED);
-			//}
+			} else {
+				return redirect_header(icms_getPreviousPage(), 3, _MD_DOWNLOADS_ALLREADY_VOTED);
+			}
 			break;
 	}
 }
