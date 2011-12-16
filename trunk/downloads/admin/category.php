@@ -75,9 +75,6 @@ $valid_op = array ('mod', 'changedField', 'addcategory', 'del', 'view', 'visible
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $op = filter_input(INPUT_POST, 'op');
 
-if (isset($_GET['op'])) $clean_op = htmlentities($_GET['op']);
-if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
-
 $downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 
 $clean_category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0 ;
