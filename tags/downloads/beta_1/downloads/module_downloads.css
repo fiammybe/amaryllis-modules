@@ -1,0 +1,350 @@
+/**
+ * 'Downloads' is a light weight download handling module for ImpressCMS
+ *
+ * File: /module_downloads.css
+ * 
+ * some module related styles
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Downloads
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		downloads
+ *
+ */
+
+	.downloads_headertable {
+		margin-bottom: 2em;
+	}
+
+	.downloads_clear_both {
+		clear: both;
+		height: 1px;
+	}
+	
+	.downloads_clear_left {
+		clear: left;
+		height: 1px;
+	}
+	
+	.downloads_clear_right {
+		clear: right;
+		height: 1px;
+	}
+
+	.downloads_indeximage {
+		text-align: center;
+	}
+	
+	.downloads_indexheader {
+		text-align: center;
+		font-size: 2em;
+		margin: 2em auto;
+	}
+	
+	.downloads_indexheading, .downloads_indexfooter {
+		margin: 1em auto;
+	}
+	
+	
+
+	.downloads_cats {
+		margin: 1.5em auto;
+		display: table;
+		width: 100%;
+		padding: 5px;
+	}
+	
+	.downloads_cat_img {
+		float: left;
+		padding-right: 10px;
+		vertical-align: top;
+	}
+	
+	.downloads_cat_title {
+		float: left;
+		font-size: 1.1em;
+		font-weight: bold;
+	}
+	
+	.downloads_category_info {
+		font-size: .8em;
+		font-weight: normal;
+		margin: .5em 0;
+	}
+	
+	.downloads_cat_dsc {
+		font-size: .9em;
+		margin: 1em 0;
+		display: block;
+	}
+	
+	.downloads_cat_desc {
+		font-size: 1em;
+		margin: 1em .9375em;
+	}
+	
+	.downloads_cat_subs {
+		float: right;
+		font-size: .8em;
+		padding-right: 45px;
+	}
+	
+	.downloads_headertable {}
+	
+	.downloads_downloads_title {
+		font-size: 1.5em;
+		margin: 2em 0;
+		text-align: center;
+	}
+	
+	.downloads_images {
+		margin: 1.5em auto;
+		display: table;
+		width: 100%;
+		padding: 5px;
+	}
+	
+	.downloads_adminlinks {
+		text-align: center;
+	}
+	
+	
+	.downloads_file {
+		width: 100%;
+		margin: 2em auto;
+	}
+	
+	.file_header {
+		display: block;
+	}
+	
+	.file_image {
+		float: left;
+		padding-right: 10px;
+		vertical-align: top;
+	}
+	
+	.file_title {
+		float: left;
+		font-size: 1.1em;
+		font-weight: bold;
+	}
+	
+	.file_info {
+		font-size: .8em;
+		font-weight: normal;
+		margin: .5em 0;
+	}
+	
+	.file_links {
+		position: relative;
+		background-color: #ccc;
+		width: 200px;
+		float: right;
+		padding: .750em;
+		border-color: #FF7F2A;
+		border-width: 2px;
+		margin: .750em auto;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+	}
+	
+	
+	.down_link {
+		position: relative;
+		background: #FFAA2A url(images/download.png) left center no-repeat;
+		padding: 15px 20px 15px 40px;
+		margin: 1em auto;
+		display: block;
+		font-size: 1.5em;
+		-webkit-border-radius: .5em;
+		-moz-border-radius: .5em;
+		border-radius: .5em;
+	}
+	
+	.file_dsc{
+		
+		margin: 1em auto 2em auto;
+		display: inline;
+		position: relative;
+		
+	}
+	
+	.file_req, .file_keys {
+		position: relative;
+		display: inline-block;
+		background: #ccc;
+		padding: 1em 1em;
+		width: auto;
+		height: auto;
+		text-align: left;
+		vertical-align: middle;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+	}
+	
+	ul.downloads_check {
+		
+	}
+	
+	.downloads_check li {
+		padding-left: 5px;
+	}
+	
+	.file_descriptions {
+		padding: 1em 1em;
+		margin: .750em auto;
+		text-align: center;
+	}
+	
+	.file_image_row {
+		margin: 1em auto;
+	}
+	
+	.file_informations {
+		display: table;
+		width: auto;
+		font-size: .8em;
+		background: #ccc;
+		padding: 1em .5em;
+		margin: 0 auto .5em auto;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+	}
+	
+	.table_row {
+		display: table-row;
+		padding: .250em;
+		line-height: 2.5em;
+	}
+	
+	.table_cell {
+		display: table-cell;
+		width: 60%;
+		padding-left: 1em;
+	}
+	
+	.file_dev, .file_dev_hp, .file_version, .file_version_status, .file_limits, .file_platform, .file_license {
+		display: table-cell;
+		padding-left: 30px;
+	}
+	
+	.file_dev {
+		background: url(images/dev.png) left center no-repeat;
+	}
+	.file_dev_hp {
+		background: url(images/dev_hp.png) left center no-repeat;
+	}
+	.file_version {
+		background: url(images/version.png) left center no-repeat;
+	}
+	
+	.file_version_status {
+		background: url(images/version_status.png) left center no-repeat;
+	}
+	.file_limits{
+		background: url(images/limits.png) left center no-repeat;
+	}
+	
+	.file_license{
+		background: url(images/license.png) left center no-repeat;
+	}
+	
+	.file_platform {
+		background: url(images/platform.png) left center no-repeat;
+	}
+	
+	.file_screens {
+		margin-right: 15px;
+	}
+	
+	.file_footer {
+		background-color: #ccc;
+		width: 100%;
+		line-height: 1.1em;
+		margin: 1.5em auto;
+		padding: .5em;
+	}
+	
+	.download_file {
+		margin: 3em auto;
+		width: 75%;
+	}
+	.download_progress {
+		font-size: 2em;
+		text-align: center;
+	}
+	.download_wait {
+		font-size: 1.1em;
+		margin-top: 2em;
+	}
+	
+	.popup  {
+		display: none;
+	}
+	
+	.file_reviews {
+		display: table;
+	}
+	
+	.review_poster {
+		width: 25%;
+		height: auto;
+		float: left;
+	}
+	
+	.review_name, .review_email, .review_date {
+		display: block;
+		padding: 0;
+		margin: 0;
+	}
+	
+	.review_message {
+		float: left;
+		width: 70%;
+		margin: 1em auto;
+	}
+	
+	/** 
+	 * Rating feature
+	 */
+	#votebox
+{
+border:solid 1px #dedede; padding:3px;
+display:none;
+padding:15px;
+width:700px;
+-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+}
+#greebar
+{
+float:left;
+background-color:#aada37;
+border:solid 1px #698a14;
+width:0px;
+height:12px;
+}
+#redbar
+{
+float:left;
+background-color:#cf362f;
+border:solid 1px #881811;
+width:0px;
+height:12px;
+}
+#close
+{
+float:right; font-weight:bold; 
+padding:3px 5px 3px 5px; 
+border:solid 1px #333;
+-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+}

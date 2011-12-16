@@ -1,0 +1,18 @@
+<div class="downloads_menu">
+	<ul class="primary-nav blue">
+		<{foreach item=category from=$block.downloads_category}>
+			<li>
+				<a class="menuMain" href="<{$category.itemLink}>"><{$category.title}></a>				
+				<{if $category.hassubs == 1}>
+					<ul>
+						<{foreach item=subcategory from=$category.subcategories}>
+							<li>
+								<a class="menuMain" href="<{$subcategory.itemLink}>"><{$subcategory.title}></a>
+							</li>
+						<{/foreach}>
+					</ul>
+				<{/if}>
+			</li>
+		<{/foreach}>
+	</ul>
+</div>

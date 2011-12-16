@@ -1,0 +1,15 @@
+<link href="<{$downloads_url}>module_downloads.css" rel="stylesheet" type="text/css" />
+
+<{if $downloads_show_breadcrumb}>
+	<!-- module breadcrumb -->
+	<div class="downloads_headertable">
+		<{if $downloads_module_home}><span class="downloads_modulename"><{$downloads_module_home}></span><{/if}>
+		<{if $downloads_cat_path}>
+			<span class="downloads_breadcrumb">
+				<{if $downloads_module_home}>&nbsp;:&nbsp;<{/if}><{$downloads_cat_path}>
+			</span>
+		<{/if}>
+	</div>
+<{/if}>
+
+<{$downloads_index.image}>
