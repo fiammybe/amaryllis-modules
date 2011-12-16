@@ -19,6 +19,7 @@
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
+icms_loadLanguageFile('downloads', 'common');
 
 class DownloadsCategoryHandler extends icms_ipf_Handler {
 
@@ -292,7 +293,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'download_grpperm', $category_publisher = false, $category_id = null, $category_pid = null) {
+	public function getCategoriesCount ($active = null, $approve = null, $groups = array(), $perm = 'category_grpperm', $category_publisher = false, $category_id = null, $category_pid = null) {
 		$criteria = new icms_db_criteria_Compo();
 		
 		if (isset($active)) {
@@ -302,13 +303,19 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('category_approve', true));
 		}
 		if (is_null($category_id)) $category_id = 0;
-		$criteria->add(new icms_db_criteria_Item('category_id', $category_id));
-		if (is_null($category_pid)) $category_pid = 0;
-		$criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
+		if($category_id) $criteria->add(new icms_db_criteria_Item('category_id', $category_id));
+		if (is_null($category_pid)) $category_pid == 0;
+		if($category_pid) $criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
 		
-		if($this->setGrantedObjectsCriteria($criteria, $perm)){
-			return $criteria;
+		$categories = $this->getObjects($criteria, true, false);
+		$ret = array();
+		foreach ($categories as $category){
+			if ($category['accessgranted']){
+				$ret[$category['category_id']] = $category;
+			}
 		}
+		
+		return count($ret);
 	
 	}
 

@@ -322,7 +322,34 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$download_counter = intval($downloaded) + intval($downloaded_mirror);
 				
 				$icmsTpl->assign("download_counter", $download_counter);
-			
+				
+				/**
+				 * voting -> can vote?
+				 */
+				if($downloadsConfig['guest_vote'] == 1){
+					$icmsTpl->assign("can_vote", TRUE);
+				} else {
+					if(is_object(icms::$user)){
+						$icmsTpl->assign("can_vote", TRUE);
+					} else {
+						$icmsTpl->assign("can_vote", FALSE);
+						$icmsTpl->assign("register_link", ICMS_URL . "/user.php");
+					}
+				}
+				
+				/**
+				 * comment counter
+				 */
+				$comment_handler = icms::handler("icms_data_comment");
+				$modid = icms::$module->getVar("mid");
+				$criteria = "";
+				$criteria = new icms_db_criteria_Compo();
+				$criteria->add(new icms_db_criteria_Item("com_itemid", $clean_download_id));
+				$criteria->add(new icms_db_criteria_Item("com_modid", $modid));
+				$comments = $comment_handler->getCount($criteria);
+				$icmsTpl->assign("comment_counter", $comments);
+				$lang_comments = $comments != 1 ? _MD_DOWNLOADS_COMMENTS : _MD_DOWNLOADS_COMMENT;
+				$icmsTpl->assign("comment_lang", $lang_comments);
 				/**
 				 * get the meta informations
 				 */

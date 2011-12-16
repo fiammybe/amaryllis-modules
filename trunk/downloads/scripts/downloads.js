@@ -25,7 +25,6 @@
 	 * http://www.gnu.org/licenses/gpl.html
 	 *
 	 */
-	
 	jQuery.cookie = function (key, value, options) {
 	    // key and at least value given, set cookie...
 	    if (arguments.length > 1 && String(value) !== "[object Object]") {
@@ -60,8 +59,6 @@
 	/**
 	 * E N D jquery cookie plugin
 	 */
-	
-	
 	//report broken Link
 	$(document).ready(function(){
 		$("#dialog-confirm-broken").dialog({
@@ -137,6 +134,31 @@
 		});
 	});
 	
+	//rate permission denied
+	$(document).ready(function(){
+		$("#dialog-vote-perm").dialog({
+			modal: true,
+			width: 500,
+			height: 200,
+			autoOpen: false,
+			resizable: false,
+			draggable: true
+		});
+		$(".file_vote_perm").click(function(e) {
+			e.preventDefault();
+			var targetUrl = $(this).attr("href");
+			$("#dialog-vote-perm").dialog('option', 'buttons', {
+				"Register Now" : function() {
+					window.location.href = targetUrl;
+				},
+				"Cancel" : function() {
+					$(this).dialog("close");
+				}
+			});
+			$("#dialog-vote-perm").dialog("open");
+		});
+	});
+	
 	// call disclaimer for download-confirmation
 	$(document).ready(function(){
 		$(".down_disclaimer").click(function(e) {
@@ -195,7 +217,7 @@
 		$('a.file_screens').colorbox({transition:'fade', speed:500});
 		// initiate the tabs for single file view
 		$("#file_tabs").tabs({ cookie: { expires: 7 } });
-		
+		//initiate qtip for category description
 		$('div.downloads_category').each(function(){
 			$(this).qtip({
 				content: {
@@ -217,5 +239,30 @@
 					}
 				},
 			});
+		});
+		// file votings
+		$("a.file_vote").click(function() {
+			var id = $(this).attr("download_id");
+			var name = $(this).attr("name");
+			var dataString = 'download_id='+ id ;
+			var parent = $(this);
+			if (name=='up') {
+				$.ajax({
+					type: "POST",
+					url: "ajax.php?op=vote_up",
+					data: dataString,
+					cache: false,
+				});
+			} else {
+				$.ajax({
+					type: "POST",
+					url: "ajax.php?op=vote_down",
+					data: dataString,
+					cache: false,
+					
+				});
+			}
+			$("#file_voting").load(location.href + " #file_voting > *");
+			return false;
 		});
 	});

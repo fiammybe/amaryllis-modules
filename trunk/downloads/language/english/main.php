@@ -59,6 +59,7 @@ define("_MD_DOWNLOADS_MAILTO_BDY", "I%20found%20a%20nice%20File%20to%20download"
 define("_MD_DOWNLOADS_REVIEW", "Review");
 define("_MD_DOWNLOADS_REVIEW_PERM", "You don't have permissions to submit reviews. Please login or register to submit a review.");
 define("_MD_DOWNLOADS_REV_PERM", "Sorry, no permissions");
+define("_MD_DOWNLOADS_VOTE_PERM", "You don't have permissions to vote files. Please login or register to vote this file.");
 define("_MD_DOWNLOADS_FILE_DOWNLOADED", "File downloaded");
 // tabs
 define("_MD_DOWNLOADS_FILE_GENERAL_INFORMATIONS", "General Informations");
@@ -67,13 +68,17 @@ define("_MD_DOWNLOADS_FILE_IMAGES", "Images");
 define("_MD_DOWNLOADS_FILE_INSTRUCTIONS", "Instructions");
 define("_MD_DOWNLOADS_FILE_HISTORY", "History");
 define("_MD_DOWNLOADS_FILE_REVIEWS", "Reviews");
+define("_MD_DOWNLOADS_COMMENT", "Comment");
+define("_MD_DOWNLOADS_COMMENTS", "Comments");
 
 define("_MD_DOWNLOADS_PUBLISHER_MAIL", "E-Mail");
 define("_MD_DOWNLOADS_FILESIZE", "Filesize");
 
 // used in ajax.php
 define("_MD_DOWNLOADS_BROKEN_REPORTED", "Thank you for submitting! File was reported as broken.");
-define("_MD_DOWNLOADS_DOWNLOAD_START", "Please be patient, and your download will start shortly."); 
+define("_MD_DOWNLOADS_DOWNLOAD_START", "Please be patient, and your download will start shortly.");
+define("_MD_DOWNLOADS_THANKS_VOTING", "Thank you for Voting");
+define("_MD_DOWNLOADS_ALLREADY_VOTED", "You have allready voted!");
 //for new file form
 define("_MD_DOWNLOADS_DOWNLOAD_EDIT", "Edit the File");
 define("_MD_DOWNLOADS_DOWNLOAD_CREATE", "Upload a new file");

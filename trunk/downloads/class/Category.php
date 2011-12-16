@@ -136,10 +136,10 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$active = $this->getVar('category_active', 'e');
 		if ($active == FALSE) {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
-				<img src="' . DOWNLOADS_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
 		} else {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
-				<img src="' . DOWNLOADS_IMAGES_URL . 'visible.png" alt="Online" /></a>';
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
 		}
 	}
 	
@@ -172,7 +172,8 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	}
 	
 	function getSubsCount(){
-		$count = $this->handler->getCategorySubCount($groups = array(), $perm = 'category_grpperm', TRUE, TRUE, $this->id());
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$count = $this->handler->getCategoriesCount (TRUE, TRUE, $groups,'category_grpperm', FALSE, FALSE, $this->getVar("category_id", "e"));
 		return $count;
 	}
 	// get sub category
@@ -191,10 +192,9 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	
 	function getFilesCount() {
 		$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
-		$files_count_criteria = $downloads_download_handler->getCountCriteria(TRUE, TRUE, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $this->id());
-		$files_count = $downloads_download_handler -> getCount($files_count_criteria, TRUE, FALSE);
+		$files_count = $downloads_download_handler->getCountCriteria(TRUE, TRUE, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $this->getVar("category_id"));
+		
 		return $files_count;
-	
 	}
 	
 	function category_pid() {
