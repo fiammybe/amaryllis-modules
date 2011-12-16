@@ -87,9 +87,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar("download_static_section", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar('download_comments', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_notification_sent', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('download_fb_like', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('download_fb_dislike', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('download_g_like', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('download_like', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('download_dislike', XOBJ_DTYPE_INT, false);
 		$this->initCommonVar('weight');
 		$this->initCommonVar('counter');
 		$this->initCommonVar('dohtml', false, 1);
@@ -197,10 +196,10 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$active = $this->getVar('download_active', 'e');
 		if ($active == false) {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'download.php?download_id=' . $this->getVar('download_id') . '&amp;op=visible">
-				<img src="' . DOWNLOADS_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
 		} else {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'download.php?download_id=' . $this->getVar('download_id') . '&amp;op=visible">
-				<img src="' . DOWNLOADS_IMAGES_URL . 'visible.png" alt="Online" /></a>';
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
 		}
 	}
 	
@@ -543,6 +542,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	public function toArray() {
 		global $icmsConfig, $downloadsConfig;
 		$ret = parent::toArray();
+		$ret['id'] = $this->getVar('download_id');
 		$ret['published_date'] = $this->getDownloadPublishedDate();
 		$ret['updated_date'] = $this->getDownloadUpdatedDate();
 		$ret['publisher'] = $this->getDownloadPublisher(true);
@@ -569,6 +569,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['filesize'] = $this->getFileSize();
 		$ret['file_thumbnail_width'] = $downloadsConfig['file_img_thumbnail_width'];
 		$ret['file_thumbnail_height'] = $downloadsConfig['file_img_thumbnail_height'];
+		$ret['like'] = $this->getVar('download_like');
+		$ret['dislike'] = $this->getVar('download_dislike');
 		
 		$albumModule = icms_getModuleInfo('album');
 		if ($downloadsConfig['use_album'] == true && $albumModule){

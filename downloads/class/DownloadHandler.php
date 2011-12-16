@@ -351,17 +351,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	
 	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $download_cid = false) {
 		$criteria = new icms_db_criteria_Compo();
-		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
-			foreach($groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
-			}
-			$criteria->add($criteriaTray);
-			if ($perm == 'download_grpperm' || $perm == 'downloads_admin') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
-			}
-		}
+		
 		if (isset($active)) {
 			$criteria->add(new icms_db_criteria_Item('download_active', true));
 		}
@@ -370,7 +360,15 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		}
 		if (is_null($download_cid)) $download_cid = 0;
 		$criteria->add(new icms_db_criteria_Item('download_cid', $download_cid));
-		return $criteria;
+		
+		$downloads = $this->getObjects($criteria, true, false);
+		$ret = array();
+		foreach ($downloads as $download){
+			if ($download['accessgranted']){
+				$ret[$download['download_id']] = $download;
+			}
+		}
+		return count($ret);
 	
 	}
 	

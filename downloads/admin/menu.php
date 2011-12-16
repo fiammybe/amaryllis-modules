@@ -59,10 +59,6 @@ $i = 0;
 	$i++;
 	$headermenu[$i]['title'] = _CO_ICMS_UPDATE_MODULE;
 	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $moddir;
-
-	$i++;
-	$headermenu[$i]['title'] = _MI_DOWNLOADS_MENU_RATINGS;
-	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/ratings.php';
 	
 	$i++;
 	$headermenu[$i]['title'] = _MI_DOWNLOADS_MENU_MANUAL;

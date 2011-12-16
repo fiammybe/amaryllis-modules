@@ -18,7 +18,7 @@
  */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
-
+icms_loadLanguageFile('downloads', 'common');
 // this needs to be the latest db version
 define('DOWNLOADS_DB_VERSION', 1);
 

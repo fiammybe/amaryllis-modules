@@ -33,7 +33,7 @@ class DownloadsLog extends icms_ipf_Object {
 		$this->quickInitVar('log_item_id', XOBJ_DTYPE_INT);
 		$this->quickInitVar('log_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('log_item', XOBJ_DTYPE_INT); // file = 0; category = 1
-		$this->quickInitVar('log_case', XOBJ_DTYPE_INT); // download = 0; upload/create = 1; delete = 2; updated= 3; download from mirror = 4
+		$this->quickInitVar('log_case', XOBJ_DTYPE_INT); // download = 0; upload/create = 1; delete = 2; updated= 3; download from mirror = 4, vote up = 5, vote down = 6,
 		
 	}
 	
@@ -77,7 +77,7 @@ class DownloadsLog extends icms_ipf_Object {
 	}
 	
 	public function getLogCase() {
-		$item = $this->getVar("log_item", "e");
+		$item = $this->getVar("log_case", "e");
 		switch ($item) {
 			case '0':
 				return 'download';
@@ -93,6 +93,18 @@ class DownloadsLog extends icms_ipf_Object {
 			
 			case '3':
 				return 'updated';
+				break;
+				
+			case '4':
+				return 'download mirror';
+				break;
+				
+			case '5':
+				return 'vote up';
+				break;
+			
+			case '6':
+				return 'vote down';
 				break;
 		}
 	}

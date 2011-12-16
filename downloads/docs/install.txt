@@ -6,3 +6,7 @@ of your website. Then, log in to your site as administrator, go to System Admin 
 modules and click in the install icon. Follow the directions in the screen and you'll be ready to go.
 
 After successfull installation read manual first! You'll find the manual in ACP Menu of the Module.
+
+Further you'll find a folder "extras" inside my module folder.There you can find :
+* plugin for sitemap module -> copy the file inside sitemap/plugins folder to use sitemap with downloads
+* plugin for waiting block -> copy the file to rootpath/plugins/waiting to make use of icms waiting block in ACP.

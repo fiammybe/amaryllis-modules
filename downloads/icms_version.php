@@ -90,8 +90,6 @@ $modversion['object_items'][$i] = 'category';
 $i++;
 $modversion['object_items'][$i] = 'download';
 $i++;
-$modversion['object_items'][$i] = 'ratings';
-$i++;
 $modversion['object_items'][$i] = 'indexpage';
 $i++;
 $modversion['object_items'][$i] = 'review';
@@ -514,15 +512,6 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
-								'name' 			=> 'guest_review',
-								'title' 		=> '_MI_DOWNLOADS_GUEST_CAN_REVIEW',
-								'description' 	=> '_MI_DOWNLOADS_GUEST_CAN_REVIEW_DSC',
-								'formtype' 		=> 'yesno',
-								'valuetype' 	=> 'int',
-								'default' 		=> 1
-							);
-$i++;
-$modversion['config'][$i] = array(
 								'name' 			=> 'downloads_needs_approve',
 								'title' 		=> '_MI_DOWNLOADS_DOWNLOAD_APPROVE',
 								'description' 	=> '_MI_DOWNLOADS_DOWNLOAD_APPROVE_DSC',
@@ -541,12 +530,30 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'guest_vote',
+								'title' 		=> '_MI_DOWNLOADS_GUEST_CAN_VOTE',
+								'description' 	=> '_MI_DOWNLOADS_GUEST_CAN_VOTE_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 0
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'show_reviews',
 								'title' 		=> '_MI_DOWNLOADS_SHOW_REVIEWS',
 								'description' 	=> '_MI_DOWNLOADS_SHOW_REVIEWS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'guest_review',
+								'title' 		=> '_MI_DOWNLOADS_GUEST_CAN_REVIEW',
+								'description' 	=> '_MI_DOWNLOADS_GUEST_CAN_REVIEW_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 0
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -630,7 +637,7 @@ $modversion['config'][$i] = array(
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-$modversion['hasNotification'] = 1;
+$modversion['hasNotification'] = 0;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';
 $modversion['notification']['lookup_func'] = 'downloads_notify_iteminfo';
 

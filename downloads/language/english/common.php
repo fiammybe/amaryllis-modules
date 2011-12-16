@@ -23,6 +23,7 @@ define("_CO_DOWNLOADS_EDIT", "edit");
 define("_CO_SUBMIT", "submit");
 define("_CO_DOWNLOADS_DELETE", "delete");
 define("_CO_DOWNLOADS_VIEW", "view");
+define("_NO_PERM", "No permissions");
 
 define("_CO_DOWNLOADS_MODIFIED", "Modified");
 define("_ER_UP_UNKNOWNFILETYPEREJECTED", "unknown Filetype");
