@@ -28,7 +28,7 @@ class DownloadsLog extends icms_ipf_Object {
 		icms_ipf_object::__construct($handler);
 		
 		$this->quickInitVar('log_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('log_ip', XOBJ_DTYPE_INT);
+		$this->quickInitVar('log_ip', XOBJ_DTYPE_OTHER);
 		$this->quickInitVar('log_uid', XOBJ_DTYPE_INT);
 		$this->quickInitVar('log_item_id', XOBJ_DTYPE_INT);
 		$this->quickInitVar('log_date', XOBJ_DTYPE_LTIME);
