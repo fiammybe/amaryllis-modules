@@ -467,7 +467,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$logObj->setVar('download_publisher', $log_uid);
 		$logObj->setVar('log_item', 0 );
 		$logObj->setVar('log_case', 2	 );
-		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 		$logObj->store(TRUE);
 			
 	}

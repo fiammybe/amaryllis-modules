@@ -40,7 +40,7 @@ function editdownload($download_id = 0) {
 		$logObj->setVar('log_uid', $log_uid);
 		$logObj->setVar('log_item', 0 );
 		$logObj->setVar('log_case', 3 );
-		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 		$logObj->store(TRUE);
 		
 		downloads_adminmenu( 1, _MI_DOWNLOADS_MENU_DOWNLOAD . ' > ' . _MI_DOWNLOADS_DOWNLOAD_EDIT);
@@ -64,7 +64,7 @@ function editdownload($download_id = 0) {
 		$logObj->setVar('log_uid', $log_uid);
 		$logObj->setVar('log_item', 0 );
 		$logObj->setVar('log_case', 1 );
-		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 		$logObj->store(TRUE);
 	}
 	$icmsAdminTpl->display('db:downloads_admin.html');

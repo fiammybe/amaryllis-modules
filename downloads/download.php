@@ -38,7 +38,7 @@ function editdownload($downloadObj) {
 		$logObj->setVar('log_uid', $log_uid);
 		$logObj->setVar('log_item', 0 );
 		$logObj->setVar('log_case', 3 );
-		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 		$logObj->store(TRUE);
 		
 		$sform = $downloadObj->getSecureForm(_MD_DOWNLOADS_DOWNLOAD_EDIT, 'adddownload');
@@ -66,7 +66,7 @@ function editdownload($downloadObj) {
 		$logObj->setVar('log_uid', $log_uid);
 		$logObj->setVar('log_item', 0 );
 		$logObj->setVar('log_case', 1 );
-		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 		$logObj->store(TRUE);
 		
 		$sform = $downloadObj->getSecureForm(_MD_DOWNLOADS_DOWNLOAD_CREATE, 'adddownload');

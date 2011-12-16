@@ -39,7 +39,7 @@ function editcategory($category_id = 0) {
 		$logObj->setVar('log_uid', $log_uid);
 		$logObj->setVar('log_item', 1 );
 		$logObj->setVar('log_case', 3 );
-		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 		$logObj->store(TRUE);
 		
 		downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_CATEGORY . ' > ' . _MI_DOWNLOADS_CATEGORY_EDIT);
@@ -57,7 +57,7 @@ function editcategory($category_id = 0) {
 		$logObj->setVar('log_uid', $log_uid);
 		$logObj->setVar('log_item', 1 );
 		$logObj->setVar('log_case', 1 );
-		$logObj->setVar('log_ip', $_SERVER['REMOTE_ADDR'] );
+		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 		$logObj->store(TRUE);
 		
 		downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_CATEGORY . " > " . _MI_DOWNLOADS_CATEGORY_CREATINGNEW);
