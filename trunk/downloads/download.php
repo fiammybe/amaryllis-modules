@@ -126,6 +126,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$controller->storeFromDefaultForm(_MD_DOWNLOADS_DOWNLOAD_CREATED, _MD_DOWNLOADS_DOWNLOAD_MODIFIED);
 			break;
 		case('del'):
+			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			if (!$downloadObj->userCanEditAndDelete()) {
 				redirect_header($categoryObj->getItemLink(true), 3, _NOPERM);
 			}
@@ -136,7 +137,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			}
 			$controller = new icms_ipf_Controller($downloads_download_handler);
 			$controller->handleObjectDeletionFromUserSide();
-			$icmsTpl->assign('downloads_cat_path', $downloads_download_handler->getBreadcrumbForPid($downloadObj->getVar('category_id', 'e'), 1) . ' > ' . _DELETE);
 			break;
 	}
 } else {

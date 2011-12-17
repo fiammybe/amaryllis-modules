@@ -102,9 +102,9 @@
 				
 				<!-- File image -->
 				<span class="downloads_cat_img">
-					<{if $download.img}>
-						<a class="file_screens" href="<{$image_path}><{$download.download_img}>" title="file image">
-							<{resized_image file=$image_path width=$download.file_thumbnail_width height=$download.file_thumbnail_height fit="inside"}>
+					<{if $download.index_img}>
+						<a class="file_screens" href="<{$download.index_img}>" title="file image">
+							<{resized_image file=$download.index_img width=$download.file_thumbnail_width height=$download.file_thumbnail_height fit="inside"}>
 						</a>
 					<{/if}>
 				</span>
