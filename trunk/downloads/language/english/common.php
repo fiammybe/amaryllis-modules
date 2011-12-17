@@ -43,7 +43,7 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_ACTIVE_DSC", " Set 'YES' to set file onl
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_INBLOCKS", "In Block?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_INBLOCKS_DSC", " Set 'YES' to show file in block 'recent downloads' ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_APPROVE", "Approved?");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_APPROVE_DSC", "This will be true, if you&#039;re adding new files from backend. If an user add a file from frontend and you choosed to use approvals in module settings, this will be false and you need to approve from backend");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_APPROVE_DSC", "This will be true, if you&#039;re adding new files from backend. If an user adds a file from frontend and you chose to use approvals in module settings, this will be false and you need to approve from backend");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISHER", "Publisher");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISHER_DSC", "Select the Publisher of the File");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEV", "Developer");
@@ -58,10 +58,10 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_ALT_DSC", " You can also upload a f
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY", "Filehistory");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY_DSC", "Insert the history from the file. Minimalistic html will be allowed.");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER", "Teaser");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER_DSC", "Descripe the file using 1 or 2 sentences. This will be displayed on index view.");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER_DSC", "Describe the file using 1 or 2 sentences. This will be displayed on index view.");
 
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES", "Keyfeatures");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES_DSC", " Enter the keyfeatures of the file.");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES_DSC", " Enter the key features of the file.");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_REQUIREMENTS", "Requirements");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_REQUIREMENTS_DSC", " Enter the requirements of the File. ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_SCREEN_1", "1st screenshot");
@@ -98,12 +98,12 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HAS_MIRROR", "Has Mirror?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_APPROVE", "Mirror approved?");
 
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_IMAGES", "Add some images for visual description");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS", "Descripe the file");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS", "Describe the file");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING", "Download Mirror");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEVELOPER_INFO", "Developer informations");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISH_INFO", "Publish informations");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEVELOPER_INFO", "Developer information");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISH_INFO", "Publish information");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VIEW_SECTION", "Public permissions");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_STATIC_SECTION", "Some additional informations");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_STATIC_SECTION", "Some additional information");
 // language constants for editing indexpage
 define("_CO_DOWNLOADS_INDEXPAGE_INDEX_HEADER", "Title");
 define("_CO_DOWNLOADS_INDEXPAGE_INDEX_HEADER_DSC", " Set Title displayed in the index at frontend ");
