@@ -49,9 +49,9 @@ define("_MI_DOWNLOADS_SHOW_BREADCRUMBS_DSC", "choose 'YES' to show breadcrumb in
 define("_MI_DOWNLOADS_SHOW_DOWNLOADS", "show Files");
 define("_MI_DOWNLOADS_SHOW_DOWNLOADS_DSC", "How many Files should be displayed before using page navigation?");
 define("_MI_DOWNLOADS_SHOW_CATEGORIES", "Show Categories");
-define("_MI_DOWNLOADS_SHOW_CATEGORIES_DSC", "How many Categories should be displayed at one page");
+define("_MI_DOWNLOADS_SHOW_CATEGORIES_DSC", "How many Categories should be displayed in each page");
 define("_MI_DOWNLOADS_SHOW_CATEGORY_COLUMNS", "Select category columns");
-define("_MI_DOWNLOADS_SHOW_CATEGORY_COLUMNS_DSC", "You can select, how many columns you want to see in the frontpage to sort categories");
+define("_MI_DOWNLOADS_SHOW_CATEGORY_COLUMNS_DSC", "You can select how many columns you want to see in the frontpage to sort categories");
 define("_MI_DOWNLOADS_THUMBNAIL_WIDTH", "Screenshot Thumbnail width");
 define("_MI_DOWNLOADS_THUMBNAIL_WIDTH_DSC", "choose width of screenshot thumbnails");
 define("_MI_DOWNLOADS_THUMBNAIL_HEIGHT", "Screenshot Thumbnail height");
@@ -99,7 +99,7 @@ define("_MI_DOWNLOADS_DOWN_DISCLAIMER_TEXT", "<h1>TERMS OF USE</h1>
 define("_MI_DOWNLOADS_PLATFORM", "file platform requirements");
 define("_MI_DOWNLOADS_PLATFORM_DSC", "file platform requirements can be select while creating/adding a new file. Seperate all platform requirements with '|'");
 define("_MI_DOWNLOADS_LICENSE", "file license");
-define("_MI_DOWNLOADS_LICENSE_DSC", "set the file licenses you need for your published files. The license can be selected while uploading/editing a file and will be displayed in frontent.");
+define("_MI_DOWNLOADS_LICENSE_DSC", "set the file licenses you need for your published files. The license can be selected while uploading/editing a file and will be displayed in the frontend.");
 define("_MI_DOWNLOADS_USE_RSS", "Use RSS-Feeds?");
 define("_MI_DOWNLOADS_USE_RSS_DSC", "Set to 'YES' to provide a rss link.");
 define("_MI_DOWNLOADS_USE_CATALOGUE", "Use 'catalogue' module?");
@@ -127,7 +127,7 @@ define("_MI_DOWNLOADS_SHOW_REVIEWS_AVATAR_DSC", "select 'YES' to display users a
 define("_MI_DOWNLOADS_REVIEWS_COUNT", "How many reviews should be shown in one page?");
 define("_MI_DOWNLOADS_REVIEWS_ORDER", "Order reviews date");
 define("_MI_DOWNLOADS_DISPLAY_REVIEWS_EMAIL", "How to display the email-address in frontend?");
-define("_MI_DOWNLOADS_DISPLAY_REVIEWS_EMAIL_DSC", "The first option 'Text spam protected' will display the email like 'mymail at example dot com', the second will display a usual email 'myemail@example.com', which can be protected from core by creating an image from email.");
+define("_MI_DOWNLOADS_DISPLAY_REVIEWS_EMAIL_DSC", "The first option 'Text spam protected' will display the email in the style of 'mymail at example dot com', the second will display a usual email 'myemail@example.com', which can be protected from core by creating an image from email.");
 define("_MI_DOWNLOADS_DISPLAY_REVEMAIL_SPAMPROT", "Text spam protected without checking banned list");
 define("_MI_DOWNLOADS_DISPLAY_REVEMAIL_IMGPROT", "usual email without checking banned list");
 define("_MI_DOWNLOADS_DISPLAY_REVEMAIL_SPAMPROT_BANNED", "Text spam protected with checking banned list");
@@ -141,7 +141,7 @@ define("_MI_DOWNLOADS_POPULAR", "How many downloads of one file before it's popu
 define("_MI_DOWNLOADS_DAYSNEW", "How many days to provide one file as new");
 define("_MI_DOWNLOADS_DAYSUPDATED", "How many days to provide one file as updated after editing");
 define("_MI_DOWNLOADS_MIMETYPES", "Allowed Mimetypes");
-define("_MI_DOWNLOADS_MIMETYPES_DSC", "Enter the Mimetypes you want to allow for file/imageupload. For more Informations about the system mimetypes go to system->media->mime types");
+define("_MI_DOWNLOADS_MIMETYPES_DSC", "Enter the Mimetypes you want to allow for file/imageupload. For more Information about the system mimetypes go to system->media->mime types");
 // Notifications
 define('_MI_DOWNLOADS_GLOBAL_NOTIFY', 'Global');
 define('_MI_DOWNLOADS_GLOBAL_NOTIFY_DSC', 'Global Downloads notification options.');
