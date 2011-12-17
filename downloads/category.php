@@ -36,7 +36,7 @@ function editcategory($categoryObj = 0) {
 		$categoryObj->setVar('category_updated', TRUE );
 		
 		$logObj = $downloads_log_handler->create();
-		$logObj->setVar('log_item_id', $categoryObj->id() );
+		$logObj->setVar('log_item_id', $categoryObj->getVar("category_id") );
 		$logObj->setVar('log_date', (time()-200) );
 		$logObj->setVar('log_uid', $log_uid);
 		$logObj->setVar('log_item', 1 );
@@ -59,7 +59,7 @@ function editcategory($categoryObj = 0) {
 		$categoryObj->setVar('category_publisher', icms::$user->getVar("uid"));
 		
 		$logObj = $downloads_log_handler->create();
-		$logObj->setVar('log_item_id', $categoryObj->id() );
+		$logObj->setVar('log_item_id', $categoryObj->getVar("category_id") );
 		$logObj->setVar('log_date', (time()-200) );
 		$logObj->setVar('log_uid', $log_uid);
 		$logObj->setVar('log_item', 1 );
