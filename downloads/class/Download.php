@@ -323,16 +323,25 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		return icms_member_user_Handler::getUserLink($this->getVar('download_publisher', 'e'));
 	}
 	
-	public function getDownloadImageTag() {
+	public function getDownloadImageTag($singleview = true) {
 		$download_img = $image_tag = '';
 		$directory_name = basename(dirname( dirname( __FILE__ ) ));
 		$script_name = getenv("SCRIPT_NAME");
-		$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
 		$download_img = $this->getVar('download_img', 'e');
-		if (!$download_img == "") {
-			$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_img;
-		}else {
-			$image_tag=false;
+		if($singleview) {
+			$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
+			if (!$download_img == "") {
+				$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_img;
+			}else {
+				$image_tag=false;
+			}
+		} else {
+			$document_root = str_replace('modules/' . $directory_name . '/index.php', '', $script_name);
+			if (!$download_img == "") {
+				$image_tag = $document_root . 'uploads/' . $directory_name . '/download/' . $download_img;
+			}else {
+				$image_tag=false;
+			}
 		}
 		return $image_tag;
 	}
@@ -550,7 +559,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['history'] = $this->getDownloadHistory();
 		$ret['id'] = $this->getVar('download_id');
 		$ret['title'] = $this->getVar('download_title');
-		$ret['img'] = $this->getDownloadImageTag();
+		$ret['img'] = $this->getDownloadImageTag(TRUE);
+		$ret['index_img'] = $this->getDownloadImageTag(FALSE);
 		$ret['file'] = $this->getDownloadTag(TRUE, FALSE);
 		$ret['dsc'] = $this->getVar('download_description');
 		$ret['keyfeatures'] = $this->getDownloadKeyfeatures();
