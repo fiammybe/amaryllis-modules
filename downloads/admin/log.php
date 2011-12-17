@@ -19,13 +19,11 @@
 
 include_once "admin_header.php";
 
-$clean_log_id = isset($_GET['log_id']) ? (int)$_GET['log_id'] : 0 ;
-
-$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "downloads");
-
 $valid_op = array ('del', 'view', '');
-
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+
+$clean_log_id = isset($_GET['log_id']) ? filter_input(INPUT_GET, 'log_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "downloads");
 
 if (in_array($clean_op, $valid_op, TRUE)){
 	switch ($clean_op) {
@@ -50,15 +48,14 @@ if (in_array($clean_op, $valid_op, TRUE)){
 				$criteria = null;
 			}
 			// create downloads table
-			$objectTable = new icms_ipf_view_Table($downloads_log_handler, $criteria, array());
+			$objectTable = new icms_ipf_view_Table($downloads_log_handler, $criteria);
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item_id', FALSE, FALSE, 'getLogItemId' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item', FALSE, FALSE, 'getLogItem' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_case',FALSE, FALSE, 'getLogCase' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', FALSE, 'getLogDate' ) );			
-			$objectTable->setDefaultSort('log_date'); 
-			$objectTable->setDefaultOrder('DESC');
-			$icmsAdminTpl->display( 'db:downloads_admin.html' );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', FALSE, 'getLogDate' ) );
+			
 			$icmsAdminTpl->assign( 'downloads_log_table', $objectTable->fetch() );
+			$icmsAdminTpl->display( 'db:downloads_admin.html' );
 			break;
 	}
 	icms_cp_footer();

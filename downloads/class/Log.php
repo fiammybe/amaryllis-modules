@@ -37,6 +37,13 @@ class DownloadsLog extends icms_ipf_Object {
 		
 	}
 	
+	public function getLogIP() {
+		$ip = "";
+		$ip = $this->getValueFor("log_ip", "e");
+		$ip = icms_core_DataFilter::checkVar($ip, "ip", "ipv4");
+		return $ip;
+	}
+	
 	public function getLogDate() {
 		global $downloadsConfig;
 		$date = '';
