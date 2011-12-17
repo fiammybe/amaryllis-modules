@@ -36,8 +36,8 @@ define("_AM_DOWNLOADS_INDEX_NEED_APPROVAL_CATS", "Categories to approve: &nbsp;"
 define("_AM_DOWNLOADS_DOWNLOAD_ADD", "Add File");
 define("_AM_DOWNLOADS_CREATE", "New");
 define("_AM_DOWNLOADS_EDIT", "Edit");
-define("_AM_DOWNLOADS_CREATED", "Successful created");
-define("_AM_DOWNLOADS_MODIFIED", "Successfull modified");
+define("_AM_DOWNLOADS_CREATED", "Successfully created");
+define("_AM_DOWNLOADS_MODIFIED", "Successfully modified");
 define("_AM_DOWNLOADS_ONLINE", "Online");
 define("_AM_DOWNLOADS_OFFLINE", "Offline");
 define("_AM_DOWNLOADS_DOWNLOAD_WEIGHTS_UPDATED", "Weights updated");
@@ -58,4 +58,4 @@ define("_AM_DOWNLOADS_APPROVE_FALSE", "Denied");
 define("_AM_DOWNLOADS_MIRROR_FALSE", "Mirror denied");
 define("_AM_DOWNLOADS_MIRROR_TRUE", "Mirror approved");
 
-define("_AM_DOWNLOADS_NO_CAT_FOUND", "No category was found. Please create a category first. For questions read manual first.");
+define("_AM_DOWNLOADS_NO_CAT_FOUND", "No category was found. Please create a category first. If you have any further questions, please read the manual first.");
