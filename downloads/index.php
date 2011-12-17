@@ -81,6 +81,9 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
 	} else {
 		$icmsTpl->assign('user_submit', false);
 	}
+	$categories = $downloads_category_handler->getCategories($clean_category_start, $downloadsConfig['show_categories'], $clean_category_uid,  false, $clean_category_id, "weight", "ASC", TRUE, TRUE);
+	$downloads_category_columns = array_chunk($categories, $downloadsConfig['show_category_columns']);
+	$icmsTpl->assign('sub_category_columns', $downloads_category_columns);
 /**
  * if there's no valid category, retrieve a list of all primary categories
  */

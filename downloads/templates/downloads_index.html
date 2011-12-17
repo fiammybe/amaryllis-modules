@@ -13,42 +13,42 @@
 			<{if $category_pagenav}><{$category_pagenav}><{/if}>
 			<!-- category row -->
 			<{foreach item=category_column from=$category_columns}>
-			<div class="category_row table_row">
-				<{foreach item=categories from=$category_column}>
-				<!-- category rule -->
-					<div class="downloads_category table_cell" original-title="<{$categories.title}>">
-						<!-- category image -->
-						<span class="downloads_cat_img">
-							<a href="<{$categories.itemLink}>">
-								<img src="<{$categories.img}>" alt="" title="<{$categories.title}>" />
-							</a>
-						</span>
-						
-						<!-- Category title -->
-						<span class="downloads_cat_title">
-							<a href="<{$categories.itemLink}>" title=""><{$categories.title}></a>
-							<span style="font-size: small; font-weight: normal;"> &nbsp;(&nbsp;<{$categories.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;|&nbsp;<{$categories.cat_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_SUBCATS}>&nbsp;)&nbsp;</span>
-							<{if $categories.userCanEditAndDelete}>
-								<{$categories.editItemLink}><{$categories.deleteItemLink}>
-							<{/if}>
-							<{if $categories.user_upload}>
-								<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$categories.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
-									<img src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
+				<div class="category_row table_row">
+					<{foreach item=categories from=$category_column}>
+					<!-- category rule -->
+						<div class="downloads_category table_cell" original-title="<{$categories.title}>">
+							<!-- category image -->
+							<span class="downloads_cat_img">
+								<a href="<{$categories.itemLink}>">
+									<img src="<{$categories.img}>" alt="" title="<{$categories.title}>" />
 								</a>
-							<{/if}>
-						</span>
-					</div><!-- E N D .downloads_category -->
-					<div class="popup">
-							<span class="downloads_category_info">
-								(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$categories.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$categories.published_date}>&nbsp;)
 							</span>
-							<span class="downloads_cat_desc">
-								<{$categories.dsc}>
+							
+							<!-- Category title -->
+							<span class="downloads_cat_title">
+								<a href="<{$categories.itemLink}>" title=""><{$categories.title}></a>
+								<span style="font-size: small; font-weight: normal;"> &nbsp;(&nbsp;<{$categories.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;|&nbsp;<{$categories.cat_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_SUBCATS}>&nbsp;)&nbsp;</span>
+								<{if $categories.userCanEditAndDelete}>
+									<{$categories.editItemLink}><{$categories.deleteItemLink}>
+								<{/if}>
+								<{if $categories.user_upload}>
+									<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$categories.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
+										<img src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
+									</a>
+								<{/if}>
 							</span>
-						</div>
-					<{/foreach}>
-				<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
-			</div>
+						</div><!-- E N D .downloads_category -->
+						<div class="popup">
+								<span class="downloads_category_info">
+									(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$categories.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$categories.published_date}>&nbsp;)
+								</span>
+								<span class="downloads_cat_desc">
+									<{$categories.dsc}>
+								</span>
+							</div>
+						<{/foreach}>
+					<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
+				</div>
 			<{/foreach}>
 			<!-- pagination control -->
 			<{if $category_pagenav}><{$category_pagenav}><{/if}>
@@ -149,52 +149,43 @@
 			<!-- pagination control -->
 			<{if $category_pagenav }><{$category_pagenav}><{/if}>
 			
-			<{foreach item=category from=$downloads_single_cat.sub}>
-
-					<!-- category image -->
-				<span class="downloads_cat_img">
-					<a href="<{$category.itemLink}>">
-						<img src="<{$category.img}>" alt="" title="<{$category.title}>" />
-					</a>
-				</span>
-				
-				<!-- category title -->
-				<span class="downloads_cat_title">
-					<a href="<{$category.itemLink}>"><{$category.title}></a> 
-						&nbsp;(&nbsp;<{$category.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;)&nbsp;
-						<{if $category.userCanEditAndDelete}>
-							<{$category.editItemLink}><{$category.deleteItemLink}>
-						<{/if}>
-						<{if $downloads_single_cat.user_upload}>
-							<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=200}>" href="<{$downloads_single_cat.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
-								<img src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
-							</a>
-							<{if $downloads_upl_disclaimer}>
-								<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
-									<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
-								</div>
-							<{/if}>
-						<{/if}>
-						<p class="downloads_category_info">
-							(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$category.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$category.published_date}>&nbsp;)
-						</p>
-				</span>
-				<br /><br />
-				<!-- category description -->
-				<div class="downloads_cat_dsc">
-					<{$category.dsc}>
-				</div>
-
-				<{if $category.hassub}>
-					<div style="float: right; font-size: .8em; padding-right: 45px;">
-						<ul>
-						<{foreach item=sub from=$category.sub}>
-							<li><a href="<{$sub.itemLink}>" title="<{$sub.title}>"><{$sub.title}></a></li>
+			<{foreach item=category_column from=$sub_category_columns}>
+				<div class="category_row table_row">
+					<{foreach item=categories from=$category_column}>
+					<!-- category rule -->
+						<div class="downloads_category table_cell" original-title="<{$categories.title}>">
+							<!-- category image -->
+							<span class="downloads_cat_img">
+								<a href="<{$categories.itemLink}>">
+									<img src="<{$categories.img}>" alt="" title="<{$categories.title}>" />
+								</a>
+							</span>
+							
+							<!-- Category title -->
+							<span class="downloads_cat_title">
+								<a href="<{$categories.itemLink}>" title=""><{$categories.title}></a>
+								<span style="font-size: small; font-weight: normal;"> &nbsp;(&nbsp;<{$categories.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;|&nbsp;<{$categories.cat_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_SUBCATS}>&nbsp;)&nbsp;</span>
+								<{if $categories.userCanEditAndDelete}>
+									<{$categories.editItemLink}><{$categories.deleteItemLink}>
+								<{/if}>
+								<{if $categories.user_upload}>
+									<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$categories.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
+										<img src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
+									</a>
+								<{/if}>
+							</span>
+						</div><!-- E N D .downloads_category -->
+						<div class="popup">
+								<span class="downloads_category_info">
+									(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$categories.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$categories.published_date}>&nbsp;)
+								</span>
+								<span class="downloads_cat_desc">
+									<{$categories.dsc}>
+								</span>
+							</div>
 						<{/foreach}>
-						</ul>
-					</div>	
-				<{/if}>
-				<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>	
+					<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
+				</div>
 			<{/foreach}>
 			
 			<!-- pagination control -->
