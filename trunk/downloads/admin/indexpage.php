@@ -40,9 +40,6 @@ if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 $valid_op = array ( 'mod','addindexpage' );
 
-if (isset($_GET['op'])) $clean_op = htmlentities($_GET['op']);
-if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
-
 $clean_indexkey = isset($_GET['indexkey']) ? (int) $_GET['indexkey'] : 1 ;
 
 if ( in_array( $clean_op, $valid_op, true ) ) {

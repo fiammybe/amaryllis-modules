@@ -34,7 +34,7 @@ function editcategory($category_id = 0) {
 		$categoryObj->setVar( 'category_updated_date', (time() - 100) );
 		
 		$logObj = $downloads_log_handler->create();
-		$logObj->setVar('log_item_id', $categoryObj->id() );
+		$logObj->setVar('log_item_id', $categoryObj->getVar("category_id") );
 		$logObj->setVar('log_date', (time()-200) );
 		$logObj->setVar('log_uid', $log_uid);
 		$logObj->setVar('log_item', 1 );
@@ -42,7 +42,7 @@ function editcategory($category_id = 0) {
 		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 		$logObj->store(TRUE);
 		
-		downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_CATEGORY . ' > ' . _MI_DOWNLOADS_CATEGORY_EDIT);
+		downloads_adminmenu( 2, _MI_DOWNLOADS_MENU_CATEGORY . ' > ' . _MI_DOWNLOADS_CATEGORY_EDIT);
 		$sform = $categoryObj->getForm(_AM_DOWNLOADS_EDIT, 'addcategory');
 		$sform->assign($icmsAdminTpl);
 	} else {
@@ -52,7 +52,7 @@ function editcategory($category_id = 0) {
 		$categoryObj->setVar('category_submitter', icms::$user->getVar("uid"));
 		
 		$logObj = $downloads_log_handler->create();
-		$logObj->setVar('log_item_id', $categoryObj->id() );
+		$logObj->setVar('log_item_id', $categoryObj->getVar("category_id") );
 		$logObj->setVar('log_date', (time()-200) );
 		$logObj->setVar('log_uid', $log_uid);
 		$logObj->setVar('log_item', 1 );
@@ -60,7 +60,7 @@ function editcategory($category_id = 0) {
 		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 		$logObj->store(TRUE);
 		
-		downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_CATEGORY . " > " . _MI_DOWNLOADS_CATEGORY_CREATINGNEW);
+		downloads_adminmenu( 2, _MI_DOWNLOADS_MENU_CATEGORY . " > " . _MI_DOWNLOADS_CATEGORY_CREATINGNEW);
 		$sform = $categoryObj->getForm(_AM_DOWNLOADS_CREATE, 'addcategory');
 		$sform->assign($icmsAdminTpl);
 
@@ -73,11 +73,12 @@ include_once 'admin_header.php';
 $valid_op = array ('mod', 'changedField', 'addcategory', 'del', 'view', 'visible', 'changeShow','changeApprove', 'changeWeight', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
-if (isset($_POST['op'])) $op = filter_input(INPUT_POST, 'op');
+if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 $downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 
-$clean_category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0 ;
+$clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_category_id = ($clean_category_id == 0 && isset($_POST['category_id'])) ? filter_input(INPUT_POST, 'category_id', FILTER_SANITIZE_NUMBER_INT) : $clean_category_id;
 
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {

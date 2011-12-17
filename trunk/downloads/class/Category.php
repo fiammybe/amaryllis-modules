@@ -286,7 +286,6 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		} else {
 			return FALSE;
 		}
-	
 	}
 	
 	function toArray() {
