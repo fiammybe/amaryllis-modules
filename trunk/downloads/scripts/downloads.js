@@ -89,7 +89,7 @@
 		$(".review_form").dialog({
 			modal: true,
 			width: 700,
-			height: 350,
+			height: 400,
 			autoOpen: false,
 			resizable: false,
 			draggable: true

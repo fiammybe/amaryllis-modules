@@ -143,6 +143,8 @@ define("_CO_DOWNLOADS_REVIEW_REVIEW_UID", "user");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_NAME", "Name");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_EMAIL", "E-Mail");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_MESSAGE", "Message");
+define("_CO_DOWNLOADS_REVIEW_REVIEW_MESSAGE_DSC", 'You can use some HTML here. Actually &lt;b&gt; for <b>bold</b>, &lt;i&gt; for <i>italic</i> Text and &lt;a&gt; for a link. All others will be stripped out.');
+
 define("_CO_DOWNLOADS_REVIEW_REVIEW_DATE", "Date");
 // LOG system
 define("_CO_DOWNLOADS_LOG_LOG_ITEM_ID", "Item Name");

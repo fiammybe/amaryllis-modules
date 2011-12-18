@@ -118,7 +118,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				}
 				$controller = new icms_ipf_Controller($downloads_review_handler);
 				$controller->storeFromDefaultForm(_MD_DOWNLOADS_REVIEW_SUBMITTED, _MD_DOWNLOADS_REVIEW_SUBMITTED);
-				return redirect_header(icms_getPreviousPage(), 3, _THANKS_SUBMISSION);
+				return redirect_header (DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id, 3, _THANKS_SUBMISSION);
 			} else {
 				return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
 			}

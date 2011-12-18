@@ -42,13 +42,13 @@ class DownloadsReviewHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 
-	protected function beforeSafe(& $obj) {
+	protected function beforeInsert(& $obj) {
 		global $downloadsConfig;
-		$message = icms_core_DataFilter::checkVar($obj->getVar("review-message"), "str", "striplow");
-		
+		$message = $obj->getVar("review_message", "s");
+		$message = icms_core_DataFilter::checkVar(strip_tags($message,"<b><i><a>"), "html", "input");
 		$obj->setVar("review_message", $message);
 
-		$email = $this->getVar("review_email", "s");
+		$email = $obj->getVar("review_email", "s");
 		if($downloadsConfig['display_reviews_email'] == 1) {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
 		} elseif($downloadsConfig['display_reviews_email'] == 2) {
@@ -58,7 +58,6 @@ class DownloadsReviewHandler extends icms_ipf_Handler {
 		} elseif($downloadsConfig['display_reviews_email'] == 4) {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
 		}
-		return $email;
 		$obj->setVar("review_email", $email);
 		return TRUE;
 	}
