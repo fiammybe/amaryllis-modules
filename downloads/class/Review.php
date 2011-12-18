@@ -32,8 +32,8 @@ class DownloadsReview extends icms_ipf_Object {
 		$this->quickInitVar("review_message", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("review_ip", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("review_date",XOBJ_DTYPE_LTIME);
-		
-		$this->setVar("review_message", array("name" => "textarea", "form_editor" => "htmlarea"));
+		$this->initCommonVar('dohtml', FALSE, 1);
+		$this->setVar("review_message", "textarea");
 		
 		$this->hideFieldFromForm(array("review_item_id", "review_uid", "review_ip", "review_date" ));
 		
@@ -42,7 +42,8 @@ class DownloadsReview extends icms_ipf_Object {
 	 * message output -> filter again
 	 */
 	public function getReviewMessage(){
-		$message = icms_core_DataFilter::checkVar($this->getVar("review_message", "s"), "str", "encodelow");
+		
+		$message = icms_core_DataFilter::checkVar($this->getVar("review_message", "s"), "html", "output");
 		return $message;
 	}
 	/**
@@ -52,15 +53,6 @@ class DownloadsReview extends icms_ipf_Object {
 	public function getReviewEmail(){
 		global $downloadsConfig;
 		$email = $this->getVar("review_email", "s");
-		if($downloadsConfig['display_reviews_email'] == 1) {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
-		} elseif($downloadsConfig['display_reviews_email'] == 2) {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
-		} elseif($downloadsConfig['display_reviews_email'] == 3) {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 1);
-		} elseif($downloadsConfig['display_reviews_email'] == 4) {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
-		}
 		return $email;
 	}
 	
@@ -100,7 +92,7 @@ class DownloadsReview extends icms_ipf_Object {
 		$ret['date'] = $this->getReviewPublishedDate();
 		$ret['message'] = $this->getReviewMessage();
 		$ret['name'] = $this->getVar("review_name", "s");
-		$ret['email'] = $this->getReviewEmail();
+		$ret['email'] = $this->getVar("review_email"); //getReviewEmail();
 		$ret['avatar'] = $this->getReviewAvatar();
 		return $ret;
 	}
