@@ -1,0 +1,84 @@
+<link href="<{$guestbook_url}>module_guestbook.css" rel="stylesheet" type="text/css" />
+
+<{if $guestbook_show_breadcrumb}>
+	<!-- module breadcrumb -->
+	<div class="guestbook_headertable">
+		<{if $guestbook_module_home}>
+			<span class="guestbook_modulename"><{$guestbook_module_home}></span>
+		<{/if}>
+		<{if $guestbook_category_path}>
+			<span class="guestbook_breadcrumb"><{if $guestbook_module_home}>&gt;<{/if}><{$guestbook_category_path}></span>
+		<{/if}>
+	</div>
+<{/if}>
+
+<{$guestbook_index.image}>
+
+<{$guestbook_index.header}>
+
+<{$guestbook_index.heading}>
+
+<{if $entries}>
+	<div class="guestbook_entries">
+		<{foreach item=entry from=$entries}>
+			<div>
+			<!-- title -->
+				<div class="guestbook_title"><{$entry.title}></div>
+				
+				<div class="guestbook_row">
+					<div class="guestbook_uinfo">
+						<{if $show_avatar}>
+							<span class="guestbook_avatar">
+								<{$entry.avatar}>
+							</span>
+						<{/if}>
+						<span class="guestbook_publisher">
+							<{$smarty.const._MD_GUESTBOOK_PUBLISHED_BY}>&nbsp;:&nbsp;<{$entry.published_by}>
+						</span>
+						<span class="guestbook_published_date">
+							<{$smarty.const._MD_GUESTBOOK_PUBLISHED_ON}>&nbsp;:&nbsp;<{$entry.published_on}>
+						</span>
+					</div>
+					<div class="guestbook_message">
+						<span class="entry_info">
+							<{if $guestbook_is_admin}>&nbsp;&nbsp;
+								<span="guestbook_ip">
+									<{$entry.ip}>
+								</span>
+							<{/if}>
+						</span>
+						<span class="guestbook_message">
+							<{$entry.message}>
+						</span>
+						<!-- <{if $reply_link && $guestbook_is_admin}>
+							<span class="submit_link">
+								<a href="<{$entry.reply}>" title="reply"><{$smarty.const._MD_GUESTBOOK_REPLY}></a>
+							</span>
+						<{/if}> -->
+					</div>
+				</div>
+			</div>
+		
+		<{/foreach}>
+	</div>
+<{/if}>
+<div class="guestbook_submit">
+	<span class="guestbook_link">
+		<a class="<{if $submit_link}>submit_link<{else}>register_link<{/if}>"><{$smarty.const._MD_GUESTBOOK_ADD_ENTRY}></a>
+	</span>
+</div>
+<div class="ui-helper-hidden guestbook_form">
+	<{if $guestbook_form}>
+		<{includeq file='db:system_common_form.html' form=$guestbook_form}>
+	<{/if}>
+</div>
+
+<div id="dialog-confirm-perm" title="<{$smarty.const._MD_GUESTBOOK_PERM}>" class="ui-helper-hidden" >
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$smarty.const._MD_GUESTBOOK_PERMISSION}></p>
+</div>
+
+<{if $guestbook_is_admin}>
+	<div class="guestbook_adminlinks"><{$guestbook_adminpage}></div>
+<{/if}>
+
+<{$guestbook_index.footer}>
