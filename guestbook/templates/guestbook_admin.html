@@ -1,0 +1,18 @@
+<{if $guestbook_guestbook_title}><h1><{$guestbook_guestbook_title}></h1><{/if}>
+<{if $guestbook_guestbook_info}><p><{$guestbook_guestbook_info}></p><{/if}>
+<{if $guestbook_guestbook_table}><{$guestbook_guestbook_table}><{/if}>
+<{if $addguestbook}><{includeq file='db:system_common_form.html' form=$addguestbook}><{/if}>
+
+<!-- admin index page -->
+<{if $downloads_indexpage_title}>
+	<h1><{$downloads_indexpage_title}></h1>
+<{/if}>
+<{if $downloads_indexpage_info}>
+	<p><{$downloads_indexpage_info}></p>
+<{/if}>
+<{if $downloads_indexpage_table}>
+	<{$downloads_indexpage_table}>
+<{/if}>
+<{if $addindexpage}>
+	<{includeq file='db:system_common_form.html' form=$addindexpage}>
+<{/if}>
