@@ -207,37 +207,6 @@ define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_CAP', 'Notify me when any file 
 define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_DSC', 'Receive notification when any file is modified.');
 define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : File Modified');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ACP menu
 define("_MI_DOWNLOADS_MENU_INDEX", "Index");
 define("_MI_DOWNLOADS_MENU_DOWNLOAD", "Manage Files");
