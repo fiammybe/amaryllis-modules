@@ -229,7 +229,7 @@
 					viewport: $(window), // Keep it on-screen at all times if possible
 					textAlign:'left',
 					tip:'bottomLeft',
-					classes: 'ui-tooltip ui-tooltip-rounded ui-tooltip-shadow',
+					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
 				},
 				position:   {
 					target: 'mouse',
