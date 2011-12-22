@@ -45,6 +45,7 @@ define("_MD_DOWNLOADS_FILE_VERSION_STATUS", "Version Status:");
 define("_MD_DOWNLOADS_FILE_PLATFORM", "Platform:");
 define("_MD_DOWNLOADS_FILE_LICENSE", "License:");
 define("_MD_DOWNLOADS_FILE_LIMITS", "Limitations:");
+define("_MD_DOWNLOADS_FILE_LANGUAGE", "Language:");
 define("_MD_DOWNLOADS_SURE_BROKEN", "Are you sure, the download link is broken?");
 define("_MD_DOWNLOADS_REPORT_BROKEN", "Report Broken Link");
 define("_MD_DOWNLOADS_FILE_UPDATED", "updated");

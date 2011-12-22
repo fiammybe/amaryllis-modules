@@ -222,7 +222,7 @@
 	.table_row {
 		display: table-row;
 		padding: .250em;
-		line-height: 2.5em;
+		line-height: 3em;
 	}
 	
 	.table_cell {
@@ -231,13 +231,19 @@
 		padding-left: 1em;
 	}
 	
-	.file_dev, .file_dev_hp, .file_version, .file_version_status, .file_limits, .file_platform, .file_license {
+	.file_dev, .file_dev_hp, .file_version, .file_version_status, .file_limits, .file_platform, .file_license, .file_counter, .file_language {
 		display: table-cell;
-		padding-left: 30px;
+		padding-left: 45px;
 	}
 	
 	.file_dev {
 		background: url(images/dev.png) left center no-repeat;
+	}
+	.file_counter {
+		background: url(images/counter.png) left center no-repeat;
+	}
+	.file_language {
+		background: url(images/language.png) left center no-repeat;
 	}
 	.file_dev_hp {
 		background: url(images/dev_hp.png) left center no-repeat;

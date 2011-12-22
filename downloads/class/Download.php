@@ -44,6 +44,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_limitations', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_license', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_platform', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar("download_language", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_history', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar("download_file_descriptions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
@@ -114,7 +115,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->setControl('download_version_status',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadVersionStatus', 'module' => 'downloads'));
 		$this->setControl('download_limitations',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadLimitations', 'module' => 'downloads'));
 		$this->setControl('download_license',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadLicense', 'module' => 'downloads'));
-		$this->setControl('download_platform',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadPlatform', 'module' => 'downloads'));
+		$this->setControl('download_platform',array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadPlatform', 'module' => 'downloads'));
 		$this->setControl('download_publisher','user');
 		$this->setControl('download_grpperm', array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getGroups', 'module' => 'downloads'));
 		$this->setControl('download_active', 'yesno');
@@ -570,6 +571,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['limitations'] = $this->getVar('download_limitations');
 		$ret['license'] = $this->getVar('download_license');
 		$ret['platform'] = $this->getVar('download_platform');
+		$ret['language'] = $this->getVar('download_language');
 		$ret['mirror'] = $this->getMirrorLink();
 		$ret['dev'] = $this->getVar('download_dev');
 		$ret['dev_hp'] = $this->getDevHpLink();

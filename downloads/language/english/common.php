@@ -59,11 +59,12 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY", "Filehistory");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY_DSC", "Insert the history from the file. Minimalistic html will be allowed.");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER", "Teaser");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER_DSC", "Describe the file using 1 or 2 sentences. This will be displayed on index view.");
-
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_LANGUAGE", "Language");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_LANGUAGE_DSC", "Enter the language of your file");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES", "Keyfeatures");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES_DSC", " Enter the key features of the file.");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES_DSC", " Enter the key features of the file. Use '|' to seperate them");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_REQUIREMENTS", "Requirements");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_REQUIREMENTS_DSC", " Enter the requirements of the File. ");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_REQUIREMENTS_DSC", " Enter the requirements of the File. Use '|' to seperate them");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_SCREEN_1", "1st screenshot");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_SCREEN_2", "2nd screenshot");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_SCREEN_3", "3rd screenshot");
