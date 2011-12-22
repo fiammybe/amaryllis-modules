@@ -131,7 +131,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$criteria->add(new icms_db_criteria_Item("log_item_id", $download_id));
 			$criteria->add(new icms_db_criteria_Item("log_item", 0));
 			$criteria->add(new icms_db_criteria_Item("log_ip", xoops_getenv('REMOTE_ADDR')));
-			$count= $downloads_log_handler->getcount($criteria);
+			$count= $downloads_log_handler->getCount($criteria);
 			if($count == 0){
 				if(is_object(icms::$user)){
 					$log_uid = icms::$user->getVar("uid");

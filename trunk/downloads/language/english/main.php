@@ -65,7 +65,7 @@ define("_MD_DOWNLOADS_FILE_DOWNLOADED", "File downloaded");
 define("_MD_DOWNLOADS_FILE_GENERAL_INFORMATIONS", "General Informations");
 define("_MD_DOWNLOADS_FILE_DESCRIPTION", "Description");
 define("_MD_DOWNLOADS_FILE_IMAGES", "Images");
-define("_MD_DOWNLOADS_FILE_INSTRUCTIONS", "Instructions");
+define("_MD_DOWNLOADS_FILE_INSTRUCTIONS", "Relevant");
 define("_MD_DOWNLOADS_FILE_HISTORY", "History");
 define("_MD_DOWNLOADS_FILE_REVIEWS", "Reviews");
 define("_MD_DOWNLOADS_COMMENT", "Comment");
