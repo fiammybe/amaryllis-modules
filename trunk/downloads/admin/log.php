@@ -53,7 +53,8 @@ if (in_array($clean_op, $valid_op, TRUE)){
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item', FALSE, FALSE, 'getLogItem' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_case',FALSE, FALSE, 'getLogCase' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', FALSE, 'getLogDate' ) );
-			
+			$objectTable->setDefaultOrder("log_date");
+			$objectTable->setDefaultSort("DESC");
 			$icmsAdminTpl->assign( 'downloads_log_table', $objectTable->fetch() );
 			$icmsAdminTpl->display( 'db:downloads_admin.html' );
 			break;
