@@ -450,9 +450,11 @@ $modversion['config'][$i] = array(
 |GNU Free Documentation License (FDL) (v. 1.2)
 |GNU General Public License (GPL) (v. 1.0)
 |GNU General Public License (GPL) (v. 2.0)
+|GNU General Public License (GPL) (v. 3.0)
 |GNU Lesser General Public License (LGPL) (v. 2.1)
 |GNU Library General Public License (LGPL) (v.2.0)
 |Microsoft Shared Source License
+|MIT License
 |Mozilla Public License (v. 1.1)
 |Open Software License (OSL) (v. 1.0)
 |Open Software License (OSL) (v. 1.1)
