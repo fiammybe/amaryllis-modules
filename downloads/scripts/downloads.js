@@ -249,7 +249,7 @@
 			if (name=='up') {
 				$.ajax({
 					type: "POST",
-					url: "ajax.php?op=vote_up",
+					url: "ajax.php?op=vote_up&download_id="+ id ,
 					data: dataString,
 					cache: false,
 				});
