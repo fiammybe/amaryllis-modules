@@ -334,7 +334,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		return $link;
 	}
 	
-	public function getRelated($criteria = null) {
+	public function getRelated() {
 		if (!$this->_download_related) {
 			$related = $this->getList(TRUE);
 			return $related;
