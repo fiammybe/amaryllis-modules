@@ -498,6 +498,15 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		return $filesize . '&nbsp;' . downloadsFileSizeType($downloadsConfig['display_file_size']) ;
 	}
 	
+	public function getFileType() {
+		$myfile = $this->getDownloadTag(FALSE, TRUE);
+		/**
+		 * @TODO if going fully php 5.3 use finfo
+		 */
+		$filetype = explode(".",$myfile);
+		return $filetype[1];
+	}
+	
 	function accessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
@@ -601,6 +610,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['thumbnail_width'] = $downloadsConfig['thumbnail_width'];
 		$ret['thumbnail_height'] = $downloadsConfig['thumbnail_height'];
 		$ret['filesize'] = $this->getFileSize();
+		$ret['filetype'] = $this->getFileType();
 		$ret['file_thumbnail_width'] = $downloadsConfig['file_img_thumbnail_width'];
 		$ret['file_thumbnail_height'] = $downloadsConfig['file_img_thumbnail_height'];
 		$ret['like'] = $this->getVar('download_like');

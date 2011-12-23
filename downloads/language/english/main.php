@@ -75,6 +75,7 @@ define("_MD_DOWNLOADS_COMMENTS", "Comments");
 
 define("_MD_DOWNLOADS_PUBLISHER_MAIL", "E-Mail");
 define("_MD_DOWNLOADS_FILESIZE", "Filesize");
+define("_MD_DOWNLOADS_FILETYPE", "Download-Filetype");
 
 // used in ajax.php
 define("_MD_DOWNLOADS_BROKEN_REPORTED", "Thank you for submitting! File was reported as broken.");
