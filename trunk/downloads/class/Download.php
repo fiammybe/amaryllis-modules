@@ -46,6 +46,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_platform', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("download_language", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_history', XOBJ_DTYPE_TXTAREA);
+		$this->quickInitVar('download_related', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("download_file_descriptions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->quickInitVar("download_file_images", XOBJ_DTYPE_FORM_SECTION);
@@ -106,6 +107,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->setControl('download_history', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl('download_keyfeatures', 'textarea');
 		$this->setControl('download_requirements', 'textarea');
+		$this->setControl('download_related', array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getRelated', 'module' => 'downloads'));
 		$this->setControl('download_file', 'file');
 		$this->setControl('download_img', 'image');
 		$this->setControl('download_screen_1','image');
@@ -284,6 +286,12 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		return $license;
 	}
 	
+	function download_related() {
+		$ret = $this->getVar('download_related', 'e');
+		$related = $this->handler->getRelated();
+		return $related;
+	}
+	
 	public function getDownloadPublishedDate() {
 		global $downloadsConfig;
 		$date = '';
@@ -422,6 +430,19 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 			$result = '';
 			foreach ($requirements as $requirement) {
 				$result .= '<li>' . $requirement . '</li>';
+			}
+			return $result;
+		}
+	}
+
+	public function getDownloadRelated() {
+		$related_array = $this->getVar('download_related');
+		if (!$related_array == "") {
+			$relateds = explode(",", $related_array);
+			$result = '';
+			foreach ($relateds as $related) {
+				$link = $this->handler->getLink($related);
+				$result .= '<li>' . $link . '</li>';
 			}
 			return $result;
 		}
@@ -566,6 +587,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['dsc'] = $this->getVar('download_description');
 		$ret['keyfeatures'] = $this->getDownloadKeyfeatures();
 		$ret['requirements'] = $this->getDownloadRequirements();
+		$ret['related'] = $this->getDownloadRelated();
 		$ret['version'] = $this->getVar('download_version');
 		$ret['version_status'] = $this->getVar('download_version_status');
 		$ret['limitations'] = $this->getVar('download_limitations');

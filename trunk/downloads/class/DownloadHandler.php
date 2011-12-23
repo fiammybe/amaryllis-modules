@@ -25,6 +25,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	
 	private $_download_limitations = array();
 	
+	private $_download_related = array();
+	
 	private $_download_platform = array();
 	
 	private $_download_version_status = array();
@@ -68,12 +70,12 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	public function getList($download_active = null) {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($download_active)) {
-			$criteria->add(new icms_db_criteria_Item('download_active', true));
+			$criteria->add(new icms_db_criteria_Item('download_active', TRUE));
 		}
-		$downloads = & $this->getObjects($criteria, true);
-		$ret[]= array();
+		$downloads = $this->getObjects($criteria, TRUE);
+		$ret = array();
 		foreach(array_keys($downloads) as $i) {
-			$ret[$downloads[$i]->getVar('download_id')] = $downloads[$i]->getVar('download_title');
+			$ret[$i] = $downloads[$i]->getVar('download_title');
 		}
 		return $ret;
 	}
@@ -182,6 +184,9 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		
 	}
 
+	/**
+	 * handling some functions to easily switch some fields
+	 */
 	public function changeVisible($download_id) {
 		$visibility = '';
 		$downloadObj = $this->get($download_id);
@@ -251,7 +256,10 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$this->insert($downloadObj, true);
 		return $broken;
 	}
-
+	
+	/**
+	 * Adding some filters for object table in ACP
+	 */
 	public function download_active_filter() {
 		return array(0 => 'Offline', 1 => 'Online');
 	}
@@ -318,6 +326,20 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			return $platform;
 		}
 		return $this->_download_license;
+	}
+	
+	public function getLink($download_id = NULL) {
+		$file = $this->get($download_id);
+		$link = $file->getItemLink(FALSE);
+		return $link;
+	}
+	
+	public function getRelated($criteria = null) {
+		if (!$this->_download_related) {
+			$related = $this->getList(TRUE);
+			return $related;
+		}
+		return $this->_download_related;
 	}
 
 	public function getGroups($criteria = null) {

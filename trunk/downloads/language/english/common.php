@@ -65,6 +65,8 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES", "Keyfeatures");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_KEYFEATURES_DSC", " Enter the key features of the file. Use '|' to seperate them");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_REQUIREMENTS", "Requirements");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_REQUIREMENTS_DSC", " Enter the requirements of the File. Use '|' to seperate them");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_RELATED", "Related Files");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_RELATED_DSC", "");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_SCREEN_1", "1st screenshot");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_SCREEN_2", "2nd screenshot");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_SCREEN_3", "3rd screenshot");
