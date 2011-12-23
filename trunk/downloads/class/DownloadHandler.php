@@ -307,7 +307,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	public function getDownloadLicense() {
 		global $downloadsConfig;
 		if (!$this->_download_license) {
-			$license_array = explode("|", $downloadsConfig['downloads_license']);
+			$license_array = explode(",", $downloadsConfig['downloads_license']);
+			$license = array();
 			foreach (array_keys($license_array) as $i) {
 				$license[$license_array[$i]] = $license_array[$i];
 			}
