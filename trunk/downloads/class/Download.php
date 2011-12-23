@@ -78,7 +78,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar("download_publish_info_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->quickInitVar("download_view_section", XOBJ_DTYPE_FORM_SECTION);
-		$this->quickInitVar('download_grpperm', XOBJ_DTYPE_ARRAY);
+		$this->quickInitVar('download_grpperm', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_active', XOBJ_DTYPE_INT,false, false, false, 1);
 		$this->quickInitVar('download_inblocks', XOBJ_DTYPE_INT,false, false, false, 1);
 		$this->quickInitVar('download_approve', XOBJ_DTYPE_INT);
@@ -257,19 +257,19 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 
 	function download_grpperm() {
-		$ret = $this->getVar('download_grpperm', 's');
+		$ret = $this->getVar('download_grpperm', 'e');
 		$groups = $this->handler->getGroups();
 		return $groups;
 	}
 	
 	function download_limitations() {
-		$ret = array($this->getVar('download_limitations', 's'));
+		$ret = $this->getVar('download_limitations', 'e');
 		$limitations = $this->handler->getDownloadLimitations();
 		return $limitations;
 	}
 	
 	function download_platform() {
-		$ret = $this->getVar('download_platform', 's');
+		$ret = $this->getVar('download_platform', 'e');
 		$platform = $this->handler->getDownloadPlatform();
 		return $platform;
 	}
@@ -600,7 +600,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['version'] = $this->getVar('download_version');
 		$ret['version_status'] = $this->getVar('download_version_status');
 		$ret['limitations'] = $this->getVar('download_limitations');
-		$ret['license'] = $this->getVar('download_license');
+		$ret['license'] = $this->getVar('download_license', 's');
 		$ret['platform'] = $this->getVar('download_platform');
 		$ret['language'] = $this->getVar('download_language');
 		$ret['mirror'] = $this->getMirrorLink();
