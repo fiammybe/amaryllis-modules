@@ -42,7 +42,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_version', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_version_status', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_limitations', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('download_license', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_license', XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar('download_platform', XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar("download_language", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_history', XOBJ_DTYPE_TXTAREA);
@@ -78,7 +78,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar("download_publish_info_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->quickInitVar("download_view_section", XOBJ_DTYPE_FORM_SECTION);
-		$this->quickInitVar('download_grpperm', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_grpperm', XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar('download_active', XOBJ_DTYPE_INT,false, false, false, 1);
 		$this->quickInitVar('download_inblocks', XOBJ_DTYPE_INT,false, false, false, 1);
 		$this->quickInitVar('download_approve', XOBJ_DTYPE_INT);
@@ -116,7 +116,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->setControl('download_screen_4','image');
 		$this->setControl('download_version_status',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadVersionStatus', 'module' => 'downloads'));
 		$this->setControl('download_limitations',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadLimitations', 'module' => 'downloads'));
-		$this->setControl('download_license',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadLicense', 'module' => 'downloads'));
+		$this->setControl('download_license',array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadLicense', 'module' => 'downloads'));
 		$this->setControl('download_platform',array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadPlatform', 'module' => 'downloads'));
 		$this->setControl('download_publisher','user');
 		$this->setControl('download_grpperm', array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getGroups', 'module' => 'downloads'));
@@ -257,13 +257,13 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 
 	function download_grpperm() {
-		$ret = $this->getVar('download_grpperm', 'e');
+		$ret = $this->getVar('download_grpperm', 's');
 		$groups = $this->handler->getGroups();
 		return $groups;
 	}
 	
 	function download_limitations() {
-		$ret = $this->getVar('download_limitations', 'e');
+		$ret = array($this->getVar('download_limitations', 's'));
 		$limitations = $this->handler->getDownloadLimitations();
 		return $limitations;
 	}
@@ -281,7 +281,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 	
 	function download_license() {
-		$ret = $this->getVar('download_license', 's');
+		$ret = array($this->getVar('download_license', 's'));
 		$license = $this->handler->getDownloadLicense();
 		return $license;
 	}

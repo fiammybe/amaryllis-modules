@@ -440,33 +440,32 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'textsarea',
 								'valuetype' 	=> 'text',
 								'default' 		=> 'None
-|Apache License (v. 1.1
-|Apple Public Source License (v. 2.0)
-|Berkeley Database License
-|BSD License (Original)
-|Common Public License
-|FreeBSD Copyright (Modifizierte BSD-Lizenz)
-|GNU Emacs General Public License
-|GNU Free Documentation License (FDL) (v. 1.2)
-|GNU General Public License (GPL) (v. 1.0)
-|GNU General Public License (GPL) (v. 2.0)
-|GNU General Public License (GPL) (v. 3.0)
-|GNU Lesser General Public License (LGPL) (v. 2.1)
-|GNU Library General Public License (LGPL) (v.2.0)
-|Microsoft Shared Source License
-|MIT License
-|Mozilla Public License (v. 1.1)
-|Open Software License (OSL) (v. 1.0)
-|Open Software License (OSL) (v. 1.1)
-|Open Software License (OSL) (v. 2.0)
-|Open Public License
-|Open RTLinux Patent License (v. 1.0)
-|PHP License (v. 3.0)
-|W3C Software Notice and License
-|Wide Open License (WOL)
-|X.Net License
-|X Window System License'
-							);
+,Apache License (v. 1.1)
+,Apple Public Source License (v. 2.0)
+,Berkeley Database License
+,BSD License (Original)
+,Common Public License
+,FreeBSD Copyright (Modifizierte BSD-Lizenz)
+,GNU Emacs General Public License
+,GNU Free Documentation License (FDL) (v. 1.2)
+,GNU General Public License (GPL) (v. 1.0)
+,GNU General Public License (GPL) (v. 2.0)
+,GNU General Public License (GPL) (v. 3.0)
+,GNU Lesser General Public License (LGPL) (v. 2.1)
+,GNU Library General Public License (LGPL) (v.2.0)
+,Microsoft Shared Source License
+,MIT License
+,Mozilla Public License (v. 1.1)
+,Open Software License (OSL) (v. 1.0)
+,Open Software License (OSL) (v. 1.1)
+,Open Software License (OSL) (v. 2.0)
+,Open Public License
+,Open RTLinux Patent License (v. 1.0)
+,PHP License (v. 3.0)
+,W3C Software Notice and License
+,Wide Open License (WOL)
+,X.Net License
+,X Window System License');
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'use_rss',
