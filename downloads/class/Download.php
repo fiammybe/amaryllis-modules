@@ -43,10 +43,10 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_version_status', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_limitations', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_license', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('download_platform', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_platform', XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar("download_language", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_history', XOBJ_DTYPE_TXTAREA);
-		$this->quickInitVar('download_related', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_related', XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar("download_file_descriptions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->quickInitVar("download_file_images", XOBJ_DTYPE_FORM_SECTION);
@@ -269,7 +269,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 	
 	function download_platform() {
-		$ret = $this->getVar('download_platform', 'e');
+		$ret = $this->getVar('download_platform', 's');
 		$platform = $this->handler->getDownloadPlatform();
 		return $platform;
 	}
@@ -281,13 +281,13 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 	
 	function download_license() {
-		$ret = $this->getVar('download_license', 'e');
+		$ret = $this->getVar('download_license', 's');
 		$license = $this->handler->getDownloadLicense();
 		return $license;
 	}
 	
 	function download_related() {
-		$ret = $this->getVar('download_related', 'e');
+		$ret = array($this->getVar('download_related', 's'));
 		$related = $this->handler->getRelated();
 		return $related;
 	}
