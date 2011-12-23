@@ -175,7 +175,7 @@
 		
 	}
 	
-	.file_req, .file_keys {
+	.file_req, .file_keys, .file_related {
 		position: relative;
 		display: inline-block;
 		background: #ccc;

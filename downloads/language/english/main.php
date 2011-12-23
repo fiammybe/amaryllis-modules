@@ -38,6 +38,7 @@ define("_MD_DOWNLOADS_GOTO_ITEM", "Go to buy");
 define("_MD_DOWNLOADS_DOWNLOAD_USE_MIRROR", "Or use our download mirror:");
 define("_MD_DOWNLOADS_FILE_KEYFEATURES", "Keyfeatures:");
 define("_MD_DOWNLOADS_FILE_REQUIREMENTS", "Requirements:");
+define("_MD_DOWNLOADS_FILE_RELATED", "Related Files:");
 define("_MD_DOWNLOADS_FILE_DEV", "Developer:");
 define("_MD_DOWNLOADS_FILE_DEV_HP", "Developer's Homepage:");
 define("_MD_DOWNLOADS_FILE_VERSION", "Version:");
