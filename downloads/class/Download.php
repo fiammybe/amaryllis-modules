@@ -600,8 +600,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['version'] = $this->getVar('download_version');
 		$ret['version_status'] = $this->getVar('download_version_status');
 		$ret['limitations'] = $this->getVar('download_limitations');
-		$ret['license'] = $this->getVar('download_license', 's');
-		$ret['platform'] = $this->getVar('download_platform');
+		$ret['license'] = implode(", ", $this->getVar('download_license', 's'));
+		$ret['platform'] = implode(", ", $this->getVar('download_platform'));
 		$ret['language'] = $this->getVar('download_language');
 		$ret['mirror'] = $this->getMirrorLink();
 		$ret['dev'] = $this->getVar('download_dev');
