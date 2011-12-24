@@ -2,9 +2,9 @@
 /**
  * 'Album' is a light weight gallery module
  *
- * File: /class/AlbumHandler.php
+ * File: /class/Indexpage.php
  * 
- * Class representing album indexpage objects
+ * Class representing Album indexpage objects
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -16,10 +16,15 @@
  * @package		album
  *
  */
+
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 class AlbumIndexpage extends icms_ipf_Object {
-
+	
+	/**
+	 * constructor
+	 */
+	
 	public function __construct(&$handler) {
 		parent::__construct($handler);
 
@@ -37,11 +42,16 @@ class AlbumIndexpage extends icms_ipf_Object {
 
 		$this->setControl( 'index_img_upload', array( 'name' => 'imageupload' ) );
 		$this -> setControl( 'index_heading','dhtmltextarea' );
-		$this -> setControl( 'index_footer', 'textarea' );
+		$this -> setControl( 'index_footer', array('name' => 'textarea', 'form_editor' => 'htmlarea') );
 		$this -> setControl( 'index_image', array( 'name' => 'select', 'itemHandler' => 'indexpage', 'method' => 'getImageList', 'module' => 'album' ) );
 		
 		$this->hideFieldFromForm( array( 'index_key', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
 	}
+
+	/**
+	 * Overriding getVar
+	 * 
+	 */
 
 	public function getVar($key, $format = "s") {
 		if ($format == "s" && in_array($key, array())) {
@@ -50,13 +60,57 @@ class AlbumIndexpage extends icms_ipf_Object {
 		return parent::getVar($key, $format);
 	}
 	
-	public function get_indeximage_tag() {
+	/**
+	 * get the output for the indeximage
+	 */
+	
+	public function getIndexImg() {
 		$indeximage = $image_tag = '';
 		$indeximage = $this->getVar('index_image', 'e');
 		if (!empty($indeximage)) {
 			$image_tag = ALBUM_UPLOAD_URL . 'indeximages/' . $indeximage;
 		}
-		return $image_tag;
+		return '<div class="album_indeximage"><img src="' . $image_tag . '" /></div>';
+	}
+	
+	/**
+	 * get output for indeximage
+	 */
+	public function getIndexHeader() {
+		$indexheader = '';
+		$indexheader = $this->getVar('index_header', 'e');
+		return '<div class="album_indexheader">' . $indexheader . '</div>';
+	}
+
+	/**
+	 * output for index heading
+	 */
+	public function getIndexHeading() {
+		$indexheading = '';
+		$indexheading = $this->getVar('index_heading', 'e');
+		return '<div class="album_indexheading">' . $indexheading . '</div>';
+	}
+	
+	/**
+	 * output for indexfooter
+	 */
+	public function getIndexFooter() {
+		$indexfooter = '';
+		$indexfooter = $this->getVar('index_footer', 'e');
+		$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
+		return '<div class="album_indexfooter">' . $indexfooter . '</div>';
+	}
+
+	/**
+	 * override toArray
+	 */
+	function toArray() {
+		$ret = parent::toArray();
+		$ret['image'] = $this->getIndexImg();
+		$ret['header'] = $this->getIndexHeader();
+		$ret['heading'] = $this->getIndexHeading();
+		$ret['footer'] = $this->getIndexFooter();
+		return $ret;
 	}
 	
 }

@@ -1,9 +1,9 @@
 <{includeq file='db:album_header.html'}>
 
 <!-- display index header -->
-<{$album_indexarray.index_header}>
+<{$album_index.header}>
 <!-- display index heading -->
-<{$album_indexarray.index_heading}>
+<{$album_index.heading}>
 
 	<div>
 		<!-- pagination control -->
@@ -47,3 +47,5 @@
 			<{/foreach}>
 		</div>
 	</div>
+	
+<{includeq file='db:album_footer.html'}>

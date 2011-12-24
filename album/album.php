@@ -23,22 +23,9 @@ $xoopsOption['template_main'] = 'album_album.html';
 
 include_once ICMS_ROOT_PATH . '/header.php';
 
-global $icmsConfig, $albumConfig;
-
-$clean_album_id = $clean_album_pid = $clean_img_id = $clean_start = $albumObj = $album_album_handler = $clean_aid = $imagesObjects = $imagesObj = $album_images_handler = $clean_index_key = $indexpageObj = $album_indexpage_handler = '';
-$albumArray = array();
-$imagesArray = array();
-$indexpageArray = array();
-
-$clean_album_uid = isset($_GET['uid']) ? (int)$_GET['uid'] : false;
-
-$clean_index_key = isset($_GET['index_key']) ? intval($_GET['index_key']) : 1 ;
-$clean_album_id = isset($_GET['album_id']) ? intval($_GET['album_id']) : 0 ;
-$clean_album_pid = isset($_GET['album_pid']) ? intval($_GET['album_pid']) : 0 ;
-$clean_img_id = isset($_GET['img_id']) ? intval($_GET['img_id']) : 0 ;
+$clean_album_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : false;
 
 $clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
-$clean_index_key = ($clean_index_key == 0 && isset($_POST['index_key'])) ? filter_input(INPUT_POST, 'index_key', FILTER_SANITIZE_NUMBER_INT) : $clean_index_key;
 
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_album_id = ($clean_album_id == 0 && isset($_POST['album_id'])) ? filter_input(INPUT_POST, 'album_id', FILTER_SANITIZE_NUMBER_INT) : $clean_album_id;
@@ -73,29 +60,10 @@ $albumModule = icms_getModuleInfo( icms::$module -> getVar( 'dirname' ) );
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	
-	$criteria = icms_buildCriteria(array('index_key' => '1'));
-	$indexpageObj = $album_indexpage_handler->get($clean_index_key, TRUE, FALSE, $criteria);
-	
-	$indexpageArray = prepareIndexpageForDisplay($indexpageObj, true); // with DB overrides
-	
-	unset($criteria);
-
-	if ( $indexpageArray['index_image'] ) { 
-		$album_indexarray['index_image'] = '<div class="album_indeximage"><img src="' . $indexpageObj->get_indeximage_tag() . '" alt="indeximage" /></div>';
-	} 
-	if ( $indexpageArray['index_heading'] ) {
-		$album_indexarray['index_heading'] = '<div class="album_indexheading">' . $indexpageArray['index_heading'] . '</div>';
-	}
-	if ( $indexpageArray['index_header'] ) {
-		$album_indexarray['index_header'] = '<div class="album_indexheader">' . $indexpageArray['index_header'] . '</div>';
-	}
-	if ( $indexpageArray['index_footer'] ) {
-		$album_indexarray['index_footer'] = '<div class="album_indexfooter">' . $indexpageArray['index_footer'] . '</div>';
-	}
-
-	$icmsTpl->assign('album_indexarray', $album_indexarray);
-
+$album_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'album' );
+$indexpageObj = $album_indexpage_handler->get($clean_index_key);
+$index = $indexpageObj->toArray();
+$icmsTpl->assign('album_index', $index);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// INDEXVIEW ////////////////////////////////////////////////////

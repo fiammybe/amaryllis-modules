@@ -19,6 +19,8 @@
  
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
+icms_loadLanguageFile('album', 'common');
+
 class AlbumAlbumHandler extends icms_ipf_Handler {
 
 	private $_album_grpperm = array();
@@ -30,13 +32,11 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		parent::__construct($db, "album", "album_id", "album_title", "album_description", "album");
 		$this->addPermission('album_grpperm', _CO_ALBUM_ALBUM_ALBUM_GRPPERM, _CO_ALBUM_ALBUM_ALBUM_GRPPERM_DSC);
-		
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . icms::$module->getVar('dirname') . '/albumimages/';
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/albumimages/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
-	
-
 	}
+	
 	public function getImagePath() {
 		$dir = $this->_uploadPath;
 		if (!file_exists($dir)) {
@@ -44,11 +44,15 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		}
 		return $dir . "/";
 	}
+	
 	// retrieve a list of Albums
-	public function getList($album_active = null) {
+	public function getList($album_active = null, $album_approve = null) {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($album_active)) {
 			$criteria->add(new icms_db_criteria_Item('album_active', true));
+		}
+		if (isset($album_approve)) {
+			$criteria->add(new icms_db_criteria_Item('album_approve', true));
 		}
 		$albums = & $this->getObjects($criteria, true);
 		foreach(array_keys($albums) as $i) {
@@ -78,7 +82,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	}
 	
 	// get a album List for pid
-	public function getAlbumListForPid($groups = array(), $perm = 'album_grpperm', $status = null, $album_id = null, $showNull = true) {
+	public function getAlbumListForPid($groups = array(), $perm = 'album_grpperm', $status = null, $approve = null, $album_id = null, $showNull = true) {
 	
 		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
@@ -94,6 +98,9 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		}
 		if (isset($status)) {
 			$criteria->add(new icms_db_criteria_Item('album_active', true));
+		}
+		if (isset($approve)) {
+			$criteria->add(new icms_db_criteria_Item('album_approve', true));
 		}
 		if (is_null($album_id)) $album_id = 0;
 		$criteria->add(new icms_db_criteria_Item('album_pid', $album_id));
@@ -112,9 +119,12 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getAlbums($start = 0, $limit = 0, $album_uid = false, $album_id = false,  $album_pid = false, $order = 'weight', $sort = 'ASC') {
+	public function getAlbums($approve = NULL, $onindex = NULL, $active = NULL, $start = 0, $limit = 0, $album_uid = false, $album_id = false,  $album_pid = false, $order = 'weight', $sort = 'ASC') {
 		$criteria = $this->getAlbumsCriteria($start, $limit, $album_uid, $album_id,  $album_pid, $order, $sort);
-		$albums = $this->getObjects($criteria, true, false);
+		if(isset($approve)) $criteria->add(new icms_db_criteria_Item("album_active", TRUE));
+		if(isset($onindex)) $criteria->add(new icms_db_criteria_Item("album_onindex", TRUE));
+		if(isset($active)) $criteria->add(new icms_db_criteria_Item("album_active", TRUE));
+		$albums = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($albums as $album){
 			if ($album['accessgranted']){
@@ -123,12 +133,33 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
+
+	public function getAlbumsCount ($active = NULL, $approve = NULL, $onindex = NULL, $groups = array(), $perm = 'album_grpperm', $album_uid = FALSE, $album_id = NULL, $album_pid = NULL) {
+		$criteria = new icms_db_criteria_Compo();
+		if(isset($active))	$criteria->add(new icms_db_criteria_Item('album_active', TRUE));
+		if(isset($approve)) $criteria->add(new icms_db_criteria_Item('album_approve', TRUE));
+		if(isset($onindex)) $criteria->add(new icms_db_criteria_Item('album_onindex', TRUE));
+		
+		if (is_null($album_id)) $album_id = 0;
+		if($album_id) $criteria->add(new icms_db_criteria_Item('album_id', $album_id));
+		if (is_null($album_pid)) $album_pid == 0;
+		if($album_pid) $criteria->add(new icms_db_criteria_Item('album_pid', $album_pid));
+		$albums = $this->getObjects($criteria, TRUE, FALSE);
+		$ret = array();
+		foreach ($albums as $album){
+			if ($album['accessgranted']){
+				$ret[$album['album_id']] = $album;
+			}
+		}
+		return count($ret);
+	}
 	
 	public function getAlbumsForBlocks($start = 0, $limit = 0, $order = 'weight', $sort = 'ASC') {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('album_active', true));
 		$criteria->add(new icms_db_criteria_Item('album_inblocks', true));
-	
+		$criteria->add(new icms_db_criteria_Item('album_approve', true));
+		$criteria->add(new icms_db_criteria_Item('album_onindex', true));
 		$criteria->setStart(0);
 		$criteria->setLimit($limit);
 		$criteria->setSort('album_published_date');
@@ -147,14 +178,14 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	public function changeVisible($album_id) {
 		$visibility = '';
 		$albumObj = $this->get($album_id);
-		if ($albumObj->getVar('album_active', 'e') == true) {
+		if ($albumObj->getVar('album_active', 'e') == TRUE) {
 			$albumObj->setVar('album_active', 0);
 			$visibility = 0;
 		} else {
 			$albumObj->setVar('album_active', 1);
 			$visibility = 1;
 		}
-		$this->insert($albumObj, true);
+		$this->insert($albumObj, TRUE);
 		return $visibility;
 	}
 	
@@ -171,6 +202,38 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		}
 		$this->insert($albumObj, true);
 		return $show;
+	}
+
+	// approve/deny album
+	public function changeApprove($album_id) {
+		$approve = '';
+		$albumObj = $this->get($album_id);
+		if ($albumObj->getVar('album_approve', 'e') == true) {
+			$albumObj->setVar('album_approve', 0);
+			$approve = 0;
+		} else {
+			$albumObj->setVar('album_approve', 1);
+			$approve = 1;
+		}
+		$this->insert($albumObj, true);
+		return $approve;
+	}
+	
+	/**
+	 * An album can be approved and activated but hidden in index page.
+	 */
+	public function changeIndex($album_id) {
+		$onindex = '';
+		$albumObj = $this->get($album_id);
+		if ($albumObj->getVar('album_onindex', 'e') == true) {
+			$albumObj->setVar('album_onindex', 0);
+			$onindex = 0;
+		} else {
+			$albumObj->setVar('album_onindex', 1);
+			$onindex = 1;
+		}
+		$this->insert($albumObj, true);
+		return $onindex;
 	}
 
 	// count sub-albums
@@ -222,6 +285,9 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	/**
+	 * adding some filters for module ACP
+	 */
 	public function album_active_filter() {
 		return array(0 => 'Offline', 1 => 'Online');
 	}
@@ -230,6 +296,17 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return array(0 => 'Hidden', 1 => 'Visible');
 	}
 	
+	public function album_onindex_filter() {
+		return array(0 => 'Hidden', 1 => 'Visible');
+	}
+	
+	public function album_approve_filter() {
+		return array(0 => 'Denied', 1 => 'Approved');
+	}
+	
+	/**
+	 * retrieve the images from uploads/album/albumimages/
+	 */
 	static public function getImageList() {
 		$albumimages = array();
 		$albumimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/uploads/' . icms::$module -> getVar( 'dirname' ) . '/albumimages/', '', array('gif', 'jpg', 'png'));
@@ -241,6 +318,9 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 
+	/**
+	 * retrieve groups for permission control
+	 */
 	public function getGroups($criteria = null) {
 		if (!$this->_album_grpperm) {
 			$member_handler =& icms::handler('icms_member');
@@ -250,6 +330,9 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return $this->_album_grpperm;
 	}
 	
+	/**
+	 * frontend permission control
+	 */
 	public function userCanSubmit() {
 		global $album_isAdmin;
 		if (!is_object(icms::$user)) return false;
@@ -269,13 +352,13 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 				$album = $this->get($album_id);
 				if ($album->getVar('album_id', 'e') > 0) {
 					if (!$userside) {
-						$ret = "<a href='" . ALBUM_URL . "album.php?album_id=" . $album->getVar('album_id', 'e') . "&amp;album_pid=" . $album->getVar('album_id', 'e') . "'>" . $album->getVar('album_title', 'e') . "</a>";
+						$ret = "<a href='" . ALBUM_URL . "index.php?album_id=" . $album->getVar('album_id', 'e') . "&amp;album_pid=" . $album->getVar('album_id', 'e') . "'>" . $album->getVar('album_title', 'e') . "</a>";
 					} else {
-						$ret = "<a href='" . ALBUM_URL . "album.php?album_id=" . $album->getVar('album_id', 'e') . "&amp;album=" . $this->makeLink($album) . "'>" . $album->getVar('album_title', 'e') . "</a>";
+						$ret = "<a href='" . ALBUM_URL . "index.php?album_id=" . $album->getVar('album_id', 'e') . "&amp;album=" . $this->makeLink($album) . "'>" . $album->getVar('album_title', 'e') . "</a>";
 					}
 					if ($album->getVar('album_pid', 'e') == 0) {
 						if (!$userside){
-							return "<a href='" . ALBUM_URL . "album.php?album_id=" . $album->getVar('album_id', 'e') . "'>" . _MI_ALBUM_ALBUMS . "</a> &nbsp;:&nbsp; " . $ret;
+							return "<a href='" . ALBUM_URL . "index.php?album_id=" . $album->getVar('album_id', 'e') . "'>" . _MI_ALBUM_ALBUMS . "</a> &nbsp;:&nbsp; " . $ret;
 						} else {
 							return $ret;
 						}
@@ -294,13 +377,13 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	public function updateCounter($album_id) {
 		global $album_isAdmin;
 		$albumObj = $this->get($album_id);
-		if (!is_object($albumObj)) return false;
+		if (!is_object($albumObj)) return FALSE;
 
 		if (isset($albumObj->vars['counter']) && !is_object(icms::$user) || (!$album_isAdmin && $albumObj->getVar('album_uid', 'e') != icms::$user->uid ()) ) {
 			$new_counter = $albumObj->getVar('counter') + 1;
 			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
 				. ' WHERE ' . $this->keyName . '=' . $albumObj->id();
-			$this->query($sql, null, true);
+			$this->query($sql, NULL, TRUE);
 		}
 		return true;
 	}
@@ -323,41 +406,41 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 			}
 			$criteria->add($criteriaKeywords);
 		}
-		$criteria->add(new icms_db_criteria_Item('album_active', true));
-		return $this->getObjects($criteria, true, false);
+		$criteria->add(new icms_db_criteria_Item('album_active', TRUE));
+		return $this->getObjects($criteria, TRUE, FALSE);
 	}
 	
 	public function updateComments($album_id, $total_num) {
 		$albumObj = $this->get($album_id);
 		if ($albumObj && !$albumObj->isNew()) {
 			$albumObj->setVar('album_comments', $total_num);
-			$this->insert($albumObj, true);
+			$this->insert($albumObj, TRUE);
 		}
 	}
 	
 	// some related functions for storing
 	protected function beforeSave(&$obj) {
 		if ($obj->updating_counter)
-		return true;
+		return TRUE;
 		if ($obj->getVar('album_pid','e') == $obj->getVar('album_id','e')){
 			$obj->setVar('album_pid', 0);
 		}
-		if ($obj->getVar('album_img_upload') != '') {
+		if (!$obj->getVar('album_img_upload') == "") {
 			$obj->setVar('album_img', $obj->getVar('album_img_upload') );
 		}
-		return true;
+		return TRUE;
 	}
 	
-/**	protected function afterSave(& $obj) {
+	protected function afterSave(& $obj) {
 		if($obj->getVar('album_published_date') < time()) {
-			if (!$obj->getVar('album_notification_sent') && $obj->getVar ('album_active', 'e') == 1) {
+			if (!$obj->getVar('album_notification_sent') && $obj->getVar ('album_active', 'e') == 1 && $obj->getVar ('album_approve', 'e') == 1 && $obj->getVar ('album_onindex', 'e') == 1 ) {
 			$obj->sendNotifAlbumPublished();
-			$obj->setVar('album_notification_sent', true);
+			$obj->setVar('album_notification_sent', TRUE);
 			$this->insert ($obj);
 			}
 		}
 		return true;
-	}**/
+	}
 	
 	protected function afterDelete(& $obj) {
 		$notification_handler = icms::handler( 'icms_data_notification' );

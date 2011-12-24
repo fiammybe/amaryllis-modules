@@ -32,19 +32,52 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		$this->enableUpload($mimetypes,	$albumConfig['image_file_size'], $albumConfig['image_upload_width'], $albumConfig['image_upload_height']);
 	}
 
-	function getAlbumList() {
+	function getAlbumList($active = NULL, $approve = NULL ) {
 		
 		$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
 		$criteria = new icms_db_criteria_Compo();
-
-		if (isset($album_id)) {
-			$criteria->add( new icms_db_criteria_Item( 'album_id', (int)$album_id ) );
-		}
-		$albums = & $this -> getObjects( $criteria, true );
+		
+		if(isset($approve)) $criteria->add(new icms_db_criteria_Item('album_approve', TRUE));
+		if(isset($active)) $criteria->add(new icms_db_criteria_Item('album_active', TRUE));
+		if(isset($album_id)) $criteria->add( new icms_db_criteria_Item( 'album_id', (int)$album_id));
+		$albums = $this -> getObjects( $criteria, true );
 		foreach( array_keys( $albums ) as $i ) {
 			$ret[$albums[$i]->getVar( 'album_id' )] = $albums[$i] -> getVar( 'album_title' );
 		}
 		return $ret;
+	}
+	
+	public function getImages($active = NULL, $approve = NULL, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC', $a_id = NULL) {
+		$criteria = new icms_db_criteria_Compo();
+		if($start) $criteria->setStart($start);
+		if($limit) $criteria->setLimit($limit);
+		$criteria->setOrder($sort);
+		$criteria->setSort($order);
+		if(isset($active)) $criteria->add(new icms_db_criteria_Item('img_active', TRUE));
+		if(isset($approve)) $criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
+		if(is_null($a_id)) $a_id = 0;
+		$criteria->add(new icms_db_criteria_Item('a_id', $a_id));
+		$images = $this->getObjects($criteria, TRUE, FALSE);
+		$ret = array();
+		foreach ($images as $image) {
+			$ret[$image['img_id']] = $image;
+		}
+		return $ret;
+	}
+	
+	public function getImagesCount ($active = NULL, $approve = NULL, $a_id = NULL) {
+		$criteria = new icms_db_criteria_Compo();
+		if(isset($active))	$criteria->add(new icms_db_criteria_Item('img_active', TRUE));
+		if(isset($approve)) $criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
+		
+		if (is_null($a_id)) $a_id == 0;
+		if($a_id) $criteria->add(new icms_db_criteria_Item('a_id', $a_id));
+		$images = $this->getObjects($criteria, TRUE, FALSE);
+		$ret = array();
+		foreach ($images as $image){
+				$ret[$image['img_id']] = $image;
+		}
+		return count($ret);
 	}
 	
 	public function changeVisible($img_id) {
@@ -61,7 +94,25 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		return $visibility;
 	}
 	
+	public function changeApprove($img_id) {
+		$approve = '';
+		$imagesObj = $this->get($img_id);
+		if ($imagesObj->getVar('img_approve', 'e') == true) {
+			$imagesObj->setVar('img_approve', 0);
+			$approve = 0;
+		} else {
+			$imagesObj->setVar('img_approve', 1);
+			$approve = 1;
+		}
+		$this->insert($imagesObj, true);
+		return $approve;
+	}
+	
 	public function img_active_filter() {
+		return array(0 => 'Offline', 1 => 'Online');
+	}
+	
+	public function img_approve_filter() {
 		return array(0 => 'Offline', 1 => 'Online');
 	}
 
