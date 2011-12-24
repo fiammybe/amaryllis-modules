@@ -39,8 +39,14 @@ define("_CO_ALBUM_ALBUM_WEIGHT_DSC", " set weight to order albums in frontend ")
 define("_CO_ALBUM_ALBUM_ALBUM_ACTIVE", "Active?");
 define("_CO_ALBUM_ALBUM_ALBUM_ACTIVE_DSC", " Set 'YES' to set album online ");
 
-define("_CO_ALBUM_ALBUM_ALBUM_INBLOCKS", "Show Album in Block");
+define("_CO_ALBUM_ALBUM_ALBUM_INBLOCKS", "In Blocks?");
 define("_CO_ALBUM_ALBUM_ALBUM_INBLOCKS_DSC", " Set 'YES' to show album in block 'recent Albums' ");
+
+define("_CO_ALBUM_ALBUM_ALBUM_APPROVE", "Approved?");
+define("_CO_ALBUM_ALBUM_ALBUM_APPROVE_DSC", " Set 'YES' to approve Album ");
+
+define("_CO_ALBUM_ALBUM_ALBUM_ONINDEX", "On Index");
+define("_CO_ALBUM_ALBUM_ALBUM_ONINDEX_DSC", " Set 'YES' to show album on Index. This can be used, to approve albums and keep them active, but do not Display on Index-View. e.g. 'Downloads' can use Albums for describing a file. So you can allow these Album, but only show it in Downloads. ");
 
 define("_CO_ALBUM_ALBUM_ALBUM_UID", "Publisher");
 define("_CO_ALBUM_ALBUM_ALBUM_UID_DSC", "Select the Publisher of the Album");

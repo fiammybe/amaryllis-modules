@@ -38,6 +38,10 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
 		
 	}
+	/**
+	 * override the path
+	 */
+	
 	public function getImagePath() {
 		$dir = $this->_uploadPath;
 		if (!file_exists($dir)) {
@@ -45,9 +49,9 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 		}
 		return $dir . "/";
 	}
-	
-	
-	
+	/**
+	 * search out the indeximage upload directory for images
+	 */
 	static public function getImageList() {
 		$indeximages = array();
 		$indeximages = icms_core_Filesystem::getFileList(ALBUM_UPLOAD_ROOT . 'indeximages/', '', array('gif', 'jpg', 'png'));
@@ -59,10 +63,12 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	// some related functions for storing
+	/**
+	 * some events while storing the data
+	 */
 	protected function beforeSave(&$obj) {
 		
-		if ($obj->getVar('index_img_upload') != '') {
+		if (!$obj->getVar('index_img_upload') == "") {
 			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
 		}
 		return true;

@@ -17,6 +17,9 @@
  * 
  */
 
+// general usage
+define("_AM_ALBUM_ONLINE", "Online");
+define("_AM_ALBUM_OFFLINE", "Offline");
 // Requirements
 define("_AM_ALBUM_REQUIREMENTS", "'Album' Requirements");
 define("_AM_ALBUM_REQUIREMENTS_INFO", "We've reviewed your system, unfortunately it doesn't meet all the requirements needed for 'Album' to function. Below are the requirements needed.");
@@ -29,8 +32,6 @@ define("_AM_ALBUM_ALBUM_CREATE", "New album");
 define("_AM_ALBUM_ALBUM_CLONE", "Clone album");
 define("_AM_ALBUM_ALBUM_CREATED", "New album created");
 define("_AM_ALBUM_ALBUM_MODIFIED", "Album modified");
-define("_AM_ALBUM_ALBUM_ONLINE", "Online");
-define("_AM_ALBUM_ALBUM_OFFLINE", "Offline");
 define("_AM_ALBUM_ALBUM_WEIGHTS_UPDATED", "Weights updated");
 
 define("_AM_ALBUM_INDEXPAGE_EDIT", "Edit the Frontend-Indexpage");
@@ -38,8 +39,6 @@ define("_AM_ALBUM_INDEXPAGE_MODIFIED", "Indexpage modified");
 define("_AM_ALBUM_IMAGE_ADD", "Add Image");
 
 define("_AM_ALBUM_IMAGES_WEIGHTS_UPDATED", "Add Image");
-define("_AM_ALBUM_IMAGE_ONLINE", "Image Online");
-define("_AM_ALBUM_IMAGE_OFFLINE", "Image Offline");
 define("_AM_ALBUM_IMAGES_ADDED", "Image Added");
 
 define("_AM_ALBUM_PREVIEW", "Preview");

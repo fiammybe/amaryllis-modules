@@ -32,8 +32,9 @@ class AlbumImages extends icms_ipf_Object {
 		$this->quickInitVar('img_updated_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_description', XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar('img_url', XOBJ_DTYPE_IMAGE, TRUE);
-		$this->quickInitVar('img_active', XOBJ_DTYPE_INT, true, '', '', 1);
-		$this -> initCommonVar( 'weight', XOBJ_DTYPE_INT );
+		$this->quickInitVar('img_active', XOBJ_DTYPE_INT,TRUE, '', '', 1);
+		$this->quickInitVar('img_approve', XOBJ_DTYPE_INT, TRUE);
+		$this->initCommonVar( 'weight', XOBJ_DTYPE_INT );
 		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE);
 		$this->initCommonVar('dohtml', FALSE, 1);
 		$this->initCommonVar('dobr', TRUE, 1);
@@ -51,7 +52,7 @@ class AlbumImages extends icms_ipf_Object {
 		$path = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$this->setImageDir($url, $path);
 		
-		$this->hideFieldFromForm( array( 'weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
+		$this->hideFieldFromForm( array( 'img_publisher', 'img_published_date', 'img_updated_date', 'weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
 		$this->hideFieldFromSingleView( array( 'weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
 
 	}
@@ -63,14 +64,33 @@ class AlbumImages extends icms_ipf_Object {
 		return parent::getVar($key, $format);
 	}
 	
+	public function image_aid() {
+		$cid = $this->getVar ( 'a_id', 'e' );
+		$album_album_handler = icms_getModuleHandler ( 'album',basename(dirname(dirname(__FILE__))), 'album' );
+		$album = $album_album_handler->get ( $cid );
+		
+		return $album->getVar ( 'album_title' );
+	}
+	
 	public function img_active() {
 		$img_active = $this->getVar('img_active', 'e');
 		if ($img_active == false) {
 			return '<a href="' . ALBUM_ADMIN_URL . 'images.php?img_id=' . $this->getVar('img_id') . '&amp;op=visible">
-				<img src="' . ALBUM_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
 		} else {
 			return '<a href="' . ALBUM_ADMIN_URL . 'images.php?img_id=' . $this->getVar('img_id') . '&amp;op=visible">
-				<img src="' . ALBUM_IMAGES_URL . 'visible.png" alt="Online" /></a>';
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
+		}
+	}
+	
+	public function img_approve() {
+		$active = $this->getVar('img_approve', 'e');
+		if ($active == false) {
+			return '<a href="' . ALBUM_ADMIN_URL . 'images.php?img_id=' . $this->getVar('img_id') . '&amp;op=changeApprove">
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Denied" /></a>';
+		} else {
+			return '<a href="' . ALBUM_ADMIN_URL . 'images.php?img_id=' . $this->getVar('img_id') . '&amp;op=changeApprove">
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Approved" /></a>';
 		}
 	}
 
@@ -80,8 +100,67 @@ class AlbumImages extends icms_ipf_Object {
 		return $control->render();
 	}
 	
+	function userCanEditAndDelete() {
+		global $album_isAdmin;
+		if (!is_object(icms::$user)) return false;
+		if ($album_isAdmin) return true;
+		return $this->getVar('image_publisher', 'e') == icms::$user->getVar("uid");
+	}
+	
+	public function getImageTag($indexview = true) {
+		$img = $image_tag = '';
+		$directory_name = basename(dirname( dirname( __FILE__ ) ));
+		$script_name = getenv("SCRIPT_NAME");
+		$img = $this->getVar('img_url', 'e');
+		$document_root = str_replace('modules/' . $directory_name . '/index.php', '', $script_name);
+		if($indexview) {
+			if (!$img == "") {
+				$image_tag = $document_root . 'uploads/' . $directory_name . '/images/' . $img;
+			} else {
+				$image_tag = false;
+			}
+		} else {
+			if (!$img == "") {
+				$image_tag = ICMS_URL . '/uploads/album/images/' . $img;
+			} else {
+				$image_tag = false;
+			}
+		}
+		return $image_tag;
+	}
+
+	public function getMaxHeight() {
+		global $albumConfig;
+		$innerHeight = $albumConfig['image_display_height'];
+		$maxHeight = $innerHeight + 300;
+		return $maxHeight;
+	}
+	
+	public function getMaxWidth() {
+		global $albumConfig;
+		$innerWidth = $albumConfig['image_display_width'];
+		$maxWidth = $innerWidth + 50;
+		return $maxHeight;
+	}
+	
 	public function getEditItemLink() {
 		$ret = '<a href="' . ALBUM_ADMIN_URL . 'images.php?op=changedField&amp;img_id=' . $this->getVar('img_id', 'e') . '" title="' . _MD_ALBUM_ALBUM_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
+		return $ret;
+	}
+	
+	public function toArray() {
+		$ret = parent::toArray();
+		$ret['thumbnail_width'] = $albumConfig['thumbnail_width'];
+		$ret['thumbnail_height'] = $albumConfig['thumbnail_height'];
+		$ret['inner_width'] = $albumConfig['image_display_width'];
+		$ret['inner_height'] = $albumConfig['image_display_height'];
+		$ret['max_width'] = $this->getMaxWidth();
+		$ret['max_height'] = $this->getMaxHeight();
+		$ret['dsc'] = $this->getVar("image_description");
+		$ret['title'] = $this->getVar("image_title");
+		$ret['img'] = $this->getImageTag(TRUE);
+		$ret['img_url'] = $this->getImageTag(FALSE);
+		
 		return $ret;
 	}
 	

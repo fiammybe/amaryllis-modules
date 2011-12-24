@@ -21,114 +21,138 @@ function editimages($images_id = 0) {
 	global $album_images_handler, $icmsModule, $icmsAdminTpl;
 
 	$imagesObj = $album_images_handler->get($images_id);
-
+	if(is_object(icms::$user)) {
+		$img_uid = ichs::$user->getVar("uid");
+	} else {
+		$img_uid = 0;
+	}
 	if (!$imagesObj->isNew()){
-		$imagesObj->hideFieldFromForm(array( 'img_published_date', 'img_updated_date' ) );
-		$imagesObj->setVar( 'img_published_date', (time() - 300) );
+		$imagesObj->setVar( 'img_updated_date', (time() - 300) );
 		album_adminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT);
 		$sform = $imagesObj->getForm(_AM_ALBUM_IMAGES_EDIT, "addimages");
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$imagesObj->hideFieldFromForm(array( 'img_published_date', 'img_updated_date' ) );
-		$imagesObj->setVar( 'img_published_date', (time() - 600) );
+		$imagesObj->setVar('img_publisher', $img_uid);
+		$imagesObj->setVar( 'img_published_date', (time() - 300) );
 		album_adminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_UPLOADNEW);
 		$sform = $imagesObj->getForm(_MI_ALBUM_IMAGES_UPLOADNEW, "addimages");
 		$sform->assign($icmsAdminTpl);
 
 	}
-	$icmsAdminTpl->display("db:album_admin_images.html");
+	$icmsAdminTpl->display("db:album_admin.html");
 }
 
 include_once "admin_header.php";
 
-$album_images_handler = icms_getModuleHandler('images', basename(dirname(dirname(__FILE__))), 'album');
-$clean_img_id = $clean_a_id = $clean_op = $valid_op = '';
-$valid_op = array ('mod','addimages','del','view','visible','changeWeight','changedField','');
-
-if (isset($_GET["op"])) $clean_op = htmlentities($_GET["op"]);
-if (isset($_POST["op"])) $clean_op = htmlentities($_POST["op"]);
-
-$clean_img_id = isset($_GET["img_id"]) ? (int)$_GET["img_id"] : 0 ;
-
-if (in_array($clean_op, $valid_op, TRUE)) {
-	switch ($clean_op) {
-		case "mod":
-		case "changedField":
-			icms_cp_header();
-			editimages($clean_img_id);
-			break;
-
-		case "addimages":
-			$controller = new icms_ipf_Controller($album_images_handler);
-			$controller->storeFromDefaultForm(_AM_ALBUM_IMAGES_CREATED, _AM_ALBUM_IMAGES_MODIFIED);
-			break;
-
-		case "del":
-			$controller = new icms_ipf_Controller($album_images_handler);
-			$controller->handleObjectDeletion();
-			break;
-
-		case "view" :
-			$imagesObj = $album_images_handler->get($clean_img_id);
-			icms_cp_header();
-			$imagesObj->displaySingleObject();
-			break;
-
-		case "visible":
-			$visibility = $album_images_handler -> changeVisible( $clean_img_id );
-			$ret = 'images.php';
-			if ($visibility == 0) {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_IMAGE_OFFLINE );
-			} else {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_IMAGE_ONLINE );
-			}
-			break;
+$album_album_handler = icms_getModuleHandler("album", basename(dirname(dirname(__FILE__))), "album");
+$count = $album_album_handler->getCount(FALSE, TRUE, FALSE);
+if($count == 0) {
+	redirect_header(ALBUM_ADMIN_URL . 'album.php', 3, _AM_NO_ALBUM_FOUND);
+} else {
 	
-		case "changeWeight":
-			foreach ($_POST['AlbumImages_objects'] as $key => $value) {
-				$changed = false;
-				$imagesObj = $album_images_handler -> get( $value );
-				if ($imagesObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
-					$imagesObj->setVar('weight', intval($_POST['weight'][$key]));
-					$changed = true;
-				}
-				if ($changed) {
-					$album_images_handler -> insert($imagesObj);
-				}
-			}
-			$ret = 'index.php';
-			redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_IMAGES_WEIGHTS_UPDATED);
-			break;
-			
-		default:
-			icms_cp_header();
-			$icmsModule->displayAdminMenu(1, _MI_ALBUM_MENU_IMAGES);
-			$criteria = '';
-		// if no op is set, but there is a (valid) album_id, display a single album
-		if ($clean_img_id) {
-			$imagesObj = $album_images_handler->get($clean_img_id);
-			if ($imagesObj->id()) {
+	$clean_img_id = $clean_a_id = $clean_op = $valid_op = '';
+	$valid_op = array ('mod', 'changedField', 'addimages', 'del','view','changeApprove','visible','changeWeight','');
+	
+	$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+	if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
+	
+	$album_images_handler = icms_getModuleHandler('images', basename(dirname(dirname(__FILE__))), 'album');
+	$clean_img_id = isset($_GET["img_id"]) ? filter_input(INPUT_GET, "img_id", FILTER_SANITIZE_NUMBER_INT) : 0 ;
+	
+	if (in_array($clean_op, $valid_op, TRUE)) {
+		switch ($clean_op) {
+			case "mod":
+			case "changedField":
+				icms_cp_header();
+				editimages($clean_img_id);
+				break;
+	
+			case "addimages":
+				$controller = new icms_ipf_Controller($album_images_handler);
+				$controller->storeFromDefaultForm(_AM_ALBUM_IMAGES_CREATED, _AM_ALBUM_IMAGES_MODIFIED);
+				break;
+	
+			case "del":
+				$controller = new icms_ipf_Controller($album_images_handler);
+				$controller->handleObjectDeletion();
+				break;
+	
+			case "view" :
+				$imagesObj = $album_images_handler->get($clean_img_id);
+				icms_cp_header();
 				$imagesObj->displaySingleObject();
-			}
+				break;
+	
+			case "visible":
+				$visibility = $album_images_handler -> changeVisible( $clean_img_id );
+				$ret = 'images.php';
+				if ($visibility == 0) {
+					redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_IMAGE_OFFLINE );
+				} else {
+					redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_IMAGE_ONLINE );
+				}
+				break;
+			
+			case 'changeApprove':
+				$approve = $album_images_handler -> changeApprove( $clean_img_id );
+				$ret = 'images.php';
+				if ($approve == 0) {
+					redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_APPROVE_FALSE );
+				} else {
+					redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_APPROVE_TRUE );
+				}
+				break;
+				
+			case "changeWeight":
+				foreach ($_POST['AlbumImages_objects'] as $key => $value) {
+					$changed = false;
+					$imagesObj = $album_images_handler -> get( $value );
+					if ($imagesObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
+						$imagesObj->setVar('weight', intval($_POST['weight'][$key]));
+						$changed = true;
+					}
+					if ($changed) {
+						$album_images_handler -> insert($imagesObj);
+					}
+				}
+				$ret = 'index.php';
+				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_WEIGHT_UPDATED);
+				break;
+				
+			default:
+				icms_cp_header();
+				$icmsModule->displayAdminMenu(1, _MI_ALBUM_MENU_IMAGES);
+				$criteria = '';
+				// if no op is set, but there is a (valid) album_id, display a single album
+				if ($clean_img_id) {
+					$imagesObj = $album_images_handler->get($clean_img_id);
+					if ($imagesObj->id()) {
+						$imagesObj->displaySingleObject();
+					}
+				}
+				if (empty($criteria)) {
+					$criteria = null;
+				}
+				
+				$objectTable = new icms_ipf_view_Table($album_images_handler, $criteria);
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_active', 'center', true, 'img_active' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'a_id', false, false, 'image_aid' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_approve', 'center', true, 'img_approve' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_title' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getWeightControl' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_published_date', 'center', true ) );
+				
+				$objectTable->addFilter( 'img_active', 'img_active_filter' );
+				$objectTable->addFilter( 'img_approve', 'img_approve_filter' );
+				$objectTable->addFilter( 'a_id', 'getAlbumList' );
+		  		
+				$objectTable->addIntroButton( 'addform', 'images.php?op=mod', _AM_ALBUM_ADD );
+				$objectTable->addActionButton( 'changeWeight', false, _SUBMIT );
+		  				
+				$icmsAdminTpl->assign( 'album_images_table', $objectTable->fetch() );
+		  		$icmsAdminTpl->display( 'db:album_admin.html' );
+				break;
 		}
-		if (empty($criteria)) {
-			$criteria = null;
-		}
-		
-		$objectTable = new icms_ipf_view_Table($album_images_handler, $criteria);
-		$objectTable->addColumn( new icms_ipf_view_Column( 'img_active', 'center', true, 'img_active' ) );
-		$objectTable->addColumn( new icms_ipf_view_Column( 'img_title', false, false ) );
-		$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getWeightControl' ) );
-		$objectTable->addColumn( new icms_ipf_view_Column( 'img_published_date', 'center', true ) );
-		
-		$objectTable->addFilter( 'img_active', 'img_active_filter' );
-  		
-		$objectTable->addIntroButton( 'addform', 'images.php?op=mod', _AM_ALBUM_IMAGE_ADD );
-		$objectTable->addActionButton( 'changeWeight', false, _SUBMIT );
-  				
-		$icmsAdminTpl->assign( 'album_images_table', $objectTable->fetch() );
-  		$icmsAdminTpl->display( 'db:album_admin_images.html' );
-			break;
+		icms_cp_footer();
 	}
-	icms_cp_footer();
 }

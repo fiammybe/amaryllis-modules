@@ -175,7 +175,7 @@ $modversion['search'] ['func'] = 'album_search';
 
 // Comments
 $modversion['hasComments'] = 1;
-$modversion['comments']['pageName'] = 'album.php';
+$modversion['comments']['pageName'] = 'index.php';
 $modversion['comments']['itemName'] = 'album_id';
 
 // Comment callback functions
@@ -192,15 +192,50 @@ global $icmsConfig;
 
 $i=0;
 $i++;
-/** prepared for later use
 $modversion['config'][$i] = array(
 								'name'			=> 'uploader_groups',
 								'title'			=> '_MI_ALBUM_AUTHORIZED_UPLOADER',
 								'description'	=> '_MI_ALBUM_AUTHORIZED_UPLOADER_DSC',
 								'formtype'		=> 'group_multi',
 								'valuetype'		=> 'array',
-								'default'		=> '1'
-							); **/
+								'default'		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'album_needs_approval',
+								'title' 		=> '_MI_ALBUM_NEEDS_APPROVAL',
+								'description' 	=> '_MI_ALBUM_NEEDS_APPROVAL_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=>  1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'image_needs_approval',
+								'title' 		=> '_MI_IMAGE_NEEDS_APPROVAL',
+								'description' 	=> '_MI_IMAGE_NEEDS_APPROVAL_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=>  1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'album_show_upl_disclaimer',
+								'title' 		=> '_MI_ALBUM_SHOWDISCLAIMER',
+								'description' 	=> '_MI_ALBUM_SHOWDISCLAIMER_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'album_upl_disclaimer',
+								'title' 		=> '_MI_ALBUM_DISCLAIMER',
+								'description' 	=> '',
+								'formtype' 		=> 'textarea',
+								'valuetype' 	=> 'text',
+								'default' 		=> _MI_ALBUM_UPL_DISCLAIMER_TEXT
+							);
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'album_dateformat',
@@ -236,7 +271,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ALBUM_SHOW_IMAGES_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> '20'
+								'default' 		=> 20
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -245,7 +280,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ALBUM_SHOW_IMAGES_ROW_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=>  '4'
+								'default' 		=>  4
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -254,7 +289,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ALBUM_THUMBNAIL_WIDTH_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> '110'
+								'default' 		=> 110
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -263,7 +298,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ALBUM_THUMBNAIL_HEIGHT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> '150'
+								'default' 		=> 150
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -272,7 +307,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ALBUM_THUMBNAIL_MARGIN_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> '10'
+								'default' 		=> 10
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -281,7 +316,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ALBUM_THUMBNAIL_MARGIN_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> '15'
+								'default' 		=> 15
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -290,7 +325,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ALBUM_THUMBNAIL_MARGIN_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> '10'
+								'default' 		=> 10
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -299,7 +334,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ALBUM_THUMBNAIL_MARGIN_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> '15'
+								'default' 		=> 15
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -308,7 +343,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ALBUM_IMAGE_UPLOAD_WIDTH_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> '1024'
+								'default' 		=> 1024
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -317,7 +352,25 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ALBUM_IMAGE_UPLOAD_HEIGHT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> '768'
+								'default' 		=> 768
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'image_display_width',
+								'title' 		=> '_MI_ALBUM_IMAGE_DISPLAY_WIDTH',
+								'description' 	=> '_MI_ALBUM_IMAGE_DISPLAY_WIDTH_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> 500
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'image_display_height',
+								'title' 		=> '_MI_ALBUM_IMAGE_DISPLAY_HEIGHT',
+								'description'	=> '_MI_ALBUM_IMAGE_DISPLAY_HEIGHT_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> 300
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -326,7 +379,35 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ALBUM_IMAGE_FILE_SIZE_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> '2097152' // 2MB default max upload size
+								'default' 		=> 2097152 // 2MB default max upload size
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'albums_popular',
+								'title' 		=> '_MI_ALBUM_POPULAR',
+								'description' 	=> '',
+								'formtype' 		=> 'select',
+								'valuetype' 	=> 'int',
+								'options' 		=> array('0' => 0, '5' => 5, '10' => 10, '50' => 50, '100' => 100, '200' => 200, '500' => 500, '1000' => 1000),
+								'default' 		=> 100
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'albums_daysnew',
+								'title' 		=> '_MI_ALBUM_DAYSNEW',
+								'description' 	=> '',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> 10
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'albums_daysupdated',
+								'title' 		=> '_MI_ALBUM_DAYSUPDATED',
+								'description' 	=> '',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> 10
 							);
 
 
@@ -343,7 +424,7 @@ $modversion['notification']['category'][] = array (
 													'name'				=> 'global',
 													'title'				=> _MI_ALBUM_GLOBAL_NOTIFY,
 													'description'		=> _MI_ALBUM_GLOBAL_NOTIFY_DSC,
-													'subscribe_from'	=> array('index.php', 'album.php')
+													'subscribe_from'	=> array('index.php')
 												);
 $modversion['notification']['event'][] = array(
 													'name'				=> 'album_published',

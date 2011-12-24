@@ -19,13 +19,15 @@
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
+icms_loadLanguageFile('album', 'common');
+
 class AlbumAlbum extends icms_ipf_seo_Object {
 
 	public $updating_counter = false;
 	/**
 	 * Constructor
 	 *
-	 * @param mod_album_Album $handler Object handler
+	 * @param AlbumAlbum $handler Object handler
 	 */
 	public function __construct(&$handler) {
 		icms_ipf_object::__construct($handler);
@@ -43,35 +45,41 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->quickInitVar('album_description', XOBJ_DTYPE_TXTAREA, false);
 		$this->quickInitVar('album_active', XOBJ_DTYPE_INT, false, false, false, 1);
 		$this->quickInitVar('album_inblocks', XOBJ_DTYPE_INT, false, false, false, 1);
+		$this->quickInitVar('album_approve', XOBJ_DTYPE_INT);
+		$this->quickInitVar('album_onindex', XOBJ_DTYPE_INT, false, false, false, 1);
 		$this->quickInitVar('album_grpperm', XOBJ_DTYPE_TXTBOX, true );
 		$this->quickInitVar('album_uid', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('album_comments', XOBJ_DTYPE_INT, false);
 		$this->initCommonVar('weight');
 		$this->initCommonVar('counter');
 		$this->initCommonVar('dohtml', false, 1);
-		$this->initCommonVar('dobr', true, 1);
 		$this->initCommonVar('doimage', true, 1);
 		$this->initCommonVar('dosmiley', true, 1);
 		$this->initCommonVar('docxode', true, 1);
 		$this->initNonPersistableVar('album_sub', XOBJ_DTYPE_INT);
+		$this->quickInitVar('album_notification_sent', XOBJ_DTYPE_INT);
 		// set controls
 		$this->setControl( 'album_img_upload', array( 'name' => 'imageupload' ) );
 		
-		
-		$this->setControl('album_pid', array('itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
+		$this->setControl('album_pid', 'parentcategory');
 		$this->setControl('album_description', 'dhtmltextarea');
 		$this->setControl('album_active', 'yesno');
 		$this->setControl('album_inblocks', 'yesno');
+		$this->setControl('album_onindex', 'yesno');
+		$this->setControl('album_approve', 'yesno');
 		$this->setControl('album_uid', 'user');
 		$this->setControl('album_img', array( 'name' => 'select', 'itemHandler' => 'album', 'method' => 'getImageList', 'module' => 'album'));
 		$this->setControl('album_grpperm', array ( 'name' => 'select_multi', 'itemHandler' => 'album', 'method' => 'getGroups', 'module' => 'album'));
 		// hide static fields from forms/single views
-		$this->hideFieldFromForm( array( 'album_sub', 'album_comments', 'weight', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
-		$this->hideFieldFromSingleView( array( 'album_sub', 'album_comments', 'weight', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
+		$this->hideFieldFromForm( array('album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
+		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
 
 		$this->initiateSEO();
 	}
 
+	/**
+	 * overriding getVar
+	 */
 	public function getVar($key, $format = 's') {
 		if ($format == 's' && in_array($key, array('album_uid', 'album_active', 'album_grpperm'))) {
 			return call_user_func(array ($this,	$key));
@@ -79,7 +87,9 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		return parent::getVar($key, $format);
 	}
 
-	// get sub album
+	/**
+	 * if sub album -> admin-link
+	 */
 	function album_sub() {
 		$ret = $this->handler->getAlbumSubCount($this->getVar('album_id', 'e'));
 
@@ -100,14 +110,16 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		}
 		$ret = $this->getVar('album_pid', 'e');
 		if ($ret > 0) {
-			$ret = '<a href="' . ALBUM_URL . 'album.php?album_id=' . $ret . '">' . str_replace('-', '', $album_pidArray[$ret]) . '</a>';
+			$ret = '<a href="' . ALBUM_URL . 'index.php?album_id=' . $ret . '">' . str_replace('-', '', $album_pidArray[$ret]) . '</a>';
 		} else {
 			$ret = $album_pidArray[$ret];
 		}
 		return $ret;
 	}
 	
-	// get uname instead of id for publisher
+	/**
+	 * publisher link instead of stored id
+	 */
 	function album_uid() {
 		return icms_member_user_Handler::getUserLink($this->getVar('album_uid', 'e'));
 	}
@@ -135,6 +147,9 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		}
 	}
 	
+	/**
+	 * convert the date to prefered settings
+	 */
 	public function getPublishedDate() {
 		global $albumConfig;
 		$date = '';
@@ -151,14 +166,17 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		return date($albumConfig['album_dateformat'], $date);
 	}
 	
+	/*
+	 * some functions to handle easy change album to approved/online/inblocks/onindex or back
+	 */
 	public function album_active() {
 		$active = $this->getVar('album_active', 'e');
 		if ($active == false) {
 			return '<a href="' . ALBUM_ADMIN_URL . 'album.php?album_id=' . $this->getVar('album_id') . '&amp;op=visible">
-				<img src="' . ALBUM_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
 		} else {
 			return '<a href="' . ALBUM_ADMIN_URL . 'album.php?album_id=' . $this->getVar('album_id') . '&amp;op=visible">
-				<img src="' . ALBUM_IMAGES_URL . 'visible.png" alt="Online" /></a>';
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
 		}
 	}
 	
@@ -166,10 +184,32 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$active = $this->getVar('album_inblocks', 'e');
 		if ($active == false) {
 			return '<a href="' . ALBUM_ADMIN_URL . 'album.php?album_id=' . $this->getVar('album_id') . '&amp;op=changeShow">
-				<img src="' . ALBUM_IMAGES_URL . 'off.png" alt="Hidden" /></a>';
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Hidden" /></a>';
 		} else {
 			return '<a href="' . ALBUM_ADMIN_URL . 'album.php?album_id=' . $this->getVar('album_id') . '&amp;op=changeShow">
-				<img src="' . ALBUM_IMAGES_URL . 'on.png" alt="Visible" /></a>';
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Visible" /></a>';
+		}
+	}
+	
+	public function album_approve() {
+		$active = $this->getVar('album_approve', 'e');
+		if ($active == false) {
+			return '<a href="' . ALBUM_ADMIN_URL . 'album.php?album_id=' . $this->getVar('album_id') . '&amp;op=changeApprove">
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Denied" /></a>';
+		} else {
+			return '<a href="' . ALBUM_ADMIN_URL . 'album.php?album_id=' . $this->getVar('album_id') . '&amp;op=changeApprove">
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Approved" /></a>';
+		}
+	}
+	
+	public function album_onindex() {
+		$active = $this->getVar('album_onindex', 'e');
+		if ($active == false) {
+			return '<a href="' . ALBUM_ADMIN_URL . 'album.php?album_id=' . $this->getVar('album_id') . '&amp;op=changeIndex">
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Hidden" /></a>';
+		} else {
+			return '<a href="' . ALBUM_ADMIN_URL . 'album.php?album_id=' . $this->getVar('album_id') . '&amp;op=changeIndex">
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Visible" /></a>';
 		}
 	}
 	
@@ -194,11 +234,12 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('album_uid', 'e')) {
 			return true;
 		}
-		
 		if ($viewperm && $this->getVar('album_active', 'e') == true) {
 			return true;
 		}
-
+		if ($viewperm && $this->getVar('album_approve', 'e') == true) {
+			return true;
+		}
 		if ($viewperm && count($allowed_groups) > 0) {
 			return true;
 		}
@@ -220,12 +261,12 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 
 	function getItemLink($onlyUrl = false) {
 		$seo = $this->handler->makelink($this);
-		$url = ALBUM_URL . 'album.php?album_id=' . $this -> getVar( 'album_id' ) . '&amp;album=' . $seo;
+		$url = ALBUM_URL . 'index.php?album_id=' . $this -> getVar( 'album_id' ) . '&amp;album=' . $seo;
 		if ($onlyUrl) return $url;
 		return '<a href="' . $url . '" title="' . $this -> getVar( 'album_title' ) . ' ">' . $this -> getVar( 'album_title' ) . '</a>';
 	}
 	
-	public function get_albumimage_tag() {
+	public function getAlbumImageTag() {
 		$album_img = $image_tag = '';
 		$album_img = $this->getVar('album_img', 'e');
 		if (!empty($album_img)) {
@@ -240,17 +281,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	}
 	
 	function getPreviewItemLink() {
-		$ret = '<a href="' . ALBUM_URL . 'album.php?album_id=' . $this->getVar('album_id', 'e') . '" title="' . _AM_ALBUM_PREVIEW . '" target="_blank">' . $this->getVar('album_title') . '</a>';
-		return $ret;
-	}
-	
-	public function getEditItemLink() {
-		$ret = '<a href="' . ALBUM_ADMIN_URL . 'album.php?op=changedField&amp;album_id=' . $this->getVar('album_id', 'e') . '" title="' . _AM_ALBUM_ALBUM_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
-		return $ret;
-	}
-	
-	public function getDeleteItemLink() {
-		$ret = '<a href="' . ALBUM_ADMIN_URL . 'album.php?op=del&amp;album_id=' . $this->getVar('album_id', 'e') . '" title="' . _AM_ALBUM_ALBUM_DELETE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
+		$ret = '<a href="' . ALBUM_URL . 'index.php?album_id=' . $this->getVar('album_id', 'e') . '" title="' . _AM_ALBUM_PREVIEW . '" target="_blank">' . $this->getVar('album_title') . '</a>';
 		return $ret;
 	}
 	
@@ -262,7 +293,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$ret['id'] = $this->getVar('album_id');
 		$ret['title'] = $this->getVar('album_title');
 		
-		$ret['img'] = $this->get_albumimage_tag();
+		$ret['img'] = $this->getAlbumImageTag();
 		$ret['album_dsc'] = $this->getVar('album_description');
 		$ret['sub'] = $this->getAlbumSub($this->getVar('album_id', 'e'), true);
 		$ret['hassub'] = (count($ret['album_sub']) > 0) ? true : false;

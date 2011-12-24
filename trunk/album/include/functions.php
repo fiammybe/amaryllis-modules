@@ -23,35 +23,50 @@ function album_adminmenu( $currentoption = 0, $header = '', $menu = '', $extra =
 	echo '<h3 style="color: #2F5376;">' . $header . '</h3>';
 }
 
-function album_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
-	$albumModule = icms_getModuleInfo( basename(dirname(dirname(__FILE__))) );
-	$albumname = $albumModule -> getVar( "name" );
-	if (!$moduleName) {
-		$albumModule = icms_getModuleInfo( icms::$module -> getVar( 'dirname' ) );
-		$moduleName = $albumModule -> getVar( 'dirname' );
-	}
-	$icmsModuleConfig = icms_getModuleConfig($moduleName);
-	if (!isset ($albumModule)) {
-		return '';
-	}
-	if (!$withLink) {
-		return $albumModule->name();
-	} else {
-		$ret = ICMS_URL . '/modules/' . $moduleName . '/';
-		return '<a href="' . $ret . '" title="' . $albumname .  '">' . $albumname . '</a>';
-	}
-}
-
-function prepareIndexpageForDisplay($indexpageObj, $with_overrides = true) {
+function album_display_new($time) {
 	global $albumConfig;
-	$indexpageArray = array();
-	if ($with_overrides) {
-		$indexpageArray = $indexpageObj->toArray();
+	$new = ( time() - ( 86400 * intval( $albumConfig['album_daysnew'] ) ) );
+	if ( icms::$module->config['albums_daysnew'] !== 0) {
+		if ( $new > $time ) {
+			$new = ALBUM_IMAGES_URL . 'new.png';
+			
+		} else {
+			return false;
+		}
 	} else {
-		$indexpageArray = $indexpageObj->toArrayWithoutOverrides();
+		return false;
 	}
-	// create an image tag for the indeximage
-	$indexpageArray['indeximage'] = $indexpageObj->get_indeximage_tag();
-	return $indexpageArray;
+	return $new;
 }
 
+function album_display_updated($time) {
+	global $albumConfig;
+	$updated = ( time() - ( 86400 * intval( $albumConfig['album_daysupdated'] ) ) );
+	if ( icms::$module->config['albums_daysupdated'] !== 0) {
+		if ( $updated > $time ) {
+			$updated = ALBUM_IMAGES_URL . 'updated.png';
+			
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+	return $updated;
+}
+
+function album_display_popular($counter) {
+	global $albumConfig;
+	$popular = $albumConfig['albums_popular'];
+	if ( $popular !== 0) {
+		if ( $popular < $counter ) {
+			$popular = ALBUM_IMAGES_URL . 'popular.png';
+			
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+	return $popular;
+}
