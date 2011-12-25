@@ -3,7 +3,7 @@
  *
  * File: /scripts/downloads.js
  * 
- * Class representing Downloads download objects
+ * script to initiate some jQuery Effekts for Downloads
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
