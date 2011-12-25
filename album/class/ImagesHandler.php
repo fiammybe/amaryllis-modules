@@ -97,14 +97,14 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	public function changeApprove($img_id) {
 		$approve = '';
 		$imagesObj = $this->get($img_id);
-		if ($imagesObj->getVar('img_approve', 'e') == true) {
+		if ($imagesObj->getVar('img_approve', 'e') == TRUE) {
 			$imagesObj->setVar('img_approve', 0);
 			$approve = 0;
 		} else {
 			$imagesObj->setVar('img_approve', 1);
 			$approve = 1;
 		}
-		$this->insert($imagesObj, true);
+		$this->insert($imagesObj, TRUE);
 		return $approve;
 	}
 	
@@ -114,6 +114,15 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	
 	public function img_approve_filter() {
 		return array(0 => 'Offline', 1 => 'Online');
+	}
+	
+	public function userCanSubmit() {
+		global $album_isAdmin;
+		if (!is_object(icms::$user)) return TRUE;
+		if ($content_isAdmin) return TRUE;
+		$user_groups = icms::$user->getGroups();
+		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
+		return count(array_intersect($module->config['uploader_groups'], $user_groups)) > 0;
 	}
 
 }

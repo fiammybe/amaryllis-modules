@@ -274,6 +274,18 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		}
 		return $image_tag;
 	}
+	
+	function getSubsCount(){
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$count = $this->handler->getAlbumsCount (TRUE, TRUE, TRUE, $groups,'album_grpperm', FALSE, FALSE, $this->getVar("album_id", "e"));
+		return $count;
+	}
+	
+	function getImagesCount() {
+		$album_images_handler = icms_getModuleHandler('images', basename(dirname(dirname(__FILE__))), 'album');
+		$images_count = $album_images_handler->getImagesCount(TRUE, TRUE, $this->getVar("album_id"));
+		return $images_count;
+	}
 
 	public function getViewItemLink() {
 		$ret = '<a href="' . ALBUM_ADMIN_URL . 'album.php?op=view&amp;album_id=' . $this->getVar('album_id', 'e') . '" title="' . _AM_ALBUM_ALBUM_VIEW . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
@@ -285,14 +297,22 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		return $ret;
 	}
 	
+	function getEditAndDelete() {
+		$album_images_handler = icms_getModuleHandler('images', basename(dirname(dirname(__FILE__))), 'album');
+		if($album_images_handler->userCanSubmit()) {
+			return ALBUM_URL . 'images.php?op=mod&amp;album_id=' . $this->id();
+		} else {
+			return FALSE;
+		}
+	}
+	
 	function toArray() {
 		$ret = parent::toArray();
-		$ret['album_published_on'] = $this->getPublishedDate();
-		$ret['album_updated_on'] = $this->getUpdatedDate();
-		$ret['album_publisher'] = $this->getPublisher(true);
+		$ret['published_on'] = $this->getPublishedDate();
+		$ret['updated_on'] = $this->getUpdatedDate();
+		$ret['publisher'] = $this->getPublisher(true);
 		$ret['id'] = $this->getVar('album_id');
 		$ret['title'] = $this->getVar('album_title');
-		
 		$ret['img'] = $this->getAlbumImageTag();
 		$ret['album_dsc'] = $this->getVar('album_description');
 		$ret['sub'] = $this->getAlbumSub($this->getVar('album_id', 'e'), true);
@@ -301,9 +321,12 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['album_posterid'] = $this->getVar('album_uid', 'e');
-		$ret['itemLink'] = $this->getItemLink();
+		$ret['itemLink'] = $this->getItemLink(FALSE);
+		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['accessgranted'] = $this->accessGranted();
-
+		$ret['album_count'] = $this->getSubsCount();
+		$ret['images_count'] = $this->getImagesCount();
+		$ret['user_upload'] = $this->getEditAndDelete();
 		return $ret;
 	}
 

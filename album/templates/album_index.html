@@ -1,51 +1,92 @@
 <{includeq file='db:album_header.html'}>
 
-<!-- display index header -->
-<{$album_index.header}>
-<!-- display index heading -->
-<{$album_index.heading}>
+<{if $album_index}> <!-- album index view -->
+	<!-- display index header -->
+	<{$album_index.header}>
+	<!-- display index heading -->
+	<{$album_index.heading}>
 
 	<div>
 		<!-- pagination control -->
 		<{if $album_pagenav }><{$album_pagenav}><{/if}>
 		
-		<div class="album_album">
+		<div class="album_rule">
 			<!-- album rule -->
-			<{foreach item=album from=$album_album}>
+			<{foreach item=album from=$album_index}>
+			
+				<{includeq file='db:album_album.html'}>
 				
-				<!-- Album image -->
-				<span style="float: left; padding-right: 10px; vertical-align: top;">
-					<a href="<{$album_url}>album.php?album_id=<{$album.id}>">
-						<img src="<{$album.img}>" alt="" title="<{$album.title}>" />
-					</a>
-				</span>
-				
-				<!-- Album title -->
-				<span style="float: left; font-size: 1.1em; font-weight: bold;">
-					<{$album.itemLink}>&nbsp;&nbsp;
-						<p class="album_album_info">
-							(&nbsp;<{$smarty.const._MD_ALBUM_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$album.album_publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_ALBUM_ALBUM_PUBLISHED_ON}>&nbsp;:&nbsp;<{$album.album_published_on}>&nbsp;)
-						</p>
-				</span>
-<br /><br />
-				<!-- Album description -->
-				<div class="album_album_dsc">
-					<{$album.album_dsc}>
-				</div>
-
-				<{if $album.hassub}>
-					<div style="float: right; font-size: .8em; padding-right: 45px;">
-						<ul>
-						<{foreach item=sub from=$album.sub}>
-							<li><{$sub.itemLink}></li>
-						<{/foreach}>
-						</ul>
-					</div>	
-				<{/if}>
-	
-				<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
 			<{/foreach}>
 		</div>
+		<{if $user_submit}>
+			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+				<img src="<{$album_images_url}>add_cat.png" title="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />
+			</a>
+		<{/if}>
+		
+		<{if $album_upl_disclaimer}>
+			<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
+				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
+			</div>
+		<{/if}>
 	</div>
+<!-- E N D category index -->
+<{/if}>
+
+<{if $single_album}> <!-- display single album -->
+	<!-- album title -->
+	<div class="album_album_title"><{$single_album.title}></div>
+	<!-- album description -->
+	<div class="album_album_desc"> <{$single_album.dsc}> </div>
+
+	<!-- start image loop -->
+	<{if $album_image_rows}>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+		<!-- image rows -->
+		<div class="album_images">
+			<{foreach item=album_row from=$album_image_rows}>
+				<div class="album_images_row" <{$album_row_margins}> >
+					<{foreach item=album_images from=$album_row}>
+						<div class="album_image" <{$album_image_margins}>>
+							<a class="single_image" href="<{$album_images.img_url}>" title="<{$album_images.title}>" alt="<{$album_images.dsc}>">
+								<{resized_image file=$album_images.img width=$album_images.thumbnail_width height=$album_images.thumbnail_height fit="inside"}>
+							</a>
+						</div>	
+					<{/foreach}>
+				</div>
+			<{/foreach}>
+		</div>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+	<{/if}>
 	
+	<{if $single_album.hassub}> <!-- subalbums -->
+	
+		<!-- pagination control -->
+		<{if $album_pagenav }><{$album_pagenav}><{/if}>
+		
+		<{foreach item=album from=$subalbums}>
+					
+			<{includeq file='db:album_album.html'}>
+			
+		<{/foreach}>
+		
+		<{if $user_submit}>
+			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+				<img src="<{$album_images_url}>add_cat.png" title="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />
+			</a>
+		<{/if}>
+		
+		<{if $album_upl_disclaimer}>
+			<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
+				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
+			</div>
+		<{/if}>
+	<!-- E N D subalbums -->
+	<{/if}>
+<!-- E N D single_album -->
+<{/if}>
 <{includeq file='db:album_footer.html'}>

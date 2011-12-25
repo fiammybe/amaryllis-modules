@@ -56,14 +56,22 @@ if ($clean_album_id != 0) {
  */
 if(is_object($albumObj) && $albumObj->accessGranted()){
 	$album_album_handler->updateCounter($clean_album_id);
-	$album = $album_obj->toArray();
+	$album = $albumObj->toArray();
 	$icmsTpl->assign('single_album', $album);
+	if($album['hassub'] == TRUE) {
+		$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], $clean_album_uid, FALSE, $album['id'], 'weight', 'ASC');
+		$icmsTpl->assign('subalbums', $albums);
+	}
 	/**
 	 * retrieve the images of these album, if there are some
 	 */
 	$album_images_handler = icms_getModuleHandler('images', basename(dirname(__FILE__)), 'album');
 	$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, $albumConfig['show_images'], 'weight', 'ASC', $clean_a_id);
-	$icmsTpl->assign('images', $images);
+	$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
+	$icmsTpl->assign('album_image_rows', $album_image_rows);
+	$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
+	$album_image_margins = 'align="center" style="display:inline-block; margin: 0px ' . $albumConfig['thumbnail_margin_right'] . 'px 0px ' . $albumConfig['thumbnail_margin_left'] . 'px;"';
+	
 	/**
 	 * assign breadcrumb
 	 */
@@ -72,24 +80,79 @@ if(is_object($albumObj) && $albumObj->accessGranted()){
 	}else{
 		$icmsTpl->assign('album_cat_path',false);
 	}
+	/**
+	 * check, if user can submit
+	 */
 	if($album_album_handler->userCanSubmit()) {
 		$icmsTpl->assign('user_submit', true);
 		$icmsTpl->assign('user_submit_link', ALBUM_URL . 'album.php?op=mod&album_id=' . $albumObj->getVar("album_id"));
 	} else {
 		$icmsTpl->assign('user_submit', false);
 	}
+	/**
+	 * check, if album is popular
+	 */
+	$popular = album_display_popular($albumObj->getVar("counter"));
+	if($popular) {
+		$icmsTpl->assign('album_is_popular', TRUE );
+		$icmsTpl->assign('album_is_popular_img', $popular );
+	}
+	/**
+	 * display image if album is new or updated
+	 */
+	$newalbum = album_display_new($albumObj->getVar('album_published_date'));
+	if($newalbum) {
+		$icmsTpl->assign('album_is_new', TRUE);
+		$icmsTpl->assign('album_is_new_img', $newalbum);
+	} else {
+		$icmsTpl->assign('album_is_new', FALSE);
+	}
+	if( $albumObj->getVar('album_updated') == true && $albumObj->getVar('album_updated_date') != 0) {
+		$newalbum = album_display_updated( $albumObj->getVar( 'album_published_date' ) );
+		if($newalbum) {
+			$icmsTpl->assign('album_is_updated', TRUE );
+			$icmsTpl->assign('album_is_updated_img', $newalbum );
+		} else {
+			$icmsTpl->assign('album_is_updated', FALSE );
+		}
+	}
+	if($albumObj->getVar('album_updated_date') > 0) {
+		$icmsTpl->assign("show_updated", TRUE);
+	}
+	
 /**
  * retrieve album index view
  */
 } elseif ($clean_album_id == 0) {
-	$album = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], $clean_album_uid, $clean_album_id, $clean_album_pid, 'weight', 'ASC');
-	$icmsTpl->assign('album_index', $album);
+	$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], $clean_album_uid, $clean_album_id, $clean_album_pid, 'weight', 'ASC');
+	$icmsTpl->assign('album_index', $albums);
 /**
  * if permissions denied for a single album, redirect to index view
  */
 } else {
 	redirect_header(ALBUM_URL, 3, _NO_PERM);
 }
+
+/**
+ * check, if upload disclaimer is necessary and retrieve the link
+ */
+
+if($albumConfig['album_show_upl_disclaimer'] == 1) {
+	$icmsTpl->assign('album_upl_disclaimer', TRUE );
+	$icmsTpl->assign('up_disclaimer', $albumConfig['album_upl_disclaimer']);
+} else {
+	$icmsTpl->assign('album_upl_disclaimer', FALSE);
+}
+/**
+ * check, if user can submit
+ */
+if($album_album_handler->userCanSubmit()) {
+	$icmsTpl->assign('user_submit', true);
+	$icmsTpl->assign('user_submit_link', ALBUM_URL . 'album.php?op=mod&amp;album_id=' . $clean_album_id);
+} else {
+	$icmsTpl->assign('user_submit', false);
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////
@@ -104,7 +167,7 @@ if (!empty($clean_album_id)) {
 }
 $pagenav = new icms_view_PageNav($album_count, $albumConfig['show_albums'], $clean_album_start, 'album_nav', $extra_arg);
 $imagesnav = new icms_view_PageNav($images_count, $albumConfig['show_images'], $clean_img_start, 'img_nav', $extra_arg);
-$icmsTpl->assign('pagenav', $pagenav->renderNav());
-$icmsTpl->assign('imgnav', $imagenav->renderNav());
+$icmsTpl->assign('album_pagenav', $pagenav->renderNav());
+$icmsTpl->assign('imgnav', $imagesnav->renderNav());
 
 include_once 'footer.php';
