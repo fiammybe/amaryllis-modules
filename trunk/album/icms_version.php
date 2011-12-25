@@ -122,15 +122,7 @@ $modversion['templates'][] = array(
 										'description'	=> _MI_ALBUM_ALBUM_TPL
 								);
 $modversion['templates'][] = array(
-										'file'			=> 'album_admin_album.html',
-										'description'	=> _MI_ALBUM_ADMIN_FORM_TPL
-								);
-$modversion['templates'][] = array(
-										'file'			=> 'album_admin_images.html',
-										'description'	=> _MI_ALBUM_ADMIN_FORM_TPL
-								);
-$modversion['templates'][] = array(
-										'file'			=> 'album_admin_indexpage.html',
+										'file'			=> 'album_admin.html',
 										'description'	=> _MI_ALBUM_ADMIN_FORM_TPL
 								);
 $modversion['templates'][] = array(
