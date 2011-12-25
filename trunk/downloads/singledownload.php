@@ -154,17 +154,17 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				} else {
 					$icmsTpl->assign('file_is_new', FALSE );
 				}
-				if( $downloadObj->getVar('download_updated') == true && $downloadObj->getVar('download_updated_date') !== 0) {
+				if( $downloadObj->getVar('download_updated') == true && $downloadObj->getVar('download_updated_date') != 0) {
 					$newfile = downloads_display_updated( $downloadObj->getVar( 'download_published_date' ) );
 					if($newfile) {
 						$icmsTpl->assign('file_is_updated', TRUE );
 						$icmsTpl->assign('file_is_updated_img', $newfile );
 					} else {
-						$icmsTpl->assign('file_is_new', FALSE );
+						$icmsTpl->assign('file_is_updated', FALSE );
 					}
 				}
 				if($downloadObj->getVar('download_updated_date') > 0) {
-					$icmsTpl->assign("show updated", TRUE);
+					$icmsTpl->assign("show_updated", TRUE);
 				}
 				/**
 				 * mirror yes/no?
