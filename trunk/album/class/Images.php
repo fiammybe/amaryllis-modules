@@ -161,6 +161,7 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['title'] = $this->getVar("img_title");
 		$ret['img'] = $this->getImageTag(TRUE);
 		$ret['img_url'] = $this->getImageTag(FALSE);
+		$ret['id'] = $this->getVar("img_id");
 		
 		
 		return $ret;

@@ -45,11 +45,17 @@
 
 	$(document).ready(function(){
 		// use colorbox for screenshots
-		$('a.single_image').colorbox({
-			transition:'fade',
-			speed:500,
-			opacity: 0.7,
+		$('a.single_image').each(function(){
 			
+			$(this).colorbox({
+				transition:'fade',
+				speed:500,
+				opacity: 0.9,
+				slideshow: true,
+				arrowKey: true,
+				slideshowAuto: false,
+				inline: true,
+			});
 		});
 		
 		//initiate qtip for category description
