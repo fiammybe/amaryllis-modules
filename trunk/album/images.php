@@ -2,9 +2,9 @@
 /**
  * 'Album' is a light weight gallery module
  *
- * File: /album.php
+ * File: /images.php
  *
- * display a single album and album subs
+ * add, edit and delete images
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -17,34 +17,32 @@
  * 
  */
 
-function editalbum($albumObj) {
-	global $album_album_handler, $icmsTpl, $albumConfig;
+function editimages($imagesObj) {
+	global $album_images_handler, $icmsTpl, $albumConfig;
 	
-	if (!$albumObj->isNew()){
-		$albumObj->hideFieldFromForm(array('album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve', 'album_published_date', 'album_updated_date' ) );
-		$albumObj->setVar( 'album_updated_date', (time() - 100) );
-		$albumObj->setVar('album_updated', TRUE );
-		if($albumConfig['album_needs_approval'] == 1) {
-			$albumObj->setVar('album_approve', FALSE );
+	if (!$imagesObj->isNew()){
+		$imagesObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'img_publisher', 'img_active', 'img_approve', 'img_published_date', 'img_updated_date' ) );
+		$imagesObj->setVar( 'img_updated_date', (time() - 100) );
+		if($albumConfig['image_needs_approval'] == 1) {
+			$imagesObj->setVar('img_approve', FALSE );
 		} else {
-			$albumObj->setVar('album_approve', TRUE );
+			$imagesObj->setVar('img_approve', TRUE );
 		}
-		$sform = $albumObj->getSecureForm(_MD_ALBUM_ALBUM_EDIT, 'addalbum');
-		$sform->assign($icmsTpl, 'album_album_form');
-		$icmsTpl->assign('album_cat_path', $albumObj->getVar('album_title') . ' > ' . _EDIT);
+		$sform = $imagesObj->getSecureForm(_MD_ALBUM_IMAGES_EDIT, 'addimages');
+		$sform->assign($icmsTpl, 'album_images_form');
+		$icmsTpl->assign('album_cat_path', $imagesObj->getVar('img_title') . ' > ' . _EDIT);
 	} else {
-		$albumObj->hideFieldFromForm(array('album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve', 'album_published_date', 'album_updated_date') );
-		$albumObj->setVar('album_published_date', (time() - 100) );
-		if($albumConfig['album_needs_approval'] == 1) {
-			$albumObj->setVar('album_approve', FALSE );
+		$imagesObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'img_updated','img_active', 'img_publisher', 'img_approve', 'img_published_date', 'img_updated_date' ) );
+		$imagesObj->setVar('images_published_date', (time() - 100) );
+		if($albumConfig['image_needs_approval'] == 1) {
+			$imagesObj->setVar('img_approve', FALSE );
 		} else {
-			$albumObj->setVar('album_approve', TRUE );
+			$imagesObj->setVar('img_approve', TRUE );
 		}
-		$albumObj->setVar('album_uid', icms::$user->getVar("uid"));
+		$imagesObj->setVar('img_publisher', icms::$user->getVar("uid"));
 		
-		
-		$sform = $albumObj->getSecureForm(_MD_ALBUM_ALBUM_CREATE, 'addalbum');
-		$sform->assign($icmsTpl, 'album_album_form');
+		$sform = $imagesObj->getSecureForm(_MD_ALBUM_IMAGES_CREATE, 'addimages');
+		$sform->assign($icmsTpl, 'album_images_form');
 		$icmsTpl->assign('album_cat_path', _SUBMIT);
 	}
 }
@@ -71,50 +69,50 @@ $icmsTpl->assign('album_index', $index);
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_images_id = isset($_GET['images_id']) ? filter_input(INPUT_GET, 'images_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
 
-$valid_op = array ('mod', 'addalbum', 'del');
+$valid_op = array ('mod', 'addimages', 'del');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 
-$album_album_handler = icms_getModuleHandler("album", basename(dirname(__FILE__)), "album");
+$album_images_handler = icms_getModuleHandler("images", basename(dirname(__FILE__)), "album");
 
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case('mod'):
-			$albumObj = $album_album_handler->get($clean_album_id);
-			if ($clean_album_id > 0 && $albumObj->isNew()) {
+			$imagesObj = $album_images_handler->get($clean_images_id);
+			if ($clean_images_id > 0 && $imagesObj->isNew()) {
 				redirect_header(ALBUM_URL, 3, _NO_PERM);
 			}
-			editalbum($albumObj);
+			editimages($imagesObj);
 			break;
 		
-		case('addalbum'):
+		case('addimages'):
 			if (!icms::$security->check()) {
 				redirect_header('index.php', 3, _MD_ALBUM_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 			}
-			$controller = new icms_ipf_Controller($album_album_handler);
-			$controller->storeFromDefaultForm(_MD_ALBUM_ALBUM_CREATED, _MD_ALBUM_ALBUM_MODIFIED);
+			$controller = new icms_ipf_Controller($album_images_handler);
+			$controller->storeFromDefaultForm(_MD_ALBUM_IMAGES_CREATED, _MD_ALBUM_IMAGES_MODIFIED);
 			break;
 		case('del'):
-			$albumObj = $album_album_handler->get($clean_album_id);
-			if (!$albumObj->userCanEditAndDelete()) {
-				redirect_header($categoryObj->getItemLink(true), 3, _NOPERM);
+			$imagesObj = $album_images_handler->get($clean_images_id);
+			if (!$imagesObj->userCanEditAndDelete()) {
+				redirect_header($imagesObj->getItemLink(true), 3, _NO_PERM);
 			}
 			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {
 					redirect_header('index.php', 3, _MD_ALBUM_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 				}
 			}
-			$controller = new icms_ipf_Controller($album_album_handler);
+			$controller = new icms_ipf_Controller($album_images_handler);
 			$controller->handleObjectDeletionFromUserSide();
 			break;
 	}
 } else {
-	redirect_header(ALBUM_URL, 3, _NOPERM);
+	redirect_header(ALBUM_URL, 3, _NO_PERM);
 }
 
 if( $albumConfig['show_breadcrumbs'] == true ) {

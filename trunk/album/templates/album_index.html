@@ -52,7 +52,7 @@
 				<div class="album_images_row" <{$album_row_margins}> >
 					<{foreach item=album_images from=$album_row}>
 						
-							<a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" original-title="<{$album_images.dsc}>" alt="<{$album_images.dsc}>" rel="lightbox" <{$album_image_margins}> >
+							<a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" rel="lightbox" <{$album_image_margins}> >
 								<{resized_image file=$album_images.img width=$album_images.thumbnail_width height=$album_images.thumbnail_height fit="inside"}>
 							</a>
 							
