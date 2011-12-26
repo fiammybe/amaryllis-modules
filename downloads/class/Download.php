@@ -91,6 +91,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_notification_sent', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_like', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_dislike', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('download_downcounter', XOBJ_DTYPE_INT, false);
 		$this->initCommonVar('weight');
 		$this->initCommonVar('counter');
 		$this->initCommonVar('dohtml', false, 1);
@@ -126,7 +127,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->setControl('download_updated', 'yesno');
 		$this->setControl('download_broken', 'yesno');
 		// hide static fields from form
-		$this->hideFieldFromForm(array( 'download_submitter','download_like','download_dislike', 'download_has_mirror', 'download_comments','download_notification_sent','download_fb_like', 'download_fb_dislike','download_g_like', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
+		$this->hideFieldFromForm(array( 'download_downcounter', 'download_submitter','download_like','download_dislike', 'download_has_mirror', 'download_comments','download_notification_sent','download_fb_like', 'download_fb_dislike','download_g_like', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
 		// hide fields from single view
 		$this->hideFieldFromSingleView(array('download_has_mirror', 'download_comments','download_notification_sent','download_fb_like', 'download_fb_dislike','download_g_like', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
 		
@@ -635,7 +636,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['file_thumbnail_height'] = $downloadsConfig['file_img_thumbnail_height'];
 		$ret['like'] = $this->getVar('download_like');
 		$ret['dislike'] = $this->getVar('download_dislike');
-		
+		$ret['downcounter'] = $this->getVar('download_downcounter', 'e');
 		$albumModule = icms_getModuleInfo('album');
 		if ($downloadsConfig['use_album'] == true && $albumModule){
 			$ret['album_images'] = $this->getVar('download_album');

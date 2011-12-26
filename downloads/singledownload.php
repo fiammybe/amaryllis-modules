@@ -304,24 +304,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				} else {
 					$icmsTpl->assign("show_reviews", FALSE);
 				}
-				/**
-				 * Download Counter
-				 */
-				$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(__FILE__)), "downloads");
-				$criteria = new icms_db_criteria_Compo();
-				$criteria->add(new icms_db_criteria_Item("log_item_id", $downloadObj->getVar("download_id", "e")));
-				$criteria->add(new icms_db_criteria_Item("log_item", 0));
-				$criteria->add(new icms_db_criteria_Item("log_case", 0));
-				$downloaded = $downloads_log_handler->getCount($criteria);
-				
-				$criteria2 = new icms_db_criteria_Compo();
-				$criteria2->add(new icms_db_criteria_Item("log_item_id", $downloadObj->getVar("download_id", "e")));
-				$criteria2->add(new icms_db_criteria_Item("log_item", 0));
-				$criteria2->add(new icms_db_criteria_Item("log_case", 4));
-				$downloaded_mirror = $downloads_log_handler->getCount($criteria2);
-				$download_counter = intval($downloaded) + intval($downloaded_mirror);
-				
-				$icmsTpl->assign("download_counter", $download_counter);
 				
 				/**
 				 * voting -> can vote?
