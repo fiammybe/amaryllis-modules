@@ -436,11 +436,12 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 
 	public function getDownloadRelated() {
-		$related_array = $this->getVar('download_related');
-		if (!$related_array == "") {
-			$relateds = explode(",", $related_array);
+		$related_array = $this->getVar('download_related' , 'e');
+		if (!$related_array == "0") {
+			$relateds = implode(",", $related_array);
+			$relateds2 = explode(",", $relateds);
 			$result = '';
-			foreach ($relateds as $related) {
+			foreach ($relateds2 as $related) {
 				$link = $this->handler->getLink($related);
 				$result .= '<li>' . $link . '</li>';
 			}
