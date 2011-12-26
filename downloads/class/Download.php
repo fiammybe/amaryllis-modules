@@ -628,7 +628,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['download_posterid'] = $this->getVar('download_publisher', 'e');
-		$ret['itemLink'] = $this->getItemLink(true, true);
+		$ret['itemLink'] = $this->getItemLink(FALSE);
+		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['accessgranted'] = $this->accessGranted();
 		return $ret;
 	}
