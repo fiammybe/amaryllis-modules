@@ -111,7 +111,7 @@
 				
 				<!-- File title -->
 				<span class="downloads_cat_title">
-					<a href="<{$download.itemLink}>" title="<{$download.title}>"><{$download.title}></a>&nbsp;
+					<a href="<{$download.itemURL}>" title="<{$download.title}>"><{$download.title}></a>&nbsp;
 						<{if $download.userCanEditAndDelete}>
 							<{$download.editItemLink}><{$download.deleteItemLink}>
 						<{/if}>
@@ -122,7 +122,8 @@
 <br /><br />
 				<!-- File description -->
 				<div class="downloads_cat_dsc">
-					<{$download.teaser}>
+					<{$download.teaser}> 
+					<a href="<{$file.itemURL}>" title="<{$smarty.const._MD_DOWNLOADS_READ_MORE}>"><{$smarty.const._MD_DOWNLOADS_READ_MORE}></a>
 				</div>
 				
 				<{if $download.keyfeatures}>
