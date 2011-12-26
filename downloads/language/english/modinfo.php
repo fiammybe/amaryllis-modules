@@ -136,12 +136,9 @@ define("_MI_DOWNLOADS_DISPLAY_REVEMAIL_IMGPROT_BANNED", "usual email with checki
 define("_MI_DOWNLOADS_DISPLAY_FILE_SIZE", "How to display the file size?");
 define("_MI_DOWNLOADS_DISPLAY_FILE_SIZE_DSC", "Select 'byte' to display in byte, 'mb' to display in megabyte, 'gb' to display in gigabyte");
 
-
 define("_MI_DOWNLOADS_POPULAR", "How many downloads of one file before it's popular");
 define("_MI_DOWNLOADS_DAYSNEW", "How many days to provide one file as new");
 define("_MI_DOWNLOADS_DAYSUPDATED", "How many days to provide one file as updated after editing");
-define("_MI_DOWNLOADS_MIMETYPES", "Allowed Mimetypes");
-define("_MI_DOWNLOADS_MIMETYPES_DSC", "Enter the Mimetypes you want to allow for file/imageupload. For more Information about the system mimetypes go to system->media->mime types");
 // Notifications
 define('_MI_DOWNLOADS_GLOBAL_NOTIFY', 'Global');
 define('_MI_DOWNLOADS_GLOBAL_NOTIFY_DSC', 'Global Downloads notification options.');
