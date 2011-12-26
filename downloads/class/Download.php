@@ -484,6 +484,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	
 	public function getDownloadTag($url = TRUE, $path = FALSE ) {
 		$file_alt = $this->getVar("download_file_alt", "e");
+		$file_alt = $this->getVar("download_file_alt", "e");
 		if($url){
 			if(!$file_alt == "") {
 				$url = DOWNLOADS_UPLOAD_URL . 'download/' . $file_alt;
@@ -522,7 +523,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		 */
 		if($myfile != "") {
 			$filetype = explode(".",$myfile);
-			return $filetype[1];
+			$last = (isset($filetype[count($filetype)-1])) ? $filetype[count($filetype)-1] : null;
+			return $last;
 		}
 	}
 	

@@ -376,7 +376,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_DOWNLOADS_LIMITS_DSC',
 								'formtype' 		=> 'textsarea',
 								'valuetype' 	=> 'text',
-								'default' 		=> 'None,Trial,14 day limitation,None Save'
+								'default' 		=> 'None,Trial,14 day limitation,None Save, Freeware, Shareware, Free - paid upgrade available, Free to try, 30-day trial, See file description'
 							);
 $i++;
 $modversion['config'][$i] = array(
