@@ -51,11 +51,23 @@
 			<{foreach item=album_row from=$album_image_rows}>
 				<div class="album_images_row" <{$album_row_margins}> >
 					<{foreach item=album_images from=$album_row}>
-						<div class="album_image" <{$album_image_margins}>>
-							<a class="single_image" href="<{$album_images.img_url}>" title="<{$album_images.title}>" alt="<{$album_images.dsc}>">
+						
+							<a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" original-title="<{$album_images.dsc}>" alt="<{$album_images.dsc}>" rel="lightbox" <{$album_image_margins}> >
 								<{resized_image file=$album_images.img width=$album_images.thumbnail_width height=$album_images.thumbnail_height fit="inside"}>
 							</a>
-						</div>	
+							
+							
+							<div style="display: none">
+								<div class="img_content" id="image-<{$album_images.id}>">
+									<title><{$album_images.title}></title>
+									<img src="<{$album_images.img_url}>" alt="<{$album_images.title}>" title="<{$album_images.title}>" />
+									<div class="img_desc">
+										<{$album_images.dsc}>
+									</div>
+								</div>
+							</div>
+							
+						
 					<{/foreach}>
 				</div>
 			<{/foreach}>

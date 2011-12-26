@@ -22,7 +22,7 @@ function editimages($images_id = 0) {
 
 	$imagesObj = $album_images_handler->get($images_id);
 	if(is_object(icms::$user)) {
-		$img_uid = ichs::$user->getVar("uid");
+		$img_uid = icms::$user->getVar("uid");
 	} else {
 		$img_uid = 0;
 	}
