@@ -58,6 +58,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 			$logObj->store(TRUE);
 			
+			$down_counter = $downloadObj->getVar("download_downcounter", "e");
+			$downloadObj->setVar("download_downcounter", (intval($down_counter) + 1));
+			$downloadObj->store(TRUE);
+			
 			if((strpos(xoops_getenv('HTTP_REFERER'), ICMS_URL) !== FALSE) ) {
 				return redirect_header (DOWNLOADS_URL . 'singledownload.php?op=downfile&amp;download_id=' . $download_id, 3, _MD_DOWNLOADS_DOWNLOAD_START);
 			} else {
@@ -85,6 +89,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$logObj->setVar('log_case', 4 );
 			$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
 			$logObj->store(TRUE);
+			
+			$down_counter = $downloadObj->getVar("download_downcounter", "e");
+			$downloadObj->setVar("download_downcounter", (intval($down_counter) + 1));
+			$downloadObj->store(TRUE);
 			
 			if((strpos(xoops_getenv('HTTP_REFERER'), ICMS_URL) !== FALSE) ) {
 				return redirect_header (DOWNLOADS_URL . 'singledownload.php?op=downfileMirror&amp;download_id=' . $download_id, 3, _MD_DOWNLOADS_DOWNLOAD_START);
