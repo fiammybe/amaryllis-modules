@@ -1,12 +1,10 @@
-<!-- module footer -->
-<{includeq file='db:album_footer.html'}>
 <!-- display admin link -->
 <{if $album_is_admin}>
 	<div class="album_adminlinks"><{$album_adminpage}></div>
 <{/if}>
 
 <!-- display indexfooter -->		
-<{$album_indexarray.index_footer}>
+<{$album_index.footer}>
 
 <!-- comment loop -->
 <{if $album_album_comment}>

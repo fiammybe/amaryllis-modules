@@ -23,7 +23,7 @@ function editalbum($album_id = 0) {
 
 	$albumObj = $album_album_handler->get($album_id);
 	if(is_object(icms::$user)) {
-		$album_uid = ichs::$user->getVar("uid");
+		$album_uid = icms::$user->getVar("uid");
 	} else {
 		$album_uid = 0;
 	}
@@ -40,7 +40,7 @@ function editalbum($album_id = 0) {
 		$sform->assign($icmsAdminTpl);
 
 	}
-	$icmsAdminTpl->display('db:album_admin_album.html');
+	$icmsAdminTpl->display('db:album_admin.html');
 }
 
 include_once 'admin_header.php';

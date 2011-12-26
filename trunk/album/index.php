@@ -22,20 +22,12 @@ include_once 'header.php';
 $xoopsOption['template_main'] = 'album_index.html';
 
 include_once ICMS_ROOT_PATH . '/header.php';
-/** Use a naming convention that indicates the source of the content of the variable */
-$clean_album_start = isset($_GET['album_nav']) ? filter_input(INPUT_GET, 'album_nav') : 0;
-$clean_img_start = isset($_GET['img_nav']) ? filter_input(INPUT_GET, 'img_nav') : 0;
-$clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
-$clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
-$clean_album_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : false;
-$clean_album_pid = isset($_GET['pid']) ? filter_input(INPUT_GET, 'pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_album_uid ? false : 0);
-$clean_img_id = isset($_GET['img_id']) ? filter_input(INPUT_GET, 'img_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_a_id = isset($_GET['a_id']) ? filter_input(INPUT_GET, 'a_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+$clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
 $album_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'album' );
 $indexpageObj = $album_indexpage_handler->get($clean_index_key);
 $index = $indexpageObj->toArray();
@@ -45,7 +37,20 @@ $icmsTpl->assign('album_index', $index);
 ////////////////////////////////////////////// ALBUM LIST ////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/** Use a naming convention that indicates the source of the content of the variable */
+$clean_album_start = isset($_GET['album_nav']) ? intval($_GET['album_nav']) : 0;
+$clean_img_start = isset($_GET['img_nav']) ? intval($_GET['img_nav']) : 0;
+$clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
+
+$clean_album_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : false;
+$clean_album_pid = isset($_GET['pid']) ? filter_input(INPUT_GET, 'pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_album_uid ? false : 0);
+
+$clean_img_id = isset($_GET['img_id']) ? filter_input(INPUT_GET, 'img_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_a_id = isset($_GET['a_id']) ? filter_input(INPUT_GET, 'a_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+
 $album_album_handler = icms_getModuleHandler('album', basename(dirname(__FILE__)), 'album');
+$album_images_handler = icms_getModuleHandler('images', basename(dirname(__FILE__)), 'album');
+
 if ($clean_album_id != 0) {
 	$albumObj = $album_album_handler->get($clean_album_id);
 } else {
@@ -65,7 +70,6 @@ if(is_object($albumObj) && $albumObj->accessGranted()){
 	/**
 	 * retrieve the images of these album, if there are some
 	 */
-	$album_images_handler = icms_getModuleHandler('images', basename(dirname(__FILE__)), 'album');
 	$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, $albumConfig['show_images'], 'weight', 'ASC', $clean_a_id);
 	$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
 	$icmsTpl->assign('album_image_rows', $album_image_rows);
@@ -77,7 +81,7 @@ if(is_object($albumObj) && $albumObj->accessGranted()){
 	 */
 	if ($albumConfig['show_breadcrumbs']){
 		$icmsTpl->assign('album_cat_path', $album_album_handler->getBreadcrumbForPid($albumObj->getVar('album_id', 'e'), 1));
-	}else{
+	} else{
 		$icmsTpl->assign('album_cat_path',false);
 	}
 	/**
@@ -125,7 +129,7 @@ if(is_object($albumObj) && $albumObj->accessGranted()){
  */
 } elseif ($clean_album_id == 0) {
 	$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], $clean_album_uid, $clean_album_id, $clean_album_pid, 'weight', 'ASC');
-	$icmsTpl->assign('album_index', $albums);
+	$icmsTpl->assign('album_album', $albums);
 /**
  * if permissions denied for a single album, redirect to index view
  */
@@ -135,7 +139,7 @@ if(is_object($albumObj) && $albumObj->accessGranted()){
 
 /**
  * check, if upload disclaimer is necessary and retrieve the link
- */
+
 
 if($albumConfig['album_show_upl_disclaimer'] == 1) {
 	$icmsTpl->assign('album_upl_disclaimer', TRUE );
@@ -145,19 +149,20 @@ if($albumConfig['album_show_upl_disclaimer'] == 1) {
 }
 /**
  * check, if user can submit
- */
+
 if($album_album_handler->userCanSubmit()) {
 	$icmsTpl->assign('user_submit', true);
 	$icmsTpl->assign('user_submit_link', ALBUM_URL . 'album.php?op=mod&amp;album_id=' . $clean_album_id);
 } else {
 	$icmsTpl->assign('user_submit', false);
 }
-
+ */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 $album_count = $album_album_handler->getAlbumsCount(TRUE, TRUE, TRUE, $groups, 'album_grpperm', $clean_album_uid, $clean_album_id, $clean_album_pid);
 $images_count = $album_images_handler->getImagesCount (TRUE, TRUE, $clean_album_id);
 if (!empty($clean_album_id)) {

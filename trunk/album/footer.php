@@ -16,7 +16,7 @@
  *
  */
 
-defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+
 if($albumConfig['show_breadcrumbs'] == 1) {
 	$icmsTpl->assign('album_show_breadcrumb', TRUE);
 }
@@ -26,5 +26,14 @@ $icmsTpl->assign('album_url', ALBUM_URL);
 $icmsTpl->assign('album_module_home', '<a href="' . ALBUM_URL . '" title="' . icms::$module->getVar("name") . '">' . icms::$module->getVar("name") . '</a>');
 $icmsTpl->assign('album_images_url', ALBUM_IMAGES_URL);
 $icmsTpl->assign('dirname', icms::$module -> getVar( 'dirname' ) );
+
+/**
+ * force js-files to header
+ */
+
+$xoTheme->addScript('/modules/' . ALBUM_DIRNAME . '/scripts/jquery.qtip.js', array('type' => 'text/javascript'));
+$xoTheme->addStylesheet('/modules/' . ALBUM_DIRNAME . '/scripts/jquery.qtip.css');
+$xoTheme->addScript('/modules/' . ALBUM_DIRNAME . '/scripts/album.js', array('type' => 'text/javascript'));
+
 
 include_once ICMS_ROOT_PATH . '/footer.php';

@@ -25,8 +25,8 @@ function album_adminmenu( $currentoption = 0, $header = '', $menu = '', $extra =
 
 function album_display_new($time) {
 	global $albumConfig;
-	$new = ( time() - ( 86400 * intval( $albumConfig['album_daysnew'] ) ) );
-	if ( icms::$module->config['albums_daysnew'] !== 0) {
+	$new = ( time() - ( 86400 * intval( $albumConfig['albums_daysnew'] ) ) );
+	if ( icms::$module->config['albums_daysnew'] != 0) {
 		if ( $new > $time ) {
 			$new = ALBUM_IMAGES_URL . 'new.png';
 			
@@ -41,8 +41,8 @@ function album_display_new($time) {
 
 function album_display_updated($time) {
 	global $albumConfig;
-	$updated = ( time() - ( 86400 * intval( $albumConfig['album_daysupdated'] ) ) );
-	if ( icms::$module->config['albums_daysupdated'] !== 0) {
+	$updated = ( time() - ( 86400 * intval( $albumConfig['albums_daysupdated'] ) ) );
+	if ( icms::$module->config['albums_daysupdated'] != 0) {
 		if ( $updated > $time ) {
 			$updated = ALBUM_IMAGES_URL . 'updated.png';
 			
@@ -58,7 +58,7 @@ function album_display_updated($time) {
 function album_display_popular($counter) {
 	global $albumConfig;
 	$popular = $albumConfig['albums_popular'];
-	if ( $popular !== 0) {
+	if ( $popular != 0) {
 		if ( $popular < $counter ) {
 			$popular = ALBUM_IMAGES_URL . 'popular.png';
 			
