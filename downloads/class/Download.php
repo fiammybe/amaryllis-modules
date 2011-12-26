@@ -436,16 +436,32 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 
 	public function getDownloadRelated() {
-		$related_array = $this->getVar('download_related' , 'e');
-		if (!$related_array == "0") {
-			$relateds = implode(",", $related_array);
-			$relateds2 = explode(",", $relateds);
-			$result = '';
-			foreach ($relateds2 as $related) {
+		$related_array = $this->getVar('download_related' , 's');
+		$relateds = implode(",", $related_array);
+		$relateds2 = explode(",", $relateds);
+		$result = '';
+		foreach ($relateds2 as $related) {
+			if($related != 0) {
 				$link = $this->handler->getLink($related);
 				$result .= '<li>' . $link . '</li>';
 			}
-			return $result;
+		}
+		return $result;
+	}
+	
+	public function getDownloadLicense() {
+		$licenses = $this->getVar("download_license", "s");
+		if($licenses != "") {
+			$license = implode(", ", $licenses);
+			return $license;
+		}
+	}
+	
+	public function getDownloadPlatform() {
+		$platforms = $this->getVar("download_platform", "s");
+		if($platforms != "") {
+			$platform = implode(", ", $platforms);
+			return $platform;
 		}
 	}
 	
@@ -504,8 +520,10 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		/**
 		 * @TODO if going fully php 5.3 use finfo
 		 */
-		$filetype = explode(".",$myfile);
-		return $filetype[1];
+		if($myfile != "") {
+			$filetype = explode(".",$myfile);
+			return $filetype[1];
+		}
 	}
 	
 	function accessGranted() {
@@ -600,8 +618,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['version'] = $this->getVar('download_version');
 		$ret['version_status'] = $this->getVar('download_version_status');
 		$ret['limitations'] = $this->getVar('download_limitations');
-		$ret['license'] = implode(", ", $this->getVar('download_license', 's'));
-		$ret['platform'] = implode(", ", $this->getVar('download_platform'));
+		$ret['license'] = $this->getDownloadLicense();
+		$ret['platform'] = $this->getDownloadPlatform();
 		$ret['language'] = $this->getVar('download_language');
 		$ret['mirror'] = $this->getMirrorLink();
 		$ret['dev'] = $this->getVar('download_dev');
