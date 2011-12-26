@@ -49,7 +49,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->quickInitVar('album_onindex', XOBJ_DTYPE_INT, false, false, false, 1);
 		$this->quickInitVar('album_updated', XOBJ_DTYPE_INT);
 		$this->quickInitVar('album_grpperm', XOBJ_DTYPE_TXTBOX, true );
-		$this->quickInitVar('album_uid', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('album_uid', XOBJ_DTYPE_INT, false, false, false, 1);
 		$this->quickInitVar('album_comments', XOBJ_DTYPE_INT, false);
 		$this->initCommonVar('weight');
 		$this->initCommonVar('counter');
@@ -166,6 +166,21 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$date = $this->getVar('album_updated_date', 'e');
 		
 		return date($albumConfig['album_dateformat'], $date);
+	}
+	
+	public function displayNewIcon() {
+		$newalbum = album_display_new($this->getVar('album_published_date'));
+		return $newalbum;
+	}
+	
+	public function displayUpdatedIcon() {
+		$newalbum = album_display_updated($this->getVar('album_updated_date'));
+		return $newalbum;
+	}
+	
+	public function displayPopularIcon() {
+		$popular = album_display_popular($this->getVar("counter"));
+		return $popular;
 	}
 	
 	/*
@@ -316,19 +331,23 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$ret['id'] = $this->getVar('album_id');
 		$ret['title'] = $this->getVar('album_title');
 		$ret['img'] = $this->getAlbumImageTag();
-		$ret['album_dsc'] = $this->getVar('album_description');
+		$ret['dsc'] = $this->getVar('album_description');
 		$ret['sub'] = $this->getAlbumSub($this->getVar('album_id', 'e'), true);
 		$ret['hassub'] = (count($ret['album_sub']) > 0) ? true : false;
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
-		$ret['album_posterid'] = $this->getVar('album_uid', 'e');
+		$ret['posterid'] = $this->getVar('album_uid', 'e');
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['accessgranted'] = $this->accessGranted();
 		$ret['album_count'] = $this->getSubsCount();
 		$ret['images_count'] = $this->getImagesCount();
 		$ret['user_upload'] = $this->getEditAndDelete();
+		
+		$ret['album_is_new'] = $this->displayNewIcon();
+		$ret['album_is_updated'] = $this->displayUpdatedIcon();
+		$ret['album_popular'] = $this->displayPopularIcon();
 		return $ret;
 	}
 

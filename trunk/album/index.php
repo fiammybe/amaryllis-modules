@@ -65,17 +65,19 @@ if(is_object($albumObj) && $albumObj->accessGranted()){
 	$icmsTpl->assign('single_album', $album);
 	if($album['hassub'] == TRUE) {
 		$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], $clean_album_uid, FALSE, $album['id'], 'weight', 'ASC');
-		$icmsTpl->assign('subalbums', $albums);
+		$subalbum_columns = array_chunk($albums, $albumConfig['show_album_columns']);
+		$icmsTpl->assign('subalbum_columns', $subalbum_columns);
 	}
 	/**
 	 * retrieve the images of these album, if there are some
 	 */
-	$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, $albumConfig['show_images'], 'weight', 'ASC', $clean_a_id);
+	$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, $albumConfig['show_images'], 'weight', 'ASC', $clean_album_id);
 	$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
 	$icmsTpl->assign('album_image_rows', $album_image_rows);
 	$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
 	$album_image_margins = 'align="center" style="display:inline-block; margin: 0px ' . $albumConfig['thumbnail_margin_right'] . 'px 0px ' . $albumConfig['thumbnail_margin_left'] . 'px;"';
-	
+	$icmsTpl->assign('album_row_margins', $album_row_margins);
+	$icmsTpl->assign('album_image_margins', $album_image_margins);
 	/**
 	 * assign breadcrumb
 	 */
@@ -96,30 +98,7 @@ if(is_object($albumObj) && $albumObj->accessGranted()){
 	/**
 	 * check, if album is popular
 	 */
-	$popular = album_display_popular($albumObj->getVar("counter"));
-	if($popular) {
-		$icmsTpl->assign('album_is_popular', TRUE );
-		$icmsTpl->assign('album_is_popular_img', $popular );
-	}
-	/**
-	 * display image if album is new or updated
-	 */
-	$newalbum = album_display_new($albumObj->getVar('album_published_date'));
-	if($newalbum) {
-		$icmsTpl->assign('album_is_new', TRUE);
-		$icmsTpl->assign('album_is_new_img', $newalbum);
-	} else {
-		$icmsTpl->assign('album_is_new', FALSE);
-	}
-	if( $albumObj->getVar('album_updated') == true && $albumObj->getVar('album_updated_date') != 0) {
-		$newalbum = album_display_updated( $albumObj->getVar( 'album_published_date' ) );
-		if($newalbum) {
-			$icmsTpl->assign('album_is_updated', TRUE );
-			$icmsTpl->assign('album_is_updated_img', $newalbum );
-		} else {
-			$icmsTpl->assign('album_is_updated', FALSE );
-		}
-	}
+	
 	if($albumObj->getVar('album_updated_date') > 0) {
 		$icmsTpl->assign("show_updated", TRUE);
 	}
@@ -129,7 +108,8 @@ if(is_object($albumObj) && $albumObj->accessGranted()){
  */
 } elseif ($clean_album_id == 0) {
 	$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], $clean_album_uid, $clean_album_id, $clean_album_pid, 'weight', 'ASC');
-	$icmsTpl->assign('album_album', $albums);
+	$album_columns = array_chunk($albums, $albumConfig['show_album_columns']);
+	$icmsTpl->assign('album_columns', $album_columns);
 /**
  * if permissions denied for a single album, redirect to index view
  */

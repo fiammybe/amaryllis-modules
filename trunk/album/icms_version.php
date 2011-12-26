@@ -269,6 +269,16 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name'			=> 'show_album_columns',
+								'title'			=> '_MI_ALBUM_SHOW_ALBUM_COLUMNS',
+								'description' 	=> '_MI_ALBUM_SHOW_ALBUM_COLUMNS_DSC',
+								'formtype' 		=> 'select',
+								'valuetype'		=> 'int',
+								'options'		=> array('1' => 1, '2' => 2, '3' => 3, '4' => 4),
+								'default' 		=> 2
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'show_images',
 								'title' 		=> '_MI_ALBUM_SHOW_IMAGES',
 								'description'	=> '_MI_ALBUM_SHOW_IMAGES_DSC',

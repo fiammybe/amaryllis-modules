@@ -61,6 +61,8 @@ define("_MI_ALBUM_SHOW_BREADCRUMBS", "show breadcrumb");
 define("_MI_ALBUM_SHOW_BREADCRUMBS_DSC", "choose 'YES' to show breadcrumb in frontend");
 define("_MI_ALBUM_SHOW_ALBUMS", "show Albums");
 define("_MI_ALBUM_SHOW_ALBUMS_DSC", "How many Albums should be displayed on indexpage before using page navigation?");
+define("_MI_ALBUM_SHOW_ALBUM_COLUMNS", "How many columns in frontend to display albums?");
+define("_MI_ALBUM_SHOW_ALBUM_COLUMNS_DSC", "");
 define("_MI_ALBUM_SHOW_IMAGES", "Show Images");
 define("_MI_ALBUM_SHOW_IMAGES_DSC", "How many Images should be displayed at one page");
 define("_MI_ALBUM_SHOW_IMAGES_ROW", "Show Images per row");
