@@ -26,33 +26,33 @@ function album_adminmenu( $currentoption = 0, $header = '', $menu = '', $extra =
 function album_display_new($time) {
 	global $albumConfig;
 	$new = ( time() - ( 86400 * intval( $albumConfig['albums_daysnew'] ) ) );
-	if ( icms::$module->config['albums_daysnew'] != 0) {
-		if ( $new > $time ) {
-			$new = ALBUM_IMAGES_URL . 'new.png';
+	if ( $albumConfig['albums_daysnew'] != 0) {
+		if ( $new < $time ) {
+			$new_img = '<img src="' . ALBUM_IMAGES_URL . 'new.png" title="new" alt="new" />';
 			
 		} else {
-			return false;
+			$new_img = false;
 		}
 	} else {
-		return false;
+		$new_img = false;
 	}
-	return $new;
+	return $new_img;
 }
 
 function album_display_updated($time) {
 	global $albumConfig;
 	$updated = ( time() - ( 86400 * intval( $albumConfig['albums_daysupdated'] ) ) );
-	if ( icms::$module->config['albums_daysupdated'] != 0) {
-		if ( $updated > $time ) {
-			$updated = ALBUM_IMAGES_URL . 'updated.png';
+	if ( $albumConfig['albums_daysupdated'] != 0) {
+		if ( $updated < $time ) {
+			$updated_img = '<img src="' . ALBUM_IMAGES_URL . 'updated.png" title="updated" alt="updated" />';
 			
 		} else {
-			return false;
+			$updated_img = false;
 		}
 	} else {
-		return false;
+		$updated_img = false;
 	}
-	return $updated;
+	return $updated_img;
 }
 
 function album_display_popular($counter) {
@@ -60,13 +60,13 @@ function album_display_popular($counter) {
 	$popular = $albumConfig['albums_popular'];
 	if ( $popular != 0) {
 		if ( $popular < $counter ) {
-			$popular = ALBUM_IMAGES_URL . 'popular.png';
+			$popular = '<img src="' . ALBUM_IMAGES_URL . 'popular.png" title="popular" alt="popular" />';
 			
 		} else {
-			return false;
+			$popular = false;
 		}
 	} else {
-		return false;
+		$popular = false;
 	}
 	return $popular;
 }

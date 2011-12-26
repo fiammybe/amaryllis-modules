@@ -35,7 +35,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->quickInitVar('img_active', XOBJ_DTYPE_INT,TRUE, '', '', 1);
 		$this->quickInitVar('img_approve', XOBJ_DTYPE_INT, TRUE);
 		$this->initCommonVar( 'weight', XOBJ_DTYPE_INT );
-		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->initCommonVar('dohtml', FALSE, 1);
 		$this->initCommonVar('dobr', TRUE, 1);
 		$this->initCommonVar('doimage', TRUE, 1);
@@ -161,6 +161,7 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['title'] = $this->getVar("img_title");
 		$ret['img'] = $this->getImageTag(TRUE);
 		$ret['img_url'] = $this->getImageTag(FALSE);
+		
 		
 		return $ret;
 	}
