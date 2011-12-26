@@ -140,7 +140,7 @@ class AlbumImages extends icms_ipf_Object {
 		global $albumConfig;
 		$innerWidth = $albumConfig['image_display_width'];
 		$maxWidth = $innerWidth + 50;
-		return $maxHeight;
+		return $maxWidth;
 	}
 	
 	public function getEditItemLink() {
@@ -149,6 +149,7 @@ class AlbumImages extends icms_ipf_Object {
 	}
 	
 	public function toArray() {
+		global $albumConfig;
 		$ret = parent::toArray();
 		$ret['thumbnail_width'] = $albumConfig['thumbnail_width'];
 		$ret['thumbnail_height'] = $albumConfig['thumbnail_height'];
@@ -156,8 +157,8 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['inner_height'] = $albumConfig['image_display_height'];
 		$ret['max_width'] = $this->getMaxWidth();
 		$ret['max_height'] = $this->getMaxHeight();
-		$ret['dsc'] = $this->getVar("image_description");
-		$ret['title'] = $this->getVar("image_title");
+		$ret['dsc'] = $this->getVar("img_description");
+		$ret['title'] = $this->getVar("img_title");
 		$ret['img'] = $this->getImageTag(TRUE);
 		$ret['img_url'] = $this->getImageTag(FALSE);
 		

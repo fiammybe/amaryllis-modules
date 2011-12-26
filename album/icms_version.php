@@ -104,28 +104,39 @@ $modversion['onInstall'] = 'include/onupdate.inc.php';
 ////////////////////////////////////////////// TEMPLATES /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-$modversion['templates'][1] = array(
+$i = 0;
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'album_index.html',
 										'description'	=> _MI_ALBUM_INDEX_TPL
 								);
-$modversion['templates'][] = array(
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'album_header.html',
 										'description'	=> _MI_ALBUM_HEADER_TPL
 								);
-$modversion['templates'][] = array(
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'album_footer.html',
 										'description'	=> _MI_ALBUM_FOOTER_TPL
 								);
-$modversion['templates'][] = array(
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'album_album.html',
 										'description'	=> _MI_ALBUM_ALBUM_TPL
 								);
-$modversion['templates'][] = array(
+$i++;
+$modversion['templates'][$i] = array(
+										'file'			=> 'album_forms.html',
+										'description'	=> _MI_ALBUM_FORMS_TPL
+								);
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'album_admin.html',
 										'description'	=> _MI_ALBUM_ADMIN_FORM_TPL
 								);
-$modversion['templates'][] = array(
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'album_requirements.html',
 										'description'	=> _AM_ALBUM_REQUIREMENTS_TPL
 								);
@@ -408,7 +419,7 @@ $modversion['config'][$i] = array(
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-$modversion['hasNotification'] = 1;
+$modversion['hasNotification'] = 0;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';
 $modversion['notification']['lookup_func'] = 'album_notify_iteminfo';
 

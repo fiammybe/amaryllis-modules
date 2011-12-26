@@ -47,6 +47,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->quickInitVar('album_inblocks', XOBJ_DTYPE_INT, false, false, false, 1);
 		$this->quickInitVar('album_approve', XOBJ_DTYPE_INT);
 		$this->quickInitVar('album_onindex', XOBJ_DTYPE_INT, false, false, false, 1);
+		$this->quickInitVar('album_updated', XOBJ_DTYPE_INT);
 		$this->quickInitVar('album_grpperm', XOBJ_DTYPE_TXTBOX, true );
 		$this->quickInitVar('album_uid', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('album_comments', XOBJ_DTYPE_INT, false);
@@ -61,12 +62,13 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		// set controls
 		$this->setControl( 'album_img_upload', array( 'name' => 'imageupload' ) );
 		
-		$this->setControl('album_pid', 'parentcategory');
+		$this->setControl('album_pid', array("name" => "select", "itemHandler" => "album", "method" => "getAlbumListForPid", "module" => "album"));
 		$this->setControl('album_description', 'dhtmltextarea');
 		$this->setControl('album_active', 'yesno');
 		$this->setControl('album_inblocks', 'yesno');
 		$this->setControl('album_onindex', 'yesno');
 		$this->setControl('album_approve', 'yesno');
+		$this->setControl('album_updated', 'yesno');
 		$this->setControl('album_uid', 'user');
 		$this->setControl('album_img', array( 'name' => 'select', 'itemHandler' => 'album', 'method' => 'getImageList', 'module' => 'album'));
 		$this->setControl('album_grpperm', array ( 'name' => 'select_multi', 'itemHandler' => 'album', 'method' => 'getGroups', 'module' => 'album'));

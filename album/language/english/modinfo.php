@@ -28,6 +28,7 @@ define("_MI_ALBUM_ADMIN_FORM_TPL", "'Album' Admin form");
 define("_AM_ALBUM_REQUIREMENTS_TPL", "'Album' Requirements check");
 define("_MI_ALBUM_FOOTER_TPL", "'Album' footer contains notifications and comment rules");
 define("_MI_ALBUM_ALBUM_TPL", "'Album' view in frontend");
+define("_MI_ALBUM_FORMS_TPL", "Form to add, edit and delete Albums and Images ");
 
 // blocks
 define("_MI_ALBUM_BLOCK_RECENT_ALBUMS", "Album List");
@@ -39,7 +40,20 @@ define("_MI_ALBUM_NEEDS_APPROVAL", "Album needs approval?");
 define("_MI_ALBUM_NEEDS_APPROVAL_DSC", "Albums created in frontend needs to be approved first");
 define("_MI_IMAGE_NEEDS_APPROVAL", "Image needs approval?");
 define("_MI_IMAGE_NEEDS_APPROVAL_DSC", "Images uploaded in frontend needs to be approved");
-
+define("_MI_ALBUM_SHOWDISCLAIMER", "Show Disclaimer before user can upload?");
+define("_MI_ALBUM_SHOWDISCLAIMER_DSC", "Set 'YES' to display disclaimer before user can upload.");
+define("_MI_ALBUM_DISCLAIMER", "Disclaimer for Upload");
+define("_MI_ALBUM_UPL_DISCLAIMER_TEXT", "<h1>Terms of Service for {X_SITENAME}:</h1>
+												<p>{X_SITENAME} reserves the right to remove any image or file for any reason what ever. Specifically, any image/file uploaded that infringes upon copyrights not held by the uploader, is illegal or violates any laws, will be immediately deleted and the IP address of the uploaded reported to authorities. Violating these terms will result in termination of your ability to upload further images/files.
+												Do not link or embed images hosted on this service into a large-scale, non- forum website. You may link or embed images hosted on this service in personal sites, message boards, and individual online auctions.</p>
+												<p>By uploading images to {X_SITENAME} you give permission for the owners of {X_SITENAME} to publish your images in any way or form, meaning websites, print, etc. You will not be compensated by {X_SITENAME} for any loss what ever!</p>
+												<p>We reserve the right to ban any individual uploader or website from using our services for any reason.</p>
+												<p>All images uploaded are copyright © their respective owners.</p>
+												<h2>Privacy Policy :</h2> 
+												<p>{X_SITENAME} collects user's IP address, the time at which user uploaded a file, and the file's URL. This data is not shared with any third party companies or individuals (unless the file in question is deemed to be in violation of these Terms of Service, in which case this data may be shared with law enforcement entities), and is used to enforce these Terms of Service as well as to resolve any legal matters that may arise due to violations of the Terms of Service. </p>
+												<h2>Legal Policy:</h2> 
+												<p>These Terms of Service are subject to change without prior warning to its users. By using {X_SITENAME}, user agrees not to involve {X_SITENAME} in any type of legal action. {X_SITENAME} directs full legal responsibility of the contents of the files that are uploaded to {X_SITENAME} to individual users, and will cooperate with law enforcement entities in the case that uploaded files are deemed to be in violation of these Terms of Service. </p>
+												<p>All files are © to their respective owners · All other content © {X_SITENAME}. {X_SITENAME} is not responsible for the content any uploaded files, nor is it in affiliation with any entities that may be represented in the uploaded files.</p>");
 
 define("_MI_ALBUM_DATE_FORMAT", "Date format");
 define("_MI_ALBUM_DATE_FORMAT_DSC", "For more informations: <a href=\"http://php.net/manual/en/function.date.php\" target=\"blank\">see php.net manual</a>");
@@ -64,8 +78,15 @@ define("_MI_ALBUM_IMAGE_UPLOAD_WIDTH", "image upload width");
 define("_MI_ALBUM_IMAGE_UPLOAD_WIDTH_DSC", "set max width for uploading images");
 define("_MI_ALBUM_IMAGE_UPLOAD_HEIGHT", "image upload height");
 define("_MI_ALBUM_IMAGE_UPLOAD_HEIGHT_DSC", "set max height for uploading images");
+define("_MI_ALBUM_IMAGE_DISPLAY_WIDTH", "image upload width");
+define("_MI_ALBUM_IMAGE_DISPLAY_WIDTH_DSC", "set max width for uploading images");
+define("_MI_ALBUM_IMAGE_DISPLAY_HEIGHT", "image upload height");
+define("_MI_ALBUM_IMAGE_DISPLAY_HEIGHT_DSC", "set max height for uploading images");
 define("_MI_ALBUM_IMAGE_FILE_SIZE", "image file size");
 define("_MI_ALBUM_IMAGE_FILE_SIZE_DSC", "set max file size for uploading");
+define("_MI_ALBUM_POPULAR", "How many calls of one Album before it's popular");
+define("_MI_ALBUM_DAYSNEW", "How many days to provide one Album as new");
+define("_MI_ALBUM_DAYSUPDATED", "How many days to provide one Album as updated after editing");
 
 // Blocks information
 define("_MI_ALBUM_BLOCK_RECENT", "Recent Albums");

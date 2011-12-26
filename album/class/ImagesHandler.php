@@ -119,7 +119,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	public function userCanSubmit() {
 		global $album_isAdmin;
 		if (!is_object(icms::$user)) return TRUE;
-		if ($content_isAdmin) return TRUE;
+		if ($album_isAdmin) return TRUE;
 		$user_groups = icms::$user->getGroups();
 		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
 		return count(array_intersect($module->config['uploader_groups'], $user_groups)) > 0;

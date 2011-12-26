@@ -1,6 +1,6 @@
 <{includeq file='db:album_header.html'}>
 
-<{if $album_index}> <!-- album index view -->
+<{if $album_album}> <!-- album index view -->
 	<!-- display index header -->
 	<{$album_index.header}>
 	<!-- display index heading -->
@@ -12,10 +12,8 @@
 		
 		<div class="album_rule">
 			<!-- album rule -->
-			<{foreach item=album from=$album_index}>
-			
+			<{foreach item=album from=$album_album}>
 				<{includeq file='db:album_album.html'}>
-				
 			<{/foreach}>
 		</div>
 		<{if $user_submit}>
@@ -30,7 +28,7 @@
 			</div>
 		<{/if}>
 	</div>
-<!-- E N D category index -->
+<!-- E N D album index -->
 <{/if}>
 
 <{if $single_album}> <!-- display single album -->
@@ -69,10 +67,11 @@
 		<{if $album_pagenav }><{$album_pagenav}><{/if}>
 		
 		<{foreach item=album from=$subalbums}>
-					
 			<{includeq file='db:album_album.html'}>
-			
 		<{/foreach}>
+		
+		<!-- pagination control -->
+		<{if $album_pagenav }><{$album_pagenav}><{/if}>
 		
 		<{if $user_submit}>
 			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">

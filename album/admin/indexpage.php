@@ -37,6 +37,8 @@ $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
 $valid_op = array ( 'mod','addindexpage' );
 
+$album_indexpage_handler = icms_getModuleHandler("indexpage", basename(dirname(dirname(__FILE__))), "album");
+
 $clean_indexkey = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1 ;
 
 if ( in_array( $clean_op, $valid_op, TRUE ) ) {
