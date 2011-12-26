@@ -45,7 +45,7 @@ class DownloadsReviewHandler extends icms_ipf_Handler {
 	protected function beforeInsert(& $obj) {
 		global $downloadsConfig;
 		$message = $obj->getVar("review_message", "s");
-		$smessage = strip_tags($message,'<b><i><a>');
+		$smessage = strip_tags($message,'<b><i><a><br/>');
 		$smessage = icms_core_DataFilter::checkVar($smessage, "html", "input");
 		$obj->setVar("review_message", $smessage);
 

@@ -242,14 +242,15 @@
 		});
 		// file votings
 		$("a.file_vote").click(function() {
-			var id = $(this).attr("download_id");
-			var name = $(this).attr("name");
+			var $link = $(this);
+			var id = $link.attr("download_id");
+			var name = $link.attr("name");
 			var dataString = 'download_id='+ id ;
 			var parent = $(this);
 			if (name=='up') {
 				$.ajax({
 					type: "POST",
-					url: "ajax.php?op=vote_up&download_id="+ id ,
+					url: "ajax.php?op=vote_up",
 					data: dataString,
 					cache: false,
 				});

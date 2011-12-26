@@ -445,6 +445,12 @@ $modversion['config'][$i] = array(
 ,Berkeley Database License
 ,BSD License (Original)
 ,Common Public License
+,Creative Commons (CC) 3.0 (by)
+,Creative Commons (CC) 3.0 (by-nd)
+,Creative Commons (CC) 3.0 (by-nc)
+,Creative Commons (CC) 3.0 (by-nc-nd)
+,Creative Commons (CC) 3.0 (by-nc-sa)
+,Creative Commons (CC) 3.0 (by-sa)
 ,FreeBSD Copyright (Modifizierte BSD-Lizenz)
 ,GNU Emacs General Public License
 ,GNU Free Documentation License (FDL) (v. 1.2)
