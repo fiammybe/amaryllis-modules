@@ -73,7 +73,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('download_active', TRUE));
 		}
 		$downloads = $this->getObjects($criteria, TRUE);
-		$ret = array();
+		$ret[0] = '-----------';
 		foreach(array_keys($downloads) as $i) {
 			$ret[$i] = $downloads[$i]->getVar('download_title');
 		}
@@ -442,17 +442,14 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	}
 	
 	// some related functions for storing
-	protected function beforeSave(&$obj) {
-		global $downloadsConfig;
-		if ($obj->updating_counter)
-		return true;
-		if(!empty($mirror_url)) {
+	protected function beforeInsert(&$obj) {
+		$mirror_url = $obj->getVar('download_mirror_url');
+		if(!$mirror_url == "") {
 			$obj->setVar('download_has_mirror', 1);
 		} else {
 			$obj->setVar('download_has_mirror', 0);
 		}
 		return true;
-		
 	}
 	
 	protected function afterSave(&$obj) {
