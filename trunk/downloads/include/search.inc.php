@@ -30,7 +30,7 @@ function downloads_search($queryarray, $andor, $limit, $offset, $userid) {
 
 	foreach ($downloadsArray as $downloadArray) {
 		$item['image'] = "images/downloads_icon.png";
-		$item['link'] = $downloadArray['itemLink'];
+		$item['link'] = $downloadArray['itemURL'];
 		$item['title'] = $downloadArray['download_title'];
 		$item['time'] = strtotime($downloadArray['download_published_date']);
 		$item['uid'] = $downloadArray['download_publisher'];
