@@ -318,6 +318,11 @@
 		margin: 1em auto;
 	}
 	
+	/*override*/
+.ui-tabs .ui-tabs-nav li {
+    list-style: none outside none !important;
+}
+	
 	/** 
 	 * Rating feature
 	 */
