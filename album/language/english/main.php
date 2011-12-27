@@ -22,6 +22,7 @@ define('_MD_ALBUM_EDIT', 'Edit Album');
 
 
 define('_MD_ALBUM_PUBLISHED_ON', 'Published on');
+define('_MD_ALBUM_UPDATED_ON', 'Updated on');
 define('_MD_ALBUM_PUBLISHED_BY', 'Published by');
 define("_MD_ALBUM_IMAGES", "Images");
 define("_MD_ALBUM_SUBALBUMS", "Subalbums");

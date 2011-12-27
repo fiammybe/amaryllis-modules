@@ -129,17 +129,66 @@ class AlbumImages extends icms_ipf_Object {
 		return $image_tag;
 	}
 
+	function img_publisher() {
+		return icms_member_user_Handler::getUserLink($this->getVar('img_publisher', 'e'));
+	}
+	
+	// get publisher for frontend
+	function getPublisher($link = false) {
+		
+			$publisher_uid = $this->getVar('img_publisher', 'e');
+			$userinfo = array();
+			$userObj = icms::handler('icms_member')->getuser($publisher_uid);
+			if (is_object($userObj)) {
+				$userinfo['uid'] = $publisher_uid;
+				$userinfo['uname'] = $userObj->getVar('uname');
+				$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
+			} else {
+				global $icmsConfig;
+				$userinfo['uid'] = 0;
+				$userinfo['uname'] = $icmsConfig['anonymous'];
+			}
+		
+		if ($link && $userinfo['uid']) {
+			return $userinfo['link'];
+		} else {
+			return $userinfo['uname'];
+		}
+	}
+	
+	/**
+	 * convert the date to prefered settings
+	 */
+	public function getPublishedDate() {
+		global $albumConfig;
+		$date = '';
+		$date = $this->getVar('img_published_date', 'e');
+		
+		return date($albumConfig['album_dateformat'], $date);
+	}
+	
+	public function getUpdatedDate() {
+		global $albumConfig;
+		$date = '';
+		$date = $this->getVar('img_updated_date', 'e');
+		if($date != 0){
+			return date($albumConfig['album_dateformat'], $date);
+		} else {
+			return FALSE;
+		}
+	}
+
 	public function getMaxHeight() {
 		global $albumConfig;
 		$innerHeight = $albumConfig['image_display_height'];
-		$maxHeight = $innerHeight + 300;
+		$maxHeight = (intval($innerHeight) + 300);
 		return $maxHeight;
 	}
 	
 	public function getMaxWidth() {
 		global $albumConfig;
 		$innerWidth = $albumConfig['image_display_width'];
-		$maxWidth = $innerWidth + 50;
+		$maxWidth = (intval($innerWidth) + 50);
 		return $maxWidth;
 	}
 	
@@ -162,7 +211,9 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['img'] = $this->getImageTag(TRUE);
 		$ret['img_url'] = $this->getImageTag(FALSE);
 		$ret['id'] = $this->getVar("img_id");
-		
+		$ret['published_on'] = $this->getPublishedDate();
+		$ret['updated_on'] = $this->getUpdatedDate();
+		$ret['publisher'] = $this->getPublisher(TRUE);
 		
 		return $ret;
 	}

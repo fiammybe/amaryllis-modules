@@ -52,7 +52,8 @@
 				<div class="album_images_row" <{$album_row_margins}> >
 					<{foreach item=album_images from=$album_row}>
 						
-							<a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" rel="lightbox" <{$album_image_margins}> >
+							<a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" rel="lightbox" 
+								 <{$album_image_margins}> >
 								<{resized_image file=$album_images.img width=$album_images.thumbnail_width height=$album_images.thumbnail_height fit="inside"}>
 							</a>
 							
@@ -60,12 +61,17 @@
 							<div style="display: none">
 								<div class="img_content" id="image-<{$album_images.id}>">
 									<title><{$album_images.title}></title>
-									<img src="<{$album_images.img_url}>" alt="<{$album_images.title}>" title="<{$album_images.title}>" />
-									<div class="img_info">
-										
+									<{resized_image file=$album_images.img width=$album_images.inner_width height=$album_images.inner_height fit="inside"}>
+									<div class="img_info" width="$album_images.inner_width" >
+										<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$album_images.publisher}>&nbsp;|&nbsp;
+										<{if $album_images.updated_on}>
+											<{$smarty.const._MD_ALBUM_UPDATED_ON}>&nbsp;:&nbsp;<{$album_images.updated_on}>&nbsp;|&nbsp;
+										<{else}>
+											<{$smarty.const._MD_ALBUM_PUBLISHED_ON}>&nbsp;:&nbsp;<{$album_images.published_on}>&nbsp;|&nbsp;
+										<{/if}>
 									</div>
 									
-									<div class="img_desc">
+									<div class="img_desc" style="width: <{$album_images.inner_width}>px" >
 										<{$album_images.dsc}>
 									</div>
 								</div>
