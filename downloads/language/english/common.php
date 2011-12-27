@@ -34,6 +34,8 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_CID", "Category");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_CID_DSC", "Here you can choose a category, where the file will be listed");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISHED_DATE", "Published Date");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISHED_DATE_DSC", "  ");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_UPDATED_DATE", "Updated Date");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_UPDATED_DATE_DSC", "  ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_IMG", "File Image");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_IMG_DSC", " The file image will be displayed in file listing ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DESCRIPTION", "Description");
@@ -46,6 +48,7 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_APPROVE", "Approved?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_APPROVE_DSC", "This will be true, if you&#039;re adding new files from backend. If an user adds a file from frontend and you chose to use approvals in module settings, this will be false and you need to approve from backend");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISHER", "Publisher");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISHER_DSC", "Select the Publisher of the File");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_SUBMITTER", "Submitter");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEV", "Developer");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEV_DSC", "");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM", "View Permission");
@@ -99,7 +102,6 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_BROKEN", "Broken?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_BROKEN_DSC", "This will be 'YES' if the download link was reported as broken");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HAS_MIRROR", "Has Mirror?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_APPROVE", "Mirror approved?");
-
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_IMAGES", "Add some images for visual description");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS", "Describe the file");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING", "Download Mirror");
@@ -107,6 +109,9 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEVELOPER_INFO", "Developer information"
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISH_INFO", "Publish information");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VIEW_SECTION", "Public permissions");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_STATIC_SECTION", "Some additional information");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DOWNCOUNTER", " Downloaded  ");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_LIKE", "Like");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DISLIKE", "Dislike");
 // language constants for editing indexpage
 define("_CO_DOWNLOADS_INDEXPAGE_INDEX_HEADER", "Title");
 define("_CO_DOWNLOADS_INDEXPAGE_INDEX_HEADER_DSC", " Set Title displayed in the index at frontend ");
@@ -146,7 +151,7 @@ define("_CO_DOWNLOADS_REVIEW_REVIEW_UID", "user");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_NAME", "Name");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_EMAIL", "E-Mail");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_MESSAGE", "Message");
-define("_CO_DOWNLOADS_REVIEW_REVIEW_MESSAGE_DSC", 'You can use some HTML here. Actually &lt;b&gt; for <b>bold</b>, &lt;i&gt; for <i>italic</i> Text and &lt;a&gt; for a link. All others will be stripped out.');
+define("_CO_DOWNLOADS_REVIEW_REVIEW_MESSAGE_DSC", 'You can use some HTML here. Actually &lt;b&gt; for <b>bold</b>, &lt;i&gt; for <i>italic</i> Text, &lt;a&gt; for a link and &lt;br&gt; for a line break. All others will be stripped out.');
 
 define("_CO_DOWNLOADS_REVIEW_REVIEW_DATE", "Date");
 // LOG system
