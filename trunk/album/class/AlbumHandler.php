@@ -160,10 +160,10 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		$criteria->add(new icms_db_criteria_Item('album_inblocks', true));
 		$criteria->add(new icms_db_criteria_Item('album_approve', true));
 		$criteria->add(new icms_db_criteria_Item('album_onindex', true));
-		$criteria->setStart(0);
+		$criteria->setStart($start);
 		$criteria->setLimit($limit);
-		$criteria->setSort('album_published_date');
-		$criteria->setOrder('DESC');
+		$criteria->setSort($order);
+		$criteria->setOrder($sort);
 		$albums = $this->getObjects($criteria, true, false);
 		$ret = array();
 		foreach ($albums as $key => &$album){

@@ -153,7 +153,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable = new icms_ipf_view_Table($album_album_handler, $criteria);
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_active', 'center', FALSE, 'album_active' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_title', FALSE, FALSE, 'getPreviewItemLink' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'album_pid', FALSE, FALSE, 'album_pid' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'album_pid', FALSE, FALSE, 'getAlbumParent' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'counter', 'center', 100));
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_approve', 'center', 50, 'album_approve' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_inblocks', 'center', 50, 'album_inblocks' ) );
