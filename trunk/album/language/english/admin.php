@@ -20,6 +20,8 @@
 // general usage
 define("_AM_ALBUM_ONLINE", "Online");
 define("_AM_ALBUM_OFFLINE", "Offline");
+define("_AM_ALBUM_ADD", "Add");
+define("_AM_ALBUM_CREATE", "Create new");
 // Requirements
 define("_AM_ALBUM_REQUIREMENTS", "'Album' Requirements");
 define("_AM_ALBUM_REQUIREMENTS_INFO", "We've reviewed your system, unfortunately it doesn't meet all the requirements needed for 'Album' to function. Below are the requirements needed.");

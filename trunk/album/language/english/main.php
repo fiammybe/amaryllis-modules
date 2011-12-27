@@ -19,6 +19,9 @@
 
 define('_MD_ALBUM_DELETE', 'Delete Album');
 define('_MD_ALBUM_EDIT', 'Edit Album');
+define('_MD_ALBUM_IMAGES_CREATE', 'Upload new Image');
+define('_MD_ALBUM_SUBMIT_CAT', 'Submit new album');
+define('_MD_ALBUM_ALBUM_CREATE', 'Create New Album');
 
 
 define('_MD_ALBUM_PUBLISHED_ON', 'Published on');

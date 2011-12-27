@@ -95,12 +95,14 @@ if(is_object($albumObj) && $albumObj->accessGranted()){
 	} else {
 		$icmsTpl->assign('user_submit', false);
 	}
-	/**
-	 * check, if album is popular
-	 */
 	
-	if($albumObj->getVar('album_updated_date') > 0) {
-		$icmsTpl->assign("show_updated", TRUE);
+	/**
+	 * include the comment rules
+	 */
+	$images_count = $album_images_handler->getImagesCount (TRUE, TRUE, $clean_album_id);
+	if ($albumConfig['com_rule'] && $images_count > 0) {
+		$icmsTpl->assign('album_album_comment', true);
+		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 	}
 	
 /**
@@ -119,6 +121,7 @@ if(is_object($albumObj) && $albumObj->accessGranted()){
 
 /**
  * check, if upload disclaimer is necessary and retrieve the link
+ */
 
 
 if($albumConfig['album_show_upl_disclaimer'] == 1) {
@@ -129,6 +132,7 @@ if($albumConfig['album_show_upl_disclaimer'] == 1) {
 }
 /**
  * check, if user can submit
+ */
 
 if($album_album_handler->userCanSubmit()) {
 	$icmsTpl->assign('user_submit', true);
@@ -136,7 +140,6 @@ if($album_album_handler->userCanSubmit()) {
 } else {
 	$icmsTpl->assign('user_submit', false);
 }
- */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////

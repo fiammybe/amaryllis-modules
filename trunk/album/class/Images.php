@@ -43,6 +43,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->initCommonVar('docxode', TRUE, 1);
 		
 		$this -> setControl ( 'img_active', 'yesno' );
+		$this -> setControl ( 'img_approve', 'yesno' );
 		$this->setControl( 'img_publisher', 'user' );
 		$this->setControl('a_id', array('itemHandler' => 'album', 'method' => 'getAlbumList', 'module' => 'album'));
 		$this -> setControl( 'img_description', 'dhtmltextarea' );
@@ -190,11 +191,6 @@ class AlbumImages extends icms_ipf_Object {
 		$innerWidth = $albumConfig['image_display_width'];
 		$maxWidth = (intval($innerWidth) + 50);
 		return $maxWidth;
-	}
-	
-	public function getEditItemLink() {
-		$ret = '<a href="' . ALBUM_ADMIN_URL . 'images.php?op=changedField&amp;img_id=' . $this->getVar('img_id', 'e') . '" title="' . _MD_ALBUM_ALBUM_EDIT . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
-		return $ret;
 	}
 	
 	public function toArray() {

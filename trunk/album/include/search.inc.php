@@ -30,7 +30,7 @@ function album_search($queryarray, $andor, $limit, $offset, $userid) {
 
 	foreach ($albumsArray as $albumArray) {
 		$item['image'] = "images/album_icon.png";
-		$item['link'] = $albumArray['itemUrl'];
+		$item['link'] = $albumArray['itemURL'];
 		$item['title'] = $albumArray['album_title'];
 		$item['time'] = strtotime($albumArray['album_published_date']);
 		$item['uid'] = $albumArray['album_uid'];

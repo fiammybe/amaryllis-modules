@@ -17,20 +17,19 @@
 				<{foreach item=album from=$album_column}>
 					<{includeq file='db:album_album.html'}>
 				<{/foreach}>
-				
-				<{if $user_submit}>
-					<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
-						<img src="<{$album_images_url}>add_cat.png" title="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />
-					</a>
-				<{/if}>
-				
-				<{if $album_upl_disclaimer}>
-					<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
-						<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
-					</div>
-				<{/if}>
 			</div>
 		<{/foreach}>
+		<{if $user_submit}>
+			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+				<img src="<{$album_images_url}>add_cat.png" title="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />
+			</a>
+		<{/if}>
+		
+		<{if $album_upl_disclaimer}>
+			<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
+				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
+			</div>
+		<{/if}>
 	</div>
 <!-- E N D album index -->
 <{/if}>
