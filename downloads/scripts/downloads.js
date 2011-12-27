@@ -214,7 +214,13 @@
 
 	$(document).ready(function(){
 		// use colorbox for screenshots
-		$('a.file_screens').colorbox({transition:'fade', speed:500});
+		$('a.file_screens').colorbox({
+			transition:'fade',
+			speed:500,
+			opacity: 0.9,
+			slideshow: true,
+			slideshowAuto: false
+		});
 		// initiate the tabs for single file view
 		$("#file_tabs").tabs({ cookie: { expires: 7 } });
 		//initiate qtip for category description
