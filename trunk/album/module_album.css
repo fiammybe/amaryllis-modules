@@ -100,3 +100,11 @@
 		padding: .250em;
 		line-height: 3em;
 	}
+	
+	.img_info {
+		margin: 2em auto;
+	}
+	
+	.img_desc{
+		margin: 1em auto;
+	}

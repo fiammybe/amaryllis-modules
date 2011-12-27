@@ -46,15 +46,25 @@
 	$(document).ready(function(){
 		// use colorbox for screenshots
 		$('a.single_image').each(function(){
-			
+			var $link = $(this);
+			var maxH = $link.attr("maxheight");
+			var maxW = $link.attr("maxwidth");
+			var innerH = $link.attr("innerheight");
+			var innerW = $link.attr("innerwidth");
 			$(this).colorbox({
 				transition:'fade',
 				speed:500,
 				opacity: 0.9,
+				photo: true,
+				scalePhotos: true,
 				slideshow: true,
 				arrowKey: true,
 				slideshowAuto: false,
 				inline: true,
+				maxWidth: maxW,
+				maxHeight: maxH,
+				innerWidth: innerW,
+				innerHeight: innerH,
 			});
 		});
 		
