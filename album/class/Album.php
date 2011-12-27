@@ -108,7 +108,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	public function getAlbumParent() {
 		$parent = $this->getVar("album_pid", "e");
 		if($parent == 0){
-			return '-----------';
+			return '-------------';
 		} else {
 			$album = $this->handler->get($parent);
 			$parent_link = $album->getItemLink(FALSE);

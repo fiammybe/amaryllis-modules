@@ -39,8 +39,8 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		
 		if(isset($approve)) $criteria->add(new icms_db_criteria_Item('album_approve', TRUE));
 		if(isset($active)) $criteria->add(new icms_db_criteria_Item('album_active', TRUE));
-		if(isset($album_id)) $criteria->add( new icms_db_criteria_Item( 'album_id', (int)$album_id));
-		$albums = $this -> getObjects( $criteria, true );
+		
+		$albums = $album_album_handler -> getObjects( $criteria, true );
 		foreach( array_keys( $albums ) as $i ) {
 			$ret[$albums[$i]->getVar( 'album_id' )] = $albums[$i] -> getVar( 'album_title' );
 		}
@@ -118,7 +118,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	
 	public function userCanSubmit() {
 		global $album_isAdmin;
-		if (!is_object(icms::$user)) return TRUE;
+		if (!is_object(icms::$user)) return FALSE;
 		if ($album_isAdmin) return TRUE;
 		$user_groups = icms::$user->getGroups();
 		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);

@@ -48,6 +48,9 @@ define("_CO_ALBUM_ALBUM_ALBUM_APPROVE_DSC", " Set 'YES' to approve Album ");
 define("_CO_ALBUM_ALBUM_ALBUM_ONINDEX", "On Index");
 define("_CO_ALBUM_ALBUM_ALBUM_ONINDEX_DSC", " Set 'YES' to show album on Index. This can be used, to approve albums and keep them active, but do not Display on Index-View. e.g. 'Downloads' can use Albums for describing a file. So you can allow these Album, but only show it in Downloads. ");
 
+define("_CO_ALBUM_ALBUM_ALBUM_UPDATED", "Updated?");
+define("_CO_ALBUM_ALBUM_ALBUM_UPDATED_DSC", " Set 'YES' to show Album as updated");
+
 define("_CO_ALBUM_ALBUM_ALBUM_UID", "Publisher");
 define("_CO_ALBUM_ALBUM_ALBUM_UID_DSC", "Select the Publisher of the Album");
 
@@ -73,8 +76,9 @@ define("_CO_ALBUM_IMAGES_IMG_PUBLISHED_DATE", "Published Date");
 define("_CO_ALBUM_IMAGES_IMG_PUBLISHED_DATE_DSC", "  ");
 define("_CO_ALBUM_IMAGES_IMG_URL", "Select the image");
 define("_CO_ALBUM_IMAGES_IMG_URL_DSC", "You can upload a new image");
-define("_CO_ALBUM_IMG_DESCRIPTION", "Description");
-define("_CO_ALBUM_IMG_DESCRIPTION_DSC", " Set Description of the image ");
+define("_CO_ALBUM_IMAGES_IMG_DESCRIPTION", "Description");
+define("_CO_ALBUM_IMAGES_IMG_DESCRIPTION_DSC", " Set Description of the image ");
 define("_CO_ALBUM_IMAGES_IMG_ACTIVE", "Active?");
 define("_CO_ALBUM_IMAGES_IMG_ACTIVE_DSC", "Set 'YES' to set image online");
+define("_CO_ALBUM_IMAGES_IMG_APPROVE", "Approved?");
 define("_CO_ALBUM_IMAGES_IMG_PUBLISHER", "Uploader");
