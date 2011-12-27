@@ -96,7 +96,7 @@ class AlbumIndexpage extends icms_ipf_Object {
 	 */
 	public function getIndexFooter() {
 		$indexfooter = '';
-		$indexfooter = $this->getVar('index_footer', 'e');
+		$indexfooter = $this->getVar('index_footer', 's');
 		$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
 		return '<div class="album_indexfooter">' . $indexfooter . '</div>';
 	}

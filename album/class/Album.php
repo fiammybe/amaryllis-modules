@@ -73,8 +73,8 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->setControl('album_img', array( 'name' => 'select', 'itemHandler' => 'album', 'method' => 'getImageList', 'module' => 'album'));
 		$this->setControl('album_grpperm', array ( 'name' => 'select_multi', 'itemHandler' => 'album', 'method' => 'getGroups', 'module' => 'album'));
 		// hide static fields from forms/single views
-		$this->hideFieldFromForm( array('album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
-		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
+		$this->hideFieldFromForm( array('album_updated_date','album_published_date','album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter', 'dohtml', 'doimage', 'dosmiley', 'docxcode' ) );
+		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter', 'dohtml', 'doimage', 'dosmiley', 'docxcode' ) );
 
 		$this->initiateSEO();
 	}
@@ -169,12 +169,16 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	}
 	
 	public function displayNewIcon() {
-		$newalbum = album_display_new($this->getVar('album_published_date'));
+		$time = $this->getVar("album_published_date", "e");
+		$timestamp = time();
+		$newalbum = album_display_new($time, $timestamp);
 		return $newalbum;
 	}
 	
 	public function displayUpdatedIcon() {
-		$newalbum = album_display_updated($this->getVar('album_updated_date'));
+		$time = $this->getVar("album_updated_date", "e");
+		$timestamp = time();
+		$newalbum = album_display_updated($time, $timestamp);
 		return $newalbum;
 	}
 	
