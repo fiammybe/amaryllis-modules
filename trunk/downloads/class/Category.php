@@ -68,7 +68,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		// hide static fields from form
 		$this->hideFieldFromForm(array('category_submitter', 'category_notification_sent', 'category_sub','counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
 		// hide fields from single view
-		$this->hideFieldFromSingleView(array('category_sub','counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
+		$this->hideFieldFromSingleView(array('category_notification_sent', 'weight', 'category_sub','counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
 		
 		//make use of seo
 		$this->initiateSEO();

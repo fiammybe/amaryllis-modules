@@ -91,7 +91,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_notification_sent', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_like', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_dislike', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('download_downcounter', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('download_downcounter', XOBJ_DTYPE_INT, false, FALSE, FALSE, 0);
 		$this->initCommonVar('weight');
 		$this->initCommonVar('counter');
 		$this->initCommonVar('dohtml', false, 1);
