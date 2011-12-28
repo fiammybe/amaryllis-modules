@@ -82,8 +82,9 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 		global $downloadsConfig;
 		// filter and store entry
 		$message = $obj->getVar("guestbook_entry", "s");
-		$message = icms_core_DataFilter::checkVar(strip_tags($message,"<b><i><a>"), "html", "input");
-		$obj->setVar("guestbook", $message);
+		$smessage = strip_tags($message,'<b><i><a><br>');
+		$smessage = icms_core_DataFilter::checkVar($smessage, "html", "input");
+		$obj->setVar("guestbook", $smessage);
 		// filter and store e-mail
 		$email = $obj->getVar("guestbook_email", "s");
 		if($downloadsConfig['display_guestbook_email'] == 1 && $email != "") {
