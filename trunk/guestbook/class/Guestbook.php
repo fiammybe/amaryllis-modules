@@ -47,7 +47,6 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		
 		$this->setControl("guestbook_image", "image");
-		$this->setControl("guestbook_entry", "textarea");
 		$this->setControl("guestbook_approve", "yesno");
 		if($guestbookConfig['allow_imageupload'] == 0) {
 			$this->hideFieldFromForm("guestbook_image");
