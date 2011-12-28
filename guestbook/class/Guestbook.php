@@ -39,7 +39,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$this->quickInitVar("guestbook_image", XOBJ_DTYPE_IMAGE, FALSE);
 		$this->quickInitVar("guestbook_entry", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("guestbook_pid", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("guestbook_ip", XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar("guestbook_ip", XOBJ_DTYPE_OTHER, FALSE);
 		$this->quickInitVar("guestbook_approve", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("guestbook_published_date", XOBJ_DTYPE_LTIME);
 		$this->initCommonVar("dohtml", FALSE, 1);
@@ -134,13 +134,35 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		return date($guestbookConfig['guestbook_dateformat'], $date);
 	}
 	
+	public function getSubEntries($toArray = FALSE) {
+		global $guestbookConfig;
+		if($guestbookConfig['use_moderation'] == 1) {
+			$pid = $this->getVar("guestbook_id", "e");
+			return $this->handler->getSubEntries(TRUE, $pid, $toArray);
+		}
+	}
+
 	public function getReplyLink() {
-		$link = GUESTBOOK_URL . 'submit.php?op=replyEntry&amp;guestbook_id=' . $this->getVar("guestbook_id");
+		global $guestbookConfig;
+		if($guestbookConfig['use_moderation'] == 1) {
+			$pid = $this->getVar("guestbook_id", "e");
+			$link = GUESTBOOK_URL . 'submit.php?op=addreply&guestbook_pid=' . $this->getVar("guestbook_id");
+		} else {
+			$link = FALSE;
+		}
 		return $link;
+	}
+
+	public function getReplyForm() {
+		$pid = $this->getVar("guestbook_id", "e");
+		//$sform = $this->getSecureForm(_MD_GUESTBOOK_CREATE, "addentry", 'submit.php?op=addentry&guestbook_pid=' . $pid, FALSE, TRUE);
+		return $sform;
 	}
 	
 	public function toArray() {
+		global $guestbookConfig;
 		$ret = parent::toArray();
+		$ret['id'] = $this->getVar("guestbook_id");
 		$ret['published_on'] = $this->getPublishedDate();
 		$ret['published_by'] = $this->getPublisher(TRUE);
 		$ret['img'] = $this->getImageTag();
@@ -150,8 +172,14 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$ret['ip'] = $this->getVar("guestbook_ip");
 		$ret['title'] = $this->getVar("guestbook_title");
 		$ret['message'] = $this->getMessage();
-		//$ret['reply'] = $this->getReplyLink();
 		$ret['avatar'] = $this->getGuestbookAvatar();
+		$ret['parent'] = $this->getVar("guestbook_pid", "e");
+		if($guestbookConfig['use_moderation'] == 1){
+			$ret['sub'] = $this->getSubEntries(TRUE);
+			$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
+		}
+		$ret['reply'] = $this->getReplyLink();
+		
 		return $ret;
 	}
 	

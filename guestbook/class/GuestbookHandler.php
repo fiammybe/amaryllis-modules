@@ -55,16 +55,25 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 		if ($limit) $criteria->setLimit((int)$limit);
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
-		if($approve) {
-			$criteria->add(new icms_db_criteria_Item('guestbook_approve', TRUE));
-		}
-		if ($guestbook_pid !== FALSE) {
-			$criteria->add(new icms_db_criteria_Item('guestbook_pid', $guestbook_pid));
-		}
+		if($approve) $criteria->add(new icms_db_criteria_Item('guestbook_approve', TRUE));
+		$criteria->add(new icms_db_criteria_Item('guestbook_pid', $guestbook_pid));
 		$entries = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach($entries as $entry) {
-			$ret[$entry['guestbook_id']] = $entry;
+			$ret[$entry['id']] = $entry;
+		}
+		return $ret;
+	}
+	
+	public function getSubEntries($approve = NULL, $guestbook_pid = 0, $toArray = FALSE) {
+		$criteria = new icms_db_criteria_Compo();
+		if($approve) $criteria->add(new icms_db_criteria_Item("guestbook_approve", TRUE));
+		$criteria = new icms_db_criteria_Item("guestbook_pid", $guestbook_pid);
+		$subentries = $this->getObjects($criteria, TRUE, TRUE);
+		if(!$toArray) return $subentries;
+		$ret = array();
+		foreach(array_keys($subentries) as $i) {
+			$ret[$i] = $subentries[$i]->toArray();
 		}
 		return $ret;
 	}

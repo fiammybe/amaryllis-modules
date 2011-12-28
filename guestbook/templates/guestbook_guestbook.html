@@ -1,5 +1,5 @@
 <link href="<{$guestbook_url}>module_guestbook.css" rel="stylesheet" type="text/css" />
-
+<{if $entries}>
 <{if $guestbook_show_breadcrumb}>
 	<!-- module breadcrumb -->
 	<div class="guestbook_headertable">
@@ -21,43 +21,21 @@
 <{if $entries}>
 	<div class="guestbook_entries">
 		<{foreach item=entry from=$entries}>
-			<div>
-			<!-- title -->
-				<div class="guestbook_title"><{$entry.title}></div>
+			<{includeq file="db:guestbook_singleentry.html"}>
+			<{if $entry.reply && $guestbook_is_admin}>
 				
-				<div class="guestbook_row">
-					<div class="guestbook_uinfo">
-						<{if $show_avatar}>
-							<span class="guestbook_avatar">
-								<{$entry.avatar}>
-							</span>
-						<{/if}>
-						<span class="guestbook_publisher">
-							<{$smarty.const._MD_GUESTBOOK_PUBLISHED_BY}>&nbsp;:&nbsp;<{$entry.published_by}>
-						</span>
-						<span class="guestbook_published_date">
-							<{$smarty.const._MD_GUESTBOOK_PUBLISHED_ON}>&nbsp;:&nbsp;<{$entry.published_on}>
-						</span>
-					</div>
-					<div class="guestbook_message">
-						<span class="entry_info">
-							<{if $guestbook_is_admin}>&nbsp;&nbsp;
-								<span="guestbook_ip">
-									<{$entry.ip}>
-								</span>
-							<{/if}>
-						</span>
-						<span class="guestbook_message">
-							<{$entry.message}>
-						</span>
-						<!-- <{if $reply_link && $guestbook_is_admin}>
-							<span class="submit_link">
-								<a href="<{$entry.reply}>" title="reply"><{$smarty.const._MD_GUESTBOOK_REPLY}></a>
-							</span>
-						<{/if}> -->
-					</div>
+				<span class="guestbook_reply_link">
+					<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_GUESTBOOK_REPLY}></a>
+				</span>
+			<{/if}>
+			
+			<{if $entry.hassub}>
+				<div class="guestbook_replies">
+					<{foreach item=entry from=$entry.sub}>
+						<{includeq file="db:guestbook_singleentry.html"}>
+					<{/foreach}>
 				</div>
-			</div>
+			<{/if}>
 		
 		<{/foreach}>
 	</div>
@@ -82,3 +60,7 @@
 <{/if}>
 
 <{$guestbook_index.footer}>
+<{/if}>
+<{if $guestbook_reply_form}>
+	<{includeq file='db:system_common_form.html' form=$guestbook_reply_form}>
+<{/if}>

@@ -114,17 +114,24 @@ $modversion['onInstall'] = 'include/onupdate.inc.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// TEMPLATES /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-$modversion['templates'][1] = array(
+$i = 0;
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'guestbook_guestbook.html',
 										'description'	=> _MI_GUESTBOOK_GUESTBOOK_TPL
 								);
-$modversion['templates'][2] = array(
+$i++;
+$modversion['templates'][$i] = array(
+										'file'			=> 'guestbook_singleentry.html',
+										'description'	=> _MI_GUESTBOOK_GUESTBOOK_TPL
+								);
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'guestbook_admin.html',
 										'description'	=> _MI_GUESTBOOK_ADMIN_TPL
 								);
-$modversion['templates'][3] = array(
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'guestbook_requirements.html',
 										'description'	=> _MI_GUESTBOOK_REQUIREMENTS_TPL
 								);
