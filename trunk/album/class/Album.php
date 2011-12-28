@@ -45,7 +45,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->quickInitVar('album_description', XOBJ_DTYPE_TXTAREA, false);
 		$this->quickInitVar('album_active', XOBJ_DTYPE_INT, false, false, false, 1);
 		$this->quickInitVar('album_inblocks', XOBJ_DTYPE_INT, false, false, false, 1);
-		$this->quickInitVar('album_approve', XOBJ_DTYPE_INT);
+		$this->quickInitVar('album_approve', XOBJ_DTYPE_INT, TRUE, '', '', 1);
 		$this->quickInitVar('album_onindex', XOBJ_DTYPE_INT, false, false, false, 1);
 		$this->quickInitVar('album_updated', XOBJ_DTYPE_INT);
 		$this->quickInitVar('album_grpperm', XOBJ_DTYPE_TXTBOX, true );
