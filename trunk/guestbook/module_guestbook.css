@@ -53,3 +53,70 @@
 	.guestbook_adminlinks {
 		text-align: center;
 	}
+	
+	.guestbook_entries {
+		width: 100%;
+		margin: 2em auto;
+	}
+	
+	.guestbook_entry {
+		display: table;
+		width: 100%;
+	}
+	
+	.guestbook_uinfo {
+		display: table-cell;
+		width: 25%;
+	}
+	
+	.guestbook_message {
+		display: table-cell;
+		margin: 0em 2em;
+	}
+	
+	.guestbook_row {
+		display: table-row;
+		padding: 0em 2em;
+		width: 100%;
+	}
+
+	.guestbook_title {
+		display: table-caption;
+		width: 100%;
+		line-height: 2em;
+		text-align: center;
+		font-weight: bold;
+		background: #ccc;
+		
+	}
+	
+	.guestbook_publisher {
+		display: block;
+	}
+	
+	.guestbook_published_on {
+		display: block;
+	}
+	
+	.guestbook_replies {
+		margin-left: 5em;
+	}
+	
+	.reply_link, .register_link, .submit_link {
+		position: relative;
+		background: #FFAA2A;
+		padding: 5px 10px;
+		margin: 1em auto;
+		display: block;
+		width: 5em;
+		text-align: center;
+		font-size: 1.5em;
+		-webkit-border-radius: .5em;
+		-moz-border-radius: .5em;
+		border-radius: .5em;
+		cursor: pointer;
+	}
+	
+	.guestbook_ip {
+		color: red;
+	}

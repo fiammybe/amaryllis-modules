@@ -1,0 +1,32 @@
+<div class="guestbook_entry">
+	<!-- title -->
+	<div class="guestbook_title"><{$entry.title}></div>
+	
+	<div class="guestbook_row">
+		<div class="guestbook_uinfo">
+			<{if $show_avatar}>
+				<span class="guestbook_avatar">
+					<{$entry.avatar}>
+				</span>
+			<{/if}>
+			<span class="guestbook_publisher">
+				<{$smarty.const._MD_GUESTBOOK_PUBLISHED_BY}>&nbsp;:&nbsp;<{$entry.published_by}>
+			</span>
+			<span class="guestbook_published_date">
+				<{$smarty.const._MD_GUESTBOOK_PUBLISHED_ON}>&nbsp;:&nbsp;<{$entry.published_on}>
+			</span>
+		</div> <!-- E N D .guestbook_uinfo -->
+		<div class="guestbook_message">
+			<span class="entry_info">
+				<{if $guestbook_is_admin}>&nbsp;&nbsp;
+					<span class="guestbook_ip">
+						<{$entry.ip}>
+					</span>
+				<{/if}>
+			</span>
+			<span class="guestbook_message">
+				<{$entry.message}>
+			</span>
+		</div> <!-- E N D .guestbook_message -->
+	</div> <!-- E N D .guestbook_row -->
+</div> <!-- E N D .guestbook_entry -->

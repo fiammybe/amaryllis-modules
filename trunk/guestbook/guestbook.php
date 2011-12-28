@@ -17,7 +17,7 @@
  *
  */
  
-function editmessage($clean_guestbook_id = 0) {
+function editmessage($clean_guestbook_id = 0, $guestbook_pid = FALSE) {
 	global $icmsConfig, $guestbook_guestbook_handler, $icmsTpl, $guestbookConfig;
 	$guestbook_guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(dirname(__FILE__))), "guestbook");
 	$guestbookObj = $guestbook_guestbook_handler->get($clean_guestbook_id);
@@ -39,8 +39,16 @@ function editmessage($clean_guestbook_id = 0) {
 		} else {
 			$guestbookObj->setVar("guestbook_approve", TRUE);
 		}
-		$sform = $guestbookObj->getSecureForm(_MD_GUESTBOOK_CREATE, 'addentry', 'submit.php?op=addentry&guestbook_id=' . $clean_guestbook_id);
-		$sform->assign($icmsTpl, 'guestbook_form');
+		if($guestbook_pid) {
+			$guestbookObj->setVar("guestbook_pid", $guestbook_pid);
+		}
+		$sform = $guestbookObj->getSecureForm(_MD_GUESTBOOK_CREATE, 'addentry', 'submit.php?op=addentry&guestbook_id=' . $clean_guestbook_id, FALSE, TRUE);
+		//$sform->addElement();
+		if($guestbook_pid) {
+			$sform->assign($icmsTpl, 'guestbook_reply_form');
+		} else {
+			$sform->assign($icmsTpl, 'guestbook_form');
+		}
 	} else {
 		exit;
 	}
@@ -69,8 +77,14 @@ $icmsTpl->assign('guestbook_index', $index);
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start') : 0;
 $guestbook_guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(__FILE__)), "guestbook");
 $clean_guestbook_id = isset($_GET['guestbook_id']) ? filter_input(INPUT_GET, 'guestbook_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$entries = $guestbook_guestbook_handler -> getEntries(false ,false, 0, $guestbookConfig["show_entries"], 'guestbook_published_date', 'DESC');
+$entries = $guestbook_guestbook_handler -> getEntries(TRUE ,$clean_guestbook_id, $clean_start, $guestbookConfig["show_entries"], 'guestbook_published_date', 'DESC');
 $icmsTpl->assign("entries", $entries);
+if($guestbookConfig['use_moderation'] == 1) {
+	
+		$icmsTpl->assign("reply_link", TRUE);
+	
+}
+
 if($guestbookConfig["show_avatar"] == 1) {
 	$icmsTpl->assign("show_avatar", TRUE);
 }
@@ -84,7 +98,7 @@ if($guestbookConfig["guest_entry"] == 1) {
 	$icmsTpl->assign("submit_link", FALSE);
 	}
 }
-editmessage();
+editmessage($clean_guestbook_id);
 $icmsTpl->assign("guestbook_module_home", '<a href="' . ICMS_URL . '/modules/' . icms::$module->getVar("dirname") . '/">' . icms::$module->getVar("name") . '</a>');
 $icmsTpl->assign("guestbook_adminpage", '<a href="' . GUESTBOOK_ADMIN_URL . '">' . _MD_GUESTBOOK_ADMIN_PAGE . '</a>');
 $icmsTpl->assign("guestbook_is_admin", icms_userIsAdmin(GUESTBOOK_DIRNAME));

@@ -27,16 +27,16 @@
 		});
 		$(".submit_link").click(function(e) {
 			e.preventDefault();
-			var targetUrl = $(this).attr("href");
-			$(".guestbook_link").dialog('option', 'buttons', {
-				"Submit" : function() {
-					window.location.href = targetUrl;
-				},
-				"Cancel" : function() {
-					$(this).dialog("close");
-				}
-			});
 			$(".guestbook_form").dialog("open");
+		});
+		
+		$(".guestbook_reply_form").dialog({
+			modal: true,
+			width: 700,
+			height: 600,
+			autoOpen: false,
+			resizable: true,
+			draggable: true,
 		});
 	});
 
