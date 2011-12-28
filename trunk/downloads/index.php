@@ -90,7 +90,7 @@ if (is_object($categoryObj) && $categoryObj->accessGranted()) {
  * if not valid single category or no permissions -> redirect to module home
  */
 } else {
-	redirect_header(DOWNLOADS_URL, 3, _NOPERM);
+	redirect_header(DOWNLOADS_URL, 3, _NO_PERM);
 }
 
 /**
