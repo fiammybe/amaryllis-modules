@@ -117,6 +117,10 @@
 		width: 100%;
 		margin: 2em auto;
 	}
+
+	.downloads_cat_icons {
+		float:right;
+	}
 	
 	.file_header {
 		display: block;
@@ -174,19 +178,32 @@
 		position: relative;
 		
 	}
-	
+	#file_description{
+		max-height: 300px;
+    overflow: auto;
+	}
 	.file_req, .file_keys, .file_related {
 		position: relative;
 		display: inline-block;
 		background: #ccc;
 		padding: 1em 1em;
-		width: auto;
+		width: 100%;
 		height: auto;
 		text-align: left;
 		vertical-align: middle;
 		-webkit-border-radius: 6px;
 		-moz-border-radius: 6px;
 		border-radius: 6px;
+	}
+	
+	#file_history{
+		max-height: 300px;
+    overflow: auto;
+	}
+	
+	#file_reviews{
+		max-height: 300px;
+    overflow: auto;
 	}
 	
 	ul.downloads_check {
