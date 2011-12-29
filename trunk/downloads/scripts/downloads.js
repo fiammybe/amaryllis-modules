@@ -241,7 +241,7 @@
 					target: 'mouse',
 					my:'bottomLeft',
 					adjust: {
-						x: 10,  y: 10
+						x: 0,  y: -5
 					}
 				},
 			});

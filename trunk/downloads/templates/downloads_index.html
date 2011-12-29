@@ -16,6 +16,7 @@
 				<div class="category_row table_row">
 					<{foreach item=categories from=$category_column}>
 					<!-- category rule -->
+					<div class="download_cat_frame">
 						<div class="downloads_category table_cell" original-title="<{$categories.title}>">
 							<!-- category image -->
 							<span class="downloads_cat_img">
@@ -28,15 +29,7 @@
 							<span class="downloads_cat_title">
 								<a href="<{$categories.itemLink}>" title=""><{$categories.title}></a>
 								<span style="font-size: small; font-weight: normal;"> &nbsp;(&nbsp;<{$categories.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;|&nbsp;<{$categories.cat_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_SUBCATS}>&nbsp;)&nbsp;</span>
-								<{if $categories.userCanEditAndDelete}>
-									<{$categories.editItemLink}><{$categories.deleteItemLink}>
-								<{/if}>
-								<{if $categories.user_upload}>
-									<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$categories.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
-										<img src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
-									</a>
-								<{/if}>
-							</span>
+							</span>	
 						</div><!-- E N D .downloads_category -->
 						<div class="popup">
 								<span class="downloads_category_info">
@@ -46,6 +39,23 @@
 									<{$categories.dsc}>
 								</span>
 						</div>
+						
+						<div class="downloads_cat_icons">
+								<{if $categories.userCanEditAndDelete}>
+									<{$categories.editItemLink}><{$categories.deleteItemLink}>
+								<{/if}>
+								<{if $categories.user_upload}>
+									<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$categories.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
+										<img style="vertical-align: middle;" src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/filenew2.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
+									</a>
+								<{/if}>
+								<{if $user_submit}>
+									<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+										<img style="vertical-align: middle;" src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/folder_new.png" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" alt="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" />
+									</a>
+								<{/if}>
+						</div>
+					</div>		
 					<{/foreach}>
 					<div style="clear: both; height: 1px; margin: 4px 5px 4px 0;">&nbsp;</div>
 				</div>
@@ -54,12 +64,7 @@
 			<{if $category_pagenav}><{$category_pagenav}><{/if}>
 			
 		</div>
-		<{if $user_submit}>
-			<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
-				<img src="<{$downloads_images_url}>add_cat.png" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" alt="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" />
-			</a>
-		<{/if}>
-		
+
 		<{if $downloads_upl_disclaimer}>
 			<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
 				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
@@ -73,7 +78,7 @@
 		<div class="downloads_scat_title"><{$downloads_single_cat.title}></div>&nbsp;(&nbsp;<{$downloads_single_cat.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;)&nbsp;&nbsp;<{if $downloads_single_cat.userCanEditAndDelete}><{$downloads_single_cat.editItemLink}><{/if}>
 			<{if $downloads_single_cat.user_upload}>
 				<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_100" href="<{$downloads_single_cat.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
-					<img src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
+					<img style="vertical-align: middle;" src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/filenew2.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
 				</a>
 				<{if $downloads_upl_disclaimer}>
 					<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
@@ -172,7 +177,7 @@
 								<{/if}>
 								<{if $categories.user_upload}>
 									<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$categories.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
-										<img src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
+										<img style="vertical-align: middle;" src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/filenew2.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
 									</a>
 								<{/if}>
 							</span>
