@@ -18,6 +18,10 @@ define("_MI_GUESTBOOK_DSC", "ImpressCMS Simple guestbook");
 define("_MI_GUESTBOOK_GUESTBOOK_TPL", "Guestbook index page");
 define("_MI_GUESTBOOK_ADMIN_TPL", "guestbook admin Template");
 define("_MI_GUESTBOOK_REQUIREMENTS_TPL", "guestbook requirements");
+// blocks
+define("_MI_GUESTBOOK_BLOCK_RECENT_ENTRIES", "Last entries");
+define("_MI_GUESTBOOK_BLOCK_RECENT_ENTRIES_DSC", "Displaying recent entries in a block");
+
 // Config
 define("_MI_GUESTBOOK_DATE_FORMAT", "Date Format");
 define("_MI_GUESTBOOK_DATE_FORMAT_DSC", "You can set the Date Format output like prefered");
