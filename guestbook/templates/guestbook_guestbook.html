@@ -1,5 +1,4 @@
 <link href="<{$guestbook_url}>module_guestbook.css" rel="stylesheet" type="text/css" />
-<{if $entries}>
 <{if $guestbook_show_breadcrumb}>
 	<!-- module breadcrumb -->
 	<div class="guestbook_headertable">
@@ -60,7 +59,6 @@
 <{/if}>
 
 <{$guestbook_index.footer}>
-<{/if}>
 <{if $guestbook_reply_form}>
 	<{includeq file='db:system_common_form.html' form=$guestbook_reply_form}>
 <{/if}>
