@@ -1,0 +1,66 @@
+<link href="<{$visitorvoice_url}>module_visitorvoice.css" rel="stylesheet" type="text/css" />
+<{if $entries}>
+<{if $visitorvoice_show_breadcrumb}>
+	<!-- module breadcrumb -->
+	<div class="visitorvoice_headertable">
+		<{if $visitorvoice_module_home}>
+			<span class="visitorvoice_modulename"><{$visitorvoice_module_home}></span>
+		<{/if}>
+		<{if $visitorvoice_category_path}>
+			<span class="visitorvoice_breadcrumb"><{if $visitorvoice_module_home}>&gt;<{/if}><{$visitorvoice_category_path}></span>
+		<{/if}>
+	</div>
+<{/if}>
+
+<{$visitorvoice_index.image}>
+
+<{$visitorvoice_index.header}>
+
+<{$visitorvoice_index.heading}>
+
+<{if $entries}>
+	<div class="visitorvoice_entries">
+		<{foreach item=entry from=$entries}>
+			<{includeq file="db:visitorvoice_singleentry.html"}>
+			<{if $entry.reply && $visitorvoice_is_admin}>
+				
+				<span class="visitorvoice_reply_link">
+					<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_VISITORVOICE_REPLY}></a>
+				</span>
+			<{/if}>
+			
+			<{if $entry.hassub}>
+				<div class="visitorvoice_replies">
+					<{foreach item=entry from=$entry.sub}>
+						<{includeq file="db:visitorvoice_singleentry.html"}>
+					<{/foreach}>
+				</div>
+			<{/if}>
+		
+		<{/foreach}>
+	</div>
+<{/if}>
+<div class="visitorvoice_submit">
+	<span class="visitorvoice_link">
+		<a class="<{if $submit_link}>submit_link<{else}>register_link<{/if}>"><{$smarty.const._MD_VISITORVOICE_ADD_ENTRY}></a>
+	</span>
+</div>
+<div class="ui-helper-hidden visitorvoice_form">
+	<{if $visitorvoice_form}>
+		<{includeq file='db:system_common_form.html' form=$visitorvoice_form}>
+	<{/if}>
+</div>
+
+<div id="dialog-confirm-perm" title="<{$smarty.const._MD_visitorvoice_PERM}>" class="ui-helper-hidden" >
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$smarty.const._MD_VISITORVOICE_PERMISSION}></p>
+</div>
+
+<{if $visitorvoice_is_admin}>
+	<div class="visitorvoice_adminlinks"><{$visitorvoice_adminpage}></div>
+<{/if}>
+
+<{$visitorvoice_index.footer}>
+<{/if}>
+<{if $visitorvoice_reply_form}>
+	<{includeq file='db:system_common_form.html' form=$visitorvoice_reply_form}>
+<{/if}>
