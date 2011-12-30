@@ -336,43 +336,6 @@
 	}
 	
 	/*override*/
-.ui-tabs .ui-tabs-nav li {
-    list-style: none outside none !important;
-}
-	
-	/** 
-	 * Rating feature
-	 */
-	#votebox
-{
-border:solid 1px #dedede; padding:3px;
-display:none;
-padding:15px;
-width:700px;
--moz-border-radius: 6px;
--webkit-border-radius: 6px;
-}
-#greebar
-{
-float:left;
-background-color:#aada37;
-border:solid 1px #698a14;
-width:0px;
-height:12px;
-}
-#redbar
-{
-float:left;
-background-color:#cf362f;
-border:solid 1px #881811;
-width:0px;
-height:12px;
-}
-#close
-{
-float:right; font-weight:bold; 
-padding:3px 5px 3px 5px; 
-border:solid 1px #333;
--moz-border-radius: 6px;
--webkit-border-radius: 6px;
-}
+	.ui-tabs .ui-tabs-nav li {
+		list-style: none outside none !important;
+	}
