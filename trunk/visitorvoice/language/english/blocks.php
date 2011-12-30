@@ -11,3 +11,5 @@
 */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+
+define("_MB_VISITORVOICE_VISITORVOICE_RECENT_LIMIT", "Show entries:");

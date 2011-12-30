@@ -158,6 +158,13 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		return $sform;
 	}
 	
+	public function getItemLink() {
+		$id = $this->getVar("visitorvoice_id", "e");
+		$title = $this->getVar("visitorvoice_title", "e");
+		$link = '<a href="' . VISITORVOICE_URL . '#entry_' . $id . '" title="' . $title . '">' . $title . '</a>';
+		return $link;
+	}
+	
 	public function toArray() {
 		global $visitorvoiceConfig;
 		$ret = parent::toArray();
@@ -178,6 +185,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 			$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
 		}
 		$ret['reply'] = $this->getReplyLink();
+		$ret['itemLink'] = $this->getItemLink();
 		
 		return $ret;
 	}

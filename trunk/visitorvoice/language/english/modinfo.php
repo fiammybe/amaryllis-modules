@@ -18,6 +18,9 @@ define("_MI_VISITORVOICE_DSC", "ImpressCMS Simple visitorvoice");
 define("_MI_VISITORVOICE_VISITORVOICE_TPL", "Visitorvoice index page");
 define("_MI_VISITORVOICE_ADMIN_TPL", "visitorvoice admin Template");
 define("_MI_VISITORVOICE_REQUIREMENTS_TPL", "visitorvoice requirements");
+// Blocks
+define("_MI_VISITORVOICE_BLOCK_RECENT_ENTRIES", "Last entries");
+define("_MI_VISITORVOICE_BLOCK_RECENT_ENTRIES_DSC", "Displaying recent entries in a block");
 // Config
 define("_MI_VISITORVOICE_DATE_FORMAT", "Date Format");
 define("_MI_VISITORVOICE_DATE_FORMAT_DSC", "You can set the Date Format output like prefered");

@@ -1,0 +1,5 @@
+<ul>
+	<{foreach item=visitorvoice_entry from=$block.visitorvoice_entries}>
+		<li><{$visitorvoice_entry.itemLink}> (<{$visitorvoice_entry.published_on}>)</li>
+	<{/foreach}>
+</ul>
