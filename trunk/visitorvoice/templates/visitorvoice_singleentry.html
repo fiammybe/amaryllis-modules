@@ -1,0 +1,32 @@
+<div class="visitorvoice_entry">
+	<!-- title -->
+	<div class="visitorvoice_title"><{$entry.title}></div>
+	
+	<div class="visitorvoice_row">
+		<div class="visitorvoice_uinfo">
+			<{if $show_avatar}>
+				<span class="visitorvoice_avatar">
+					<{$entry.avatar}>
+				</span>
+			<{/if}>
+			<span class="visitorvoice_publisher">
+				<{$smarty.const._MD_VISITORVOICE_PUBLISHED_BY}>&nbsp;:&nbsp;<{$entry.published_by}>
+			</span>
+			<span class="visitorvoice_published_date">
+				<{$smarty.const._MD_VISITORVOICE_PUBLISHED_ON}>&nbsp;:&nbsp;<{$entry.published_on}>
+			</span>
+		</div> <!-- E N D .VISITORVOICE_uinfo -->
+		<div class="visitorvoice_message">
+			<span class="entry_info">
+				<{if $visitorvoice_is_admin}>&nbsp;&nbsp;
+					<span class="visitorvoice_ip">
+						<{$entry.ip}>
+					</span>
+				<{/if}>
+			</span>
+			<span class="visitorvoice_message">
+				<{$entry.message}>
+			</span>
+		</div> <!-- E N D .VISITORVOICE_message -->
+	</div> <!-- E N D .VISITORVOICE_row -->
+</div> <!-- E N D .VISITORVOICE_entry -->
