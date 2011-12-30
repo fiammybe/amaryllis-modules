@@ -9,53 +9,58 @@
 		<{$downloads_index.heading}>
 		
 		<div class="downloads_cats"><!-- START category index view -->
+			<{if $user_submit}>
+				<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+					<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_cat.png" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" alt="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" />
+				</a>
+			<{/if}>
 			<!-- pagination control -->
 			<{if $category_pagenav}><{$category_pagenav}><{/if}>
 			<!-- category row -->
 			<{foreach item=category_column from=$category_columns}>
 				<div class="category_row table_row">
 					<{foreach item=categories from=$category_column}>
-					<!-- category rule -->
-					<div class="download_cat_frame">
-						<div class="downloads_category table_cell" original-title="<{$categories.title}>">
-							<!-- category image -->
-							<span class="downloads_cat_img">
-								<a href="<{$categories.itemLink}>">
-									<img src="<{$categories.img}>" alt="" title="<{$categories.title}>" />
-								</a>
-							</span>
+						<!-- category rule -->
+						<div class="download_cat_frame">
+							<div class="downloads_category table_cell" original-title="<{$categories.title}>">
+								<!-- category image -->
+								<span class="downloads_cat_img">
+									<a href="<{$categories.itemLink}>">
+										<img src="<{$categories.img}>" alt="" title="<{$categories.title}>" />
+									</a>
+								</span>
+								
+								<!-- Category title -->
+								<span class="downloads_cat_title">
+									<a href="<{$categories.itemLink}>" title=""><{$categories.title}></a>
+									<span style="font-size: small; font-weight: normal;"> &nbsp;(&nbsp;<{$categories.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;|&nbsp;<{$categories.cat_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_SUBCATS}>&nbsp;)&nbsp;</span>
+								</span>	
+							</div><!-- E N D .downloads_category -->
+							<div class="popup">
+									<span class="downloads_category_info">
+										(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$categories.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$categories.published_date}>&nbsp;)
+									</span>
+									<span class="downloads_cat_desc">
+										<{$categories.dsc}>
+									</span>
+							</div>
 							
-							<!-- Category title -->
-							<span class="downloads_cat_title">
-								<a href="<{$categories.itemLink}>" title=""><{$categories.title}></a>
-								<span style="font-size: small; font-weight: normal;"> &nbsp;(&nbsp;<{$categories.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;|&nbsp;<{$categories.cat_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_SUBCATS}>&nbsp;)&nbsp;</span>
-							</span>	
-						</div><!-- E N D .downloads_category -->
-						<div class="popup">
-								<span class="downloads_category_info">
-									(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$categories.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$categories.published_date}>&nbsp;)
-								</span>
-								<span class="downloads_cat_desc">
-									<{$categories.dsc}>
-								</span>
+							<div class="downloads_cat_icons">
+									<{if $categories.userCanEditAndDelete}>
+										<{$categories.editItemLink}><{$categories.deleteItemLink}>
+									<{/if}>
+									<{if $categories.user_upload}>
+										<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$categories.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
+											<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
+										</a>
+									<{/if}>
+									<{if $categories.user_submit}>
+										<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$categories.user_submit}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+											<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_cat.png" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" alt="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" />
+										</a>
+									<{/if}>
+							</div>
 						</div>
-						
-						<div class="downloads_cat_icons">
-								<{if $categories.userCanEditAndDelete}>
-									<{$categories.editItemLink}><{$categories.deleteItemLink}>
-								<{/if}>
-								<{if $categories.user_upload}>
-									<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$categories.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
-										<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
-									</a>
-								<{/if}>
-								<{if $user_submit}>
-									<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
-										<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_cat.png" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" alt="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" />
-									</a>
-								<{/if}>
-						</div>
-					</div>		
 					<{/foreach}>
 					<div style="clear: both; height: 1px; margin: 4px 5px 4px 0;">&nbsp;</div>
 				</div>
@@ -95,59 +100,59 @@
 		
 		
 		<{if $downloads_single_cat.files_count > 0 }>
-		<h2><{$smarty.const._MD_DOWNLOADS_DOWNLOAD_FILELIST}></h2>
-		
-		<div class="downloads_filelist">
-		
-			<!-- pagination control -->
-			<{if $download_pagenav }><{$download_pagenav}><{/if}>
-		
-			<!-- File rule -->
-			<{foreach item=download from=$downloads_files}>
-				
-				<!-- File image -->
-				<span class="downloads_cat_img">
-					<{if $download.index_img}>
-						<a class="file_screens" href="<{$download.index_img}>" title="file image">
-							<{resized_image file=$download.index_img width=$download.file_thumbnail_width height=$download.file_thumbnail_height fit="inside"}>
-						</a>
-					<{/if}>
-				</span>
-				
-				<!-- File title -->
-				<span class="downloads_cat_title">
-					<a href="<{$download.itemURL}>" title="<{$download.title}>"><{$download.title}></a>&nbsp;
-						<{if $download.userCanEditAndDelete}>
-							<{$download.editItemLink}><{$download.deleteItemLink}>
-						<{/if}>
-						<p class="downloads_category_info">
-							(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$download.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$download.published_date}>&nbsp;)
-						</p>
-				</span>
-<br /><br />
-				<!-- File description -->
-				<div class="downloads_cat_dsc">
-					<{$download.teaser}> 
-					<a href="<{$download.itemURL}>" title="<{$smarty.const._MD_DOWNLOADS_READ_MORE}>"><{$smarty.const._MD_DOWNLOADS_READ_MORE}></a>
-					<{$smarty.const._MD_DOWNLOADS_FILE_DOWNLOADED}>&nbsp;:&nbsp;<{$download.downcounter}>
-				</div>
-				
-				<{if $download.keyfeatures}>
-					<span class="file_keys" style="float:right;">
-						<{$smarty.const._MD_DOWNLOADS_FILE_KEYFEATURES}>
-						<ul class="downloads_check">
-							<{$download.keyfeatures}>
-						</ul>
-					</span>
-				<{/if}>
-	
-				<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
-			<{/foreach}>
+			<h2><{$smarty.const._MD_DOWNLOADS_DOWNLOAD_FILELIST}></h2>
 			
-			<!-- pagination control -->
-			<{if $download_pagenav }><{$download_pagenav}><{/if}>
-	
-		</div>
+			<div class="downloads_filelist">
+			
+				<!-- pagination control -->
+				<{if $download_pagenav }><{$download_pagenav}><{/if}>
+			
+				<!-- File rule -->
+				<{foreach item=download from=$downloads_files}>
+					
+					<!-- File image -->
+					<span class="downloads_cat_img">
+						<{if $download.index_img}>
+							<a class="file_screens" href="<{$download.index_img}>" title="file image">
+								<{resized_image file=$download.index_img width=$download.file_thumbnail_width height=$download.file_thumbnail_height fit="inside"}>
+							</a>
+						<{/if}>
+					</span>
+					
+					<!-- File title -->
+					<span class="downloads_cat_title">
+						<a href="<{$download.itemURL}>" title="<{$download.title}>"><{$download.title}></a>&nbsp;
+							<{if $download.userCanEditAndDelete}>
+								<{$download.editItemLink}><{$download.deleteItemLink}>
+							<{/if}>
+							<p class="downloads_category_info">
+								(&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_BY}>&nbsp;:&nbsp;<{$download.publisher}>&nbsp;|&nbsp;<{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>&nbsp;:&nbsp;<{$download.published_date}>&nbsp;)
+							</p>
+					</span>
+	<br /><br />
+					<!-- File description -->
+					<div class="downloads_cat_dsc">
+						<{$download.teaser}> 
+						<a href="<{$download.itemURL}>" title="<{$smarty.const._MD_DOWNLOADS_READ_MORE}>"><{$smarty.const._MD_DOWNLOADS_READ_MORE}></a>
+						<{$smarty.const._MD_DOWNLOADS_FILE_DOWNLOADED}>&nbsp;:&nbsp;<{$download.downcounter}>
+					</div>
+					
+					<{if $download.keyfeatures}>
+						<span class="file_keys" style="float:right;">
+							<{$smarty.const._MD_DOWNLOADS_FILE_KEYFEATURES}>
+							<ul class="downloads_check">
+								<{$download.keyfeatures}>
+							</ul>
+						</span>
+					<{/if}>
+		
+					<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
+				<{/foreach}>
+				
+				<!-- pagination control -->
+				<{if $download_pagenav }><{$download_pagenav}><{/if}>
+		
+			</div>
 		<{/if}>
 		<!-- subcategories -->
 		<{if $downloads_single_cat.hassub}>
