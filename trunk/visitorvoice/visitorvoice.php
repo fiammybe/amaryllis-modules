@@ -39,16 +39,9 @@ function editmessage($clean_visitorvoice_id = 0) {
 		} else {
 			$visitorvoiceObj->setVar("visitorvoice_approve", TRUE);
 		}
-		if($visitorvoice_pid) {
-			$visitorvoiceObj->setVar("visitorvoice_pid", $visitorvoice_pid);
-		}
 		$sform = $visitorvoiceObj->getSecureForm(_MD_VISITORVOICE_CREATE, 'addentry', 'submit.php?op=addentry&visitorvoice_id=' . $clean_visitorvoice_id, FALSE, TRUE);
 		//$sform->addElement();
-		if($visitorvoice_pid) {
-			$sform->assign($icmsTpl, 'visitorvoice_reply_form');
-		} else {
-			$sform->assign($icmsTpl, 'visitorvoice_form');
-		}
+		$sform->assign($icmsTpl, 'visitorvoice_form');
 	} else {
 		exit;
 	}
@@ -80,15 +73,11 @@ $clean_visitorvoice_id = isset($_GET['visitorvoice_id']) ? filter_input(INPUT_GE
 $entries = $visitorvoice_visitorvoice_handler -> getEntries(TRUE ,$clean_visitorvoice_id, $clean_start, $visitorvoiceConfig["show_entries"], 'visitorvoice_published_date', 'DESC');
 $icmsTpl->assign("entries", $entries);
 if($visitorvoiceConfig['use_moderation'] == 1) {
-	
 		$icmsTpl->assign("reply_link", TRUE);
-	
 }
-
 if($visitorvoiceConfig["show_avatar"] == 1) {
 	$icmsTpl->assign("show_avatar", TRUE);
 }
-
 if($visitorvoiceConfig["guest_entry"] == 1) {
 	$icmsTpl->assign("submit_link", TRUE);
 } else {
