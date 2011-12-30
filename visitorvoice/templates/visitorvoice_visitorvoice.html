@@ -1,5 +1,5 @@
 <link href="<{$visitorvoice_url}>module_visitorvoice.css" rel="stylesheet" type="text/css" />
-<{if $entries}>
+
 <{if $visitorvoice_show_breadcrumb}>
 	<!-- module breadcrumb -->
 	<div class="visitorvoice_headertable">
@@ -60,7 +60,7 @@
 <{/if}>
 
 <{$visitorvoice_index.footer}>
-<{/if}>
+
 <{if $visitorvoice_reply_form}>
 	<{includeq file='db:system_common_form.html' form=$visitorvoice_reply_form}>
 <{/if}>
