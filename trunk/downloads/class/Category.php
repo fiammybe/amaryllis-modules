@@ -288,6 +288,16 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		}
 	}
 	
+	public function userCanSubmit() {
+		$submit = $this->handler->userCanSubmit();
+		if($submit) {
+			$link = DOWNLOADS_URL . 'category.php?op=mod&amp;category_pid=' . $this->getVar("category_id", "e");
+		} else {
+			$link = FALSE;
+		}
+		return $link;
+	}
+	
 	function toArray() {
 		$ret = parent::toArray();
 		$ret['published_date'] = $this->getCategoryPublishedDate();
@@ -308,6 +318,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret['cat_count'] = $this->getSubsCount();
 		$ret['files_count'] = $this->getFilesCount();
 		$ret['user_upload'] = $this->getEditAndDelete();
+		$ret['user_submit'] = $this->userCanSubmit();
 		return $ret;
 	}
 
