@@ -20,7 +20,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class mod_artikel_ArticleHandler extends icms_ipf_Handler {
+class ArtikelArticleHandler extends icms_ipf_Handler {
 	/**
 	 * Constructor
 	 *
