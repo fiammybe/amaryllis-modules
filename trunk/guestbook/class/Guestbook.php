@@ -158,10 +158,17 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		return $sform;
 	}
 	
+	public function getItemLink() {
+		$id = $this->getVar("guestbook_id", "e");
+		$title = $this->getVar("guestbook_title", "e");
+		$link = '<a href="' . GUESTBOOK_URL . '#entry_' . $id . '" title="' . $title . '">' . $title . '</a>';
+		return $link;
+	}
+	
 	public function toArray() {
 		global $guestbookConfig;
 		$ret = parent::toArray();
-		$ret['id'] = $this->getVar("guestbook_id");
+		$ret['id'] = $this->getVar("guestbook_id", "e");
 		$ret['published_on'] = $this->getPublishedDate();
 		$ret['published_by'] = $this->getPublisher(TRUE);
 		$ret['img'] = $this->getImageTag();
@@ -178,6 +185,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 			$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
 		}
 		$ret['reply'] = $this->getReplyLink();
+		$ret['itemLink'] = $this->getItemLink();
 		
 		return $ret;
 	}

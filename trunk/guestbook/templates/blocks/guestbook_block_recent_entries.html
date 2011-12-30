@@ -1,0 +1,5 @@
+<ul>
+	<{foreach item=guestbook_entry from=$block.guestbook_entries}>
+		<li><{$guestbook_entry.itemLink}> (<{$guestbook_entry.published_on}>)</li>
+	<{/foreach}>
+</ul>
