@@ -26,9 +26,10 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
+		global $guestbookConfig;
 		parent::__construct($db, "guestbook", "guestbook_id", "guestbook_title", "guestbook_entry", "guestbook");
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
-		$this->enableUpload($mimetypes, icms::$module->config['image_file_size'], icms::$module->config['image_upload_width'], icms::$module->config['image_upload_height']);
+		$this->enableUpload($mimetypes, $guestbookConfig['image_file_size'], $guestbookConfig['image_upload_width'], $guestbookConfig['image_upload_height']);
 	}
 	
 	public function changeApprove($guestbook_id) {
