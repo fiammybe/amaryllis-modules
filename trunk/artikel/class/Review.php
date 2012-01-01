@@ -1,25 +1,25 @@
 <?php
 /**
- * "Artikel" is a light weight download handling module for ImpressCMS
+ * "Article" is an article management module for ImpressCMS
  *
  * File: /class/Review.php
  * 
- * Class representing Download review objects
+ * Class representing Article review Objects
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		downloads
+ * @package		article
  *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class ArtikelReview extends icms_ipf_Object {
+class ArticleReview extends icms_ipf_Object {
 	
 	public function __construct(&$handler) {
 		parent::__construct($handler);
@@ -57,7 +57,7 @@ class ArtikelReview extends icms_ipf_Object {
 		$date = '';
 		$date = $this->getVar('review_date', 'e');
 		
-		return date($downloadsConfig['artikel_dateformat'], $date);
+		return date($downloadsConfig['article_dateformat'], $date);
 	}
 	
 	public function getReviewAvatar() {
@@ -76,10 +76,10 @@ class ArtikelReview extends icms_ipf_Object {
 	
 	public function getReviewItem() {
 		$item_id = $this->getVar("review_item_id", "e");
-		$artikel_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "artikel");
-		$file = $artikel_article_handler->get($item_id);
+		$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
+		$file = $article_article_handler->get($item_id);
 		$filename = $file->getVar("article_title", "s");
-		$url = ARTIKEL_URL . 'singlearticle.php?article_id=' . $item_id;
+		$url = ARTICLE_URL . 'singlearticle.php?article_id=' . $item_id;
 		return '<a href="' . $url . '" title="' . $filename . '">' . $filename . '</a>';
 	}
 	

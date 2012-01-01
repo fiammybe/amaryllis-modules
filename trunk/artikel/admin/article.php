@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /admin/article.php
  * 
@@ -9,11 +9,11 @@
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
@@ -23,26 +23,26 @@
  * @param int $article_id Articleid to be edited
 */
 function editarticle($article_id = 0) {
-	global $artikel_article_handler, $icmsModule, $icmsAdminTpl;
+	global $article_article_handler, $icmsModule, $icmsAdminTpl;
 
-	$articleObj = $artikel_article_handler->get($article_id);
+	$articleObj = $article_article_handler->get($article_id);
 
 	if (!$articleObj->isNew()){
-		$icmsModule->displayAdminMenu(1, _AM_ARTIKEL_ARTICLES . " > " . _CO_ICMS_EDITING);
-		$sform = $articleObj->getForm(_AM_ARTIKEL_ARTICLE_EDIT, "addarticle");
+		$icmsModule->displayAdminMenu(1, _AM_ARTICLE_ARTICLES . " > " . _CO_ICMS_EDITING);
+		$sform = $articleObj->getForm(_AM_ARTICLE_ARTICLE_EDIT, "addarticle");
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$icmsModule->displayAdminMenu(1, _AM_ARTIKEL_ARTICLES . " > " . _CO_ICMS_CREATINGNEW);
-		$sform = $articleObj->getForm(_AM_ARTIKEL_ARTICLE_CREATE, "addarticle");
+		$icmsModule->displayAdminMenu(1, _AM_ARTICLE_ARTICLES . " > " . _CO_ICMS_CREATINGNEW);
+		$sform = $articleObj->getForm(_AM_ARTICLE_ARTICLE_CREATE, "addarticle");
 		$sform->assign($icmsAdminTpl);
 
 	}
-	$icmsAdminTpl->display("db:artikel_admin_article.html");
+	$icmsAdminTpl->display("db:article_admin_article.html");
 }
 
 include_once "admin_header.php";
 
-$artikel_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "artikel");
+$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 /** Use a naming convention that indicates the source of the content of the variable */
 $clean_op = "";
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
@@ -71,29 +71,29 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "addarticle":
-			$controller = new icms_ipf_Controller($artikel_article_handler);
-			$controller->storeFromDefaultForm(_AM_ARTIKEL_ARTICLE_CREATED, _AM_ARTIKEL_ARTICLE_MODIFIED);
+			$controller = new icms_ipf_Controller($article_article_handler);
+			$controller->storeFromDefaultForm(_AM_ARTICLE_ARTICLE_CREATED, _AM_ARTICLE_ARTICLE_MODIFIED);
 			break;
 
 		case "del":
-			$controller = new icms_ipf_Controller($artikel_article_handler);
+			$controller = new icms_ipf_Controller($article_article_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		case "view" :
-			$articleObj = $artikel_article_handler->get($clean_article_id);
+			$articleObj = $article_article_handler->get($clean_article_id);
 			icms_cp_header();
 			$articleObj->displaySingleObject();
 			break;
 
 		default:
 			icms_cp_header();
-			$icmsModule->displayAdminMenu(1, _AM_ARTIKEL_ARTICLES);
-			$objectTable = new icms_ipf_view_Table($artikel_article_handler);
+			$icmsModule->displayAdminMenu(1, _AM_ARTICLE_ARTICLES);
+			$objectTable = new icms_ipf_view_Table($article_article_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("article_title"));
-			$objectTable->addIntroButton("addarticle", "article.php?op=mod", _AM_ARTIKEL_ARTICLE_CREATE);
-			$icmsAdminTpl->assign("artikel_article_table", $objectTable->fetch());
-			$icmsAdminTpl->display("db:artikel_admin_article.html");
+			$objectTable->addIntroButton("addarticle", "article.php?op=mod", _AM_ARTICLE_ARTICLE_CREATE);
+			$icmsAdminTpl->assign("article_article_table", $objectTable->fetch());
+			$icmsAdminTpl->display("db:article_admin_article.html");
 			break;
 	}
 	icms_cp_footer();

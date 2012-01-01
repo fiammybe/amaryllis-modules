@@ -1,26 +1,26 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /class/ArticleHandler.php
  * 
- * Classes responsible for managing Artikel article objects
+ * Classes responsible for managing Article article objects
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class ArtikelArticleHandler extends icms_ipf_Handler {
+class ArticleArticleHandler extends icms_ipf_Handler {
 	
 	private $_article_grpperm = array();
 	
@@ -36,11 +36,11 @@ class ArtikelArticleHandler extends icms_ipf_Handler {
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
-		global $artikelConfig;
-		parent::__construct($db, "article", "article_id", "article_title", "article_teaser", "artikel");
-		$this->addPermission('article_grpperm', _CO_ARTIKEL_ARTICLE_ARTICLE_GRPPERM, _CO_ARTIKEL_ARTICLE_ARTICLE_GRPPERM_DSC);
+		global $articleConfig;
+		parent::__construct($db, "article", "article_id", "article_title", "article_teaser", "article");
+		$this->addPermission('article_grpperm', _CO_ARTICLE_ARTICLE_ARTICLE_GRPPERM, _CO_ARTICLE_ARTICLE_ARTICLE_GRPPERM_DSC);
 		$mimetypes = $this->checkMimeType();
-		$this->enableUpload($mimetypes, $artikelConfig['upload_file_size'], $artikelConfig['image_upload_width'], $artikelConfig['image_upload_height']);
+		$this->enableUpload($mimetypes, $articleConfig['upload_file_size'], $articleConfig['image_upload_width'], $articleConfig['image_upload_height']);
 	}
 	
 	/**
@@ -100,9 +100,9 @@ class ArtikelArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function getRelatedDownloads() {
-		global $artikelConfig;
+		global $articleConfig;
 		$downloadsModule = icms_getModuleInfo("downloads");
-		if($downloadsModule && $artikelConfig['use_downloads'] == 1) {
+		if($downloadsModule && $articleConfig['use_downloads'] == 1) {
 			$downloads_download_handler = icms_getModuleHandler("download", $downloadsModule->getVar("dirname"), "downloads");
 			$downloads = $downloads_download_handler->getDownloads(0, 0, FALSE, FALSE, FALSE, 'download_title', 'ASC');
 			$ret = array();
@@ -115,9 +115,9 @@ class ArtikelArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function getAlbumList() {
-		global $artikelConfig;
+		global $articleConfig;
 		$albumModule = icms_getModuleInfo('album');
-		if($albumModule && $artikelConfig['use_album'] == 1) {
+		if($albumModule && $articleConfig['use_album'] == 1) {
 			$album_album_handler = icms_getModuleHandler ('album', $albumModule->getVar('dirname'), 'album');
 			$albumObjects = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, 0, 0, FALSE, FALSE,  FALSE, 'weight', 'ASC');
 			$ret = array();
@@ -130,9 +130,9 @@ class ArtikelArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function getArticleLicense() {
-		global $artikelConfig;
+		global $articleConfig;
 		if (!$this->_article_license) {
-			$license_array = explode(",", $artikelConfig['article_license']);
+			$license_array = explode(",", $articleConfig['article_license']);
 			$license = array();
 			foreach (array_keys($license_array) as $i) {
 				$license[$license_array[$i]] = $license_array[$i];
@@ -143,8 +143,8 @@ class ArtikelArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function getArticleVideoSources() {
-		global $artikelConfig;
-		if($artikelConfig['need_videos'] == 1) {
+		global $articleConfig;
+		if($articleConfig['need_videos'] == 1) {
 			if (!$this->_article_license) {
 				$sources_array = array(1 => "MyTube", 2 => "YouTube", 3 => "MetaCafe", 4 => "Spike", 5 => "Viddler", 6 => "MySpace TV", 7 => "DailyMotion", 8 => "Blip.tv", 9 => "ClipFish", 10 => "LiveLeak", 11 => "Veoh", 12 => "Vimeo", 13 => "MegaVideo", 14 => "National Geographik");
 				$sources = var_dump($sources_array);
@@ -160,7 +160,28 @@ class ArtikelArticleHandler extends icms_ipf_Handler {
 	
 	
 	
+	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $download_cid = false) {
+		$criteria = new icms_db_criteria_Compo();
+		
+		if (isset($active)) {
+			$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
+		}
+		if (isset($approve)) {
+			$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
+		}
+		if (is_null($download_cid)) $download_cid = 0;
+		$criteria->add(new icms_db_criteria_Item('article_cid', $download_cid));
+		
+		$articles = $this->getObjects($criteria, TRUE, FALSE);
+		$ret = array();
+		foreach ($articles as $article){
+			if ($article['accessgranted']){
+				$ret[$article['article_id']] = $article;
+			}
+		}
+		return count($ret);
 	
+	}
 	
 	public function makeLink($article) {
 		$count = $this->getCount(new icms_db_criteria_Item("short_url", $article->getVar("short_url")));

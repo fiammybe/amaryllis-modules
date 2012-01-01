@@ -1,35 +1,35 @@
 <?php
 /**
- * "Artikel" is an article management module for ImpressCMS
+ * "Article" is an article management module for ImpressCMS
  *
  * File: /class/Article.php
  * 
- * Class representing Artikel article Objects
+ * Class representing Article article Objects
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class ArtikelArticle extends icms_ipf_seo_Object {
+class ArticleArticle extends icms_ipf_seo_Object {
 	
 	public $updating_counter = false;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param mod_artikel_Article $handler Object handler
+	 * @param mod_article_Article $handler Object handler
 	 */
 	public function __construct(&$handler) {
-		global $artikelConfig, $icmsConfig;
+		global $articleConfig, $icmsConfig;
 		icms_ipf_object::__construct($handler);
 
 		$this->quickInitVar("article_id", XOBJ_DTYPE_INT, TRUE);
@@ -95,11 +95,11 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		$this->quickInitVar("article_stats_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		
-		$this->setControl("article_cid", array("name" => "select_multi", "itemhandler" => "category", "method" => "getCategoryListForPid", "module" => "artikel"));
+		$this->setControl("article_cid", array("name" => "select_multi", "itemhandler" => "category", "method" => "getCategoryListForPid", "module" => "article"));
 		$this->setControl("article_image", "image");
 		$this->setControl("article_teaser", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("article_body", "dhtmltextarea");
-		$this->setControl("article_tags", array("name" => "select_multi", "itemhandler" => "tags", "method" => "getTags", "module" => "artikel"));
+		$this->setControl("article_tags", array("name" => "select_multi", "itemhandler" => "tags", "method" => "getTags", "module" => "article"));
 		$this->setControl("article_publisher", "user_multi");
 		$this->setControl("article_approve", "yesno");
 		$this->setControl("article_active", "yesno");
@@ -108,17 +108,17 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 
 		$this->hideFieldFromForm(array("article_submitter", "weight", "counter", "article_like", "article_dislike"));
 		
-		$this->openFormSection("article_descriptions", _CO_ARTIKEL_ARTICLE_ARTICLE_DESCRIPTIONS);
-		$this->openFormSection("article_additionals", _CO_ARTIKEL_ARTICLE_ARTICLE_ADDITIONALS);
-		$this->openFormSection("article_informations", _CO_ARTIKEL_ARTICLE_ARTICLE_INFORMATIONS);
-		$this->openFormSection("article_permissions", _CO_ARTIKEL_ARTICLE_ARTICLE_PERMISSIONS);
-		$this->openFormSection("article_statics", _CO_ARTIKEL_ARTICLE_ARTICLE_STATICS);
+		$this->openFormSection("article_descriptions", _CO_ARTICLE_ARTICLE_ARTICLE_DESCRIPTIONS);
+		$this->openFormSection("article_additionals", _CO_ARTICLE_ARTICLE_ARTICLE_ADDITIONALS);
+		$this->openFormSection("article_informations", _CO_ARTICLE_ARTICLE_ARTICLE_INFORMATIONS);
+		$this->openFormSection("article_permissions", _CO_ARTICLE_ARTICLE_ARTICLE_PERMISSIONS);
+		$this->openFormSection("article_statics", _CO_ARTICLE_ARTICLE_ARTICLE_STATICS);
 		
 		/**
 		 * check, if 'Downloads' can be used to attach files, else hide field
 		 */
-		if($artikelConfig['use_downloads'] == 1) {
-			$this->setControl("article_downloads", array("name" => "select_multi", "itemhandler" => "article", "method" => "getRelatedDownloads", "module" => "artikel"));
+		if($articleConfig['use_downloads'] == 1) {
+			$this->setControl("article_downloads", array("name" => "select_multi", "itemhandler" => "article", "method" => "getRelatedDownloads", "module" => "article"));
 		} else {
 			$this->hideFieldFromForm("article_downloads");
 			$this->hideFieldFromSingleView("article_downloads");
@@ -128,8 +128,8 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		 * check, if 'Album' module can be used to display images, else hid field
 		 */
 		
-		if($artikelConfig['use_album'] == 1) {
-			$this->setControl("article_album", array("name" => "select", "itemhandler" => "article", "method" => "getAlbumList", "module" => "artikel"));
+		if($articleConfig['use_album'] == 1) {
+			$this->setControl("article_album", array("name" => "select", "itemhandler" => "article", "method" => "getAlbumList", "module" => "article"));
 		} else {
 			$this->hideFieldFromForm("article_downloads");
 			$this->hideFieldFromSingleView("article_downloads");
@@ -138,7 +138,7 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		/**
 		 * check, if steps are needed, else hide them
 		 */
-		if($artikelConfig['need_steps'] == 0) {
+		if($articleConfig['need_steps'] == 0) {
 			$this->hideFieldFromForm("article_steps");
 			$this->hideFieldFromSingleView("article_steps");
 		}
@@ -146,7 +146,7 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		/**
 		 * check, if tips are needed, else hide them
 		 */
-		if($artikelConfig['need_tips'] == 0) {
+		if($articleConfig['need_tips'] == 0) {
 			$this->hideFieldFromForm("article_tips");
 			$this->hideFieldFromSingleView("article_tips");
 		}
@@ -154,7 +154,7 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		/**
 		 * check, if warnings are needed, else hide them
 		 */
-		if($artikelConfig['need_warnings'] == 0) {
+		if($articleConfig['need_warnings'] == 0) {
 			$this->hideFieldFromForm("article_warnings");
 			$this->hideFieldFromSingleView("article_warnings");
 		}
@@ -162,17 +162,17 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		/**
 		 * check, if licenses are needed, else hide them
 		 */
-		if($artikelConfig['need_licenses'] == 0) {
+		if($articleConfig['need_licenses'] == 0) {
 			$this->hideFieldFromForm("article_license");
 			$this->hideFieldFromSingleView("article_license");
 		} else {
-			$this->setControl("article_license", array("name" => "select_multi", "itemhandler" => "article", "method" => "getArticleLicense", "module" => "artikel"));
+			$this->setControl("article_license", array("name" => "select_multi", "itemhandler" => "article", "method" => "getArticleLicense", "module" => "article"));
 		}
 		
 		/**
 		 * check, if 'needed things' are needed, else hide them
 		 */
-		if($artikelConfig['need_needed_things'] == 0) {
+		if($articleConfig['need_needed_things'] == 0) {
 			$this->hideFieldFromForm("article_needed");
 			$this->hideFieldFromSingleView("article_needed");
 		}
@@ -180,7 +180,7 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		/**
 		 * check, if attachments are needed, else hide them
 		 */
-		if($artikelConfig['need_attachments'] == 0) {
+		if($articleConfig['need_attachments'] == 0) {
 			$this->hideFieldFromForm(array("article_attachment", "article_attachment_alt"));
 			$this->hideFieldFromSingleView(array("article_attachment", "article_attachment_alt"));
 		} else {
@@ -190,18 +190,18 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		/**
 		 * check, if videos are needed, else hide them
 		 */
-		if($artikelConfig['need_videos'] == 0) {
+		if($articleConfig['need_videos'] == 0) {
 			$this->hideFieldFromForm(array("article_video", "article_video_source", "article_video_upload", "article_video_upload_alt"));
 			$this->hideFieldFromSingleView(array("article_video", "article_video_source", "article_video_upload", "article_video_upload_alt"));
 		} else {
-			$this->setControl("article_video_source", array("name" => "select", "itemhandler" => "article", "method" => "getVideoSources", "module" => "artikel"));
+			$this->setControl("article_video_source", array("name" => "select", "itemhandler" => "article", "method" => "getVideoSources", "module" => "article"));
 			$this->setControl("article_video_upload", "file");
 		}
 		
 		/**
 		 * check, if history is needed, else hide it
 		 */
-		if($artikelConfig['need_history'] == 0) {
+		if($articleConfig['need_history'] == 0) {
 			$this->hideFieldFromForm("article_history");
 			$this->hideFieldFromSingleView("article_history");
 		} else {
@@ -211,27 +211,27 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		/**
 		 * check, if relateds are needed, else hide them
 		 */
-		if($artikelConfig['need_related'] == 0) {
+		if($articleConfig['need_related'] == 0) {
 			$this->hideFieldFromForm("article_related");
 			$this->hideFieldFromSingleView("article_related");
 		} else {
-			$this->setControl("article_related", array("name" => "select_multi", "itemhandler" => "article", "method" => "getRelated", "module" => "artikel"));
+			$this->setControl("article_related", array("name" => "select_multi", "itemhandler" => "article", "method" => "getRelated", "module" => "article"));
 		}
 		
 		/**
 		 * check, if resources are needed, else hide them
 		 */
-		if($artikelConfig['need_resources'] == 0) {
+		if($articleConfig['need_resources'] == 0) {
 			$this->hideFieldFromForm("article_resources");
 			$this->hideFieldFromSingleView("article_resources");
 		} else {
-			$this->setControl("article_resources", array("name" => "select_multi", "itemhandler" => "resources", "method" => "getResources", "module" => "artikel"));
+			$this->setControl("article_resources", array("name" => "select_multi", "itemhandler" => "resources", "method" => "getResources", "module" => "article"));
 		}
 		
 		/**
 		 * check, if conclusion is needed, else hide it
 		 */
-		if($artikelConfig['need_conclusion'] == 0) {
+		if($articleConfig['need_conclusion'] == 0) {
 			$this->hideFieldFromForm("article_conclusion");
 			$this->hideFieldFromSingleView("article_conclusion");
 		} else {
@@ -279,10 +279,10 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	public function article_active() {
 		$active = $this->getVar('article_active', 'e');
 		if ($active == false) {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=visible">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=visible">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
 		} else {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=visible">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=visible">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
 		}
 	}
@@ -290,10 +290,10 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	public function article_inblocks() {
 		$active = $this->getVar('article_inblocks', 'e');
 		if ($active == false) {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeShow">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeShow">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Hidden" /></a>';
 		} else {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeShow">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeShow">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Visible" /></a>';
 		}
 	}
@@ -301,10 +301,10 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	public function article_approve() {
 		$active = $this->getVar('article_approve', 'e');
 		if ($active == false) {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeApprove">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeApprove">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Denied" /></a>';
 		} else {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeApprove">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeApprove">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Approved" /></a>';
 		}
 	}
@@ -312,10 +312,10 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	public function article_broken_file() {
 		$active = $this->getVar('article_broken_file', 'e');
 		if ($active == true) {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeBroken">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeBroken">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Broken" /></a>';
 		} else {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeBroken">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeBroken">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Online" /></a>';
 		}
 	}
@@ -323,10 +323,10 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	public function article_broken_video() {
 		$active = $this->getVar('article_broken_video', 'e');
 		if ($active == true) {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeBroken">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeBroken">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Broken" /></a>';
 		} else {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeBroken">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'article.php?article_id=' . $this->getVar('article_id') . '&amp;op=changeBroken">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Online" /></a>';
 		}
 	}
@@ -360,8 +360,8 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	
 	public function getCategories() {
 		$cids = array($this->getVar("article_category", "s"));
-		$artikel_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "artikel");
-		$category = function($cid) {return $artikel_category_handler->get($cid);}; 
+		$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
+		$category = function($cid) {return $article_category_handler->get($cid);}; 
 		$cids = array_map($category, $cids);
 		$cid = array();
 		foreach ($cids as $cid) {
@@ -469,7 +469,7 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		
 		if($url){
 			if(!$file_alt == "") {
-				$url = ARTIKEL_UPLOAD_URL . 'article/' . $file_alt;
+				$url = ARTICLE_UPLOAD_URL . 'article/' . $file_alt;
 			} elseif(!$file == "0") {
 				$file = 'download_file';
 				$fileObj = $this->getFileObj($file);
@@ -480,13 +480,13 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 			return $url;
 		} elseif ($path){
 			if(!$file_alt == "") {
-				$path = ARTIKEL_UPLOAD_ROOT . 'article/' . $file_alt;
+				$path = ARTICLE_UPLOAD_ROOT . 'article/' . $file_alt;
 			} elseif (!$file == "0") {
 				$file = 'download_file';
 				$fileObj = $this->getFileObj($file);
 				$url = $fileObj->getVar('url', 's');
 				$filename = basename($url);
-				$path = ICMS_ROOT_PATH . '/uploads/artikel/article/' . $filename;
+				$path = ICMS_ROOT_PATH . '/uploads/article/article/' . $filename;
 			} else {
 				$path = FALSE;
 			}
@@ -495,12 +495,12 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	}
 	
 	public function getFileSize() {
-		global $artikelConfig;
+		global $articleConfig;
 		$myfile = $this->getArticleAttachment(FALSE, TRUE);
 		if($myfile) {
 			$bytes = filesize($myfile);
-			$filesize = downloadsConvertFileSize($bytes, artikelFileSizeType($artikelConfig['display_file_size']), 2);
-			return $filesize . '&nbsp;' . artikelFileSizeType($artikelConfig['display_file_size']) ;
+			$filesize = downloadsConvertFileSize($bytes, articleFileSizeType($articleConfig['display_file_size']), 2);
+			return $filesize . '&nbsp;' . articleFileSizeType($articleConfig['display_file_size']) ;
 		} else {
 			return FALSE;
 		}
@@ -521,10 +521,10 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	}
 	
 	public function getDownloadsLinks() {
-		global $artikelConfig;
+		global $articleConfig;
 		$downloads_array = $this->getVar('article_downloads' , 's');
 		$downloadsModule = icms_getModuleInfo("downloads");
-		if($downloadsModule && $artikelConfig['use_downloads'] == 1) {
+		if($downloadsModule && $articleConfig['use_downloads'] == 1) {
 			$downloads_download_handler = icms_getModuleHandler("download", $downloadsModule->getVar("dirname"), "downloads");
 			$downloads = implode(",", $downloads_array);
 			$downloads2 = explode(",", $relateds);
@@ -551,18 +551,18 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	}
 	
 	public function getArticleVideo() {
-		global $artikelConfig;
-		if($artikelConfig['need_videos'] == 1) {
+		global $articleConfig;
+		if($articleConfig['need_videos'] == 1) {
 			$video_upl_alt = $this->getVar("article_video_upload_alt", "e");
 			$video_upl = $this->getVar("article_video_upl", "e");
 			if($video_upl_alt != "") {
-				$path = ARTIKEL_UPLOAD_PATH . "article/" . $video_upl_alt;
+				$path = ARTICLE_UPLOAD_PATH . "article/" . $video_upl_alt;
 			} elseif ($video_upl != "0") {
 				$file = 'article_video_upl';
 				$fileObj = $this->getFileObj($file);
 				$url = $fileObj->getVar('url', 's');
 				$filename = basename($url);
-				$path = ICMS_ROOT_PATH . '/uploads/artikel/article/' . $filename;
+				$path = ICMS_ROOT_PATH . '/uploads/article/article/' . $filename;
 			} else {
 				$video = $this->getVar("article_video", "e");
 				$source = $this->getVar("article_video_source");
@@ -666,7 +666,7 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	
 	public function getArtikleTags() {
 		$taglist = $this->getVar("article_tags", "s");
-		$artikel_tags_handler = icms_getModuleHandler("tags", basename(dirname(dirname(__FILE__))), "artikel");
+		$article_tags_handler = icms_getModuleHandler("tags", basename(dirname(dirname(__FILE__))), "article");
 		$tags = '';
 		foreach ($taglist as $tag) {
 			
@@ -675,19 +675,19 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	}
 	
 	public function getArticlePublishedDate() {
-		global $artikelConfig;
+		global $articleConfig;
 		$date = '';
 		$date = $this->getVar('article_published_date', 'e');
 		
-		return date($artikelConfig['artikel_dateformat'], $date);
+		return date($articleConfig['article_dateformat'], $date);
 	}
 	
 	public function getArticleUpdatedDate() {
-		global $artikelConfig;
+		global $articleConfig;
 		$date = '';
 		$date = $this->getVar('article_updated_date', 'e');
 		
-		return date($artikelConfig['artikel_dateformat'], $date);
+		return date($articleConfig['article_dateformat'], $date);
 	}
 	
 	public function getArticleSubmitter($link = false) {
@@ -735,10 +735,10 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	 */
 	
 	function userCanEditAndDelete() {
-		global $downloads_isAdmin;
-		if (!is_object(icms::$user)) return false;
-		if ($downloads_isAdmin) return true;
-		return $this->getVar('download_publisher', 'e') == icms::$user->getVar("uid");
+		global $article_isAdmin;
+		if (!is_object(icms::$user)) return FALSE;
+		if ($article_isAdmin) return TRUE;
+		if($this->getVar("article_publisher", "e") == icms::$user->getVar("uid")) return TRUE;
 	}
 	
 	function getItemLink($onlyUrl = false) {
@@ -749,19 +749,19 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 	}
 	
 	public function getViewItemLink() {
-		$ret = '<a href="' . ARTIKEL_ADMIN_URL . 'article.php?op=view&amp;article_id=' . $this->getVar('article_id', 'e') . '" title="' . _CO_ARTIKEL_VIEW . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
+		$ret = '<a href="' . ARTICLE_ADMIN_URL . 'article.php?op=view&amp;article_id=' . $this->getVar('article_id', 'e') . '" title="' . _CO_ARTICLE_VIEW . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
 		return $ret;
 	}
 	
 	function getPreviewItemLink() {
-		$ret = '<a href="' . ARTIKEL_URL . 'singlearticle.php?article_id=' . $this->getVar('article_id', 'e') . '" title="' . _CO_ARTIKEL_PREVIEW . '" target="_blank">' . $this->getVar('article_title') . '</a>';
+		$ret = '<a href="' . ARTICLE_URL . 'singlearticle.php?article_id=' . $this->getVar('article_id', 'e') . '" title="' . _CO_ARTICLE_PREVIEW . '" target="_blank">' . $this->getVar('article_title') . '</a>';
 		return $ret;
 	}
 	
 	
 	
 	public function toArray() {
-		global $artikelConfig;
+		global $articleConfig;
 		$ret = parent::toArray();
 		$ret['id'] = $this->getVar("article_id", "e");
 		$ret['title'] = $this->getVar("article_title", "e");
@@ -800,10 +800,10 @@ class ArtikelArticle extends icms_ipf_seo_Object {
 		$ret['broken_file'] = $this->article_broken_file();
 		$ret['broken_video'] = $this->article_broken_video();
 		/** some configs **/
-		$ret['thumbnail_width'] = $artikelConfig['thumbnail_width'];
-		$ret['thumbnail_height'] = $artikelConfig['thumbnail_height'];
-		$ret['display_width'] = $artikelConfig['display_width'];
-		$ret['display_height'] = $artikelConfig['display_height'];
+		$ret['thumbnail_width'] = $articleConfig['thumbnail_width'];
+		$ret['thumbnail_height'] = $articleConfig['thumbnail_height'];
+		$ret['display_width'] = $articleConfig['display_width'];
+		$ret['display_height'] = $articleConfig['display_height'];
 		
 		return $ret;
 	}

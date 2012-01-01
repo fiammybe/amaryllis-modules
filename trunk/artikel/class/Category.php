@@ -1,29 +1,29 @@
 <?php
 /**
- * "Artikel" is an article management module for ImpressCMS
+ * "Article" is an article management module for ImpressCMS
  *
  * File: /class/Category.php
  * 
- * Class representing Artikel category Objects
+ * Class representing Article category Objects
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class ArtikelCategory extends icms_ipf_seo_Object {
+class ArticleCategory extends icms_ipf_seo_Object {
 	/**
 	 * Constructor
 	 *
-	 * @param mod_artikel_Category $handler Object handler
+	 * @param mod_article_Category $handler Object handler
 	 */
 	public function __construct(&$handler) {
 		icms_ipf_object::__construct($handler);
@@ -54,11 +54,11 @@ class ArtikelCategory extends icms_ipf_seo_Object {
 		$this->initCommonVar("docxode", FALSE, 1);
 		$this->quickInitVar("category_notification_sent", XOBJ_DTYPE_INT, FALSE);
 		
-		$this->setControl("category_image", array("name" => "select", "itemhandler" => "category", "method" => "getImageList", "module" => "artikel"));
+		$this->setControl("category_image", array("name" => "select", "itemhandler" => "category", "method" => "getImageList", "module" => "article"));
 		$this->setControl("category_image_upl", "image");
 		$this->setControl("category_publisher", "user");
-		$this->setControl("category_grpperm", array("name" => "select_multi", "itemhandler" => "category", "method" => "getGroups", "module" => "artikel"));
-		$this->setControl("category_uplperm", array("name" => "select_multi", "itemhandler" => "category", "method" => "getUplGroups", "module" => "artikel"));
+		$this->setControl("category_grpperm", array("name" => "select_multi", "itemhandler" => "category", "method" => "getGroups", "module" => "article"));
+		$this->setControl("category_uplperm", array("name" => "select_multi", "itemhandler" => "category", "method" => "getUplGroups", "module" => "article"));
 		$this->setControl("category_active", "yesno");
 		$this->setControl("category_approve", "yesno");
 		$this->setControl("category_inblocks", "yesno");
@@ -125,26 +125,26 @@ class ArtikelCategory extends icms_ipf_seo_Object {
 	}
 	
 	public function getCategoryPublishedDate() {
-		global $artikelConfig;
+		global $articleConfig;
 		$date = '';
 		$date = $this->getVar('category_published_date', 'e');
 		
-		return date($artikelConfig['artikel_dateformat'], $date);
+		return date($articleConfig['article_dateformat'], $date);
 	}
 
 	public function getCategoryUpdatedDate() {
-		global $artikelConfig;
+		global $articleConfig;
 		$date = '';
 		$date = $this->getVar('category_updated_date', 'e');
 		
-		return date($artikelConfig['artikel_dateformat'], $date);
+		return date($articleConfig['article_dateformat'], $date);
 	}
 	
 	public function getCategoryImageTag() {
 		$category_img = $image_tag = '';
 		$category_img = $this->getVar('category_img', 'e');
 		if (!empty($category_img)) {
-			$image_tag = ARTIKEL_UPLOAD_URL . 'categoryimages/' . $category_img;
+			$image_tag = ARTICLE_UPLOAD_URL . 'categoryimages/' . $category_img;
 		}
 		return $image_tag;
 	}
@@ -152,10 +152,10 @@ class ArtikelCategory extends icms_ipf_seo_Object {
 	public function category_active() {
 		$active = $this->getVar('category_active', 'e');
 		if ($active == FALSE) {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
 		} else {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
 		}
 	}
@@ -163,10 +163,10 @@ class ArtikelCategory extends icms_ipf_seo_Object {
 	public function category_inblocks() {
 		$active = $this->getVar('category_inblocks', 'e');
 		if ($active == FALSE) {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeShow">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeShow">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Hidden" /></a>';
 		} else {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeShow">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeShow">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Visible" /></a>';
 		}
 	}
@@ -174,10 +174,10 @@ class ArtikelCategory extends icms_ipf_seo_Object {
 	public function category_approve() {
 		$active = $this->getVar('category_approve', 'e');
 		if ($active == FALSE) {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeApprove">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeApprove">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Denied" /></a>';
 		} else {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeApprove">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeApprove">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Approved" /></a>';
 		}
 	}
@@ -198,7 +198,7 @@ class ArtikelCategory extends icms_ipf_seo_Object {
 		$ret = $this->handler->getCategorySubCount($this->getVar('category_id', 'e'));
 
 		if ($ret > 0) {
-			$ret = '<a href="' . ARTIKEL_ADMIN_URL . 'category.php?category_pid=' . $this->getVar('category_id', 'e') . '">' . $ret . ' <img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag+.png" align="absmiddle" /></a>';
+			$ret = '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_pid=' . $this->getVar('category_id', 'e') . '">' . $ret . ' <img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag+.png" align="absmiddle" /></a>';
 		}
 		return $ret;
 	}
@@ -208,8 +208,8 @@ class ArtikelCategory extends icms_ipf_seo_Object {
 	}
 	
 	function getFilesCount() {
-		$artikel_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'artikel');
-		$files_count = $artikel_download_handler->getCountCriteria(TRUE, TRUE, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $this->getVar("category_id"));
+		$article_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'article');
+		$files_count = $article_download_handler->getCountCriteria(TRUE, TRUE, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $this->getVar("category_id"));
 		
 		return $files_count;
 	}
@@ -221,7 +221,7 @@ class ArtikelCategory extends icms_ipf_seo_Object {
 		}
 		$ret = $this->getVar('category_pid', 'e');
 		if ($ret > 0) {
-			$ret = '<a href="' . ARTIKEL_URL . 'index.php?category_id=' . $ret . '">' . str_replace('-', '', $category_pidArray[$ret]) . '</a>';
+			$ret = '<a href="' . ARTICLE_URL . 'index.php?category_id=' . $ret . '">' . str_replace('-', '', $category_pidArray[$ret]) . '</a>';
 		} else {
 			$ret = $category_pidArray[$ret];
 		}
@@ -273,33 +273,33 @@ class ArtikelCategory extends icms_ipf_seo_Object {
 	}
 
 	function userCanEditAndDelete() {
-		global $artikel_isAdmin;
+		global $article_isAdmin;
 		if (!is_object(icms::$user)) return FALSE;
-		if ($artikel_isAdmin) return TRUE;
+		if ($article_isAdmin) return TRUE;
 		return $this->getVar('category_publisher', 'e') == icms::$user->getVar("uid");
 	}
 	
 	public function getViewItemLink() {
-		$ret = '<a href="' . ARTIKEL_ADMIN_URL . 'category.php?op=view&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_ARTIKEL_VIEW . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
+		$ret = '<a href="' . ARTICLE_ADMIN_URL . 'category.php?op=view&amp;category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_ARTICLE_VIEW . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
 		return $ret;
 	}
 	
 	function getItemLink($onlyUrl = FALSE) {
 		$seo = $this->handler->makelink($this);
-		$url = ARTIKEL_URL . 'index.php?category_id=' . $this -> getVar( 'category_id' ) . '&amp;cat=' . $seo;
+		$url = ARTICLE_URL . 'index.php?category_id=' . $this -> getVar( 'category_id' ) . '&amp;cat=' . $seo;
 		if ($onlyUrl) return $url;
 		return '<a href="' . $url . '" title="' . $this -> getVar( 'category_title' ) . ' ">' . $this -> getVar( 'category_title' ) . '</a>';
 	}
 	
 	function getPreviewItemLink() {
-		$ret = '<a href="' . ARTIKEL_URL . 'index.php?category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_ARTIKEL_PREVIEW . '" target="_blank">' . $this->getVar('category_title') . '</a>';
+		$ret = '<a href="' . ARTICLE_URL . 'index.php?category_id=' . $this->getVar('category_id', 'e') . '" title="' . _CO_ARTICLE_PREVIEW . '" target="_blank">' . $this->getVar('category_title') . '</a>';
 		return $ret;
 	}
 	
 	function getEditAndDelete() {
-		$artikel_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'artikel');
-		if($artikel_download_handler->userCanSubmit($this->id())) {
-			return ARTIKEL_URL . 'download.php?op=mod&amp;category_id=' . $this->id();
+		$article_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'article');
+		if($article_download_handler->userCanSubmit($this->id())) {
+			return ARTICLE_URL . 'download.php?op=mod&amp;category_id=' . $this->id();
 		} else {
 			return FALSE;
 		}
@@ -308,7 +308,7 @@ class ArtikelCategory extends icms_ipf_seo_Object {
 	public function userCanSubmit() {
 		$submit = $this->handler->userCanSubmit();
 		if($submit) {
-			$link = ARTIKEL_URL . 'category.php?op=mod&amp;category_pid=' . $this->getVar("category_id", "e");
+			$link = ARTICLE_URL . 'category.php?op=mod&amp;category_pid=' . $this->getVar("category_id", "e");
 		} else {
 			$link = FALSE;
 		}

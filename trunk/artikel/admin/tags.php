@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /admin/tags.php
  * 
@@ -9,11 +9,11 @@
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
@@ -23,26 +23,26 @@
  * @param int $tags_id Tagsid to be edited
 */
 function edittags($tags_id = 0) {
-	global $artikel_tags_handler, $icmsModule, $icmsAdminTpl;
+	global $article_tags_handler, $icmsModule, $icmsAdminTpl;
 
-	$tagsObj = $artikel_tags_handler->get($tags_id);
+	$tagsObj = $article_tags_handler->get($tags_id);
 
 	if (!$tagsObj->isNew()){
-		$icmsModule->displayAdminMenu(3, _AM_ARTIKEL_TAGSS . " > " . _CO_ICMS_EDITING);
-		$sform = $tagsObj->getForm(_AM_ARTIKEL_TAGS_EDIT, "addtags");
+		$icmsModule->displayAdminMenu(3, _AM_ARTICLE_TAGSS . " > " . _CO_ICMS_EDITING);
+		$sform = $tagsObj->getForm(_AM_ARTICLE_TAGS_EDIT, "addtags");
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$icmsModule->displayAdminMenu(3, _AM_ARTIKEL_TAGSS . " > " . _CO_ICMS_CREATINGNEW);
-		$sform = $tagsObj->getForm(_AM_ARTIKEL_TAGS_CREATE, "addtags");
+		$icmsModule->displayAdminMenu(3, _AM_ARTICLE_TAGSS . " > " . _CO_ICMS_CREATINGNEW);
+		$sform = $tagsObj->getForm(_AM_ARTICLE_TAGS_CREATE, "addtags");
 		$sform->assign($icmsAdminTpl);
 
 	}
-	$icmsAdminTpl->display("db:artikel_admin_tags.html");
+	$icmsAdminTpl->display("db:article_admin_tags.html");
 }
 
 include_once "admin_header.php";
 
-$artikel_tags_handler = icms_getModuleHandler("tags", basename(dirname(dirname(__FILE__))), "artikel");
+$article_tags_handler = icms_getModuleHandler("tags", basename(dirname(dirname(__FILE__))), "article");
 /** Use a naming convention that indicates the source of the content of the variable */
 $clean_op = "";
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
@@ -71,29 +71,29 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "addtags":
-			$controller = new icms_ipf_Controller($artikel_tags_handler);
-			$controller->storeFromDefaultForm(_AM_ARTIKEL_TAGS_CREATED, _AM_ARTIKEL_TAGS_MODIFIED);
+			$controller = new icms_ipf_Controller($article_tags_handler);
+			$controller->storeFromDefaultForm(_AM_ARTICLE_TAGS_CREATED, _AM_ARTICLE_TAGS_MODIFIED);
 			break;
 
 		case "del":
-			$controller = new icms_ipf_Controller($artikel_tags_handler);
+			$controller = new icms_ipf_Controller($article_tags_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		case "view" :
-			$tagsObj = $artikel_tags_handler->get($clean_tags_id);
+			$tagsObj = $article_tags_handler->get($clean_tags_id);
 			icms_cp_header();
 			$tagsObj->displaySingleObject();
 			break;
 
 		default:
 			icms_cp_header();
-			$icmsModule->displayAdminMenu(3, _AM_ARTIKEL_TAGSS);
-			$objectTable = new icms_ipf_view_Table($artikel_tags_handler);
+			$icmsModule->displayAdminMenu(3, _AM_ARTICLE_TAGSS);
+			$objectTable = new icms_ipf_view_Table($article_tags_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("tag_title"));
-			$objectTable->addIntroButton("addtags", "tags.php?op=mod", _AM_ARTIKEL_TAGS_CREATE);
-			$icmsAdminTpl->assign("artikel_tags_table", $objectTable->fetch());
-			$icmsAdminTpl->display("db:artikel_admin_tags.html");
+			$objectTable->addIntroButton("addtags", "tags.php?op=mod", _AM_ARTICLE_TAGS_CREATE);
+			$icmsAdminTpl->assign("article_tags_table", $objectTable->fetch());
+			$icmsAdminTpl->display("db:article_admin_tags.html");
 			break;
 	}
 	icms_cp_footer();
