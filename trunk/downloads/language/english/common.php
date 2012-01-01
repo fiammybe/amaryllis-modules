@@ -161,11 +161,3 @@ define("_CO_DOWNLOADS_LOG_LOG_IP", "IP");
 define("_CO_DOWNLOADS_LOG_LOG_UID", "user");
 define("_CO_DOWNLOADS_LOG_LOG_CASE", "Log case");
 define("_CO_DOWNLOADS_LOG_LOG_DATE", "Log Date");
-// ratings
-define("_CO_DOWNLOADS_RATINGS_ITEM", "Rated item");
-define("_CO_DOWNLOADS_RATINGS_RATING_RATE", "Rate");
-define("_CO_DOWNLOADS_RATINGS_RATING_IP", "IP Address");
-define("_CO_DOWNLOADS_RATINGS_RATING_FB_LIKE", "FB Like");
-define("_CO_DOWNLOADS_RATINGS_RATING_FB_DISLIKE", "FB dislike");
-define("_CO_DOWNLOADS_RATINGS_RATINGS_TOTAL", "Total ratings");
-define("_CO_DOWNLOADS_RATINGS_RATINGS_G_LIKE", "Google like");
