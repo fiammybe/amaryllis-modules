@@ -1,22 +1,23 @@
 <?php
 /**
- * 'Downloads' is a light weight download handling module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /class/ReviewHandler.php
  * 
- * Classes responsible for managing Downloads review objects
+ * Classes responsible for managing Article review objects
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Downloads
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		downloads
+ * @package		article
  *
  */
-
+ 
+ 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
 class DownloadsReviewHandler extends icms_ipf_Handler {
@@ -24,7 +25,7 @@ class DownloadsReviewHandler extends icms_ipf_Handler {
 	 * constructor
 	 */	
 	public function __construct(&$db) {
-		parent::__construct($db, "review", "review_id", "review_item_id", "review_message", "artikel");
+		parent::__construct($db, "review", "review_id", "review_item_id", "review_message", "article");
 	}
 	
 	public function getReviews($start = 0, $limit = 0, $order = 'review_date', $sort = 'DESC' , $review_item_id = null) {

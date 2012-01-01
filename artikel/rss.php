@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since		1.0
  * @author		QM-B <qm-b@hotmail.de>
- * @package		artikel
+ * @package		article
  * @version		$Id$
  */
 
@@ -18,21 +18,21 @@ include_once ICMS_ROOT_PATH . '/header.php';
 
 $clean_post_uid = isset($_GET['uid']) ? intval($_GET['uid']) : FALSE;
 
-$artikel_feed = new icms_feeds_Rss();
+$article_feed = new icms_feeds_Rss();
 
-$artikel_feed->title = $icmsConfig['sitename'] . ' - ' . $icmsModule->name();
-$artikel_feed->url = XOOPS_URL;
-$artikel_feed->description = $icmsConfig['slogan'];
-$artikel_feed->language = _LANGCODE;
-$artikel_feed->charset = _CHARSET;
-$artikel_feed->category = $icmsModule->name();
+$article_feed->title = $icmsConfig['sitename'] . ' - ' . $icmsModule->name();
+$article_feed->url = XOOPS_URL;
+$article_feed->description = $icmsConfig['slogan'];
+$article_feed->language = _LANGCODE;
+$article_feed->charset = _CHARSET;
+$article_feed->category = $icmsModule->name();
 
-$artikel_post_handler = icms_getModuleHandler("post", basename(dirname(__FILE__)), "artikel");
-//ArtikelPostHandler::getPosts($start = 0, $limit = 0, $post_uid = FALSE, $year = FALSE, $month = FALSE
-$postsArray = $artikel_post_handler->getPosts(0, 10, $clean_post_uid);
+$article_post_handler = icms_getModuleHandler("post", basename(dirname(__FILE__)), "article");
+//ArticlePostHandler::getPosts($start = 0, $limit = 0, $post_uid = FALSE, $year = FALSE, $month = FALSE
+$postsArray = $article_post_handler->getPosts(0, 10, $clean_post_uid);
 
 foreach($postsArray as $postArray) {
-	$artikel_feed->feeds[] = array (
+	$article_feed->feeds[] = array (
 	  'title' => $postArray['post_title'],
 	  'link' => str_replace('&', '&amp;', $postArray['itemUrl']),
 	  'description' => htmlspecialchars(str_replace('&', '&amp;', $postArray['post_lead']), ENT_QUOTES),
@@ -41,5 +41,5 @@ foreach($postsArray as $postArray) {
 	);
 }
 
-$artikel_feed->render();
+$article_feed->render();
 */

@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /admin/log.php
  * 
@@ -9,11 +9,11 @@
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
@@ -23,26 +23,26 @@
  * @param int $log_id Logid to be edited
 */
 function editlog($log_id = 0) {
-	global $artikel_log_handler, $icmsModule, $icmsAdminTpl;
+	global $article_log_handler, $icmsModule, $icmsAdminTpl;
 
-	$logObj = $artikel_log_handler->get($log_id);
+	$logObj = $article_log_handler->get($log_id);
 
 	if (!$logObj->isNew()){
-		$icmsModule->displayAdminMenu(4, _AM_ARTIKEL_LOGS . " > " . _CO_ICMS_EDITING);
-		$sform = $logObj->getForm(_AM_ARTIKEL_LOG_EDIT, "addlog");
+		$icmsModule->displayAdminMenu(4, _AM_ARTICLE_LOGS . " > " . _CO_ICMS_EDITING);
+		$sform = $logObj->getForm(_AM_ARTICLE_LOG_EDIT, "addlog");
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$icmsModule->displayAdminMenu(4, _AM_ARTIKEL_LOGS . " > " . _CO_ICMS_CREATINGNEW);
-		$sform = $logObj->getForm(_AM_ARTIKEL_LOG_CREATE, "addlog");
+		$icmsModule->displayAdminMenu(4, _AM_ARTICLE_LOGS . " > " . _CO_ICMS_CREATINGNEW);
+		$sform = $logObj->getForm(_AM_ARTICLE_LOG_CREATE, "addlog");
 		$sform->assign($icmsAdminTpl);
 
 	}
-	$icmsAdminTpl->display("db:artikel_admin_log.html");
+	$icmsAdminTpl->display("db:article_admin_log.html");
 }
 
 include_once "admin_header.php";
 
-$artikel_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "artikel");
+$article_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "article");
 /** Use a naming convention that indicates the source of the content of the variable */
 $clean_op = "";
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
@@ -71,29 +71,29 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "addlog":
-			$controller = new icms_ipf_Controller($artikel_log_handler);
-			$controller->storeFromDefaultForm(_AM_ARTIKEL_LOG_CREATED, _AM_ARTIKEL_LOG_MODIFIED);
+			$controller = new icms_ipf_Controller($article_log_handler);
+			$controller->storeFromDefaultForm(_AM_ARTICLE_LOG_CREATED, _AM_ARTICLE_LOG_MODIFIED);
 			break;
 
 		case "del":
-			$controller = new icms_ipf_Controller($artikel_log_handler);
+			$controller = new icms_ipf_Controller($article_log_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		case "view" :
-			$logObj = $artikel_log_handler->get($clean_log_id);
+			$logObj = $article_log_handler->get($clean_log_id);
 			icms_cp_header();
 			$logObj->displaySingleObject();
 			break;
 
 		default:
 			icms_cp_header();
-			$icmsModule->displayAdminMenu(4, _AM_ARTIKEL_LOGS);
-			$objectTable = new icms_ipf_view_Table($artikel_log_handler);
+			$icmsModule->displayAdminMenu(4, _AM_ARTICLE_LOGS);
+			$objectTable = new icms_ipf_view_Table($article_log_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("log_item_id"));
-			$objectTable->addIntroButton("addlog", "log.php?op=mod", _AM_ARTIKEL_LOG_CREATE);
-			$icmsAdminTpl->assign("artikel_log_table", $objectTable->fetch());
-			$icmsAdminTpl->display("db:artikel_admin_log.html");
+			$objectTable->addIntroButton("addlog", "log.php?op=mod", _AM_ARTICLE_LOG_CREATE);
+			$icmsAdminTpl->assign("article_log_table", $objectTable->fetch());
+			$icmsAdminTpl->display("db:article_admin_log.html");
 			break;
 	}
 	icms_cp_footer();

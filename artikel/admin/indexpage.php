@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /admin/indexpage.php
  * 
@@ -9,11 +9,11 @@
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
@@ -23,26 +23,26 @@
  * @param int $indexpage_id Indexpageid to be edited
 */
 function editindexpage($indexpage_id = 0) {
-	global $artikel_indexpage_handler, $icmsModule, $icmsAdminTpl;
+	global $article_indexpage_handler, $icmsModule, $icmsAdminTpl;
 
-	$indexpageObj = $artikel_indexpage_handler->get($indexpage_id);
+	$indexpageObj = $article_indexpage_handler->get($indexpage_id);
 
 	if (!$indexpageObj->isNew()){
-		$icmsModule->displayAdminMenu(2, _AM_ARTIKEL_INDEXPAGES . " > " . _CO_ICMS_EDITING);
-		$sform = $indexpageObj->getForm(_AM_ARTIKEL_INDEXPAGE_EDIT, "addindexpage");
+		$icmsModule->displayAdminMenu(2, _AM_ARTICLE_INDEXPAGES . " > " . _CO_ICMS_EDITING);
+		$sform = $indexpageObj->getForm(_AM_ARTICLE_INDEXPAGE_EDIT, "addindexpage");
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$icmsModule->displayAdminMenu(2, _AM_ARTIKEL_INDEXPAGES . " > " . _CO_ICMS_CREATINGNEW);
-		$sform = $indexpageObj->getForm(_AM_ARTIKEL_INDEXPAGE_CREATE, "addindexpage");
+		$icmsModule->displayAdminMenu(2, _AM_ARTICLE_INDEXPAGES . " > " . _CO_ICMS_CREATINGNEW);
+		$sform = $indexpageObj->getForm(_AM_ARTICLE_INDEXPAGE_CREATE, "addindexpage");
 		$sform->assign($icmsAdminTpl);
 
 	}
-	$icmsAdminTpl->display("db:artikel_admin_indexpage.html");
+	$icmsAdminTpl->display("db:article_admin_indexpage.html");
 }
 
 include_once "admin_header.php";
 
-$artikel_indexpage_handler = icms_getModuleHandler("indexpage", basename(dirname(dirname(__FILE__))), "artikel");
+$article_indexpage_handler = icms_getModuleHandler("indexpage", basename(dirname(dirname(__FILE__))), "article");
 /** Use a naming convention that indicates the source of the content of the variable */
 $clean_op = "";
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
@@ -71,29 +71,29 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "addindexpage":
-			$controller = new icms_ipf_Controller($artikel_indexpage_handler);
-			$controller->storeFromDefaultForm(_AM_ARTIKEL_INDEXPAGE_CREATED, _AM_ARTIKEL_INDEXPAGE_MODIFIED);
+			$controller = new icms_ipf_Controller($article_indexpage_handler);
+			$controller->storeFromDefaultForm(_AM_ARTICLE_INDEXPAGE_CREATED, _AM_ARTICLE_INDEXPAGE_MODIFIED);
 			break;
 
 		case "del":
-			$controller = new icms_ipf_Controller($artikel_indexpage_handler);
+			$controller = new icms_ipf_Controller($article_indexpage_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		case "view" :
-			$indexpageObj = $artikel_indexpage_handler->get($clean_indexpage_id);
+			$indexpageObj = $article_indexpage_handler->get($clean_indexpage_id);
 			icms_cp_header();
 			$indexpageObj->displaySingleObject();
 			break;
 
 		default:
 			icms_cp_header();
-			$icmsModule->displayAdminMenu(2, _AM_ARTIKEL_INDEXPAGES);
-			$objectTable = new icms_ipf_view_Table($artikel_indexpage_handler);
+			$icmsModule->displayAdminMenu(2, _AM_ARTICLE_INDEXPAGES);
+			$objectTable = new icms_ipf_view_Table($article_indexpage_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("index_header"));
-			$objectTable->addIntroButton("addindexpage", "indexpage.php?op=mod", _AM_ARTIKEL_INDEXPAGE_CREATE);
-			$icmsAdminTpl->assign("artikel_indexpage_table", $objectTable->fetch());
-			$icmsAdminTpl->display("db:artikel_admin_indexpage.html");
+			$objectTable->addIntroButton("addindexpage", "indexpage.php?op=mod", _AM_ARTICLE_INDEXPAGE_CREATE);
+			$icmsAdminTpl->assign("article_indexpage_table", $objectTable->fetch());
+			$icmsAdminTpl->display("db:article_admin_indexpage.html");
 			break;
 	}
 	icms_cp_footer();

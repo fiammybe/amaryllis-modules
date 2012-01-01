@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /icms_version.php
  * 
@@ -9,11 +9,11 @@
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
@@ -21,16 +21,16 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 /**  General Information  */
 $modversion = array(
-						"name"						=> _MI_ARTIKEL_MD_NAME,
+						"name"						=> _MI_ARTICLE_MD_NAME,
 						"version"					=> 1.0,
-						"description"				=> _MI_ARTIKEL_MD_DESC,
+						"description"				=> _MI_ARTICLE_MD_DESC,
 						"author"					=> "QM-B",
 						"credits"					=> "",
 						"help"						=> "",
 						"license"					=> "GNU General Public License (GPL)",
 						"official"					=> 0,
 						"dirname"					=> basename(dirname(__FILE__)),
-						"modname"					=> "artikel",
+						"modname"					=> "article",
 					
 					/**  Images information  */
 						"iconsmall"					=> "images/icon_small.png",
@@ -60,7 +60,7 @@ $modversion = array(
 					
 					/** Search information */
 						"hasSearch"					=> 0,
-						"search"					=> array("file" => "include/search.inc.php", "func" => "artikel_search"),
+						"search"					=> array("file" => "include/search.inc.php", "func" => "article_search"),
 					
 					/** Menu information */
 						"hasMain"					=> 1,
@@ -70,7 +70,7 @@ $modversion = array(
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
 
 /** Manual */
-$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Artikel' target='_blank'>English</a>";
+$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Article' target='_blank'>English</a>";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// SUPPORT //////////////////////////////////////////////////////
@@ -108,48 +108,48 @@ $modversion["tables"] = icms_getTablesArray($modversion['dirname'], $modversion[
 $i = 0;
 $i++;
 $modversion['templates'][$i] = array(
-										'file'			=> 'artikel_index.html',
-										'description'	=> _MI_ARTIKEL_INDEX_TPL
+										'file'			=> 'article_index.html',
+										'description'	=> _MI_ARTICLE_INDEX_TPL
 								);
 $i++;
 $modversion['templates'][$i] = array(
-										'file'			=> 'artikel_article.html',
-										'description'	=> _MI_ARTIKEL_ARTICLE_TPL
+										'file'			=> 'article_article.html',
+										'description'	=> _MI_ARTICLE_ARTICLE_TPL
 								);
 $i++;
 $modversion['templates'][$i] = array(
-										'file'			=> 'artikel_category.html',
-										'description'	=> _MI_ARTIKEL_CATEGORY_TPL
+										'file'			=> 'article_category.html',
+										'description'	=> _MI_ARTICLE_CATEGORY_TPL
 								);
 $i++;
 $modversion['templates'][$i] = array(
-										'file'			=> 'artikel_forms.html',
-										'description'	=> _MI_ARTIKEL_FORMS_TPL
+										'file'			=> 'article_forms.html',
+										'description'	=> _MI_ARTICLE_FORMS_TPL
 								);
 $i++;
 $modversion['templates'][$i] = array(
-										'file'			=> 'artikel_singlearticle.html',
-										'description'	=> _MI_ARTIKEL_SINGLEARTICLE_TPL
+										'file'			=> 'article_singlearticle.html',
+										'description'	=> _MI_ARTICLE_SINGLEARTICLE_TPL
 								);
 $i++;
 $modversion['templates'][$i] = array(
-										'file'			=> 'artikel_admin.html',
-										'description'	=> _MI_ARTIKEL_ADMIN_TPL
+										'file'			=> 'article_admin.html',
+										'description'	=> _MI_ARTICLE_ADMIN_TPL
 								);
 $i++;
 $modversion['templates'][$i] = array(
-										'file'			=> 'artikel_requirements.html',
-										'description'	=> _MI_ARTIKEL_REQUIREMENTS_TPL
+										'file'			=> 'article_requirements.html',
+										'description'	=> _MI_ARTICLE_REQUIREMENTS_TPL
 								);
 $i++;
 $modversion['templates'][$i] = array(
-										'file'			=> 'artikel_header.html',
-										'description'	=> _MI_ARTIKEL_HEADER_TPL
+										'file'			=> 'article_header.html',
+										'description'	=> _MI_ARTICLE_HEADER_TPL
 								);
 $i++;
 $modversion['templates'][$i] = array(
-										'file'			=> 'artikel_footer.html',
-										'description'	=> _MI_ARTIKEL_FOOTER_TPL
+										'file'			=> 'article_footer.html',
+										'description'	=> _MI_ARTICLE_FOOTER_TPL
 								);
 
 
@@ -161,43 +161,43 @@ $i=0;
 
 // Recent files block
 $i++;
-$modversion['blocks'][$i]['file']			= 'artikel_recent_artikel.php';
-$modversion['blocks'][$i]['name']			= _MI_ARTIKEL_BLOCK_RECENT_ARTICLE;
-$modversion['blocks'][$i]['description']	= _MI_ARTIKEL_BLOCK_RECENT_ARTICLE_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_artikel_recent_article_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_artikel_recent_article_edit';
+$modversion['blocks'][$i]['file']			= 'article_recent_article.php';
+$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_RECENT_ARTICLE;
+$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_RECENT_ARTICLE_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_article_recent_article_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_article_recent_article_edit';
 $modversion['blocks'][$i]['options']		= '10';
-$modversion['blocks'][$i]['template']		= 'artikel_block_recent_article.html';
+$modversion['blocks'][$i]['template']		= 'article_block_recent_article.html';
 $modversion['blocks'][$i]['can_clone']		= true ;
 // recent updated block
 $i++;
-$modversion['blocks'][$i]['file']			= 'artikel_recent_updated.php';
-$modversion['blocks'][$i]['name']			= _MI_ARTIKEL_BLOCK_RECENT_UPDATED;
-$modversion['blocks'][$i]['description']	= _MI_ARTIKEL_BLOCK_RECENT_UPDATED_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_artikel_recent_updated_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_artikel_recent_updated_edit';
+$modversion['blocks'][$i]['file']			= 'article_recent_updated.php';
+$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_RECENT_UPDATED;
+$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_RECENT_UPDATED_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_article_recent_updated_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_article_recent_updated_edit';
 $modversion['blocks'][$i]['options']		= '10';
-$modversion['blocks'][$i]['template']		= 'artikel_block_recent_updated.html';
+$modversion['blocks'][$i]['template']		= 'article_block_recent_updated.html';
 $modversion['blocks'][$i]['can_clone']		= true ;
 // most popular block
 $i++;
-$modversion['blocks'][$i]['file']			= 'artikel_most_popular.php';
-$modversion['blocks'][$i]['name']			= _MI_ARTIKEL_BLOCK_MOST_POPULAR;
-$modversion['blocks'][$i]['description']	= _MI_ARTIKEL_BLOCK_MOST_POPULAR_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_artikel_most_popular_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_artikel_most_popular_edit';
+$modversion['blocks'][$i]['file']			= 'article_most_popular.php';
+$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_MOST_POPULAR;
+$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_MOST_POPULAR_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_article_most_popular_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_article_most_popular_edit';
 $modversion['blocks'][$i]['options']		= '10';
-$modversion['blocks'][$i]['template']		= 'artikel_block_most_popular.html';
+$modversion['blocks'][$i]['template']		= 'article_block_most_popular.html';
 $modversion['blocks'][$i]['can_clone']		= true ;
 // category menu block
 $i++;
-$modversion['blocks'][$i]['file']			= 'artikel_category_menu.php';
-$modversion['blocks'][$i]['name']			= _MI_ARTIKEL_BLOCK_CATEGORY_MENU;
-$modversion['blocks'][$i]['description']	= _MI_ARTIKEL_BLOCK_CATEGORY_MENU_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_artikel_category_menu_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_artikel_category_menu_edit';
+$modversion['blocks'][$i]['file']			= 'article_category_menu.php';
+$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_CATEGORY_MENU;
+$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_CATEGORY_MENU_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_article_category_menu_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_article_category_menu_edit';
 $modversion['blocks'][$i]['options']		= 'category_title|ASC|1|0';
-$modversion['blocks'][$i]['template']		= 'artikel_block_category_menu.html';
+$modversion['blocks'][$i]['template']		= 'article_block_category_menu.html';
 $modversion['blocks'][$i]['can_clone']		= true ;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,8 +212,8 @@ $modversion['comments']['itemName'] = 'article_id';
 
 // Comment callback functions
 $modversion['comments']['callbackFile'] = 'include/comment.inc.php';
-$modversion['comments']['callback']['approve'] = 'artikel_com_approve';
-$modversion['comments']['callback']['update'] = 'artikel_com_update';
+$modversion['comments']['callback']['approve'] = 'article_com_approve';
+$modversion['comments']['callback']['update'] = 'article_com_update';
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,18 +226,18 @@ $i=0;
 
 $i++;
 $modversion['config'][$i] = array(
-								'name'			=> 'artikel_allowed_groups',
-								'title'			=> '_MI_ARTIKEL_AUTHORIZED_GROUPS',
-								'description'	=> '_MI_ARTIKEL_AUTHORIZED_GROUPS_DSC',
+								'name'			=> 'article_allowed_groups',
+								'title'			=> '_MI_ARTICLE_AUTHORIZED_GROUPS',
+								'description'	=> '_MI_ARTICLE_AUTHORIZED_GROUPS_DSC',
 								'formtype'		=> 'group_multi',
 								'valuetype'		=> 'array',
 								'default'		=> 1
 							);
 $i++;
 $modversion['config'][$i] = array(
-								'name' 			=> 'artikel_dateformat',
-								'title' 		=> '_MI_ARTIKEL_DATE_FORMAT',
-								'description' 	=> '_MI_ARTIKEL_DATE_FORMAT_DSC',
+								'name' 			=> 'article_dateformat',
+								'title' 		=> '_MI_ARTICLE_DATE_FORMAT',
+								'description' 	=> '_MI_ARTICLE_DATE_FORMAT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'string',
 								'default' 		=> 'j/n/Y'
@@ -246,8 +246,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'show_breadcrumbs',
-								'title' 		=> '_MI_ARTIKEL_SHOW_BREADCRUMBS',
-								'description' 	=> '_MI_ARTIKEL_SHOW_BREADCRUMBS_DSC',
+								'title' 		=> '_MI_ARTICLE_SHOW_BREADCRUMBS',
+								'description' 	=> '_MI_ARTICLE_SHOW_BREADCRUMBS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=>  1
@@ -255,8 +255,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name'			=> 'show_categories',
-								'title'			=> '_MI_ARTIKEL_SHOW_CATEGORIES',
-								'description' 	=> '_MI_ARTIKEL_SHOW_CATEGORIES_DSC',
+								'title'			=> '_MI_ARTICLE_SHOW_CATEGORIES',
+								'description' 	=> '_MI_ARTICLE_SHOW_CATEGORIES_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype'		=> 'int',
 								'default' 		=> 15
@@ -264,8 +264,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name'			=> 'show_category_columns',
-								'title'			=> '_MI_ARTIKEL_SHOW_CATEGORY_COLUMNS',
-								'description' 	=> '_MI_ARTIKEL_SHOW_CATEGORY_COLUMNS_DSC',
+								'title'			=> '_MI_ARTICLE_SHOW_CATEGORY_COLUMNS',
+								'description' 	=> '_MI_ARTICLE_SHOW_CATEGORY_COLUMNS_DSC',
 								'formtype' 		=> 'select',
 								'valuetype'		=> 'int',
 								'options'		=> array('1' => 1, '2' => 2, '3' => 3, '4' => 4),
@@ -274,8 +274,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'show_articles',
-								'title' 		=> '_MI_ARTIKEL_SHOW_ARTIKEL',
-								'description'	=> '_MI_ARTIKEL_SHOW_ARTIKEL_DSC',
+								'title' 		=> '_MI_ARTICLE_SHOW_ARTICLE',
+								'description'	=> '_MI_ARTICLE_SHOW_ARTICLE_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 20
@@ -283,8 +283,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'thumbnail_width',
-								'title' 		=> '_MI_ARTIKEL_THUMBNAIL_WIDTH',
-								'description' 	=> '_MI_ARTIKEL_THUMBNAIL_WIDTH_DSC',
+								'title' 		=> '_MI_ARTICLE_THUMBNAIL_WIDTH',
+								'description' 	=> '_MI_ARTICLE_THUMBNAIL_WIDTH_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 110
@@ -292,8 +292,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'thumbnail_height',
-								'title' 		=> '_MI_ARTIKEL_THUMBNAIL_HEIGHT',
-								'description'	=> '_MI_ARTIKEL_THUMBNAIL_HEIGHT_DSC',
+								'title' 		=> '_MI_ARTICLE_THUMBNAIL_HEIGHT',
+								'description'	=> '_MI_ARTICLE_THUMBNAIL_HEIGHT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 150
@@ -301,8 +301,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'display_width',
-								'title' 		=> '_MI_ARTIKEL_DISPLAY_WIDTH',
-								'description' 	=> '_MI_ARTIKEL_DISPLAY_WIDTH_DSC',
+								'title' 		=> '_MI_ARTICLE_DISPLAY_WIDTH',
+								'description' 	=> '_MI_ARTICLE_DISPLAY_WIDTH_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 110
@@ -310,8 +310,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'display_height',
-								'title' 		=> '_MI_ARTIKEL_DISPLAY_HEIGHT',
-								'description'	=> '_MI_ARTIKEL_DISPLAY_HEIGHT_DSC',
+								'title' 		=> '_MI_ARTICLE_DISPLAY_HEIGHT',
+								'description'	=> '_MI_ARTICLE_DISPLAY_HEIGHT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 150
@@ -319,8 +319,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'image_upload_width',
-								'title' 		=> '_MI_ARTIKEL_IMAGE_UPLOAD_WIDTH',
-								'description' 	=> '_MI_ARTIKEL_IMAGE_UPLOAD_WIDTH_DSC',
+								'title' 		=> '_MI_ARTICLE_IMAGE_UPLOAD_WIDTH',
+								'description' 	=> '_MI_ARTICLE_IMAGE_UPLOAD_WIDTH_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1024
@@ -328,8 +328,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'image_upload_height',
-								'title' 		=> '_MI_ARTIKEL_IMAGE_UPLOAD_HEIGHT',
-								'description'	=> '_MI_ARTIKEL_IMAGE_UPLOAD_HEIGHT_DSC',
+								'title' 		=> '_MI_ARTICLE_IMAGE_UPLOAD_HEIGHT',
+								'description'	=> '_MI_ARTICLE_IMAGE_UPLOAD_HEIGHT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 768
@@ -337,8 +337,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'upload_file_size',
-								'title' 		=> '_MI_ARTIKEL_UPLOAD_FILE_SIZE',
-								'description' 	=> '_MI_ARTIKEL_UPLOAD_FILE_SIZE_DSC',
+								'title' 		=> '_MI_ARTICLE_UPLOAD_FILE_SIZE',
+								'description' 	=> '_MI_ARTICLE_UPLOAD_FILE_SIZE_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 2097152 // 2MB default max upload size
@@ -346,8 +346,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'display_file_size',
-								'title' 		=> '_MI_ARTIKEL_DISPLAY_FILE_SIZE',
-								'description' 	=> '_MI_ARTIKEL_DISPLAY_FILE_SIZE_DSC',
+								'title' 		=> '_MI_ARTICLE_DISPLAY_FILE_SIZE',
+								'description' 	=> '_MI_ARTICLE_DISPLAY_FILE_SIZE_DSC',
 								'formtype' 		=> 'select',
 								'valuetype' 	=> 'text',
 								'options'		=> array("byte" => 1, "kb" => 2, "mb" => 3, "gb" => 4),
@@ -356,8 +356,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'show_upl_disclaimer',
-								'title' 		=> '_MI_ARTIKEL_SHOWDISCLAIMER',
-								'description' 	=> '_MI_ARTIKEL_SHOWDISCLAIMER_DSC',
+								'title' 		=> '_MI_ARTICLE_SHOWDISCLAIMER',
+								'description' 	=> '_MI_ARTICLE_SHOWDISCLAIMER_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -365,17 +365,17 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'upl_disclaimer',
-								'title' 		=> '_MI_ARTIKEL_DISCLAIMER',
+								'title' 		=> '_MI_ARTICLE_DISCLAIMER',
 								'description' 	=> '',
 								'formtype' 		=> 'textarea',
 								'valuetype' 	=> 'text',
-								'default' 		=> _MI_ARTIKEL_UPL_DISCLAIMER_TEXT
+								'default' 		=> _MI_ARTICLE_UPL_DISCLAIMER_TEXT
 							);
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'show_down_disclaimer',
-								'title' 		=> '_MI_ARTIKEL_SHOW_DOWN_DISCL',
-								'description' 	=> '_MI_ARTIKEL_SHOW_DOWN_DISCL_DSC',
+								'title' 		=> '_MI_ARTICLE_SHOW_DOWN_DISCL',
+								'description' 	=> '_MI_ARTICLE_SHOW_DOWN_DISCL_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -383,17 +383,17 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'down_disclaimer',
-								'title' 		=> '_MI_ARTIKEL_DOWN_DISCLAIMER',
+								'title' 		=> '_MI_ARTICLE_DOWN_DISCLAIMER',
 								'description' 	=> '',
 								'formtype' 		=> 'textarea',
 								'valuetype' 	=> 'text',
-								'default' 		=> _MI_ARTIKEL_DOWN_DISCLAIMER_TEXT
+								'default' 		=> _MI_ARTICLE_DOWN_DISCLAIMER_TEXT
 							);
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'downloads_license',
-								'title' 		=> '_MI_ARTIKEL_LICENSE',
-								'description' 	=> '_MI_ARTIKEL_LICENSE_DSC',
+								'title' 		=> '_MI_ARTICLE_LICENSE',
+								'description' 	=> '_MI_ARTICLE_LICENSE_DSC',
 								'formtype' 		=> 'textsarea',
 								'valuetype' 	=> 'text',
 								'default' 		=> 'None
@@ -432,8 +432,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'use_rss',
-								'title' 		=> '_MI_ARTIKEL_USE_RSS',
-								'description' 	=> '_MI_ARTIKEL_USE_RSS_DSC',
+								'title' 		=> '_MI_ARTICLE_USE_RSS',
+								'description' 	=> '_MI_ARTICLE_USE_RSS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -441,8 +441,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'use_downloads',
-								'title' 		=> '_MI_ARTIKEL_USE_DOWNLOADS',
-								'description' 	=> '_MI_ARTIKEL_USE_DOWNLOADS_DSC',
+								'title' 		=> '_MI_ARTICLE_USE_DOWNLOADS',
+								'description' 	=> '_MI_ARTICLE_USE_DOWNLOADS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -450,8 +450,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'use_album',
-								'title' 		=> '_MI_ARTIKEL_USE_RSS',
-								'description' 	=> '_MI_ARTIKEL_USE_RSS_DSC',
+								'title' 		=> '_MI_ARTICLE_USE_RSS',
+								'description' 	=> '_MI_ARTICLE_USE_RSS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -459,8 +459,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_steps',
-								'title' 		=> '_MI_ARTIKEL_NEED_STEPS',
-								'description' 	=> '_MI_ARTIKEL_NEED_STEPS_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_STEPS',
+								'description' 	=> '_MI_ARTICLE_NEED_STEPS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -468,8 +468,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_tips',
-								'title' 		=> '_MI_ARTIKEL_NEED_TIPS',
-								'description' 	=> '_MI_ARTIKEL_NEED_TIPS_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_TIPS',
+								'description' 	=> '_MI_ARTICLE_NEED_TIPS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -477,8 +477,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_warnings',
-								'title' 		=> '_MI_ARTIKEL_NEED_WARNINGS',
-								'description' 	=> '_MI_ARTIKEL_NEED_WARNINGS_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_WARNINGS',
+								'description' 	=> '_MI_ARTICLE_NEED_WARNINGS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -486,8 +486,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_licenses',
-								'title' 		=> '_MI_ARTIKEL_NEED_LICENSES',
-								'description' 	=> '_MI_ARTIKEL_NEED_LICENSES_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_LICENSES',
+								'description' 	=> '_MI_ARTICLE_NEED_LICENSES_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -495,8 +495,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_needed_things',
-								'title' 		=> '_MI_ARTIKEL_NEED_NEEDED_THINGS',
-								'description' 	=> '_MI_ARTIKEL_NEED_NEEDED_THINGS_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_NEEDED_THINGS',
+								'description' 	=> '_MI_ARTICLE_NEED_NEEDED_THINGS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -504,8 +504,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_attachments',
-								'title' 		=> '_MI_ARTIKEL_NEED_STEPS',
-								'description' 	=> '_MI_ARTIKEL_NEED_STEPS_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_STEPS',
+								'description' 	=> '_MI_ARTICLE_NEED_STEPS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -513,8 +513,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_videos',
-								'title' 		=> '_MI_ARTIKEL_NEED_VIDEOS',
-								'description' 	=> '_MI_ARTIKEL_NEED_VIDEOS_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_VIDEOS',
+								'description' 	=> '_MI_ARTICLE_NEED_VIDEOS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -522,8 +522,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_history',
-								'title' 		=> '_MI_ARTIKEL_NEED_HISTORY',
-								'description' 	=> '_MI_ARTIKEL_NEED_HISTORY_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_HISTORY',
+								'description' 	=> '_MI_ARTICLE_NEED_HISTORY_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -531,8 +531,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_related',
-								'title' 		=> '_MI_ARTIKEL_NEED_RELATED',
-								'description' 	=> '_MI_ARTIKEL_NEED_RELATED_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_RELATED',
+								'description' 	=> '_MI_ARTICLE_NEED_RELATED_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -540,8 +540,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_resources',
-								'title' 		=> '_MI_ARTIKEL_NEED_RESOURCES',
-								'description' 	=> '_MI_ARTIKEL_NEED_RESOURCES_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_RESOURCES',
+								'description' 	=> '_MI_ARTICLE_NEED_RESOURCES_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -549,8 +549,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'resources_needs_approval',
-								'title' 		=> '_MI_ARTIKEL_RESOURCES_APPROVE',
-								'description' 	=> '_MI_ARTIKEL_RESOURCES_APPROVE_DSC',
+								'title' 		=> '_MI_ARTICLE_RESOURCES_APPROVE',
+								'description' 	=> '_MI_ARTICLE_RESOURCES_APPROVE_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -558,8 +558,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_conclusion',
-								'title' 		=> '_MI_ARTIKEL_NEED_CONCLUSION',
-								'description' 	=> '_MI_ARTIKEL_NEED_CONCLUSION_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_CONCLUSION',
+								'description' 	=> '_MI_ARTICLE_NEED_CONCLUSION_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -567,8 +567,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'article_needs_approval',
-								'title' 		=> '_MI_ARTIKEL_DOWNLOAD_APPROVE',
-								'description' 	=> '_MI_ARTIKEL_DOWNLOAD_APPROVE_DSC',
+								'title' 		=> '_MI_ARTICLE_DOWNLOAD_APPROVE',
+								'description' 	=> '_MI_ARTICLE_DOWNLOAD_APPROVE_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -576,8 +576,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'category_needs_approval',
-								'title' 		=> '_MI_ARTIKEL_CATEGORY_APPROVE',
-								'description' 	=> '_MI_ARTIKEL_CATEGORY_APPROVE_DSC',
+								'title' 		=> '_MI_ARTICLE_CATEGORY_APPROVE',
+								'description' 	=> '_MI_ARTICLE_CATEGORY_APPROVE_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -585,8 +585,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'guest_vote',
-								'title' 		=> '_MI_ARTIKEL_GUEST_CAN_VOTE',
-								'description' 	=> '_MI_ARTIKEL_GUEST_CAN_VOTE_DSC',
+								'title' 		=> '_MI_ARTICLE_GUEST_CAN_VOTE',
+								'description' 	=> '_MI_ARTICLE_GUEST_CAN_VOTE_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 0
@@ -594,8 +594,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'show_reviews',
-								'title' 		=> '_MI_ARTIKEL_SHOW_REVIEWS',
-								'description' 	=> '_MI_ARTIKEL_SHOW_REVIEWS_DSC',
+								'title' 		=> '_MI_ARTICLE_SHOW_REVIEWS',
+								'description' 	=> '_MI_ARTICLE_SHOW_REVIEWS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -603,8 +603,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'review_needs_approval',
-								'title' 		=> '_MI_ARTIKEL_CATEGORY_APPROVE',
-								'description' 	=> '_MI_ARTIKEL_CATEGORY_APPROVE_DSC',
+								'title' 		=> '_MI_ARTICLE_CATEGORY_APPROVE',
+								'description' 	=> '_MI_ARTICLE_CATEGORY_APPROVE_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -612,8 +612,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'guest_review',
-								'title' 		=> '_MI_ARTIKEL_GUEST_CAN_REVIEW',
-								'description' 	=> '_MI_ARTIKEL_GUEST_CAN_REVIEW_DSC',
+								'title' 		=> '_MI_ARTICLE_GUEST_CAN_REVIEW',
+								'description' 	=> '_MI_ARTICLE_GUEST_CAN_REVIEW_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 0
@@ -621,8 +621,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'show_reviews_email',
-								'title' 		=> '_MI_ARTIKEL_SHOW_REVIEWS_EMAIL',
-								'description' 	=> '_MI_ARTIKEL_SHOW_REVIEWS_EMAIL_DSC',
+								'title' 		=> '_MI_ARTICLE_SHOW_REVIEWS_EMAIL',
+								'description' 	=> '_MI_ARTICLE_SHOW_REVIEWS_EMAIL_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 0
@@ -630,18 +630,18 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'display_reviews_email',
-								'title' 		=> '_MI_ARTIKEL_DISPLAY_REVIEWS_EMAIL',
-								'description' 	=> '_MI_ARTIKEL_DISPLAY_REVIEWS_EMAIL_DSC',
+								'title' 		=> '_MI_ARTICLE_DISPLAY_REVIEWS_EMAIL',
+								'description' 	=> '_MI_ARTICLE_DISPLAY_REVIEWS_EMAIL_DSC',
 								'formtype' 		=> 'select',
 								'valuetype' 	=> 'int',
-								'options'		=> array("_MI_ARTIKEL_DISPLAY_REVEMAIL_SPAMPROT" => 1, "_MI_ARTIKEL_DISPLAY_REVEMAIL_IMGPROT" => 2, "_MI_ARTIKEL_DISPLAY_REVEMAIL_SPAMPROT_BANNED" => 3, "_MI_ARTIKEL_DISPLAY_REVEMAIL_IMGPROT_BANNED" => 4),
+								'options'		=> array("_MI_ARTICLE_DISPLAY_REVEMAIL_SPAMPROT" => 1, "_MI_ARTICLE_DISPLAY_REVEMAIL_IMGPROT" => 2, "_MI_ARTICLE_DISPLAY_REVEMAIL_SPAMPROT_BANNED" => 3, "_MI_ARTICLE_DISPLAY_REVEMAIL_IMGPROT_BANNED" => 4),
 								'default' 		=> 1
 							);
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'show_reviews_avatar',
-								'title' 		=> '_MI_ARTIKEL_SHOW_REVIEWS_AVATAR',
-								'description' 	=> '_MI_ARTIKEL_SHOW_REVIEWS_AVATAR_DSC',
+								'title' 		=> '_MI_ARTICLE_SHOW_REVIEWS_AVATAR',
+								'description' 	=> '_MI_ARTICLE_SHOW_REVIEWS_AVATAR_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 0
@@ -649,7 +649,7 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'show_reviews_count',
-								'title' 		=> '_MI_ARTIKEL_REVIEWS_COUNT',
+								'title' 		=> '_MI_ARTICLE_REVIEWS_COUNT',
 								'description' 	=> '',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
@@ -658,7 +658,7 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'review_order',
-								'title' 		=> '_MI_ARTIKEL_REVIEWS_ORDER',
+								'title' 		=> '_MI_ARTICLE_REVIEWS_ORDER',
 								'description' 	=> '',
 								'formtype' 		=> 'select',
 								'valuetype' 	=> 'text',
@@ -668,8 +668,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'tags_needs_approval',
-								'title' 		=> '_MI_ARTIKEL_TAGS_APPROVE',
-								'description' 	=> '_MI_ARTIKEL_TAGS_APPROVE_DSC',
+								'title' 		=> '_MI_ARTICLE_TAGS_APPROVE',
+								'description' 	=> '_MI_ARTICLE_TAGS_APPROVE_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -677,8 +677,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'display_teaser',
-								'title' 		=> '_MI_ARTIKEL_DISPLAY_TEASER',
-								'description' 	=> '_MI_ARTIKEL_DISPLAY_TEASER_DSC',
+								'title' 		=> '_MI_ARTICLE_DISPLAY_TEASER',
+								'description' 	=> '_MI_ARTICLE_DISPLAY_TEASER_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -686,7 +686,7 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'article_popular',
-								'title' 		=> '_MI_ARTIKEL_POPULAR',
+								'title' 		=> '_MI_ARTICLE_POPULAR',
 								'description' 	=> '',
 								'formtype' 		=> 'select',
 								'valuetype' 	=> 'int',
@@ -696,7 +696,7 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'article_daysnew',
-								'title' 		=> '_MI_ARTIKEL_DAYSNEW',
+								'title' 		=> '_MI_ARTICLE_DAYSNEW',
 								'description' 	=> '',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
@@ -705,7 +705,7 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'article_daysupdated',
-								'title' 		=> '_MI_ARTIKEL_DAYSUPDATED',
+								'title' 		=> '_MI_ARTICLE_DAYSUPDATED',
 								'description' 	=> '',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',

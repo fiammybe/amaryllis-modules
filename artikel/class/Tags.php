@@ -1,29 +1,29 @@
 <?php
 /**
- * 'Artikel' is an tags management module for ImpressCMS
+ * 'Article' is an tags management module for ImpressCMS
  *
  * File: /class/Tags.php
  * 
- * Class representing Artikel tag Objects
+ * Class representing Article tag Objects
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class mod_artikel_Tags extends icms_ipf_Object {
+class mod_article_Tags extends icms_ipf_Object {
 	/**
 	 * Constructor
 	 *
-	 * @param mod_artikel_Tags $handler Object handler
+	 * @param mod_article_Tags $handler Object handler
 	 */
 	public function __construct(&$handler) {
 		parent::__construct($handler);
@@ -68,10 +68,10 @@ class mod_artikel_Tags extends icms_ipf_Object {
 	public function tags_active() {
 		$active = $this->getVar('tags_active', 'e');
 		if ($active == false) {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=visible">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=visible">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
 		} else {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=visible">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=visible">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
 		}
 	}
@@ -79,10 +79,10 @@ class mod_artikel_Tags extends icms_ipf_Object {
 	public function tags_approve() {
 		$active = $this->getVar('tags_approve', 'e');
 		if ($active == false) {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=changeApprove">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=changeApprove">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Denied" /></a>';
 		} else {
-			return '<a href="' . ARTIKEL_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=changeApprove">
+			return '<a href="' . ARTICLE_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=changeApprove">
 				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Approved" /></a>';
 		}
 	}

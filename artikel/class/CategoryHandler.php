@@ -1,25 +1,25 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /class/CategoryHandler.php
  * 
- * Classes responsible for managing Artikel category objects
+ * Classes responsible for managing Article category objects
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class ArtikelCategoryHandler extends icms_ipf_Handler {
+class ArticleCategoryHandler extends icms_ipf_Handler {
 	
 	private $_category_grpperm = array();
 	
@@ -32,7 +32,7 @@ class ArtikelCategoryHandler extends icms_ipf_Handler {
 	public $identifierName;
 
 	public function __construct($db) {
-		parent::__construct($db, 'category', 'category_id', 'category_title', 'category_description', 'artikel');
+		parent::__construct($db, 'category', 'category_id', 'category_title', 'category_description', 'article');
 		$this->addPermission('category_grpperm', _CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM, _CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM_DSC);
 		
 		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/categoryimages/';
@@ -103,7 +103,7 @@ class ArtikelCategoryHandler extends icms_ipf_Handler {
 				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
-			if ($perm == 'category_grpperm' || $perm == 'artikel_admin') {
+			if ($perm == 'category_grpperm' || $perm == 'article_admin') {
 				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
 				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
 			}
@@ -236,7 +236,7 @@ class ArtikelCategoryHandler extends icms_ipf_Handler {
 				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
-			if ($perm == 'category_grpperm' || $perm == 'artikel_admin') {
+			if ($perm == 'category_grpperm' || $perm == 'article_admin') {
 				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
 				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
 			}
@@ -337,12 +337,12 @@ class ArtikelCategoryHandler extends icms_ipf_Handler {
 	}
 
 	public function userCanSubmit() {
-		global $artikel_isAdmin, $artikelConfig;
+		global $article_isAdmin, $articleConfig;
 		if (!is_object(icms::$user)) return false;
-		if ($artikel_isAdmin) return true;
+		if ($article_isAdmin) return true;
 		$user_groups = icms::$user->getGroups();
 		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
-		return count(array_intersect($module->config['artikel_allowed_groups'], $user_groups)) > 0;
+		return count(array_intersect($module->config['article_allowed_groups'], $user_groups)) > 0;
 	}
 	
 	// get breadcrumb
@@ -378,11 +378,11 @@ class ArtikelCategoryHandler extends icms_ipf_Handler {
 	
 	//update hit-counter
 	public function updateCounter($category_id) {
-		global $artikel_isAdmin;
+		global $article_isAdmin;
 		$categoryObj = $this->get($category_id);
 		if (!is_object($categoryObj)) return false;
 
-		if (isset($categoryObj->vars['counter']) && !is_object(icms::$user) || (!$artikel_isAdmin && $categoryObj->getVar('category_publisher', 'e') != icms::$user->uid ()) ) {
+		if (isset($categoryObj->vars['counter']) && !is_object(icms::$user) || (!$article_isAdmin && $categoryObj->getVar('category_publisher', 'e') != icms::$user->uid ()) ) {
 			$new_counter = $categoryObj->getVar('counter') + 1;
 			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
 				. ' WHERE ' . $this->keyName . '=' . $categoryObj->id();
@@ -427,13 +427,13 @@ class ArtikelCategoryHandler extends icms_ipf_Handler {
 		$notification_handler->unsubscribeByItem($module_id, $category, $category_id);
 		return true;
 		
-		$artikel_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "artikel");
+		$article_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "article");
 		if (!is_object(icms::$user)) {
 			$log_uid = 0;
 		} else {
 			$log_uid = icms::$user->getVar("uid");
 		}
-		$logObj = $artikel_log_handler->create();
+		$logObj = $article_log_handler->create();
 		$logObj->setVar('log_item_id', $obj->id() );
 		$logObj->setVar('log_date', (time()-200) );
 		$logObj->setVar('log_uid', $log_uid);

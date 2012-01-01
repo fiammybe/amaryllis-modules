@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /comment_new.php
  * 
@@ -9,19 +9,19 @@
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
 include_once "header.php";
 $com_itemid = isset($_GET["com_itemid"]) ? (int)$_GET["com_itemid"] : 0;
 if ($com_itemid > 0) {
-	$artikel_post_handler = icms_getModuleHandler("post", basename(dirname(__FILE__)), "artikel");
-	$postObj = $artikel_post_handler->get($com_itemid);
+	$article_post_handler = icms_getModuleHandler("post", basename(dirname(__FILE__)), "article");
+	$postObj = $article_post_handler->get($com_itemid);
 	if ($postObj && !$postObj->isNew()) {
 		$com_replytext = "test...";
 		$bodytext = $postObj->getPostLead();
