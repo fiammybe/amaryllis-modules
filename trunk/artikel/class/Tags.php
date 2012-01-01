@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Artikel' is an tags management module for ImpressCMS
  *
  * File: /class/Tags.php
  * 
@@ -29,14 +29,24 @@ class mod_artikel_Tags extends icms_ipf_Object {
 		parent::__construct($handler);
 
 		$this->quickInitVar("tags_id", XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar("tag_title", XOBJ_DTYPE_TXTBOX, TRUE);
-		$this->quickInitVar("tag_description", XOBJ_DTYPE_TXTAREA, FALSE);
-		$this->quickInitVar("tag_image", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("tag_image_upl", XOBJ_DTYPE_IMAGE, FALSE);
-		$this->initCommonVar("counter");
-		$this->initCommonVar("dohtml");
-		$this->initCommonVar("dosmiley");
-		$this->setControl("tag_image_upl", "image");
+		$this->quickInitVar("tags_title", XOBJ_DTYPE_TXTBOX, TRUE);
+		$this->quickInitVar("tags_description", XOBJ_DTYPE_TXTAREA, FALSE);
+		$this->quickInitVar("tags_image", XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar("tags_image_upl", XOBJ_DTYPE_IMAGE, FALSE);
+		$this->quickInitVar("tags_submitter", XOBJ_DTYPE_INT);
+		$this->quickInitVar("tags_updater", XOBJ_DTYPE_INT);
+		$this->quickInitVar("tags_published_date", XOBJ_DTYPE_LTIME);
+		$this->quickInitVar("tags_updated_date", XOBJ_DTYPE_LTIME);
+		$this->quickInitVar("tags_approve", XOBJ_DTYPE_INT, FALSE, "", "", 1);
+		$this->quickInitVar("tags_active", XOBJ_DTYPE_INT, FALSE, "", "", 1);
+		$this->initCommonVar("counter", FALSE);
+		$this->initCommonVar("dohtml", FALSE, 1);
+		$this->initCommonVar("dosmiley", FALSE, 1);
+		
+		$this->setControl("tags_description", array("name" => "textarea", "form_editor" => "htmlarea"));
+		$this->setControl("tags_image_upl", "image");
+		$this->setControl("tags_approve", "yesno");
+		$this->setControl("tags_active", "yesno");
 
 	}
 
@@ -53,5 +63,49 @@ class mod_artikel_Tags extends icms_ipf_Object {
 			return call_user_func(array ($this,	$key));
 		}
 		return parent::getVar($key, $format);
+	}
+	
+	public function tags_active() {
+		$active = $this->getVar('tags_active', 'e');
+		if ($active == false) {
+			return '<a href="' . ARTIKEL_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=visible">
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
+		} else {
+			return '<a href="' . ARTIKEL_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=visible">
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
+		}
+	}
+	
+	public function tags_approve() {
+		$active = $this->getVar('tags_approve', 'e');
+		if ($active == false) {
+			return '<a href="' . ARTIKEL_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=changeApprove">
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Denied" /></a>';
+		} else {
+			return '<a href="' . ARTIKEL_ADMIN_URL . 'tags.php?tags_id=' . $this->getVar('tags_id') . '&amp;op=changeApprove">
+				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Approved" /></a>';
+		}
+	}
+	
+	
+	
+	/**
+	 * preparing tags for output
+	 */
+	public function getTagsDescription() {
+		$dsc = $this->getVar("tags_description", "e");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "output");
+		return $dsc;
+	}
+	
+
+	public function toArray() {
+		$ret = parent::toArray();
+		$ret['id'] = $this->getVar("tags_id");
+		$ret['title'] = $this->getVar("tags_title", "e");
+		$ret['dsc'] = $this->getTagsDescription();
+		
+		
+		
 	}
 }

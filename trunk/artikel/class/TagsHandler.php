@@ -26,9 +26,31 @@ class mod_artikel_TagsHandler extends icms_ipf_Handler {
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
-		parent::__construct($db, "tags", "tags_id", "tag_title", "tag_description", "artikel");
-		$this->enableUpload(array("image/gif", "image/jpeg", "image/pjpeg", "image/png"), 512000, 800, 600);
+		parent::__construct($db, "tags", "tags_id", "tags_title", "tags_description", "artikel");
+		$this->enableUpload(array("image/gif", "image/jpeg", "image/pjpeg", "image/png"), 512000, 32, 32);
 	}
 
+	public function getList($approve = TRUE, $active = TRUE) {
+		$criteria = new icms_db_criteria_Compo();
+		if($approve) $criteria->add(new icms_db_criteria_Item("tags_approve", TRUE));
+		if($active) $criteria->add(new icms_db_criteria_Item("tags_active", TRUE));
+		$tags = $this->getObjects($criteria, TRUE);
+		$ret[] = '-----------------';
+		foreach (array_keys($tags) as $i) {
+			$ret[$i] = $tags[$i]->getVar("tags_title", "e");
+		}
+		return $ret;
+	}
+	
+	public function beforeInsert(&$obj)	{
+		if ($obj->getVar("tags_image_upl", "e") != "") {
+			$obj->setVar("tags_image", $obj->getVar("tags_image_upload"));
+		}
+		$dsc = $obj->getVar("tags_description", "s");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
+		$obj->setVar("tags_description", $dsc);
+		
+		return true;
+	}
 
 }
