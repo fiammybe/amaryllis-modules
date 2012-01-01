@@ -1,0 +1,21 @@
+<{includeq file='db:artikel_header.html'}>
+<{if $artikel_category}>
+<div id="artikel-category-container">
+	<h1><{$artikel_category.category_title}></h1>
+		<div><b><{$smarty.const._CO_ARTIKEL_CATEGORY_CATEGORY_DESCRIPRION}></b></div>
+				<div><{$artikel_category.category_descriprion}></div>
+		<div><b><{$smarty.const._CO_ARTIKEL_CATEGORY_CATEGORY_PID}></b>: <{$artikel_category.category_pid}></div>
+		<div><b><{$smarty.const._CO_ARTIKEL_CATEGORY_CATEGORY_IMAGE}></b>: <{$artikel_category.category_image}></div>
+		<div><b><{$smarty.const._CO_ARTIKEL_CATEGORY_CATEGORY_IMAGE_UPL}></b>: <{$artikel_category.category_image_upl}></div>
+		<div><b><{$smarty.const._CO_ARTIKEL_CATEGORY_CATEGORY_SUBMITTER}></b>: <{$artikel_category.category_submitter}></div>
+		<div><b><{$smarty.const._CO_ARTIKEL_CATEGORY_CATEGORY_PUBLISHER}></b>: <{$artikel_category.category_publisher}></div>
+		<div><b><{$smarty.const._CO_ARTIKEL_CATEGORY_CATEGORY_PUBLISHED_DATE}></b>: <{$artikel_category.category_published_date}></div>
+		<div><b><{$smarty.const._CO_ARTIKEL_CATEGORY_CATEGORY_UPDATED_DATE}></b>: <{$artikel_category.category_updated_date}></div>
+
+</div>
+<{/if}>
+<{if $artikel_category_table}>
+<h1><{$artikel_title}></h1>
+<{$artikel_category_table}>
+<{/if}>
+<{includeq file='db:artikel_footer.html'}>
