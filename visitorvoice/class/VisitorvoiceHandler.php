@@ -26,9 +26,10 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
+		global $visitorvoiceConfig;
 		parent::__construct($db, "visitorvoice", "visitorvoice_id", "visitorvoice_title", "visitorvoice_entry", "visitorvoice");
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
-		$this->enableUpload($mimetypes, icms::$module->config['image_file_size'], icms::$module->config['image_upload_width'], icms::$module->config['image_upload_height']);
+		$this->enableUpload($mimetypes, $visitorvoiceConfig['image_file_size'], $visitorvoiceConfig['image_upload_width'], $visitorvoiceConfig['image_upload_height']);
 	}
 	
 	public function changeApprove($visitorvoice_id) {
