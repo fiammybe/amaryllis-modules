@@ -1,29 +1,29 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /class/Log.php
  * 
- * Class representing Artikel log Objects
+ * Class representing Article log Objects
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class mod_artikel_Log extends icms_ipf_Object {
+class mod_article_Log extends icms_ipf_Object {
 	/**
 	 * Constructor
 	 *
-	 * @param mod_artikel_Log $handler Object handler
+	 * @param mod_article_Log $handler Object handler
 	 */
 	public function __construct(&$handler) {
 		parent::__construct($handler);

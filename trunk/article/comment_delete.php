@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Artikel' is an article management module for ImpressCMS
+ * 'Article' is an article management module for ImpressCMS
  *
  * File: /comment_delete.php
  * 
@@ -9,11 +9,11 @@
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Artikel
+ * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		artikel
+ * @package		article
  *
  */
 
