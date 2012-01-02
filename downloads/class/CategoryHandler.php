@@ -96,7 +96,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return isset($ret[$category_id]) ? $ret[$category_id] : false;
 	}
 	
-	public function getCategoryListForPid($groups = array(), $perm = 'category_grpperm', $status = null,$approved = null,$inblocks = null, $category_id = null, $showNull = true) {
+	public function getCategoryListForPid($groups = array(), $perm = 'category_grpperm', $status = null,$approved = null, $category_id = null, $showNull = true) {
 	
 		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
@@ -116,9 +116,6 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		if (isset($approved)) {
 			$criteria->add(new icms_db_criteria_Item('category_approve', true));
 		}
-		if (isset($inblocks)) {
-			$criteria->add(new icms_db_criteria_Item('category_inblocks', true));
-		}
 		if (is_null($category_id)) $category_id = 0;
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
 		$categories = & $this->getObjects($criteria, true);
@@ -128,7 +125,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		}
 		foreach(array_keys($categories) as $i) {
 			$ret[$i] = $categories[$i]->getVar('category_title');
-			$subcategories = $this->getCategoryListForPid($groups, $perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'), $showNull);
+			$subcategories = $this->getCategoryListForPid($groups, $perm, $status, $approved, $categories[$i]->getVar('category_id'), $showNull);
 			foreach(array_keys($subcategories) as $j) {
 				$ret[$j] = '-' . $subcategories[$j];
 			}
