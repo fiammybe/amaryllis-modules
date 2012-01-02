@@ -280,6 +280,21 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		return array(0 => 'No Mirror', 1 => 'Has Mirror');
 	}
 	
+	function getCategoryList($active = NULL, $approve = NULL ) {
+		
+		$downloads_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "downloads");
+		$criteria = new icms_db_criteria_Compo();
+		
+		if(isset($approve)) $criteria->add(new icms_db_criteria_Item("category_approve", TRUE));
+		if(isset($active)) $criteria->add(new icms_db_criteria_Item("category_active", TRUE));
+		
+		$categories = $downloads_category_handler->getObjects($criteria, TRUE);
+		foreach(array_keys($categories) as $i ) {
+			$ret[$categories[$i]->getVar('category_id')] = $categories[$i]->getVar('category_title');
+		}
+		return $ret;
+	}
+	
 	public function getDownloadVersionStatus() {
 		global $downloadsConfig;
 		if (!$this->_download_version_status) {

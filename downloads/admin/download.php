@@ -210,6 +210,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addFilter( 'download_approve', 'download_approve_filter' );
 			$objectTable->addFilter( 'download_broken', 'download_broken_filter' );
 			$objectTable->addFilter( 'download_has_mirror', 'download_has_mirror_filter' );
+			$objectTable->addFilter( 'download_cid', 'getCategoryList' );
 			
 			$objectTable->addQuickSearch(array('download_title', 'download_keyfeatures', 'download_requirements', 'download_platform', 'download_dev'));
 			
