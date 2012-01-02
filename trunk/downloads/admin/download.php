@@ -195,7 +195,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable = new icms_ipf_view_Table($downloads_download_handler, $criteria);
 			$objectTable->addColumn( new icms_ipf_view_Column( 'download_active', 'center', 50, 'download_active' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'download_title', false, false, 'getPreviewItemLink' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'download_cid', false, false, 'download_cid' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'download_cid', false, false, 'getDownloadCid' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'counter', 'center', 50));
 			$objectTable->addColumn( new icms_ipf_view_Column( 'download_inblocks', 'center', 50, 'download_inblocks' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'download_approve', 'center', 50, 'download_approve' ) );

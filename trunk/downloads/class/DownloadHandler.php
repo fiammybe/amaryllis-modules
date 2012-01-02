@@ -33,6 +33,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	
 	private $_download_license = array();
 	
+	private $_download_cid = array();
+	
 	public $_moduleName;
 
 	public function __construct(&$db) {
@@ -96,7 +98,11 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$crit->add(new icms_db_criteria_Item('download_id', $download_id),'OR');
 			$criteria->add($crit);
 		}
-		if ($download_cid !== false)	$criteria->add(new icms_db_criteria_Item('download_cid', $download_cid));
+		if ($download_cid != false)	{
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("download_cid", "%" . $download_cid . "%", "LIKE"));
+			$criteria->add($critTray);
+		}
 		return $criteria;
 	}
 	
@@ -357,6 +363,20 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		}
 		return $this->_download_related;
 	}
+	
+	public function getDownloadCategories()	{
+		if(!$this->_download_cid) {
+			$downloads_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "downloads");
+			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+			$categories = $downloads_category_handler->getObjects(FALSE, TRUE, FALSE);
+			$ret = array();
+			foreach(array_keys($categories) as $i) {
+				$ret[$categories[$i]['category_id']] = $categories[$i]['title'];
+			}
+			return $ret;
+		}
+		return $this->_download_cid;
+	}
 
 	public function getGroups($criteria = null) {
 		if (!$this->_download_grpperm) {
@@ -397,7 +417,11 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('download_approve', true));
 		}
 		if (is_null($download_cid)) $download_cid = 0;
-		$criteria->add(new icms_db_criteria_Item('download_cid', $download_cid));
+		if ($download_cid != false)	{
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("download_cid", "%" . $download_cid . "%", "LIKE"));
+			$criteria->add($critTray);
+		}
 		
 		$downloads = $this->getObjects($criteria, true, false);
 		$ret = array();

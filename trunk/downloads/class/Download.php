@@ -30,7 +30,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('download_title', XOBJ_DTYPE_TXTBOX, true);
 		$this->initCommonVar('short_url');
-		$this->quickInitVar('download_cid', XOBJ_DTYPE_INT, true, false, false, 1);
+		$this->quickInitVar('download_cid', XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar('download_file', XOBJ_DTYPE_FILE);
 		$this->quickInitVar('download_file_alt', XOBJ_DTYPE_TXTBOX);
 		
@@ -102,7 +102,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar("download_static_section_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		// set controls
-		$this->setControl('download_cid', array('name' => 'select', 'itemHandler' => 'category', 'method' => 'getCategoryList', 'module' => 'downloads'));
+		$this->setControl('download_cid', array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadCategories', 'module' => 'downloads'));
 		$this->setControl('download_description', 'dhtmltextarea');
 		$this->setControl('download_teaser', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl('download_history', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
@@ -168,34 +168,30 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 	
 	public function getVar($key, $format = 's') {
-		if ($format == 's' && in_array($key, array('download_publisher','download_grpperm', 'download_cid'))) {
+		if ($format == 's' && in_array($key, array('download_publisher','download_grpperm'))) {
 			return call_user_func(array($this,$key));
 		}
 		return parent::getVar($key, $format);
 	}
 	
-	public function download_cid() {
-		$cid = $this->getVar ( 'download_cid', 'e' );
+	function download_cid() {
+		$ret = $this->getVar('download_cid', 's');
+		$categories = $this->handler->getDownloadCategories();
+		return $categories;
+	}
+	
+	public function getDownloadCid() {
+		$cid = $this->getVar ( 'download_cid', 's' );
+		//$cids = explode(",", $cid);
 		$downloads_category_handler = icms_getModuleHandler ( 'category',basename(dirname(dirname(__FILE__))), 'downloads' );
-		$category = $downloads_category_handler->get ( $cid );
-		
-		return $category->getVar ( 'category_title' );
-	}
-	/** prepared for later use
-	public function download_cid() {
-		$cid_array = implode(" ", array($this->getVar('download_cid', 's')));
-		$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
-		$category_array = $downloads_category_handler->getObjects();
-		
-		$categories = array_intersect_key(explode(",", $cid_array), $category_array);
-		$category=array();
-		foreach($categories as &$category) {
-			$category = $downloads_category_handler->get($category, false);
-			
+		$ret = array();
+		foreach ($cid as $category) {
+			$categoryObject = $downloads_category_handler->get($category);
+			$ret[$category] = $categoryObject->getVar("category_title");
 		}
-		return $category['category_title'];
+		return implode(", ", $ret);
 	}
-	**/
+	
 	public function download_active() {
 		$active = $this->getVar('download_active', 'e');
 		if ($active == false) {
