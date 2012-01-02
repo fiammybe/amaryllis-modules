@@ -295,6 +295,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if(isset($active)) $criteria->add(new icms_db_criteria_Item("category_active", TRUE));
 		
 		$categories = $downloads_category_handler->getObjects($criteria, TRUE);
+		$ret = array();
 		foreach(array_keys($categories) as $i ) {
 			$ret[$categories[$i]->getVar('category_id')] = $categories[$i]->getVar('category_title');
 		}
