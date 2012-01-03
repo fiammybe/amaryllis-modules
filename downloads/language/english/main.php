@@ -90,6 +90,7 @@ define("_MD_DOWNLOADS_BROKEN_REPORTED", "Thank you for submitting! File was repo
 define("_MD_DOWNLOADS_DOWNLOAD_START", "Please be patient, and your download will start shortly.");
 define("_MD_DOWNLOADS_THANKS_VOTING", "Thank you for Voting");
 define("_MD_DOWNLOADS_ALLREADY_VOTED", "You have allready voted!");
+define('_THANKS_SUBMISSION_TAG', 'Thank you for submitting new tag!');
 //for new file form
 define("_MD_DOWNLOADS_DOWNLOAD_EDIT", "Edit the File");
 define("_MD_DOWNLOADS_DOWNLOAD_CREATE", "Upload a new file");
@@ -103,5 +104,5 @@ define("_MD_DOWNLOADS_CATEGORY_MODIFIED", "Category successfully modified. Thank
 // for review form
 define("_MD_DOWNLOADS_REVIEW_ADD", "Submit Review");
 define('_MD_DOWNLOADS_REVIEW_SUBMITTED', 'Review submitted');
-define('_THANKS_SUBMISSION', 'Thank you for submitting your review!');
+define('_THANKS_SUBMISSION_REV', 'Thank you for submitting your review!');
 
