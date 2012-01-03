@@ -99,7 +99,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->setControl("article_image", "image");
 		$this->setControl("article_teaser", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("article_body", "dhtmltextarea");
-		$this->setControl("article_tags", array("name" => "select_multi", "itemhandler" => "tags", "method" => "getTags", "module" => "article"));
 		$this->setControl("article_publisher", "user_multi");
 		$this->setControl("article_approve", "yesno");
 		$this->setControl("article_active", "yesno");
@@ -131,8 +130,8 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		if($articleConfig['use_album'] == 1) {
 			$this->setControl("article_album", array("name" => "select", "itemhandler" => "article", "method" => "getAlbumList", "module" => "article"));
 		} else {
-			$this->hideFieldFromForm("article_downloads");
-			$this->hideFieldFromSingleView("article_downloads");
+			$this->hideFieldFromForm("article_album");
+			$this->hideFieldFromSingleView("article_album");
 		}
 		
 		/**
@@ -181,21 +180,23 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		 * check, if attachments are needed, else hide them
 		 */
 		if($articleConfig['need_attachments'] == 0) {
-			$this->hideFieldFromForm(array("article_attachment", "article_attachment_alt"));
-			$this->hideFieldFromSingleView(array("article_attachment", "article_attachment_alt"));
+			$this->hideFieldFromForm(array("article_broken_file", "article_attachment", "article_attachment_alt"));
+			$this->hideFieldFromSingleView(array("article_broken_file", "article_attachment", "article_attachment_alt"));
 		} else {
 			$this->setControl("article_attachment", "file");
+			$this->setControl("article_broken_file", "yesno");
 		}
 		
 		/**
 		 * check, if videos are needed, else hide them
 		 */
 		if($articleConfig['need_videos'] == 0) {
-			$this->hideFieldFromForm(array("article_video", "article_video_source", "article_video_upload", "article_video_upload_alt"));
-			$this->hideFieldFromSingleView(array("article_video", "article_video_source", "article_video_upload", "article_video_upload_alt"));
+			$this->hideFieldFromForm(array("article_broken_video", "article_video", "article_video_source", "article_video_upload", "article_video_upload_alt"));
+			$this->hideFieldFromSingleView(array("article_video", "article_broken_video", "article_video_source", "article_video_upload", "article_video_upload_alt"));
 		} else {
 			$this->setControl("article_video_source", array("name" => "select", "itemhandler" => "article", "method" => "getVideoSources", "module" => "article"));
 			$this->setControl("article_video_upload", "file");
+			$this->setControl("article_broken_video", "yesno");
 		}
 		
 		/**
@@ -238,6 +239,10 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			$this->setControl("article_conclusion", array("name" => "textarea", "form_editor" => "htmlarea"));
 		}
 		
+		if($articleConfig['use_tags'] == 1) {
+			$this->setControl("article_tags", array("name" => "select_multi", "itemhandler" => "tags", "method" => "getTags", "module" => "tags"));
+		}
+		
 		$this->initiateSEO();
 	}
 
@@ -254,6 +259,24 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			return call_user_func(array ($this,	$key));
 		}
 		return parent::getVar($key, $format);
+	}
+	
+	function article_cid() {
+		$ret = $this->getVar('article_cid', 's');
+		$categories = $this->handler->getArticleCategories();
+		return $categories;
+	}
+	
+	public function getArticleCid() {
+		$cid = $this->getVar ( 'article_cid', 's' );
+		//$cids = explode(",", $cid);
+		$article_category_handler = icms_getModuleHandler ( 'category',basename(dirname(dirname(__FILE__))), 'article' );
+		$ret = array();
+		foreach ($cid as $category) {
+			$categoryObject = $article_category_handler->get($category);
+			$ret[$category] = $categoryObject->getVar("category_title");
+		}
+		return implode(", ", $ret);
 	}
 	
 	function article_license() {
@@ -273,8 +296,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$sources = $this->handler->getArticleVideoSources();
 		return $sources;
 	}
-	
-	
 	
 	public function article_active() {
 		$active = $this->getVar('article_active', 'e');
@@ -350,9 +371,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	public function article_submitter() {
 		return icms_member_user_Handler::getUserLink($this->getVar('article_publisher', 'e'));
 	}
-	
-	
-	
 	
 	/**
 	 * preparing all fields for output
@@ -730,15 +748,46 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		}
 	}
 	
-	/**
-	 * @TODO publishers are missing yet
-	 */
+	public function getArticlePublishers() {
+		$publishers = $this->getVar("article_publisher", "s");
+		$ret = array();
+		foreach ($publishers as $publisher) {
+			$ret[$publisher] = icms_member_user_Handler::getUserLink($publisher);
+		}
+		return implode(", ", $ret);
+	}
 	
 	function userCanEditAndDelete() {
-		global $downloads_isAdmin;
+		global $article_isAdmin;
 		if (!is_object(icms::$user)) return false;
 		if ($downloads_isAdmin) return true;
-		return $this->getVar('download_publisher', 'e') == icms::$user->getVar("uid");
+		if($this->getVar('article_submitter', 'e') == icms::$user->getVar("uid")) return TRUE;
+		$publishers = $this->getVar("article_publisher", "s");
+		foreach ($publishers as $publisher) {
+			if($publisher == icms::$user->getVar("uid")) return TRUE;
+		}
+	}
+	
+	function accessGranted() {
+		$gperm_handler = icms::handler('icms_member_groupperm');
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+		$agroups = $gperm_handler->getGroupIds('module_admin', $module->getVar("mid"));
+		$allowed_groups = array_intersect($groups, $agroups);
+		$viewperm = $gperm_handler->checkRight('article_grpperm', $this->getVar('article_id', 'e'), $groups, $module->getVar("mid"));
+		if ($this->userCanEditAndDelete()) {
+			return true;
+		}
+		if ($viewperm && $this->getVar('article_active', 'e') == true) {
+			return true;
+		}
+		if ($viewperm && $this->getVar('article_approve', 'e') == true) {
+			return true;
+		}
+		if ($viewperm && count($allowed_groups) > 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	function getItemLink($onlyUrl = false) {
@@ -782,7 +831,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['video'] = $this->getArticleVideo();
 		$ret['history'] = $this->getArticleHistory();
 		$ret['conclusion'] = $this->getArticleConclusion();
-		
+		$ret['publisher'] = $this->getArticlePublishers();
 		$ret['submitter'] = $this->getArticleSubmitter(TRUE);
 		$ret['updater'] = $this->getArticleUpdater(TRUE);
 		$ret['published_on'] = $this->getArticlePublishedDate();
@@ -793,6 +842,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
+		$ret['accessgranted'] = $this->accessGranted();
 		/** related for single view **/
 		$ret['active'] = $this->article_active();
 		$ret['approve'] = $this->article_approve();

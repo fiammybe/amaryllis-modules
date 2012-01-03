@@ -30,6 +30,8 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	
 	private $_article_video_sources = array();
 	
+	private $_article_cid = array();
+	
 	/**
 	 * Constructor
 	 *
@@ -52,7 +54,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$modulename = basename(dirname(dirname(__FILE__)));
 		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
 			icms_file_MediaUploadHandler::setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
-			return false;
+			return FALSE;
 		}
 		$AllowedMimeTypes = $mimetypeHandler->AllowedModules($this->mediaRealType, $modulename);
 		if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes))
@@ -60,9 +62,9 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 				|| (empty($this->allowedMimeTypes) && !$AllowedMimeTypes))
 			{
 			icms_file_MediaUploadHandler::setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
-			return false;
+			return FALSE;
 		}
-		return true;
+		return TRUE;
 	}
 	
 	/**
@@ -81,10 +83,194 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	// some criterias used by other requests
+	public function getArticleCriteria($start = 0, $limit = 0, $article_publisher = FALSE, $article_id = FALSE,$article_cid = FALSE, $order = 'article_published_date', $sort = 'DESC') {
+		$criteria = new icms_db_criteria_Compo();
+		if ($start) $criteria->setStart($start);
+		if ($limit) $criteria->setLimit((int)$limit);
+		$criteria->setSort($order);
+		$criteria->setOrder($sort);
+		if ($article_publisher) $criteria->add(new icms_db_criteria_Item('article_publisher', $article_publisher));
+		if ($article_id) {
+			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('short_url', $article_id,'LIKE'));
+			$alt_article_id = str_replace('-',' ',$article_id);
+			//Added for backward compatiblity in case short_url contains spaces instead of dashes.
+			$crit->add(new icms_db_criteria_Item('short_url', $alt_article_id),'OR');
+			$crit->add(new icms_db_criteria_Item('article_id', $article_id),'OR');
+			$criteria->add($crit);
+		}
+		if ($article_cid != FALSE){
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("article_cid", "%" . $article_cid . "%", "LIKE"));
+			$criteria->add($critTray);
+		}
+		return $criteria;
+	}
+	
+	public function getArticles($start = 0, $limit = 0, $article_publisher = FALSE, $article_id = FALSE,  $article_cid = FALSE, $order = 'weight', $sort = 'ASC') {
+		
+		$criteria = $this->getDownloadsCriteria($start, $limit, $article_publisher, $article_id,  $article_cid, $order, $sort);
+		$article = $this->getObjects($criteria, TRUE, FALSE);
+		$ret = array();
+		foreach ($article as $article){
+			if ($article['accessgranted']){
+				$ret[$article['article_id']] = $article;
+			}
+		}
+		return $ret;
+	}
+	
+	public function getArticlesForBlocks($start = 0, $limit = 0,$updated = FALSE,$popular = FALSE, $order = 'article_published_date', $sort = 'DESC') {
+		global $articleConfig;
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->setStart(0);
+		$criteria->setLimit($limit);
+		$criteria->setSort($order);
+		$criteria->setOrder($sort);
+		$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
+		$criteria->add(new icms_db_criteria_Item('article_inblocks', TRUE));
+		$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
+		if($updated == TRUE) $criteria->add(new icms_db_criteria_Item('article_updated', TRUE));
+		if($popular == TRUE) {
+			$pop = $downloadsConfig['article_popular'];
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item('counter', $pop, ">="));
+			$criteria->add($critTray);
+		}
+		$articles = $this->getObjects($criteria, TRUE, FALSE);
+		$ret = array();
+		foreach ($articles as $key => &$article){
+			if ($article['accessgranted']){
+				$ret[$article['download_id']] = $article;
+			}
+		}
+		return $ret;
+	}
+
+	/**
+	 * handling some functions to easily switch some fields
+	 */
+	public function changeVisible($article_id) {
+		$visibility = '';
+		$articleObj = $this->get($article_id);
+		if ($articleObj->getVar('article_active', 'e') == TRUE) {
+			$articleObj->setVar('article_active', 0);
+			$visibility = 0;
+		} else {
+			$articleObj->setVar('article_active', 1);
+			$visibility = 1;
+		}
+		$this->insert($articleObj, TRUE);
+		return $visibility;
+	}
+	
+	public function changeShow($article_id) {
+		$show = '';
+		$articleObj = $this->get($article_id);
+		if ($articleObj->getVar('article_inblocks', 'e') == TRUE) {
+			$articleObj->setVar('article_inblocks', 0);
+			$show = 0;
+		} else {
+			$articleObj->setVar('article_inblocks', 1);
+			$show = 1;
+		}
+		$this->insert($articleObj, TRUE);
+		return $show;
+	}
+	
+	public function changeApprove($article_id) {
+		$approve = '';
+		$articleObj = $this->get($article_id);
+		if ($articleObj->getVar('article_approve', 'e') == TRUE) {
+			$articleObj->setVar('article_approve', 0);
+			$approve = 0;
+		} else {
+			$articleObj->setVar('article_approve', 1);
+			$approve = 1;
+		}
+		$this->insert($articleObj, TRUE);
+		return $approve;
+	}
+	
+	public function changeMirrorApprove($article_id) {
+		$mirror_approve = '';
+		$articleObj = $this->get($article_id);
+		if ($articleObj->getVar('article_mirror_approve', 'e') == TRUE) {
+			$articleObj->setVar('article_mirror_approve', 0);
+			$mirror_approve = 0;
+		} else {
+			$articleObj->setVar('article_mirror_approve', 1);
+			$mirror_approve = 1;
+		}
+		$this->insert($articleObj, TRUE);
+		return $mirror_approve;
+	}
+	
+	public function changeBroken($article_id) {
+		$broken = '';
+		$articleObj = $this->get($article_id);
+		if ($articleObj->getVar('article_broken', 'e') == TRUE) {
+			$articleObj->setVar('article_broken', 0);
+			$broken = 0;
+		} else {
+			$articleObj->setVar('article_broken', 1);
+			$broken = 1;
+		}
+		$this->insert($articleObj, TRUE);
+		return $broken;
+	}
+	
+	/**
+	 * Adding some filters for object table in ACP
+	 */
+	public function article_active_filter() {
+		return array(0 => 'Offline', 1 => 'Online');
+	}
+	
+	public function article_inblocks_filter() {
+		return array(0 => 'Hidden', 1 => 'Visible');
+	}
+	
+	public function article_approve_filter() {
+		return array(0 => 'Denied', 1 => 'Approved');
+	}
+	
+	public function article_broken_filter() {
+		return array(0 => 'Online', 1 => 'Broken');
+	}
+	
+	function getCategoryList($active = NULL, $approve = NULL ) {
+		
+		$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
+		$criteria = new icms_db_criteria_Compo();
+		
+		if(isset($approve)) $criteria->add(new icms_db_criteria_Item("category_approve", TRUE));
+		if(isset($active)) $criteria->add(new icms_db_criteria_Item("category_active", TRUE));
+		
+		$categories = $article_category_handler->getObjects($criteria, TRUE);
+		foreach(array_keys($categories) as $i ) {
+			$ret[$categories[$i]->getVar('category_id')] = $categories[$i]->getVar('category_title');
+		}
+		return $ret;
+	}
 	
 	/**
 	 * handle some object fields
 	 */
+	
+	public function getArticleCategories()	{
+		if(!$this->_article_cid) {
+			$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
+			$categories = $article_category_handler->getObjects(FALSE, TRUE, FALSE);
+			$ret = array();
+			foreach(array_keys($categories) as $i) {
+				$ret[$categories[$i]['category_id']] = $categories[$i]['title'];
+			}
+			return $ret;
+		}
+		return $this->_article_cid;
+	}
+	
 	public function getLink($download_id = NULL) {
 		$file = $this->get($download_id);
 		$link = $file->getItemLink(FALSE);
@@ -158,9 +344,26 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		}
 	}
 	
+	public function getGroups($criteria = null) {
+		if (!$this->_article_grpperm) {
+			$member_handler =& icms::handler('icms_member');
+			$groups = $member_handler->getGroupList($criteria, true);
+			return $groups;
+		}
+		return $this->_article_grpperm;
+	}
 	
 	
-	
+	public function userCanSubmit($category_id) {
+		global $article_isAdmin;
+		$article_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
+		$categoryObject = $article_category_handler->get($category_id);
+		if (!is_object(icms::$user)) return FALSE;
+		if ($article_isAdmin) return TRUE;
+		$user_groups = icms::$user->getGroups();
+		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
+		return count(array_intersect(array($categoryObject->getVar('category_uplperm')), $user_groups)) > 0;
+	}
 	
 	public function makeLink($article) {
 		$count = $this->getCount(new icms_db_criteria_Item("short_url", $article->getVar("short_url")));
@@ -173,6 +376,34 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		}
 	}
 	
+	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'article_grpperm', $article_publisher = FALSE, $article_id = FALSE, $article_cid = FALSE) {
+		$criteria = new icms_db_criteria_Compo();
+		
+		if (isset($active)) {
+			$criteria->add(new icms_db_criteria_Item('article_active', true));
+		}
+		if (isset($approve)) {
+			$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
+		}
+		if (is_null($article_cid)) $article_cid = 0;
+		if ($article_cid != FALSE)	{
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("article_cid", "%" . $article_cid . "%", "LIKE"));
+			$criteria->add($critTray);
+		}
+		
+		$articles = $this->getObjects($criteria, TRUE, FALSE);
+		$ret = array();
+		foreach ($articles as $article){
+			if ($article['accessgranted']){
+				$ret[$article['article_id']] = $article;
+			}
+		}
+		return count($ret);
+	
+	}
+	
+	
 	protected function beforeInsert(&$obj) {
 		$teaser = $obj->getVar("article_teaser", "s");
 		$teaser = icms_core_DataFilter::checkVar($teaser, "html", "input");
@@ -182,6 +413,30 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$history = icms_core_DataFilter::checkVar($history, "html", "input");
 		$obj->setVar("article_history", $history);
 		
+	}
+	
+	protected function afterSave(&$obj) {
+		if ($obj->updating_counter)
+		return TRUE;
+
+		if (!$obj->getVar('article_notification_sent') && $obj->getVar('article_active', 'e') == TRUE && $obj->getVar('article_approve', 'e') == TRUE) {
+			$obj->sendNotifArticlePublished();
+			$obj->setVar('article_notification_sent', TRUE);
+			$this->insert($obj);
+		}
+		return TRUE;
+	}
+	
+	protected function afterDelete(& $obj) {
+		$notification_handler = icms::handler( 'icms_data_notification' );
+		$module_handler = icms::handler('icms_module');
+		$module = $module_handler->getByDirname( icms::$module -> getVar( 'dirname' ) );
+		$module_id = icms::$module->getVar('mid');
+		$category = 'global';
+		$article_id = $obj->id();
+		// delete global notifications
+		$notification_handler->unsubscribeByItem($module_id, $category, $article_id);
+		return TRUE;
 	}
 
 }

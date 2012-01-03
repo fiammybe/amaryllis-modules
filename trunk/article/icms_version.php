@@ -391,7 +391,7 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
-								'name' 			=> 'downloads_license',
+								'name' 			=> 'article_license',
 								'title' 		=> '_MI_ARTICLE_LICENSE',
 								'description' 	=> '_MI_ARTICLE_LICENSE_DSC',
 								'formtype' 		=> 'textsarea',
@@ -449,9 +449,27 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'use_tags',
+								'title' 		=> '_MI_ARTICLE_USE_TAGS',
+								'description' 	=> '_MI_ARTICLE_USE_TAGS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'use_album',
 								'title' 		=> '_MI_ARTICLE_USE_RSS',
 								'description' 	=> '_MI_ARTICLE_USE_RSS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'show_teaser',
+								'title' 		=> '_MI_ARTICLE_SHOW_TEASER',
+								'description' 	=> '_MI_ARTICLE_SHOW_TEASER_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
