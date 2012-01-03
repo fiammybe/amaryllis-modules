@@ -1,5 +1,5 @@
 <ul>
 	<{foreach item=downloads_updated from=$block.downloads_updated}>
-		<li><a href="<{$downloads_updated.itemLink}>" title="<{$downloads_updated.title}>"><{$downloads_updated.title}></a> (<{$downloads_updated.updated_date}>)</li>
+		<li><a href="<{$downloads_updated.itemURL}>" title="<{$downloads_updated.title}>"><{$downloads_updated.title}></a> (<{$downloads_updated.updated_date}>)</li>
 	<{/foreach}>
 </ul>

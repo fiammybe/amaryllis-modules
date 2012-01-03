@@ -48,7 +48,7 @@ function b_downloads_category_menu_edit($options) {
 	$selorder->addOptionArray($order);
 	$showsubs = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
 	$selcats = new icms_form_elements_Select('', 'options[3]', $options[3]);
-	$selcats->addOptionArray($downloads_category_handler->getCategoryListForPid($groups = array(), 'category_grpperm', true, true, true, null, true));
+	$selcats->addOptionArray($downloads_category_handler->getCategoryListForPid($groups = array(), 'category_grpperm', true, true, null, true));
 	
 	$form = '<table width="100%">';
 	$form .= '<tr>';
