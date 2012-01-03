@@ -71,6 +71,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case('downfile'):
 			$clean_download_id = isset($_GET['download_id']) ? filter_input(INPUT_GET, 'download_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+			$clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted() ) {
@@ -119,6 +120,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 		default:
 			$clean_download_id = isset($_GET['download_id']) ? filter_input(INPUT_GET, 'download_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+			$clean_category_id = isset($_GET['cid']) ? filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$clean_review_start = isset($_GET['rev_nav']) ? filter_input(INPUT_GET, 'rev_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
@@ -138,7 +140,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 * forwarding new reports for broken links
 				 */
 				$icmsTpl->assign("broken_link", DOWNLOADS_URL . "ajax.php?op=report_broken&download_id=" . $downloadObj->id() );
-				
+				/**
+				 * display File as popular
+				 */
 				$popular = downloads_display_popular($downloadObj->getVar("counter"));
 				if($popular) {
 					$icmsTpl->assign('file_is_popular', TRUE );
@@ -246,12 +250,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 						$icmsTpl->assign('item_link', $catalogue_item_link);
 					}
 				}
-				if ($downloadsConfig['show_breadcrumbs'] == true) {
-					$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'downloads');
-					$icmsTpl->assign('downloads_cat_path', $downloads_category_handler->getBreadcrumbForPid($downloadObj->getVar('download_cid', 'e'), 1));
-				} else {
-					$icmsTpl->assign('downloads_cat_path', false);
-				}
+
 				/**
 				 * review form
 				 */
@@ -332,6 +331,17 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$icmsTpl->assign("comment_counter", $comments);
 				$lang_comments = $comments != 1 ? _MD_DOWNLOADS_COMMENTS : _MD_DOWNLOADS_COMMENT;
 				$icmsTpl->assign("comment_lang", $lang_comments);
+				
+				/**
+				 * 
+				 */
+				if ($downloadsConfig['show_breadcrumbs'] == true) {
+					$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'downloads');
+					$icmsTpl->assign('downloads_show_breadcrumb', TRUE);
+					$icmsTpl->assign('downloads_cat_path', $downloads_category_handler->getBreadcrumbForPid($clean_category_id, 1));
+				} else {
+					$icmsTpl->assign('downloads_cat_path', false);
+				}
 				/**
 				 * get the meta informations
 				 */
@@ -340,8 +350,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			} else {
 				redirect_header (DOWNLOADS_URL, 3, _NO_PERM);
 			}
-			
-			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == true);
 			
 	}
 } else {
