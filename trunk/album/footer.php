@@ -20,7 +20,7 @@
 if($albumConfig['show_breadcrumbs'] == 1) {
 	$icmsTpl->assign('album_show_breadcrumb', TRUE);
 }
-$icmsTpl->assign('album_adminpage', '<a href="' . ALBUM_ADMIN_URL . '" title="admin-link" class="album_admin_link" >' . _MD_ALBUM_ADMIN_PAGE . '</a>' );
+$icmsTpl->assign('album_adminpage', '<a href="' . ALBUM_ADMIN_URL . 'index.php" title="admin-link" class="album_admin_link" >' . _MD_ALBUM_ADMIN_PAGE . '</a>' );
 $icmsTpl->assign('album_is_admin', icms_userIsAdmin(ALBUM_DIRNAME));
 $icmsTpl->assign('album_url', ALBUM_URL);
 $icmsTpl->assign('album_module_home', '<a href="' . ALBUM_URL . '" title="' . icms::$module->getVar("name") . '">' . icms::$module->getVar("name") . '</a>');
