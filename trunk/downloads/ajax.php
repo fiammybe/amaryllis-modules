@@ -124,7 +124,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					redirect_header('singledownload.php', 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 				}
 				$controller = new icms_ipf_Controller($downloads_review_handler);
-				$controller->storeFromDefaultForm(_MD_DOWNLOADS_REVIEW_SUBMITTED, _MD_DOWNLOADS_REVIEW_SUBMITTED, DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id);
+				$controller->storeFromDefaultForm(_THANKS_SUBMISSION_REV, _THANKS_SUBMISSION_REV, DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id);
 				return redirect_header (DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id, 3, _THANKS_SUBMISSION);
 			} else {
 				return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
@@ -168,7 +168,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					redirect_header('singledownload.php?download_id=' . $download_id, 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 				}
 				$controller = new icms_ipf_Controller($sprockets_tag_handler);
-				$controller->storeFromDefaultForm(_MD_DOWNLOADS_REVIEW_SUBMITTED, _MD_DOWNLOADS_REVIEW_SUBMITTED, DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id);
+				$controller->storeFromDefaultForm(_THANKS_SUBMISSION_TAG, _THANKS_SUBMISSION_TAG, DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id);
 				return redirect_header (DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id, 3, _THANKS_SUBMISSION);
 			} else {
 				return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
