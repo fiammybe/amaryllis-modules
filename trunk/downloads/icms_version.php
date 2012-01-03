@@ -492,6 +492,15 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'use_sprockets',
+								'title' 		=> '_MI_DOWNLOADS_USE_SPROCKETS',
+								'description' 	=> '_MI_DOWNLOADS_USE_SPROCKETS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 0
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'use_album',
 								'title' 		=> '_MI_DOWNLOADS_USE_ALBUM',
 								'description' 	=> '_MI_DOWNLOADS_USE_ALBUM_DSC',

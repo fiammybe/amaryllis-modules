@@ -35,6 +35,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	
 	private $_download_cid = array();
 	
+	private $_download_tags = array();
+	
 	public $_moduleName;
 
 	public function __construct(&$db) {
@@ -106,9 +108,14 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		return $criteria;
 	}
 	
-	public function getDownloads($start = 0, $limit = 0, $download_publisher = false, $download_id = false,  $download_cid = false, $order = 'weight', $sort = 'ASC') {
+	public function getDownloads($start = 0, $limit = 0,$tag_id = FALSE, $download_publisher = FALSE, $download_id = FALSE,  $download_cid = FALSE, $order = 'weight', $sort = 'ASC') {
 		
 		$criteria = $this->getDownloadsCriteria($start, $limit, $download_publisher, $download_id,  $download_cid, $order, $sort);
+		if($tag_id) {
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("download_tags", "%" . $tag_id . "%", "LIKE"));
+			$criteria->add($critTray);
+		}
 		$downloads = $this->getObjects($criteria, true, false);
 		$ret = array();
 		foreach ($downloads as $download){
@@ -120,8 +127,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	}
 	
 	public function getDownload($download_id) {
-		$ret = $this->getDownloads(0, 0, false, $download_id);
-		return isset($ret[$download_id]) ? $ret[$download_id] : false;
+		$ret = $this->getDownloads(0, 0, FALSE, FALSE, $download_id);
+		return isset($ret[$download_id]) ? $ret[$download_id] : FALSE;
 	}
 	
 	public function getDownloadsForBlocks($start = 0, $limit = 0,$updated = FALSE,$popular = FALSE, $order = 'download_published_date', $sort = 'DESC') {
@@ -378,6 +385,26 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		}
 		return $this->_download_cid;
 	}
+	
+	public function getDownloadTags() {
+		if(!$this->_download_tags) {
+			$sprocketsModule = icms_getModuleInfo("sprockets");
+			if($sprocketsModule) {
+				$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
+				$criteria = new icms_db_criteria_Compo();
+				$criteria->add(new icms_db_criteria_Item("label_type", 0));
+				$criteria->add(new icms_db_criteria_Item("navigation_element", 0));
+				
+				$tags = $sprockets_tag_handler->getObjects(FALSE, TRUE, FALSE);
+				$ret = array();
+				foreach(array_keys($tags) as $i) {
+					$ret[$tags[$i]['tag_id']] = $tags[$i]['title'];
+				}
+				return $ret;
+			}
+		}
+		return $this->_download_tags;
+	}
 
 	public function getGroups($criteria = null) {
 		if (!$this->_download_grpperm) {
@@ -495,6 +522,29 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	protected function afterSave(&$obj) {
 		if ($obj->updating_counter)
 		return true;
+		
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($sprocketsModule && $downloadsConfig['use_sprockets'] == 1);
+		$tags = $obj->getVar("download_tags", "s");
+		foreach ($tags as $key => $tag) {
+			$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
+			$mid = icms::$module->getVar("mid");
+			$iid = $obj->getVar("download_id");
+			$criteria = icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item("mid", $mid));
+			$criteria->add(new icms_db_criteria_Item("iid", $iid));
+			$criteria->add(new icms_db_criteria_Item("tid", $tag));
+			$count = $sprockets_taglink_handler->getCount($criteria);
+			if($count == 0) {
+				$taglinkObj = $sprockets_taglink_handler->cerate();
+				$taglinkObj->setVar("mid", $mid);
+				$taglinkObj->setVar("iid", $iid);
+				$taglinkObj->setVar("tid", $tag);
+				$taglinkObj->setVar("item", $obj->getVar("download_title"));
+				$taglinkObj->store(TRUE);
+				
+			}
+		}
 
 		if (!$obj->getVar('download_notification_sent') && $obj->getVar('download_active', 'e') == true && $obj->getVar('download_approve', 'e') == true) {
 			$obj->sendNotifDownloadPublished();

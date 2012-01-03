@@ -42,6 +42,26 @@ function addreview($clean_review_id = 0, $clean_download_id = 0){
 	
 }
 
+function addtags($clean_tag_id = 0, $clean_download_id = 0){
+	global $sprockets_tag_handler, $downloadsConfig, $icmsTpl;
+	
+	$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
+	$downloadObj = $downloads_download_handler->get($clean_download_id);
+	$sprocketsModule = icms_getModuleInfo("sprockets");
+	$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
+	$tagObj = $sprockets_tag_handler->get($clean_tag_id);
+	$tagObj->hideFieldFromForm(array("label_type", "parent_id", "navigation_element", "rss", "short_url", "meta_description", "meta_keywords"));
+	if ($tagObj->isNew()){
+		$tagObj->setVar("label_type", 0);
+		$tagObj->setVar("navigation_element", 0);
+		$tagObj = $tagObj->getSecureForm(_MD_DOWNLOADS_TAG_ADD, 'addtags', DOWNLOADS_URL . "ajax.php?op=addtags&download_id=" . $downloadObj->id() , 'OK', TRUE, TRUE);
+		$tagObj->assign($icmsTpl, 'downloads_tag_form');
+	} else {
+		exit;
+	}
+	
+}
+
 include_once "header.php";
 
 $xoopsOption["template_main"] = "downloads_singledownload.html";
@@ -226,6 +246,25 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				} else {
 					$icmsTpl->assign('album_module', false );
 				}
+				
+				/**
+				 * check if Sprockets Module can be used and if it's available
+				 */
+				$sprocketsModule = icms_getModuleInfo("sprockets");
+				if($downloadsConfig['use_sprockets'] == 1 && $sprocketsModule) {
+					$icmsTpl->assign("sprockets_module", TRUE);
+				
+					if(is_object(icms::$user)) {
+						$icmsTpl->assign("tag_link", DOWNLOADS_URL . "ajax.php?op=addtags&amp;download_id=" . $downloadObj->getVar("download_id") );
+						$icmsTpl->assign("tag_perm_denied", FALSE);
+						addtags(0, $clean_download_id);
+					} else {
+						$icmsTpl->assign("tag_link", ICMS_URL . "/user.php");
+						$icmsTpl->assign("tag_perm_denied", TRUE);
+					}
+				}
+				
+
 				/**
 				 * check if catalogue module is installed and link to item
 				 */

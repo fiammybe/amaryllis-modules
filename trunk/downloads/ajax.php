@@ -18,10 +18,9 @@
  */
 
 include_once "../../mainfile.php";
-include_once ICMS_ROOT_PATH . 'header.php';
 include_once dirname(__FILE__) . '/include/common.php';
 
-$valid_op = array ('report_broken', 'getFile', 'getFileMirror', 'addreview', 'vote_down', 'vote_up');
+$valid_op = array ('report_broken', 'getFile', 'getFileMirror', 'addreview','addtags' , 'vote_down', 'vote_up');
 $clean_op = (isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '');
 
 if (in_array($clean_op, $valid_op, TRUE)) {
@@ -125,12 +124,57 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					redirect_header('singledownload.php', 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 				}
 				$controller = new icms_ipf_Controller($downloads_review_handler);
-				$controller->storeFromDefaultForm(_MD_DOWNLOADS_REVIEW_SUBMITTED, _MD_DOWNLOADS_REVIEW_SUBMITTED);
+				$controller->storeFromDefaultForm(_MD_DOWNLOADS_REVIEW_SUBMITTED, _MD_DOWNLOADS_REVIEW_SUBMITTED, DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id);
 				return redirect_header (DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id, 3, _THANKS_SUBMISSION);
 			} else {
 				return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
 			}
 			break;
+		
+		case 'addtags':
+			global $downloadsConfig;
+			$download_id = (int)filter_input(INPUT_GET, 'download_id');
+			if ($download_id <= 0) return FALSE;
+			$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(__FILE__)),'downloads');
+			$downloadObj = $downloads_download_handler->get($download_id);
+			if ($downloadObj->isNew()) return FALSE;
+			$downloadsModule = icms_getModuleInfo("downloads");
+			$downloads_modid = $downloadsModule->getVar("mid");
+			$clean_tag_id = isset($_GET['tag_id']) ? filter_input(INPUT_GET, 'tag_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+			$sprocketsModule = icms_getModuleInfo("sprockets");
+			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
+			$tagObj = $sprockets_tag_handler->get($clean_tag_id);
+			if($tagObj->isNew() ) {
+				$tagObj->setVar('label_type', 0);
+				$tagObj->setVar('navigation_element', 0);
+				
+				$sprockets_taglink_handler = icms_getModuleHandler('taglink', $sprocketsModule->getVar("dirname"),'sprockets');
+				$taglinkObj = $sprockets_taglink_handler->create();
+				$tagObjects = $sprockets_tag_handler->getCount(FALSE);
+				$tag_id = intval($tagObjects) + 1;
+				$taglinkObj->setVar('tid', $tag_id );
+				$taglinkObj->setVar('mid', $downloads_modid );
+				$taglinkObj->setVar('item', $downloadObj->getVar("download_title"));
+				$taglinkObj->setVar('iid', $download_id);
+				$taglinkObj->store(TRUE);
+				
+				$mytags = $downloadObj->getVar("download_tags", "s");
+				$newtag = $tag_id;
+				$merge = array_merge($mytags, array($tag_id));
+				$downloadObj->setVar("download_tags", $merge);
+				$downloadObj->store(TRUE);
+				
+				if (!icms::$security->check()) {
+					redirect_header('singledownload.php?download_id=' . $download_id, 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
+				}
+				$controller = new icms_ipf_Controller($sprockets_tag_handler);
+				$controller->storeFromDefaultForm(_MD_DOWNLOADS_REVIEW_SUBMITTED, _MD_DOWNLOADS_REVIEW_SUBMITTED, DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id);
+				return redirect_header (DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id, 3, _THANKS_SUBMISSION);
+			} else {
+				return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
+			}
+			break;
+			
 		case 'vote_up':
 			$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(__FILE__)),'downloads');
 			$downloads_log_handler = icms_getModuleHandler('log', basename(dirname(__FILE__)),'downloads');
@@ -201,4 +245,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			}
 			break;
 	}
+} else {
+	return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
 }

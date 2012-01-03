@@ -68,6 +68,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar("download_developer_info", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar("download_dev", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("download_dev_hp", XOBJ_DTYPE_URLLINK);
+		$this->quickInitVar("download_demo", XOBJ_DTYPE_URLLINK);
 		$this->quickInitVar("download_developer_information_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->quickInitVar("download_publish_info", XOBJ_DTYPE_FORM_SECTION);
@@ -75,6 +76,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_publisher', XOBJ_DTYPE_INT);
 		$this->quickInitVar('download_published_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('download_updated_date', XOBJ_DTYPE_LTIME);
+		$this->quickInitVar("download_tags", XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar("download_publish_info_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->quickInitVar("download_view_section", XOBJ_DTYPE_FORM_SECTION);
@@ -154,6 +156,13 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 			$this->openFormSection('download_mirror_handling', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING);
 			$this->setControl('download_mirror_approve', 'yesno');
 		}
+		
+		if($downloadsConfig['use_sprockets'] == 1) {
+			$this->setControl("download_tags", array("name" => "select_multi", "itemhandler" => "download", "method" => "getDownloadTags", "module" => "Downloads"));
+		} else {
+			$this->hideFieldFromForm("download_tags");
+			$this->hideFieldFromSingleView("download_tags");
+		}
 
 		$this->openFormSection('download_file_descriptions', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS);
 		$this->openFormSection('download_file_images', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_IMAGES);
@@ -180,16 +189,66 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		return $categories;
 	}
 	
-	public function getDownloadCid() {
+	public function getDownloadCid($itemlink = FALSE) {
 		$cid = $this->getVar ( 'download_cid', 's' );
 		//$cids = explode(",", $cid);
 		$downloads_category_handler = icms_getModuleHandler ( 'category',basename(dirname(dirname(__FILE__))), 'downloads' );
 		$ret = array();
-		foreach ($cid as $category) {
-			$categoryObject = $downloads_category_handler->get($category);
-			$ret[$category] = $categoryObject->getVar("category_title");
+		if($itemlink == FALSE) {
+			foreach ($cid as $category) {
+				$categoryObject = $downloads_category_handler->get($category);
+				$ret[$category] = $categoryObject->getVar("category_title");
+			}
+		} else {
+			foreach ($cid as $category) {
+				$categoryObject = $downloads_category_handler->get($category);
+				$ret[$category] = $categoryObject->getItemLink(FALSE);
+			}
 		}
-		return implode(", ", $ret);
+		return implode(" | ", $ret);
+	}
+	
+	function download_tags() {
+		$ret = $this->getVar('download_tags', 's');
+		$tags = $this->handler->getDownloadTags();
+		return $tags;
+	}
+	
+	public function getDownloadTags($itemlink = FALSE) {
+		$tags = $this->getVar('download_tags', 's');
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($sprocketsModule && $tags != "") {
+			$sprockets_tag_handler = icms_getModuleHandler ( 'tag', $sprocketsModule->getVar("dirname"), 'sprockets' );
+			$ret = array();
+			if($itemlink == FALSE) {
+				foreach ($tags as $tag) {
+					$tagObject = $sprockets_tag_handler->get($tag);
+					$ret[$tag] = $tagObject->getVar("title");
+				}
+			} else {
+				foreach ($tags as $tag) {
+					$tagObject = $sprockets_tag_handler->get($tag);
+					$icon = $tagObject->getVar("icon", "e");
+					if($icon != "") {
+						$image = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
+						$title = $tagObject->getVar("title");
+						
+						$ret[$tag] = '<a href="' . $this->getTaglink($tag) . '" title="' . $tagObject->getVar("title") . '"><img width=16px height=16px src="'
+							. $image . '" title="' . $title . '" alt="' . $title . '" />&nbsp;&nbsp;' . $tagObject->getVar("title") . '</a>' ;
+					} else {
+						$ret[$tag] = '<a href="' . $this->getTaglink($tag) . '" title="' . $tagObject->getVar("title") . '">' . $tagObject->getVar("title") . '</a>';
+					}
+				}
+			}
+			return implode(" | ", $ret);
+		} else {
+			return FALSE;
+		}
+	}
+	
+	public function getTagLink($tag) {
+		$link = DOWNLOADS_URL . "index.php?op=getByTags&tag=" . $tag;
+		return $link;
 	}
 	
 	public function download_active() {
@@ -473,10 +532,21 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 
 	public function getDevHpLink() {
-		$dev_hp = 'download_dev_hp';
-		$linkObj = $this-> getUrlLinkObj($dev_hp);
-		$url = $linkObj->render();
-		return $url;
+		if($this->getVar("download_dev_hp") != 0) {
+			$dev_hp = 'download_dev_hp';
+			$linkObj = $this-> getUrlLinkObj($dev_hp);
+			$url = $linkObj->render();
+			return $url;
+		}
+	}
+	
+	public function getDemoLink() {
+		if($this->getVar("download_demo") != 0) {
+			$demo = 'download_demo';
+			$linkObj = $this-> getUrlLinkObj($demo);
+			$url = $linkObj->render();
+			return $url;
+		}
 	}
 	
 	public function getDownloadTag($url = TRUE, $path = FALSE ) {
@@ -601,6 +671,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		global $icmsConfig, $downloadsConfig;
 		$ret = parent::toArray();
 		$ret['id'] = $this->getVar('download_id');
+		$ret['cats'] = $this->getDownloadCid(TRUE);
+		$ret['tags'] = $this->getDownloadTags(TRUE);
 		$ret['published_date'] = $this->getDownloadPublishedDate();
 		$ret['updated_date'] = $this->getDownloadUpdatedDate();
 		$ret['publisher'] = $this->getDownloadPublisher(true);
@@ -623,6 +695,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['mirror'] = $this->getMirrorLink();
 		$ret['dev'] = $this->getVar('download_dev');
 		$ret['dev_hp'] = $this->getDevHpLink();
+		$ret['demo'] = $this->getDemoLink();
 		$ret['catalogue_item'] = $this->getVar('catalogue_item');
 		$ret['thumbnail_width'] = $downloadsConfig['thumbnail_width'];
 		$ret['thumbnail_height'] = $downloadsConfig['thumbnail_height'];

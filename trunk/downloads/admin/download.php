@@ -75,7 +75,7 @@ include_once "admin_header.php";
 $downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 $count = $downloads_category_handler -> getCount(false, true, false);
 if( $count <= 0 ) {
-	redirect_header (DOWNLOADS_ADMIN_URL, 3, _AM_DOWNLOADS_NO_CAT_FOUND);
+	redirect_header (DOWNLOADS_ADMIN_URL . 'category.php', 3, _AM_DOWNLOADS_NO_CAT_FOUND);
 } else {
 $valid_op = array ('mod', 'changedField', 'adddownload', 'del', 'view', 'visible', 'changeShow','changeBroken','changeApprove','changeMirrorApprove', 'changeWeight', '');
 
