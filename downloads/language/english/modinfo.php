@@ -102,6 +102,10 @@ define("_MI_DOWNLOADS_LICENSE", "file license");
 define("_MI_DOWNLOADS_LICENSE_DSC", "set the file licenses you need for your published files. The license can be selected while uploading/editing a file and will be displayed in the frontend.");
 define("_MI_DOWNLOADS_USE_RSS", "Use RSS-Feeds?");
 define("_MI_DOWNLOADS_USE_RSS_DSC", "Set to 'YES' to provide a rss link.");
+
+define("_MI_DOWNLOADS_USE_SPROCKETS", "Use 'Sprockets' Module?");
+define("_MI_DOWNLOADS_USE_SPROCKETS_DSC", "You can use 'Sprockets' Module to deal with tags. Only Tags will be supported, not navigation Elements or Tags labled as both!");
+
 define("_MI_DOWNLOADS_USE_CATALOGUE", "Use 'catalogue' module?");
 define("_MI_DOWNLOADS_USE_CATALOGUE_DSC", "You can use catalogue module to sell file downloads. Catalogue needs to be installed! You'll get a list of catalogue items to link a file with an item. If an item is selected you'll not get a download link, but a link to the item to add it to your card. Also the price of the item will be displayd.");
 define("_MI_DOWNLOADS_USE_ALBUM", "use 'Album' module?");

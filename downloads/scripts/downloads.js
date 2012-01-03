@@ -273,3 +273,54 @@
 			return false;
 		});
 	});
+	
+	
+		// initiate tag form
+	$(document).ready(function(){
+		$(".tag_form").dialog({
+			modal: true,
+			width: 700,
+			height: 600,
+			autoOpen: false,
+			resizable: true,
+			draggable: true
+		});
+		$(".tag_link").click(function(e) {
+			e.preventDefault();
+			var targetUrl = $(this).attr("href");
+			$(".file_tag").dialog('option', 'buttons', {
+				"Submit" : function() {
+					window.location.href = targetUrl;
+				},
+				"Cancel" : function() {
+					$(this).dialog("close");
+				}
+			});
+			$(".tag_form").dialog("open");
+		});
+	});
+
+	//tag permission denied
+	$(document).ready(function(){
+		$("#dialog-confirm-perm-tag").dialog({
+			modal: true,
+			width: 500,
+			height: 200,
+			autoOpen: false,
+			resizable: false,
+			draggable: true
+		});
+		$(".perm_tag_link").click(function(e) {
+			e.preventDefault();
+			var targetUrl = $(this).attr("href");
+			$("#dialog-confirm-perm-tag").dialog('option', 'buttons', {
+				"Register Now" : function() {
+					window.location.href = targetUrl;
+				},
+				"Cancel" : function() {
+					$(this).dialog("close");
+				}
+			});
+			$("#dialog-confirm-perm-tag").dialog("open");
+		});
+	});

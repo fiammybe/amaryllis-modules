@@ -53,4 +53,8 @@ $downloads_isAdmin = icms_userIsAdmin( DOWNLOADS_DIRNAME );
 
 $downloadsConfig = icms_getModuleConfig( DOWNLOADS_DIRNAME );
 
+if($downloadsConfig['use_sprockets'] == 1) {
+	icms_loadLanguageFile('sprockets', 'common');
+}
+
 $icmsPersistableRegistry = icms_ipf_registry_Handler::getInstance();

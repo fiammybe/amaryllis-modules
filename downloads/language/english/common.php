@@ -102,6 +102,8 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_BROKEN", "Broken?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_BROKEN_DSC", "This will be 'YES' if the download link was reported as broken");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HAS_MIRROR", "Has Mirror?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_APPROVE", "Mirror approved?");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TAGS", "Tags");
+
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_IMAGES", "Add some images for visual description");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS", "Describe the file");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING", "Download Mirror");

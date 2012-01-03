@@ -20,7 +20,7 @@
 // general used constants
 define("_MD_DOWNLOADS_PUBLISHED_BY", "Published by");
 define("_MD_DOWNLOADS_PUBLISHED_ON", "Published on");
-define("_MD_DOWNLOADS_UPDATED_ON", "Published on");
+define("_MD_DOWNLOADS_UPDATED_ON", "Updated on");
 define("_MD_DOWNLOADS_SECURITY_CHECK_FAILED", "Security check failed.");
 define("_MD_DOWNLOADS_ADMIN_PAGE", ":: Admin page ::");
 define("_MD_DOWNLOADS_SUBMIT", "Submit");
@@ -64,6 +64,11 @@ define("_MD_DOWNLOADS_REVIEW_PERM", "You don't have permissions to submit review
 define("_MD_DOWNLOADS_REV_PERM", "Sorry, no permissions");
 define("_MD_DOWNLOADS_VOTE_PERM", "You don't have permissions to vote files. Please login or register to vote this file.");
 define("_MD_DOWNLOADS_FILE_DOWNLOADED", "File downloaded");
+define("_MD_DOWNLOADS_TAG_ADD", "Submit a new tag");
+define("_MD_DOWNLOADS_TAGS_PERM", "You don't have permissions to submit tags. Please login or register to submit a new tag.");
+define("_MD_DOWNLOADS_TAG_PERM", "Sorry, no permissions");
+define("_MD_DOWNLOADS_DOWNLOAD_DEMO", "DEMO");
+
 // tabs
 define("_MD_DOWNLOADS_FILE_GENERAL_INFORMATIONS", "General Informations");
 define("_MD_DOWNLOADS_FILE_DESCRIPTION", "Description");
@@ -75,6 +80,8 @@ define("_MD_DOWNLOADS_COMMENT", "Comment");
 define("_MD_DOWNLOADS_COMMENTS", "Comments");
 
 define("_MD_DOWNLOADS_PUBLISHER_MAIL", "E-Mail");
+define("_MD_DOWNLOADS_CATS", "Categories");
+define("_MD_DOWNLOADS_TAGS", "Tags");
 define("_MD_DOWNLOADS_FILESIZE", "Filesize");
 define("_MD_DOWNLOADS_FILETYPE", "Download-Filetype");
 

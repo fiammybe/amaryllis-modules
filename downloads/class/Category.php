@@ -313,7 +313,8 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['category_posterid'] = $this->getVar('category_publisher', 'e');
-		$ret['itemLink'] = $this->getItemLink(TRUE, TRUE);
+		$ret['itemLink'] = $this->getItemLink(TRUE);
+		$ret['catlink'] = $this->getItemLink(FALSE);
 		$ret['accessgranted'] = $this->accessGranted();
 		$ret['cat_count'] = $this->getSubsCount();
 		$ret['files_count'] = $this->getFilesCount();

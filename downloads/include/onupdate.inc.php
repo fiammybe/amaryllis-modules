@@ -98,10 +98,10 @@ function downloads_indexpage() {
 	$downloads_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'downloads' );
 	$indexpageObj = $downloads_indexpage_handler -> create(true);
 	echo '<code>';
-	$indexpageObj -> setVar( 'index_header', 'Shared Files' );
-	$indexpageObj -> setVar( 'index_heading', 'Here you can search our shared files. ' );
-	$indexpageObj -> setVar( 'index_footer', '&copy; 2011 | Downloads module footer');
-	$indexpageObj -> setVar( 'index_image', 'downloads_indeximage.png');
+	$indexpageObj->setVar('index_header', 'Shared Files');
+	$indexpageObj->setVar('index_heading', 'Here you can search our shared files.');
+	$indexpageObj->setVar('index_footer', '&copy; 2011 | Downloads module footer');
+	$indexpageObj->setVar('index_image', 'downloads_indeximage.png');
 	$indexpageObj->setVar('dohtml', 1);
 	$indexpageObj->setVar('dobr', 1);
 	$indexpageObj->setVar('doimage', 1);
