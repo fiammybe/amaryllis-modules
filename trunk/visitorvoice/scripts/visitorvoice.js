@@ -1,5 +1,5 @@
 /**
- * 'Guestbook' is a small, light weight guestbook module for ImpressCMS
+ * 'Visitorvoice' is a small, light weight visitorvoice module for ImpressCMS
  *
  * File: /scripts/guestbook.js
  * 
@@ -7,17 +7,17 @@
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Guestbook
+ * 				Visitorvoice
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		guestbook
+ * @package		visitorvoice
  *
  */
 
-// guestbook submit form
+// visitorvoice submit form
 	$(document).ready(function(){
-		$(".guestbook_form").dialog({
+		$(".visitorvoice_form").dialog({
 			modal: true,
 			width: 700,
 			height: 800,
@@ -27,10 +27,10 @@
 		});
 		$(".submit_link").click(function(e) {
 			e.preventDefault();
-			$(".guestbook_form").dialog("open");
+			$(".visitorvoice_form").dialog("open");
 		});
 		
-		$(".guestbook_reply_form").dialog({
+		$(".visitorvoice_reply_form").dialog({
 			modal: true,
 			width: 700,
 			height: 600,
@@ -40,7 +40,7 @@
 		});
 	});
 
-	//guestbook permission denied
+	//visitorvoice permission denied
 	$(document).ready(function(){
 		$("#dialog-confirm-perm").dialog({
 			modal: true,
