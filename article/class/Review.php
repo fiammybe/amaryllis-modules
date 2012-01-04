@@ -33,31 +33,30 @@ class ArticleReview extends icms_ipf_Object {
 		$this->quickInitVar("review_ip", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("review_date",XOBJ_DTYPE_LTIME);
 		$this->initCommonVar('dohtml', FALSE, 1);
+		$this->initCommonVar('doxcode', FALSE, 1);
 		
 		$this->hideFieldFromForm(array("review_item_id", "review_uid", "review_ip", "review_date" ));
-		
 	}
 	/**
 	 * message output -> filter again
 	 */
 	public function getReviewMessage(){
-		
 		$message = icms_core_DataFilter::checkVar($this->getVar("review_message", "s"), "html", "output");
 		return $message;
 	}
 	
 	public function getReviewEmail(){
-		global $downloadsConfig;
+		global $articleConfig;
 		$email = $this->getVar("review_email", "s");
 		return $email;
 	}
 	
 	public function getReviewPublishedDate() {
-		global $downloadsConfig;
+		global $articleConfig;
 		$date = '';
 		$date = $this->getVar('review_date', 'e');
 		
-		return date($downloadsConfig['article_dateformat'], $date);
+		return date($articleConfig['article_dateformat'], $date);
 	}
 	
 	public function getReviewAvatar() {

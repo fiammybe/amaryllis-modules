@@ -19,7 +19,7 @@
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
-class DownloadsReviewHandler extends icms_ipf_Handler {
+class ArticleReviewHandler extends icms_ipf_Handler {
 	/**
 	 * constructor
 	 */	
@@ -43,20 +43,20 @@ class DownloadsReviewHandler extends icms_ipf_Handler {
 	}
 
 	protected function beforeInsert(& $obj) {
-		global $downloadsConfig;
+		global $articleConfig;
 		$message = $obj->getVar("review_message", "s");
 		$smessage = strip_tags($message,'<b><i><a><br>');
 		$smessage = icms_core_DataFilter::checkVar($smessage, "html", "input");
 		$obj->setVar("review_message", $smessage);
 
 		$email = $obj->getVar("review_email", "s");
-		if($downloadsConfig['display_reviews_email'] == 1) {
+		if($articleConfig['display_reviews_email'] == 1) {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
-		} elseif($downloadsConfig['display_reviews_email'] == 2) {
+		} elseif($articleConfig['display_reviews_email'] == 2) {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
-		} elseif($downloadsConfig['display_reviews_email'] == 3) {
+		} elseif($articleConfig['display_reviews_email'] == 3) {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 1);
-		} elseif($downloadsConfig['display_reviews_email'] == 4) {
+		} elseif($articleConfig['display_reviews_email'] == 4) {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
 		}
 		$obj->setVar("review_email", $email);

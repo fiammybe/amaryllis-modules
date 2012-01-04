@@ -134,6 +134,13 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			$this->hideFieldFromSingleView("article_album");
 		}
 		
+		if($articleConfig['use_sprockets'] == 1) {
+			$this->setControl("article_tags", array("name" => "select_multi", "itemhandler" => "article", "method" => "getArticleTags", "module" => "article"));
+		} else {
+			$this->hideFieldFromForm("article_album");
+			$this->hideFieldFromSingleView("article_album");
+		}
+		
 		/**
 		 * check, if steps are needed, else hide them
 		 */
@@ -295,6 +302,12 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret = array($this->getVar('article_video_sources', 's'));
 		$sources = $this->handler->getArticleVideoSources();
 		return $sources;
+	}
+	
+	function article_tags() {
+		$ret = $this->getVar('article_tags', 's');
+		$tags = $this->handler->getArticleTags();
+		return $tags;
 	}
 	
 	public function article_active() {
@@ -682,14 +695,41 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		return $conclusion;
 	}
 	
-	public function getArtikleTags() {
-		$taglist = $this->getVar("article_tags", "s");
-		$article_tags_handler = icms_getModuleHandler("tags", basename(dirname(dirname(__FILE__))), "article");
-		$tags = '';
-		foreach ($taglist as $tag) {
-			
+	public function getArticleTags($itemlink = FALSE) {
+		$tags = $this->getVar('article_tags', 's');
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($sprocketsModule && $tags != "") {
+			$sprockets_tag_handler = icms_getModuleHandler ( 'tag', $sprocketsModule->getVar("dirname"), 'sprockets' );
+			$ret = array();
+			if($itemlink == FALSE) {
+				foreach ($tags as $tag) {
+					$tagObject = $sprockets_tag_handler->get($tag);
+					$ret[$tag] = $tagObject->getVar("title");
+				}
+			} else {
+				foreach ($tags as $tag) {
+					$tagObject = $sprockets_tag_handler->get($tag);
+					$icon = $tagObject->getVar("icon", "e");
+					if($icon != "") {
+						$image = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
+						$title = $tagObject->getVar("title");
+						
+						$ret[$tag] = '<a href="' . $this->getTaglink($tag) . '" title="' . $tagObject->getVar("title") . '"><img width=16px height=16px src="'
+							. $image . '" title="' . $title . '" alt="' . $title . '" />&nbsp;&nbsp;' . $tagObject->getVar("title") . '</a>' ;
+					} else {
+						$ret[$tag] = '<a href="' . $this->getTaglink($tag) . '" title="' . $tagObject->getVar("title") . '">' . $tagObject->getVar("title") . '</a>';
+					}
+				}
+			}
+			return implode(" | ", $ret);
+		} else {
+			return FALSE;
 		}
-		return $tags;
+	}
+
+	public function getTagLink($tag) {
+		$link = ARTICLE_URL . "index.php?op=getByTags&tag=" . $tag;
+		return $link;
 	}
 	
 	public function getArticlePublishedDate() {
@@ -830,6 +870,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['album'] = $this->getArticleAlbum();
 		$ret['video'] = $this->getArticleVideo();
 		$ret['history'] = $this->getArticleHistory();
+		$ret['tags'] = $this->getArticleTags();
 		$ret['conclusion'] = $this->getArticleConclusion();
 		$ret['publisher'] = $this->getArticlePublishers();
 		$ret['submitter'] = $this->getArticleSubmitter(TRUE);

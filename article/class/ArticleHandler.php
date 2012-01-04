@@ -107,9 +107,14 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $criteria;
 	}
 	
-	public function getArticles($start = 0, $limit = 0, $article_publisher = FALSE, $article_id = FALSE,  $article_cid = FALSE, $order = 'weight', $sort = 'ASC') {
+	public function getArticles($start = 0, $limit = 0,$tag_id = FALSE, $article_publisher = FALSE, $article_id = FALSE,  $article_cid = FALSE, $order = 'weight', $sort = 'ASC') {
 		
 		$criteria = $this->getDownloadsCriteria($start, $limit, $article_publisher, $article_id,  $article_cid, $order, $sort);
+		if($tag_id != FALSE) {
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("article_tags", "%" . $tag_id . "%", "LIKE"));
+			$criteria->add($critTray);
+		}
 		$article = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($article as $article){
