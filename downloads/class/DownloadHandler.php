@@ -520,6 +520,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	}
 	
 	protected function afterSave(&$obj) {
+		global $downloadsConfig;
 		if ($obj->updating_counter)
 		return true;
 		
