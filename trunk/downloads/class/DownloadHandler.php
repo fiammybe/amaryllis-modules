@@ -523,29 +523,6 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		global $downloadsConfig;
 		if ($obj->updating_counter)
 		return true;
-		
-		$sprocketsModule = icms_getModuleInfo("sprockets");
-		if($sprocketsModule && $downloadsConfig['use_sprockets'] == 1);
-		$tags = $obj->getVar("download_tags", "s");
-		foreach ($tags as $key => $tag) {
-			$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
-			$mid = icms::$module->getVar("mid");
-			$iid = $obj->getVar("download_id");
-			$criteria = icms_db_criteria_Compo();
-			$criteria->add(new icms_db_criteria_Item("mid", $mid));
-			$criteria->add(new icms_db_criteria_Item("iid", $iid));
-			$criteria->add(new icms_db_criteria_Item("tid", $tag));
-			$count = $sprockets_taglink_handler->getCount($criteria);
-			if($count == 0) {
-				$taglinkObj = $sprockets_taglink_handler->cerate();
-				$taglinkObj->setVar("mid", $mid);
-				$taglinkObj->setVar("iid", $iid);
-				$taglinkObj->setVar("tid", $tag);
-				$taglinkObj->setVar("item", $obj->getVar("download_title"));
-				$taglinkObj->store(TRUE);
-				
-			}
-		}
 
 		if (!$obj->getVar('download_notification_sent') && $obj->getVar('download_active', 'e') == true && $obj->getVar('download_approve', 'e') == true) {
 			$obj->sendNotifDownloadPublished();
