@@ -309,7 +309,7 @@
 		margin-top: 2em;
 	}
 	
-	.popup  {
+	.popup, .popup_tag {
 		display: none;
 	}
 	
