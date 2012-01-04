@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class mod_article_LogHandler extends icms_ipf_Handler {
+class ArticleLogHandler extends icms_ipf_Handler {
 	/**
 	 * Constructor
 	 *
@@ -28,6 +28,25 @@ class mod_article_LogHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		parent::__construct($db, "log", "log_id", "log_item_id", "log_item", "article");
 
+	}
+	
+	public function clearLogDB($value='') {
+		$time = ( time() - ( 86400 * intval( $articleConfig['downloads_daysnew'] ) ) );
+		
+	}
+	
+	
+	protected function beforeSafe(&$obj) {
+		$item_id = $obj->getVar("log_item_id");
+		$item = $obj->getVar("log_item");
+		$case = $obj->getVar("log_case");
+		
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item("log_item_id", $item_id));
+		$criteria->add(new icms_db_criteria_Item("log_item", $item));
+		$criteria->add(new icms_db_criteria_Item("log_case", $case));
+		$log_total = $this->getCount($criteria);
+		
 	}
 
 

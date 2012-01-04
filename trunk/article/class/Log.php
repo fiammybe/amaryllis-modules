@@ -52,4 +52,94 @@ class mod_article_Log extends icms_ipf_Object {
 		}
 		return parent::getVar($key, $format);
 	}
+	
+	
+	public function getLogIP() {
+		$ip = "";
+		$ip = $this->getValueFor("log_ip", "e");
+		$ip = icms_core_DataFilter::checkVar($ip, "ip", "ipv4");
+		return $ip;
+	}
+	
+	public function getLogDate() {
+		global $downloadsConfig;
+		$date = '';
+		$date = $this->getVar('log_date', 'e');
+		
+		return date($downloadsConfig['downloads_dateformat'], $date);
+	}
+	
+	public function getLogItemId() {
+		$item_id = $this->getVar("log_item_id", "e");
+		$item = $this->getVar("log_item", "e");
+		$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(dirname(__FILE__))), "downloads");
+		$downloads_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "downloads");
+		if($item == 0){
+			$file = $downloads_download_handler->get($item_id);
+			$filename = $file->getVar("download_title", "s");
+			$url = DOWNLOADS_URL . 'singledownload.php?download_id=' . $item_id;
+			return '<a href="' . $url . '" title="' . $filename . '">' . $filename . '</a>';
+		} elseif ($item == 1) {
+			$cat = $downloads_category_handler->get($item_id);
+			$catname = $cat->getVar("category_title", "s");
+			$url = DOWNLOADS_URL . 'index.php?category_id=' . $item_id;
+			return '<a href="' . $url . '" title="' . $catname . '">' . $catname . '</a>';
+		}
+	}
+	
+	public function getLogItem() {
+		$item = $this->getVar("log_item", "e");
+		switch ($item) {
+			case '0':
+				return 'article';
+				break;
+			
+			case '1':
+				return 'category';
+				break;
+		}
+	}
+	
+	public function getLogCase() {
+		$item = $this->getVar("log_case", "e");
+		switch ($item) {
+			case '0':
+				return 'download';
+				break;
+			
+			case '1':
+				return 'create';
+				break;
+				
+			case '2':
+				return 'delete';
+				break;
+			
+			case '3':
+				return 'updated';
+				break;
+				
+			case '4':
+				return '';
+				break;
+				
+			case '5':
+				return 'vote up';
+				break;
+			
+			case '6':
+				return 'vote down';
+				break;
+		}
+	}
+	
+	function toArray() {
+		$ret = parent::toArray();
+		$ret['date'] = $this->getLogDate();
+		$ret['item_id'] = $this->getLogItemId();
+		$ret['item'] = $this->getLogItem();
+		$ret['case'] = $this->getLogCase();
+		return $ret;
+	}
+	
 }

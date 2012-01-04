@@ -58,7 +58,7 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$this->setControl("category_image_upl", "image");
 		$this->setControl("category_publisher", "user");
 		$this->setControl("category_grpperm", array("name" => "select_multi", "itemhandler" => "category", "method" => "getGroups", "module" => "article"));
-		$this->setControl("category_uplperm", array("name" => "select_multi", "itemhandler" => "category", "method" => "getUplGroups", "module" => "article"));
+		$this->setControl("category_uplperm", "group_multi");
 		$this->setControl("category_active", "yesno");
 		$this->setControl("category_approve", "yesno");
 		$this->setControl("category_inblocks", "yesno");
@@ -80,6 +80,10 @@ class ArticleCategory extends icms_ipf_seo_Object {
 	// get uname instead of id for publisher
 	function category_publisher() {
 		return icms_member_user_Handler::getUserLink($this->getVar('category_publisher', 'e'));
+	}
+	
+	function category_updater() {
+		return icms_member_user_Handler::getUserLink($this->getVar('category_updater', 'e'));
 	}
 	
 	// get publisher for frontend
@@ -207,7 +211,7 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		return $this->handler->getCategorySub($this->getVar('category_id', 'e'), $toarray);
 	}
 	
-	function getFilesCount() {
+	function getArticlesCount() {
 		$article_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'article');
 		$files_count = $article_download_handler->getCountCriteria(TRUE, TRUE, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $this->getVar("category_id"));
 		
@@ -245,30 +249,22 @@ class ArticleCategory extends icms_ipf_seo_Object {
 	function accessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-
 		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-
 		$agroups = $gperm_handler->getGroupIds('module_admin', $module->getVar("mid"));
 		$allowed_groups = array_intersect($groups, $agroups);
-
 		$viewperm = $gperm_handler->checkRight('category_grpperm', $this->getVar('category_id', 'e'), $groups, $module->getVar("mid"));
-
 		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('category_publisher', 'e')) {
 			return TRUE;
 		}
-		
 		if ($viewperm && ($this->getVar('category_active', 'e') == TRUE)) {
 			return TRUE;
 		}
-		
 		if ($viewperm && ($this->getVar('category_approve', 'e') == TRUE)) {
 			return TRUE;
 		}
-
 		if ($viewperm && (count($allowed_groups) > 0)) {
 			return TRUE;
 		}
-		
 		return FALSE;
 	}
 
@@ -298,8 +294,8 @@ class ArticleCategory extends icms_ipf_seo_Object {
 	
 	function getEditAndDelete() {
 		$article_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'article');
-		if($article_download_handler->userCanSubmit($this->id())) {
-			return ARTICLE_URL . 'download.php?op=mod&amp;category_id=' . $this->id();
+		if($article_article_handler->userCanSubmit($this->id())) {
+			return ARTICLE_URL . 'article.php?op=mod&amp;category_id=' . $this->id();
 		} else {
 			return FALSE;
 		}
@@ -317,24 +313,25 @@ class ArticleCategory extends icms_ipf_seo_Object {
 	
 	function toArray() {
 		$ret = parent::toArray();
-		$ret['published_date'] = $this->getCategoryPublishedDate();
-		$ret['updated_date'] = $this->getCategoryUpdatedDate();
-		$ret['publisher'] = $this->getCategoryPublisher(TRUE);
-		$ret['updated_by'] = $this->getCategoryUpdater(TRUE);
 		$ret['id'] = $this->getVar('category_id');
 		$ret['title'] = $this->getVar('category_title');
 		$ret['img'] = $this->getCategoryImageTag();
 		$ret['dsc'] = $this->getVar('category_description');
 		$ret['sub'] = $this->getCategorySub($this->getVar('category_id', 'e'), TRUE);
 		$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
+		$ret['published_date'] = $this->getCategoryPublishedDate();
+		$ret['updated_date'] = $this->getCategoryUpdatedDate();
+		$ret['publisher'] = $this->getCategoryPublisher(TRUE);
+		$ret['updated_by'] = $this->getCategoryUpdater(TRUE);
+		$ret['category_posterid'] = $this->getVar('category_publisher', 'e');
+		$ret['itemLink'] = $this->getItemLink(FALSE);
+		$ret['itemURL'] = $this->getItemLink(TRUE);
+		$ret['accessgranted'] = $this->accessGranted();
 		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
-		$ret['category_posterid'] = $this->getVar('category_publisher', 'e');
-		$ret['itemLink'] = $this->getItemLink(TRUE, TRUE);
-		$ret['accessgranted'] = $this->accessGranted();
 		$ret['cat_count'] = $this->getSubsCount();
-		$ret['files_count'] = $this->getFilesCount();
+		$ret['articles_count'] = $this->getArticlesCount();
 		$ret['user_upload'] = $this->getEditAndDelete();
 		$ret['user_submit'] = $this->userCanSubmit();
 		return $ret;
