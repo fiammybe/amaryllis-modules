@@ -229,14 +229,20 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 				foreach ($tags as $tag) {
 					$tagObject = $sprockets_tag_handler->get($tag);
 					$icon = $tagObject->getVar("icon", "e");
+					$title = $tagObject->getVar("title");
+					$dsc = $tagObject->getVar("description", "s");
+					$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodehigh");
+					$dsc = icms_core_DataFilter::undoHtmlSpecialChars($dsc);
+					$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodelow");
 					if($icon != "") {
 						$image = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
-						$title = $tagObject->getVar("title");
-						
-						$ret[$tag] = '<a href="' . $this->getTaglink($tag) . '" title="' . $tagObject->getVar("title") . '"><img width=16px height=16px src="'
-							. $image . '" title="' . $title . '" alt="' . $title . '" />&nbsp;&nbsp;' . $tagObject->getVar("title") . '</a>' ;
+						$ret[$tag] = '<span class="download_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag) . '" title="' . $title . '"><img width=16px height=16px src="'
+							. $image . '" title="' . $title . '" alt="' . $title . '" />&nbsp;&nbsp;' . $title . '</a></span><span class="popup_tag"> '
+							. $dsc . '</span>';
 					} else {
-						$ret[$tag] = '<a href="' . $this->getTaglink($tag) . '" title="' . $tagObject->getVar("title") . '">' . $tagObject->getVar("title") . '</a>';
+						$ret[$tag] = '<span class="download_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag) 
+						. '" title="' . $title . '">' . $title . '</a></span><span class="popup_tag"> '
+						. $dsc . '</span>';
 					}
 				}
 			}

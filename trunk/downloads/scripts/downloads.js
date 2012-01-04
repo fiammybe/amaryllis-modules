@@ -246,6 +246,30 @@
 				},
 			});
 		});
+		// initiate qtips for tags
+		$('span.download_tag').each(function(){
+			$(this).qtip({
+				content: {
+					text: $(this).next('span.popup_tag').html(),
+					title: $(this).attr('original-title')
+				},
+				style: {
+					width:500,
+					viewport: $(window), // Keep it on-screen at all times if possible
+					textAlign:'left',
+					tip:'bottomLeft',
+					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
+				},
+				position:   {
+					target: 'mouse',
+					my:'bottomLeft',
+					adjust: {
+						x: 0,  y: -5
+					}
+				},
+			});
+		});
+		
 		// file votings
 		$("a.file_vote").click(function() {
 			var $link = $(this);

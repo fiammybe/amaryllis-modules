@@ -396,7 +396,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 				$criteria->add(new icms_db_criteria_Item("navigation_element", 0));
 				
 				$tags = $sprockets_tag_handler->getObjects(FALSE, TRUE, FALSE);
-				$ret = array();
+				$ret[] = '------------';
 				foreach(array_keys($tags) as $i) {
 					$ret[$tags[$i]['tag_id']] = $tags[$i]['title'];
 				}
@@ -516,7 +516,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		} else {
 			$obj->setVar('download_has_mirror', 0);
 		}
-		return true;
+		return TRUE;
 	}
 	
 	protected function afterSave(&$obj) {
@@ -529,7 +529,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$obj->setVar('download_notification_sent', true);
 			$this->insert($obj);
 		}
-		return true;
+		return TRUE;
 	}
 	
 	protected function afterDelete(& $obj) {
