@@ -236,9 +236,12 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 					$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodelow");
 					if($icon != "") {
 						$image = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
-						$ret[$tag] = '<span class="download_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag) . '" title="' . $title . '"><img width=16px height=16px src="'
-							. $image . '" title="' . $title . '" alt="' . $title . '" />&nbsp;&nbsp;' . $title . '</a></span><span class="popup_tag"> '
-							. $dsc . '</span>';
+						$ret[$tag] = '<span class="download_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag)
+									 . '" title="' . $title . '"><img width=16px height=16px src="'
+									. $image . '" title="' . $title . '" alt="' . $title . '" />&nbsp;&nbsp;' . $title . '</a></span>';
+						if($dsc != "") {
+							$ret[$tag] .= '<span class="popup_tag">' . $dsc . '</span>';
+						}
 					} else {
 						$ret[$tag] = '<span class="download_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag) 
 						. '" title="' . $title . '">' . $title . '</a></span><span class="popup_tag"> '
@@ -356,18 +359,16 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	
 	public function getDownloadPublishedDate() {
 		global $downloadsConfig;
-		$date = '';
 		$date = $this->getVar('download_published_date', 'e');
-		
 		return date($downloadsConfig['downloads_dateformat'], $date);
 	}
 	
 	public function getDownloadUpdatedDate() {
 		global $downloadsConfig;
-		$date = '';
 		$date = $this->getVar('download_updated_date', 'e');
-		
-		return date($downloadsConfig['downloads_dateformat'], $date);
+		if($date != 0) {
+			return date($downloadsConfig['downloads_dateformat'], $date);
+		}
 	}
 	
 	public function getDownloadPublisher($link = false) {
@@ -557,25 +558,29 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	
 	public function getDownloadTag($url = TRUE, $path = FALSE ) {
 		$file_alt = $this->getVar("download_file_alt", "e");
-		$file_alt = $this->getVar("download_file_alt", "e");
+		$file = $this->getVar("download_file", "e");
 		if($url){
 			if(!$file_alt == "") {
 				$url = DOWNLOADS_UPLOAD_URL . 'download/' . $file_alt;
-			} else {
+			} elseif($file != 0) {
 				$file = 'download_file';
 				$fileObj = $this->getFileObj($file);
 				$url = $fileObj->getVar('url');
+			} else {
+				$url = FALSE;
 			}
 			return $url;
 		} elseif ($path){
 			if(!$file_alt == "") {
 				$path = DOWNLOADS_UPLOAD_ROOT . 'download/' . $file_alt;
-			} else {
+			} elseif($file != 0) {
 				$file = 'download_file';
 				$fileObj = $this->getFileObj($file);
 				$url = $fileObj->getVar('url', 's');
 				$filename = basename($url);
 				$path = ICMS_ROOT_PATH . '/uploads/downloads/download/' . $filename;
+			} else {
+				$path = FALSE;
 			}
 			return $path;
 		}
@@ -584,9 +589,11 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	public function getFileSize() {
 		global $downloadsConfig;
 		$myfile = $this->getDownloadTag(FALSE, TRUE);
-		$bytes = filesize($myfile);
-		$filesize = downloadsConvertFileSize($bytes, downloadsFileSizeType($downloadsConfig['display_file_size']), 2);
-		return $filesize . '&nbsp;' . downloadsFileSizeType($downloadsConfig['display_file_size']) ;
+		if($myfile) {
+			$bytes = filesize($myfile);
+			$filesize = downloadsConvertFileSize($bytes, downloadsFileSizeType($downloadsConfig['display_file_size']), 2);
+			return $filesize . '&nbsp;' . downloadsFileSizeType($downloadsConfig['display_file_size']) ;
+		}
 	}
 	
 	public function getFileType() {
@@ -730,12 +737,61 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['accessgranted'] = $this->accessGranted();
 		return $ret;
 	}
-	
-	function sendNotifDownloadPublished() {
-		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-		$tags ['DOWNLOAD_TITLE'] = $this->getVar('download_title');
-		$tags ['DOWNLOAD_URL'] = $this->getItemLink();
-		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'download_published', $tags, array(), $module->getVar('mid'));
+
+	function sendDownloadNotification($case) {
+		$valid_case = array("new_file", "file_submit", "file_modified", "file_approved", "mirror_approved", "file_broken", "review_submitted");
+		if(in_array($case, $valid_case)) {
+			$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+			$mid = $module->getVar('mid');
+			$tags ['DOWNLOAD_TITLE'] = $this->getVar('download_title');
+			$tags ['DOWNLOAD_URL'] = $this->getItemLink(FALSE);
+			$tags ['DOWNLOAD_CATS'] = $this->getDownloadCid(TRUE);
+			switch ($case) {
+				case 'new_file':
+					$category = 'global';
+					$file_id = 0;
+					$recipient = array();
+					break;
+				
+				case 'file_submit':
+					$category = 'global';
+					$file_id = 0;
+					$recipient = array();
+					break;
+				
+				case 'file_modified':
+					$category = 'global';
+					$file_id = 0;
+					$recipient = array();
+					break;
+				
+				case 'file_approved':
+					$category = 'file';
+					$file_id = $this->id();
+					$recipient = $this->getVar("download_publisher", "e");
+					break;
+				
+				case 'mirror_approved':
+					$category = 'file';
+					$file_id = $this->id();
+					$recipient = $this->getVar("download_publisher", "e");
+					break;
+					
+				case 'file_broken':
+					$category = 'file';
+					$file_id = $this->id();
+					$recipient = array();
+					break;
+					
+				case 'review_submitted':
+					$category = 'file';
+					$file_id = 0;
+					$recipient = array();
+					break;
+					
+			}
+			icms::handler('icms_data_notification')->triggerEvent($category, $file_id, $case, $tags, $recipient, $mid);
+		}
 	}
 
 	function getReads() {
