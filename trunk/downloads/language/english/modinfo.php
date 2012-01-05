@@ -156,12 +156,7 @@ define('_MI_DOWNLOADS_FILE_NOTIFY_DSC', 'Notification options that apply to the 
 define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY', 'New Category');
 define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_CAP', 'Notify me when a new file category is created.');
 define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_DSC', 'Receive notification when a new file category is created.');
-define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file category');                              
-
-define('_MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY', 'Modify File Requested');
-define('_MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY_CAP', 'Notify me of any file modification request.');
-define('_MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY_DSC', 'Receive notification when any file modification request is submitted.');
-define('_MI_DOWNLOADS_GLOBAL_FILEMODIFY_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : File Modification Requested');
+define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file category');
 
 define('_MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY', 'Broken File Submitted');
 define('_MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY_CAP', 'Notify me of any broken file report.');

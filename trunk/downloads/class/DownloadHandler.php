@@ -524,10 +524,14 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if ($obj->updating_counter)
 		return true;
 
-		if (!$obj->getVar('download_notification_sent') && $obj->getVar('download_active', 'e') == true && $obj->getVar('download_approve', 'e') == true) {
-			$obj->sendNotifDownloadPublished();
+		if (!$obj->getVar('download_notification_sent') && $obj->getVar('download_active', 'e') == TRUE && $obj->getVar('download_approve', 'e') == TRUE) {
+			$obj->sendDownloadNotification('new_file');
 			$obj->setVar('download_notification_sent', true);
 			$this->insert($obj);
+		}
+		
+		if (!$obj->isNew() && ($obj->getVar('download_active', 'e') == TRUE) && ($obj->getVar('download_approve', 'e') == TRUE) && ($obj->getVar('download_notification_sent') == 1)) {
+			$obj->sendDownloadNotification('file_modified');
 		}
 		return TRUE;
 	}

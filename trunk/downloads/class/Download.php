@@ -104,7 +104,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar("download_static_section_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		// set controls
-		$this->setControl('download_cid', array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadCategories', 'module' => 'downloads'));
+		$this->setControl('download_cid', array('name' => 'select_multi', 'itemHandler' => 'category', 'method' => 'getCategoryListForPid', 'module' => 'downloads'));
 		$this->setControl('download_description', 'dhtmltextarea');
 		$this->setControl('download_teaser', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl('download_history', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
@@ -191,7 +191,6 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	
 	public function getDownloadCid($itemlink = FALSE) {
 		$cid = $this->getVar ( 'download_cid', 's' );
-		//$cids = explode(",", $cid);
 		$downloads_category_handler = icms_getModuleHandler ( 'category',basename(dirname(dirname(__FILE__))), 'downloads' );
 		$ret = array();
 		if($itemlink == FALSE) {

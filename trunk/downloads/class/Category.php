@@ -323,11 +323,42 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		return $ret;
 	}
 
-	function sendNotifCategoryPublished() {
-		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-		$tags ['CATEGORY_TITLE'] = $this->getVar('category_title');
-		$tags ['CATEGORY_URL'] = $this->getItemLink(TRUE, TRUE);
-		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'category_published', $tags, array(), $module->getVar('mid'));
+	function sendCategoryNotification($case) {
+		$valid_case = array('new_category', 'category_modified', 'category_approved');
+		if(in_array($case, $valid_case, TRUE)) {
+			$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+			$mid = $module->getVar('mid');
+			$tags ['CATEGORY_TITLE'] = $this->getVar('category_title');
+			$tags ['CATEGORY_URL'] = $this->getItemLink(FALSE);
+			switch ($case) {
+				case 'new_category':
+					$category = 'global';
+					$cat_id = 0;
+					$recipient = array();
+					break;
+					
+				case 'category_modified':
+					$category = 'global';
+					$cat_id = 0;
+					$recipient = array();
+					break;
+					
+				case 'category_submitted':
+					$category = 'global';
+					$cat_id = 0;
+					$recipient = array();
+					break;
+					
+				case 'category_approved':
+					$category = 'category';
+					$cat_id = $this->id();
+					$recipient = $this->getVar("category_publisher", "e");
+					break;
+				
+			}
+			icms::handler('icms_data_notification')->triggerEvent($category, $cat_id, $case, $tags, $recipient, $mid);
+		}
+		
 	}
 
 	function getReads() {

@@ -408,9 +408,12 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return true;
 
 		if (!$obj->getVar('category_notification_sent') && $obj->getVar('category_active', 'e') == true && $obj->getVar('category_approve', 'e') == true) {
-			$obj->sendNotifCategoryPublished();
+			$obj->sendCategoryNotification('new_category');
 			$obj->setVar('category_notification_sent', true);
 			$this->insert($obj);
+		}
+		if(!$obj->isNew() && ($obj->getVar('category_notification_sent') == 1) && ($obj->getVar('category_active', 'e') == true) && ($obj->getVar('category_approve', 'e') == true)) {
+			$obj->sendCategoryNotification('category_modified');
 		}
 		return true;
 	}
