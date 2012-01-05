@@ -59,8 +59,8 @@
 	}
 	
 	.downloads_cat_img {
-		float: left;
-		padding-right: 10px;
+		float: right	;
+		padding-left: 10px;
 		vertical-align: top;
 	}
 	
