@@ -187,7 +187,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 						$icmsTpl->assign('file_is_updated', FALSE );
 					}
 				}
-				if($downloadObj->getVar('download_updated_date') > 0) {
+				if($downloadObj->getVar('download_updated_date', 'e') > 0) {
 					$icmsTpl->assign("show_updated", TRUE);
 				}
 				/**

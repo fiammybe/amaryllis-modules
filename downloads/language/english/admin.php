@@ -23,6 +23,7 @@ define("_AM_DOWNLOADS_REQUIREMENTS_INFO", "We've reviewed your system, unfortuna
 define("_AM_DOWNLOADS_REQUIREMENTS_ICMS_BUILD", "'Downloads' requires at least ImpressCMS 1.3 final.");
 define("_AM_DOWNLOADS_REQUIREMENTS_SUPPORT", "Should you have any question or concerns, please visit our forums at <a href='http://community.impresscms.org/modules/newbb/viewforum.php?forum=9'>ImpressCMS Community</a>.");
 //Admin Index
+define("_AM_DOWNLOADS_INDEX_WARNING", "<b>PLEASE READ MANUAL BEFORE USING THE MODULE.</b>");
 define("_AM_DOWNLOADS_INDEX", "Downloads Summary");
 define("_AM_DOWNLOADS_INDEX_TOTAL", "Currently there are");
 define("_AM_DOWNLOADS_FILES_IN", "&nbsp;Files in &nbsp;");

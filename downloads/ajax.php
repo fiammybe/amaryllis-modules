@@ -33,6 +33,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if ($downloadObj->isNew()) return FALSE;
 			$downloadObj->setVar('download_broken', TRUE);
 			$downloadObj->store(TRUE);
+			$downloadObj->sendNotifDownloadBroken();
 			return redirect_header(icms_getPreviousPage(), 3, _MD_DOWNLOADS_BROKEN_REPORTED);
 			break;
 	
@@ -123,6 +124,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				if (!icms::$security->check()) {
 					redirect_header('singledownload.php', 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 				}
+				$downloadObj->sendDownloadNotification('review_submitted');
 				$controller = new icms_ipf_Controller($downloads_review_handler);
 				$controller->storeFromDefaultForm(_THANKS_SUBMISSION_REV, _THANKS_SUBMISSION_REV, DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id);
 				return redirect_header (DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id, 3, _THANKS_SUBMISSION);

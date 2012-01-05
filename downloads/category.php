@@ -128,6 +128,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if (!icms::$security->check()) {
 				redirect_header('index.php', 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 			}
+			$categoryObj = $downloads_category_handler->get($clean_category_id);
+			$categoryObj->sendCategoryNotification('category_submitted');
+			
 			$controller = new icms_ipf_Controller($downloads_category_handler);
 			$controller->storeFromDefaultForm(_MD_DOWNLOADS_CATEGORY_CREATED, _MD_DOWNLOADS_CATEGORY_MODIFIED);
 			break;

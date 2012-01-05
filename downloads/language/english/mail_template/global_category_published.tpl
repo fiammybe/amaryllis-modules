@@ -1,12 +1,12 @@
 Hello {X_UNAME},
 
-The following album has been published on {X_SITENAME} :
+The following category has been published on {X_SITENAME} :
 
-"{ALBUM_TITLE}"
+"{CATEGORY_TITLE}"
 
 You can read this item here:
 
-{ALBUM_URL}
+{CATEGORY_URL}
 
 -----------
 

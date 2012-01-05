@@ -97,7 +97,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case 'adddownload':
 			$controller = new icms_ipf_Controller($downloads_download_handler);
 			$controller->storeFromDefaultForm(_AM_DOWNLOADS_CREATED, _AM_DOWNLOADS_MODIFIED);
-			
 			break;
 
 		case 'del':
@@ -147,6 +146,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if ($show == 0) {
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_MIRROR_FALSE );
 			} else {
+				$obj = $downloads_download_handler->get($clean_download_id);
+				$obj->sendDownloadNotification('mirror_approved');
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_MIRROR_TRUE );
 			}
 			break;
@@ -157,8 +158,11 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if ($approve == 0) {
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_APPROVE_FALSE );
 			} else {
+				$obj = $downloads_download_handler->get($clean_download_id);
+				$obj->sendDownloadNotification('file_approved');
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_APPROVE_TRUE );
 			}
+			
 			break;
 			
 		case "changeWeight":

@@ -122,6 +122,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if (!icms::$security->check()) {
 				redirect_header('index.php', 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 			}
+			$downloadObj = $downloads_download_handler->get($clean_download_id);
+			$downloadObj->sendDownloadNotification('file_submitted');
 			$controller = new icms_ipf_Controller($downloads_download_handler);
 			$controller->storeFromDefaultForm(_MD_DOWNLOADS_DOWNLOAD_CREATED, _MD_DOWNLOADS_DOWNLOAD_MODIFIED);
 			break;
