@@ -256,34 +256,34 @@
 	}
 	
 	.file_dev {
-		background: url(images/dev.png) left center no-repeat;
+		background: url(images/gi-icon-dev.png) left center no-repeat;
 	}
 	.file_counter {
-		background: url(images/counter.png) left center no-repeat;
+		background: url(images/gi-icon-counter.png) left center no-repeat;
 	}
 	.file_language {
-		background: url(images/language.png) left center no-repeat;
+		background: url(images/gi-icon-language.png) left center no-repeat;
 	}
 	.file_dev_hp {
-		background: url(images/dev_hp.png) left center no-repeat;
+		background: url(images/gi-icon-dev_hp.png) left center no-repeat;
 	}
 	.file_version {
-		background: url(images/version.png) left center no-repeat;
+		background: url(images/gi-icon-version.png) left center no-repeat;
 	}
 	
 	.file_version_status {
-		background: url(images/version_status.png) left center no-repeat;
+		background: url(images/gi-icon-version_status.png) left center no-repeat;
 	}
 	.file_limits{
-		background: url(images/limits.png) left center no-repeat;
+		background: url(images/gi-icon-limits.png) left center no-repeat;
 	}
 	
 	.file_license{
-		background: url(images/license.png) left center no-repeat;
+		background: url(images/gi-icon-license.png) left center no-repeat;
 	}
 	
 	.file_platform {
-		background: url(images/platform.png) left center no-repeat;
+		background: url(images/gi-icon-platform.png) left center no-repeat;
 	}
 	
 	.file_screens {
