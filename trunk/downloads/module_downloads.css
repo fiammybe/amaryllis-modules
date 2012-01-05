@@ -189,6 +189,8 @@
 		padding: 1em 1em;
 		width: 100%;
 		height: auto;
+		max-height: 150px;
+		overflow: auto;
 		text-align: left;
 		vertical-align: middle;
 		-webkit-border-radius: 6px;
