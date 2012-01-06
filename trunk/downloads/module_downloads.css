@@ -94,12 +94,11 @@
 	}
 	
 	.download_cat_teaser {
-		float: left;
 	}
 	
 	.downloads_cat_desc {
-		font-size: 1em;
-		margin: 1em .9375em;
+		font-size: 100%;
+		margin-bottom: 10px;
 	}
 	
 	.downloads_cat_subs {
@@ -230,25 +229,21 @@
 	}
 	
 	.file_descriptions {
-		padding: 1em 1em;
-		margin: .750em auto;
 		text-align: center;
 	}
 	
 	.file_image_row {
-		margin: 1em auto;
 	}
 	
 	.file_informations {
 		display: table;
-		width: auto;
 		font-size: .8em;
 		background: #ccc;
-		padding: 1em .5em;
-		margin: 0 auto .5em auto;
 		-webkit-border-radius: 6px;
 		-moz-border-radius: 6px;
 		border-radius: 6px;
+		padding: 5px;
+		width: 100%;
 	}
 	
 	.table_row {
@@ -271,6 +266,7 @@
 	}
 	.file_counter {
 		background: url(images/gi-icon-counter.png) left center no-repeat;
+		width:50%;
 	}
 	.file_language {
 		background: url(images/gi-icon-language.png) left center no-repeat;
@@ -298,8 +294,13 @@
 	}
 	
 	.file_screens {
+		float:right;
 	}
 	
+	.file_screens2 {
+		vertical-align: top;
+	}
+		
 	.file_footer {
 		background-color: #ccc;
 		width: 100%;
