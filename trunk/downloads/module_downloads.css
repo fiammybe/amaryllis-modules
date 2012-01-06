@@ -59,27 +59,42 @@
 	}
 	
 	.downloads_cat_img {
-		float: right	;
-		padding-left: 10px;
 		vertical-align: top;
 	}
+	.downloads_cat_img2 {
+		vertical-align: top;
+		float:right;
+		margin: 0 0 0 10px;
+	}
 	
-	.downloads_cat_title {
-		float: left;
-		font-size: 1.1em;
+	.downloads_cat_title a{
+		font-size: 120%;
 		font-weight: bold;
 	}
 	
 	.downloads_category_info {
-		font-size: .8em;
+		float:left;
+	}
+	
+	.downloads_category_info a{
 		font-weight: normal;
-		margin: .5em 0;
+		font-size: 100%;
+		float:left;
 	}
 	
 	.downloads_cat_dsc {
-		font-size: .9em;
-		margin: 1em 0;
-		display: block;
+	}
+	
+	.info_download_div {
+		float: left;
+	}
+	
+	.div_download_counter {
+		float: right;
+	}
+	
+	.download_cat_teaser {
+		float: left;
 	}
 	
 	.downloads_cat_desc {
@@ -119,7 +134,6 @@
 	}
 
 	.downloads_cat_icons {
-		float:right;
 	}
 	
 	.file_header {
@@ -186,7 +200,6 @@
 		position: relative;
 		display: inline-block;
 		background: #ccc;
-		padding: 1em 1em;
 		width: 100%;
 		height: auto;
 		max-height: 150px;
@@ -246,8 +259,6 @@
 	
 	.table_cell {
 		display: table-cell;
-		width: 60%;
-		padding-left: 1em;
 	}
 	
 	.file_dev, .file_dev_hp, .file_version, .file_version_status, .file_limits, .file_platform, .file_license, .file_counter, .file_language {
@@ -287,7 +298,6 @@
 	}
 	
 	.file_screens {
-		margin-right: 15px;
 	}
 	
 	.file_footer {
