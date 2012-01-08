@@ -113,3 +113,28 @@ function downloadsFileSizeType ($type) {
 			break;
 	}
 }
+
+/**
+ * Writes entire admin menu into cache
+ * @param string  $content  content to write to the admin menu file
+ * @return true
+ * @todo create language constants for the error messages
+ */
+function Downloads_write_admin_menu($content) {
+	global $icmsConfig;
+	$filename = ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php';
+	if (! $file = fopen($filename, "w")) {
+		echo 'failed open file';
+		return false;
+	}
+	if (fwrite($file, var_export($content, true)) == FALSE) {
+		echo 'failed write file';
+		return false;
+	}
+	fclose($file);
+
+	// write index.html file in cache folder
+	// file is delete after clear_cache (smarty)
+	icms_core_Filesystem::writeIndexFile(ICMS_CACHE_PATH);
+	return true;
+}

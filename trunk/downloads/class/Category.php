@@ -176,19 +176,6 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$count = $this->handler->getCategoriesCount (TRUE, TRUE, $groups,'category_grpperm', FALSE, FALSE, $this->getVar("category_id", "e"));
 		return $count;
 	}
-	// get sub category
-	function category_sub() {
-		$ret = $this->handler->getCategorySubCount($this->getVar('category_id', 'e'));
-
-		if ($ret > 0) {
-			$ret = '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_pid=' . $this->getVar('category_id', 'e') . '">' . $ret . ' <img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag+.png" align="absmiddle" /></a>';
-		}
-		return $ret;
-	}
-
-	function getCategorySub($toarray) {
-		return $this->handler->getCategorySub($this->getVar('category_id', 'e'), $toarray);
-	}
 	
 	function getFilesCount() {
 		$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
@@ -300,24 +287,22 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	
 	function toArray() {
 		$ret = parent::toArray();
+		$ret['id'] = $this->getVar("category_id", "e");
+		$ret['title'] = $this->getVar("category_title", "e");
+		$ret['img'] = $this->getCategoryImageTag();
+		$ret['dsc'] = $this->getVar('category_description');
 		$ret['published_date'] = $this->getCategoryPublishedDate();
 		$ret['updated_date'] = $this->getCategoryUpdatedDate();
 		$ret['publisher'] = $this->getCategoryPublisher(TRUE);
-		$ret['id'] = $this->getVar('category_id');
-		$ret['title'] = $this->getVar('category_title');
-		$ret['img'] = $this->getCategoryImageTag();
-		$ret['dsc'] = $this->getVar('category_description');
-		$ret['sub'] = $this->getCategorySub($this->getVar('category_id', 'e'), TRUE);
-		$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
+		$ret['hassub'] = (count($ret['cat_count']) > 0) ? TRUE : FALSE;
 		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
-		$ret['category_posterid'] = $this->getVar('category_publisher', 'e');
 		$ret['itemLink'] = $this->getItemLink(TRUE);
 		$ret['catlink'] = $this->getItemLink(FALSE);
 		$ret['accessgranted'] = $this->accessGranted();
 		$ret['cat_count'] = $this->getSubsCount();
-		$ret['files_count'] = $this->getFilesCount();
+		//$ret['files_count'] = $this->getFilesCount();
 		$ret['user_upload'] = $this->getEditAndDelete();
 		$ret['user_submit'] = $this->userCanSubmit();
 		return $ret;

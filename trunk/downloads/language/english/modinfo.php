@@ -71,8 +71,6 @@ define("_MI_DOWNLOADS_UPLOAD_FILE_SIZE", "max file size");
 define("_MI_DOWNLOADS_UPLOAD_FILE_SIZE_DSC", "set max file size for uploading");
 define("_MI_DOWNLOADS_LIMITS", "file limitations");
 define("_MI_DOWNLOADS_LIMITS_DSC", "file limitations can be select while creating/adding a new file. Seperate all limitations with '|'");
-define("_MI_DOWNLOADS_VERSIONTYPES", "file version type");
-define("_MI_DOWNLOADS_VERSIONTYPES_DSC", "file version types can be select while creating/adding a new file. Seperate all version types with '|'");
 define("_MI_DOWNLOADS_SHOWDISCLAIMER", "Show disclaimer, before an user can upload new files?");
 define("_MI_DOWNLOADS_SHOWDISCLAIMER_DSC", "Select 'YES' to show the disclaimer before an user can upload new files ");
 define("_MI_DOWNLOADS_DISCLAIMER", "Disclaimer for Fileupload");
@@ -102,6 +100,19 @@ define("_MI_DOWNLOADS_LICENSE", "file license");
 define("_MI_DOWNLOADS_LICENSE_DSC", "set the file licenses you need for your published files. The license can be selected while uploading/editing a file and will be displayed in the frontend.");
 define("_MI_DOWNLOADS_USE_RSS", "Use RSS-Feeds?");
 define("_MI_DOWNLOADS_USE_RSS_DSC", "Set to 'YES' to provide a rss link.");
+define("_MI_DOWNLOADS_NEED_VERSION_CONTROL", "Do you need version controll?");
+define("_MI_DOWNLOADS_NEED_VERSION_CONTROL_DSC", "If set to 'YES', you'll get Fields for Version number, version status, file history and previous Versions");
+
+define("_MI_DOWNLOADS_NEED_RELATED", "Do you need related Files?");
+define("_MI_DOWNLOADS_NEED_RELATED_DSC", "If set to 'YES', you can select related files from a list.");
+
+define("_MI_DOWNLOADS_NEED_DEMO", "Do you need a link to a Demo-Site");
+define("_MI_DOWNLOADS_NEED_DEMO_DSC", "If set to 'YES', you will get a Field for a Demo-Link.");
+
+define("_MI_DOWNLOADS_NEED_REQUIREMENTS", "Do you need File requirements?");
+define("_MI_DOWNLOADS_NEED_REQUIREMENTS_DSC", "");
+define("_MI_DOWNLOADS_NEED_KEYFEATURES", "Do you need File keyfeatures?");
+define("_MI_DOWNLOADS_NEED_KEYFEATURES_DSC", "");
 
 define("_MI_DOWNLOADS_USE_SPROCKETS", "Use 'Sprockets' Module?");
 define("_MI_DOWNLOADS_USE_SPROCKETS_DSC", "You can use 'Sprockets' Module to deal with tags. Only Tags will be supported, not navigation Elements or Tags labled as both!");

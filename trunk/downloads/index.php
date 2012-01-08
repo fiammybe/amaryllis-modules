@@ -79,7 +79,7 @@ if(in_array($clean_op, $valid_op)) {
 				$downloads_category_handler->updateCounter($clean_category_id);
 				$category = $categoryObj->toArray();
 				$icmsTpl->assign('downloads_single_cat', $category);
-				$downloads = $downloads_download_handler->getDownloads($clean_files_start, icms::$module->config['show_downloads'], FALSE, $clean_category_uid, FALSE,  $clean_category_id);
+				$downloads = $downloads_download_handler->getDownloads($clean_files_start, icms::$module->config['show_downloads'], FALSE, FALSE, FALSE,  $clean_category_id);
 				$icmsTpl->assign('downloads_files', $downloads);
 				if ($downloadsConfig['show_breadcrumbs']){
 					$icmsTpl->assign('downloads_cat_path', $downloads_category_handler->getBreadcrumbForPid($categoryObj->getVar('category_id', 'e'), 1));

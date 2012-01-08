@@ -88,8 +88,6 @@
 								<div class="downloads_cat_title">
 									<a href="<{$categories.itemLink}>" title=""><{$categories.title}></a>
 								</div>
-								<div style="font-size: small; font-weight: normal;">(&nbsp;<{$categories.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;|&nbsp;<{$categories.cat_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_SUBCATS}>&nbsp;)&nbsp;</div>
-								
 								
 								<!-- category image -->
 								<div class="downloads_cat_img">
@@ -158,10 +156,6 @@
 
 		<div class="downloads_cat_desc"> <{$downloads_single_cat.dsc}> </div>
 		
-		<{if $downloads_single_cat.files_count == 0 }>
-			<span style="color: red;"><{$smarty.const._MD_DOWNLOADS_NOFILES}></span>
-		<{/if}>
-		
 		<!-- subcategories -->
 		<{if $downloads_single_cat.hassub}>
 			<h2><{$smarty.const._MD_DOWNLOADS_CATEGORY_SUBCATLIST}></h2>
@@ -215,7 +209,7 @@
 			<{if $category_pagenav }><{$category_pagenav}><{/if}>
 		<{/if}>
 		
-		<{if $downloads_single_cat.files_count > 0 }>
+		<{if $downloads_files }>
 			<h2><{$smarty.const._MD_DOWNLOADS_DOWNLOAD_FILELIST}></h2>
 			
 			<div class="downloads_filelist">

@@ -57,7 +57,8 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE", "Fileupload");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DSC", "  ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_ALT", "OR define a file");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_ALT_DSC", " You can also upload a file to 'upload/downloads/download/' and enter the file here. example 'file.zip' ");
-
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VERSION_LINK", "Select <b>first</b> file version");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VERSION_LINK_DSC", "");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY", "Filehistory");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HISTORY_DSC", "Insert the history from the file. Minimalistic html will be allowed.");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TEASER", "Teaser");
@@ -78,6 +79,13 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VERSION", "Version Number");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VERSION_DSC", "Which version does the file have?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VERSION_STATUS", "Version Status");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_VERSION_STATUS_DSC", "Set the status of the file");
+define("_CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_FINAL", "Final");
+define("_CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_ALPHA", "Alpha");
+define("_CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_BETA", "Beta");
+define("_CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_RC", "Release Candidate");
+define("_CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_NONE", "None");
+define("_CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_DEPRECATED", "This Version is deprecated. Please use newest Version.");
+
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_LIMITATIONS", "File limitations");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_LIMITATIONS_DSC", " ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_LICENSE", "File License");
@@ -151,11 +159,15 @@ define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM_DSC", "Select which groups will 
 define("_CO_DOWNLOADS_REVIEW_REVIEW_ITEM_ID", "item");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_UID", "user");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_NAME", "Name");
+define("_CO_DOWNLOADS_REVIEW_REVIEW_CASE", "Review Case");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_EMAIL", "E-Mail");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_MESSAGE", "Message");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_MESSAGE_DSC", 'You can use some HTML here. Actually &lt;b&gt; for <b>bold</b>, &lt;i&gt; for <i>italic</i> Text, &lt;a&gt; for a link and &lt;br&gt; for a line break. All others will be stripped out.');
-
 define("_CO_DOWNLOADS_REVIEW_REVIEW_DATE", "Date");
+define("_CO_DOWNLOADS_REVIEW_PRAISE", "Praise");
+define("_CO_DOWNLOADS_REVIEW_SUGGESTION", "Suggestion");
+define("_CO_DOWNLOADS_REVIEW_PROBLEM", "Problem");
+define("_CO_DOWNLOADS_REVIEW_QUESTION", "Question");
 // LOG system
 define("_CO_DOWNLOADS_LOG_LOG_ITEM_ID", "Item Name");
 define("_CO_DOWNLOADS_LOG_LOG_ITEM", "Item");

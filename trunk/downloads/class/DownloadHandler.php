@@ -102,7 +102,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		}
 		if ($download_cid != false)	{
 			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("download_cid", "%" . $download_cid . "%", "LIKE"));
+			$critTray->add(new icms_db_criteria_Item("download_cid", '%:"' . $download_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
 		return $criteria;
@@ -113,7 +113,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$criteria = $this->getDownloadsCriteria($start, $limit, $download_publisher, $download_id,  $download_cid, $order, $sort);
 		if($tag_id) {
 			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("download_tags", "%" . $tag_id . "%", "LIKE"));
+			$critTray->add(new icms_db_criteria_Item("download_tags", '%:"' . $tag_id . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
 		$downloads = $this->getObjects($criteria, true, false);
@@ -310,12 +310,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	}
 	
 	public function getDownloadVersionStatus() {
-		global $downloadsConfig;
 		if (!$this->_download_version_status) {
-			$status_array = explode(",", $downloadsConfig['downloads_status_versiontypes']);
-			foreach (array_keys($status_array) as $i) {
-				$version_status[$status_array[$i]] = $status_array[$i];
-			}
+			$version_status = array(1 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_FINAL, 2 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_ALPHA, 3 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_BETA, 4 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_RC, 5 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_NONE);
 			return $version_status;
 		}
 		return $this->_download_version_status;
@@ -447,7 +443,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if (is_null($download_cid)) $download_cid = 0;
 		if ($download_cid != false)	{
 			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("download_cid", "%" . $download_cid . "%", "LIKE"));
+			$critTray->add(new icms_db_criteria_Item("download_cid", '%:"' . $download_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
 		
@@ -468,7 +464,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$downloadObj = $this->get($download_id);
 		if (!is_object($downloadObj)) return false;
 
-		if (isset($downloadObj->vars['counter']) && !is_object(icms::$user) || (!$download_isAdmin && $downloadObj->getVar('download_publisher', 'e') != icms::$user->uid ()) ) {
+		if (isset($downloadObj->vars['counter']) && !is_object(icms::$user) || (!$download_isAdmin && $downloadObj->getVar('download_publisher', 'e') != icms::$user->getVar("uid")) ) {
 			$new_counter = $downloadObj->getVar('counter') + 1;
 			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
 				. ' WHERE ' . $this->keyName . '=' . $downloadObj->id();
@@ -526,13 +522,14 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 
 		if (!$obj->getVar('download_notification_sent') && $obj->getVar('download_active', 'e') == TRUE && $obj->getVar('download_approve', 'e') == TRUE) {
 			$obj->sendDownloadNotification('new_file');
-			$obj->setVar('download_notification_sent', true);
+			$obj->setVar('download_notification_sent', TRUE);
 			$this->insert($obj);
 		}
 		
 		if (!$obj->isNew() && ($obj->getVar('download_active', 'e') == TRUE) && ($obj->getVar('download_approve', 'e') == TRUE) && ($obj->getVar('download_notification_sent') == 1)) {
 			$obj->sendDownloadNotification('file_modified');
 		}
+		
 		return TRUE;
 	}
 	
