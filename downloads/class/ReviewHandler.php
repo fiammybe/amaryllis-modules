@@ -41,6 +41,11 @@ class DownloadsReviewHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
+	
+	public function getCase() {
+		$cases = array(1 => _CO_DOWNLOADS_REVIEW_PRAISE, 2 => _CO_DOWNLOADS_REVIEW_SUGGESTION, 3 => _CO_DOWNLOADS_REVIEW_PROBLEM, 4 => _CO_DOWNLOADS_REVIEW_QUESTION);
+		return $cases;
+	}
 
 	protected function beforeInsert(& $obj) {
 		global $downloadsConfig;

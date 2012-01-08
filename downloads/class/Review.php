@@ -27,12 +27,15 @@ class DownloadsReview extends icms_ipf_Object {
 		$this->quickInitVar("review_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("review_item_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("review_uid", XOBJ_DTYPE_INT);
+		$this->quickInitVar("review_case", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 3);
 		$this->quickInitVar("review_name", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("review_email", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("review_message", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("review_ip", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("review_date",XOBJ_DTYPE_LTIME);
 		$this->initCommonVar('dohtml', FALSE, 1);
+		
+		$this->setControl("review_case", array("name" => "radio", "itemhandler" => "review", "method" => "getCase", "module" => "downloads"));
 		
 		$this->hideFieldFromForm(array("review_item_id", "review_uid", "review_ip", "review_date" ));
 		
@@ -77,6 +80,25 @@ class DownloadsReview extends icms_ipf_Object {
 		}
 	}
 	
+	public function getCase() {
+		$case = $this->getVar("review_case", "e");
+		switch ($case) {
+			case '1':
+				return _CO_DOWNLOADS_REVIEW_PRAISE;
+				break;
+			
+			case '2':
+				return _CO_DOWNLOADS_REVIEW_SUGGESTION;
+				break;
+			case '3':
+				return _CO_DOWNLOADS_REVIEW_PROBLEM;
+				break;
+			case '4':
+				return _CO_DOWNLOADS_REVIEW_QUESTION;
+				break;
+		}
+	}
+	
 	public function getReviewItem() {
 		$item_id = $this->getVar("review_item_id", "e");
 		$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(dirname(__FILE__))), "downloads");
@@ -93,6 +115,7 @@ class DownloadsReview extends icms_ipf_Object {
 		$ret['name'] = $this->getVar("review_name", "s");
 		$ret['email'] = $this->getVar("review_email"); //getReviewEmail();
 		$ret['avatar'] = $this->getReviewAvatar();
+		$ret['case'] = $this->getCase();
 		return $ret;
 	}
 	

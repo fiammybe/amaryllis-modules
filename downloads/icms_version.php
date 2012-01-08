@@ -90,6 +90,8 @@ $modversion['object_items'][$i] = 'category';
 $i++;
 $modversion['object_items'][$i] = 'download';
 $i++;
+$modversion['object_items'][$i] = 'versions';
+$i++;
 $modversion['object_items'][$i] = 'indexpage';
 $i++;
 $modversion['object_items'][$i] = 'review';
@@ -380,15 +382,6 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
-								'name' 			=> 'downloads_status_versiontypes',
-								'title' 		=> '_MI_DOWNLOADS_VERSIONTYPES',
-								'description' 	=> '_MI_DOWNLOADS_VERSIONTYPES_DSC',
-								'formtype' 		=> 'textsarea',
-								'valuetype' 	=> 'text',
-								'default' 		=> 'None,Alpha,Beta,RC,Final'
-							);
-$i++;
-$modversion['config'][$i] = array(
 								'name' 			=> 'downloads_show_upl_disclaimer',
 								'title' 		=> '_MI_DOWNLOADS_SHOWDISCLAIMER',
 								'description' 	=> '_MI_DOWNLOADS_SHOWDISCLAIMER_DSC',
@@ -477,6 +470,51 @@ $modversion['config'][$i] = array(
 								'name' 			=> 'use_rss',
 								'title' 		=> '_MI_DOWNLOADS_USE_RSS',
 								'description' 	=> '_MI_DOWNLOADS_USE_RSS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'need_version_control',
+								'title' 		=> '_MI_DOWNLOADS_NEED_VERSION_CONTROL',
+								'description' 	=> '_MI_DOWNLOADS_NEED_VERSION_CONTROL_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'need_related_files',
+								'title' 		=> '_MI_DOWNLOADS_NEED_RELATED',
+								'description' 	=> '_MI_DOWNLOADS_NEED_RELATED_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'need_requirements',
+								'title' 		=> '_MI_DOWNLOADS_NEED_REQUIREMENTS',
+								'description' 	=> '_MI_DOWNLOADS_NEED_REQUIREMENTS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'need_keyfeatures',
+								'title' 		=> '_MI_DOWNLOADS_NEED_KEYFEATURES',
+								'description' 	=> '_MI_DOWNLOADS_NEED_KEYFEATURES_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'need_demo',
+								'title' 		=> '_MI_DOWNLOADS_NEED_DEMO',
+								'description' 	=> '_MI_DOWNLOADS_NEED_DEMO_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1

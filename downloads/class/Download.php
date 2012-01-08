@@ -41,11 +41,12 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar('download_requirements', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('download_version', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_version_status', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_version_link', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('download_history', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('download_limitations', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('download_license', XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar('download_platform', XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar("download_language", XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('download_history', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('download_related', XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar("download_file_descriptions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
@@ -91,6 +92,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar("download_static_section", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar('download_comments', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_notification_sent', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('download_status_set', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_like', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_dislike', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('download_downcounter', XOBJ_DTYPE_INT, false, FALSE, FALSE, 0);
@@ -107,17 +109,12 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->setControl('download_cid', array('name' => 'select_multi', 'itemHandler' => 'category', 'method' => 'getCategoryListForPid', 'module' => 'downloads'));
 		$this->setControl('download_description', 'dhtmltextarea');
 		$this->setControl('download_teaser', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
-		$this->setControl('download_history', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
-		$this->setControl('download_keyfeatures', 'textarea');
-		$this->setControl('download_requirements', 'textarea');
-		$this->setControl('download_related', array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getRelated', 'module' => 'downloads'));
 		$this->setControl('download_file', 'file');
 		$this->setControl('download_img', 'image');
 		$this->setControl('download_screen_1','image');
 		$this->setControl('download_screen_2','image');
 		$this->setControl('download_screen_3','image');
 		$this->setControl('download_screen_4','image');
-		$this->setControl('download_version_status',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadVersionStatus', 'module' => 'downloads'));
 		$this->setControl('download_limitations',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadLimitations', 'module' => 'downloads'));
 		$this->setControl('download_license',array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadLicense', 'module' => 'downloads'));
 		$this->setControl('download_platform',array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadPlatform', 'module' => 'downloads'));
@@ -129,9 +126,9 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->setControl('download_updated', 'yesno');
 		$this->setControl('download_broken', 'yesno');
 		// hide static fields from form
-		$this->hideFieldFromForm(array( 'download_downcounter', 'download_submitter','download_like','download_dislike', 'download_has_mirror', 'download_comments','download_notification_sent','download_fb_like', 'download_fb_dislike','download_g_like', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
+		$this->hideFieldFromForm(array('weight','download_version_link', 'download_status_set', 'download_inblocks', 'download_downcounter', 'download_submitter','download_like','download_dislike', 'download_has_mirror', 'download_comments','download_notification_sent', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
 		// hide fields from single view
-		$this->hideFieldFromSingleView(array('download_has_mirror', 'download_comments','download_notification_sent','download_fb_like', 'download_fb_dislike','download_g_like', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
+		$this->hideFieldFromSingleView(array('download_has_mirror', 'download_version_link', 'download_status_set', 'download_comments','download_notification_sent','download_fb_like', 'download_fb_dislike','download_g_like', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
 		
 		$albumModule = icms_getModuleInfo('album');
 		if ($downloadsConfig['use_album'] == 1 && $albumModule){
@@ -148,6 +145,14 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 			$this->hideFieldFromForm('catalogue_item');
 			$this->hideFieldFromSingleView('catalogue_item');
 		}
+		
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($downloadsConfig['use_sprockets'] == 1 && $sprocketsModule) {
+			$this->setControl("download_tags", array("name" => "select_multi", "itemhandler" => "download", "method" => "getDownloadTags", "module" => "Downloads"));
+		} else {
+			$this->hideFieldFromForm("download_tags");
+			$this->hideFieldFromSingleView("download_tags");
+		}
 
 		if ($downloadsConfig['use_mirror'] == 0){
 			$this->hideFieldFromForm(array('download_mirror_approve','download_mirror_handling','download_mirror_url', 'download_mirror_title'));
@@ -156,12 +161,40 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 			$this->openFormSection('download_mirror_handling', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_HANDLING);
 			$this->setControl('download_mirror_approve', 'yesno');
 		}
-		
-		if($downloadsConfig['use_sprockets'] == 1) {
-			$this->setControl("download_tags", array("name" => "select_multi", "itemhandler" => "download", "method" => "getDownloadTags", "module" => "Downloads"));
+
+		if($downloadsConfig['need_version_control'] == 1) {
+			$this->setControl('download_history', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
+			$this->setControl('download_version_status',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadVersionStatus', 'module' => 'downloads'));
+			//$this->setControl('download_version_link', array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getList', 'module' => 'downloads'));
 		} else {
-			$this->hideFieldFromForm("download_tags");
-			$this->hideFieldFromSingleView("download_tags");
+			$this->hideFieldFromForm(array("download_history", "download_version", "download_version_status", "download_version_link"));
+			$this->hideFieldFromSingleView(array("download_history", "download_version", "download_version_status", "download_version_link"));
+		}
+		
+		if($downloadsConfig['need_related_files'] == 1) {
+			$this->setControl('download_related', array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getRelated', 'module' => 'downloads'));
+		} else {
+			$this->hideFieldFromForm("download_related");
+			$this->hideFieldFromSingleView("download_related");
+		}
+		
+		if($downloadsConfig['need_demo'] == 0) {
+			$this->hideFieldFromForm("download_demo");
+			$this->hideFieldFromSingleView("download_demo");
+		}
+			
+		if($downloadsConfig['need_requirements'] == 1){
+			$this->setControl('download_requirements', 'textarea');
+		} else {
+			$this->hideFieldFromForm("download_requirements");
+			$this->hideFieldFromSingleView("download_requirements");
+		}
+		
+		if($downloadsConfig['need_keyfeatures'] == 1){
+			$this->setControl('download_keyfeatures', 'textarea');
+		} else {
+			$this->hideFieldFromForm("download_keyfeatures");
+			$this->hideFieldFromSingleView("download_keyfeatures");
 		}
 
 		$this->openFormSection('download_file_descriptions', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_FILE_DESCRIPTIONS);
@@ -527,6 +560,31 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		}
 	}
 	
+	public function getDownloadVersionStatus() {
+		$status = $this->getVar("download_version_status", "e");
+		switch ($status) {
+			case '1':
+				return _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_FINAL;
+				break;
+			
+			case '2':
+				return _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_ALPHA;
+				break;
+				
+			case '3':
+				return _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_BETA;
+				break;
+				
+			case '4':
+				return _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_RC;
+				break;
+				
+			case '5':
+				return _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_NONE;
+				break;
+		}
+	}
+	
 	public function getDownloadHistory() {
 		$history = icms_core_Datafilter::checkVar($this->getVar('download_history'), 'str', 'encodehigh');
 		return $history;
@@ -644,10 +702,6 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 			$mirror_url = 'download_mirror_url';
 			$linkObj = $this-> getUrlLinkObj($mirror_url);
 			$onlyurl = $linkObj->getVar("url", "e");
-			//$urltitle = $linkObj->getVar("caption", "e");
-			//$urldsc = $linkObj->getVar("description", "e");
-			//$url = '<a href="' . $onlyurl . '" title="' . $urlsdsc . '">' . $urltitle . '</a>';
-			//$url = $linkObj->render();
 			if($downloadsConfig['mirror_needs_approve'] == 1 ){
 				if ($mirror_approve == true) {
 					return $onlyurl;
@@ -683,49 +737,52 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		global $icmsConfig, $downloadsConfig;
 		$ret = parent::toArray();
 		$ret['id'] = $this->getVar('download_id');
+		$ret['title'] = $this->getVar('download_title');
 		$ret['cats'] = $this->getDownloadCid(TRUE);
+		$ret['teaser'] = $this->getDownloadTeaser();
+		$ret['dsc'] = $this->getVar('download_description');
+		
+		$ret['file'] = $this->getDownloadTag(TRUE, FALSE);
+		$ret['filesize'] = $this->getFileSize();
+		$ret['filetype'] = $this->getFileType();
+		
+		$ret['index_img'] = $this->getDownloadImageTag(FALSE);
+		$ret['img'] = $this->getDownloadImageTag(TRUE);
+		$ret['screen_1'] = $this->getDownloadScreen1Tag();
+		$ret['screen_2'] = $this->getDownloadScreen2Tag();
+		$ret['screen_3'] = $this->getDownloadScreen3Tag();
+		$ret['screen_4'] = $this->getDownloadScreen4Tag();
+		$albumModule = icms_getModuleInfo('album');
+		if ($downloadsConfig['use_album'] == true && $albumModule){
+			$ret['album_images'] = $this->getVar('download_album');
+		} 
+		
+		$ret['version'] = $this->getVar('download_version', 'e');
+		$ret['version_status'] = $this->getDownloadVersionStatus();
+		$ret['history'] = $this->getDownloadHistory();
+		//$ret['version_control'] = $this->getDownloadVersionControl();
+		
 		$ret['tags'] = $this->getDownloadTags(TRUE);
 		$ret['published_date'] = $this->getDownloadPublishedDate();
 		$ret['updated_date'] = $this->getDownloadUpdatedDate();
 		$ret['publisher'] = $this->getDownloadPublisher(true);
-		$ret['teaser'] = $this->getDownloadTeaser();
-		$ret['history'] = $this->getDownloadHistory();
-		$ret['title'] = $this->getVar('download_title');
-		$ret['img'] = $this->getDownloadImageTag(TRUE);
-		$ret['index_img'] = $this->getDownloadImageTag(FALSE);
-		$ret['file'] = $this->getDownloadTag(TRUE, FALSE);
-		$ret['dsc'] = $this->getVar('download_description');
+		
 		$ret['keyfeatures'] = $this->getDownloadKeyfeatures();
 		$ret['requirements'] = $this->getDownloadRequirements();
-		$ret['related'] = $this->getDownloadRelated();
-		$ret['version'] = $this->getVar('download_version');
-		$ret['version_status'] = $this->getVar('download_version_status');
 		$ret['limitations'] = $this->getVar('download_limitations');
-		$ret['license'] = $this->getDownloadLicense();
 		$ret['platform'] = $this->getDownloadPlatform();
 		$ret['language'] = $this->getVar('download_language');
+		$ret['license'] = $this->getDownloadLicense();
+		$ret['related'] = $this->getDownloadRelated();
 		$ret['mirror'] = $this->getMirrorLink();
 		$ret['dev'] = $this->getVar('download_dev');
 		$ret['dev_hp'] = $this->getDevHpLink();
 		$ret['demo'] = $this->getDemoLink();
 		$ret['catalogue_item'] = $this->getVar('catalogue_item');
-		$ret['thumbnail_width'] = $downloadsConfig['thumbnail_width'];
-		$ret['thumbnail_height'] = $downloadsConfig['thumbnail_height'];
-		$ret['filesize'] = $this->getFileSize();
-		$ret['filetype'] = $this->getFileType();
-		$ret['file_thumbnail_width'] = $downloadsConfig['file_img_thumbnail_width'];
-		$ret['file_thumbnail_height'] = $downloadsConfig['file_img_thumbnail_height'];
+		
 		$ret['like'] = $this->getVar('download_like');
 		$ret['dislike'] = $this->getVar('download_dislike');
 		$ret['downcounter'] = $this->getVar('download_downcounter', 'e');
-		$albumModule = icms_getModuleInfo('album');
-		if ($downloadsConfig['use_album'] == true && $albumModule){
-			$ret['album_images'] = $this->getVar('download_album');
-		} 
-		$ret['screen_1'] = $this->getDownloadScreen1Tag();
-		$ret['screen_2'] = $this->getDownloadScreen2Tag();
-		$ret['screen_3'] = $this->getDownloadScreen3Tag();
-		$ret['screen_4'] = $this->getDownloadScreen4Tag();
 		
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
@@ -734,6 +791,12 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['accessgranted'] = $this->accessGranted();
+		
+		$ret['thumbnail_width'] = $downloadsConfig['thumbnail_width'];
+		$ret['thumbnail_height'] = $downloadsConfig['thumbnail_height'];
+		$ret['file_thumbnail_width'] = $downloadsConfig['file_img_thumbnail_width'];
+		$ret['file_thumbnail_height'] = $downloadsConfig['file_img_thumbnail_height'];
+		
 		return $ret;
 	}
 

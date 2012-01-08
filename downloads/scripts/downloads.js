@@ -299,7 +299,7 @@
 	});
 	
 	
-		// initiate tag form
+	// initiate tag form
 	$(document).ready(function(){
 		$(".tag_form").dialog({
 			modal: true,

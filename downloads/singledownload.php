@@ -358,20 +358,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				}
 				
 				/**
-				 * comment counter
-				 */
-				$comment_handler = icms::handler("icms_data_comment");
-				$modid = icms::$module->getVar("mid");
-				$criteria = "";
-				$criteria = new icms_db_criteria_Compo();
-				$criteria->add(new icms_db_criteria_Item("com_itemid", $clean_download_id));
-				$criteria->add(new icms_db_criteria_Item("com_modid", $modid));
-				$comments = $comment_handler->getCount($criteria);
-				$icmsTpl->assign("comment_counter", $comments);
-				$lang_comments = $comments != 1 ? _MD_DOWNLOADS_COMMENTS : _MD_DOWNLOADS_COMMENT;
-				$icmsTpl->assign("comment_lang", $lang_comments);
-				
-				/**
 				 * 
 				 */
 				if ($downloadsConfig['show_breadcrumbs'] == true) {

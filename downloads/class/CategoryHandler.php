@@ -50,12 +50,6 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return $dir . "/";
 	}
 	
-	// retrieve a list of categories
-	public function getCategoryList() {
-		$list= $this->getCategoryListForPid ($groups = array(), $perm = 'category_grpperm', $status=true, $approved = null,$inblocks = null, $category_id = null, $showNull = false);
-		return $list;
-	}
-	
 	// some criterias used by other requests
 	public function getCategoryCriteria($start = 0, $limit = 0, $category_publisher = false, $category_id = false,  $category_pid = false, $order = 'category_published_date', $sort = 'DESC') {
 		$criteria = new icms_db_criteria_Compo();
@@ -88,12 +82,6 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 			}
 		}
 		return $ret;
-	}
-	
-	public function getCategory($category_id) {
-		$ret = $this->getCategories(0, 0, false, $category_id);
-		
-		return isset($ret[$category_id]) ? $ret[$category_id] : false;
 	}
 	
 	public function getCategoryListForPid($groups = array(), $perm = 'category_grpperm', $status = null,$approved = null, $category_id = null, $showNull = true) {
@@ -224,48 +212,6 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		}
 		$this->insert($categoryObj, true);
 		return $approve;
-	}
-	
-	// count sub-categories
-	public function getCategorySubCount($groups = array(), $perm = 'category_grpperm', $status = null,$approved = null, $category_id = 0) {
-		$criteria = new icms_db_criteria_Compo();
-		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
-			foreach($groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
-			}
-			$criteria->add($criteriaTray);
-			if ($perm == 'category_grpperm' || $perm == 'downloads_admin') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
-			}
-		}
-		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('category_active', true));
-		}
-		if (isset($approved)) {
-			$criteria->add(new icms_db_criteria_Item('category_approve', true));
-		}
-		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
-		return $this->getCount($criteria);
-	}
-	
-	// call sub-categories
-	public function getCategorySub($category_id = 0, $toarray=false) {
-		$criteria = $this->getCategoryCriteria();
-		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
-		$criteria->add(new icms_db_criteria_Item('category_active', true ) );
-		$criteria->add(new icms_db_criteria_Item('category_approve', true ) );
-		$categories = $this->getObjects($criteria);
-		if (!$toarray) return $categories;
-		$ret = array();
-		foreach(array_keys($categories) as $i) {
-			if ($categories[$i]->accessGranted()){
-				$ret[$i] = $categories[$i]->toArray();
-				$ret[$i]['category_description'] = icms_core_DataFilter::icms_substr(icms_cleanTags($categories[$i]->getVar('category_description','n'),array()),0,300);
-			}
-		}
-		return $ret;
 	}
 	
 	public function category_active_filter() {
