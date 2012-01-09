@@ -446,15 +446,15 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$critTray->add(new icms_db_criteria_Item("download_cid", '%:"' . $download_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
-		
-		$downloads = $this->getObjects($criteria, true, false);
-		$ret = array();
-		foreach ($downloads as $download){
-			if ($download['accessgranted']){
-				$ret[$download['download_id']] = $download;
-			}
+		$critTray = new icms_db_criteria_Compo();
+		/**
+		 * @TODO : not the best way to check, if the user-group is in array of allowed groups. Does work, but only if there are not 10+ groups.
+		 */
+		foreach ($groups as $group) {
+			$critTray->add(new icms_db_criteria_Item("download_grpperm", "%" . $group . "%", "LIKE"), "OR");
 		}
-		return count($ret);
+		$criteria->add($critTray);
+		return $this->getCount($criteria);
 	
 	}
 	
