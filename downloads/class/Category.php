@@ -173,15 +173,8 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	
 	function getSubsCount(){
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-		$count = $this->handler->getCategoriesCount (TRUE, TRUE, $groups,'category_grpperm', FALSE, FALSE, $this->getVar("category_id", "e"));
+		$count = $this->handler->getCategoriesCount (TRUE, TRUE, $groups, 'category_grpperm', FALSE, FALSE, $this->getVar("category_id", "e"));
 		return $count;
-	}
-	
-	function getFilesCount() {
-		$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
-		$files_count = $downloads_download_handler->getCountCriteria(TRUE, TRUE, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $this->getVar("category_id"));
-		
-		return $files_count;
 	}
 	
 	function category_pid() {
@@ -294,6 +287,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret['published_date'] = $this->getCategoryPublishedDate();
 		$ret['updated_date'] = $this->getCategoryUpdatedDate();
 		$ret['publisher'] = $this->getCategoryPublisher(TRUE);
+		$ret['cat_count'] = $this->getSubsCount();
 		$ret['hassub'] = (count($ret['cat_count']) > 0) ? TRUE : FALSE;
 		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
@@ -301,8 +295,6 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret['itemLink'] = $this->getItemLink(TRUE);
 		$ret['catlink'] = $this->getItemLink(FALSE);
 		$ret['accessgranted'] = $this->accessGranted();
-		$ret['cat_count'] = $this->getSubsCount();
-		//$ret['files_count'] = $this->getFilesCount();
 		$ret['user_upload'] = $this->getEditAndDelete();
 		$ret['user_submit'] = $this->userCanSubmit();
 		return $ret;

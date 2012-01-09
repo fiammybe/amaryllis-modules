@@ -237,7 +237,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getCategoriesCount ($active = null, $approve = null, $groups = array(), $perm = 'category_grpperm', $category_publisher = false, $category_id = null, $category_pid = null) {
+	public function getCategoriesCount ($active = null, $approve = null, $groups, $perm = 'category_grpperm', $category_publisher = false, $category_id = null, $category_pid = null) {
 		$criteria = new icms_db_criteria_Compo();
 		
 		if (isset($active)) {
@@ -250,17 +250,15 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		if($category_id) $criteria->add(new icms_db_criteria_Item('category_id', $category_id));
 		if (is_null($category_pid)) $category_pid == 0;
 		if($category_pid) $criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
-		
-		$categories = $this->getObjects($criteria, true, false);
-		$ret = array();
-		foreach ($categories as $category){
-			if ($category['accessgranted']){
-				$ret[$category['category_id']] = $category;
-			}
+		$critTray = new icms_db_criteria_Compo();
+		/**
+		 * @TODO : not the best way to check, if the user-group is in array of allowed groups. Does work, but only if there are not 10+ groups.
+		 */
+		foreach ($groups as $group) {
+			$critTray->add(new icms_db_criteria_Item("category_grpperm", "%" . $group . "%", "LIKE"), "OR");
 		}
-		
-		return count($ret);
-	
+		$criteria->add($critTray);
+		return $this->getCount($criteria);
 	}
 
 	public function getGroups($criteria = null) {

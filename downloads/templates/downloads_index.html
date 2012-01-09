@@ -142,7 +142,7 @@
 	
 	<{if $downloads_single_cat}>
 	
-		<div class="downloads_scat_title"><{$downloads_single_cat.title}></div>(&nbsp;<{$downloads_single_cat.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;)&nbsp;&nbsp;<{if $downloads_single_cat.userCanEditAndDelete}><{$downloads_single_cat.editItemLink}><{/if}>
+		<div class="downloads_scat_title"><{$downloads_single_cat.title}></div>&nbsp;<{if $downloads_single_cat.userCanEditAndDelete}><{$downloads_single_cat.editItemLink}><{/if}>
 			<{if $downloads_single_cat.user_upload}>
 				<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_100" href="<{$downloads_single_cat.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
 					<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
@@ -179,7 +179,6 @@
 								<!-- Category title -->
 								<span class="downloads_cat_title">
 									<a href="<{$categories.itemLink}>" title=""><{$categories.title}></a>
-									<span style="font-size: small; font-weight: normal;"> &nbsp;(&nbsp;<{$categories.files_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_FILES}>&nbsp;|&nbsp;<{$categories.cat_count}>&nbsp;<{$smarty.const._MD_DOWNLOADS_SUBCATS}>&nbsp;)&nbsp;</span>
 									<{if $categories.userCanEditAndDelete}>
 										<{$categories.editItemLink}><{$categories.deleteItemLink}>
 									<{/if}>
