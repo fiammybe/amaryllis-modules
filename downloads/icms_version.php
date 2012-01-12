@@ -90,8 +90,6 @@ $modversion['object_items'][$i] = 'category';
 $i++;
 $modversion['object_items'][$i] = 'download';
 $i++;
-$modversion['object_items'][$i] = 'versions';
-$i++;
 $modversion['object_items'][$i] = 'indexpage';
 $i++;
 $modversion['object_items'][$i] = 'review';

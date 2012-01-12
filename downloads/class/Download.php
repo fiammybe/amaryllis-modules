@@ -165,7 +165,6 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		if($downloadsConfig['need_version_control'] == 1) {
 			$this->setControl('download_history', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 			$this->setControl('download_version_status',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadVersionStatus', 'module' => 'downloads'));
-			//$this->setControl('download_version_link', array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getList', 'module' => 'downloads'));
 		} else {
 			$this->hideFieldFromForm(array("download_history", "download_version", "download_version_status", "download_version_link"));
 			$this->hideFieldFromSingleView(array("download_history", "download_version", "download_version_status", "download_version_link"));
