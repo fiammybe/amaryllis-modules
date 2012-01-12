@@ -149,7 +149,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		 * @TODO : not the best way to check, if the user-group is in array of allowed groups. Does work, but only if there are not 10+ groups.
 		 */
 		foreach ($groups as $group) {
-			$critTray->add(new icms_db_criteria_Item("download_grpperm", "%" . $group . "%", "LIKE"), "OR");
+			$critTray->add(new icms_db_criteria_Item("album_grpperm", "%" . $group . "%", "LIKE"), "OR");
 		}
 		$criteria->add($critTray);
 		return $this->getCount($criteria);
