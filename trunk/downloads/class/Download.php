@@ -592,7 +592,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 	
 	public function getDownloadTeaser() {
-		$teaser = icms_core_Datafilter::checkVar($this->getVar('download_teaser'), 'str', 'encodehigh');
+		$teaser = icms_core_Datafilter::checkVar($this->getVar('download_teaser'), 'html', 'output');
 		return $teaser;
 	}
 

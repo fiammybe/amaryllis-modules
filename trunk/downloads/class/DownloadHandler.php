@@ -512,6 +512,14 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		} else {
 			$obj->setVar('download_has_mirror', 0);
 		}
+		$history = $obj->getVar("download_history", "s");
+		$history = icms_core_DataFilter::checkVar($history, "html", "input");
+		$obj->setVar("download_history", $history);
+		
+		$teaser = $obj->getVar("download_teaser", "s");
+		$teaser = icms_core_DataFilter::checkVar($teaser, "html", "input");
+		$obj->setVar("download_teaser", $teaser);
+		
 		return TRUE;
 	}
 	
