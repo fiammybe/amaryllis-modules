@@ -144,14 +144,15 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		if($album_id) $criteria->add(new icms_db_criteria_Item('album_id', $album_id));
 		if (is_null($album_pid)) $album_pid == 0;
 		if($album_pid) $criteria->add(new icms_db_criteria_Item('album_pid', $album_pid));
-		$albums = $this->getObjects($criteria, TRUE, FALSE);
-		$ret = array();
-		foreach ($albums as $album){
-			if ($album['accessgranted']){
-				$ret[$album['album_id']] = $album;
-			}
+		$critTray = new icms_db_criteria_Compo();
+		/**
+		 * @TODO : not the best way to check, if the user-group is in array of allowed groups. Does work, but only if there are not 10+ groups.
+		 */
+		foreach ($groups as $group) {
+			$critTray->add(new icms_db_criteria_Item("download_grpperm", "%" . $group . "%", "LIKE"), "OR");
 		}
-		return count($ret);
+		$criteria->add($critTray);
+		return $this->getCount($criteria);
 	}
 	
 	public function getAlbumsForBlocks($start = 0, $limit = 0, $order = 'weight', $sort = 'ASC') {
