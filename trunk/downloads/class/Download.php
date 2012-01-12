@@ -587,7 +587,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	}
 	
 	public function getDownloadHistory() {
-		$history = icms_core_Datafilter::checkVar($this->getVar('download_history'), 'str', 'encodehigh');
+		$history = icms_core_Datafilter::checkVar($this->getVar('download_history'), 'html', 'output');
 		return $history;
 	}
 	
