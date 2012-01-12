@@ -28,7 +28,10 @@ function editarticle($article_id = 0) {
 	$articleObj = $article_article_handler->get($article_id);
 
 	if (!$articleObj->isNew()){
+		
 		$icmsModule->displayAdminMenu(1, _AM_ARTICLE_ARTICLES . " > " . _CO_ICMS_EDITING);
+		
+		
 		$sform = $articleObj->getForm(_AM_ARTICLE_ARTICLE_EDIT, "addarticle");
 		$sform->assign($icmsAdminTpl);
 	} else {
@@ -37,7 +40,7 @@ function editarticle($article_id = 0) {
 		$sform->assign($icmsAdminTpl);
 
 	}
-	$icmsAdminTpl->display("db:article_admin_article.html");
+	$icmsAdminTpl->display("db:article_admin.html");
 }
 
 include_once "admin_header.php";

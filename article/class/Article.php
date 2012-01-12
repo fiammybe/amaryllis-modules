@@ -39,6 +39,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->quickInitVar("article_descriptions", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar("article_image", XOBJ_DTYPE_IMAGE, FALSE);
 		$this->quickInitVar("article_teaser", XOBJ_DTYPE_TXTAREA, TRUE);
+		$this->quickInitVar("article_show_teaser", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar("article_body", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("article_descriptions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
@@ -98,6 +99,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->setControl("article_cid", array("name" => "select_multi", "itemhandler" => "category", "method" => "getCategoryListForPid", "module" => "article"));
 		$this->setControl("article_image", "image");
 		$this->setControl("article_teaser", array("name" => "textarea", "form_editor" => "htmlarea"));
+		$this->setControl("article_show_teaser", "yesno");
 		$this->setControl("article_body", "dhtmltextarea");
 		$this->setControl("article_publisher", "user_multi");
 		$this->setControl("article_approve", "yesno");

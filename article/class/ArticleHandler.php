@@ -99,9 +99,9 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$crit->add(new icms_db_criteria_Item('article_id', $article_id),'OR');
 			$criteria->add($crit);
 		}
-		if ($article_cid != FALSE){
+		if ($article_cid != FALSE)	{
 			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("article_cid", "%" . $article_cid . "%", "LIKE"));
+			$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
 		return $criteria;
@@ -110,9 +110,9 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	public function getArticles($start = 0, $limit = 0,$tag_id = FALSE, $article_publisher = FALSE, $article_id = FALSE,  $article_cid = FALSE, $order = 'weight', $sort = 'ASC') {
 		
 		$criteria = $this->getDownloadsCriteria($start, $limit, $article_publisher, $article_id,  $article_cid, $order, $sort);
-		if($tag_id != FALSE) {
+		if($tag_id) {
 			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("article_tags", "%" . $tag_id . "%", "LIKE"));
+			$critTray->add(new icms_db_criteria_Item("article_tags", '%:"' . $tag_id . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
 		$article = $this->getObjects($criteria, TRUE, FALSE);
@@ -417,6 +417,10 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$history = $obj->getVar("article_history", "s");
 		$history = icms_core_DataFilter::checkVar($history, "html", "input");
 		$obj->setVar("article_history", $history);
+		
+		$conclusion = $this->getVar("article_conclusion", "s");
+		$conclusion = icms_core_DataFilter::checkVar($conclusion, "html", "input");
+		$obj->setVar("article_conclusion", $conclusion);
 		
 	}
 	
