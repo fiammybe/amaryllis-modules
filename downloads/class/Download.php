@@ -276,8 +276,10 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 						}
 					} else {
 						$ret[$tag] = '<span class="download_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag) 
-						. '" title="' . $title . '">' . $title . '</a></span><span class="popup_tag"> '
-						. $dsc . '</span>';
+									. '" title="' . $title . '">' . $title . '</a></span>';
+						if($dsc != "") {
+							$ret[$tag] .= '<span class="popup_tag">' . $dsc . '</span>';
+						}
 					}
 				}
 			}

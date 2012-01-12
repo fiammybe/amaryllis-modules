@@ -53,8 +53,6 @@ $downloads_download_handler = icms_getModuleHandler( 'download', icms::$module -
 $valid_op = array ('getByTags', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
-if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
-
 
 if(in_array($clean_op, $valid_op)) {
 	switch ($clean_op) {
