@@ -352,3 +352,46 @@
 	.ui-tabs .ui-tabs-nav li {
 		list-style: none outside none !important;
 	}
+	
+	/* download button */
+
+	.btn {
+	float:left;
+	display:inline-block;
+	height:44px;
+	line-height:44px;
+	padding:0 10px 0 50px;
+	background: url("images/white.jpg") repeat-x scroll 0 0 transparent;
+	color:#999;
+	font-weight:bold;
+	font-size:13px;
+	text-shadow:0 1px 0 #fff;
+	position:relative;
+	border:1px solid #DFDFDF;
+	margin:0 10px 10px 0;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	}
+
+	.btn:hover {
+	border-color:#cacaca;
+	background:#F8F8F8;
+	text-decoration: none;
+	}
+
+	.btn span {
+	display:block;
+	position:absolute;
+	top:6px;
+	left:9px;
+	width:32px;
+	height:32px;
+	background-repeat:no-repeat;
+	background-position:center;
+	}
+
+.btn.download span {
+    background-image: url("images/download.png");
+}
+
