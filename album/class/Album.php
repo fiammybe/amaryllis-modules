@@ -101,10 +101,6 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		return $ret;
 	}
 	
-	function getAlbumSub($toarray) {
-		return $this->handler->getAlbumSub($this->getVar('album_id', 'e'), $toarray);
-	}
-	
 	public function getAlbumParent() {
 		$parent = $this->getVar("album_pid", "e");
 		if($parent == 0){
@@ -347,8 +343,8 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$ret['title'] = $this->getVar('album_title');
 		$ret['img'] = $this->getAlbumImageTag();
 		$ret['dsc'] = $this->getVar('album_description');
-		$ret['sub'] = $this->getAlbumSub($this->getVar('album_id', 'e'), true);
-		$ret['hassub'] = (count($ret['album_sub']) > 0) ? true : false;
+		$ret['album_count'] = $this->getSubsCount();
+		$ret['hassub'] = (($ret['album_count']) > 0) ? true : false;
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
@@ -356,7 +352,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['accessgranted'] = $this->accessGranted();
-		$ret['album_count'] = $this->getSubsCount();
+		
 		$ret['images_count'] = $this->getImagesCount();
 		$ret['user_upload'] = $this->getEditAndDelete();
 		
