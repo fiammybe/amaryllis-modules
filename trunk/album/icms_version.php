@@ -196,6 +196,15 @@ global $icmsConfig;
 $i=0;
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'use_sprockets',
+								'title' 		=> '_MI_ALBUM_USE_SPROCKETS',
+								'description' 	=> '_MI_ALBUM_USE_SPROCKETS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=>  1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name'			=> 'uploader_groups',
 								'title'			=> '_MI_ALBUM_AUTHORIZED_UPLOADER',
 								'description'	=> '_MI_ALBUM_AUTHORIZED_UPLOADER_DSC',

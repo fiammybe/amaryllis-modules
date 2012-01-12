@@ -34,6 +34,8 @@ define("_MI_ALBUM_FORMS_TPL", "Form to add, edit and delete Albums and Images ")
 define("_MI_ALBUM_BLOCK_RECENT_ALBUMS", "Album List");
 define("_MI_ALBUM_BLOCK_RECENT_ALBUMS_DSC", "List the latest published albums");
 // config
+define("_MI_ALBUM_USE_SPROCKETS", "Use Sprockets Module?");
+define("_MI_ALBUM_USE_SPROCKETS_DSC", "Set 'YES' to use sprockets Module for tag support.");
 define("_MI_ALBUM_AUTHORIZED_UPLOADER", "Groups allowed to add albums");
 define("_MI_ALBUM_AUTHORIZED_UPLOADER_DSC", "Select the groups which are allowed to create new albums. Please note that a user belonging to one of these groups will be able to create albums directly on the site. The module currently has no moderation feature.");
 define("_MI_ALBUM_NEEDS_APPROVAL", "Album needs approval?");

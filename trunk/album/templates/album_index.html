@@ -1,5 +1,64 @@
 <{includeq file='db:album_header.html'}>
 
+	<{if $byTags}>	
+		
+		<!-- display index header -->
+		<{$album_index.header}>
+		<!-- display index heading -->
+		<{$album_index.heading}>
+		
+		<!-- start image loop -->
+		<{if $album_image_rows}>
+			<{if $imgnav}> <!-- page navigation -->
+				<div class="images_pagenav"><{$imgnav}></div>
+			<{/if}>
+			<!-- image rows -->
+			<div class="album_images">
+				<{foreach item=album_row from=$album_image_rows}>
+					<div class="album_images_row" <{$album_row_margins}> >
+						<{foreach item=album_images from=$album_row}>
+							
+								<a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" rel="lightbox" 
+									 <{$album_image_margins}> >
+									<{resized_image file=$album_images.img width=$album_images.thumbnail_width height=$album_images.thumbnail_height fit="inside"}>
+								</a>
+								
+								
+								<div style="display: none">
+									<div class="img_content" id="image-<{$album_images.id}>">
+										<title><{$album_images.title}></title>
+										<{resized_image file=$album_images.img width=$album_images.inner_width height=$album_images.inner_height fit="inside"}>
+										<div class="img_info" width="$album_images.inner_width" >
+											<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$album_images.publisher}>&nbsp;|&nbsp;
+											<{if $album_images.updated_on}>
+												<{$smarty.const._MD_ALBUM_UPDATED_ON}>&nbsp;:&nbsp;<{$album_images.updated_on}>&nbsp;|&nbsp;
+											<{else}>
+												<{$smarty.const._MD_ALBUM_PUBLISHED_ON}>&nbsp;:&nbsp;<{$album_images.published_on}>&nbsp;|&nbsp;
+											<{/if}>
+										</div>
+										
+										<{if $sprockets_module && $album_images.tags}>
+											(&nbsp;<{$smarty.const._MD_ALBUM_TAGS}>&nbsp;:&nbsp;<{$album_images.tags}>&nbsp;)
+										<{/if}>
+										
+										<div class="img_desc" style="width: <{$album_images.inner_width}>px" >
+											<{$album_images.dsc}>
+										</div>
+									</div>
+								</div>
+								
+							
+						<{/foreach}>
+					</div>
+				<{/foreach}>
+			</div>
+			<{if $imgnav}> <!-- page navigation -->
+				<div class="images_pagenav"><{$imgnav}></div>
+			<{/if}>
+		<{/if}>
+		
+	<{/if}>
+
 <{if $album_columns}> <!-- album index view -->
 	<!-- display index header -->
 	<{$album_index.header}>
@@ -69,6 +128,10 @@
 											<{$smarty.const._MD_ALBUM_PUBLISHED_ON}>&nbsp;:&nbsp;<{$album_images.published_on}>&nbsp;|&nbsp;
 										<{/if}>
 									</div>
+									
+									<{if $sprockets_module && $album_images.tags}>
+										(&nbsp;<{$smarty.const._MD_ALBUM_TAGS}>&nbsp;:&nbsp;<{$album_images.tags}>&nbsp;)
+									<{/if}>
 									
 									<div class="img_desc" style="width: <{$album_images.inner_width}>px" >
 										<{$album_images.dsc}>

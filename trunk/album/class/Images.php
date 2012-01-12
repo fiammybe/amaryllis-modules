@@ -23,6 +23,7 @@ defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 class AlbumImages extends icms_ipf_Object {
 
 	public function __construct(&$handler) {
+		global $albumConfig;
 		parent::__construct($handler);
 
 		$this->quickInitVar('img_id', XOBJ_DTYPE_INT, TRUE);
@@ -32,8 +33,9 @@ class AlbumImages extends icms_ipf_Object {
 		$this->quickInitVar('img_updated_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_description', XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar('img_url', XOBJ_DTYPE_IMAGE, TRUE);
-		$this->quickInitVar('img_active', XOBJ_DTYPE_INT,TRUE, '', '', 1);
-		$this->quickInitVar('img_approve', XOBJ_DTYPE_INT, TRUE, '', '',1);
+		$this->quickInitVar("img_tags", XOBJ_DTYPE_ARRAY);
+		$this->quickInitVar('img_active', XOBJ_DTYPE_INT,TRUE, FALSE, FALSE, 1);
+		$this->quickInitVar('img_approve', XOBJ_DTYPE_INT, TRUE, FALSE, FALSE,1);
 		$this->initCommonVar( 'weight', XOBJ_DTYPE_INT );
 		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->initCommonVar('dohtml', FALSE, 1);
@@ -42,19 +44,27 @@ class AlbumImages extends icms_ipf_Object {
 		$this->initCommonVar('dosmiley', TRUE, 1);
 		$this->initCommonVar('docxode', TRUE, 1);
 		
-		$this -> setControl ( 'img_active', 'yesno' );
-		$this -> setControl ( 'img_approve', 'yesno' );
-		$this->setControl( 'img_publisher', 'user' );
+		$this->setControl('img_active', 'yesno');
+		$this->setControl('img_approve', 'yesno');
+		$this->setControl('img_publisher', 'user');
 		$this->setControl('a_id', array('itemHandler' => 'album', 'method' => 'getAlbumList', 'module' => 'album'));
-		$this -> setControl( 'img_description', 'dhtmltextarea' );
+		$this->setControl('img_description', 'dhtmltextarea' );
 		
 		$this->setControl( 'img_url', array( 'name' => 'image' ) );
 		$url = ICMS_URL . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$path = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$this->setImageDir($url, $path);
 		
-		$this->hideFieldFromForm( array( 'img_publisher', 'img_published_date', 'img_updated_date', 'weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
-		$this->hideFieldFromSingleView( array( 'weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($albumConfig['use_sprockets'] == 1 && $sprocketsModule) {
+			$this->setControl("img_tags", array("name" => "select_multi", "itemhandler" => "images", "method" => "getImagesTags", "module" => "album"));
+		} else {
+			$this->hideFieldFromForm("img_tags");
+			$this->hideFieldFromSingleView("img_tags");
+		}
+		
+		$this->hideFieldFromForm( array('img_publisher', 'img_published_date', 'img_updated_date', 'weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode'));
+		$this->hideFieldFromSingleView(array('weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode'));
 
 	}
 
@@ -157,6 +167,54 @@ class AlbumImages extends icms_ipf_Object {
 		}
 	}
 	
+	public function getImagesTags($itemlink = FALSE) {
+		$tags = $this->getVar('img_tags', 's');
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($sprocketsModule && $tags != "") {
+			$sprockets_tag_handler = icms_getModuleHandler ( 'tag', $sprocketsModule->getVar("dirname"), 'sprockets' );
+			$ret = array();
+			if($itemlink == FALSE) {
+				foreach ($tags as $tag) {
+					$tagObject = $sprockets_tag_handler->get($tag);
+					$ret[$tag] = $tagObject->getVar("title");
+				}
+			} else {
+				foreach ($tags as $tag) {
+					$tagObject = $sprockets_tag_handler->get($tag);
+					$icon = $tagObject->getVar("icon", "e");
+					$title = $tagObject->getVar("title");
+					$dsc = $tagObject->getVar("description", "s");
+					$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodehigh");
+					$dsc = icms_core_DataFilter::undoHtmlSpecialChars($dsc);
+					$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodelow");
+					if($icon != "") {
+						$image = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $icon;
+						$ret[$tag] = '<span class="album_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag)
+									 . '" title="' . $title . '"><img width=16px height=16px src="'
+									. $image . '" title="' . $title . '" alt="' . $title . '" />&nbsp;&nbsp;' . $title . '</a></span>';
+						if($dsc != "") {
+							$ret[$tag] .= '<span class="popup_tag">' . $dsc . '</span>';
+						}
+					} else {
+						$ret[$tag] = '<span class="album_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag) 
+									. '" title="' . $title . '">' . $title . '</a></span>';
+						if($dsc != "") {
+							$ret[$tag] .= '<span class="popup_tag">' . $dsc . '</span>';
+						}
+					}
+				}
+			}
+			return implode(" | ", $ret);
+		} else {
+			return FALSE;
+		}
+	}
+	
+	public function getTagLink($tag) {
+		$link = ALBUM_URL . "index.php?op=getByTags&tag=" . $tag;
+		return $link;
+	}
+	
 	/**
 	 * convert the date to prefered settings
 	 */
@@ -210,7 +268,7 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['published_on'] = $this->getPublishedDate();
 		$ret['updated_on'] = $this->getUpdatedDate();
 		$ret['publisher'] = $this->getPublisher(TRUE);
-		
+		$ret['tags'] = $this->getImagesTags(TRUE);
 		return $ret;
 	}
 	
