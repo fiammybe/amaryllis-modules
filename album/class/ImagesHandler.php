@@ -47,7 +47,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getImages($active = NULL, $approve = NULL, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC', $a_id = NULL) {
+	public function getImages($active = NULL, $approve = NULL, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC', $a_id = NULL, $tag_id = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if($start) $criteria->setStart($start);
 		if($limit) $criteria->setLimit($limit);
@@ -55,8 +55,14 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		$criteria->setSort($order);
 		if(isset($active)) $criteria->add(new icms_db_criteria_Item('img_active', TRUE));
 		if(isset($approve)) $criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
+		if($tag_id) {
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("img_tags", '%:"' . $tag_id . '";%', "LIKE"));
+			$criteria->add($critTray);
+		}
+		
 		if(is_null($a_id)) $a_id = 0;
-		$criteria->add(new icms_db_criteria_Item('a_id', $a_id));
+		if($a_id)$criteria->add(new icms_db_criteria_Item('a_id', $a_id));
 		$images = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($images as $image) {
@@ -114,6 +120,24 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	
 	public function img_approve_filter() {
 		return array(0 => 'Offline', 1 => 'Online');
+	}
+	
+	public function getImagesTags() {
+		global $albumConfig;
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($sprocketsModule && $albumConfig['use_sprockets'] == 1) {
+			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item("label_type", 0));
+			$criteria->add(new icms_db_criteria_Item("navigation_element", 0));
+			
+			$tags = $sprockets_tag_handler->getObjects(FALSE, TRUE, FALSE);
+			$ret[] = '------------';
+			foreach(array_keys($tags) as $i) {
+				$ret[$tags[$i]['tag_id']] = $tags[$i]['title'];
+			}
+			return $ret;
+		}
 	}
 	
 	public function userCanSubmit() {

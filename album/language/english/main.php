@@ -30,5 +30,6 @@ define('_MD_ALBUM_PUBLISHED_BY', 'Published by');
 define("_MD_ALBUM_IMAGES", "Images");
 define("_MD_ALBUM_SUBALBUMS", "Subalbums");
 define("_MD_ALBUM_UPLOAD", "Upload");
-
+define("_MD_ALBUM_TAGS", "Tags");
+define("_MD_ALBUM_TAG_ADD", "Submit new tag");
 define('_MD_ALBUM_ADMIN_PAGE', ':: Admin page ::');

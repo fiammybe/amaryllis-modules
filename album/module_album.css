@@ -91,6 +91,10 @@
 		display: none;
 	}
 	
+	.popup_tag  {
+		display: none;
+	}
+	
 	.album_adminlinks {
 		text-align: center;
 	}
