@@ -17,88 +17,47 @@
  *
  */
 
-/**
- * Edit a Log
- *
- * @param int $log_id Logid to be edited
-*/
-function editlog($log_id = 0) {
-	global $article_log_handler, $icmsModule, $icmsAdminTpl;
-
-	$logObj = $article_log_handler->get($log_id);
-
-	if (!$logObj->isNew()){
-		$icmsModule->displayAdminMenu(4, _AM_ARTICLE_LOGS . " > " . _CO_ICMS_EDITING);
-		$sform = $logObj->getForm(_AM_ARTICLE_LOG_EDIT, "addlog");
-		$sform->assign($icmsAdminTpl);
-	} else {
-		$icmsModule->displayAdminMenu(4, _AM_ARTICLE_LOGS . " > " . _CO_ICMS_CREATINGNEW);
-		$sform = $logObj->getForm(_AM_ARTICLE_LOG_CREATE, "addlog");
-		$sform->assign($icmsAdminTpl);
-
-	}
-	$icmsAdminTpl->display("db:article_admin_log.html");
-}
-
 include_once "admin_header.php";
 
+$valid_op = array ('del', 'view', '');
+$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+
+$clean_log_id = isset($_GET['log_id']) ? filter_input(INPUT_GET, 'log_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $article_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "article");
-/** Use a naming convention that indicates the source of the content of the variable */
-$clean_op = "";
-/** Create a whitelist of valid values, be sure to use appropriate types for each value
- * Be sure to include a value for no parameter, if you have a default condition
- */
-$valid_op = array ("mod", "changedField", "addlog", "del", "view", "");
 
-if (isset($_GET["op"])) $clean_op = htmlentities($_GET["op"]);
-if (isset($_POST["op"])) $clean_op = htmlentities($_POST["op"]);
-
-/** Again, use a naming convention that indicates the source of the content of the variable */
-$clean_log_id = isset($_GET["log_id"]) ? (int)$_GET["log_id"] : 0 ;
-
-/**
- * in_array() is a native PHP function that will determine if the value of the
- * first argument is found in the array listed in the second argument. Strings
- * are case sensitive and the 3rd argument determines whether type matching is
- * required
-*/
-if (in_array($clean_op, $valid_op, TRUE)) {
+if (in_array($clean_op, $valid_op, TRUE)){
 	switch ($clean_op) {
-		case "mod":
-		case "changedField":
-			icms_cp_header();
-			editlog($clean_log_id);
-			break;
-
-		case "addlog":
-			$controller = new icms_ipf_Controller($article_log_handler);
-			$controller->storeFromDefaultForm(_AM_ARTICLE_LOG_CREATED, _AM_ARTICLE_LOG_MODIFIED);
-			break;
-
-		case "del":
+		case 'del':
 			$controller = new icms_ipf_Controller($article_log_handler);
 			$controller->handleObjectDeletion();
 			break;
 
-		case "view" :
+		case 'view':
 			$logObj = $article_log_handler->get($clean_log_id);
 			icms_cp_header();
+			downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_LOG );
 			$logObj->displaySingleObject();
 			break;
-
+		
 		default:
 			icms_cp_header();
-			$icmsModule->displayAdminMenu(4, _AM_ARTICLE_LOGS);
-			$objectTable = new icms_ipf_view_Table($article_log_handler);
-			$objectTable->addColumn(new icms_ipf_view_Column("log_item_id"));
-			$objectTable->addIntroButton("addlog", "log.php?op=mod", _AM_ARTICLE_LOG_CREATE);
-			$icmsAdminTpl->assign("article_log_table", $objectTable->fetch());
-			$icmsAdminTpl->display("db:article_admin_log.html");
+			downloads_adminmenu( 0, _MI_DOWNLOADS_MENU_LOG );
+			$criteria = '';
+			
+			if (empty($criteria)) {
+				$criteria = null;
+			}
+			// create article log table
+			$objectTable = new icms_ipf_view_Table($article_log_handler, $criteria, array('delete'));
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item_id', FALSE, FALSE, 'getLogItemId' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item', FALSE, FALSE, 'getLogItem' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_case',FALSE, FALSE, 'getLogCase' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', FALSE, 'getLogDate' ) );
+			$objectTable->setDefaultOrder("DESC");
+			$objectTable->setDefaultSort("log_date");
+			$icmsAdminTpl->assign( 'article_log_table', $objectTable->fetch() );
+			$icmsAdminTpl->display( 'db:article_admin.html' );
 			break;
 	}
 	icms_cp_footer();
 }
-/**
- * If you want to have a specific action taken because the user input was invalid,
- * place it at this point. Otherwise, a blank page will be displayed
- */

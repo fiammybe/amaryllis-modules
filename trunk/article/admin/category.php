@@ -140,7 +140,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 			
 		case "changeWeight":
-			foreach ($_POST['DownloadsCategory_objects'] as $key => $value) {
+			foreach ($_POST['ArticleCategory_objects'] as $key => $value) {
 				$changed = false;
 				$categoryObj = $article_category_handler -> get( $value );
 

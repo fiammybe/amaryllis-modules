@@ -1,0 +1,79 @@
+<!-- admin index view -->
+<{if $article_index_title}>
+	<h1><{$article_index_title}></h1>
+<{/if}>
+<{if $article_index_info}>
+	<p><{$article_index_info}></p>
+<{/if}>
+<{if $article_index_table}>
+	<{$article_index_table}>
+<{/if}>
+<{if $addindex}>
+	<{includeq file='db:system_common_form.html' form=$addindex}>
+<{/if}>
+
+<!-- admin article page -->
+<{if $article_article_title}>
+	<h1><{$article_article_title}></h1>
+<{/if}>
+<{if $article_article_info}>
+	<p><{$article_article_info}></p>
+<{/if}>
+<{if $article_article_table}>
+	<{$article_article_table}>
+<{/if}>
+<{if $addarticle}>
+	<{includeq file='db:system_common_form.html' form=$addarticle}>
+<{/if}>
+
+<!-- admin category page -->
+<{if $article_category_title}>
+	<h1><{$article_category_title}></h1>
+<{/if}>
+<{if $article_category_info}>
+	<p><{$article_category_info}></p>
+<{/if}>
+<{if $article_category_table}>
+	<{$article_category_table}>
+<{/if}>
+<{if $addcategory}>
+	<{includeq file='db:system_common_form.html' form=$addcategory}>
+<{/if}>
+
+<!-- admin index page -->
+<{if $article_indexpage_title}>
+	<h1><{$article_indexpage_title}></h1>
+<{/if}>
+<{if $article_indexpage_info}>
+	<p><{$article_indexpage_info}></p>
+<{/if}>
+<{if $article_indexpage_table}>
+	<{$article_indexpage_table}>
+<{/if}>
+<{if $addindexpage}>
+	<{includeq file='db:system_common_form.html' form=$addindexpage}>
+<{/if}>
+
+<!-- admin review page -->
+<{if $article_review_title}>
+	<h1><{$article_review_title}></h1>
+<{/if}>
+<{if $article_review_info}>
+	<p><{$article_review_info}></p>
+<{/if}>
+<{if $article_review_table}>
+	<{$article_review_table}>
+<{/if}>
+<{if $addreview}>
+	<{includeq file='db:system_common_form.html' form=$addreview}>
+<{/if}>
+<!-- admin log page -->
+<{if $article_log_title}>
+	<h1><{$article_log_title}></h1>
+<{/if}>
+<{if $article_log_info}>
+	<p><{$article_log_info}></p>
+<{/if}>
+<{if $article_log_table}>
+	<{$article_log_table}>
+<{/if}>
