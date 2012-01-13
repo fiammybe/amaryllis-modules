@@ -131,7 +131,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_APPROVE_FALSE );
 			} else {
 				$obj = $downloads_category_handler->get($clean_category_id);
-				$obj->sendNotifCategoryApproved();
+				$obj->sendCategoryNotification('category_approved');
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_APPROVE_TRUE );
 			}
 			break;
