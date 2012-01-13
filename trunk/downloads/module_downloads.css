@@ -94,6 +94,7 @@
 	}
 	
 	.download_cat_teaser {
+		float: left;
 	}
 	
 	.downloads_cat_desc {
@@ -159,16 +160,17 @@
 	
 	.file_links {
 		position: relative;
-		background-color: #ccc;
-		width: 200px;
+		width: 188px;
 		float: right;
+		overflow: auto;
 		padding: .750em;
 		border-color: #FF7F2A;
 		border-width: 2px;
-		margin: .750em auto;
+		margin: 0.75em auto 0.75em 10px;
 		-webkit-border-radius: 6px;
 		-moz-border-radius: 6px;
 		border-radius: 6px;
+		border: 1px solid #AAAAAA;
 	}
 	
 	
@@ -295,6 +297,7 @@
 	
 	.file_screens {
 		float:right;
+		padding-left: 10px;
 	}
 	
 	.file_screens2 {
@@ -392,6 +395,24 @@
 	}
 
 .btn.download span {
-    background-image: url("images/download.png");
+    background-image: url("images/download.png");background-repeat: no-repeat;
 }
 
+a.vote_up {
+    vertical-align: middle;
+    background-image: url("images/like_shadow.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+}
+
+a.vote_down {
+    vertical-align: middle;
+    background-image: url("images/dislike_shadow.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+}
+
+a.vote_up:hover {
+    vertical-align: middle;
+    background-image: url("images/like.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+}
+a.vote_down:hover {
+    vertical-align: middle;
+    background-image: url("images/dislike.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+}
