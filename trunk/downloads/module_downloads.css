@@ -150,6 +150,12 @@
 		float: left;
 		font-size: 1.1em;
 		font-weight: bold;
+		width: 220px;
+		overflow: auto;
+	}
+	
+	.icon_middle {
+		vertical-align: middle;
 	}
 	
 	.file_info {
@@ -298,6 +304,10 @@
 	.file_screens {
 		float:right;
 		padding-left: 10px;
+	}
+
+	.file_screens_detail {
+		float:right;
 	}
 	
 	.file_screens2 {
