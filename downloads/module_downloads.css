@@ -424,3 +424,7 @@ a.vote_down:hover {
     vertical-align: middle;
     background-image: url("images/dislike.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
 }
+
+span.download_tag img {
+    vertical-align: middle;
+}
