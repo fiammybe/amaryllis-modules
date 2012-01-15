@@ -527,17 +527,14 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		global $downloadsConfig;
 		if ($obj->updating_counter)
 		return true;
-
 		if (!$obj->getVar('download_notification_sent') && $obj->getVar('download_active', 'e') == TRUE && $obj->getVar('download_approve', 'e') == TRUE) {
 			$obj->sendDownloadNotification('new_file');
 			$obj->setVar('download_notification_sent', TRUE);
 			$this->insert($obj);
 		}
-		
 		if (!$obj->isNew() && ($obj->getVar('download_active', 'e') == TRUE) && ($obj->getVar('download_approve', 'e') == TRUE) && ($obj->getVar('download_notification_sent') == 1)) {
 			$obj->sendDownloadNotification('file_modified');
 		}
-		
 		return TRUE;
 	}
 	
@@ -551,7 +548,6 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		// delete global notifications
 		$notification_handler->unsubscribeByItem($module_id, $category, $download_id);
 		return true;
-		
 		$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "downloads");
 		if (!is_object(icms::$user)) {
 			$log_uid = 0;

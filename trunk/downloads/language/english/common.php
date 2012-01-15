@@ -20,13 +20,13 @@
 //some general language constants
 define("_CO_DOWNLOADS_PREVIEW", "preview");
 define("_CO_DOWNLOADS_EDIT", "edit");
-define("_CO_SUBMIT", "submit");
+if(!defined("_CO_SUBMIT")) define("_CO_SUBMIT", "submit");
 define("_CO_DOWNLOADS_DELETE", "delete");
 define("_CO_DOWNLOADS_VIEW", "view");
-define("_NO_PERM", "No permissions");
+if(!defined("_NO_PERM")) define("_NO_PERM", "No permissions");
 
 define("_CO_DOWNLOADS_MODIFIED", "Modified");
-define("_ER_UP_UNKNOWNFILETYPEREJECTED", "unknown Filetype");
+if(!defined("_ER_UP_UNKNOWNFILETYPEREJECTED")) define("_ER_UP_UNKNOWNFILETYPEREJECTED", "unknown Filetype");
 // language constants for adding new file
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TITLE", "Title");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TITLE_DSC", " Set Title of the File ");

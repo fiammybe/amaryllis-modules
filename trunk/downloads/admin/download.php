@@ -171,7 +171,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$downloadObj = $downloads_download_handler -> get( $value );
 
 				if ($downloadObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
-					$downloadObj->setVar('weight', intval($_POST['weight'][$key]));
+					$downloadObj->setVar('weight', (int)($_POST['weight'][$key]));
 					$changed = true;
 				}
 				if ($changed) {

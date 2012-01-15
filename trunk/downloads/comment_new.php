@@ -18,7 +18,7 @@
  */
 
 include_once 'header.php';
-$com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
+$com_itemid = isset($_GET['com_itemid']) ? filter_input(INPUT_GET, 'com_itemid', FILTER_SANITIZE_NUMBER_INT) : 0;
 if ($com_itemid > 0) {
 	$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(__FILE__)),'downloads');
 	$downloadObj = $downloads_download_handler->get($com_itemid);

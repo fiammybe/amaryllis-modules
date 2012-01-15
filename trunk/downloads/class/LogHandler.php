@@ -28,7 +28,7 @@ class DownloadsLogHandler extends icms_ipf_Handler {
 	}
 	
 	public function clearLogDB($value='') {
-		$time = ( time() - ( 86400 * intval( $downloadsConfig['downloads_daysnew'] ) ) );
+		$time = ( time() - ( 86400 * (int)( $downloadsConfig['downloads_daysnew'] ) ) );
 		
 	}
 	

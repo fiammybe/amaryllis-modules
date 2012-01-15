@@ -142,7 +142,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$categoryObj = $downloads_category_handler -> get( $value );
 
 				if ($categoryObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
-					$categoryObj->setVar('weight', intval($_POST['weight'][$key]));
+					$categoryObj->setVar('weight', (int)($_POST['weight'][$key]));
 					$changed = true;
 				}
 				if ($changed) {

@@ -29,7 +29,7 @@ if (ICMS_VERSION_BUILD < 50) {
 if (count($failed_requirements) > 0) {
 	icms_cp_header();
 	$icmsAdminTpl->assign('failed_requirements', $failed_requirements);
-	$icmsAdminTpl->display(DOWNLOADS_ROOT_PATH . 'templates/album_requirements.html');
+	$icmsAdminTpl->display(DOWNLOADS_ROOT_PATH . 'templates/downloads_requirements.html');
 	icms_cp_footer();
 	exit;
 }

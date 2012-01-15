@@ -98,7 +98,7 @@ $icmsTpl->assign('downloads_index', $index);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $clean_download_id = isset($_GET['download_id']) ? filter_input(INPUT_GET, 'download_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+$clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start', FILTER_SANITIZE_NUMBER_INT) : 0;
 
 $valid_op = array ('mod', 'adddownload', 'del');
 

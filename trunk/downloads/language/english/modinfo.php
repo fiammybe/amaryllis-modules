@@ -164,10 +164,20 @@ define('_MI_DOWNLOADS_CATEGORY_NOTIFY_DSC', 'Notification options that apply to 
 define('_MI_DOWNLOADS_FILE_NOTIFY', 'File');
 define('_MI_DOWNLOADS_FILE_NOTIFY_DSC', 'Notification options that apply to the current file.');
 
+define('_MI_DOWNLOADS_GLOBAL_CATSUBMIT_NOTIFY', 'Category Submitted');
+define('_MI_DOWNLOADS_GLOBAL_CATSUBMIT_NOTIFY_CAP', 'Notify me when any new category is submitted.');
+define('_MI_DOWNLOADS_GLOBAL_CATSUBMIT_NOTIFY_DSC', 'Receive notification when any new category is submitted (awaiting approval).');
+define('_MI_DOWNLOADS_GLOBAL_CATSUBMIT_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file submitted');
+
 define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY', 'New Category');
 define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_CAP', 'Notify me when a new file category is created.');
 define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_DSC', 'Receive notification when a new file category is created.');
 define('_MI_DOWNLOADS_GLOBAL_NEWCATEGORY_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file category');
+
+define('_MI_DOWNLOADS_GLOBAL_CATEGORYMODIFIED_NOTIFY', 'Category Modified');
+define('_MI_DOWNLOADS_GLOBAL_CATEGORYMODIFIED_NOTIFY_CAP', 'Notify me when any category is modified.');
+define('_MI_DOWNLOADS_GLOBAL_CATEGORYMODIFIED_NOTIFY_DSC', 'Receive notification when any category is modified.');
+define('_MI_DOWNLOADS_GLOBAL_CATEGORYMODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Category Modified');
 
 define('_MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY', 'Broken File Submitted');
 define('_MI_DOWNLOADS_GLOBAL_FILEBROKEN_NOTIFY_CAP', 'Notify me of any broken file report.');
@@ -213,6 +223,11 @@ define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY', 'File Modified');
 define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_CAP', 'Notify me when any file is modified.');
 define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_DSC', 'Receive notification when any file is modified.');
 define('_MI_DOWNLOADS_GLOBAL_FILEMODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : File Modified');
+
+define('_MI_DOWNLOADS_GLOBAL_REVIEWSUBMITTED_NOTIFY', 'Review Submitted');
+define('_MI_DOWNLOADS_GLOBAL_REVIEWSUBMITTED_NOTIFY_CAP', 'Notify me when any new review is submitted.');
+define('_MI_DOWNLOADS_GLOBAL_REVIEWSUBMITTED_NOTIFY_DSC', 'Receive notification when any new review is submitted.');
+define('_MI_DOWNLOADS_GLOBAL_REVIEWSUBMITTED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New review submitted');
 
 // ACP menu
 define("_MI_DOWNLOADS_MENU_INDEX", "Index");

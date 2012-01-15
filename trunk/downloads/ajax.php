@@ -59,7 +59,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$logObj->store(TRUE);
 			
 			$down_counter = $downloadObj->getVar("download_downcounter", "e");
-			$downloadObj->setVar("download_downcounter", (intval($down_counter) + 1));
+			$downloadObj->setVar("download_downcounter", ((int)($down_counter) + 1));
 			$downloadObj->store(TRUE);
 			
 			if((strpos(xoops_getenv('HTTP_REFERER'), ICMS_URL) !== FALSE) ) {
@@ -91,7 +91,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$logObj->store(TRUE);
 			
 			$down_counter = $downloadObj->getVar("download_downcounter", "e");
-			$downloadObj->setVar("download_downcounter", (intval($down_counter) + 1));
+			$downloadObj->setVar("download_downcounter", ((int)($down_counter) + 1));
 			$downloadObj->store(TRUE);
 			
 			if((strpos(xoops_getenv('HTTP_REFERER'), ICMS_URL) !== FALSE) ) {
@@ -153,7 +153,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$sprockets_taglink_handler = icms_getModuleHandler('taglink', $sprocketsModule->getVar("dirname"),'sprockets');
 				$taglinkObj = $sprockets_taglink_handler->create();
 				$tagObjects = $sprockets_tag_handler->getCount(FALSE);
-				$tag_id = intval($tagObjects) + 1;
+				$tag_id = (int)($tagObjects) + 1;
 				$taglinkObj->setVar('tid', $tag_id );
 				$taglinkObj->setVar('mid', $downloads_modid );
 				$taglinkObj->setVar('item', $downloadObj->getVar("download_title"));
@@ -204,7 +204,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$downloadObj = $downloads_download_handler->get($download_id);
 				if ($downloadObj->isNew()) return FALSE;
 				$like = $downloadObj->getVar("download_like");
-				$downloadObj->setVar('download_like', (intval($like) + 1));
+				$downloadObj->setVar('download_like', ((int)($like) + 1));
 				$downloadObj->store(TRUE);
 				return redirect_header(icms_getPreviousPage(), 3, _MD_DOWNLOADS_THANKS_VOTING);
 			} else {

@@ -33,6 +33,9 @@ define("_MD_DOWNLOADS_SUBMIT_CAT", "Submit a new category");
 define("_MD_DOWNLOADS_UPLOAD", "Upload a new File");
 define("_MD_DOWNLOADS_NOFILES", "Sorry, currently there are no files in this category.");
 define("_MD_DOWNLOADS_READ_MORE", "info & download");
+define("_MD_DOWNLOADS_NO_CATEGORY_DSC", "Sorry, no category Description available yet.");
+define("_MD_DOWNLOADS_NO_TEASER_TEXT", "Sorry, no short summary available");
+
 // constants on single file view
 define("_MD_DOWNLOADS_DOWNLOAD", "Download");
 define("_MD_DOWNLOADS_GOTO_ITEM", "Go to buy");
