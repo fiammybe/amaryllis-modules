@@ -69,10 +69,10 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$active = $this->getVar('visitorvoice_approve', 'e');
 		if ($active == false) {
 			return '<a href="' . VISITORVOICE_ADMIN_URL . 'visitorvoice.php?visitorvoice_id=' . $this->getVar('visitorvoice_id') . '&amp;op=changeApprove">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Denied" /></a>';
+				<img src="' . VISITORVOICE_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
 		} else {
 			return '<a href="' . VISITORVOICE_ADMIN_URL . 'visitorvoice.php?visitorvoice_id=' . $this->getVar('visitorvoice_id') . '&amp;op=changeApprove">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Approved" /></a>';
+				<img src="' . VISITORVOICE_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
 		}
 	}
 	
