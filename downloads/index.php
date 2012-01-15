@@ -38,8 +38,8 @@ $icmsTpl->assign('downloads_index', $index);
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_category_start = isset($_GET['cat_nav']) ? intval($_GET['cat_nav']) : 0;
-$clean_files_start = isset($_GET['file_nav']) ? intval($_GET['file_nav']) : 0;
+$clean_category_start = isset($_GET['cat_nav']) ? filter_input(INPUT_GET, 'cat_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_files_start = isset($_GET['file_nav']) ? filter_input(INPUT_GET, 'file_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
 $clean_download_id = isset($_GET['download_id']) ? filter_input(INPUT_GET, 'download_id', FILTER_SANITIZE_NUMBER_INT) : 0;

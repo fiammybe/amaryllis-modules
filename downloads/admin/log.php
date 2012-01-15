@@ -19,7 +19,7 @@
 
 include_once "admin_header.php";
 
-$valid_op = array ('del', 'view', '');
+$valid_op = array ('view', '');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
 $clean_log_id = isset($_GET['log_id']) ? filter_input(INPUT_GET, 'log_id', FILTER_SANITIZE_NUMBER_INT) : 0;
@@ -27,11 +27,6 @@ $downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(_
 
 if (in_array($clean_op, $valid_op, TRUE)){
 	switch ($clean_op) {
-		case 'del':
-			$controller = new icms_ipf_Controller($downloads_log_handler);
-			$controller->handleObjectDeletion();
-			break;
-
 		case 'view':
 			$logObj = $downloads_log_handler->get($clean_log_id);
 			icms_cp_header();
@@ -48,7 +43,7 @@ if (in_array($clean_op, $valid_op, TRUE)){
 				$criteria = null;
 			}
 			// create downloads table
-			$objectTable = new icms_ipf_view_Table($downloads_log_handler, $criteria);
+			$objectTable = new icms_ipf_view_Table($downloads_log_handler, $criteria, array());
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item_id', FALSE, FALSE, 'getLogItemId' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item', FALSE, FALSE, 'getLogItem' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_case',FALSE, FALSE, 'getLogCase' ) );

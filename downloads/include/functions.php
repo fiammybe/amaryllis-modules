@@ -27,7 +27,7 @@ function downloads_adminmenu( $currentoption = 0, $header = '', $menu = '', $ext
 
 function downloads_display_new($time) {
 	global $downloadsConfig;
-	$new = ( time() - ( 86400 * intval( $downloadsConfig['downloads_daysnew'] ) ) );
+	$new = ( time() - ( 86400 * (int)( $downloadsConfig['downloads_daysnew'] ) ) );
 	if ( icms::$module->config['downloads_daysnew'] !== 0) {
 		if ( $new > $time ) {
 			$new = DOWNLOADS_IMAGES_URL . 'new.png';
@@ -43,7 +43,7 @@ function downloads_display_new($time) {
 
 function downloads_display_updated($time) {
 	global $downloadsConfig;
-	$updated = ( time() - ( 86400 * intval( $downloadsConfig['downloads_daysupdated'] ) ) );
+	$updated = ( time() - ( 86400 * (int)( $downloadsConfig['downloads_daysupdated'] ) ) );
 	if ( icms::$module->config['downloads_daysupdated'] !== 0) {
 		if ( $updated > $time ) {
 			$updated = DOWNLOADS_IMAGES_URL . 'updated.png';
@@ -74,7 +74,7 @@ function downloads_display_popular($counter) {
 }
 
 function downloadsConvertFileSize( $size, $type = 'byte', $decimal = 2 ) {
-	$size = intval( $size );
+	$size = (int)( $size );
 	switch ($type) {
 		case 'kb':
 			return round( ($size / pow( 1024, 1 )), $decimal );

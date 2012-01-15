@@ -136,10 +136,10 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$active = $this->getVar('category_active', 'e');
 		if ($active == FALSE) {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
+				<img src="' . DOWNLOADS_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
+				<img src="' . DOWNLOADS_IMAGES_URL . 'visible.png" alt="Online" /></a>';
 		}
 	}
 	
@@ -147,10 +147,10 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$active = $this->getVar('category_inblocks', 'e');
 		if ($active == FALSE) {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeShow">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Hidden" /></a>';
+				<img src="' . DOWNLOADS_IMAGES_URL . 'denied.png" alt="Hidden" /></a>';
 		} else {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeShow">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Visible" /></a>';
+				<img src="' . DOWNLOADS_IMAGES_URL . 'approved.png" alt="Visible" /></a>';
 		}
 	}
 	
@@ -158,10 +158,10 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$active = $this->getVar('category_approve', 'e');
 		if ($active == FALSE) {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeApprove">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Denied" /></a>';
+				<img src="' . DOWNLOADS_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
 		} else {
 			return '<a href="' . DOWNLOADS_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeApprove">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Approved" /></a>';
+				<img src="' . DOWNLOADS_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
 		}
 	}
 	
