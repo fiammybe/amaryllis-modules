@@ -40,7 +40,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		if(isset($approve)) $criteria->add(new icms_db_criteria_Item('album_approve', TRUE));
 		if(isset($active)) $criteria->add(new icms_db_criteria_Item('album_active', TRUE));
 		
-		$albums = $album_album_handler -> getObjects( $criteria, true );
+		$albums = $album_album_handler -> getObjects( $criteria, TRUE );
 		foreach( array_keys( $albums ) as $i ) {
 			$ret[$albums[$i]->getVar( 'album_id' )] = $albums[$i] -> getVar( 'album_title' );
 		}

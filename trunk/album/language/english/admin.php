@@ -31,10 +31,13 @@ define("_AM_ALBUM_REQUIREMENTS_SUPPORT", "Should you have any question or concer
 // 
 define("_AM_ALBUM_ALBUM_ADD", "Add album");
 define("_AM_ALBUM_ALBUM_CREATE", "New album");
+define("_AM_ALBUM_ALBUM_EDIT", "Edit album");
 define("_AM_ALBUM_ALBUM_CLONE", "Clone album");
 define("_AM_ALBUM_ALBUM_CREATED", "New album created");
 define("_AM_ALBUM_ALBUM_MODIFIED", "Album modified");
 define("_AM_ALBUM_ALBUM_WEIGHTS_UPDATED", "Weights updated");
+define("_AM_ALBUM_APPROVE_TRUE", "Album approved");
+define("_AM_ALBUM_APPROVE_FALSE", "Album denied");
 
 define("_AM_ALBUM_INDEXPAGE_EDIT", "Edit the Frontend-Indexpage");
 define("_AM_ALBUM_INDEXPAGE_MODIFIED", "Indexpage modified");
@@ -42,6 +45,7 @@ define("_AM_ALBUM_IMAGE_ADD", "Add Image");
 
 define("_AM_ALBUM_IMAGES_WEIGHTS_UPDATED", "Add Image");
 define("_AM_ALBUM_IMAGES_ADDED", "Image Added");
+define("_AM_ALBUM_IMAGES_CREATED", "Image successfully submitted");
 
 define("_AM_ALBUM_PREVIEW", "Preview");
 define("_AM_ALBUM_ALBUM_VIEW", "View");

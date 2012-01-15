@@ -26,7 +26,7 @@ function album_adminmenu( $currentoption = 0, $header = '', $menu = '', $extra =
 function album_display_new($time, $timestamp) {
 	global $albumConfig;
 	
-	$new = ( $timestamp - ( 86400 * intval( $albumConfig['albums_daysnew'] ) ) );
+	$new = ( $timestamp - ( 86400 * (int)( $albumConfig['albums_daysnew'] ) ) );
 	if ( $albumConfig['albums_daysnew'] != 0) {
 		if ( $new < $time ) {
 			$new_img = '<img src="' . ALBUM_IMAGES_URL . 'new.png" title="new" alt="new" />';
@@ -42,7 +42,7 @@ function album_display_new($time, $timestamp) {
 
 function album_display_updated($time, $timestamp) {
 	global $albumConfig;
-	$updated = ( $timestamp - ( 86400 * intval( $albumConfig['albums_daysupdated'] ) ) );
+	$updated = ( $timestamp - ( 86400 * (int)( $albumConfig['albums_daysupdated'] ) ) );
 	if ( $albumConfig['albums_daysupdated'] != 0) {
 		if ( $updated < $time ) {
 			$updated_img = '<img src="' . ALBUM_IMAGES_URL . 'updated.png" title="updated" alt="updated" />';
