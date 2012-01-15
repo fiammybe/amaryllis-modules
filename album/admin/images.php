@@ -108,7 +108,7 @@ if($count == 0) {
 					$changed = false;
 					$imagesObj = $album_images_handler -> get( $value );
 					if ($imagesObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
-						$imagesObj->setVar('weight', intval($_POST['weight'][$key]));
+						$imagesObj->setVar('weight', (int)($_POST['weight'][$key]));
 						$changed = true;
 					}
 					if ($changed) {

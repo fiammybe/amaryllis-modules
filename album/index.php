@@ -38,8 +38,8 @@ $icmsTpl->assign('album_index', $index);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /** Use a naming convention that indicates the source of the content of the variable */
-$clean_album_start = isset($_GET['album_nav']) ? intval($_GET['album_nav']) : 0;
-$clean_img_start = isset($_GET['img_nav']) ? intval($_GET['img_nav']) : 0;
+$clean_album_start = isset($_GET['album_nav']) ? (int)($_GET['album_nav']) : 0;
+$clean_img_start = isset($_GET['img_nav']) ? (int)($_GET['img_nav']) : 0;
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
 
 $clean_album_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : false;

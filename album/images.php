@@ -70,7 +70,7 @@ $icmsTpl->assign('album_index', $index);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $clean_images_id = isset($_GET['images_id']) ? filter_input(INPUT_GET, 'images_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+$clean_start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
 
 $valid_op = array ('mod', 'addimages', 'del');
 

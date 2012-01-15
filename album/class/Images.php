@@ -87,10 +87,10 @@ class AlbumImages extends icms_ipf_Object {
 		$img_active = $this->getVar('img_active', 'e');
 		if ($img_active == false) {
 			return '<a href="' . ALBUM_ADMIN_URL . 'images.php?img_id=' . $this->getVar('img_id') . '&amp;op=visible">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
+				<img src="' . ALBUM_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
 			return '<a href="' . ALBUM_ADMIN_URL . 'images.php?img_id=' . $this->getVar('img_id') . '&amp;op=visible">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
+				<img src="' . ALBUM_IMAGES_URL . 'visible.png" alt="Online" /></a>';
 		}
 	}
 	
@@ -98,10 +98,10 @@ class AlbumImages extends icms_ipf_Object {
 		$active = $this->getVar('img_approve', 'e');
 		if ($active == false) {
 			return '<a href="' . ALBUM_ADMIN_URL . 'images.php?img_id=' . $this->getVar('img_id') . '&amp;op=changeApprove">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Denied" /></a>';
+				<img src="' . ALBUM_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
 		} else {
 			return '<a href="' . ALBUM_ADMIN_URL . 'images.php?img_id=' . $this->getVar('img_id') . '&amp;op=changeApprove">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Approved" /></a>';
+				<img src="' . ALBUM_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
 		}
 	}
 
@@ -240,14 +240,14 @@ class AlbumImages extends icms_ipf_Object {
 	public function getMaxHeight() {
 		global $albumConfig;
 		$innerHeight = $albumConfig['image_display_height'];
-		$maxHeight = (intval($innerHeight) + 300);
+		$maxHeight = ((int)($innerHeight) + 300);
 		return $maxHeight;
 	}
 	
 	public function getMaxWidth() {
 		global $albumConfig;
 		$innerWidth = $albumConfig['image_display_width'];
-		$maxWidth = (intval($innerWidth) + 50);
+		$maxWidth = ((int)($innerWidth) + 50);
 		return $maxWidth;
 	}
 	

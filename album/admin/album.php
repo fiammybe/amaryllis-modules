@@ -125,7 +125,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$albumObj = $album_album_handler -> get( $value );
 
 				if ($albumObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
-					$albumObj->setVar('weight', intval($_POST['weight'][$key]));
+					$albumObj->setVar('weight', (int)($_POST['weight'][$key]));
 					$changed = TRUE;
 				}
 				if ($changed) {
