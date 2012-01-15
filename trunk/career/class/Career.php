@@ -164,12 +164,12 @@ class CareerCareer extends icms_ipf_seo_Object {
 		$ret['rev_num'] = $this->getVar("career_rev_num", "e");
 		$ret['cname'] = $this->getVar("career_cname", "e");
 		$ret['cpos'] = $this->getVar("career_cpos", "e");
-		$ret['phone'] = $this->getVar("career_phone", "e");
-		$ret['fax'] = $this->getVar("career_fax", "e");
+		$ret['phone'] = $this->getVar("career_ctel", "e");
+		$ret['fax'] = $this->getVar("career_cfax", "e");
 		$ret['mail'] = $this->getCareerMail();
 		$ret['county'] = $this->getVar("career_ccounty", "e");
-		$ret['zip'] = $this->getVar("career_zip", "e");
-		$ret['city'] = $this->getVar("career_city", "e");
+		$ret['zip'] = $this->getVar("career_czip", "e");
+		$ret['city'] = $this->getVar("career_ccity", "e");
 		$ret['caddress'] = $this->getVar("career_caddress", "e");
 		$ret['submitter'] = $this->getCareerSubmitter();
 		$ret['updater'] = $this->getCareerUpdater();

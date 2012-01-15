@@ -54,7 +54,7 @@ if(is_object($departmentObj)) {
 	$department = $departmentObj->toArray();
 	$icmsTpl->assign("single_department", $department);
 	$careers = $career_career_handler->getCareers(TRUE, "weight", "ASC", FALSE, FALSE, $clean_department_id);
-	$icmsTpl->assign("carrers", $careers);
+	$icmsTpl->assign("careers", $careers);
 	if ($careerConfig['show_breadcrumbs']){
 		$icmsTpl->assign('career_cat_path', $departmentObj->getItemLink(FALSE));
 	}else{
