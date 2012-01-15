@@ -1,0 +1,15 @@
+<link href="<{$career_url}>module_career.css" rel="stylesheet" type="text/css" />
+
+<{if $career_show_breadcrumb}>
+	<!-- module breadcrumb -->
+	<div class="career_headertable">
+		<{if $career_module_home}><span class="career_modulename"><{$career_module_home}></span><{/if}>
+		<{if $career_cat_path}>
+			<span class="career_breadcrumb">
+				<{if $career_module_home}>&nbsp;:&nbsp;<{/if}><{$career_cat_path}>
+			</span>
+		<{/if}>
+	</div>
+<{/if}>
+
+<{$career_index.image}>
