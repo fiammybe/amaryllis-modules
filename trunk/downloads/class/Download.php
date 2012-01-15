@@ -740,6 +740,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['id'] = $this->getVar('download_id');
 		$ret['title'] = $this->getVar('download_title');
 		$ret['cats'] = $this->getDownloadCid(TRUE);
+		$ret['cats_title'] = $this->getDownloadCid(FALSE);
 		$ret['teaser'] = $this->getDownloadTeaser();
 		$ret['dsc'] = $this->getVar('download_description');
 		

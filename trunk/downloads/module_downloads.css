@@ -18,6 +18,11 @@
 
 	.downloads_headertable {
 		margin-bottom: 2em;
+		float: left;
+	}
+	
+	.downloads_rss {
+		float: right;
 	}
 
 	.downloads_clear_both {
@@ -105,8 +110,6 @@
 		font-size: .8em;
 		padding-right: 45px;
 	}
-	
-	.downloads_headertable {}
 	
 	.downloads_downloads_title {
 		font-size: 1.5em;

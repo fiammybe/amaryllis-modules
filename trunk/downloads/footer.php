@@ -1,13 +1,20 @@
 <?php
 /**
- * Footer page included at the end of each page on user side of the mdoule
+ * 'Downloads' is a light weight download handling module for ImpressCMS
  *
+ * File: /footer.php
+ * 
+ * Frontend footer
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Downloads
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		downloads
  * @version		$Id$
+ * @package		downloads
+ *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");

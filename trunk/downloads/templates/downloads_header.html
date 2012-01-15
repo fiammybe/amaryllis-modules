@@ -12,4 +12,16 @@
 	</div>
 <{/if}>
 
+<{if $downloads_show_rss}>
+	<div class="downloads_rss">
+		<a href="<{$downloads_url}>rss.php" title="RSS-Feeds">
+			<img src="<{$downloads_images_url}>rss.png" alt="RSS-Feeds" />
+		</a>
+	</div>
+	<div class="downloads_clear_both">&nbsp;</div>
+<{else}>
+	<div class="downloads_clear_left">&nbsp;</div>
+<{/if}>
+
+<!-- display index_image -->
 <{$downloads_index.image}>
