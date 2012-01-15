@@ -1,0 +1,10 @@
+<!-- Index footer -->
+<{$career_index.footer}>
+
+<!-- display admin link -->
+<{if $career_is_admin}>
+	<div class="career_adminlinks"><{$career_adminpage}></div>
+<{/if}>
+
+<!-- include notifications -->
+<{includeq file='db:system_notification_select.html'}>

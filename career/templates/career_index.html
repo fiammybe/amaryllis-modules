@@ -1,0 +1,56 @@
+<{includeq file='db:career_header.html'}>
+<{if $departments}>
+	<!-- display index header -->
+	<{$career_index.header}>
+	<!-- display index heading -->
+	<{$career_index.heading}>
+
+	<{foreach item=department from=$departments}>
+		<div class="department_logo">
+			<a href="<{$department.itemURL}>" title="<{$department.title}>">
+				<img alt="<{$department.title}>" src="<{$department.logo}>" />
+			</a>
+		</div>
+		
+		<div class="department_title">
+			<h3><a href="<{$department.itemURL}>" title="<{$department.title}>"><{$department.title}></a></h3>
+		</div>
+		
+		<div class="department_summary">
+			<{$department.summary}>
+		</div>
+	
+	<{/foreach}>
+
+<{/if}>
+
+<{if $single_department}>
+
+	<div class="department_title">
+		<h3><{$single_department.title}></h3>
+	</div>
+	
+	<div class="department_description">
+		<h3><{$single_department.dsc}></h3>
+	</div>
+
+	<{if $careers}>
+		<{foreach item=career from=$careers}>
+			<div class="department_logo">
+				<a href="<{$career.itemURL}>" title="<{$career.title}>">
+					<img alt="<{$career.title}>" src="<{$single_department.logo}>" />
+				</a>
+			</div>
+			
+			<div class="department_title">
+				<h3><a href="<{$career.itemURL}>" title="<{$career.title}>"><{$career.title}></a></h3>
+			</div>
+		
+			<div class="department_summary">
+				<{$career.summary}>
+			</div>
+		<{/foreach}>
+	<{/if}>
+
+<{/if}>
+<{includeq file='db:career_footer.html'}>

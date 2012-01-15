@@ -1,0 +1,24 @@
+<{includeq file='db:career_header.html'}>
+
+<{if $career}>
+	
+	<div class="department_logo">
+		<img alt="<{$department.title}>" src="<{$department.logo}>" />
+	</div>
+	
+	<div class="career_title">
+		<h1><{$career.title}></a></h1>
+	</div>
+	<div class="career_body">
+		<!-- display department description -->
+		<{$department.dsc}>
+		<!-- display career description -->
+		<{$career.dsc}>
+		<div class="career_vcard">
+			
+		</div>
+	</div>
+
+<{/if}>
+
+<{includeq file='db:career_footer.html'}>
