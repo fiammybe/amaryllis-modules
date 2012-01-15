@@ -39,6 +39,7 @@ $icmsTpl->assign('career_index', $index);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $clean_career_id = isset($_GET['career_id']) ? filter_input(INPUT_GET, 'career_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_department_id = isset($_GET['department_id']) ? filter_input(INPUT_GET, 'department_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
 $career_department_handler = icms_getModuleHandler( "department", icms::$module->getVar('dirname'), "career");
 $career_career_handler = icms_getModuleHandler( "career", icms::$module->getVar('dirname'), "career");
@@ -53,7 +54,7 @@ if(is_object($careerObj) && !$careerObj->isNew()) {
 	$department = $departmentObj->toArray();
 	$icmsTpl->assign("department", $department);
 	if ($careerConfig['show_breadcrumbs']){
-		$icmsTpl->assign('career_cat_path', $departmentObj->getItemLink(TRUE));
+		$icmsTpl->assign('career_cat_path', $departmentObj->getItemLink(FALSE));
 	}else{
 		$icmsTpl->assign('career_cat_path',FALSE);
 	}
