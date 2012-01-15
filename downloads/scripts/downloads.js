@@ -213,8 +213,16 @@
 	});
 
 	$(document).ready(function(){
-		// use colorbox for screenshots
+		// use colorbox for indeximage
 		$('a.file_screens').colorbox({
+			transition:'fade',
+			speed:500,
+			opacity: 0.9,
+			slideshow: true,
+			slideshowAuto: false
+		});
+		// use colorbox for screenshots
+		$('a.file_screens2').colorbox({
 			transition:'fade',
 			speed:500,
 			opacity: 0.9,
