@@ -37,7 +37,7 @@ class CareerMessage extends icms_ipf_Object {
 		$this->quickInitVar("message_did", XOBJ_DTYPE_INT);
 		$this->quickInitVar("message_approve", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
 		$this->quickInitVar("message_favorite", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 0);
-		$this->quickInitVar("message_comments", XOBJ_DTYPE_INT),
+		$this->quickInitVar("message_comments", XOBJ_DTYPE_INT);
 		
 		$this->setControl("message_approve", "yesno");
 		$this->setControl("message_favorite", "yesno");

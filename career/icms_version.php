@@ -52,9 +52,6 @@ $modversion = array(
 					'developer_website_name' 	=> "Amaryllis Modules",
 					'developer_email' 			=> "qm-b@hotmail.de",
 					
-					/* comments */
-					'hasComments'				=> 0,
-					
 				);
 
 $modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';";
@@ -196,6 +193,22 @@ $modversion['blocks'][$i]['can_clone']		= TRUE ;
 $modversion['hasSearch'] = 1;
 $modversion['search'] ['file'] = 'include/search.inc.php';
 $modversion['search'] ['func'] = 'career_search';
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Comments
+$modversion['hasComments'] = 1;
+$modversion['comments']['pageName'] = 'message.php';
+$modversion['comments']['itemName'] = 'message_id';
+
+// Comment callback functions
+$modversion['comments']['callbackFile'] = 'include/comment.inc.php';
+$modversion['comments']['callback']['approve'] = 'career_com_approve';
+$modversion['comments']['callback']['update'] = 'career_com_update';
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// CONFIGURATION ///////////////////////////////////////////////////
