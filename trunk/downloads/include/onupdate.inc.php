@@ -65,33 +65,52 @@ function downloads_authorise_mimetypes() {
 	}
 }
 
+function full_copy( $source, $target )
+    {
+        if ( is_dir( $source ) )
+        {
+            @mkdir( $target );
+           
+            $d = dir( $source );
+           
+            while ( FALSE !== ( $entry = $d->read() ) )
+            {
+                if ( $entry == '.' || $entry == '..' )
+                {
+                    continue;
+                }
+               
+                $Entry = $source . '/' . $entry;           
+                if ( is_dir( $Entry ) )
+                {
+                    full_copy( $Entry, $target . '/' . $entry );
+                    continue;
+                }
+                copy( $Entry, $target . '/' . $entry );
+            }
+           
+            $d->close();
+        }else
+        {
+            copy( $source, $target );
+        }
+    }  
+
 function downloads_upload_paths() {
 	
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$downloads = ICMS_ROOT_PATH . '/uploads/downloads';
-	if ( !is_dir( $downloads . '/categoryimages' ) ) {
-		mkdir( $downloads . '/categoryimages', 0777, true );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/downloads/index.html' );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/downloads/categoryimages/index.html' );
-		//Copy images to new folder
-		$array = array( 'folder_black', 'folder_blue', 'folder_brown', 'folder_cyan', 'folder_green', 'folder_grey', 'folder_orange', 'folder_red', 'folder_violet', 'folder_yellow' );
-		foreach ( $array as $value ) {
-			$contentx =@file_get_contents( ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $value . '.png' );
-			$openedfile = fopen( $downloads . '/categoryimages/' . $value . '.png', "w" ); 
-			fwrite( $openedfile, $contentx );
-			fclose( $openedfile );
+	$path = ICMS_ROOT_PATH . '/uploads/downloads';
+		icms_core_Filesystem::mkdir($path . '/categoryimages');
+		$categoryimages = array();
+		$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/downloads/images/folders/', '', array('gif', 'jpg', 'png'));
+		foreach($categoryimages as $image) {
+			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/categoryimages/' . $image);
 		}
-	}
-	if ( !is_dir( $downloads . '/indeximages' ) ) {
-		mkdir( $downloads . '/indeximages', 0777, true );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/' . $moddir . '/indeximages/index.html' );
-		$contentx =@file_get_contents( ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/downloads_indeximage.png' );
-		$openedfile = fopen( $downloads . '/indeximages/downloads_indeximage.png', "w" ); 
-		fwrite( $openedfile, $contentx ); 
-		fclose( $openedfile );
-	}
-	
+		icms_core_Filesystem::mkdir($path . '/indeximages');
+		$image = 'downloads_indeximage.png';
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
+		return TRUE;
 }
 
 function downloads_indexpage() {
@@ -103,7 +122,6 @@ function downloads_indexpage() {
 	$indexpageObj->setVar('index_footer', '&copy; 2011 | Downloads module footer');
 	$indexpageObj->setVar('index_image', 'downloads_indeximage.png');
 	$indexpageObj->setVar('dohtml', 1);
-	$indexpageObj->setVar('dobr', 1);
 	$indexpageObj->setVar('doimage', 1);
 	$indexpageObj->setVar('dosmiley', 1);
 	$indexpageObj->setVar('doxcode', 1);
@@ -134,5 +152,5 @@ function icms_module_install_downloads($module) {
 	//prepare indexpage
 	downloads_indexpage();
 
-	return true;
+	return TRUE;
 }
