@@ -95,6 +95,12 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		return $message;
 	}
 	
+	function getMessageTeaser() {
+		$ret = $this->getVar("visitorvoice_entry", "s");
+		$ret = icms_core_DataFilter::icms_substr(icms_cleanTags($ret, array()), 0, 140);
+		return $ret;
+	}
+	
 	public function getImageTag() {
 		$visitorvoice_img = $image_tag = '';
 		$visitorvoice_img = $this->getVar('visitorvoice_image', 'e');
@@ -178,6 +184,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$ret['ip'] = $this->getVar("visitorvoice_ip");
 		$ret['title'] = $this->getVar("visitorvoice_title");
 		$ret['message'] = $this->getMessage();
+		$ret['teaser'] = $this->getMessageTeaser();
 		$ret['avatar'] = $this->getVisitorvoiceAvatar();
 		$ret['parent'] = $this->getVar("visitorvoice_pid", "e");
 		if($visitorvoiceConfig['use_moderation'] == 1){

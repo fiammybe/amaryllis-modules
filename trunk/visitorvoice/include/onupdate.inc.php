@@ -27,15 +27,11 @@ function visitorvoice_upload_paths() {
 	
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$visitorvoice = ICMS_ROOT_PATH . '/uploads/visitorvoice';
-	if ( !is_dir( $visitorvoice . '/indeximages' ) ) {
-		mkdir( $visitorvoice . '/indeximages', 0777, true );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/' . $moddir . '/indeximages/index.html' );
-		$contentx =@file_get_contents( ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/visitorvoice_indeximage.png' );
-		$openedfile = fopen( $visitorvoice . '/indeximages/visitorvoice_indeximage.png', "w" ); 
-		fwrite( $openedfile, $contentx ); 
-		fclose( $openedfile );
-	}
+	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
+	icms_core_Filesystem::mkdir($path . '/indeximages');
+	$image = 'visitorvoice_indeximage.png';
+	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
+	return TRUE;
 }
 
 function visitorvoice_indexpage() {
