@@ -65,6 +65,14 @@ if(!$career_isAdmin) {
 				$icmsTpl->assign("message", $message);
 				
 				/**
+				 * include the comment rules
+				 */
+				if ($downloadsConfig['com_rule']) {
+					$icmsTpl->assign('career_message_comment', TRUE);
+					include_once ICMS_ROOT_PATH . '/include/comment_view.php';
+				}
+				
+				/**
 				 * check, if breadcrumb should be displayed
 				 */
 				if ($careerConfig['show_breadcrumbs'] == 1){
