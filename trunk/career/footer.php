@@ -21,7 +21,9 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 $icmsTpl->assign("career_company_name", $careerConfig['career_display_company']);
+
 $icmsTpl->assign("career_adminpage", "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_CAREER_ADMIN_PAGE . "</a>");
+$icmsTpl->assign("career_messages", "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/message.php'>" ._MD_CAREER_MESSAGES_LINK . "</a>");
 $icmsTpl->assign("career_is_admin", icms_userIsAdmin(CAREER_DIRNAME));
 $icmsTpl->assign('career_url', CAREER_URL);
 $icmsTpl->assign('career_module_home', '<a href="' . CAREER_URL . 'index.php" title="' . icms::$module->getVar('name') . '">' . icms::$module->getVar('name') . '</a>');

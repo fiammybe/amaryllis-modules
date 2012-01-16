@@ -35,10 +35,58 @@ class CareerMessage extends icms_ipf_Object {
 		$this->quickInitVar("message_date", XOBJ_DTYPE_LTIME);
 		$this->quickInitVar("message_cid", XOBJ_DTYPE_INT);
 		$this->quickInitVar("message_did", XOBJ_DTYPE_INT);
+		$this->quickInitVar("message_approve", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
+		$this->quickInitVar("message_favorite", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 0);
 		
+		$this->setControl("message_approve", "yesno");
+		$this->setControl("message_favorite", "yesno");
 		$this->setControl("message_file", "file");
 		$this->setControl("message_body", "dhtmltextarea");
-		$this->hideFieldFromForm(array("message_submitter", "message_date", "message_cid", "message_did"));
+		$this->hideFieldFromForm(array("message_submitter", "message_date", "message_cid", "message_did", "message_approve", "message_favorite"));
+	}
+
+	public function message_approve() {
+		$approve = $this->getVar("message_approve", "e");
+		if ($approve == false) {
+			return '<a href="' . CAREER_ADMIN_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeApprove">
+				<img src="' . CAREER_IMAGES_URL . 'approved.png" alt="Rejected" /></a>';
+		} else {
+			return '<a href="' . CAREER_ADMIN_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeApprove">
+				<img src="' . CAREER_IMAGES_URL . 'denied.png" alt="Possible" /></a>';
+		}
+	}
+	
+	public function message_approve_userside() {
+		$approve = $this->getVar("message_approve", "e");
+		if ($approve == false) {
+			return '<a href="' . CAREER_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeApprove">
+				<img src="' . CAREER_IMAGES_URL . 'approved.png" alt="Rejected" /></a>';
+		} else {
+			return '<a href="' . CAREER_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeApprove">
+				<img src="' . CAREER_IMAGES_URL . 'denied.png" alt="Possible" /></a>';
+		}
+	}
+	
+	public function message_favorite() {
+		$favorite = $this->getVar("message_favorite", "e");
+		if ($favorite == false) {
+			return '<a href="' . CAREER_ADMIN_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeFavorite">
+				<img src="' . CAREER_IMAGES_URL . 'favorite.png" alt="Neutral" /></a>';
+		} else {
+			return '<a href="' . CAREER_ADMIN_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeFavorite">
+				<img src="' . CAREER_IMAGES_URL . 'neutral.png" alt="Favorite" /></a>';
+		}
+	}
+	
+	public function message_favorite_userside() {
+		$favorite = $this->getVar("message_favorite", "e");
+		if ($favorite == false) {
+			return '<a href="' . CAREER_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeFavorite">
+				<img src="' . CAREER_IMAGES_URL . 'favorite.png" alt="Neutral" /></a>';
+		} else {
+			return '<a href="' . CAREER_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeFavorite">
+				<img src="' . CAREER_IMAGES_URL . 'neutral.png" alt="Favorite" /></a>';
+		}
 	}
 	
 	public function getMessageMail() {

@@ -25,7 +25,6 @@ define("_CO_CAREER_DELETE", "delete");
 define("_CO_CAREER_VIEW", "view");
 define("_NO_PERM", "No permissions");
 define("_ER_UP_UNKNOWNFILETYPEREJECTED", "unknown Filetype");
-
 // constants used in career form
 define("_CO_CAREER_CAREER_CAREER_TITLE", "Title");
 define("_CO_CAREER_CAREER_CAREER_TITLE_DSC", "");
@@ -139,3 +138,10 @@ define("_CO_CAREER_MESSAGE_MESSAGE_CID", "Career title");
 define("_CO_CAREER_MESSAGE_MESSAGE_CID_DSC", "");
 define("_CO_CAREER_MESSAGE_MESSAGE_DID", "Department");
 define("_CO_CAREER_MESSAGE_MESSAGE_DID_DSC", "");
+define("_CO_CAREER_MESSAGE_MESSAGE_APPROVE", "Possible?");
+
+// constants for /admin/message.php and /message.php
+define("_CO_CAREER_MESSAGE_REJECTED", "Rejected");
+define("_CO_CAREER_MESSAGE_POSSIBLE", "Possible");
+define("_CO_CAREER_MESSAGE_NEUTRAL", "Neutral");
+define("_CO_CAREER_MESSAGE_FAVORITE", "Favorite");
