@@ -44,7 +44,7 @@ foreach($postsArray as $postArray) {
 	  'description' => icms_core_DataFilter::htmlSpecialChars(str_replace('&', '&amp;', $postArray['teaser']), ENT_QUOTES, _CHARSET),
 	  'pubdate' => $postArray['download_published_date'],
 	  'guid' => str_replace('&', '&amp;', $postArray['itemURL']),
-	  'category' => $postArray['cats_title'],
+	  'category' => $postArray['cats'],
 	  
 	);
 }
