@@ -17,6 +17,29 @@
  *
  */
 
+function addmessage($clean_message_id = 0, $clean_career_id = 0){
+	global $career_message_handler, $careerConfig, $icmsTpl;
+	$career_career_handler = icms_getModuleHandler("career", basename(dirname(__FILE__)), "career");
+	$careerObj = $career_career_handler->get($clean_career_id);
+	$career_message_handler = icms_getModuleHandler("message", basename(dirname(__FILE__)), "career");
+	$messageObj = $career_message_handler->get($clean_message_id);
+	if(is_object(icms::$user)){
+		$message_uid = icms::$user->getVar("uid");
+	} else {
+		$message_uid = 0;
+	}
+	if ($messageObj->isNew()){
+		$messageObj->setVar("message_date", (time()-200));
+		$messageObj->setVar("message_cid", $clean_career_id);
+		$messageObj->setVar('message_did', $careerObj->getVar("career_did", "e"));
+		$messageObj->setVar('message_submitter', $message_uid);
+		$sform = $messageObj->getSecureForm(_MD_CAREER_REVIEW_ADD, 'addmessage', CAREER_URL . "submit.php?op=addmessage&career_id=" . $careerObj->getVar("career_id", "e") , 'OK', TRUE, TRUE);
+		$sform->assign($icmsTpl, 'career_message_form');
+	} else {
+		exit;
+	}
+}
+
 include_once 'header.php';
 
 $xoopsOption['template_main'] = 'career_career.html';
@@ -53,6 +76,25 @@ if(is_object($careerObj) && !$careerObj->isNew()) {
 	$departmentObj = $career_department_handler->get($careerObj->getVar("career_did", "e"));
 	$department = $departmentObj->toArray();
 	$icmsTpl->assign("department", $department);
+	
+	/**
+	 * message form
+	 */
+	
+	if($careerConfig['guest_can_apply'] == 1) {
+		$icmsTpl->assign("message_link", CAREER_URL . "submit.php?op=addmessage&amp;career_id=" . $careerObj->getVar("career_id") );
+		addmessage(0, $clean_career_id);
+	} else {
+		if(is_object(icms::$user)){
+			addmessage(0, $clean_career_id);
+			$icmsTpl->assign("message_link", CAREER_URL . "submit.php?op=addmessage&amp;career_id=" . $careerObj->getVar("career_id") );
+			$icmsTpl->assign("message_perm_denied", FALSE);
+		} else {
+			$icmsTpl->assign("message_link", ICMS_URL . "/user.php");
+			$icmsTpl->assign("message_perm_denied", TRUE);
+		}
+	}
+	
 	if ($careerConfig['show_breadcrumbs']){
 		$icmsTpl->assign('career_cat_path', $departmentObj->getItemLink(FALSE));
 	}else{

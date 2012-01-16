@@ -27,7 +27,7 @@ class CareerMessage extends icms_ipf_Object {
 		$this->quickInitVar("message_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("message_title", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("message_name", XOBJ_DTYPE_TXTBOX, TRUE);
-		$this->quickInitVar("message_mail", XOBJ_DTYPE_EMAIL, TRUE);
+		$this->quickInitVar("message_mail", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("message_phone", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("message_body", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("message_file", XOBJ_DTYPE_FILE, TRUE);
@@ -97,7 +97,7 @@ class CareerMessage extends icms_ipf_Object {
 	}
 	
 	function getPreviewItemLink() {
-		$ret = '<a href="' . CAREER_URL . 'message.php?partners_id=' . $this->getVar("message_id", "e") . '" title="' . _CO_CAREER_PREVIEW . '" target="_blank">' . $this->getVar("message_title", "e") . '</a>';
+		$ret = '<a href="' . CAREER_URL . 'message.php?op=view&message_id=' . $this->getVar("message_id", "e") . '" title="' . _CO_CAREER_PREVIEW . '">' . $this->getVar("message_title", "e") . '</a>';
 		return $ret;
 	}
 	
@@ -112,7 +112,7 @@ class CareerMessage extends icms_ipf_Object {
 		$ret['file'] = $this->getMessageFile();
 		$ret['submitter'] = $this->getMessageSubmitter();
 		$ret['date'] = $this->getMessageDate();
-		$ret['carrer'] = $this->getMessageCid();
+		$ret['career'] = $this->getMessageCid();
 		$ret['department'] = $this->getMessageDepartment();
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
