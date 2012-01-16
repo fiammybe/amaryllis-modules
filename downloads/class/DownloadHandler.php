@@ -43,13 +43,21 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		global $downloadsConfig;
 		parent::__construct($db, "download", "download_id", "download_title", "download_description", "downloads");
 		$this->addPermission('download_grpperm', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM_DSC);
-		
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/download/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($allowedMimeTypes = true, $downloadsConfig['image_file_size'], $downloadsConfig['image_upload_width'], $downloadsConfig['image_upload_height']);
 		
 		$mimetypes = $this->checkMimeType();
 		$filesize = $downloadsConfig['downloads_file_size'];
 		$this->enableUpload($mimetypes,	$filesize);
+	}
+	
+	public function getImagePath() {
+		$dir = $this->_uploadPath;
+		if (!file_exists($dir)) {
+			icms_core_Filesystem::mkdir($dir);
+		}
+		return $dir . "/";
 	}
 	
 	public function checkMimeType() {
