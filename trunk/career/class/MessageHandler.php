@@ -127,6 +127,14 @@ class CareerMessageHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	public function updateComments($message_id, $total_num) {
+		$messageObj = $this->get($message_id);
+		if ($messageObj && !$messageObj->isNew()) {
+			$messageObj->setVar('message_comments', $total_num);
+			$this->insert($messageObj, TRUE);
+		}
+	}
+	
 	// some related functions for storing
 	protected function beforeInsert(&$obj) {
 		// check, if email is valid
