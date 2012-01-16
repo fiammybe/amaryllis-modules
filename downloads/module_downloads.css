@@ -134,6 +134,17 @@
 		margin: 2em auto;
 	}
 
+	.downloads_file #file_tabs{
+		padding: 0;
+	}
+	
+	.ui-widget-content{
+		border:medium none;
+		border-left:1px solid #AAAAAA;
+		border-right:1px solid #AAAAAA;
+		border-bottom:1px solid #AAAAAA;
+	}
+	
 	.downloads_cat_icons {
 	}
 	
@@ -209,6 +220,7 @@
 		display: inline-block;
 		background: #ccc;
 		width: 100%;
+		margin-bottom: 1em;
 		height: auto;
 		max-height: 150px;
 		overflow: auto;
@@ -247,11 +259,9 @@
 	.file_informations {
 		display: table;
 		font-size: .8em;
-		background: #ccc;
 		-webkit-border-radius: 6px;
 		-moz-border-radius: 6px;
 		border-radius: 6px;
-		padding: 5px;
 		width: 100%;
 	}
 	
@@ -259,6 +269,16 @@
 		display: table-row;
 		padding: .250em;
 		line-height: 3em;
+	}
+	
+	.table_row span{
+		border-top:1px solid #FFFFFF;
+		border-bottom:1px solid #FFFFFF;
+	}
+	
+	.table_row:hover span{
+		border-top:1px solid #AAAAAA;
+		border-bottom:1px solid #AAAAAA;
 	}
 	
 	.table_cell {
@@ -431,3 +451,4 @@ a.vote_down:hover {
 span.download_tag img {
     vertical-align: middle;
 }
+
