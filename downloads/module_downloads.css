@@ -370,6 +370,10 @@
 		float: left;
 	}
 	
+	.review_case {
+		font-weight:bold;
+	}
+	
 	.review_name, .review_email, .review_date {
 		display: block;
 		padding: 0;
