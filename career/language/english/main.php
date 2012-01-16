@@ -21,3 +21,10 @@
 
 // general used constants
 define("_MD_CAREER_ADMIN_PAGE", ":: Admin page ::");
+define("_MD_CAREER_MESSAGES_LINK", " Messages ::");
+define("_MD_CAREER_MESSAGE", "Send Application");
+define("_MD_CAREER_MAILTO", "Advise job offering");
+define("_MD_CAREER_MESSAGES_BC", "Manage Messages");
+define("_MD_CAREER_MESSAGE_OFFLINE", "Rejected");
+define("_MD_CAREER_MESSAGE_ONLINE", "Possible");
+

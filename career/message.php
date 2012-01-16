@@ -42,7 +42,7 @@ if(!$career_isAdmin) {
 	////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	$valid_op = array ('del', 'view', '');
+	$valid_op = array ('del', 'view', 'changeApprove','changeFavorite', '');
 	
 	$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 	if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
@@ -63,8 +63,37 @@ if(!$career_isAdmin) {
 				$messageObj = $career_message_handler->get($clean_message_id);
 				$message = $messageObj->toArray();
 				$icmsTpl->assign("message", $message);
+				
+				/**
+				 * check, if breadcrumb should be displayed
+				 */
+				if ($careerConfig['show_breadcrumbs'] == 1){
+					$icmsTpl->assign('career_cat_path', _MD_CAREER_MESSAGES_BC . "&nbsp;:&nbsp;" . $messageObj->getVar("message_title"));
+				}else{
+					$icmsTpl->assign('career_cat_path',FALSE);
+				}
 				break;
-	
+			
+			case 'changeApprove':
+				$visibility = $career_message_handler->changeVisible($clean_message_id);
+				$ret = 'message.php';
+				if ($visibility == 0) {
+					redirect_header( CAREER_URL . $ret, 2, _CO_CAREER_MESSAGE_REJECTED);
+				} else {
+					redirect_header( CAREER_URL . $ret, 2, _CO_CAREER_MESSAGE_POSSIBLE);
+				}
+				break;
+			
+			case 'changeFavorite':
+				$visibility = $career_message_handler->changeFavorite($clean_message_id);
+				$ret = 'message.php';
+				if ($visibility == 0) {
+					redirect_header( CAREER_URL . $ret, 2, _CO_CAREER_MESSAGE_NEUTRAL);
+				} else {
+					redirect_header( CAREER_URL . $ret, 2, _CO_CAREER_MESSAGE_FAVORITE);
+				}
+				break;
+				
 			default:
 				$criteria = '';
 				if ($clean_message_id) {
@@ -77,18 +106,40 @@ if(!$career_isAdmin) {
 					$criteria = null;
 				}
 				// create message table
-				$objectTable = new icms_ipf_view_Table($career_message_handler, $criteria, array());
+				$objectTable = new icms_ipf_view_Table($career_message_handler, $criteria, array('delete'));
 				$objectTable->isForUserSide();
+				$objectTable->addColumn( new icms_ipf_view_Column('message_approve', 'center', FALSE, 'message_approve_userside'));
+				$objectTable->addColumn( new icms_ipf_view_Column('message_favorite', 'center', FALSE, 'message_favorite_userside'));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_title', FALSE, FALSE, 'getPreviewItemLink'));
+				$objectTable->addColumn(new icms_ipf_view_Column("message_cid", FALSE, FALSE, 'getMessageCid'));
+				$objectTable->addColumn(new icms_ipf_view_Column("message_did", FALSE, FALSE, 'getMessageDepartment'));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_date', 'center', 100, "getMessageDate"));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_submitter', 'center', TRUE, 'getMessageSubmitter'));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_email', 'center', TRUE, 'getMessageMail'));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_phone', 'center', TRUE));
-				$objectTable->addColumn( new icms_ipf_view_Column('message_file', 'center', TRUE, 'getMessageFile'));
+				
+				$objectTable->addFilter('message_cid', 'getCareers');
+				$objectTable->addFilter('message_did', 'getDepartments');
+				$objectTable->addFilter('message_approve', 'message_approve_filter');
+				$objectTable->addFilter('message_favorite', 'message_favorite_filter');
 				
 				$icmsTpl->assign('career_message_table', $objectTable->fetch());
+				
+				/**
+				 * check, if breadcrumb should be displayed
+				 */
+				if ($careerConfig['show_breadcrumbs'] == 1){
+					$icmsTpl->assign('career_cat_path', _MD_CAREER_MESSAGES_BC);
+				}else{
+					$icmsTpl->assign('career_cat_path',FALSE);
+				}
 				break;
 		}
 	}
+}
+if( $careerConfig['show_breadcrumbs'] == TRUE ) {
+	$icmsTpl->assign('career_show_breadcrumb', TRUE);
+} else {
+	$icmsTpl->assign('career_show_breadcrumb', FALSE);
 }
 include_once 'footer.php';

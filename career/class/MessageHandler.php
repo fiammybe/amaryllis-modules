@@ -63,6 +63,49 @@ class CareerMessageHandler extends icms_ipf_Handler {
 		}
 	}
 	
+	/**
+	 * change possiblility
+	 */
+	//set category online/offline
+	public function changeVisible($message_id) {
+		$visibility = '';
+		$messageObj = $this->get($message_id);
+		if ($messageObj->getVar("message_approve", "e") == TRUE) {
+			$messageObj->setVar("message_approve", 0);
+			$visibility = 0;
+		} else {
+			$messageObj->setVar("message_approve", 1);
+			$visibility = 1;
+		}
+		$this->insert($messageObj, TRUE);
+		return $visibility;
+	}
+	
+	public function changeFavorite($message_id) {
+		$visibility = '';
+		$messageObj = $this->get($message_id);
+		if ($messageObj->getVar("message_favorite", "e") == TRUE) {
+			$messageObj->setVar("message_favorite", 0);
+			$visibility = 0;
+		} else {
+			$messageObj->setVar("message_favorite", 1);
+			$visibility = 1;
+		}
+		$this->insert($messageObj, TRUE);
+		return $visibility;
+	}
+	
+	/**
+	 * apply some filters
+	 */
+	public function message_approve_filter() {
+		return array(0 => _CO_CAREER_MESSAGE_REJECTED, 1 => _CO_CAREER_MESSAGE_POSSIBLE);
+	}
+	
+	public function message_favorite_filter() {
+		return array(0 => _CO_CAREER_MESSAGE_NEUTRAL, 1 => _CO_CAREER_MESSAGE_FAVORITE);
+	}
+	
 	public function getCareers() {
 		$career_career_handler = icms_getModuleHandler("career", basename(dirname(dirname(__FILE__))), "career");
 		$careers = $career_career_handler->getObjects(FALSE, TRUE);

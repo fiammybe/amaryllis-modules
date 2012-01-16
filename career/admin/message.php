@@ -19,7 +19,7 @@
 
 include_once 'admin_header.php';
 
-$valid_op = array ('del', 'view', '');
+$valid_op = array ('del', 'view', 'changeApprove','changeFavorite', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
@@ -42,6 +42,26 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			career_adminmenu( 2, _MI_CAREER_MENU_MESSAGE );
 			$messageObj->displaySingleObject();
 			break;
+			
+		case 'changeApprove':
+			$visibility = $career_message_handler->changeVisible($clean_message_id);
+			$ret = 'message.php';
+			if ($visibility == 0) {
+				redirect_header( CAREER_ADMIN_URL . $ret, 2, _CO_CAREER_MESSAGE_REJECTED );
+			} else {
+				redirect_header( CAREER_ADMIN_URL . $ret, 2, _CO_CAREER_MESSAGE_POSSIBLE );
+			}
+			break;
+		
+		case 'changeFavorite':
+			$visibility = $career_message_handler->changeFavorite($clean_message_id);
+			$ret = 'message.php';
+			if ($visibility == 0) {
+				redirect_header( CAREER_ADMIN_URL . $ret, 2, _CO_CAREER_MESSAGE_NEUTRAL );
+			} else {
+				redirect_header( CAREER_ADMIN_URL . $ret, 2, _CO_CAREER_MESSAGE_FAVORITE );
+			}
+			break;
 
 		default:
 			icms_cp_header();
@@ -58,6 +78,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			}
 			// create message table
 			$objectTable = new icms_ipf_view_Table($career_message_handler, $criteria, array('delete'));
+			$objectTable->addColumn( new icms_ipf_view_Column('message_approve', 'center', FALSE, 'message_approve'));
+				$objectTable->addColumn( new icms_ipf_view_Column('message_favorite', 'center', FALSE, 'message_favorite'));
 			$objectTable->addColumn( new icms_ipf_view_Column('message_title', FALSE, FALSE, 'getPreviewItemLink'));
 			$objectTable->addColumn(new icms_ipf_view_Column("message_cid", FALSE, FALSE, 'getMessageCid'));
 			$objectTable->addColumn(new icms_ipf_view_Column("message_did", FALSE, FALSE, 'getMessageDepartment'));
@@ -68,6 +90,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 			$objectTable->addFilter('message_cid', 'getCareers');
 			$objectTable->addFilter('message_did', 'getDepartments');
+			$objectTable->addFilter('message_approve', 'message_approve_filter');
+			$objectTable->addFilter('message_favorite', 'message_favorite_filter');
 			
 			$objectTable->addCustomAction('getViewItemLink');
 			
