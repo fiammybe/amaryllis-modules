@@ -65,20 +65,21 @@ class CareerMessageHandler extends icms_ipf_Handler {
 	
 	public function getCareers() {
 		$career_career_handler = icms_getModuleHandler("career", basename(dirname(dirname(__FILE__))), "career");
-		$careers = $career_career_handler->getCareerList();
+		$careers = $career_career_handler->getObjects(FALSE, TRUE);
 		$ret = array();
-		foreach ($careers as $key => $career) {
-			$ret[$career['career_id']] = $career;
+		foreach (array_keys($careers) as $i) {
+			$ret[$careers[$i]->getVar('career_id')] = $careers[$i]->getVar('career_title');
 		}
 		return $ret;
 	}
 	
 	public function getDepartments() {
 		$career_department_handler = icms_getModuleHandler("department", basename(dirname(dirname(__FILE__))), "career");
-		$departments = $career_department_handler->getDepartmentList(TRUE);
+		$departments = $career_department_handler->getObjects(FALSE, TRUE);
 		$ret = array();
-		foreach ($departments as $key => $department) {
-			$ret[$department['department_id']] = $department;
+		$ret = array();
+		foreach (array_keys($departments) as $i) {
+			$ret[$departments[$i]->getVar('department_id')] = $departments[$i]->getVar('department_title');
 		}
 		return $ret;
 	}
