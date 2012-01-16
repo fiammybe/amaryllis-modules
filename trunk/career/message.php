@@ -47,7 +47,7 @@ if(!$career_isAdmin) {
 	$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 	if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 	
-	$career_message_handler = icms_getModuleHandler('message', basename(dirname(dirname(__FILE__))), 'career');
+	$career_message_handler = icms_getModuleHandler("message", basename(dirname(__FILE__)), "career");
 	
 	$clean_message_id = isset($_GET['message_id']) ? filter_input(INPUT_GET, 'message_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 	$clean_message_id = ($clean_message_id == 0 && isset($_POST['message_id'])) ? filter_input(INPUT_POST, 'message_id', FILTER_SANITIZE_NUMBER_INT) : $clean_message_id;
@@ -77,17 +77,14 @@ if(!$career_isAdmin) {
 					$criteria = null;
 				}
 				// create message table
-				$objectTable = new icms_ipf_view_Table($career_message_handler, $criteria, array('delete'));
+				$objectTable = new icms_ipf_view_Table($career_message_handler, $criteria, array());
 				$objectTable->isForUserSide();
-				$objectTable->addColumn( new icms_ipf_view_Column('message_title', FALSE, FALSE, 'getItemLink'));
+				$objectTable->addColumn( new icms_ipf_view_Column('message_title', FALSE, FALSE, 'getPreviewItemLink'));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_date', 'center', 100, "getMessageDate"));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_submitter', 'center', TRUE, 'getMessageSubmitter'));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_email', 'center', TRUE, 'getMessageMail'));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_phone', 'center', TRUE));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_file', 'center', TRUE, 'getMessageFile'));
-				
-				$objectTable->addFilter('message_cid', 'getCareerList');
-				$objectTable->addFilter('message_did', 'getDepartmentList');
 				
 				$icmsTpl->assign('career_message_table', $objectTable->fetch());
 				break;

@@ -31,16 +31,11 @@ function career_upload_paths() {
 	
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$career = ICMS_ROOT_PATH . '/uploads/career';
-	if ( !is_dir( $career . '/indeximages' ) ) {
-		mkdir( $career . '/indeximages', 0777, true );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/' . $moddir . '/indeximages/index.html' );
-		$contentx =@file_get_contents( ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/career_indeximage.png' );
-		$openedfile = fopen( $career . '/indeximages/career_indeximage.png', "w" ); 
-		fwrite( $openedfile, $contentx ); 
-		fclose( $openedfile );
-	}
-	
+	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
+		icms_core_Filesystem::mkdir($path . '/indeximages');
+		$image = 'career_indeximage.png';
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
+		return TRUE;
 }
 
 function career_indexpage() {

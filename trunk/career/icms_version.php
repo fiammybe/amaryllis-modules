@@ -286,6 +286,24 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'int',
 								'default' 		=> 10
 							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'use_rss',
+								'title' 		=> '_MI_CAREER_USE_RSS',
+								'description' 	=> '_MI_CAREER_USE_RSS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'guest_apply',
+								'title' 		=> '_MI_CAREER_GUEST_CAN_APPLY',
+								'description' 	=> '_MI_CAREER_GUEST_CAN_APPLY_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 0
+							);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -329,7 +347,7 @@ $modversion['notification']['event'][$i]['description'] = _MI_CAREER_CAREER_MODI
 $modversion['notification']['event'][$i]['mail_template'] = 'career_modified';
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_CAREER_CAREER_MODIFIED_NOTIFY_SBJ;
 $i++;
-$modversion['notification']['event'][$i]['name'] = 'message_submit';
+$modversion['notification']['event'][$i]['name'] = 'message_submitted';
 $modversion['notification']['event'][$i]['category'] = 'career';
 $modversion['notification']['event'][$i]['admin_only'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_CAREER_CAREER_MESSAGE_SUBMIT_NOTIFY;

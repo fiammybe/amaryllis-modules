@@ -56,6 +56,10 @@ define("_MI_CAREER_DAYSNEW", "How many days to provide one career as new?");
 define("_MI_CAREER_DAYSNEW_DSC", "Enter the days or set to 0 to turn off");
 define("_MI_CAREER_DAYSUPDATED", "How many days to provide one career as updated after editing?");
 define("_MI_CAREER_DAYSUPDATED_DSC", "Enter the days or set to 0 to turn off");
+define("_MI_CAREER_USE_RSS", "Use RSS");
+define("_MI_CAREER_USE_RSS_DSC", "");
+define("_MI_CAREER_GUEST_CAN_APPLY", "Allow guests to send an apply?");
+define("_MI_CAREER_GUEST_CAN_APPLY_DSC", "Do you like to provide a link for guests to apply? Otherwise they will get a link to register or login.");
 // constants for notifications
 define("_MI_CAREER_GLOBAL_NOTIFY", "Global");
 define("_MI_CAREER_GLOBAL_NOTIFY_DSC", "Global Career notification options.");
