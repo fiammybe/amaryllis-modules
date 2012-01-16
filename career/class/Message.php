@@ -37,12 +37,13 @@ class CareerMessage extends icms_ipf_Object {
 		$this->quickInitVar("message_did", XOBJ_DTYPE_INT);
 		$this->quickInitVar("message_approve", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
 		$this->quickInitVar("message_favorite", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 0);
+		$this->quickInitVar("message_comments", XOBJ_DTYPE_INT),
 		
 		$this->setControl("message_approve", "yesno");
 		$this->setControl("message_favorite", "yesno");
 		$this->setControl("message_file", "file");
 		$this->setControl("message_body", "dhtmltextarea");
-		$this->hideFieldFromForm(array("message_submitter", "message_date", "message_cid", "message_did", "message_approve", "message_favorite"));
+		$this->hideFieldFromForm(array("message_submitter", "message_date", "message_cid", "message_did", "message_approve", "message_favorite", "message_comments"));
 	}
 
 	public function message_approve() {
