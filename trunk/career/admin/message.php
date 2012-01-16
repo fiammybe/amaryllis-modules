@@ -59,14 +59,15 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			// create message table
 			$objectTable = new icms_ipf_view_Table($career_message_handler, $criteria, array('delete'));
 			$objectTable->addColumn( new icms_ipf_view_Column('message_title', FALSE, FALSE, 'getPreviewItemLink'));
+			$objectTable->addColumn(new icms_ipf_view_Column("message_cid", FALSE, FALSE, 'getMessageCid'));
+			$objectTable->addColumn(new icms_ipf_view_Column("message_did", FALSE, FALSE, 'getMessageDepartment'));
 			$objectTable->addColumn( new icms_ipf_view_Column('message_date', 'center', 100, "getMessageDate"));
 			$objectTable->addColumn( new icms_ipf_view_Column('message_submitter', 'center', TRUE, 'getMessageSubmitter'));
 			$objectTable->addColumn( new icms_ipf_view_Column('message_email', 'center', TRUE, 'getMessageMail'));
 			$objectTable->addColumn( new icms_ipf_view_Column('message_phone', 'center', TRUE));
-			$objectTable->addColumn( new icms_ipf_view_Column('message_file', 'center', TRUE, 'getMessageFile'));
 			
-			$objectTable->addFilter('message_cid', 'getCareerList');
-			$objectTable->addFilter('message_did', 'getDepartmentList');
+			$objectTable->addFilter('message_cid', 'getCareers');
+			$objectTable->addFilter('message_did', 'getDepartments');
 			
 			$objectTable->addCustomAction('getViewItemLink');
 			

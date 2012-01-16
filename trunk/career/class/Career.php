@@ -141,7 +141,7 @@ class CareerCareer extends icms_ipf_seo_Object {
 		$seo = $this->handler->makelink($this);
 		$url = CAREER_URL . 'career.php?career_id=' . $this -> getVar("career_id", "e") . '&amp;career=' . $seo;
 		if ($onlyUrl) return $url;
-		return '<a href="' . $url . '" title="' . $this -> getVar("career_id", "e") . ' ">' . $this -> getVar( "career_title" ) . '</a>';
+		return '<a href="' . $url . '" title="' . $this -> getVar("career_title", "e") . ' ">' . $this -> getVar( "career_title" ) . '</a>';
 	}
 	
 	public function getViewItemLink() {
