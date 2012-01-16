@@ -42,6 +42,8 @@ define("_MI_CAREER_DATE_FORMAT", "Date Format");
 define("_MI_CAREER_DATE_FORMAT_DSC", "For more informations: <a href=\"http://php.net/manual/en/function.date.php\" target=\"blank\">see php.net manual</a>");
 define("_MI_CAREER_SHOW_BREADCRUMBS", "show breadcrumb");
 define("_MI_CAREER_SHOW_BREADCRUMBS_DSC", "choose 'YES' to show breadcrumb in frontend");
+define("_MI_CAREER_DISPLAY_COMPANY", "Enter your company Name");
+define("_MI_CAREER_DISPLAY_COMPANY_DSC", "The company Name will be displayed in frontend.");
 define("_MI_CAREER_IMAGE_UPLOAD_WIDTH", "image upload width");
 define("_MI_CAREER_IMAGE_UPLOAD_WIDTH_DSC", "set max width for uploading images");
 define("_MI_CAREER_IMAGE_UPLOAD_HEIGHT", "image upload height");

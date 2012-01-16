@@ -33,6 +33,30 @@
 	<div class="department_description">
 		<h3><{$single_department.dsc}></h3>
 	</div>
+	
+	<div class="department_informations">				
+		<div class="vcard">
+			<div class="organization-name"><{$career_company_name}></div>
+			<div class="organization-unit extended-address"><{$single_department.title}></div>
+			<span class="fn n">
+				<span class="family-name"><{$single_department.leader}></span>
+			</span>
+			
+			<a class="email" href="mailto:<{$single_department.mail}>">
+				<{$single_department.mail}>
+			</a>
+			<a class="fn org url" href="<{$icms_url}>"><{$icms_sitename}></a>
+			
+			<span class="adr">
+				<span class="street-address"><{$single_department.address}></span>
+				<span class="postal-code"><{$single_department.zip}></span>
+				<span class="locality"><{$single_department.city}></span>
+				<abbr title="<{$single_department.county}>" class="region"><{$single_department.county}></abbr>
+			</span>
+			<div class="tel"><{$single_department.phone}></div>
+			<div class="fax"><{$single_department.fax}></div>
+		</div>
+	</div>
 
 	<{if $careers}>
 		<{foreach item=career from=$careers}>
