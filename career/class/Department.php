@@ -36,7 +36,8 @@ class CareerDepartment extends icms_ipf_Object {
 		$this->quickInitVar("department_leader", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("department_phone", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("department_fax", XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar("department_mail", XOBJ_DTYPE_EMAIL);
+		$this->quickInitVar("department_mail", XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar("department_address", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("department_kanton", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("department_zipcode", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("department_city", XOBJ_DTYPE_TXTBOX);
@@ -107,7 +108,7 @@ class CareerDepartment extends icms_ipf_Object {
 	
 	public function getDepartmentMail() {
 		$mail = $this->getVar("department_mail", "s");
-		$mail = icms_core_DataFilter::checkVar($mail, "email", 1, 0);
+		$mail = icms_core_DataFilter::checkVar($mail, "email", 0, 0);
 		return $mail;
 	}
 	
@@ -164,6 +165,7 @@ class CareerDepartment extends icms_ipf_Object {
 		$ret['county'] = $this->getVar("department_kanton", "e");
 		$ret['zip'] = $this->getVar("department_zipcode", "e");
 		$ret['city'] = $this->getVar("department_city", "e");
+		$ret['address'] = $this->getVar("department_address", "e");
 		$ret['submitter'] = $this->getDepartmentSubmitter();
 		$ret['updater'] = $this->getDepartmentUpdater();
 		$ret['published_on'] = $this->getDepartmentPublishedDate();

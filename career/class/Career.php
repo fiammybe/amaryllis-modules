@@ -180,5 +180,4 @@ class CareerCareer extends icms_ipf_seo_Object {
 		
 		return $ret;
 	}
-
 }

@@ -225,6 +225,15 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'career_display_company',
+								'title' 		=> '_MI_CAREER_DISPLAY_COMPANY',
+								'description' 	=> '_MI_CAREER_DISPLAY_COMPANY_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'text',
+								'default' 		=> ''
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'logo_upload_width',
 								'title' 		=> '_MI_CAREER_IMAGE_UPLOAD_WIDTH',
 								'description' 	=> '_MI_CAREER_IMAGE_UPLOAD_WIDTH_DSC',

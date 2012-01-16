@@ -15,9 +15,30 @@
 		<!-- display career description -->
 		<{$career.dsc}>
 		<div class="career_vcard">
-			
+			<div class="vcard">
+				<div class="organization-name"><{$career_company_name}></div>
+				<div class="organization-unit extended-address"><{$department.title}></div>
+				<span class="fn n">
+					<span class="family-name"><{$career.name}></span>
+				</span>
+				
+				<a class="email" href="mailto:<{$single_department.mail}>">
+					<{$career.mail}>
+				</a>
+				<a class="fn org url" href="<{$icms_url}>"><{$icms_sitename}></a>
+				
+				<span class="adr">
+					<span class="street-address"><{$career.address}></span>
+					<span class="postal-code"><{$career.zip}></span>
+					<span class="locality"><{$career.city}></span>
+					<abbr title="<{$single_department.county}>" class="region"><{$career.county}></abbr>
+				</span>
+				<div class="tel"><{$career.phone}></div>
+				<div class="fax"><{$career.fax}></div>
+			</div>
 		</div>
 	</div>
+	
 
 <{/if}>
 
