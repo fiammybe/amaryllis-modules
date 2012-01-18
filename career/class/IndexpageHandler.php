@@ -24,7 +24,7 @@ class CareerIndexpageHandler extends icms_ipf_Handler {
 	public $_moduleName;
 	
 	public $_uploadPath;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -32,9 +32,11 @@ class CareerIndexpageHandler extends icms_ipf_Handler {
 	 */
 	public function __construct(&$db) {
 		parent::__construct($db, "indexpage", "index_id", "index_header", "index_heading", "career");
+
 		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/indeximages/';
+		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
+		$this->enableUpload($mimetypes, 2000000, 500, 500);
 		
-		$this->enableUpload(array("image/gif", "image/jpeg", "image/pjpeg", "image/png"), 512000, 800, 600);
 	}
 	
 	public function getImagePath() {
@@ -56,14 +58,17 @@ class CareerIndexpageHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function beforeInsert(&$obj)	{
-		if ($obj->getVar("index_img_upload", "e") != "") {
-			$obj->setVar("index_img", $obj->getVar("index_img_upload"));
+	public function beforeInsert(&$obj) {
+		$footer = $obj->getVar("index_footer", "s");
+		$footer = icms_core_DataFilter::checkVar($footer, "html", "input");
+		$obj->setVar("index_footer", $footer);
+	}
+	
+	// some related functions for storing
+	protected function beforeSave(&$obj) {
+		if ($obj->getVar('index_img_upload') != '') {
+			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
 		}
-		$indexfooter = $obj->getVar("index_footer", "s");
-		$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "input");
-		$obj->setVar("index_footer", $indexfooter);
-		
 		return true;
 	}
 }

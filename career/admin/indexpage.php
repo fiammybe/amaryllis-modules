@@ -23,7 +23,7 @@ function editform($indexkey = 1, $indeximage = true) {
 	global $career_indexpage_handler, $icmsAdminTpl;
 
 	$indexpageObj = $career_indexpage_handler->get($indexkey);	
-	$sform = $indexpageObj -> getForm(_MI_CAREER_INDEXPAGE_EDIT, 'addindexpage');
+	$sform = $indexpageObj -> getForm(_AM_CAREER_INDEXPAGE_EDIT, 'addindexpage');
 	$sform->assign($icmsAdminTpl);
 
 	$icmsAdminTpl->display('db:career_admin.html');
@@ -34,7 +34,7 @@ include_once "admin_header.php";
 
 $clean_indexkey = $clean_op = $valid_op = '';
 
-$career_indexpage_handler = icms_getModuleHandler("indexpage", basename(dirname(dirname(__FILE__))), "career");
+$career_indexpage_handler = icms_getModuleHandler('indexpage', basename(dirname(dirname(__FILE__))), "career");
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
