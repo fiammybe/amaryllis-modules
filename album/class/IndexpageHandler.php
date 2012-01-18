@@ -31,7 +31,7 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
-		parent::__construct($db, "indexpage", "index_key", "index_header", "index_heading", "downloads");
+		parent::__construct($db, "indexpage", "index_key", "index_header", "index_heading", "album");
 
 		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/indeximages/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
