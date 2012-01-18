@@ -88,28 +88,17 @@ function album_upload_paths() {
 	
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$album = ICMS_ROOT_PATH . '/uploads/album';
-	if ( !is_dir( $album . '/albumimages' ) ) {
-		mkdir( $album . '/albumimages', 0777, true );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/album/index.html' );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/album/albumimages/index.html' );
-		//Copy images to new folder
-		$array = array( 'folder_black', 'folder_blue', 'folder_brown', 'folder_cyan', 'folder_green', 'folder_grey', 'folder_orange', 'folder_red', 'folder_violet', 'folder_yellow' );
-		foreach ( $array as $value ) {
-			$contentx =@file_get_contents( ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $value . '.png' );
-			$openedfile = fopen( $album . '/albumimages/' . $value . '.png', "w" ); 
-			fwrite( $openedfile, $contentx );
-			fclose( $openedfile );
+	$path = ICMS_ROOT_PATH . '/uploads/album';
+		icms_core_Filesystem::mkdir($path . '/albumimages');
+		$categoryimages = array();
+		$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/album/images/folders/', '', array('gif', 'jpg', 'png'));
+		foreach($categoryimages as $image) {
+			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/albumimages/' . $image);
 		}
-	}
-	if ( !is_dir( $album . '/indeximages' ) ) {
-		mkdir( $album . '/indeximages', 0777, true );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/album/indeximages/index.html' );
-		$contentx =@file_get_contents( ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/album_indeximage.png' );
-		$openedfile = fopen( $album . '/indeximages/album_indeximage.png', "w" ); 
-		fwrite( $openedfile, $contentx ); 
-		fclose( $openedfile );
-	}
+		icms_core_Filesystem::mkdir($path . '/indeximages');
+		$image = 'album_indeximage.png';
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
+		return TRUE;
 }
 
 function album_indexpage() {

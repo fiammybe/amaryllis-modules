@@ -31,16 +31,13 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
-		parent::__construct($db, "indexpage", "index_key", "index_header", "index_heading", "album");
+		parent::__construct($db, "indexpage", "index_key", "index_header", "index_heading", "downloads");
 
 		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/indeximages/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
 		
 	}
-	/**
-	 * override the path
-	 */
 	
 	public function getImagePath() {
 		$dir = $this->_uploadPath;
@@ -49,9 +46,7 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 		}
 		return $dir . "/";
 	}
-	/**
-	 * search out the indeximage upload directory for images
-	 */
+	
 	static public function getImageList() {
 		$indeximages = array();
 		$indeximages = icms_core_Filesystem::getFileList(ALBUM_UPLOAD_ROOT . 'indeximages/', '', array('gif', 'jpg', 'png'));
@@ -63,12 +58,10 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	/**
-	 * some events while storing the data
-	 */
+	// some related functions for storing
 	protected function beforeSave(&$obj) {
 		
-		if (!$obj->getVar('index_img_upload') == "") {
+		if ($obj->getVar('index_img_upload') != '') {
 			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
 		}
 		return true;

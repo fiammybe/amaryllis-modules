@@ -21,16 +21,12 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 class AlbumIndexpage extends icms_ipf_Object {
 	
-	/**
-	 * constructor
-	 */
-	
 	public function __construct(&$handler) {
 		parent::__construct($handler);
 
 		$this->quickInitVar("index_key", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("index_image", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->initVar('index_img_upload', XOBJ_DTYPE_IMAGE);
+		$this->quickInitVar('index_img_upload', XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar("index_header", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("index_heading", XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar("index_footer", XOBJ_DTYPE_TXTAREA, FALSE);
@@ -40,18 +36,12 @@ class AlbumIndexpage extends icms_ipf_Object {
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		$this->initCommonVar("docxode", FALSE, FALSE, FALSE, 1);
 
-		$this->setControl( 'index_img_upload', array( 'name' => 'imageupload' ) );
+		$this->setControl( 'index_img_upload', 'image' );
 		$this -> setControl( 'index_heading','dhtmltextarea' );
-		$this -> setControl( 'index_footer', array('name' => 'textarea', 'form_editor' => 'htmlarea') );
+		$this -> setControl( 'index_footer', 'textarea' );
 		$this -> setControl( 'index_image', array( 'name' => 'select', 'itemHandler' => 'indexpage', 'method' => 'getImageList', 'module' => 'album' ) );
 		
-		$this->hideFieldFromForm( array( 'index_key', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode' ) );
 	}
-
-	/**
-	 * Overriding getVar
-	 * 
-	 */
 
 	public function getVar($key, $format = "s") {
 		if ($format == "s" && in_array($key, array())) {
@@ -59,11 +49,7 @@ class AlbumIndexpage extends icms_ipf_Object {
 		}
 		return parent::getVar($key, $format);
 	}
-	
-	/**
-	 * get the output for the indeximage
-	 */
-	
+
 	public function getIndexImg() {
 		$indeximage = $image_tag = '';
 		$indeximage = $this->getVar('index_image', 'e');
@@ -73,37 +59,24 @@ class AlbumIndexpage extends icms_ipf_Object {
 		return '<div class="album_indeximage"><img src="' . $image_tag . '" /></div>';
 	}
 	
-	/**
-	 * get output for indeximage
-	 */
 	public function getIndexHeader() {
 		$indexheader = '';
 		$indexheader = $this->getVar('index_header', 'e');
 		return '<div class="album_indexheader">' . $indexheader . '</div>';
 	}
 
-	/**
-	 * output for index heading
-	 */
 	public function getIndexHeading() {
 		$indexheading = '';
-		$indexheading = $this->getVar('index_heading', 'e');
+		$indexheading = icms_core_DataFilter::checkVar($this->getVar('index_heading', 's'), 'str', 'encodelow');
 		return '<div class="album_indexheading">' . $indexheading . '</div>';
 	}
 	
-	/**
-	 * output for indexfooter
-	 */
 	public function getIndexFooter() {
 		$indexfooter = '';
-		$indexfooter = $this->getVar('index_footer', 's');
-		$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
+		$indexfooter = icms_core_DataFilter::checkVar($this->getVar('index_footer', 's'), 'str', 'encodelow');
 		return '<div class="album_indexfooter">' . $indexfooter . '</div>';
 	}
 
-	/**
-	 * override toArray
-	 */
 	function toArray() {
 		$ret = parent::toArray();
 		$ret['image'] = $this->getIndexImg();
