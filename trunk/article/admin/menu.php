@@ -18,20 +18,14 @@
  */
 
 $adminmenu[] = array(
-	"title" => _MI_ARTICLE_CATEGORYS,
+	"title" => _MI_ARTICLE_MENU_CATEGORYS,
 	"link" => "admin/category.php");
 $adminmenu[] = array(
-	"title" => _MI_ARTICLE_ARTICLES,
+	"title" => _MI_ARTICLE_MENU_ARTICLES,
 	"link" => "admin/article.php");
 $adminmenu[] = array(
-	"title" => _MI_ARTICLE_INDEXPAGES,
+	"title" => _MI_ARTICLE_MENU_INDEXPAGES,
 	"link" => "admin/indexpage.php");
-$adminmenu[] = array(
-	"title" => _MI_ARTICLE_TAGSS,
-	"link" => "admin/tags.php");
-$adminmenu[] = array(
-	"title" => _MI_ARTICLE_LOGS,
-	"link" => "admin/log.php");
 
 
 $module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))));

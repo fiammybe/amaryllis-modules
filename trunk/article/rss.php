@@ -1,45 +1,51 @@
 <?php
 /**
- * Generating an RSS feed
+ * 'Article' is an article management module for ImpressCMS
  *
+ * File: /rss.php
+ * 
+ * hold the configuration information about the module
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Article
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		article
  * @version		$Id$
+ * @package		article
+ *
  */
 
-/** Include the module's header for all pages */
 include_once 'header.php';
+
 include_once ICMS_ROOT_PATH . '/header.php';
 
-/** To come soon in imBuilding...
-
-$clean_post_uid = isset($_GET['uid']) ? intval($_GET['uid']) : FALSE;
+$clean_post_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : FALSE;
 
 $article_feed = new icms_feeds_Rss();
 
 $article_feed->title = $icmsConfig['sitename'] . ' - ' . $icmsModule->name();
-$article_feed->url = XOOPS_URL;
+$article_feed->url = ICMS_URL;
 $article_feed->description = $icmsConfig['slogan'];
 $article_feed->language = _LANGCODE;
 $article_feed->charset = _CHARSET;
 $article_feed->category = $icmsModule->name();
 
-$article_post_handler = icms_getModuleHandler("post", basename(dirname(__FILE__)), "article");
-//ArticlePostHandler::getPosts($start = 0, $limit = 0, $post_uid = FALSE, $year = FALSE, $month = FALSE
-$postsArray = $article_post_handler->getPosts(0, 10, $clean_post_uid);
+$article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
+$postsArray = $article_article_handler->getDownloads(0, 10, FALSE, $clean_post_uid);
 
 foreach($postsArray as $postArray) {
+	
 	$article_feed->feeds[] = array (
-	  'title' => $postArray['post_title'],
-	  'link' => str_replace('&', '&amp;', $postArray['itemUrl']),
-	  'description' => htmlspecialchars(str_replace('&', '&amp;', $postArray['post_lead']), ENT_QUOTES),
-	  'pubdate' => $postArray['post_published_date_int'],
-	  'guid' => str_replace('&', '&amp;', $postArray['itemUrl']),
+	  'title' => $postArray['title'],
+	  'link' => str_replace('&', '&amp;', $postArray['itemURL']),
+	  'author' => $postArray['publisher'],
+	  'description' => icms_core_DataFilter::htmlSpecialChars(str_replace('&', '&amp;', $postArray['teaser']), ENT_QUOTES, _CHARSET),
+	  'pubdate' => $postArray['article_published_date'],
+	  'guid' => str_replace('&', '&amp;', $postArray['itemURL']),
+	  'category' => $postArray['cats'],
+	  
 	);
 }
-
 $article_feed->render();
-*/

@@ -43,6 +43,81 @@ if($articleObj && !$articleObj->isNew()) {
 	$icmsTpl->assign("article_article_table", $objectTable->fetch());
 }
 
-$icmsTpl->assign("article_module_home", '<a href="' . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . '/">' . icms::$module->getVar("name") . "</a>");
+
+include_once 'header.php';
+
+$xoopsOption['template_main'] = 'article_forms.html';
+
+include_once ICMS_ROOT_PATH . '/header.php';
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$clean_index_key = $indexpageObj = $article_indexpage_handler = $indexpageObj = '';
+$clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
+$article_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'article' );
+
+$indexpageObj = $article_indexpage_handler->get($clean_index_key);
+$index = $indexpageObj->toArray();
+$icmsTpl->assign('article_index', $index);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$clean_article_id = isset($_GET['article_id']) ? filter_input(INPUT_GET, 'article_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start', FILTER_SANITIZE_NUMBER_INT) : 0;
+
+$valid_op = array ('mod', 'addarticle', 'del');
+
+$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
+
+
+$article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
+
+if (in_array($clean_op, $valid_op, TRUE)) {
+	switch ($clean_op) {
+		case('mod'):
+			$articleObj = $article_article_handler->get($clean_article_id);
+			if ($clean_article_id > 0 && $articleObj->isNew()) {
+				redirect_header(ARTICLE_URL, 3, _NO_PERM);
+			}
+			editarticle($articleObj);
+			break;
+		
+		case('addarticle'):
+			if (!icms::$security->check()) {
+				redirect_header('index.php', 3, _MD_ARTICLE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
+			}
+			$articleObj = $article_article_handler->get($clean_article_id);
+			$articleObj->sendDownloadNotification('file_submitted');
+			$controller = new icms_ipf_Controller($article_article_handler);
+			$controller->storeFromDefaultForm(_MD_ARTICLE_DOWNLOAD_CREATED, _MD_ARTICLE_DOWNLOAD_MODIFIED);
+			break;
+		case('del'):
+			$articleObj = $article_article_handler->get($clean_article_id);
+			if (!$articleObj->userCanEditAndDelete()) {
+				redirect_header($categoryObj->getItemLink(true), 3, _NOPERM);
+			}
+			if (isset($_POST['confirm'])) {
+				if (!icms::$security->check()) {
+					redirect_header('index.php', 3, _MD_ARTICLE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
+				}
+			}
+			$controller = new icms_ipf_Controller($article_article_handler);
+			$controller->handleObjectDeletionFromUserSide();
+			break;
+	}
+} else {
+	redirect_header(ARTICLE_URL, 3, _NOPERM);
+}
+
+if( $articleConfig['show_breadcrumbs'] == true ) {
+	$icmsTpl->assign('article_show_breadcrumb', true);
+} else {
+	$icmsTpl->assign('article_show_breadcrumb', false);
+}
 
 include_once "footer.php";

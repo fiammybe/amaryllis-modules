@@ -77,8 +77,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->initCommonVar("doimage", FALSE, 1);
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		$this->initCommonVar("docxode", FALSE, 1);
-		$this->quickInitVar("article_like", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("article_dislike", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("article_notification_sent", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("article_stats_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
@@ -514,7 +512,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['image'] = $this->getArticleImageTag(TRUE);
 		$ret['teaser'] = $this->getArticleTeaser();
 		$ret['body'] = $this->getVar("article_body", "e");
-		$ret['license'] = $this->getArticleLicense();
 		$ret['file'] = $this->getArticleAttachment(TRUE, FALSE);
 		$ret['filesize'] = $this->getFileSize();
 		$ret['filetype'] = $this->getFileType();
@@ -525,8 +522,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['published_on'] = $this->getArticlePublishedDate();
 		$ret['updated_on'] = $this->getArticleUpdatedDate();
 		$ret['counter'] = $this->getVar("counter", "e");
-		$ret['like'] = $this->getVar("article_like", "e");
-		$ret['dislike'] = $this->getVar("article_dislike", "e");
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();

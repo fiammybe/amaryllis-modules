@@ -52,7 +52,7 @@ if($categories > 0) {
 	$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 	if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 	
-	$valid_op = array ("mod", "changedField", "addarticle", "del", "view", "");
+	$valid_op = array ('mod', 'changedField', 'addarticle', 'del', 'view', 'visible', 'changeShow', 'changeBroken', 'changeApprove', 'changeWeight', '');
 	
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 	$clean_article_id = isset($_GET["article_id"]) ? filter_input(INPUT_GET, "article_id", FILTER_SANITIZE_NUMBER_INT) : 0 ;
@@ -73,21 +73,6 @@ if($categories > 0) {
 			case "del":
 				$controller = new icms_ipf_Controller($article_article_handler);
 				$controller->handleObjectDeletion();
-				
-				$article_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "article");
-				if (!is_object(icms::$user)) {
-					$log_uid = 0;
-				} else {
-					$log_uid = icms::$user->getVar("uid");
-				}
-				$logObj = $article_log_handler->create();
-				$logObj->setVar('log_item_id', $obj->id() );
-				$logObj->setVar('log_date', (time()-200) );
-				$logObj->setVar('log_uid', $log_uid);
-				$logObj->setVar('log_item', 1 );
-				$logObj->setVar('log_case', 2 );
-				$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
-				$logObj->store(TRUE);
 				break;
 	
 			case "view" :
@@ -177,9 +162,6 @@ if($categories > 0) {
 				if($articleConfig['need_attachments'] == 1) {
 					$objectTable->addColumn( new icms_ipf_view_Column( 'article_broken_file', 'center', 50, 'article_broken_file' ) );
 				}
-				if($articleConfig['need_videos'] == 1) {
-					$objectTable->addColumn( new icms_ipf_view_Column( 'article_broken_video', 'center', 50, 'article_broken_video' ) );
-				}
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_published_date', 'center', 100, 'getArticlePublishedDate' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_publisher', 'center', true, 'article_publisher' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getArticleWeightControl' ) );
@@ -187,9 +169,9 @@ if($categories > 0) {
 				$objectTable->addFilter('article_active', 'article_active_filter');
 				$objectTable->addFilter('article_inblocks', 'article_inblocks_filter');
 				$objectTable->addFilter('article_approve', 'article_approve_filter');
-				$objectTable->addFilter('article_broken_file', 'article_broken_file_filter');
-				$objectTable->addFilter('article_broken_video', 'article_broken_video_filter');
-				$objectTable->addFilter('article_cid', 'getCategoryList');
+				if($articleConfig['need_attachments'] == 1) {
+					$objectTable->addFilter('article_broken_file', 'article_broken_filter');
+				}
 				
 				$objectTable->addQuickSearch(array('article_title', 'article_teaser', 'article_history', 'article_body', 'article_steps', 'article_tips'));
 				
