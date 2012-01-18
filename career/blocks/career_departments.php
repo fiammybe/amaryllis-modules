@@ -36,7 +36,7 @@ function b_career_departments_edit($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$career_department_handler = icms_getModuleHandler("department", basename(dirname(dirname(__FILE__))), "career");
-	$sort = array('weight' => _CO_CAREER_DEPARTMENT_DEPARTMENT_WEIGHT, 'department_title' => _CO_CAREER_DEPARTMENT_DEPARTMENT_DEPARTMENT_TITLE);
+	$sort = array('weight' => _CO_CAREER_DEPARTMENT_DEPARTMENT_WEIGHT, 'department_title' => _CO_CAREER_DEPARTMENT_DEPARTMENT_TITLE);
 	$selsort = new icms_form_elements_Select('', 'options[0]', $options[0]);
 	$selsort->addOptionArray($sort);
 	$order = array('ASC' => 'ASC' , 'DESC' => 'DESC');

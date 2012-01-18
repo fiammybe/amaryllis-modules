@@ -61,6 +61,7 @@ class CareerMessageHandler extends icms_ipf_Handler {
 		foreach ($messages as $key => $message) {
 			$ret[$message['message_id']] = $message;
 		}
+		return $ret;
 	}
 	
 	/**

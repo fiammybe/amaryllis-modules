@@ -19,7 +19,7 @@
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
-function b_career_departments_show($options) {
+function b_career_recent_careers_show($options) {
 	global $careerConfig;
 	
 	$moddir = basename(dirname(dirname(__FILE__)));
@@ -28,22 +28,22 @@ function b_career_departments_show($options) {
 	$uid = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
 	$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
 	$career_career_handler = icms_getModuleHandler("career", basename(dirname(dirname(__FILE__))), "career");
-	$block['career_career'] = $career_career_handler->getCareers(TRUE, $options[2], $options[3], 0, $options[0], $options[1]);
+	$block['career_career'] = $career_career_handler->getCareers(TRUE, $options[1], $options[2], FALSE, $options[3], $options[0]);
 	return $block;
 }
 
-function b_career_departments_edit($options) {
+function b_career_recent_careers_edit($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$career_department_handler = icms_getModuleHandler("department", basename(dirname(dirname(__FILE__))), "career");
-	$sort = array('weight' => _CO_CAREER_CAREER_CAREER_WEIGHT, 'career_title' => _CO_CAREER_CAREER_CAREER_CAREER_TITLE, 'career_p_date' => _CO_CAREER_CAREER_CAREER_CAREER_P_DATE);
+	$sort = array('weight' => _CO_CAREER_CAREER_WEIGHT, 'career_title' => _CO_CAREER_CAREER_CAREER_TITLE, 'career_p_date' => _CO_CAREER_CAREER_CAREER_P_DATE);
 	$selsort = new icms_form_elements_Select('', 'options[2]', $options[2]);
 	$selsort->addOptionArray($sort);
 	$order = array('ASC' => 'ASC' , 'DESC' => 'DESC');
 	$selorder = new icms_form_elements_Select('', 'options[3]', $options[3]);
 	$selorder->addOptionArray($order);
 	$selcats = new icms_form_elements_Select('', 'options[1]', $options[1]);
-	$selcats->addOptionArray($career_department_handler->getDepartmentList(TRUE));
+	$selcats->addOptionArray($career_department_handler->getDepartmentList(TRUE, TRUE));
 	
 	
 	$form = '<table width="100%">';

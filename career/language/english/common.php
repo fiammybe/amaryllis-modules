@@ -20,11 +20,11 @@
 // constants used throughout the module
 define("_CO_CAREER_PREVIEW", "preview");
 define("_CO_CAREER_EDIT", "edit");
-define("_CO_SUBMIT", "submit");
+if(!defined("_CO_SUBMIT")) define("_CO_SUBMIT", "submit");
 define("_CO_CAREER_DELETE", "delete");
 define("_CO_CAREER_VIEW", "view");
-define("_NO_PERM", "No permissions");
-define("_ER_UP_UNKNOWNFILETYPEREJECTED", "unknown Filetype");
+if(!defined("_NO_PERM")) define("_NO_PERM", "Sorry, you don't have permissions to access this area");
+if(!defined("_ER_UP_UNKNOWNFILETYPEREJECTED")) define("_ER_UP_UNKNOWNFILETYPEREJECTED", "unknown Filetype");
 // constants used in career form
 define("_CO_CAREER_CAREER_CAREER_TITLE", "Title");
 define("_CO_CAREER_CAREER_CAREER_TITLE_DSC", "");
@@ -66,6 +66,7 @@ define("_CO_CAREER_CAREER_CAREER_UPDATER", "Last updated by");
 define("_CO_CAREER_CAREER_CAREER_UPDATER_DSC", "");
 define("_CO_CAREER_CAREER_CAREER_ACTIVE", "Active?");
 define("_CO_CAREER_CAREER_CAREER_ACTIVE_DSC", "");
+define("_CO_CAREER_CAREER_WEIGHT", "Weight");
 
 // constants used in departments form
 define("_CO_CAREER_DEPARTMENT_DEPARTMENT_TITLE", "Title");
@@ -105,7 +106,7 @@ define("_CO_CAREER_DEPARTMENT_DEPARTMENT_U_DATE", "Last updated on");
 define("_CO_CAREER_DEPARTMENT_DEPARTMENT_U_DATE_DSC", "");
 define("_CO_CAREER_DEPARTMENT_DEPARTMENT_ACTIVE", "Active?");
 define("_CO_CAREER_DEPARTMENT_DEPARTMENT_ACTIVE_DSC", "");
-define("_CO_CAREER_DEPARTMENT_DEPARTMENT_WEIGHT", "Weight");
+define("_CO_CAREER_DEPARTMENT_WEIGHT", "Weight");
 // constants for editing indexpage
 define("_CO_CAREER_INDEXPAGE_INDEX_HEADER", "Title");
 define("_CO_CAREER_INDEXPAGE_INDEX_HEADER_DSC", " Set Title displayed in the index at frontend ");
@@ -139,7 +140,7 @@ define("_CO_CAREER_MESSAGE_MESSAGE_CID_DSC", "");
 define("_CO_CAREER_MESSAGE_MESSAGE_DID", "Department");
 define("_CO_CAREER_MESSAGE_MESSAGE_DID_DSC", "");
 define("_CO_CAREER_MESSAGE_MESSAGE_APPROVE", "Possible?");
-
+define("_CO_CAREER_MESSAGE_WEIGHT", "Weight");
 // constants for /admin/message.php and /message.php
 define("_CO_CAREER_MESSAGE_REJECTED", "Rejected");
 define("_CO_CAREER_MESSAGE_POSSIBLE", "Possible");

@@ -23,8 +23,10 @@
 define("_MD_CAREER_ADMIN_PAGE", ":: Admin page ::");
 define("_MD_CAREER_MESSAGES_LINK", " Messages ::");
 define("_MD_CAREER_MESSAGE", "Send Application");
-define("_MD_CAREER_MAILTO", "Advise job offering");
+define("_MD_CAREER_MAILTO", "Advise job offer");
 define("_MD_CAREER_MESSAGES_BC", "Manage Messages");
-define("_MD_CAREER_MESSAGE_OFFLINE", "Rejected");
-define("_MD_CAREER_MESSAGE_ONLINE", "Possible");
+define("_MD_CAREER_VCARD", "Contact informations");
+define("_MD_CAREER_CAREERLIST", "Job offers for this department");
+define("_MD_CAREER_NO_CAREERS", "Sorry, currently there are no job offers for this department.");
+
 
