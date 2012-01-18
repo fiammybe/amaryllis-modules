@@ -34,3 +34,4 @@ define("_AM_CAREER_DEPARTMENT_MODIFIED", "Department successfully modified.");
 define("_AM_CAREER_DEPARTMENT_ADD", "Add new department");
 // constants for admin/indexpage.php
 define("_AM_CAREER_INDEXPAGE_MODIFIED", "Indexpage successfully modified");
+define("_AM_CAREER_INDEXPAGE_EDIT", "Edit Indexpage");
