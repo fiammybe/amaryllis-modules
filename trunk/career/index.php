@@ -74,6 +74,16 @@ if(is_object($departmentObj)) {
 	redirect_header(CAREER_URL, 3, _NO_PERM);
 }
 
+/**
+ * check, if rss feeds are enabled. if so, display link
+ */
+if($careerConfig['use_rss'] == 1) {
+	$icmsTpl->assign("career_show_rss", TRUE);
+}
+
+/**
+ * check, if breadcrumb should be displayed
+ */
 if( $careerConfig['show_breadcrumbs'] == TRUE ) {
 	$icmsTpl->assign('career_show_breadcrumb', TRUE);
 } else {

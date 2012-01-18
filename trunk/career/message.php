@@ -75,8 +75,9 @@ if(!$career_isAdmin) {
 				/**
 				 * check, if breadcrumb should be displayed
 				 */
+				$path = "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/message.php'>" ._MD_CAREER_MESSAGES_BC . "</a>";
 				if ($careerConfig['show_breadcrumbs'] == 1){
-					$icmsTpl->assign('career_cat_path', _MD_CAREER_MESSAGES_BC . "&nbsp;:&nbsp;" . $messageObj->getVar("message_title"));
+					$icmsTpl->assign('career_cat_path', $path . "&nbsp;:&nbsp;" . $messageObj->getVar("message_title"));
 				}else{
 					$icmsTpl->assign('career_cat_path',FALSE);
 				}
@@ -136,8 +137,9 @@ if(!$career_isAdmin) {
 				/**
 				 * check, if breadcrumb should be displayed
 				 */
+				$path = "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/message.php'>" ._MD_CAREER_MESSAGES_BC . "</a>";
 				if ($careerConfig['show_breadcrumbs'] == 1){
-					$icmsTpl->assign('career_cat_path', _MD_CAREER_MESSAGES_BC);
+					$icmsTpl->assign('career_cat_path', $path);
 				}else{
 					$icmsTpl->assign('career_cat_path',FALSE);
 				}

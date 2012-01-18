@@ -12,4 +12,15 @@
 	</div>
 <{/if}>
 
+<{if $career_show_rss}>
+	<div class="career_rss">
+		<a href="<{$career_url}>rss.php" title="RSS-Feeds">
+			<img src="<{$career_images_url}>rss.png" alt="RSS-Feeds" />
+		</a>
+	</div>
+	<div class="career_clear_both">&nbsp;</div>
+<{else}>
+	<div class="career_clear_left">&nbsp;</div>
+<{/if}>
+
 <{$career_index.image}>

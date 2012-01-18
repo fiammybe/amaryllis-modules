@@ -4,48 +4,48 @@
 	<{$career_index.header}>
 	<!-- display index heading -->
 	<{$career_index.heading}>
-
-	<{foreach item=department from=$departments}>
-		<div class="department_logo">
-			<a href="<{$department.itemURL}>" title="<{$department.title}>">
-				<img alt="<{$department.title}>" src="<{$department.logo}>" />
-			</a>
-		</div>
+	<div class="career_departments">
+		<{foreach item=department from=$departments}>
+			<div class="career_department">
+				
+				<div class="department_logo">
+					<a href="<{$department.itemURL}>" title="<{$department.title}>">
+						<img alt="<{$department.title}>" src="<{$department.logo}>" />
+					</a>
+				</div>
+				
+				<div class="department_title">
+					<h3><a href="<{$department.itemURL}>" title="<{$department.title}>"><{$department.title}></a></h3>
+				</div>
+				
+				<div class="department_summary">
+					<{$department.summary}>
+				</div>
+			</div>
 		
-		<div class="department_title">
-			<h3><a href="<{$department.itemURL}>" title="<{$department.title}>"><{$department.title}></a></h3>
-		</div>
-		
-		<div class="department_summary">
-			<{$department.summary}>
-		</div>
-	
-	<{/foreach}>
+		<{/foreach}>
+	</div>
 
 <{/if}>
 
 <{if $single_department}>
 
-	<div class="department_title">
+	<div class="sdepartment_title">
 		<h3><{$single_department.title}></h3>
 	</div>
 	
-	<div class="department_description">
-		<h3><{$single_department.dsc}></h3>
+	<div class="sdepartment_description">
+		<{$single_department.dsc}>
 	</div>
 	
 	<div class="department_informations">				
 		<div class="vcard">
+			<title><{$smarty.const._MD_CAREER_VCARD}></title>
 			<div class="organization-name"><{$career_company_name}></div>
 			<div class="organization-unit extended-address"><{$single_department.title}></div>
 			<span class="fn n">
 				<span class="family-name"><{$single_department.leader}></span>
 			</span>
-			
-			<a class="email" href="mailto:<{$single_department.mail}>">
-				<{$single_department.mail}>
-			</a>
-			<a class="fn org url" href="<{$icms_url}>"><{$icms_sitename}></a>
 			
 			<span class="adr">
 				<span class="street-address"><{$single_department.address}></span>
@@ -55,26 +55,43 @@
 			</span>
 			<div class="tel"><{$single_department.phone}></div>
 			<div class="fax"><{$single_department.fax}></div>
+			
+			<a class="email" href="mailto:<{$single_department.mail}>">
+				<{$single_department.mail}>
+			</a>
+			<a class="fn org url" href="<{$icms_url}>"><{$icms_sitename}></a>
+			
 		</div>
 	</div>
 
-	<{if $careers}>
-		<{foreach item=career from=$careers}>
-			<div class="department_logo">
-				<a href="<{$career.itemURL}>" title="<{$career.title}>">
-					<img alt="<{$career.title}>" src="<{$single_department.logo}>" />
-				</a>
+	<div class="career_list">
+		<h2><{$smarty.const._MD_CAREER_CAREERLIST}></h2>
+		<{if $careers}>
+			<div class="department_careers">
+				<{foreach item=career from=$careers}>
+					<div class="department_career">
+						<div class="department_logo">
+							<a href="<{$career.itemURL}>" title="<{$career.title}>">
+								<img alt="<{$career.title}>" src="<{$single_department.logo}>" />
+							</a>
+						</div>
+						
+						<div class="department_title">
+							<h3><a href="<{$career.itemURL}>" title="<{$career.title}>"><{$career.title}></a></h3>
+						</div>
+					
+						<div class="department_summary">
+							<{$career.summary}>
+						</div>
+					</div>
+				<{/foreach}>
 			</div>
-			
-			<div class="department_title">
-				<h3><a href="<{$career.itemURL}>" title="<{$career.title}>"><{$career.title}></a></h3>
-			</div>
-		
-			<div class="department_summary">
-				<{$career.summary}>
-			</div>
-		<{/foreach}>
-	<{/if}>
-
+		<{else}>
+	
+			<span class="career_no_careers">
+				<{$smarty.const._MD_CAREER_NO_CAREERS}>
+			</span>
+		<{/if}>
+	</div>
 <{/if}>
 <{includeq file='db:career_footer.html'}>
