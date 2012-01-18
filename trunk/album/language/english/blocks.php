@@ -22,5 +22,5 @@
 // Recent Albums block
 define("_MB_ALBUM_ALBUM_RECENT_LIMIT", "Number of new albums to show");
 
-define("_AM_ALBUM_ALBUM_EDIT", "Edit");
+if(!defined("_AM_ALBUM_ALBUM_EDIT")) define("_AM_ALBUM_ALBUM_EDIT", "Edit");
 define("_AM_ALBUM_ALBUM_DELETE", "Delete");
