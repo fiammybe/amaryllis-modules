@@ -27,7 +27,7 @@ define('ARTICLE_DB_VERSION', 1);
 ////////////////////////////////////// SOME NEEDED FUNCTIONS ////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function tutorials_upload_paths() {
+function article_upload_paths() {
 	
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
@@ -76,10 +76,10 @@ function icms_module_update_article($module) {
 
 function icms_module_install_article($module) {
 	// check if upload directories exist and make them if not
-	tutorials_upload_paths();
+	article_upload_paths();
 	
 	//prepare indexpage
-	tutorials_indexpage();
+	article_indexpage();
 
 	return true;
 }
