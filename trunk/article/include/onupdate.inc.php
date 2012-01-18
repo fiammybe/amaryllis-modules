@@ -27,33 +27,21 @@ define('ARTICLE_DB_VERSION', 1);
 ////////////////////////////////////// SOME NEEDED FUNCTIONS ////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function article_upload_paths() {
+function tutorials_upload_paths() {
 	
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$article = ICMS_ROOT_PATH . '/uploads/article';
-	if ( !is_dir( $article . '/categoryimages' ) ) {
-		mkdir( $article . '/categoryimages', 0777, true );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/article/index.html' );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/article/categoryimages/index.html' );
-		//Copy images to new folder
-		$array = array( 'folder_black', 'folder_blue', 'folder_brown', 'folder_cyan', 'folder_green', 'folder_grey', 'folder_orange', 'folder_red', 'folder_violet', 'folder_yellow' );
-		foreach ( $array as $value ) {
-			$contentx =@file_get_contents( ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $value . '.png' );
-			$openedfile = fopen( $article . '/categoryimages/' . $value . '.png', "w" ); 
-			fwrite( $openedfile, $contentx );
-			fclose( $openedfile );
+	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
+		icms_core_Filesystem::mkdir($path . '/categoryimages');
+		$categoryimages = array();
+		$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/' . $moddir .'/images/folders/', '', array('gif', 'jpg', 'png'));
+		foreach($categoryimages as $image) {
+			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/categoryimages/' . $image);
 		}
-	}
-	if ( !is_dir( $article . '/indeximages' ) ) {
-		mkdir( $article . '/indeximages', 0777, true );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/' . $moddir . '/indeximages/index.html' );
-		$contentx =@file_get_contents( ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/article_indeximage.png' );
-		$openedfile = fopen( $article . '/indeximages/article_indeximage.png', "w" ); 
-		fwrite( $openedfile, $contentx ); 
-		fclose( $openedfile );
-	}
-	
+		icms_core_Filesystem::mkdir($path . '/indeximages');
+		$image = 'tutorials_indeximage.png';
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
+		return TRUE;
 }
 
 function article_indexpage() {
@@ -88,10 +76,10 @@ function icms_module_update_article($module) {
 
 function icms_module_install_article($module) {
 	// check if upload directories exist and make them if not
-	article_upload_paths();
+	tutorials_upload_paths();
 	
 	//prepare indexpage
-	article_indexpage();
+	tutorials_indexpage();
 
 	return true;
 }

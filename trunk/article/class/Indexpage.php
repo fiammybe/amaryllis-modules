@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class mod_article_Indexpage extends icms_ipf_Object {
+class ArticleIndexpage extends icms_ipf_Object {
 	/**
 	 * Constructor
 	 *

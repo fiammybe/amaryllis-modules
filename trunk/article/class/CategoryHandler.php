@@ -33,7 +33,7 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 
 	public function __construct($db) {
 		parent::__construct($db, 'category', 'category_id', 'category_title', 'category_description', 'article');
-		$this->addPermission('category_grpperm', _CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM, _CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM_DSC);
+		$this->addPermission('category_grpperm', _CO_ARTICLE_CATEGORY_CATEGORY_GRPPERM, _CO_ARTICLE_CATEGORY_CATEGORY_GRPPERM_DSC);
 		
 		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/categoryimages/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
@@ -357,13 +357,13 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 				$category = $this->get($category_id);
 				if ($category->getVar('category_id', 'e') > 0) {
 					if (!$userside) {
-						$ret = "<a href='" . DOWNLOADS_URL . "index.php?category_id=" . $category->getVar('category_id', 'e') . "&amp;category_pid=" . $category->getVar('category_id', 'e') . "'>" . $category->getVar('category_title', 'e') . "</a>";
+						$ret = "<a href='" . ARTICLE_URL . "index.php?category_id=" . $category->getVar('category_id', 'e') . "&amp;category_pid=" . $category->getVar('category_id', 'e') . "'>" . $category->getVar('category_title', 'e') . "</a>";
 					} else {
-						$ret = "<a href='" . DOWNLOADS_URL . "index.php?category_id=" . $category->getVar('category_id', 'e') . "&amp;category=" . $this->makeLink($category) . "'>" . $category->getVar('category_title', 'e') . "</a>";
+						$ret = "<a href='" . ARTICLE_URL . "index.php?category_id=" . $category->getVar('category_id', 'e') . "&amp;category=" . $this->makeLink($category) . "'>" . $category->getVar('category_title', 'e') . "</a>";
 					}
 					if ($category->getVar('category_pid', 'e') == 0) {
 						if (!$userside){
-							return "<a href='" . DOWNLOADS_URL . "index.php?category_id=" . $category->getVar('category_id', 'e') . "'>" . _MI_DOWNLOADS_CATEGORY . "</a> &nbsp;:&nbsp; " . $ret;
+							return "<a href='" . ARTICLE_URL . "index.php?category_id=" . $category->getVar('category_id', 'e') . "'>" . _MI_ARTICLE_CATEGORY . "</a> &nbsp;:&nbsp; " . $ret;
 						} else {
 							return $ret;
 						}

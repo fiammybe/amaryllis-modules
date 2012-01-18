@@ -24,14 +24,6 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	
 	private $_article_grpperm = array();
 	
-	private $_article_license = array();
-	
-	private $_article_related = array();
-	
-	private $_article_video_sources = array();
-	
-	private $_article_cid = array();
-	
 	/**
 	 * Constructor
 	 *
@@ -72,7 +64,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	 */
 	public function getList($article_active = null) {
 		$criteria = new icms_db_criteria_Compo();
-		if (isset($download_active)) {
+		if (isset($article_active)) {
 			$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
 		}
 		$articles = $this->getObjects($criteria, TRUE);
@@ -137,7 +129,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
 		if($updated == TRUE) $criteria->add(new icms_db_criteria_Item('article_updated', TRUE));
 		if($popular == TRUE) {
-			$pop = $downloadsConfig['article_popular'];
+			$pop = $articleConfig['article_popular'];
 			$critTray = new icms_db_criteria_Compo();
 			$critTray->add(new icms_db_criteria_Item('counter', $pop, ">="));
 			$criteria->add($critTray);
@@ -146,7 +138,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$ret = array();
 		foreach ($articles as $key => &$article){
 			if ($article['accessgranted']){
-				$ret[$article['download_id']] = $article;
+				$ret[$article['article_id']] = $article;
 			}
 		}
 		return $ret;
@@ -195,20 +187,6 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		}
 		$this->insert($articleObj, TRUE);
 		return $approve;
-	}
-	
-	public function changeMirrorApprove($article_id) {
-		$mirror_approve = '';
-		$articleObj = $this->get($article_id);
-		if ($articleObj->getVar('article_mirror_approve', 'e') == TRUE) {
-			$articleObj->setVar('article_mirror_approve', 0);
-			$mirror_approve = 0;
-		} else {
-			$articleObj->setVar('article_mirror_approve', 1);
-			$mirror_approve = 1;
-		}
-		$this->insert($articleObj, TRUE);
-		return $mirror_approve;
 	}
 	
 	public function changeBroken($article_id) {
@@ -276,77 +254,15 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $this->_article_cid;
 	}
 	
-	public function getLink($download_id = NULL) {
-		$file = $this->get($download_id);
+	public function getLink($article_id = NULL) {
+		$file = $this->get($article_id);
 		$link = $file->getItemLink(FALSE);
 		return $link;
 	}
 	
 	public function getRelated() {
-		if (!$this->_article_related) {
-			$related = $this->getList(TRUE);
-			return $related;
-		}
-		return $this->_article_related;
-	}
-	
-	public function getRelatedDownloads() {
-		global $articleConfig;
-		$downloadsModule = icms_getModuleInfo("downloads");
-		if($downloadsModule && $articleConfig['use_downloads'] == 1) {
-			$downloads_download_handler = icms_getModuleHandler("download", $downloadsModule->getVar("dirname"), "downloads");
-			$downloads = $downloads_download_handler->getDownloads(0, 0, FALSE, FALSE, FALSE, 'download_title', 'ASC');
-			$ret = array();
-			$ret[0] = '--None--';
-			foreach(array_keys($downloads) as $i) {
-				$ret[$downloads[$i]['download_id']] = $downloads[$i]['download_title'];
-			}
-			return $ret;
-		}
-	}
-	
-	public function getAlbumList() {
-		global $articleConfig;
-		$albumModule = icms_getModuleInfo('album');
-		if($albumModule && $articleConfig['use_album'] == 1) {
-			$album_album_handler = icms_getModuleHandler ('album', $albumModule->getVar('dirname'), 'album');
-			$albumObjects = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, 0, 0, FALSE, FALSE,  FALSE, 'weight', 'ASC');
-			$ret = array();
-			$ret[0] = '--None--';
-			foreach(array_keys($albumObjects) as $i) {
-				$ret[$albumObjects[$i]['album_id']] = $albumObjects[$i]['album_title'];
-			}
-			return $ret;
-		}
-	}
-	
-	public function getArticleLicense() {
-		global $articleConfig;
-		if (!$this->_article_license) {
-			$license_array = explode(",", $articleConfig['article_license']);
-			$license = array();
-			foreach (array_keys($license_array) as $i) {
-				$license[$license_array[$i]] = $license_array[$i];
-			}
-			return $license;
-		}
-		return $this->_article_license;
-	}
-	
-	public function getArticleVideoSources() {
-		global $articleConfig;
-		if($articleConfig['need_videos'] == 1) {
-			if (!$this->_article_license) {
-				$sources_array = array(1 => "MyTube", 2 => "YouTube", 3 => "MetaCafe", 4 => "Spike", 5 => "Viddler", 6 => "MySpace TV", 7 => "DailyMotion", 8 => "Blip.tv", 9 => "ClipFish", 10 => "LiveLeak", 11 => "Veoh", 12 => "Vimeo", 13 => "MegaVideo", 14 => "National Geographik");
-				$sources = var_dump($sources_array);
-				$ret = array();
-				foreach (array_keys($sources) as $i) {
-					$ret[$sources[$i]] = $sources[$i];
-				}
-				return $ret;
-			}
-			return $this->_article_video_sources;
-		}
+		$related = $this->getList(TRUE);
+		return $related;
 	}
 	
 	public function getGroups($criteria = null) {
@@ -374,7 +290,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$count = $this->getCount(new icms_db_criteria_Item("short_url", $article->getVar("short_url")));
 
 		if ($count > 1) {
-			return $download->getVar('article_id');
+			return $article->getVar('article_id');
 		} else {
 			$seo = str_replace(" ", "-", $article->getVar('short_url'));
 			return $seo;
@@ -413,15 +329,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$teaser = $obj->getVar("article_teaser", "s");
 		$teaser = icms_core_DataFilter::checkVar($teaser, "html", "input");
 		$obj->setVar("article_teaser", $teaser);
-		
-		$history = $obj->getVar("article_history", "s");
-		$history = icms_core_DataFilter::checkVar($history, "html", "input");
-		$obj->setVar("article_history", $history);
-		
-		$conclusion = $this->getVar("article_conclusion", "s");
-		$conclusion = icms_core_DataFilter::checkVar($conclusion, "html", "input");
-		$obj->setVar("article_conclusion", $conclusion);
-		
+		return TRUE;
 	}
 	
 	protected function afterSave(&$obj) {
