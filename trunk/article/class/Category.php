@@ -31,8 +31,8 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$this->quickInitVar("category_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("category_title", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->initCommonVar("short_url");
-		$this->quickInitVar("category_descriprion", XOBJ_DTYPE_TXTAREA, FALSE);
-		$this->quickInitVar("category_pid", XOBJ_DTYPE_CURRENCY, FALSE);
+		$this->quickInitVar("category_description", XOBJ_DTYPE_TXTAREA, FALSE);
+		$this->quickInitVar("category_pid", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("category_image", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("category_image_upl", XOBJ_DTYPE_IMAGE, FALSE);
 		$this->quickInitVar("category_grpperm", XOBJ_DTYPE_TXTBOX, FALSE);
@@ -42,10 +42,10 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$this->quickInitVar("category_updater", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("category_published_date", XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar("category_updated_date", XOBJ_DTYPE_LTIME, FALSE);
-		$this->quickInitVar("category_active", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("category_approve", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("category_inblocks", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("category_updated", XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar("category_active", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
+		$this->quickInitVar("category_approve", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
+		$this->quickInitVar("category_inblocks", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
+		$this->quickInitVar("category_updated", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->initCommonVar("weight");
 		$this->initCommonVar("counter");
 		$this->initCommonVar("dohtml", FALSE, 1);
@@ -54,20 +54,22 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$this->initCommonVar("docxode", FALSE, 1);
 		$this->quickInitVar("category_notification_sent", XOBJ_DTYPE_INT, FALSE);
 		
-		$this->setControl("category_image", array("name" => "select", "itemhandler" => "category", "method" => "getImageList", "module" => "article"));
+		$this->setControl("category_pid", array("name" => "select", "itemHandler" => "category", "method" => "getCategoryListForPid", "module" => "article"));
+		$this->setControl("category_description", "dhtmltextarea");
+		$this->setControl("category_image", array("name" => "select", "itemHandler" => "category", "method" => "getImageList", "module" => "article"));
 		$this->setControl("category_image_upl", "image");
 		$this->setControl("category_publisher", "user");
-		$this->setControl("category_grpperm", array("name" => "select_multi", "itemhandler" => "category", "method" => "getGroups", "module" => "article"));
+		$this->setControl("category_grpperm", array("name" => "select_multi", "itemHandler" => "category", "method" => "getGroups", "module" => "article"));
 		$this->setControl("category_uplperm", "group_multi");
 		$this->setControl("category_active", "yesno");
 		$this->setControl("category_approve", "yesno");
 		$this->setControl("category_inblocks", "yesno");
 		$this->setControl("category_updated", "yesno");
+		
 
-		$this->hideFieldFromForm(array("category_published_date", "category_updated_date", "weight", "counter", "category_submitter", "category_updater"));
+		$this->hideFieldFromForm(array("category_notification_sent", "category_published_date", "category_updated_date", "weight", "counter", "category_submitter", "category_updater"));
 		$this->hideFieldFromSingleView(array("dohtml", "doimage", "dosmiley", "doxcode"));
 
-		$this->initiateSEO();
 	}
 
 	public function getVar($key, $format = 's') {
@@ -146,7 +148,7 @@ class ArticleCategory extends icms_ipf_seo_Object {
 	
 	public function getCategoryImageTag() {
 		$category_img = $image_tag = '';
-		$category_img = $this->getVar('category_img', 'e');
+		$category_img = $this->getVar('category_image', 'e');
 		if (!empty($category_img)) {
 			$image_tag = ARTICLE_UPLOAD_URL . 'categoryimages/' . $category_img;
 		}
@@ -157,10 +159,10 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$active = $this->getVar('category_active', 'e');
 		if ($active == FALSE) {
 			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/stop.png" alt="Offline" /></a>';
+				<img src="' . ARTICLE_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
 			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=visible">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="Online" /></a>';
+				<img src="' . ARTICLE_IMAGES_URL . 'visible.png" alt="Online" /></a>';
 		}
 	}
 	
@@ -168,10 +170,10 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$active = $this->getVar('category_inblocks', 'e');
 		if ($active == FALSE) {
 			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeShow">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Hidden" /></a>';
+				<img src="' . ARTICLE_IMAGES_URL . 'denied.png" alt="Hidden" /></a>';
 		} else {
 			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeShow">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Visible" /></a>';
+				<img src="' . ARTICLE_IMAGES_URL . 'approved.png" alt="Visible" /></a>';
 		}
 	}
 	
@@ -179,10 +181,10 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$active = $this->getVar('category_approve', 'e');
 		if ($active == FALSE) {
 			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeApprove">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/0.png" alt="Denied" /></a>';
+				<img src="' . ARTICLE_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
 		} else {
 			return '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_id=' . $this->getVar('category_id') . '&amp;op=changeApprove">
-				<img src="' . ICMS_IMAGES_SET_URL . '/actions/1.png" alt="Approved" /></a>';
+				<img src="' . ARTICLE_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
 		}
 	}
 	
@@ -212,8 +214,8 @@ class ArticleCategory extends icms_ipf_seo_Object {
 	}
 	
 	function getArticlesCount() {
-		$article_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'article');
-		$files_count = $article_download_handler->getCountCriteria(TRUE, TRUE, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $this->getVar("category_id"));
+		$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
+		$files_count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups = array(), $perm = 'category_grpperm', $article_publisher = FALSE, $article_id = FALSE, $this->getVar("category_id"));
 		
 		return $files_count;
 	}
@@ -293,7 +295,7 @@ class ArticleCategory extends icms_ipf_seo_Object {
 	}
 	
 	function getEditAndDelete() {
-		$article_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'article');
+		$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
 		if($article_article_handler->userCanSubmit($this->id())) {
 			return ARTICLE_URL . 'article.php?op=mod&amp;category_id=' . $this->id();
 		} else {

@@ -17,30 +17,51 @@
  *
  */
 
-$adminmenu[] = array(
-	"title" => _MI_ARTICLE_MENU_CATEGORYS,
-	"link" => "admin/category.php");
-$adminmenu[] = array(
-	"title" => _MI_ARTICLE_MENU_ARTICLES,
-	"link" => "admin/article.php");
-$adminmenu[] = array(
-	"title" => _MI_ARTICLE_MENU_INDEXPAGES,
-	"link" => "admin/indexpage.php");
+$i = 0;
+
+$adminmenu[$i]['title'] = _MI_ARTICLE_MENU_INDEX;
+$adminmenu[$i]['link'] = 'admin/index.php';
+
+$i++;
+$adminmenu[$i]['title'] = _MI_ARTICLE_MENU_ARTICLE;
+$adminmenu[$i]['link'] = 'admin/article.php';
+
+$i++;
+$adminmenu[$i]['title'] = _MI_ARTICLE_MENU_CATEGORY;
+$adminmenu[$i]['link'] = 'admin/category.php';
+
+$i++;
+$adminmenu[$i]['title'] = _MI_ARTICLE_MENU_INDEXPAGE;
+$adminmenu[$i]['link'] = 'admin/indexpage.php?op=mod&index_id=1';
 
 
-$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))));
+global $icmsConfig;
+$articleModule = icms_getModuleInfo( basename( dirname( dirname( __FILE__) ) ) );
+$moddir = basename( dirname( dirname( __FILE__) ) );
+$i = 0;
+	
+	$headermenu[$i]['title'] = _CO_ICMS_GOTOMODULE;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/';
 
-$headermenu[] = array(
-	"title" => _PREFERENCES,
-	"link" => "../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $module->getVar("mid"));
-$headermenu[] = array(
-	"title" => _CO_ICMS_GOTOMODULE,
-	"link" => ICMS_URL . "/modules/article/");
-$headermenu[] = array(
-	"title" => _CO_ICMS_UPDATE_MODULE,
-	"link" => ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=" . basename(dirname(dirname(__FILE__))));
-$headermenu[] = array(
-	"title" => _MODABOUT_ABOUT,
-	"link" => ICMS_URL . "/modules/article/admin/about.php");
+	$i++;
+	$headermenu[$i]['title'] = _PREFERENCES;
+	$headermenu[$i]['link'] = '../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $articleModule-> getVar ('mid');
+	
+	$i++;
+	$headermenu[$i]['title'] = _MI_ARTICLE_MENU_TEMPLATES;
+	$headermenu[$i]['link'] = '../../system/admin.php?fct=tplsets&op=listtpl&tplset=' . $icmsConfig['template_set'] . '&moddir=' . $moddir;
 
+	$i++;
+	$headermenu[$i]['title'] = _CO_ICMS_UPDATE_MODULE;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $moddir;
+	
+	$i++;
+	$headermenu[$i]['title'] = _MI_ARTICLE_MENU_MANUAL;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/manual.php';
+
+	$i++;
+	$headermenu[$i]['title'] = _MODABOUT_ABOUT;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/about.php';
+	
+	
 unset($module_handler);

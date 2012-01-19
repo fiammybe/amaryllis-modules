@@ -53,27 +53,3 @@
 <{if $addindexpage}>
 	<{includeq file='db:system_common_form.html' form=$addindexpage}>
 <{/if}>
-
-<!-- admin review page -->
-<{if $article_review_title}>
-	<h1><{$article_review_title}></h1>
-<{/if}>
-<{if $article_review_info}>
-	<p><{$article_review_info}></p>
-<{/if}>
-<{if $article_review_table}>
-	<{$article_review_table}>
-<{/if}>
-<{if $addreview}>
-	<{includeq file='db:system_common_form.html' form=$addreview}>
-<{/if}>
-<!-- admin log page -->
-<{if $article_log_title}>
-	<h1><{$article_log_title}></h1>
-<{/if}>
-<{if $article_log_info}>
-	<p><{$article_log_info}></p>
-<{/if}>
-<{if $article_log_table}>
-	<{$article_log_table}>
-<{/if}>

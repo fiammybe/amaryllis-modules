@@ -1,0 +1,38 @@
+<div class="download_cat_frame table_cell">
+	<div class="article_category" original-title="<{$category.title}>">
+		<!-- Category title -->
+		<h3><a href="<{$category.itemURL}>" title=""><{$category.title}></a></h3>
+		
+		<!-- category image -->
+		<div class="article_cat_img">
+			<a href="<{$category.itemURL}>">
+				<img src="<{$category.img}>" alt="" title="<{$category.title}>" />
+			</a>
+		</div>
+											
+		<div class="article_cat_icons">
+			<{if $category.userCanEditAndDelete}>
+				<{$category.editItemLink}><{$category.deleteItemLink}>
+			<{/if}>
+			<{if $category.user_upload}>
+				<a class="<{if $article_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$category.user_upload}>" title="<{$smarty.const._MD_ARTICLE_UPLOAD}>">
+					<img style="vertical-align: middle;" src="<{$article_images_url}>add_file.png" title="<{$smarty.const._MD_ARTICLE_UPLOAD}>" alt="<{$smarty.const._MD_ARTICLE_UPLOAD}>" />
+				</a>
+			<{/if}>
+			<{if $category.user_submit}>
+				<a class="<{if $article_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$category.user_submit}>" title="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>">
+					<img style="vertical-align: middle;" src="<{$article_images_url}>add_cat.png" title="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>" />
+				</a>
+			<{/if}>
+		</div>
+	</div><!-- E N D .article_category -->
+	<div class="popup">
+		<div class="article_cat_desc">
+			<{if $category.dsc}>
+				<{$category.dsc}>
+			<{else}>
+				<{$smarty.const._MD_ARTICLE_NO_CATEGORY_DSC}>
+			<{/if}>
+		</div>
+	</div>
+</div>

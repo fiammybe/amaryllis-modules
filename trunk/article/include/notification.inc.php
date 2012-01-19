@@ -1,13 +1,20 @@
 <?php
 /**
- * Common functions used by the module
+ * 'Article' is an article management module for ImpressCMS
  *
+ * File: /include/notification.inc.php
+ * 
+ * Notification lookup function
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Article
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		article
  * @version		$Id$
+ * @package		article
+ *
  */
 
 /**

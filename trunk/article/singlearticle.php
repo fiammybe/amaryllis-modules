@@ -34,7 +34,6 @@ function addtags($clean_tag_id = 0, $clean_article_id = 0){
 	} else {
 		exit;
 	}
-	
 }
 
 include_once "header.php";

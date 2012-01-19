@@ -40,26 +40,21 @@ class ArticleIndexpageHandler extends icms_ipf_Handler {
 	public function getImagePath() {
 		$dir = $this->_uploadPath;
 		if (!file_exists($dir)) {
-			icms_core_Filesystem::mkdir($dir);
+			$moddir = basename(dirname(dirname(__FILE__)));
+			icms_core_Filesystem::mkdir($dir, "0777", ICMS_ROOT_PATH . '/uploads/' . $moddir . '/' );
 		}
 		return $dir . "/";
 	}
 	
 	static public function getImageList() {
 		$indeximages = array();
-		$indeximages = icms_core_Filesystem::getFileList(DOWNLOADS_UPLOAD_ROOT . 'indeximages/', '', array('gif', 'jpg', 'png'));
+		$indeximages = icms_core_Filesystem::getFileList(ARTICLE_UPLOAD_ROOT . 'indeximages/', '', array('gif', 'jpg', 'png'));
 		$ret = array();
 		$ret[0] = '-----------------------';
 		foreach(array_keys($indeximages) as $i ) {
 			$ret[$i] = $indeximages[$i];
 		}
 		return $ret;
-	}
-	
-	// some related functions for storing
-	protected function beforeSave(&$obj) {
-		
-		
 	}
 	
 	public function beforeInsert(&$obj)	{

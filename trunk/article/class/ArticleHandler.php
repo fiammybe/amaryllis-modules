@@ -59,6 +59,17 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return TRUE;
 	}
 	
+	static public function getImageList() {
+		$articleimages = array();
+		$articleimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/uploads/' . icms::$module -> getVar( 'dirname' ) . '/article/', '', array('gif', 'jpg', 'png'));
+		$ret = array();
+		$ret[0] = '-----------------------';
+		foreach(array_keys($articleimages) as $i ) {
+			$ret[$i] = $articleimages[$i];
+		}
+		return $ret;
+	}
+	
 	/**
 	 * some ways to retrieve articles
 	 */
@@ -101,7 +112,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	
 	public function getArticles($start = 0, $limit = 0,$tag_id = FALSE, $article_publisher = FALSE, $article_id = FALSE,  $article_cid = FALSE, $order = 'weight', $sort = 'ASC') {
 		
-		$criteria = $this->getDownloadsCriteria($start, $limit, $article_publisher, $article_id,  $article_cid, $order, $sort);
+		$criteria = $this->getArticleCriteria($start, $limit, $article_publisher, $article_id,  $article_cid, $order, $sort);
 		if($tag_id) {
 			$critTray = new icms_db_criteria_Compo();
 			$critTray->add(new icms_db_criteria_Item("article_tags", '%:"' . $tag_id . '";%', "LIKE"));
@@ -309,7 +320,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		if (is_null($article_cid)) $article_cid = 0;
 		if ($article_cid != FALSE)	{
 			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("article_cid", "%" . $article_cid . "%", "LIKE"));
+			$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
 		
@@ -324,11 +335,71 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	
 	}
 	
+	//update hit-counter
+	public function updateCounter($article_id) {
+		global $article_isAdmin;
+		$articleObj = $this->get($article_id);
+		if (!is_object($articleObj)) return false;
+
+		if (isset($articleObj->vars['counter']) && !is_object(icms::$user) || (!$article_isAdmin && $articleObj->getVar('article_submitter', 'e') != icms::$user->getVar("uid")) ) {
+			$new_counter = $articleObj->getVar('counter') + 1;
+			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
+				. ' WHERE ' . $this->keyName . '=' . $articleObj->id();
+			$this->query($sql, null, true);
+		}
+		return true;
+	}
+	
+	// some fuctions related to icms core functions
+	public function getArticlesForSearch($queryarray, $andor, $limit, $offset, $userid) {
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->setStart($offset);
+		$criteria->setLimit($limit);
+		if ($userid != 0){
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("article_publisher", '%:"' . $userid . '";%', "LIKE"));
+			$criteria->add($critTray);
+		}
+
+		if ($queryarray) {
+			$criteriaKeywords = new icms_db_criteria_Compo();
+			for($i = 0; $i < count($queryarray); $i ++) {
+				$criteriaKeyword = new icms_db_criteria_Compo();
+				$criteriaKeyword->add(new icms_db_criteria_Item('article_title', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+				$criteriaKeyword->add(new icms_db_criteria_Item('article_description', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+				$criteriaKeywords->add($criteriaKeyword, $andor);
+				unset($criteriaKeyword);
+			}
+			$criteria->add($criteriaKeywords);
+		}
+		$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
+		$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
+		return $this->getObjects($criteria, TRUE, FALSE);
+	}
+
+	public function updateComments($article_id, $total_num) {
+		$articleObj = $this->get($article_id);
+		if ($articleObj && !$articleObj->isNew()) {
+			$articleObj->setVar('article_comments', $total_num);
+			$this->insert($articleObj, TRUE);
+		}
+	}
+	
 	
 	protected function beforeInsert(&$obj) {
 		$teaser = $obj->getVar("article_teaser", "s");
 		$teaser = icms_core_DataFilter::checkVar($teaser, "html", "input");
 		$obj->setVar("article_teaser", $teaser);
+		return TRUE;
+	}
+	
+	protected function beforeSave(&$obj) {
+		$body = $obj->getVar("article_body", "s");
+		$body_parts = explode('[pagebreak]', $body);
+		$obj->setVar("article_pagescount", count($body_parts));
+		if (!$obj->getVar('article_img_upl') == "") {
+			$obj->setVar('article_img', $obj->getVar('article_img_upl') );
+		}
 		return TRUE;
 	}
 	

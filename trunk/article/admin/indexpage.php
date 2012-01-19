@@ -17,88 +17,42 @@
  *
  */
 
-/**
- * Edit a Indexpage
- *
- * @param int $indexpage_id Indexpageid to be edited
-*/
-function editindexpage($indexpage_id = 0) {
-	global $article_indexpage_handler, $icmsModule, $icmsAdminTpl;
+function editform($indexkey = 1, $indeximage = true) {
 
-	$indexpageObj = $article_indexpage_handler->get($indexpage_id);
+	global $article_indexpage_handler, $icmsAdminTpl;
 
-	if (!$indexpageObj->isNew()){
-		$icmsModule->displayAdminMenu(2, _AM_ARTICLE_INDEXPAGES . " > " . _CO_ICMS_EDITING);
-		$sform = $indexpageObj->getForm(_AM_ARTICLE_INDEXPAGE_EDIT, "addindexpage");
-		$sform->assign($icmsAdminTpl);
-	} else {
-		$icmsModule->displayAdminMenu(2, _AM_ARTICLE_INDEXPAGES . " > " . _CO_ICMS_CREATINGNEW);
-		$sform = $indexpageObj->getForm(_AM_ARTICLE_INDEXPAGE_CREATE, "addindexpage");
-		$sform->assign($icmsAdminTpl);
+	$indexpageObj = $article_indexpage_handler->get($indexkey);	
+	$sform = $indexpageObj -> getForm(_AM_ARTICLE_INDEXPAGE_EDIT, 'addindexpage');
+	$sform->assign($icmsAdminTpl);
 
-	}
-	$icmsAdminTpl->display("db:article_admin_indexpage.html");
+	$icmsAdminTpl->display('db:article_admin.html');
+	
 }
 
 include_once "admin_header.php";
 
+$clean_indexkey = $clean_op = $valid_op = '';
+
 $article_indexpage_handler = icms_getModuleHandler("indexpage", basename(dirname(dirname(__FILE__))), "article");
-/** Use a naming convention that indicates the source of the content of the variable */
-$clean_op = "";
-/** Create a whitelist of valid values, be sure to use appropriate types for each value
- * Be sure to include a value for no parameter, if you have a default condition
- */
-$valid_op = array ("mod", "changedField", "addindexpage", "del", "view", "");
 
-if (isset($_GET["op"])) $clean_op = htmlentities($_GET["op"]);
-if (isset($_POST["op"])) $clean_op = htmlentities($_POST["op"]);
+$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-/** Again, use a naming convention that indicates the source of the content of the variable */
-$clean_indexpage_id = isset($_GET["indexpage_id"]) ? (int)$_GET["indexpage_id"] : 0 ;
+$valid_op = array ( 'mod','addindexpage' );
 
-/**
- * in_array() is a native PHP function that will determine if the value of the
- * first argument is found in the array listed in the second argument. Strings
- * are case sensitive and the 3rd argument determines whether type matching is
- * required
-*/
-if (in_array($clean_op, $valid_op, TRUE)) {
-	switch ($clean_op) {
-		case "mod":
-		case "changedField":
-			icms_cp_header();
-			editindexpage($clean_indexpage_id);
-			break;
+$clean_indexkey = isset($_GET['index_id']) ? (int) $_GET['index_id'] : 1 ;
 
-		case "addindexpage":
-			$controller = new icms_ipf_Controller($article_indexpage_handler);
-			$controller->storeFromDefaultForm(_AM_ARTICLE_INDEXPAGE_CREATED, _AM_ARTICLE_INDEXPAGE_MODIFIED);
-			break;
-
-		case "del":
-			$controller = new icms_ipf_Controller($article_indexpage_handler);
-			$controller->handleObjectDeletion();
-			break;
-
-		case "view" :
-			$indexpageObj = $article_indexpage_handler->get($clean_indexpage_id);
-			icms_cp_header();
-			$indexpageObj->displaySingleObject();
-			break;
-
-		default:
-			icms_cp_header();
-			$icmsModule->displayAdminMenu(2, _AM_ARTICLE_INDEXPAGES);
-			$objectTable = new icms_ipf_view_Table($article_indexpage_handler);
-			$objectTable->addColumn(new icms_ipf_view_Column("index_header"));
-			$objectTable->addIntroButton("addindexpage", "indexpage.php?op=mod", _AM_ARTICLE_INDEXPAGE_CREATE);
-			$icmsAdminTpl->assign("article_indexpage_table", $objectTable->fetch());
-			$icmsAdminTpl->display("db:article_admin_indexpage.html");
-			break;
-	}
-	icms_cp_footer();
+if ( in_array( $clean_op, $valid_op, true ) ) {
+  switch ($clean_op) {
+  	case "mod":
+		icms_cp_header();
+		icms::$module->displayAdminMenu( 3, _MI_ARTICLE_MENU_INDEXPAGE );
+		editform($clean_indexkey, false);
+		break;
+  	case "addindexpage":
+		$controller = new icms_ipf_Controller( $article_indexpage_handler );
+  		$controller->storeFromDefaultForm( _AM_ARTICLE_INDEXPAGE_MODIFIED, _AM_ARTICLE_INDEXPAGE_MODIFIED );
+  		break;
+  }
+  icms_cp_footer();
 }
-/**
- * If you want to have a specific action taken because the user input was invalid,
- * place it at this point. Otherwise, a blank page will be displayed
- */

@@ -45,7 +45,7 @@ icms_loadLanguageFile('article', 'common');
 include_once ARTICLE_ROOT_PATH . '/include/functions.php';
 
 $articleModule = icms_getModuleInfo( ARTICLE_DIRNAME );
-if (is_object($articlesModule)) {
+if (is_object($articleModule)) {
 	$article_moduleName = $articleModule->getVar('name');
 }
 
