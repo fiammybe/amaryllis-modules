@@ -19,18 +19,12 @@
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
-//generates the Downloads admin menu in ACP
-function article_adminmenu( $currentoption = 0, $header = '', $menu = '', $extra = '', $scount = 5 ) {
-	icms::$module -> displayAdminMenu( $currentoption, icms::$module -> getVar( 'name' ) . ' | ' . $header );
-	echo '<h3 style="color: #2F5376;">' . $header . '</h3>';
-}
-
 function article_display_new($time) {
-	global $downloadsConfig;
-	$new = ( time() - ( 86400 * intval( $downloadsConfig['downloads_daysnew'] ) ) );
-	if ( icms::$module->config['downloads_daysnew'] !== 0) {
+	global $articleConfig;
+	$new = ( time() - ( 86400 * intval( $articleConfig['article_daysnew'] ) ) );
+	if ( icms::$module->config['article_daysnew'] !== 0) {
 		if ( $new > $time ) {
-			$new = DOWNLOADS_IMAGES_URL . 'new.png';
+			$new = ARTICLE_IMAGES_URL . 'new.png';
 			
 		} else {
 			return false;
@@ -42,11 +36,11 @@ function article_display_new($time) {
 }
 
 function article_display_updated($time) {
-	global $downloadsConfig;
-	$updated = ( time() - ( 86400 * intval( $downloadsConfig['downloads_daysupdated'] ) ) );
-	if ( icms::$module->config['downloads_daysupdated'] !== 0) {
+	global $articleConfig;
+	$updated = ( time() - ( 86400 * intval( $articleConfig['article_daysupdated'] ) ) );
+	if ( icms::$module->config['article_daysupdated'] !== 0) {
 		if ( $updated > $time ) {
-			$updated = DOWNLOADS_IMAGES_URL . 'updated.png';
+			$updated = ARTICLE_IMAGES_URL . 'updated.png';
 			
 		} else {
 			return false;
@@ -58,11 +52,11 @@ function article_display_updated($time) {
 }
 
 function article_display_popular($counter) {
-	global $downloadsConfig;
-	$popular = $downloadsConfig['downloads_popular'];
+	global $articleConfig;
+	$popular = $articleConfig['article_popular'];
 	if ( $popular !== 0) {
 		if ( $popular < $counter ) {
-			$popular = DOWNLOADS_IMAGES_URL . 'popular.png';
+			$popular = ARTICLE_IMAGES_URL . 'popular.png';
 			
 		} else {
 			return false;

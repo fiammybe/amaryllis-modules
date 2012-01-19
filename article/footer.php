@@ -25,6 +25,4 @@ $icmsTpl->assign("article_is_admin", icms_userIsAdmin(ARTICLE_DIRNAME));
 $icmsTpl->assign('article_url', ARTICLE_URL);
 $icmsTpl->assign('article_images_url', ARTICLE_IMAGES_URL);
 
-$xoTheme->addStylesheet(ARTICLE_URL . 'module' . ((defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? '_rtl' : '') . '.css');
-
 include_once ICMS_ROOT_PATH . '/footer.php';

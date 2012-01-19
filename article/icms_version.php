@@ -23,7 +23,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 $modversion = array(
 						"name"						=> _MI_ARTICLE_MD_NAME,
 						"version"					=> 1.0,
-						"description"				=> _MI_ARTICLE_MD_DESC,
+						"description"				=> _MI_ARTICLE_MD_DSC,
 						"author"					=> "QM-B",
 						"credits"					=> "",
 						"help"						=> "",
@@ -33,9 +33,9 @@ $modversion = array(
 						"modname"					=> "article",
 					
 					/**  Images information  */
-						"iconsmall"					=> "images/icon_small.png",
-						"iconbig"					=> "images/icon_big.png",
-						"image"						=> "images/icon_big.png", /* for backward compatibility */
+						"iconsmall"					=> "images/article_icon_small.png",
+						"iconbig"					=> "images/article_icon_big.png",
+						"image"						=> "images/article_icon_big.png", /* for backward compatibility */
 					
 					/**  Development information */
 						"status_version"			=> "1.0",
@@ -59,7 +59,7 @@ $modversion = array(
 						"onUpdate"					=> "include/onupdate.inc.php",
 					
 					/** Search information */
-						"hasSearch"					=> 0,
+						"hasSearch"					=> 1,
 						"search"					=> array("file" => "include/search.inc.php", "func" => "article_search"),
 					
 					/** Menu information */
@@ -89,11 +89,7 @@ $modversion['object_items'][$i] = 'category';
 $i++;
 $modversion['object_items'][$i] = 'article';
 $i++;
-$modversion['object_items'][$i] = 'review';
-$i++;
 $modversion['object_items'][$i] = 'indexpage';
-$i++;
-$modversion['object_items'][$i] = 'log';
 
 $modversion["tables"] = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
 
@@ -102,6 +98,16 @@ $modversion["tables"] = icms_getTablesArray($modversion['dirname'], $modversion[
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $i = 0;
+$i++;
+$modversion['templates'][$i] = array(
+										'file'			=> 'article_header.html',
+										'description'	=> _MI_ARTICLE_HEADER_TPL
+								);
+$i++;
+$modversion['templates'][$i] = array(
+										'file'			=> 'article_footer.html',
+										'description'	=> _MI_ARTICLE_FOOTER_TPL
+								);
 $i++;
 $modversion['templates'][$i] = array(
 										'file'			=> 'article_index.html',
@@ -137,16 +143,6 @@ $modversion['templates'][$i] = array(
 										'file'			=> 'article_requirements.html',
 										'description'	=> _MI_ARTICLE_REQUIREMENTS_TPL
 								);
-$i++;
-$modversion['templates'][$i] = array(
-										'file'			=> 'article_header.html',
-										'description'	=> _MI_ARTICLE_HEADER_TPL
-								);
-$i++;
-$modversion['templates'][$i] = array(
-										'file'			=> 'article_footer.html',
-										'description'	=> _MI_ARTICLE_FOOTER_TPL
-								);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,7 +151,7 @@ $modversion['templates'][$i] = array(
 
 $i=0;
 
-// Recent files block
+// Recent articles block
 $i++;
 $modversion['blocks'][$i]['file']			= 'article_recent_article.php';
 $modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_RECENT_ARTICLE;
@@ -333,8 +329,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'upload_file_size',
-								'title' 		=> '_MI_ARTICLE_UPLOAD_FILE_SIZE',
-								'description' 	=> '_MI_ARTICLE_UPLOAD_FILE_SIZE_DSC',
+								'title' 		=> '_MI_ARTICLE_UPLOAD_ARTICLE_SIZE',
+								'description' 	=> '_MI_ARTICLE_UPLOAD_ARTICLE_SIZE_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 2097152 // 2MB default max upload size
@@ -342,8 +338,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'display_file_size',
-								'title' 		=> '_MI_ARTICLE_DISPLAY_FILE_SIZE',
-								'description' 	=> '_MI_ARTICLE_DISPLAY_FILE_SIZE_DSC',
+								'title' 		=> '_MI_ARTICLE_DISPLAY_ARTICLE_SIZE',
+								'description' 	=> '_MI_ARTICLE_DISPLAY_ARTICLE_SIZE_DSC',
 								'formtype' 		=> 'select',
 								'valuetype' 	=> 'text',
 								'options'		=> array("byte" => 1, "kb" => 2, "mb" => 3, "gb" => 4),
@@ -424,8 +420,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'article_needs_approval',
-								'title' 		=> '_MI_ARTICLE_DOWNLOAD_APPROVE',
-								'description' 	=> '_MI_ARTICLE_DOWNLOAD_APPROVE_DSC',
+								'title' 		=> '_MI_ARTICLE_ARTICLE_APPROVE',
+								'description' 	=> '_MI_ARTICLE_ARTICLE_APPROVE_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -438,15 +434,6 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'guest_vote',
-								'title' 		=> '_MI_ARTICLE_GUEST_CAN_VOTE',
-								'description' 	=> '_MI_ARTICLE_GUEST_CAN_VOTE_DSC',
-								'formtype' 		=> 'yesno',
-								'valuetype' 	=> 'int',
-								'default' 		=> 0
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -477,9 +464,137 @@ $modversion['config'][$i] = array(
 								'default' 		=> 10
 							);
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+$modversion['hasNotification'] = 0;
+$modversion['notification']['lookup_file'] = 'include/notification.inc.php';
+$modversion['notification']['lookup_func'] = 'article_notify_iteminfo';
 
+$i = 0;
+$i++;
+$modversion['notification']['category'][$i]['name'] = 'global';
+$modversion['notification']['category'][$i]['title'] = _MI_ARTICLE_GLOBAL_NOTIFY;
+$modversion['notification']['category'][$i]['description'] = _MI_ARTICLE_GLOBAL_NOTIFY_DSC;
+$modversion['notification']['category'][$i]['item_name'] = '';
+$modversion['notification']['category'][$i]['subscribe_from'] = array('index.php', 'singlearticle.php');
+$i++;
+$modversion['notification']['category'][$i]['name'] = 'category';
+$modversion['notification']['category'][$i]['title'] = _MI_ARTICLE_CATEGORY_NOTIFY;
+$modversion['notification']['category'][$i]['description'] = _MI_ARTICLE_CATEGORY_NOTIFY_DSC;
+$modversion['notification']['category'][$i]['subscribe_from'] = array('index.php');
+$modversion['notification']['category'][$i]['item_name'] = 'category_id';
+$modversion['notification']['category'][$i]['allow_bookmark'] = 1;
+$i++;
+$modversion['notification']['category'][$i]['name'] = 'article';
+$modversion['notification']['category'][$i]['title'] = _MI_ARTICLE_ARTICLE_NOTIFY;
+$modversion['notification']['category'][$i]['description'] = _MI_ARTICLE_ARTICLE_NOTIFY_DSC;
+$modversion['notification']['category'][$i]['subscribe_from'] = array('index.php', 'singlearticle.php');
+$modversion['notification']['category'][$i]['item_name'] = 'article_id';
+$modversion['notification']['category'][$i]['allow_bookmark'] = 1;
 
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'new_category';
+$modversion['notification']['event'][$i]['category'] = 'global';
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'global_category_published';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_SBJ;
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'category_modified';
+$modversion['notification']['event'][$i]['category'] = 'global';
+$modversion['notification']['event'][$i]['admin_only'] = 1;
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_CATEGORYMODIFIED_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_CATEGORYMODIFIED_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_CATEGORYMODIFIED_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'global_category_modified';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_SBJ;
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'category_approved';
+$modversion['notification']['event'][$i]['category'] = 'category';
+$modversion['notification']['event'][$i]['invisible'] = 1;
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'category_approved';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_SBJ;
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'category_submit';
+$modversion['notification']['event'][$i]['category'] = 'global';
+$modversion['notification']['event'][$i]['admin_only'] = 1;
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_CATSUBMIT_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_CATSUBMIT_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_CATSUBMIT_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'global_category_submitted';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_CATSUBMIT_NOTIFY_SBJ;
 
-
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'article_submit';
+$modversion['notification']['event'][$i]['category'] = 'category';
+$modversion['notification']['event'][$i]['admin_only'] = 1;
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_CATEGORY_ARTICLESUBMIT_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_CATEGORY_ARTICLESUBMIT_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_CATEGORY_ARTICLESUBMIT_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'category_article_submitted';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_CATEGORY_ARTICLESUBMIT_NOTIFY_SBJ;
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'new_article';
+$modversion['notification']['event'][$i]['category'] = 'global';
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_NEWARTICLE_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_NEWARTICLE_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_NEWARTICLE_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'global_article_new';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_NEWARTICLE_NOTIFY_SBJ;
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'new_article';
+$modversion['notification']['event'][$i]['category'] = 'category';
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_CATEGORY_NEWARTICLE_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_CATEGORY_NEWARTICLE_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_CATEGORY_NEWARTICLE_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'category_article_new';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_CATEGORY_NEWARTICLE_NOTIFY_SBJ;
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'article_approved';
+$modversion['notification']['event'][$i]['category'] = 'article';
+$modversion['notification']['event'][$i]['invisible'] = 1;
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'article_approved';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_SBJ;
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'article_modified';
+$modversion['notification']['event'][$i]['category'] = 'article';
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_ARTICLE_ARTICLEMODIFIED_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_ARTICLE_ARTICLEMODIFIED_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_ARTICLE_ARTICLEMODIFIED_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'article_modified';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_ARTICLE_ARTICLEMODIFIED_NOTIFY_SBJ;
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'article_modified';
+$modversion['notification']['event'][$i]['category'] = 'category';
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_CATEGORY_ARTICLEMODIFIED_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_CATEGORY_ARTICLEMODIFIED_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_CATEGORY_ARTICLEMODIFIED_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'category_article_modified';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_CATEGORY_ARTICLEMODIFIED_NOTIFY_SBJ;
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'article_modified';
+$modversion['notification']['event'][$i]['category'] = 'global';
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'global_article_modified';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY_SBJ;
+$i++;
+$modversion['notification']['event'][$i]['name'] = 'file_broken';
+$modversion['notification']['event'][$i]['category'] = 'article';
+$modversion['notification']['event'][$i]['admin_only'] = 1;
+$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY;
+$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY_CAP;
+$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY_DSC;
+$modversion['notification']['event'][$i]['mail_template'] = 'article_broken';
+$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY_SBJ;

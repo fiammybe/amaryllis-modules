@@ -35,7 +35,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->quickInitVar("article_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("article_title", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->initCommonVar("short_url");
-		$this->quickInitVar("article_cid", XOBJ_DTYPE_ARRAY, TRUE);
+		$this->quickInitVar("article_cid", XOBJ_DTYPE_ARRAY, FALSE);
 		
 		$this->quickInitVar("article_descriptions", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar("article_img", XOBJ_DTYPE_TXTBOX, FALSE);
@@ -61,12 +61,12 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		
 		$this->quickInitVar("article_permissions", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar("article_grpperm", XOBJ_DTYPE_TXTBOX, TRUE);
-		$this->quickInitVar("article_approve", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("article_active", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("article_updated", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("article_inblocks", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("article_broken_file", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("article_cancomment", XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar("article_approve", XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
+		$this->quickInitVar("article_active", XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
+		$this->quickInitVar("article_updated", XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 0);
+		$this->quickInitVar("article_inblocks", XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
+		$this->quickInitVar("article_broken_file", XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 0);
+		$this->quickInitVar("article_cancomment", XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
 		$this->quickInitVar("article_permissions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->quickInitVar("article_statics", XOBJ_DTYPE_FORM_SECTION);
@@ -78,11 +78,14 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		$this->initCommonVar("docxode", FALSE, 1);
 		$this->quickInitVar("article_notification_sent", XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar("article_pagescount", XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar("article_comments", XOBJ_DTYPE_INT);
 		$this->quickInitVar("article_stats_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		
-		$this->setControl("article_cid", array("name" => "select_multi", "itemhandler" => "category", "method" => "getCategoryListForPid", "module" => "article"));
-		$this->setControl("article_image", "image");
+		$this->setControl("article_cid", array("name" => "select_multi", "itemHandler" => "category", "method" => "getCategoryListForPid", "module" => "article"));
+		$this->setControl("article_img_upl", "image");
+		$this->setControl("article_img", array( "name" => "select", "itemhandler" => "category", "method" => "getImageList", "module" => "article"));
 		$this->setControl("article_teaser", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("article_show_teaser", "yesno");
 		$this->setControl("article_body", "dhtmltextarea");
@@ -94,29 +97,19 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->setControl("article_broken_file", "yesno");
 		$this->setControl("article_cancomment", "yesno");
 
-		$this->hideFieldFromForm(array("article_submitter", "weight", "counter", "article_like", "article_dislike"));
+		$this->hideFieldFromForm(array("article_updated_date", "article_published_date", "article_updater","article_stats_close", "article_statics", "article_submitter", "weight", "counter", "article_comments", "article_notification_sent", "article_pagescount" ));
 		
 		$this->openFormSection("article_descriptions", _CO_ARTICLE_ARTICLE_ARTICLE_DESCRIPTIONS);
 		$this->openFormSection("article_additionals", _CO_ARTICLE_ARTICLE_ARTICLE_ADDITIONALS);
 		$this->openFormSection("article_informations", _CO_ARTICLE_ARTICLE_ARTICLE_INFORMATIONS);
 		$this->openFormSection("article_permissions", _CO_ARTICLE_ARTICLE_ARTICLE_PERMISSIONS);
-		$this->openFormSection("article_statics", _CO_ARTICLE_ARTICLE_ARTICLE_STATICS);
+		//$this->openFormSection("article_statics", _CO_ARTICLE_ARTICLE_ARTICLE_STATICS);
 		
 		if($articleConfig['use_sprockets'] == 1) {
 			$this->setControl("article_tags", array("name" => "select_multi", "itemhandler" => "article", "method" => "getArticleTags", "module" => "article"));
 		} else {
 			$this->hideFieldFromForm("article_tags");
 			$this->hideFieldFromSingleView("article_tags");
-		}
-		
-		/**
-		 * check, if licenses are needed, else hide them
-		 */
-		if($articleConfig['need_licenses'] == 0) {
-			$this->hideFieldFromForm("article_license");
-			$this->hideFieldFromSingleView("article_license");
-		} else {
-			$this->setControl("article_license", array("name" => "select_multi", "itemhandler" => "article", "method" => "getArticleLicense", "module" => "article"));
 		}
 		
 		/**
@@ -215,7 +208,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	}
 	
 	public function article_updater() {
-		return icms_member_user_Handler::getUserLink($this->getVar('article_publisher', 'e'));
+		return icms_member_user_Handler::getUserLink($this->getVar('article_updater', 'e'));
 	}
 
 	public function article_submitter() {
@@ -273,6 +266,22 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		return $teaser;
 	}
 	
+	public function myBody() {
+		if($this->getVar("article_show_teaser", "e") == 1) {
+			$body = icms_core_DataFilter::checkVar($this->getVar("article_teaser", "s"), "html", "output");
+			$body .= $this->getVar("article_body", "s");
+		} else {
+			$body = $this->getVar("article_body", "s");
+		}
+		return $body;
+	}
+	
+	public function getArticleBody() {
+		$body = $this->myBody();
+		$body_array = explode("[pagebreak]", $body);
+		return $body_array;
+	}
+	
 	public function getArticleAttachment($url = TRUE, $path = FALSE ) {
 		$file_alt = $this->getVar("article_attachment_alt", "e");
 		$file = $this->getVar("article_attachment", "e");
@@ -281,7 +290,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			if(!$file_alt == "") {
 				$url = ARTICLE_UPLOAD_URL . 'article/' . $file_alt;
 			} elseif(!$file == "0") {
-				$file = 'download_file';
+				$file = 'article_attachment';
 				$fileObj = $this->getFileObj($file);
 				$url = $fileObj->getVar('url');
 			} else {
@@ -292,7 +301,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			if(!$file_alt == "") {
 				$path = ARTICLE_UPLOAD_ROOT . 'article/' . $file_alt;
 			} elseif (!$file == "0") {
-				$file = 'download_file';
+				$file = 'article_attachment';
 				$fileObj = $this->getFileObj($file);
 				$url = $fileObj->getVar('url', 's');
 				$filename = basename($url);
@@ -309,7 +318,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$myfile = $this->getArticleAttachment(FALSE, TRUE);
 		if($myfile) {
 			$bytes = filesize($myfile);
-			$filesize = downloadsConvertFileSize($bytes, articleFileSizeType($articleConfig['display_file_size']), 2);
+			$filesize = articleConvertFileSize($bytes, articleFileSizeType($articleConfig['display_file_size']), 2);
 			return $filesize . '&nbsp;' . articleFileSizeType($articleConfig['display_file_size']) ;
 		} else {
 			return FALSE;
@@ -460,7 +469,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	function userCanEditAndDelete() {
 		global $article_isAdmin;
 		if (!is_object(icms::$user)) return FALSE;
-		if ($downloads_isAdmin) return TRUE;
+		if ($article_isAdmin) return TRUE;
 		if($this->getVar('article_submitter', 'e') == icms::$user->getVar("uid")) return TRUE;
 		$publishers = $this->getVar("article_publisher", "s");
 		foreach ($publishers as $publisher) {
@@ -511,7 +520,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['cats'] = $this->getArticleCid(TRUE);
 		$ret['image'] = $this->getArticleImageTag(TRUE);
 		$ret['teaser'] = $this->getArticleTeaser();
-		$ret['body'] = $this->getVar("article_body", "e");
+		$ret['body_array'] = $this->getArticleBody();
 		$ret['file'] = $this->getArticleAttachment(TRUE, FALSE);
 		$ret['filesize'] = $this->getFileSize();
 		$ret['filetype'] = $this->getFileType();
@@ -530,7 +539,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		return $ret;
 	}
 
-	function sendNotifArticlePublished() {
+	function sendArticleNotification($case) {
 		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
 		$tags ['ARTICLE_TITLE'] = $this->getVar('article_title');
 		$tags ['ARTICLE_URL'] = $this->getItemLink();

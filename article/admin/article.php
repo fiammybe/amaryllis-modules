@@ -29,13 +29,13 @@ function editarticle($article_id = 0) {
 
 	if (!$articleObj->isNew()){
 		
-		$icmsModule->displayAdminMenu(1, _AM_ARTICLE_ARTICLES . " > " . _CO_ICMS_EDITING);
+		$icmsModule->displayAdminMenu(1, _MI_ARTICLE_MENU_ARTICLE . " > " . _MI_ARTICLE_ARTICLE_EDIT);
 		
 		
 		$sform = $articleObj->getForm(_AM_ARTICLE_ARTICLE_EDIT, "addarticle");
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$icmsModule->displayAdminMenu(1, _AM_ARTICLE_ARTICLES . " > " . _CO_ICMS_CREATINGNEW);
+		$icmsModule->displayAdminMenu(1, _MI_ARTICLE_MENU_ARTICLE . " > " . _MI_ARTICLE_ARTICLE_CREATINGNEW);
 		$sform = $articleObj->getForm(_AM_ARTICLE_ARTICLE_CREATE, "addarticle");
 		$sform->assign($icmsAdminTpl);
 
@@ -85,9 +85,9 @@ if($categories > 0) {
 				$visibility = $article_article_handler -> changeVisible( $clean_article_id );
 				$ret = 'article.php';
 				if ($visibility == 0) {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_OFFLINE );
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_OFFLINE );
 				} else {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ONLINE );
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_ONLINE );
 				}
 				break;
 			
@@ -95,9 +95,9 @@ if($categories > 0) {
 				$show = $article_article_handler -> changeShow( $clean_article_id );
 				$ret = 'article.php';
 				if ($show == 0) {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_INBLOCK_FALSE );
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_INBLOCK_FALSE );
 				} else {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_INBLOCK_TRUE );
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_INBLOCK_TRUE );
 				}
 				break;
 			
@@ -105,9 +105,9 @@ if($categories > 0) {
 				$show = $article_article_handler -> changeBroken( $clean_article_id );
 				$ret = 'article.php';
 				if ($show == 0) {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_OFFLINE );
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_OFFLINE );
 				} else {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ONLINE );
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_ONLINE );
 				}
 				break;
 			
@@ -115,14 +115,14 @@ if($categories > 0) {
 				$approve = $article_article_handler -> changeApprove( $clean_article_id );
 				$ret = 'article.php';
 				if ($approve == 0) {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_APPROVE_FALSE );
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_APPROVE_FALSE );
 				} else {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_APPROVE_TRUE );
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_APPROVE_TRUE );
 				}
 				break;
 				
 			case "changeWeight":
-				foreach ($_POST['DownloadsCategory_objects'] as $key => $value) {
+				foreach ($_POST['ArticleArticle_objects'] as $key => $value) {
 					$changed = false;
 					$articleObj = $article_article_handler -> get( $value );
 	
@@ -140,7 +140,7 @@ if($categories > 0) {
 		
 			default:
 				icms_cp_header();
-				article_adminmenu( 1, _MI_ARTICLE_MENU_ARTICLE );
+				icms::$module->displayAdminMenu( 1, _MI_ARTICLE_MENU_ARTICLE );
 				$criteria = '';
 				if ($clean_article_id) {
 					$articleObj = $article_article_handler->get($clean_article_id);

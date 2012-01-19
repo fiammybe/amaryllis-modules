@@ -29,61 +29,55 @@ class ArticleIndexpage extends icms_ipf_Object {
 		parent::__construct($handler);
 
 		$this->quickInitVar("index_id", XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar("index_image", XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar('index_img_upload', XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar("index_header", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("index_heading", XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar("index_footer", XOBJ_DTYPE_TXTAREA, FALSE);
-		$this->quickInitVar("index_img", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("index_img_upl", XOBJ_DTYPE_IMAGE, FALSE);
-		$this->initCommonVar("dohtml");
-		$this->initCommonVar("doimage");
-		$this->initCommonVar("dosmiley");
-		$this->initCommonVar("docxode");
-		$this->setControl("index_image_upl", "image");
+		$this->initCommonVar("dohtml", FALSE, 1);
+		$this->initCommonVar("dobr", FALSE, 1);
+		$this->initCommonVar("doimage", FALSE, 1);
+		$this->initCommonVar("dosmiley", FALSE, 1);
+		$this->initCommonVar("docxode", FALSE, FALSE, FALSE, 1);
 
+		$this->setControl( 'index_img_upload', 'image' );
+		$this -> setControl( 'index_heading','dhtmltextarea' );
+		$this -> setControl( 'index_footer', 'textarea' );
+		$this -> setControl( 'index_image', array( 'name' => 'select', 'itemHandler' => 'indexpage', 'method' => 'getImageList', 'module' => 'article' ) );
+		
 	}
 
-	/**
-	 * Overriding the icms_ipf_Object::getVar method to assign a custom method on some
-	 * specific fields to handle the value before returning it
-	 *
-	 * @param str $key key of the field
-	 * @param str $format format that is requested
-	 * @return mixed value of the field that is requested
-	 */
 	public function getVar($key, $format = "s") {
 		if ($format == "s" && in_array($key, array())) {
 			return call_user_func(array ($this,	$key));
 		}
 		return parent::getVar($key, $format);
 	}
-	
-	/**
-	 * preparing indexpage for output
-	 */
-	
+
 	public function getIndexImg() {
 		$indeximage = $image_tag = '';
-		$indeximage = $this->getVar("index_image", "e");
+		$indeximage = $this->getVar('index_image', 'e');
 		if (!empty($indeximage)) {
 			$image_tag = ARTICLE_UPLOAD_URL . 'indeximages/' . $indeximage;
 		}
-		return '<div class="article_indeximage"><img src="' . $image_tag . '" class="indeximage" alt="indeximage" /></div>';
+		return '<div class="article_indeximage"><img src="' . $image_tag . '" /></div>';
 	}
 	
 	public function getIndexHeader() {
-		$indexheader = $this->getVar("index_header", "e");
+		$indexheader = '';
+		$indexheader = $this->getVar('index_header', 'e');
 		return '<div class="article_indexheader">' . $indexheader . '</div>';
 	}
 
 	public function getIndexHeading() {
-		$indexheading = $this->getVar("index_heading", "s");
-		$indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
+		$indexheading = '';
+		$indexheading = icms_core_DataFilter::checkVar($this->getVar('index_heading', 's'), 'str', 'encodelow');
 		return '<div class="article_indexheading">' . $indexheading . '</div>';
 	}
 	
 	public function getIndexFooter() {
-		$indexfooter = $this->getVar("index_footer", "s");
-		$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
+		$indexfooter = '';
+		$indexfooter = icms_core_DataFilter::checkVar($this->getVar('index_footer', 's'), 'str', 'encodelow');
 		return '<div class="article_indexfooter">' . $indexfooter . '</div>';
 	}
 
@@ -95,4 +89,5 @@ class ArticleIndexpage extends icms_ipf_Object {
 		$ret['footer'] = $this->getIndexFooter();
 		return $ret;
 	}
+	
 }

@@ -58,8 +58,8 @@ if(in_array($clean_op, $valid_op)) {
 	switch ($clean_op) {
 		case 'getByTags':
 			$clean_tag_id = isset($_GET['tag']) ? filter_input(INPUT_GET, 'tag', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$article = $article_article_handler->getDownloads($clean_files_start, icms::$module->config['show_article'], $clean_tag_id, FALSE, FALSE,  FALSE);
-			$icmsTpl->assign('article_files', $article);
+			$article = $article_article_handler->getArticles($clean_files_start, icms::$module->config['show_article'], $clean_tag_id, FALSE, FALSE,  FALSE);
+			$icmsTpl->assign('articles', $article);
 			$icmsTpl->assign("byTags", TRUE);
 			break;
 		
@@ -77,7 +77,7 @@ if(in_array($clean_op, $valid_op)) {
 				$article_category_handler->updateCounter($clean_category_id);
 				$category = $categoryObj->toArray();
 				$icmsTpl->assign('article_single_cat', $category);
-				$article = $article_article_handler->getDownloads($clean_files_start, icms::$module->config['show_article'], FALSE, FALSE, FALSE,  $clean_category_id);
+				$article = $article_article_handler->getArticles($clean_files_start, icms::$module->config['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id);
 				$icmsTpl->assign('article_files', $article);
 				if ($articleConfig['show_breadcrumbs']){
 					$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($categoryObj->getVar('category_id', 'e'), 1));
@@ -112,9 +112,9 @@ if(in_array($clean_op, $valid_op)) {
 			 * check, if upload disclaimer is necessary and retrieve the link
 			 */
 			
-			if($articleConfig['article_show_upl_disclaimer'] == 1) {
+			if($articleConfig['show_upl_disclaimer'] == 1) {
 				$icmsTpl->assign('article_upl_disclaimer', true );
-				$icmsTpl->assign('up_disclaimer', $articleConfig['article_upl_disclaimer']);
+				$icmsTpl->assign('up_disclaimer', $articleConfig['upl_disclaimer']);
 			} else {
 				$icmsTpl->assign('article_upl_disclaimer', false);
 			}
@@ -151,7 +151,7 @@ if(in_array($clean_op, $valid_op)) {
 			} else {
 				$extra_arg = false;
 			}
-			$article_pagenav = new icms_view_PageNav($files_count, $articleConfig['show_article'], $clean_files_start, 'file_nav', $extra_arg);
+			$article_pagenav = new icms_view_PageNav($files_count, $articleConfig['show_articles'], $clean_files_start, 'file_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderImageNav());
 			break;
 	}

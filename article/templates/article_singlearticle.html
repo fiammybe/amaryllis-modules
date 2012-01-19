@@ -1,0 +1,39 @@
+<{includeq file='db:artikel_header.html'}>
+
+<h1><{$article.title}></h1>
+
+<div class="article_categories">
+	<{$smarty.const._MD_ARTICLE_CATS}>&nbsp;:&nbsp;<{$article.cats}>
+</div>
+
+<{if $article.tags}>
+	<{$smarty.const._MD_ARTICLE_TAGS}>&nbsp;:&nbsp;<{$article.tags}>
+<{/if}>
+
+<div class="article_info">
+	<{$smarty.const._MD_ARTICLE_PUBLISHER}>&nbsp;:&nbsp;<{$article.publisher}>
+	<{$smarty.const._MD_ARTICLE_PUBLISHED_ON}>&nbsp;:&nbsp;<{$article.published_on}>
+	<{$smarty.const._MD_ARTICLE_SUBMITTER}>&nbsp;:&nbsp;<{$article.submitter}>
+	<{if $article.updated_on}>
+		<{$smarty.const._MD_ARTICLE_UPDATED_ON}>&nbsp;:&nbsp;<{$article.updated_on}>
+	<{/if}>
+	<{if $article.updater}>
+		<{$smarty.const._MD_ARTICLE_UPDATER}>&nbsp;:&nbsp;<{$article.updater}>
+	<{/if}>
+	<{if $article.file}>
+		<{$smarty.const._MD_ARTICLE_FILE}><{$article.file}>&nbsp;(&nbsp;<{$article.filesize}>&nbsp;|&nbsp;<{$article.filetype}>&nbsp;)
+	<{/if}>
+</div>
+
+<{foreach item=body from=$article.body_array}>
+	<div class="z">
+		<{$body}>
+	</div>
+<{/foreach}>
+
+<div class="article_footer">
+	
+</div>
+
+
+<{includeq file='db:artikel_footer.html'}>

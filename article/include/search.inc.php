@@ -15,23 +15,19 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 function article_search($queryarray, $andor, $limit, $offset, $userid) {
-/** To come soon in imBuilding...
-
-	$article_post_handler = icms_getModuleHandler("post", basename(dirname(dirname(__FILE__))), "article");
-	$postsArray = $article_post_handler->getPostsForSearch($queryarray, $andor, $limit, $offset, $userid);
+	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
+	$articleArray = $article_article_handler->getArticlesForSearch($queryarray, $andor, $limit, $offset, $userid);
 
 	$ret = array();
 
-	foreach ($postsArray as $postArray) {
-		$item['image'] = "images/post.png";
-		$item['link'] = str_replace(ARTICLE_URL, '', $postArray['itemUrl']);
-		$item['title'] = $postArray['post_title'];
-		$item['time'] = strtotime($postArray['post_published_date']);
-		$item['uid'] = $postArray['post_posterid'];
+	foreach ($articleArray as $articleArray) {
+		$item['image'] = "images/article_icon.png";
+		$item['link'] = $articleArray['itemURL'];
+		$item['title'] = $articleArray['article_title'];
+		$item['time'] = strtotime($articleArray['article_published_date']);
+		$item['uid'] = $articleArray['article_publisher'];
 		$ret[] = $item;
 		unset($item);
 	}
-
 	return $ret;
-*/
 }

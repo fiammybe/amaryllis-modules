@@ -1,0 +1,5 @@
+<ul>
+	<{foreach item=article_popular from=$block.article_popular}>
+		<li><a href="<{$article_popular.itemURL}>" title="<{$article_popular.title}>"><{$article_popular.title}></a> (<{$article_popular.published_date}>)</li>
+	<{/foreach}>
+</ul>

@@ -27,46 +27,19 @@ function editcategory($category_id = 0) {
 
 	$categoryObj = $article_category_handler->get($category_id);
 	
-	$article_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "article");
-	if (!is_object(icms::$user)) {
-		$log_uid = 0;
-	} else {
-		$log_uid = icms::$user->getVar("uid");
-	}
-	
 	if (!$categoryObj->isNew()){
-		$categoryObj->hideFieldFromForm(array( 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar( 'category_updated_date', (time() - 100) );
 		
-		$logObj = $article_log_handler->create();
-		$logObj->setVar('log_item_id', $categoryObj->getVar("category_id") );
-		$logObj->setVar('log_date', (time()-200) );
-		$logObj->setVar('log_uid', $log_uid);
-		$logObj->setVar('log_item', 1 );
-		$logObj->setVar('log_case', 3 );
-		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
-		$logObj->store(TRUE);
-		
-		article_adminmenu( 2, _MI_ARTICLE_MENU_CATEGORY . ' > ' . _MI_ARTICLE_CATEGORY_EDIT);
-		$sform = $categoryObj->getForm(_AM_ARTICLE_EDIT, 'addcategory');
+		icms::$module->displayAdminMenu( 2, _MI_ARTICLE_MENU_CATEGORY . ' > ' . _MI_ARTICLE_CATEGORY_EDIT);
+		$sform = $categoryObj->getForm(_AM_ARTICLE_CATEGORY_EDIT, 'addcategory');
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$categoryObj->hideFieldFromForm(array('category_approve', 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar('category_published_date', (time() - 100) );
-		$categoryObj->setVar('category_approve', true );
+		$categoryObj->setVar('category_approve', TRUE );
 		$categoryObj->setVar('category_submitter', icms::$user->getVar("uid"));
 		
-		$logObj = $article_log_handler->create();
-		$logObj->setVar('log_item_id', $categoryObj->getVar("category_id") );
-		$logObj->setVar('log_date', (time()-200) );
-		$logObj->setVar('log_uid', $log_uid);
-		$logObj->setVar('log_item', 1 );
-		$logObj->setVar('log_case', 1 );
-		$logObj->setVar('log_ip', xoops_getenv('REMOTE_ADDR') );
-		$logObj->store(TRUE);
-		
-		article_adminmenu( 2, _MI_ARTICLE_MENU_CATEGORY . " > " . _MI_ARTICLE_CATEGORY_CREATINGNEW);
-		$sform = $categoryObj->getForm(_AM_ARTICLE_CREATE, 'addcategory');
+		icms::$module->displayAdminMenu( 2, _MI_ARTICLE_MENU_CATEGORY . " > " . _MI_ARTICLE_CATEGORY_CREATINGNEW);
+		$sform = $categoryObj->getForm(_AM_ARTICLE_CATEGORY_CREATE, 'addcategory');
 		$sform->assign($icmsAdminTpl);
 
 	}
@@ -95,7 +68,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 
 		case 'addcategory':
 			$controller = new icms_ipf_Controller($article_category_handler);
-			$controller->storeFromDefaultForm(_AM_ARTICLE_CREATED, _AM_ARTICLE_MODIFIED);
+			$controller->storeFromDefaultForm(_AM_ARTICLE_CATEGORY_CREATED, _AM_ARTICLE_CATEGORY_MODIFIED);
 			break;
 
 		case 'del':
@@ -113,9 +86,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$visibility = $article_category_handler -> changeVisible( $clean_category_id );
 			$ret = 'category.php';
 			if ($visibility == 0) {
-				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_OFFLINE );
+				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_CATEGORY_OFFLINE );
 			} else {
-				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ONLINE );
+				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_CATEGORY_ONLINE );
 			}
 			break;
 			
@@ -133,20 +106,20 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$approve = $article_category_handler -> changeApprove( $clean_category_id );
 			$ret = 'category.php';
 			if ($approve == 0) {
-				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_APPROVE_FALSE );
+				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_CATEGORY_APPROVED );
 			} else {
-				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_APPROVE_TRUE );
+				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_CATEGORY_DENIED );
 			}
 			break;
 			
 		case "changeWeight":
 			foreach ($_POST['ArticleCategory_objects'] as $key => $value) {
-				$changed = false;
+				$changed = FALSE;
 				$categoryObj = $article_category_handler -> get( $value );
 
 				if ($categoryObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 					$categoryObj->setVar('weight', intval($_POST['weight'][$key]));
-					$changed = true;
+					$changed = TRUE;
 				}
 				if ($changed) {
 					$article_category_handler -> insert($categoryObj);
@@ -158,7 +131,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 		default:
 			icms_cp_header();
-			article_adminmenu( 2, _MI_ARTICLE_MENU_CATEGORY );
+			icms::$module->displayAdminMenu( 2, _MI_ARTICLE_MENU_CATEGORY );
 			$criteria = '';
 			if ($clean_category_id) {
 				$categoryObj = $article_category_handler->get($clean_category_id);
@@ -167,26 +140,26 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				}
 			}
 			if (empty($criteria)) {
-				$criteria = null;
+				$criteria = NULL;
 			}
 			// create article table
 			$objectTable = new icms_ipf_view_Table($article_category_handler, $criteria);
 			$objectTable->addColumn( new icms_ipf_view_Column( 'category_active','center', 50, 'category_active' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'category_title', false, false, 'getPreviewItemLink' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'category_pid', false, false, 'category_pid' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'category_title', FALSE, FALSE, 'getPreviewItemLink' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'category_pid', FALSE, FALSE, 'category_pid' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'counter', 'center', 50));
 			$objectTable->addColumn( new icms_ipf_view_Column( 'category_inblocks', 'center', 50, 'category_inblocks' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'category_approve', 'center', 50, 'category_approve' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'category_published_date', 'center', 100, true ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'category_publisher', 'center', true, 'category_publisher' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getCategoryWeightControl' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'category_published_date', 'center', 100, TRUE ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'category_publisher', 'center', TRUE, 'category_publisher' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', TRUE, 'getCategoryWeightControl' ) );
 			
 			$objectTable->addFilter( 'category_active', 'category_active_filter' );
 			$objectTable->addFilter( 'category_inblocks', 'category_inblocks_filter' );
 			$objectTable->addFilter( 'category_pid', 'getCategoryListForPid' );
 			
 			$objectTable->addIntroButton( 'addcategory', 'category.php?op=mod', _AM_ARTICLE_CATEGORY_ADD );
-			$objectTable->addActionButton( 'changeWeight', false, _SUBMIT );
+			$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
 			
 			$objectTable->addCustomAction( 'getViewItemLink' );
 			

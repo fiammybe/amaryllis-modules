@@ -39,14 +39,14 @@ function article_upload_paths() {
 			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/categoryimages/' . $image);
 		}
 		icms_core_Filesystem::mkdir($path . '/indeximages');
-		$image = 'tutorials_indeximage.png';
+		$image = 'article_indexpage.png';
 		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
 		return TRUE;
 }
 
 function article_indexpage() {
 	$article_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'article' );
-	$indexpageObj = $article_indexpage_handler -> create(true);
+	$indexpageObj = $article_indexpage_handler -> create(TRUE);
 	echo '<code>';
 	$indexpageObj -> setVar( 'index_header', 'Articles' );
 	$indexpageObj -> setVar( 'index_heading', 'Here you can search our articles. ' );
@@ -57,7 +57,7 @@ function article_indexpage() {
 	$indexpageObj->setVar('doimage', 1);
 	$indexpageObj->setVar('dosmiley', 1);
 	$indexpageObj->setVar('doxcode', 1);
-	$article_indexpage_handler -> insert( $indexpageObj, true );
+	$article_indexpage_handler -> insert( $indexpageObj, TRUE );
 	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
 	echo '</code>';
 	
@@ -81,5 +81,5 @@ function icms_module_install_article($module) {
 	//prepare indexpage
 	article_indexpage();
 
-	return true;
+	return TRUE;
 }

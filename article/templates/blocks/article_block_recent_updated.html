@@ -1,0 +1,5 @@
+<ul>
+	<{foreach item=article_updated from=$block.article_updated}>
+		<li><a href="<{$article_updated.itemURL}>" title="<{$article_updated.title}>"><{$article_updated.title}></a> (<{$article_updated.updated_date}>)</li>
+	<{/foreach}>
+</ul>
