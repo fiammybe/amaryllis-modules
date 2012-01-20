@@ -130,7 +130,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case('del'):
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			if (!$downloadObj->userCanEditAndDelete()) {
-				redirect_header($categoryObj->getItemLink(true), 3, _NOPERM);
+				redirect_header($downloadObj->getItemLink(true), 3, _NO_PERM);
 			}
 			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {

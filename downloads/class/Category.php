@@ -57,13 +57,13 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		// set controls
 		$this->setControl('category_pid', 'parentcategory');
 		$this->setControl('category_description', 'dhtmltextarea');
-		$this->setControl('category_img', array( 'name' => 'select', 'itemhandler' => 'category', 'method' => 'getImageList', 'module' => 'downloads'));
+		$this->setControl('category_img', array( 'name' => 'select', 'itemHandler' => 'category', 'method' => 'getImageList', 'module' => 'downloads'));
 		$this->setControl('category_img_upload', 'image');
 		$this->setControl('category_active', 'yesno');
 		$this->setControl('category_inblocks', 'yesno');
 		$this->setControl('category_approve', 'yesno');
-		$this->setControl('category_grpperm', array('name' => 'select_multi', 'itemhandler' => 'category', 'method' => 'getGroups', 'module' => 'downloads'));
-		$this->setControl('category_uplperm', array('name' => 'select_multi', 'itemhandler' => 'category', 'method' => 'getUplGroups', 'module' => 'downloads'));
+		$this->setControl('category_grpperm', array('name' => 'select_multi', 'itemHandler' => 'category', 'method' => 'getGroups', 'module' => 'downloads'));
+		$this->setControl('category_uplperm', array('name' => 'select_multi', 'itemHandler' => 'category', 'method' => 'getUplGroups', 'module' => 'downloads'));
 		$this->setControl('category_publisher', 'user');
 		// hide static fields from form
 		$this->hideFieldFromForm(array('category_submitter', 'category_notification_sent', 'category_sub','counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
