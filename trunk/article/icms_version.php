@@ -106,7 +106,7 @@ $modversion['templates'][$i] = array(
 $i++;
 $modversion['templates'][$i] = array(
 										'file'			=> 'article_footer.html',
-										'description'	=> _MI_ARTICLE_FOOTER_TPL
+										'description'	=> _MI_ARTICLE_HEADER_TPL
 								);
 $i++;
 $modversion['templates'][$i] = array(
@@ -402,8 +402,8 @@ $modversion['config'][$i] = array(
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_attachments',
-								'title' 		=> '_MI_ARTICLE_NEED_STEPS',
-								'description' 	=> '_MI_ARTICLE_NEED_STEPS_DSC',
+								'title' 		=> '_MI_ARTICLE_NEED_ATTACHMENTS',
+								'description' 	=> '_MI_ARTICLE_NEED_ATTACHMENTS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
@@ -463,6 +463,37 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'int',
 								'default' 		=> 10
 							);
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'display_twitter',
+								'title'			=> '_MI_ARTICLE_DISPLAY_TWITTER',
+								'description'	=> '_MI_ARTICLE_DISPLAY_TWITTER_DSC',
+								'formtype'		=> 'select',
+								'valuetype'		=> 'text',
+								'default'		=> 0,
+								'options'		=> array( _NONE => 0, _MI_ARTICLE_DEFAULT => 1, _MI_ARTICLE_HORIZONTAL => 2, _MI_ARTICLE_VERTICAL => 3 )
+							);	
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'display_fblike',
+								'title'			=> '_MI_ARTICLE_DISPLAY_FBLIKE',
+								'description'	=> '_MI_ARTICLE_DISPLAY_FBLIKE_DSC',
+								'formtype'		=> 'select',
+								'valuetype'		=> 'text',
+								'default'		=> 0,
+								'options'		=> array( _NONE => 0, _MI_ARTICLE_HORIZONTAL => 1, _MI_ARTICLE_VERTICAL => 2 ) 
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'display_gplus',
+								'title'			=> '_MI_ARTICLE_DISPLAY_GPLUS',
+								'description'	=> '_MI_ARTICLE_DISPLAY_GPLUS_DSC',
+								'formtype'		=> 'select',
+								'valuetype'		=> 'text',
+								'default'		=> 0,
+								'options'		=> array( _NONE => 0, _MI_ARTICLE_DEFAULT => 1, _MI_ARTICLE_HORIZONTAL => 2, _MI_ARTICLE_VERTICAL => 3 ) 
+							);
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////

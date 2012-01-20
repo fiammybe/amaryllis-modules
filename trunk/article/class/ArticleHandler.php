@@ -265,6 +265,25 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $this->_article_cid;
 	}
 	
+	public function getArticleTags() {
+		global $articleConfig;
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($sprocketsModule && ($articleConfig['use_sprockets'] == 1)) {
+			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item("label_type", 0));
+			$criteria->add(new icms_db_criteria_Item("navigation_element", 0));
+			
+			$tags = $sprockets_tag_handler->getObjects(FALSE, TRUE, FALSE);
+			$ret[] = '------------';
+			foreach(array_keys($tags) as $i) {
+				$ret[$tags[$i]['tag_id']] = $tags[$i]['title'];
+			}
+			return $ret;
+		}
+		return $this->_download_tags;
+	}
+	
 	public function getLink($article_id = NULL) {
 		$file = $this->get($article_id);
 		$link = $file->getItemLink(FALSE);
@@ -408,7 +427,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return TRUE;
 
 		if (!$obj->getVar('article_notification_sent') && $obj->getVar('article_active', 'e') == TRUE && $obj->getVar('article_approve', 'e') == TRUE) {
-			$obj->sendNotifArticlePublished();
+			$obj->sendArticleNotification('article_published');
 			$obj->setVar('article_notification_sent', TRUE);
 			$this->insert($obj);
 		}

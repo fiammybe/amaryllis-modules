@@ -29,7 +29,7 @@ function addtags($clean_tag_id = 0, $clean_article_id = 0){
 	if ($tagObj->isNew()){
 		$tagObj->setVar("label_type", 0);
 		$tagObj->setVar("navigation_element", 0);
-		$tagObj = $tagObj->getSecureForm(_MD_ARTICLE_TAG_ADD, 'addtags', ARTICLE_URL . "ajax.php?op=addtags&article_id=" . $articleObj->id() , 'OK', TRUE, TRUE);
+		$tagObj = $tagObj->getSecureForm(_MD_ARTICLE_TAG_ADD, 'addtags', ARTICLE_URL . "submit.php?op=addtags&article_id=" . $articleObj->id() , 'OK', TRUE, TRUE);
 		$tagObj->assign($icmsTpl, 'article_tag_form');
 	} else {
 		exit;
@@ -107,9 +107,9 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	/**
 	 * display disclaimer yes/no?
 	 */
-	if($articleConfig['article_show_down_disclaimer'] == 1) {
+	if($articleConfig['show_down_disclaimer'] == 1) {
 		$icmsTpl->assign('show_down_disclaimer', true );
-		$icmsTpl->assign('down_disclaimer', $articleConfig['article_down_disclaimer']);
+		$icmsTpl->assign('down_disclaimer', $articleConfig['down_disclaimer']);
 	} else {
 		$icmsTpl->assign('show_down_disclaimer', false);
 	}
@@ -121,7 +121,7 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 		$icmsTpl->assign("sprockets_module", TRUE);
 	
 		if(is_object(icms::$user)) {
-			$icmsTpl->assign("tag_link", ARTICLE_URL . "ajax.php?op=addtags&amp;article_id=" . $articleObj->getVar("article_id") );
+			$icmsTpl->assign("tag_link", ARTICLE_URL . "submit.php?op=addtags&amp;article_id=" . $articleObj->getVar("article_id") );
 			$icmsTpl->assign("tag_perm_denied", FALSE);
 			addtags(0, $clean_article_id);
 		} else {
@@ -130,25 +130,62 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 		}
 	}
 	/**
+	 * display social media buttons
+	 */
+	if($articleConfig['display_twitter'] > 0) {
+	//Twitter button
+		switch ( $articleConfig['display_twitter'] ) {
+			case 1:
+				$counter = 'none';
+				break;
+			case 2:
+				$counter = 'horizontal';
+				break;
+			case 3:
+				$counter = 'vertical';
+				break;
+		}
+		$tw = '<script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+				<span style="margin-right: 10px;"><a href="https://twitter.com/share" class="twitter-share-button" data-count="' . $counter . '">' . _MD_ARTICLE_TWITTER . '</a></span>';
+		$icmsTpl->assign("article_twitter", $tw);
+	}
+	
+	if($articleConfig['display_fblike'] > 0) {
+		//Facebook button
+		switch ( $articleConfig['display_fblike'] ) {
+			case 1:
+				$counter = 'button_count';
+				break;
+			case 2:
+				$counter = 'box_count';
+				break;
+		}
+		$fb = '<div data-href="' . $articleObj->getItemLink(TRUE) . '" class="fb-like" data-send="false" data-layout="' . $counter . '" data-show-faces="false"></div>';
+		$icmsTpl->assign("article_facebook", $fb);
+	}
+	
+	//Google +1 button
+	if($articleConfig['display_gplus'] > 0) {
+		switch ( $articleConfig['display_gplus'] ) {
+			case 1:
+				$gplus = '<g:plusone size="medium" annotation="none"></g:plusone>';
+				break;
+			case 2:
+				$gplus = '<span style="margin: 0; padding: 0;"><g:plusone size="medium" annotation="bubble"></g:plusone></span>';
+				break;
+			case 3:
+				$gplus = '<span style="margin: 0; padding: 0;"><g:plusone size="tall" annotation="bubble"></g:plusone></span>';
+				break;
+		}
+		$icmsTpl->assign("article_googleplus", $gplus);
+	}
+	
+	/**
 	 * include the comment rules
 	 */
 	if ($articleConfig['com_rule']) {
 		$icmsTpl->assign('article_article_comment', true);
 		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
-	}
-	
-	/**
-	 * voting -> can vote?
-	 */
-	if($articleConfig['guest_vote'] == 1){
-		$icmsTpl->assign("can_vote", TRUE);
-	} else {
-		if(is_object(icms::$user)){
-			$icmsTpl->assign("can_vote", TRUE);
-		} else {
-			$icmsTpl->assign("can_vote", FALSE);
-			$icmsTpl->assign("register_link", ICMS_URL . "/user.php");
-		}
 	}
 	
 	/**
@@ -169,5 +206,8 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 } else {
 	redirect_header (ARTICLE_URL, 3, _NO_PERM);
 }
-
+if($gplus OR $fb OR $tw) {
+	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/jquery.socialshareprivacy.js', array('type' => 'text/javascript'));
+	$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/scripts/socialshareprivacy.css');
+}
 include_once "footer.php";

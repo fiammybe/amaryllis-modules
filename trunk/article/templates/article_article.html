@@ -1,51 +1,36 @@
-<{includeq file='db:artikel_header.html'}>
-<{if $artikel_article}>
-<div id="artikel-article-container">
-	<h1><{$artikel_article.article_title}></h1>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_CID}></b>: <{$artikel_article.article_cid}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_TEASER}></b></div>
-				<div><{$artikel_article.article_teaser}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_BODY}></b></div>
-				<div><{$artikel_article.article_body}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_RESOURCES}></b>: <{$artikel_article.article_resources}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_STEPS}></b></div>
-				<div><{$artikel_article.article_steps}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_VIDEO}></b>: <{$artikel_article.article_video}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_VIDEO_SOURCE}></b>: <{$artikel_article.article_video_source}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_VIDEO_UPLOAD}></b>: <{$artikel_article.article_video_upload}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_RELATED}></b>: <{$artikel_article.article_related}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_TIPS}></b></div>
-				<div><{$artikel_article.article_tips}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_FOOTER}></b></div>
-				<div><{$artikel_article.article_footer}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_SUBMITTER}></b>: <{$artikel_article.article_submitter}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_PUBLISHER}></b>: <{$artikel_article.article_publisher}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_PUBLISHED_DATE}></b>: <{$artikel_article.article_published_date}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_UPDATED_DATE}></b>: <{$artikel_article.article_updated_date}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_HISTORY}></b></div>
-				<div><{$artikel_article.article_history}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_TAGS}></b>: <{$artikel_article.article_tags}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_ATTECHMENT}></b>: <{$artikel_article.article_attechment}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_ATTACHMENT_ALT}></b>: <{$artikel_article.article_attachment_alt}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_DOWNLOADS}></b>: <{$artikel_article.article_downloads}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_UPDATER}></b>: <{$artikel_article.article_updater}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_WARNINGS}></b></div>
-				<div><{$artikel_article.article_warnings}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_NEEDED}></b></div>
-				<div><{$artikel_article.article_needed}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_APPROVE}></b>: <{$artikel_article.article_approve}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_ACTIVE}></b>: <{$artikel_article.article_active}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_UPDATED}></b>: <{$artikel_article.article_updated}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_INBLOCKS}></b>: <{$artikel_article.article_inblocks}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_ALBUM}></b>: <{$artikel_article.article_album}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_GRPPERM}></b>: <{$artikel_article.article_grpperm}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_IMAGE}></b>: <{$artikel_article.article_image}></div>
-		<div><b><{$smarty.const._CO_ARTIKEL_ARTICLE_ARTICLE_LICENSE}></b>: <{$artikel_article.article_license}></div>
-
+<!-- File title -->
+<h3><a href="<{$article.itemURL}>" title="<{$article.title}>"><{$article.title}></a></h3>
+<div class="article_cat_title">
+		<{if $article.userCanEditAndDelete}>
+			<{$article.editItemLink}><{$article.deleteItemLink}>
+		<{/if}>
+		<div>
+			<div class="article_category_info"><{$article.publisher}>&nbsp;|&nbsp;<{$article.published_on}></div>
+		</div>
+		<div style="clear: both;height: 1px;">&nbsp;</div>
 </div>
-<{/if}>
-<{if $artikel_article_table}>
-<h1><{$artikel_title}></h1>
-<{$artikel_article_table}>
-<{/if}>
-<{includeq file='db:artikel_footer.html'}>
+<!-- File description -->
+<div class="article_cat_dsc">
+	<p class="article_cat_teaser">
+
+	<!-- File image -->
+	<{if $article.index_img}>
+		<a class="article_screens" href="<{$article.index_img}>" title="file image">
+			<{resized_image file=$article.index_img width=$thumbnail_width height=$thumbnail_height fit="inside"}>
+		</a>
+	<{/if}>
+
+	<{if $article.teaser}>
+		<{$article.teaser}>
+	<{else}>
+		<{$smarty.const._MD_ARTICLE_NO_TEASER_TEXT}>
+	<{/if}>
+	</p>
+
+	</div>
+	<div style="clear: both;height: 1px;">&nbsp;</div>
+	<div class="box">
+	<a href="<{$article.itemURL}>" class="btn article" title="<{$smarty.const._MD_ARTICLE_READ_MORE}>" ><{$smarty.const._MD_ARTICLE_READ_MORE}><span class="helper"></span></a><span class="helper"></span>
+	</div>
+	
+<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
