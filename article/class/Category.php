@@ -66,7 +66,6 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$this->setControl("category_inblocks", "yesno");
 		$this->setControl("category_updated", "yesno");
 		
-
 		$this->hideFieldFromForm(array("category_notification_sent", "category_published_date", "category_updated_date", "weight", "counter", "category_submitter", "category_updater"));
 		$this->hideFieldFromSingleView(array("dohtml", "doimage", "dosmiley", "doxcode"));
 

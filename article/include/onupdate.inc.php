@@ -39,7 +39,7 @@ function article_upload_paths() {
 			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/categoryimages/' . $image);
 		}
 		icms_core_Filesystem::mkdir($path . '/indeximages');
-		$image = 'article_indexpage.png';
+		$image = 'article_indeximage.png';
 		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
 		return TRUE;
 }

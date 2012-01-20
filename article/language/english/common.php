@@ -51,7 +51,7 @@ define("_CO_ARTICLE_ARTICLE_ARTICLE_TEASER", "Teaser");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_TEASER_DSC", "Teaser of the Article");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_SHOW_TEASER", "Display Teaser?");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_BODY", "Body");
-define("_CO_ARTICLE_ARTICLE_ARTICLE_BODY_DSC", "Body of the Article");
+define("_CO_ARTICLE_ARTICLE_ARTICLE_BODY_DSC", "Body of the Article. You can use [pagebreak] to paginate your article.");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_RELATED", "Related articles");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_RELATED_DSC", "Select related Articles");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_SUBMITTER", "Submitter");

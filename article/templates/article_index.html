@@ -61,7 +61,7 @@
 	
 <{if $article_single_cat}>
 
-	<div class="article_scat_title"><{$article_single_cat.title}></div>&nbsp;<{if $article_single_cat.userCanEditAndDelete}><{$article_single_cat.editItemLink}><{/if}>
+	<div class="article_scat_title"><{$article_single_cat.title}></div>&nbsp;<{if $article_single_cat.userCanEditAndDelete}><{$article_single_cat.editItemLink}><{$article_single_cat.deleteItemLink}><{/if}>
 		<{if $article_single_cat.user_upload}>
 			<a class="<{if $article_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_100" href="<{$article_single_cat.user_upload}>" title="<{$smarty.const._MD_ARTICLE_UPLOAD}>">
 				<img style="vertical-align: middle;" src="<{$article_images_url}>add_file.png" title="<{$smarty.const._MD_ARTICLE_UPLOAD}>" alt="<{$smarty.const._MD_ARTICLE_UPLOAD}>" />
@@ -95,20 +95,20 @@
 	<{/if}>
 	
 	<{if $article_files }>
-		<h2><{$smarty.const._MD_ARTICLE_ARTICLE_FILELIST}></h2>
-	<div class="article_articlelist">
-		<{if $article_pagenav }><!-- pagination control -->
-			<{$article_pagenav}>
-		<{/if}>
-		<!-- article rule -->
-		<{foreach item=article from=$articles}>
-			<{includeq file='db:article_article.html'}>
-		<{/foreach}>
-		
-		<{if $article_pagenav }> <!-- pagination control -->
-			<{$article_pagenav}>
-		<{/if}>
-	</div>
+		<h2><{$smarty.const._MD_ARTICLE_ARTICLELIST}></h2>
+		<div class="article_articlelist">
+			<{if $article_pagenav }><!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+			<!-- article rule -->
+			<{foreach item=article from=$article_files}>
+				<{includeq file='db:article_article.html'}>
+			<{/foreach}>
+			
+			<{if $article_pagenav }> <!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+		</div>
 	<{/if}>
 
 <{/if}>

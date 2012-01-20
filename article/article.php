@@ -17,32 +17,32 @@
  *
  */
 
-
-include_once "header.php";
-
-$xoopsOption["template_main"] = "article_article.html";
-include_once ICMS_ROOT_PATH . "/header.php";
-
-$article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
-
-/** Use a naming convention that indicates the source of the content of the variable */
-$clean_article_id = isset($_GET["article_id"]) ? (int)$_GET["article_id"] : 0 ;
-$articleObj = $article_article_handler->get($clean_article_id);
-
-if($articleObj && !$articleObj->isNew()) {
-	$icmsTpl->assign("article_article", $articleObj->toArray());
-
-	$icms_metagen = new icms_ipf_Metagen($articleObj->getVar("article_title"), $articleObj->getVar("meta_keywords", "n"), $articleObj->getVar("meta_description", "n"));
-	$icms_metagen->createMetaTags();
-} else {
-	$icmsTpl->assign("article_title", _MD_ARTICLE_ALL_ARTICLES);
-
-	$objectTable = new icms_ipf_view_Table($article_article_handler, FALSE, array());
-	$objectTable->isForUserSide();
-	$objectTable->addColumn(new icms_ipf_view_Column("article_title"));
-	$icmsTpl->assign("article_article_table", $objectTable->fetch());
+function editarticle($articleObj) {
+	global $article_article_handler, $icmsTpl, $articleConfig;
+	
+	if (!$articleObj->isNew()){
+		$articleObj->hideFieldFromForm(array('article_updated', 'article_broken_file','article_approve', 'meta_description', 'meta_keywords', 'article_additionals', 'article_updated', 'article_submitter', 'article_inblocks', 'article_active', 'article_published_date', 'article_updated_date' ) );
+		$articleObj->setVar( 'article_updated_date', (time() - 100) );
+		$articleObj->setVar('article_updated', TRUE );
+		
+		$sform = $articleObj->getSecureForm(_MD_ARTICLE_ARTICLE_EDIT, 'addarticle');
+		$sform->assign($icmsTpl, 'article_article_form');
+		$icmsTpl->assign('article_cat_path', $articleObj->getVar('article_title') . ' > ' . _EDIT);
+	} else {
+		$articleObj->hideFieldFromForm(array('article_updated', 'article_broken_file','article_approve', 'meta_description', 'meta_keywords', 'article_additionals', 'article_updated', 'article_submitter', 'article_inblocks', 'article_active', 'article_published_date', 'article_updated_date' ) );
+		$articleObj->setVar('article_published_date', (time() - 100) );
+		if($articleConfig['article_needs_approval'] == 1) {
+			$articleObj->setVar('article_approve', FALSE );
+		} else {
+			$articleObj->setVar('article_approve', TRUE );
+		}
+		$articleObj->setVar('article_submitter', icms::$user->getVar("uid"));
+		
+		$sform = $articleObj->getSecureForm(_MD_ARTICLE_ARTICLE_CREATE, 'addarticle');
+		$sform->assign($icmsTpl, 'article_article_form');
+		$icmsTpl->assign('article_cat_path', _SUBMIT);
+	}
 }
-
 
 include_once 'header.php';
 
@@ -92,14 +92,14 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				redirect_header('index.php', 3, _MD_ARTICLE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 			}
 			$articleObj = $article_article_handler->get($clean_article_id);
-			$articleObj->sendArticleNotification('article_submitted');
+			$articleObj->sendDownloadNotification('file_submitted');
 			$controller = new icms_ipf_Controller($article_article_handler);
 			$controller->storeFromDefaultForm(_MD_ARTICLE_ARTICLE_CREATED, _MD_ARTICLE_ARTICLE_MODIFIED);
 			break;
 		case('del'):
 			$articleObj = $article_article_handler->get($clean_article_id);
 			if (!$articleObj->userCanEditAndDelete()) {
-				redirect_header($categoryObj->getItemLink(true), 3, _NOPERM);
+				redirect_header($articleObj->getItemLink(TRUE), 3, _NO_PERM);
 			}
 			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {
@@ -111,7 +111,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 	}
 } else {
-	redirect_header(ARTICLE_URL, 3, _NOPERM);
+	redirect_header(ARTICLE_URL, 3, _NO_PERM);
 }
 
 if( $articleConfig['show_breadcrumbs'] == true ) {

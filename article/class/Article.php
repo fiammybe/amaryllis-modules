@@ -49,6 +49,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->quickInitVar("article_attachment", XOBJ_DTYPE_FILE, FALSE);
 		$this->quickInitVar("article_attachment_alt", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("article_related", XOBJ_DTYPE_ARRAY);
+		$this->quickInitVar("article_tags", XOBJ_DTYPE_ARRAY);
 		$this->initCommonVar("article_additionals", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->quickInitVar("article_informations", XOBJ_DTYPE_FORM_SECTION);
@@ -106,7 +107,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		//$this->openFormSection("article_statics", _CO_ARTICLE_ARTICLE_ARTICLE_STATICS);
 		
 		if($articleConfig['use_sprockets'] == 1) {
-			$this->setControl("article_tags", array("name" => "select_multi", "itemhandler" => "article", "method" => "getArticleTags", "module" => "article"));
+			$this->setControl("article_tags", array("name" => "select_multi", "itemHandler" => "article", "method" => "getArticleTags", "module" => "article"));
 		} else {
 			$this->hideFieldFromForm("article_tags");
 			$this->hideFieldFromSingleView("article_tags");
@@ -130,7 +131,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			$this->hideFieldFromForm("article_related");
 			$this->hideFieldFromSingleView("article_related");
 		} else {
-			$this->setControl("article_related", array("name" => "select_multi", "itemhandler" => "article", "method" => "getRelated", "module" => "article"));
+			$this->setControl("article_related", array("name" => "select_multi", "itemHandler" => "article", "method" => "getRelated", "module" => "article"));
 		}
 		
 		$this->initiateSEO();
@@ -208,11 +209,14 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	}
 	
 	public function article_updater() {
-		return icms_member_user_Handler::getUserLink($this->getVar('article_updater', 'e'));
+		$updater = $this->getVar("article_updater");
+		if($updater != 0) {
+			return icms_member_user_Handler::getUserLink($this->getVar('article_updater', 'e'));
+		}
 	}
 
 	public function article_submitter() {
-		return icms_member_user_Handler::getUserLink($this->getVar('article_publisher', 'e'));
+		return icms_member_user_Handler::getUserLink($this->getVar('article_submitter', 'e'));
 	}
 	
 	/**
@@ -241,7 +245,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$article_img = $image_tag = '';
 		$directory_name = basename(dirname( dirname( __FILE__ ) ));
 		$script_name = getenv("SCRIPT_NAME");
-		$article_img = $this->getVar('article_image', 'e');
+		$article_img = $this->getVar('article_img', 'e');
 		if($singleview) {
 			$document_root = str_replace('modules/' . $directory_name . '/singlearticle.php', '', $script_name);
 			if (!$article_img == "") {
@@ -292,7 +296,10 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			} elseif(!$file == "0") {
 				$file = 'article_attachment';
 				$fileObj = $this->getFileObj($file);
-				$url = $fileObj->getVar('url');
+				$filelink = $fileObj->getVar("url", "e");
+				$titlelink = explode("/",$filelink);
+				$last = (isset($titlelink[count($titlelink)-1])) ? $titlelink[count($titlelink)-1] : null;
+				$url = '<a href="' . $filelink . '" title="' . $last . '"> ' . $last . '</a>';
 			} else {
 				$url = FALSE;
 			}
@@ -413,8 +420,9 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		global $articleConfig;
 		$date = '';
 		$date = $this->getVar("article_updated_date", "e");
-		
-		return date($articleConfig['article_dateformat'], $date);
+		if($date != 0) {
+			return date($articleConfig['article_dateformat'], $date);
+		}
 	}
 	
 	public function getArticleSubmitter($link = FALSE) {
@@ -473,7 +481,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		if($this->getVar('article_submitter', 'e') == icms::$user->getVar("uid")) return TRUE;
 		$publishers = $this->getVar("article_publisher", "s");
 		foreach ($publishers as $publisher) {
-			if($publisher == icms::$user->getVar("uid")) return TRUE;
+			return $publisher == icms::$user->getVar("uid");
 		}
 	}
 	
@@ -518,6 +526,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['id'] = $this->getVar("article_id", "e");
 		$ret['title'] = $this->getVar("article_title", "e");
 		$ret['cats'] = $this->getArticleCid(TRUE);
+		$ret['index_img'] = $this->getArticleImageTag(FALSE);
 		$ret['image'] = $this->getArticleImageTag(TRUE);
 		$ret['teaser'] = $this->getArticleTeaser();
 		$ret['body_array'] = $this->getArticleBody();
@@ -526,8 +535,8 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['filetype'] = $this->getFileType();
 		$ret['tags'] = $this->getArticleTags();
 		$ret['publisher'] = $this->getArticlePublishers();
-		$ret['submitter'] = $this->getArticleSubmitter(TRUE);
-		$ret['updater'] = $this->getArticleUpdater(TRUE);
+		$ret['submitter'] = $this->article_submitter();
+		$ret['updater'] = $this->article_updater();
 		$ret['published_on'] = $this->getArticlePublishedDate();
 		$ret['updated_on'] = $this->getArticleUpdatedDate();
 		$ret['counter'] = $this->getVar("counter", "e");

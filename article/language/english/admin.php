@@ -55,3 +55,13 @@ define("_AM_ARTICLE_CATEGORY_WEIGHTS_UPDATED", "Weights have successfully been u
 // constants for /admin/indexpage.php
 define("_AM_ARTICLE_INDEXPAGE_EDIT", "Edit the Indexpage");
 
+//constants for admin/index.php
+define("_AM_ARTICLE_INDEX_WARNING", "PLEASE READ MANUAL BEFORE USING");
+define("_AM_ARTICLE_INDEX_TOTAL", "Total");
+define("_AM_ARTICLE_FILES_IN", " Files in ");
+define("_AM_ARTICLE_CATEGORIES", " Categories");
+define("_AM_ARTICLE_INDEX_BROKEN_FILES", "Broken Attachments");
+define("_AM_ARTICLE_INDEX_NEED_APPROVAL_FILES", "Files need approval");
+define("_AM_ARTICLE_INDEX_NEED_APPROVAL_CATS", "Categories need approval");
+define("_AM_ARTICLE_INDEX", "Article Index");
+

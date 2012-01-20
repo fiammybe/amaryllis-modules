@@ -26,15 +26,18 @@ function editarticle($article_id = 0) {
 	global $article_article_handler, $icmsModule, $icmsAdminTpl;
 
 	$articleObj = $article_article_handler->get($article_id);
-
+	$article_uid = icms::$user->getVar("uid");
 	if (!$articleObj->isNew()){
 		
 		$icmsModule->displayAdminMenu(1, _MI_ARTICLE_MENU_ARTICLE . " > " . _MI_ARTICLE_ARTICLE_EDIT);
 		
-		
+		$articleObj->setVar("article_updated_date", (time() - 200));
+		$articleObj->setVar("article_updater", $article_uid);
 		$sform = $articleObj->getForm(_AM_ARTICLE_ARTICLE_EDIT, "addarticle");
 		$sform->assign($icmsAdminTpl);
 	} else {
+		$articleObj->setVar("article_published_date", (time() - 600));
+		$articleObj->setVar("article_submitter", $article_uid);
 		$icmsModule->displayAdminMenu(1, _MI_ARTICLE_MENU_ARTICLE . " > " . _MI_ARTICLE_ARTICLE_CREATINGNEW);
 		$sform = $articleObj->getForm(_AM_ARTICLE_ARTICLE_CREATE, "addarticle");
 		$sform->assign($icmsAdminTpl);
@@ -155,7 +158,7 @@ if($categories > 0) {
 				$objectTable = new icms_ipf_view_Table($article_article_handler, $criteria);
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_active', 'center', 50, 'article_active' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_title', false, false, 'getPreviewItemLink' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'article_cid', false, false, 'article_cid' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'article_cid', false, false, 'getArticleCid' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'counter', 'center', 50));
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_inblocks', 'center', 50, 'article_inblocks' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_approve', 'center', 50, 'article_approve' ) );
@@ -163,7 +166,7 @@ if($categories > 0) {
 					$objectTable->addColumn( new icms_ipf_view_Column( 'article_broken_file', 'center', 50, 'article_broken_file' ) );
 				}
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_published_date', 'center', 100, 'getArticlePublishedDate' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'article_publisher', 'center', true, 'article_publisher' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'article_publisher', 'center', true, 'getArticlePublishers' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getArticleWeightControl' ) );
 				
 				$objectTable->addFilter('article_active', 'article_active_filter');

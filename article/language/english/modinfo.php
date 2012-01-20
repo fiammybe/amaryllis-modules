@@ -22,8 +22,8 @@ define("_MI_ARTICLE_FORMS_TPL", "Article submit forms to submit Articles and cat
 define("_MI_ARTICLE_SINGLEARTICLE_TPL", "Display a single article");
 define("_MI_ARTICLE_ADMIN_TPL", "Template for module ACP");
 define("_MI_ARTICLE_REQUIREMENTS_TPL", "Check requirements");
-define("_MI_ARTICLE_HEADER_TPL", "header file included in all frontend templates. Contains CSS file, breadcrumb and rss feed link");
-define("_MI_ARTICLE_FOOTER_TPL", "footer file included in all frontend templates. Contains module footer, comment loop and notifications");
+define("_MI_ARTICLE_HEADER_TPL", "header and footer file included in all frontend templates.");
+
 // blocks
 define("_MI_ARTICLE_BLOCK_RECENT_ARTICLE", "Recent Articles");
 define("_MI_ARTICLE_BLOCK_RECENT_ARTICLE_DSC", "Displayes the recent published articles");
@@ -89,6 +89,8 @@ define("_MI_ARTICLE_USE_SPROCKETS", "Use 'Sprockets' Module?");
 define("_MI_ARTICLE_USE_SPROCKETS_DSC", "You can use 'Sprockets' Module to deal with tags. Only Tags will be supported, not navigation Elements or Tags labled as both!");
 define("_MI_ARTICLE_NEED_RELATED", "Do you need related Articles?");
 define("_MI_ARTICLE_NEED_RELATED_DSC", "If set to 'YES', you can select related articles from a list.");
+define("_MI_ARTICLE_NEED_ATTACHMENTS", "Do you need related Attachments?");
+define("_MI_ARTICLE_NEED_ATTACHMENTS_DSC", "Allow/disable file attachments for articles");
 define("_MI_ARTICLE_ARTICLE_APPROVE", "Do you need approvals for new files?");
 define("_MI_ARTICLE_ARTICLE_APPROVE_DSC", "Select 'YES' if you prefer to approve the files uploaded in frontend first, before providing the file");
 define("_MI_ARTICLE_CATEGORY_APPROVE", "Do you need approvals for new categories?");
@@ -98,6 +100,15 @@ define("_MI_ARTICLE_DISPLAY_ARTICLE_SIZE_DSC", "Select 'byte' to display in byte
 define("_MI_ARTICLE_POPULAR", "How many calls of one article before it's popular");
 define("_MI_ARTICLE_DAYSNEW", "How many days to provide one article as new");
 define("_MI_ARTICLE_DAYSUPDATED", "How many days to provide one article as updated after editing");
+define("_MI_ARTICLE_DEFAULT", "Default");
+define("_MI_ARTICLE_HORIZONTAL", "Horizontal counter");
+define("_MI_ARTICLE_VERTICAL", "Vertical counter");
+define("_MI_ARTICLE_DISPLAY_TWITTER", "Display Twitter Button");
+define("_MI_ARTICLE_DISPLAY_TWITTER_DSC", "");
+define("_MI_ARTICLE_DISPLAY_FBLIKE", "Display Facebook Button");
+define("_MI_ARTICLE_DISPLAY_FBLIKE_DSC", "");
+define("_MI_ARTICLE_DISPLAY_GPLUS", "Display G+ Button");
+define("_MI_ARTICLE_DISPLAY_GPLUS_DSC", "");
 
 // Notifications
 define('_MI_ARTICLE_GLOBAL_NOTIFY', 'Global');

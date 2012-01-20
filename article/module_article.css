@@ -1,0 +1,78 @@
+/**
+ * 'Article' is an article management module for ImpressCMS
+ *
+ * File: /module_article.css
+ * 
+ * css file for article module
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Article
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		article
+ *
+ */
+
+
+	.article_headertable {
+		margin-bottom: 2em;
+		float: left;
+	}
+	
+	.article_rss {
+		float: right;
+	}
+
+	.article_clear_both {
+		clear: both;
+		height: 1px;
+	}
+	
+	.article_clear_left {
+		clear: left;
+		height: 1px;
+	}
+	
+	.article_clear_right {
+		clear: right;
+		height: 1px;
+	}
+
+	.article_indeximage {
+		text-align: center;
+	}
+	
+	.article_indexheader {
+		text-align: center;
+		font-size: 2em;
+		margin: 2em auto;
+	}
+	
+	.article_indexheading, .article_indexfooter {
+		margin: 1em auto;
+	}
+	
+	
+	.article_cats {
+		margin: 1.5em auto;
+		display: table;
+		width: 100%;
+		padding: 5px;
+	}
+	
+	.article_cat_img {
+		vertical-align: top;
+	}
+	.article_cat_img2 {
+		vertical-align: top;
+		float:right;
+		margin: 0 0 0 10px;
+	}
+	
+	.popup, .tag_popup {
+		display: none;
+	}
+
