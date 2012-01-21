@@ -67,11 +67,7 @@
 		</span>
 		&nbsp;|&nbsp;
 		<{/if}>
-		<span class="article_mailto">
-			<a href="mailto:?subject=<{$smarty.const._MD_ARTICLE_MAILTO_SBJ}>&body=<{$smarty.const._MD_ARTICLE_MAILTO_BDY}>"><{$smarty.const._MD_ARTICLE_MAILTO}></a>
-		</span>
 		<{if $sprockets_module}>
-		&nbsp;|&nbsp;
 			<span class="article_tag">
 				<a href="<{$tag_link}>" class="<{if $tag_perm_denied == TRUE}>perm_tag_link<{else}>tag_link<{/if}>" >
 					<{$smarty.const._MD_ARTICLE_TAG_ADD}>
@@ -80,6 +76,9 @@
 		<{/if}>
 		
 		<span class="article_button_bar">
+			<a href="mailto:?subject=<{$smarty.const._MD_ARTICLE_MAILTO_SBJ}>&body=<{$smarty.const._MD_ARTICLE_MAILTO_BDY}>" title="<{$smarty.const._MD_ARTICLE_MAILTO}>">
+				<img style="vertical-align: middle;" src="<{$article_images_url}>mail.png" alt="<{$smarty.const._MD_ARTICLE_MAILTO}>" title="<{$smarty.const._MD_ARTICLE_MAILTO}>" />
+			</a>
 			<a href="<{$article_url}>print.php?article_id=<{$article.id}>" title="<{$smarty.const._MD_ARTICLE_PRINT}>" target="_blank">
 				<img style="vertical-align: middle;" src="<{$article_images_url}>print.png" alt="<{$smarty.const._MD_ARTICLE_PRINT}>" title="<{$smarty.const._MD_ARTICLE_PRINT}>" />
 			</a>

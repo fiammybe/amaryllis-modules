@@ -92,7 +92,11 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				redirect_header('index.php', 3, _MD_ARTICLE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 			}
 			$articleObj = $article_article_handler->get($clean_article_id);
-			$articleObj->sendDownloadNotification('file_submitted');
+			if($articleObj->isNew()) {
+				$articleObj->sendArticleNotification('article_submitted');
+			} else {
+				$articleObj->sendArticleNotification('article_modified');
+			}
 			$controller = new icms_ipf_Controller($article_article_handler);
 			$controller->storeFromDefaultForm(_MD_ARTICLE_ARTICLE_CREATED, _MD_ARTICLE_ARTICLE_MODIFIED);
 			break;
