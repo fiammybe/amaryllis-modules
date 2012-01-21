@@ -551,7 +551,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['accessgranted'] = $this->accessGranted();
-		
+		$ret['pritandmail'] = $this->getPrintAndMailLink();
 		return $ret;
 	}
 
