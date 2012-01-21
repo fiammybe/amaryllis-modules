@@ -90,14 +90,14 @@ if(in_array($clean_op, $valid_op)) {
 				} else {
 					$icmsTpl->assign('user_submit', false);
 				}
-				$categories = $article_category_handler->getCategories($clean_category_start, $articleConfig['show_categories'], $clean_category_uid,  false, $clean_category_id, "weight", "ASC", TRUE, TRUE);
+				$categories = $article_category_handler->getArticleCategories($clean_category_start, $articleConfig['show_categories'], $clean_category_uid,  false, $clean_category_id, "weight", "ASC", TRUE, TRUE);
 				$article_category_columns = array_chunk($categories, $articleConfig['show_category_columns']);
 				$icmsTpl->assign('sub_category_columns', $article_category_columns);
 			/**
 			 * if there's no valid category, retrieve a list of all primary categories
 			 */
 			} elseif ($clean_category_id == 0) {
-				$categories = $article_category_handler->getCategories($clean_category_start, $articleConfig['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
+				$categories = $article_category_handler->getArticleCategories($clean_category_start, $articleConfig['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
 				$article_category_columns = array_chunk($categories, $articleConfig['show_category_columns']);
 				$icmsTpl->assign('category_columns', $article_category_columns);
 				

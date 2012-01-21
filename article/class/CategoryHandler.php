@@ -74,7 +74,7 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		return $criteria;
 	}
 	
-	public function getCategories($start = 0, $limit = 0, $category_publisher = FALSE, $category_id = FALSE,  $category_pid = FALSE, $order = 'weight', $sort = 'ASC', $approved= NULL, $active = NULL) {
+	public function getArticleCategories($start = 0, $limit = 0, $category_publisher = FALSE, $category_id = FALSE,  $category_pid = FALSE, $order = 'weight', $sort = 'ASC', $approved= NULL, $active = NULL) {
 		$criteria = $this->getCategoryCriteria($start, $limit, $category_publisher, $category_id,  $category_pid, $order, $sort);
 		if($approved) $criteria->add(new icms_db_criteria_Item("category_approve", TRUE));
 		if ($active) $criteria->add(new icms_db_criteria_Item("category_active", TRUE));
@@ -91,7 +91,7 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 	
 	
 	public function getCategory($category_id) {
-		$ret = $this->getCategories(0, 0, FALSE, $category_id);
+		$ret = $this->getArticleCategories(0, 0, FALSE, $category_id);
 		
 		return isset($ret[$category_id]) ? $ret[$category_id] : FALSE;
 	}
@@ -152,7 +152,7 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('category_inblocks', TRUE));
 		}
 		if (is_null($category_id)) $category_id = 0;
-		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
+		if($category_id) $criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
 		$categories = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($categories as $category){

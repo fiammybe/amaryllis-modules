@@ -31,7 +31,7 @@ function b_article_category_menu_show($options) {
 	$article_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
 
 	//$block['article_category'] = $article_category_handler->getCategoryListForMenu($options[0], $options[1], true, true, true, $options[3], $options[2]);
-	$block['article_category'] = getCategories($options[2],$options[0],$options[1],$options[3]);
+	$block['article_category'] = getArticleCategories($options[2],$options[0],$options[1],$options[3]);
 	return $block;
 }
 
@@ -48,7 +48,7 @@ function b_article_category_menu_edit($options) {
 	$selorder->addOptionArray($order);
 	$showsubs = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
 	$selcats = new icms_form_elements_Select('', 'options[3]', $options[3]);
-	$selcats->addOptionArray($article_category_handler->getCategoryListForPid($groups = array(), 'category_grpperm', true, true, null, true));
+	$selcats->addOptionArray($article_category_handler->getCategoryListForPid($groups=array(), 'category_grpperm', TRUE, TRUE, TRUE, NULL, TRUE));
 	
 	$form = '<table width="100%">';
 	$form .= '<tr>';
@@ -76,7 +76,7 @@ function b_article_category_menu_edit($options) {
  */
 
 
-function getCategories($showsubs = true, $sort='weight', $order='ASC', $category_id = 0 ) {
+function getArticleCategories($showsubs = true, $sort='weight', $order='ASC', $category_id = 0 ) {
 	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	$uid = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
 	$article_category_handler =& icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
@@ -95,11 +95,11 @@ function getCategories($showsubs = true, $sort='weight', $order='ASC', $category
 	$i = 0;
 	$categories = array();
 	foreach ($impress_category as $category){
-		if (icms::handler('icms_member_groupperm')->checkRight('category_read', $category->getVar('category_id'), $groups, $module->getVar('mid'))){
+		if (icms::handler('icms_member_groupperm')->checkRight('category_grpperm', $category->getVar('category_id'), $groups, $module->getVar('mid'))){
 			$categories[$i]['title'] = $category->getVar('category_title');
 			$categories[$i]['itemLink'] = ARTICLE_URL . "index.php?category_id=" . $category->getVar("category_id");
 			if ($showsubs){
-				$subs = getCategories($showsubs, $sort, $order, $category->getVar('category_id'));
+				$subs = getArticleCategories($showsubs, $sort, $order, $category->getVar('category_id'));
 				if (count($subs) > 0){
 					$categories[$i]['hassubs'] = 1;
 					$categories[$i]['subcategories'] = $subs;

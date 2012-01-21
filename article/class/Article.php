@@ -518,6 +518,12 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		return $ret;
 	}
 	
+	public function getArticleImagePath() {
+		$image = $this->getVar("article_img", "e");
+		$path = ICMS_URL . '/uploads/article/article/' . $image;
+		return $path;
+	}
+	
 	
 	
 	public function toArray() {
@@ -528,6 +534,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['cats'] = $this->getArticleCid(TRUE);
 		$ret['index_img'] = $this->getArticleImageTag(FALSE);
 		$ret['image'] = $this->getArticleImageTag(TRUE);
+		$ret['imgpath'] = $this->getArticleImagePath();
 		$ret['teaser'] = $this->getArticleTeaser();
 		$ret['body_array'] = $this->getArticleBody();
 		$ret['file'] = $this->getArticleAttachment(TRUE, FALSE);
