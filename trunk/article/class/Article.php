@@ -524,6 +524,25 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		return $path;
 	}
 	
+	public function displayNewIcon() {
+		$time = $this->getVar("article_published_date", "e");
+		$timestamp = time();
+		$newarticle = article_display_new($time, $timestamp);
+		return $newarticle;
+	}
+	
+	public function displayUpdatedIcon() {
+		$time = $this->getVar("article_updated_date", "e");
+		$timestamp = time();
+		$newarticle = article_display_updated($time, $timestamp);
+		return $newarticle;
+	}
+	
+	public function displayPopularIcon() {
+		$popular = article_display_popular($this->getVar("counter"));
+		return $popular;
+	}
+	
 	
 	
 	public function toArray() {
@@ -551,7 +570,9 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['accessgranted'] = $this->accessGranted();
-		$ret['pritandmail'] = $this->getPrintAndMailLink();
+		$ret['article_is_new'] = $this->displayNewIcon();
+		$ret['article_is_updated'] = $this->displayUpdatedIcon();
+		$ret['article_popular'] = $this->displayPopularIcon();
 		return $ret;
 	}
 

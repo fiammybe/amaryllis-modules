@@ -1,13 +1,22 @@
 <!-- File title -->
 <h3><a href="<{$article.itemURL}>" title="<{$article.title}>"><{$article.title}></a></h3>
 <div class="article_cat_title">
-		<{if $article.userCanEditAndDelete}>
-			<{$article.editItemLink}><{$article.deleteItemLink}>
-		<{/if}>
-		<div>
-			<div class="article_category_info"><{$article.publisher}>&nbsp;|&nbsp;<{$article.published_on}></div>
-		</div>
-		<div style="clear: both;height: 1px;">&nbsp;</div>
+	<{if $article.article_is_new}>
+		<img style="vertical-align: middle;" class="icon_middle" src="<{$article.article_is_new}>" title="<{$smarty.const._MD_ARTICLE_NEW}>" />
+	<{/if}>
+	<{if $article.article_is_updated}>
+		<img style="vertical-align: middle;" class="icon_middle" src="<{$article.article_is_updated}>" title="<{$smarty.const._MD_ARTICLE_UPDATED}>" />
+	<{/if}>
+	<{if $article.article_popular}>
+		<img style="vertical-align: middle;" class="icon_middle" src="<{$article.article_popular}>" title="<{$smarty.const._MD_ARTICLE_POPULAR}>" />
+	<{/if}>
+	<{if $article.userCanEditAndDelete}>
+		<{$article.editItemLink}><{$article.deleteItemLink}>
+	<{/if}>
+	<div>
+		<div class="article_category_info"><{$article.publisher}>&nbsp;|&nbsp;<{$article.published_on}></div>
+	</div>
+	<div class="article_clear_both">&nbsp;</div>
 </div>
 <!-- File description -->
 <div class="article_cat_dsc">
@@ -28,7 +37,7 @@
 	</p>
 
 	</div>
-	<div style="clear: both;height: 1px;">&nbsp;</div>
+	<div class="article_clear_both">&nbsp;</div>
 	<div class="box">
 	<a href="<{$article.itemURL}>" class="btn article" title="<{$smarty.const._MD_ARTICLE_READ_MORE}>" ><{$smarty.const._MD_ARTICLE_READ_MORE}><span class="helper"></span></a><span class="helper"></span>
 	</div>

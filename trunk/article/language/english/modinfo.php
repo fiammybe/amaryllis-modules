@@ -1,13 +1,20 @@
 <?php
 /**
- * English language constants related to module information
+ * 'Article' is an article management module for ImpressCMS
  *
+ * File: /language/english/modinfo.php
+ * 
+ * modinfo language file
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Article
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		article
  * @version		$Id$
+ * @package		article
+ *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
@@ -113,6 +120,10 @@ define("_MI_ARTICLE_DISPLAY_FBLIKE", "Display Facebook Button");
 define("_MI_ARTICLE_DISPLAY_FBLIKE_DSC", "");
 define("_MI_ARTICLE_DISPLAY_GPLUS", "Display G+ Button");
 define("_MI_ARTICLE_DISPLAY_GPLUS_DSC", "");
+define("_MI_ARTICLE_PRINT_FOOTER", "Print Footer");
+define("_MI_ARTICLE_PRINT_FOOTER_DSC", "This footer will be used in print layouts");
+define("_MI_ARTICLE_PRINT_LOGO", "Print Logo");
+define("_MI_ARTICLE_PRINT_LOGO_DSC", "Enter the path to logo to be printed. E.g.: /themes/example/images/logo.gif");
 
 // Notifications
 define('_MI_ARTICLE_GLOBAL_NOTIFY', 'Global');

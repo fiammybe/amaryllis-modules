@@ -3,14 +3,14 @@
 	<!-- article title -->
 	<div class="article_title">
 		<h1><{$article.title}></h1>
-		<{if $article_is_new}>
-			<img class="icon_middle" src="<{$article_is_new_img}>" title="<{$smarty.const._MD_ARTICLE_NEW}>" />
+		<{if $article.article_is_new}>
+			<img style="vertical-align: middle;" class="icon_middle" src="<{$article.article_is_new}>" title="<{$smarty.const._MD_ARTICLE_NEW}>" />
 		<{/if}>
-		<{if $article_is_updated}>
-			<img class="icon_middle" src="<{$article_is_updated_img}>" title="<{$smarty.const._MD_ARTICLE_UPDATED}>" />
+		<{if $article.article_is_updated}>
+			<img style="vertical-align: middle;" class="icon_middle" src="<{$article.article_is_updated}>" title="<{$smarty.const._MD_ARTICLE_UPDATED}>" />
 		<{/if}>
-		<{if $article_is_popular}>
-			<img class="icon_middle" src="<{$article_is_popular_img}>" title="<{$smarty.const._MD_ARTICLE_POPULAR}>" />
+		<{if $article.article_popular}>
+			<img style="vertical-align: middle;" class="icon_middle" src="<{$article.article_popular}>" title="<{$smarty.const._MD_ARTICLE_POPULAR}>" />
 		<{/if}>
 	</div>
 	<!-- article categories -->
@@ -80,10 +80,10 @@
 		<{/if}>
 		
 		<span class="article_button_bar">
-			<a href="<{$article_url}>print.php?article_id=<{$article.id}>" title="<{$smarty.const._MD_ARTICLE_PRINT}>">
+			<a href="<{$article_url}>print.php?article_id=<{$article.id}>" title="<{$smarty.const._MD_ARTICLE_PRINT}>" target="_blank">
 				<img style="vertical-align: middle;" src="<{$article_images_url}>print.png" alt="<{$smarty.const._MD_ARTICLE_PRINT}>" title="<{$smarty.const._MD_ARTICLE_PRINT}>" />
 			</a>
-			<a href="<{$article_url}>pdf.php?article_id=<{$article.id}>" title="<{$smarty.const._MD_ARTICLE_PDF}>">
+			<a href="<{$article_url}>pdf.php?article_id=<{$article.id}>" title="<{$smarty.const._MD_ARTICLE_PDF}>" target="_blank">
 				<img style="vertical-align: middle;" src="<{$article_images_url}>pdf.png" alt="<{$smarty.const._MD_ARTICLE_PDF}>" title="<{$smarty.const._MD_ARTICLE_PDF}>" />
 			</a>
 			<{if $article.userCanEditAndDelete}>

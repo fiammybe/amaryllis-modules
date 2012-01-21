@@ -1,19 +1,25 @@
 <?php
 /**
- * English language constants used in the user side of the module
+ * 'Article' is an article management module for ImpressCMS
  *
+ * article: /language/english/main.php
+ * 
+ * main language file
+ * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Article
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		article
  * @version		$Id$
+ * @package		article
+ *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 define("_MD_ARTICLE_ADMIN_PAGE", ":: Admin page ::");
-
 
 // constants for indexview
 define("_MD_ARTICLE_SUBMIT_CAT", "Submit new category");
