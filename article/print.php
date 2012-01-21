@@ -1,5 +1,21 @@
 <?php
-
+/**
+ * 'Article' is an article management module for ImpressCMS
+ *
+ * File: /print.php
+ * 
+ * print single article
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Article
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		article
+ *
+ */
 
 include_once 'header.php';
 
@@ -22,7 +38,7 @@ if (!$articleObj || !is_object($articleObj) || $articleObj->isNew()) {
 	redirect_header(icms_getPreviousPage(), 2, _MD_ARTICLE_NO_ARTICLE);
 }
 
-if (!$articleObj->accessGranted ()){
+if (!$articleObj->accessGranted()){
 	redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
 }
 

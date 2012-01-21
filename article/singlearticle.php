@@ -2,7 +2,7 @@
 /**
  * 'Article' is an article management module for ImpressCMS
  *
- * article: /singlearticle.php
+ * File: /singlearticle.php
  * 
  * display single article
  * 
@@ -74,36 +74,7 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	 * forwarding new reports for broken links
 	 */
 	$icmsTpl->assign("broken_link", ARTICLE_URL . "submit.php?op=report_broken&article_id=" . $articleObj->id() );
-	/**
-	 * display article as popular
-	 */
-	$popular = article_display_popular($articleObj->getVar("counter"));
-	if($popular) {
-		$icmsTpl->assign('article_is_popular', TRUE );
-		$icmsTpl->assign('article_is_popular_img', $popular );
-	}
-	/**
-	 * display image if article is new or updated
-	 */
-	$newarticle = article_display_new( $articleObj->getVar( 'article_published_date' ) );
-	if($newarticle) {
-		$icmsTpl->assign('article_is_new', TRUE );
-		$icmsTpl->assign('article_is_new_img', $newarticle );
-	} else {
-		$icmsTpl->assign('article_is_new', FALSE );
-	}
-	if( $articleObj->getVar('article_updated') == true && $articleObj->getVar('article_updated_date') != 0) {
-		$newarticle = article_display_updated( $articleObj->getVar( 'article_published_date' ) );
-		if($newarticle) {
-			$icmsTpl->assign('article_is_updated', TRUE );
-			$icmsTpl->assign('article_is_updated_img', $newarticle );
-		} else {
-			$icmsTpl->assign('article_is_updated', FALSE );
-		}
-	}
-	if($articleObj->getVar('article_updated_date', 'e') > 0) {
-		$icmsTpl->assign("show_updated", TRUE);
-	}
+	
 	/**
 	 * display disclaimer yes/no?
 	 */
