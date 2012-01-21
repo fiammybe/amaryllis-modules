@@ -34,7 +34,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if ($articleObj->isNew()) return FALSE;
 			$articleObj->setVar('article_broken', TRUE);
 			$articleObj->store(TRUE);
-			$articleObj->sendArticleNotification('article_broken');
+			$articleObj->sendArticleNotification('article_file_broken');
 			return redirect_header(icms_getPreviousPage(), 3, _MD_ARTICLE_BROKEN_REPORTED);
 			break;
 		

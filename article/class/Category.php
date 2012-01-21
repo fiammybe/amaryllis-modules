@@ -338,7 +338,7 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		return $ret;
 	}
 
-	function sendNotifCategoryPublished() {
+	function sendCategoryNotification($case) {
 		$valid_case = array('new_category', 'category_submitted', 'category_modified', 'category_approved');
 		if(in_array($case, $valid_case, TRUE)) {
 			$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
@@ -365,9 +365,9 @@ class ArticleCategory extends icms_ipf_seo_Object {
 					break;
 					
 				case 'category_approved':
-					$category = 'category';
+					$category = 'global';
 					$cat_id = $this->id();
-					$recipient = $this->getVar("category_publisher", "e");
+					$recipient = array($this->getVar("category_publisher", "e"));
 					break;
 				
 			}

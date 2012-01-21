@@ -2,9 +2,7 @@ Hello {X_UNAME},
 
 You are receiving this message because you selected to be notified when any file in "{CATEGORY_NAME}" category on {X_SITENAME} was modified.
 
-Category ({CATEGORY_NAME}): {CATEGORY_URL}
-File ({FILE_NAME}): {FILE_URL}
-New Version: {FILE_VERSION}
+Article ({ARTICLE_TITLE}): {ARTICLE_URL}
 
 If this is an error or you wish not to receive further such notifications, please update your subscriptions by visiting the link below:
 {X_UNSUBSCRIBE_URL}

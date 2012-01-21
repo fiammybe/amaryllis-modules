@@ -406,18 +406,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		return TRUE;
 	}
 	
-	protected function afterSave(&$obj) {
-		if ($obj->updating_counter)
-		return TRUE;
-
-		if (!$obj->getVar('category_notification_sent') && $obj->getVar('category_active', 'e') == TRUE && $obj->getVar('category_approve', 'e') == TRUE) {
-			$obj->sendNotifCategoryPublished();
-			$obj->setVar('category_notification_sent', TRUE);
-			$this->insert($obj);
-		}
-		return TRUE;
-	}
-	
 	protected function afterDelete(& $obj) {
 		$notification_handler = icms::handler( 'icms_data_notification' );
 		$module_handler = icms::handler('icms_module');

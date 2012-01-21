@@ -30,7 +30,7 @@ function editcategory($categoryObj = 0) {
 	} else {
 		$categoryObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'category_updated', 'category_publisher', 'category_submitter', 'category_active', 'category_inblocks', 'category_approve', 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar('category_published_date', (time() - 100) );
-		if($articleConfig['category_needs_approve'] == 1) {
+		if($articleConfig['category_needs_approval'] == 1) {
 			$categoryObj->setVar('category_approve', FALSE );
 		} else {
 			$categoryObj->setVar('category_approve', TRUE );
@@ -96,9 +96,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			break;
 			
 		case 'addcategory':
-			if (!icms::$security->check()) {
-				redirect_header('index.php', 3, _MD_ARTICLE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
-			}
+			
 			$categoryObj = $article_category_handler->get($clean_category_id);
 			if($categoryObj->isNew()) {
 				$categoryObj->sendCategoryNotification('category_submitted');

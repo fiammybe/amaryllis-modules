@@ -1,9 +1,9 @@
 Hello {X_UNAME},
 
-A new file "{FILE_NAME}" has been added at {X_SITENAME}.
+A new file "{ARTICLE_TITLE}" has been added at {X_SITENAME}.
 
 You can view this file here:
-{FILE_URL}
+{ARTILE_URL}
 
 -----------
 

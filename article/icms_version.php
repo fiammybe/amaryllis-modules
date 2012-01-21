@@ -591,7 +591,7 @@ $modversion['notification']['event'][$i]['mail_template'] = 'global_category_mod
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'category_approved';
-$modversion['notification']['event'][$i]['category'] = 'category';
+$modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['invisible'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY;
 $modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_CAP;
@@ -599,7 +599,7 @@ $modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_ARTICLE_AP
 $modversion['notification']['event'][$i]['mail_template'] = 'category_approved';
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_SBJ;
 $i++;
-$modversion['notification']['event'][$i]['name'] = 'category_submit';
+$modversion['notification']['event'][$i]['name'] = 'category_submitted';
 $modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['admin_only'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_CATSUBMIT_NOTIFY;
@@ -609,7 +609,7 @@ $modversion['notification']['event'][$i]['mail_template'] = 'global_category_sub
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_CATSUBMIT_NOTIFY_SBJ;
 
 $i++;
-$modversion['notification']['event'][$i]['name'] = 'article_submit';
+$modversion['notification']['event'][$i]['name'] = 'article_submitted';
 $modversion['notification']['event'][$i]['category'] = 'category';
 $modversion['notification']['event'][$i]['admin_only'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_CATEGORY_ARTICLESUBMIT_NOTIFY;
@@ -668,7 +668,7 @@ $modversion['notification']['event'][$i]['mail_template'] = 'global_article_modi
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'article_file_broken';
-$modversion['notification']['event'][$i]['category'] = 'article';
+$modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['admin_only'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY;
 $modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY_CAP;

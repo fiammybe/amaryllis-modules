@@ -1,12 +1,9 @@
 Hello {X_UNAME},
 
-A new file "{FILE_NAME}" has been added in category "{CATEGORY_NAME}" at {X_SITENAME}.
+A new file "{ARTICLE_TITLE}" has been added in category "{ARTICLE_CATS}" at {X_SITENAME}.
 
-You can view this file here:
-{FILE_URL}
-
-You can view the whole category here:
-{CATEGORY_URL}
+You can view this Article here:
+{ARTICLE_URL}
 
 -----------
 
