@@ -23,7 +23,7 @@ define("_MI_ARTICLE_SINGLEARTICLE_TPL", "Display a single article");
 define("_MI_ARTICLE_ADMIN_TPL", "Template for module ACP");
 define("_MI_ARTICLE_REQUIREMENTS_TPL", "Check requirements");
 define("_MI_ARTICLE_HEADER_TPL", "header and footer file included in all frontend templates.");
-
+define("_MI_ARTICLE_PRINT_TPL", "Print template for single articles");
 // blocks
 define("_MI_ARTICLE_BLOCK_RECENT_ARTICLE", "Recent Articles");
 define("_MI_ARTICLE_BLOCK_RECENT_ARTICLE_DSC", "Displayes the recent published articles");

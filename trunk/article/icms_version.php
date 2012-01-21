@@ -135,6 +135,11 @@ $modversion['templates'][$i] = array(
 								);
 $i++;
 $modversion['templates'][$i] = array(
+										'file'			=> 'article_print.html',
+										'description'	=> _MI_ARTICLE_PRINT_TPL
+								);
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'article_admin.html',
 										'description'	=> _MI_ARTICLE_ADMIN_TPL
 								);
@@ -513,6 +518,27 @@ $modversion['config'][$i] = array(
 								'default'		=> 0,
 								'options'		=> array( _NONE => 0, _MI_ARTICLE_DEFAULT => 1, _MI_ARTICLE_HORIZONTAL => 2, _MI_ARTICLE_VERTICAL => 3 ) 
 							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'article_print_footer',
+								'title' 		=> '_MI_ARTICLE_PRINT_FOOTER',
+								'description' 	=> '_MI_ARTICLE_PRINT_FOOTER_DSC',
+								'formtype' 		=> 'textarea',
+								'valuetype' 	=> 'txt',
+								'default' 		=> ''
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'article_print_logo',
+								'title' 		=> '_MI_ARTICLE_PRINT_LOGO',
+								'description' 	=> '_MI_ARTICLE_PRINT_LOGO_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'txt',
+								'default' 		=> ''
+							);
+
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

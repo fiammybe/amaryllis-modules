@@ -4,16 +4,13 @@
 	<div class="article_title">
 		<h1><{$article.title}></h1>
 		<{if $article_is_new}>
-			<img class="icon_middle" src="<{$article_is_new_img}>" title="<{$smarty.const._MD_DOWNLOADS_FILE_NEW}>" />
+			<img class="icon_middle" src="<{$article_is_new_img}>" title="<{$smarty.const._MD_ARTICLE_NEW}>" />
 		<{/if}>
 		<{if $article_is_updated}>
-			<img class="icon_middle" src="<{$article_is_updated_img}>" title="<{$smarty.const._MD_DOWNLOADS_FILE_UPDATED}>" />
+			<img class="icon_middle" src="<{$article_is_updated_img}>" title="<{$smarty.const._MD_ARTICLE_UPDATED}>" />
 		<{/if}>
 		<{if $article_is_popular}>
-			<img class="icon_middle" src="<{$article_is_popular_img}>" title="<{$smarty.const._MD_DOWNLOADS_FILE_POPULAR}>" />
-		<{/if}>
-		<{if $article.userCanEditAndDelete}>
-			<{$article.editItemLink}><{$article.deleteItemLink}>
+			<img class="icon_middle" src="<{$article_is_popular_img}>" title="<{$smarty.const._MD_ARTICLE_POPULAR}>" />
 		<{/if}>
 	</div>
 	<!-- article categories -->
@@ -81,18 +78,20 @@
 				</a>
 			</span>
 		<{/if}>
-		<div class="social">
-			<{if $article_googleplus}>
-				<{$article_googleplus}>
-			<{/if}>
-			<{if $article_facebook}>
-				<{$article_facebook}>
-			<{/if}>
-			<{if $article_twitter}>
-				<{$article_twitter}>
-			<{/if}>
-		</div>
 		
+		<span class="article_button_bar">
+			<a href="<{$article_url}>print.php?article_id=<{$article.id}>" title="<{$smarty.const._MD_ARTICLE_PRINT}>">
+				<img style="vertical-align: middle;" src="<{$article_images_url}>print.png" alt="<{$smarty.const._MD_ARTICLE_PRINT}>" title="<{$smarty.const._MD_ARTICLE_PRINT}>" />
+			</a>
+			<a href="<{$article_url}>pdf.php?article_id=<{$article.id}>" title="<{$smarty.const._MD_ARTICLE_PDF}>">
+				<img style="vertical-align: middle;" src="<{$article_images_url}>pdf.png" alt="<{$smarty.const._MD_ARTICLE_PDF}>" title="<{$smarty.const._MD_ARTICLE_PDF}>" />
+			</a>
+			<{if $article.userCanEditAndDelete}>
+				<{$article.editItemLink}>
+				<{$article.deleteItemLink}>
+			<{/if}>
+			
+		</span>
 		
 		<{if $icms_isuser}>
 			<div class="ui-helper-hidden tag_form">
@@ -106,6 +105,18 @@
 			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$smarty.const._MD_ARTICLE_TAGS_PERM}></p>
 		</div>
 	</div>
+	<div class="article_clear_right">&nbsp;</div>
+	<div class="social">
+			<{if $article_googleplus}>
+				<{$article_googleplus}>
+			<{/if}>
+			<{if $article_facebook}>
+				<{$article_facebook}>
+			<{/if}>
+			<{if $article_twitter}>
+				<{$article_twitter}>
+			<{/if}>
+		</div>
 </div>
 
 <{includeq file='db:article_footer.html'}>

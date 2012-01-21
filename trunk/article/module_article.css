@@ -75,4 +75,16 @@
 	.popup, .tag_popup {
 		display: none;
 	}
+	
+	
+	
+	
+	
+	
+	
+	.article_button_bar {
+		float: right;
+		margin-left: 1em;
+	}
+	
 
