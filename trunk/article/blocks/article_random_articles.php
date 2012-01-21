@@ -19,19 +19,21 @@
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
-function b_article_recent_article_show($options) {
+function b_article_random_articles_show($options) {
 	global $articleConfig;
 	
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
 
-	$block['article_article'] = $article_article_handler->getArticlesForBlocks(0, $options[0]);
+	$articles = $article_article_handler->getArticlesForBlocks(0, $options[0]);
+	$randomarticles = shuffle($articles);
+	$block['article_random'] = $randomarticles;
 	
 	return $block;
 }
 
-function b_article_recent_article_edit($options) {
+function b_article_random_articles_edit($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');

@@ -33,6 +33,10 @@ define("_MI_ARTICLE_BLOCK_MOST_POPULAR", "Most popular articles");
 define("_MI_ARTICLE_BLOCK_MOST_POPULAR_DSC", "Displays most popular articles");
 define("_MI_ARTICLE_BLOCK_CATEGORY_MENU", "Category Menu");
 define("_MI_ARTICLE_BLOCK_CATEGORY_MENU_DSC", "Category menu block");
+define("_MI_ARTICLE_BLOCK_SPOTLIGHT", "Article spotlight");
+define("_MI_ARTICLE_BLOCK_SPOTLIGHT_DSC", "Spotlight block for articles");
+define("_MI_ARTICLE_BLOCK_RANDOM_ARTICLES", "Random Articles");
+define("_MI_ARTICLE_BLOCK_RANDOM_ARTICLES_DSC", "Display random articles");
 // preferences
 define("_MI_ARTICLE_AUTHORIZED_GROUPS", "Authorized groups for submitting categories from frontend");
 define("_MI_ARTICLE_AUTHORIZED_GROUPS_DSC", "All selected groups will be allowed to submit new categories from frontend");
