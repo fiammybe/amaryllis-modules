@@ -100,8 +100,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				redirect_header('index.php', 3, _MD_ARTICLE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 			}
 			$categoryObj = $article_category_handler->get($clean_category_id);
-			$categoryObj->sendCategoryNotification('category_submitted');
-			
+			if($categoryObj->isNew()) {
+				$categoryObj->sendCategoryNotification('category_submitted');
+			} else {
+				$categoryObj->sendCategoryNotification('category_modified');
+			}
 			$controller = new icms_ipf_Controller($article_category_handler);
 			$controller->storeFromDefaultForm(_MD_ARTICLE_CATEGORY_CREATED, _MD_ARTICLE_CATEGORY_MODIFIED);
 			break;

@@ -69,6 +69,12 @@ if($categories > 0) {
 				break;
 	
 			case "addarticle":
+				$articleObj = $article_article_handler->get($clean_article_id);
+				if($articleObj->isNew()) {
+					$articleObj->sendArticleNotification('article_submitted');
+				} else {
+					$articleObj->sendArticleNotification('article_modified');
+				}
 				$controller = new icms_ipf_Controller($article_article_handler);
 				$controller->storeFromDefaultForm(_AM_ARTICLE_ARTICLE_CREATED, _AM_ARTICLE_ARTICLE_MODIFIED);
 				break;
@@ -120,6 +126,8 @@ if($categories > 0) {
 				if ($approve == 0) {
 					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_APPROVE_FALSE );
 				} else {
+					$articleObj = $article_article_handler->get($clean_article_id);
+					$articleObj->sendArticleNotification('article_approved');
 					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_APPROVE_TRUE );
 				}
 				break;

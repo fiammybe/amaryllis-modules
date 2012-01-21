@@ -577,10 +577,47 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	}
 
 	function sendArticleNotification($case) {
-		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-		$tags ['ARTICLE_TITLE'] = $this->getVar('article_title');
-		$tags ['ARTICLE_URL'] = $this->getItemLink();
-		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'article_published', $tags, array(), $module->getVar('mid'));
+		$valid_case = array("new_article", "article_submit", "article_modified", "article_approved", "article_file_broken");
+		if(in_array($case, $valid_case, TRUE)) {
+			$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+			$mid = $module->getVar('mid');
+			$tags ['ARTICLE_TITLE'] = $this->getVar('article_title');
+			$tags ['ARTICLE_URL'] = $this->getItemLink(FALSE);
+			$tags ['ARTICLE_CATS'] = $this->getArticleCid(TRUE);
+			switch ($case) {
+				case 'new_article':
+					$category = 'global';
+					$file_id = 0;
+					$recipient = array();
+					break;
+				
+				case 'article_submit':
+					$category = 'global';
+					$file_id = 0;
+					$recipient = array();
+					break;
+				
+				case 'article_modified':
+					$category = 'global';
+					$file_id = 0;
+					$recipient = array();
+					break;
+				
+				case 'article_approved':
+					$category = 'article';
+					$file_id = $this->id();
+					$recipient = $this->getVar("article_publisher", "s");
+					break;
+				
+				case 'article_file_broken':
+					$category = 'article';
+					$file_id = $this->id();
+					$recipient = array();
+					break;
+					
+			}
+			icms::handler('icms_data_notification')->triggerEvent($category, $file_id, $case, $tags, $recipient, $mid);
+		}
 	}
 
 	function getReads() {

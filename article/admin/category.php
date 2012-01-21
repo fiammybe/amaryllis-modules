@@ -106,9 +106,11 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$approve = $article_category_handler -> changeApprove( $clean_category_id );
 			$ret = 'category.php';
 			if ($approve == 0) {
-				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_CATEGORY_APPROVED );
-			} else {
 				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_CATEGORY_DENIED );
+			} else {
+				$categoryObj = $article_category_handler->get($clean_category_id);
+				$categoryObj->sendCategoryNotification('category_approved');
+				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_CATEGORY_APPROVED );
 			}
 			break;
 			

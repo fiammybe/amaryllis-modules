@@ -667,11 +667,11 @@ $modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_ART
 $modversion['notification']['event'][$i]['mail_template'] = 'global_article_modified';
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY_SBJ;
 $i++;
-$modversion['notification']['event'][$i]['name'] = 'file_broken';
+$modversion['notification']['event'][$i]['name'] = 'article_file_broken';
 $modversion['notification']['event'][$i]['category'] = 'article';
 $modversion['notification']['event'][$i]['admin_only'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY;
 $modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY_CAP;
 $modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY_DSC;
-$modversion['notification']['event'][$i]['mail_template'] = 'article_broken';
+$modversion['notification']['event'][$i]['mail_template'] = 'file_broken';
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY_SBJ;
