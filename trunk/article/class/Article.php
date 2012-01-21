@@ -577,7 +577,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	}
 
 	function sendArticleNotification($case) {
-		$valid_case = array("new_article", "article_submit", "article_modified", "article_approved", "article_file_broken");
+		$valid_case = array("new_article", "article_submitted", "article_modified", "article_approved", "article_file_broken");
 		if(in_array($case, $valid_case, TRUE)) {
 			$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
 			$mid = $module->getVar('mid');
@@ -591,7 +591,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 					$recipient = array();
 					break;
 				
-				case 'article_submit':
+				case 'article_submitted':
 					$category = 'global';
 					$file_id = 0;
 					$recipient = array();

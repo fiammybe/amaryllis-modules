@@ -1,6 +1,6 @@
 Hello {X_UNAME},
 
-A file category "{CATEGORY_NAME}" has been modified at {X_SITENAME}.
+A category "{CATEGORY_NAME}" has been modified at {X_SITENAME}.
 
 Follow this link to view this file category:
 {CATEGORY_URL}
