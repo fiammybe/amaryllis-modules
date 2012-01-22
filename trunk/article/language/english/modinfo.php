@@ -202,6 +202,7 @@ define("_MI_ARTICLE_MENU_CATEGORY", "Manage Categories");
 define("_MI_ARTICLE_MENU_INDEXPAGE", "Edit Indexpage");
 define("_MI_ARTICLE_MENU_TEMPLATES", "Templates");
 define("_MI_ARTICLE_MENU_MANUAL", "Manual");
+define("_MI_ARTICLE_MENU_IMPORT", "Import");
 // Submenu while calling a tab
 define("_MI_ARTICLE_ARTICLE_EDIT", "Edit your Article");
 define("_MI_ARTICLE_ARTICLE_CREATINGNEW", "Upload a new Article");

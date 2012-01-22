@@ -58,6 +58,10 @@ $i = 0;
 	$i++;
 	$headermenu[$i]['title'] = _MI_ARTICLE_MENU_MANUAL;
 	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/manual.php';
+	
+	$i++;
+	$headermenu[$i]['title'] = _MI_ARTICLE_MENU_IMPORT;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/import.php';
 
 	$i++;
 	$headermenu[$i]['title'] = _MODABOUT_ABOUT;

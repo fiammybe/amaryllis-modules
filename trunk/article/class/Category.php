@@ -20,6 +20,12 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 class ArticleCategory extends icms_ipf_seo_Object {
+	
+	public $updating_counter = FALSE;
+	
+	public $categories = TRUE;
+	
+	
 	/**
 	 * Constructor
 	 *
