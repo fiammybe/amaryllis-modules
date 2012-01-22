@@ -46,7 +46,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		$dir = $this->_uploadPath;
 		if (!file_exists($dir)) {
 			$moddir = basename(dirname(dirname(__FILE__)));
-			icms_core_Filesystem::mkdir($dir, "0777", ICMS_ROOT_PATH . '/uploads/' . $moddir . '/' );
+			icms_core_Filesystem::mkdir($dir, "0777", '' );
 		}
 		return $dir . "/";
 	}
@@ -71,7 +71,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		return $criteria;
 	}
 	
-	public function getCategories($start = 0, $limit = 0, $category_publisher = false, $category_id = false,  $category_pid = false, $order = 'weight', $sort = 'ASC', $approved= null, $active = null) {
+	public function getDownloadCategories($start = 0, $limit = 0, $category_publisher = false, $category_id = false,  $category_pid = false, $order = 'weight', $sort = 'ASC', $approved= null, $active = null) {
 		$criteria = $this->getCategoryCriteria($start, $limit, $category_publisher, $category_id,  $category_pid, $order, $sort);
 		if($approved) $criteria->add(new icms_db_criteria_Item("category_approve", true));
 		if ($active) $criteria->add(new icms_db_criteria_Item("category_active", true));

@@ -301,7 +301,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	}
 
 	function sendCategoryNotification($case) {
-		$valid_case = array('new_category', 'category_modified', 'category_approved');
+		$valid_case = array('new_category', 'category_submitted', 'category_modified', 'category_approved');
 		if(in_array($case, $valid_case, TRUE)) {
 			$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
 			$mid = $module->getVar('mid');

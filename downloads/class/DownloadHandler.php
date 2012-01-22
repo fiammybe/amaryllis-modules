@@ -56,7 +56,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$dir = $this->_uploadPath;
 		if (!file_exists($dir)) {
 			$moddir = basename(dirname(dirname(__FILE__)));
-			icms_core_Filesystem::mkdir($dir, "0777", ICMS_ROOT_PATH . '/uploads/' . $moddir . '/' );
+			icms_core_Filesystem::mkdir($dir, "0777", '' );
 		}
 		return $dir . "/";
 	}

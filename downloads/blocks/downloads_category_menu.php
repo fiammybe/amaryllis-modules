@@ -31,7 +31,7 @@ function b_downloads_category_menu_show($options) {
 	$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 
 	//$block['downloads_category'] = $downloads_category_handler->getCategoryListForMenu($options[0], $options[1], true, true, true, $options[3], $options[2]);
-	$block['downloads_category'] = getCategories($options[2],$options[0],$options[1],$options[3]);
+	$block['downloads_category'] = getDownloadCategories($options[2],$options[0],$options[1],$options[3]);
 	return $block;
 }
 
@@ -76,7 +76,7 @@ function b_downloads_category_menu_edit($options) {
  */
 
 
-function getCategories($showsubs = true, $sort='weight', $order='ASC', $category_id = 0 ) {
+function getDownloadCategories($showsubs = true, $sort='weight', $order='ASC', $category_id = 0 ) {
 	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	$uid = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
 	$downloads_category_handler =& icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
@@ -99,7 +99,7 @@ function getCategories($showsubs = true, $sort='weight', $order='ASC', $category
 			$categories[$i]['title'] = $category->getVar('category_title');
 			$categories[$i]['itemLink'] = DOWNLOADS_URL . "index.php?category_id=" . $category->getVar("category_id");
 			if ($showsubs){
-				$subs = getCategories($showsubs, $sort, $order, $category->getVar('category_id'));
+				$subs = getDownloadCategories($showsubs, $sort, $order, $category->getVar('category_id'));
 				if (count($subs) > 0){
 					$categories[$i]['hassubs'] = 1;
 					$categories[$i]['subcategories'] = $subs;
