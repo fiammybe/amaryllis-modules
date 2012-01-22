@@ -195,8 +195,8 @@ if(in_array($clean_op, $valid_op)) {
 			}
 			$pagenav = new icms_view_PageNav($album_count, $albumConfig['show_albums'], $clean_album_start, 'album_nav', $extra_arg);
 			$imagesnav = new icms_view_PageNav($images_count, $albumConfig['show_images'], $clean_img_start, 'img_nav', $extra_arg);
-			$icmsTpl->assign('album_pagenav', $pagenav->renderImageNav());
-			$icmsTpl->assign('imgnav', $imagesnav->renderImageNav());
+			$icmsTpl->assign('album_pagenav', $pagenav->renderNav());
+			$icmsTpl->assign('imgnav', $imagesnav->renderNav());
 			
 			break;
 	}
