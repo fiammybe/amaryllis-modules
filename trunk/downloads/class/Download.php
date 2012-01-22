@@ -804,7 +804,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 
 	function sendDownloadNotification($case) {
 		$valid_case = array("new_file", "file_submit", "file_modified", "file_approved", "mirror_approved", "file_broken", "review_submitted");
-		if(in_array($case, $valid_case)) {
+		if(in_array($case, $valid_case, TRUE)) {
 			$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
 			$mid = $module->getVar('mid');
 			$tags ['DOWNLOAD_TITLE'] = $this->getVar('download_title');

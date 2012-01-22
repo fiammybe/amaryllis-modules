@@ -90,14 +90,14 @@ if(in_array($clean_op, $valid_op)) {
 				} else {
 					$icmsTpl->assign('user_submit', false);
 				}
-				$categories = $downloads_category_handler->getCategories($clean_category_start, $downloadsConfig['show_categories'], $clean_category_uid,  false, $clean_category_id, "weight", "ASC", TRUE, TRUE);
+				$categories = $downloads_category_handler->getDownloadCategories($clean_category_start, $downloadsConfig['show_categories'], $clean_category_uid,  false, $clean_category_id, "weight", "ASC", TRUE, TRUE);
 				$downloads_category_columns = array_chunk($categories, $downloadsConfig['show_category_columns']);
 				$icmsTpl->assign('sub_category_columns', $downloads_category_columns);
 			/**
 			 * if there's no valid category, retrieve a list of all primary categories
 			 */
 			} elseif ($clean_category_id == 0) {
-				$categories = $downloads_category_handler->getCategories($clean_category_start, $downloadsConfig['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
+				$categories = $downloads_category_handler->getDownloadCategories($clean_category_start, $downloadsConfig['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
 				$downloads_category_columns = array_chunk($categories, $downloadsConfig['show_category_columns']);
 				$icmsTpl->assign('category_columns', $downloads_category_columns);
 				
