@@ -6,7 +6,7 @@
  * 
  * Classes responsible for managing Article indexpage objects
  * 
- * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Article
