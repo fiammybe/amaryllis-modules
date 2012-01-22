@@ -32,9 +32,18 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		global $articleConfig;
 		parent::__construct($db, "article", "article_id", "article_title", "article_teaser", "article");
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/article/';
 		$this->addPermission('article_grpperm', _CO_ARTICLE_ARTICLE_ARTICLE_GRPPERM, _CO_ARTICLE_ARTICLE_ARTICLE_GRPPERM_DSC);
 		$mimetypes = $this->checkMimeType();
 		$this->enableUpload($mimetypes, $articleConfig['upload_file_size'], $articleConfig['image_upload_width'], $articleConfig['image_upload_height']);
+	}
+	
+	public function getImagePath() {
+		$dir = $this->_uploadPath;
+		if (!file_exists($dir)) {
+			icms_core_Filesystem::mkdir($dir, '0777', '');
+		}
+		return $dir . "/";
 	}
 	
 	/**
