@@ -61,6 +61,18 @@ if(in_array($clean_op, $valid_op)) {
 			$downloads = $downloads_download_handler->getDownloads($clean_files_start, icms::$module->config['show_downloads'], $clean_tag_id, FALSE, FALSE,  FALSE);
 			$icmsTpl->assign('downloads_files', $downloads);
 			$icmsTpl->assign("byTags", TRUE);
+			
+			$files_count = $downloads_download_handler->getCountCriteria(true, true, $groups,'download_grpperm',false,false, $clean_category_id);
+			
+			$icmsTpl->assign('files_count', $files_count);
+			if (!empty($clean_tag_id)) {
+				$extra_arg = '?op=getByTags&tag_id=' . $clean_tag_id;
+			} else {
+				$extra_arg = false;
+			}
+			$download_pagenav = new icms_view_PageNav($files_count, $downloadsConfig['show_downloads'], $clean_files_start, 'file_nav', $extra_arg);
+			$icmsTpl->assign('download_pagenav', $download_pagenav->renderNav());
+			
 			break;
 		
 		default:
@@ -141,7 +153,7 @@ if(in_array($clean_op, $valid_op)) {
 					$extra_arg = false;
 				}
 				$category_pagenav = new icms_view_PageNav($category_count, $downloadsConfig['show_categories'], $clean_category_start, 'cat_nav', $extra_arg);
-				$icmsTpl->assign('category_pagenav', $category_pagenav->renderImageNav());
+				$icmsTpl->assign('category_pagenav', $category_pagenav->renderNav());
 			
 			$files_count = $downloads_download_handler->getCountCriteria(true, true, $groups,'download_grpperm',false,false, $clean_category_id);
 			
@@ -152,7 +164,7 @@ if(in_array($clean_op, $valid_op)) {
 				$extra_arg = false;
 			}
 			$download_pagenav = new icms_view_PageNav($files_count, $downloadsConfig['show_downloads'], $clean_files_start, 'file_nav', $extra_arg);
-			$icmsTpl->assign('download_pagenav', $download_pagenav->renderImageNav());
+			$icmsTpl->assign('download_pagenav', $download_pagenav->renderNav());
 			break;
 	}
 	/**
