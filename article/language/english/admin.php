@@ -65,3 +65,5 @@ define("_AM_ARTICLE_INDEX_NEED_APPROVAL_FILES", "Files need approval");
 define("_AM_ARTICLE_INDEX_NEED_APPROVAL_CATS", "Categories need approval");
 define("_AM_ARTICLE_INDEX", "Article Index");
 
+// import site
+define("_AM_ARTICLE_IMPORT_SMARTSECTION_WARNING", "Please handle carefully! You should have a clean updated ImpressCMS 1.3.x site. Please beware, that you don't have used 'Downloads'-Module before and you don't have created articles/files!");
