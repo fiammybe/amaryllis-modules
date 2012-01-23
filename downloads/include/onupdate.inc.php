@@ -65,37 +65,6 @@ function downloads_authorise_mimetypes() {
 	}
 }
 
-function full_copy( $source, $target )
-    {
-        if ( is_dir( $source ) )
-        {
-            @mkdir( $target );
-           
-            $d = dir( $source );
-           
-            while ( FALSE !== ( $entry = $d->read() ) )
-            {
-                if ( $entry == '.' || $entry == '..' )
-                {
-                    continue;
-                }
-               
-                $Entry = $source . '/' . $entry;           
-                if ( is_dir( $Entry ) )
-                {
-                    full_copy( $Entry, $target . '/' . $entry );
-                    continue;
-                }
-                copy( $Entry, $target . '/' . $entry );
-            }
-           
-            $d->close();
-        }else
-        {
-            copy( $source, $target );
-        }
-    }  
-
 function downloads_upload_paths() {
 	
 	//Create folders and set permissions
@@ -131,6 +100,15 @@ function downloads_indexpage() {
 	
 }
 
+function copySitemapPlugin() {
+	$dir = ICMS_ROOT_PATH . '/modules/downloads/extras/modules/sitemap/';
+	$file = 'downloads.php';
+	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
+	if(is_dir($plugin_folder)) {
+		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////// UPDATE DOWNLOADS MODULE ///////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,6 +129,9 @@ function icms_module_install_downloads($module) {
 	
 	//prepare indexpage
 	downloads_indexpage();
+	
+	//copy sitemap plugin if installed
+	copySitemapPlugin();
 
 	return TRUE;
 }

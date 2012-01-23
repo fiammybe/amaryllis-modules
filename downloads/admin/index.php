@@ -88,7 +88,11 @@ function getMimeTypes() {
 $mimetypes = getMimeTypes();
 
 //$mimetypes = $downloads_download_handler->checkMimeType();
-echo ' <div style="margin: 2em 0em;"><p>' . _AM_DOWNLOADS_INDEX_WARNING . '</p></div>'; 
+echo ' <div style="margin: 2em 0em;"><p>' . _AM_DOWNLOADS_INDEX_WARNING . '</p></div>';
+$dir = ICMS_ROOT_PATH . '/modules/sitemap/plugins';
+if(is_dir($dir)) {
+	echo "Dir found on server!";
+}
 
 echo '	<fieldset style="border: #E8E8E8 1px solid;">
 			<legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_DOWNLOADS_INDEX . '</legend>
