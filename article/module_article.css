@@ -72,19 +72,42 @@
 		margin: 0 0 0 10px;
 	}
 	
-	.popup, .tag_popup {
+	.popup, .popup_tag {
 		display: none;
 	}
 	
+	#article_body {
+		margin: 2em 0em;
+	}
 	
+	#pagingControls ul {
+		text-align: center;
+		font-size: 1.5em;
+	}
 	
+	#pagingControls li {
+		list-style: none outside none !important;
+		display: inline;
+    	margin: 0.4em; padding: 5px;
+    	background: #1A1A1A;
+    	color: #FFF;
+	}
 	
-	
-	
+	.article_footer {
+		background: #ccc;
+		line-height: 2.5em;
+		margin-top: 2em;
+		padding-left: .5em;
+		padding-right: .5em;
+	}
 	
 	.article_button_bar {
 		float: right;
 		margin-left: 1em;
+	}
+	
+	.article_adminlinks {
+		text-align: center;
 	}
 	
 

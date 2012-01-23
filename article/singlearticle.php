@@ -177,7 +177,7 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 } else {
 	redirect_header (ARTICLE_URL, 3, _NO_PERM);
 }
-if($gplus OR $fb OR $tw) {
+if(isset($gplus) OR isset($fb) OR isset($tw)) {
 	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/jquery.socialshareprivacy.js', array('type' => 'text/javascript'));
 	$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/scripts/socialshareprivacy.css');
 }

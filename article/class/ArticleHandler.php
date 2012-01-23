@@ -295,7 +295,6 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			}
 			return $ret;
 		}
-		return $this->_download_tags;
 	}
 	
 	public function getLink($article_id = NULL) {

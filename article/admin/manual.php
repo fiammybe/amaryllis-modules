@@ -25,7 +25,7 @@ $path = dirname(dirname(__FILE__));
 $dirname = icms::$module -> getVar( 'dirname' );
 
 icms_cp_header();
-downloads_adminmenu( 0, _MI_ARTICLE_MENU_MANUAL);
+icms::$module->displayAdminMenu( 0, _MI_ARTICLE_MENU_MANUAL);
 $file = isset($_GET['file']) ? icms_core_DataFilter::checkVar($_GET['file'], "html", "output") : "manual.html";
 display_lang_file($file);
 icms_cp_footer();

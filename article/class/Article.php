@@ -86,7 +86,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		
 		$this->setControl("article_cid", array("name" => "select_multi", "itemHandler" => "category", "method" => "getCategoryListForPid", "module" => "article"));
 		$this->setControl("article_img_upl", "image");
-		$this->setControl("article_img", array( "name" => "select", "itemhandler" => "category", "method" => "getImageList", "module" => "article"));
+		$this->setControl("article_img", array( "name" => "select", "itemHandler" => "article", "method" => "getImageList", "module" => "article"));
 		$this->setControl("article_teaser", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("article_show_teaser", "yesno");
 		$this->setControl("article_body", "dhtmltextarea");
@@ -559,7 +559,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['file'] = $this->getArticleAttachment(TRUE, FALSE);
 		$ret['filesize'] = $this->getFileSize();
 		$ret['filetype'] = $this->getFileType();
-		$ret['tags'] = $this->getArticleTags();
+		$ret['tags'] = $this->getArticleTags(TRUE);
 		$ret['publisher'] = $this->getArticlePublishers();
 		$ret['submitter'] = $this->article_submitter();
 		$ret['updater'] = $this->article_updater();
