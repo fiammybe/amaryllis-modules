@@ -2,7 +2,7 @@
 <div class="article_content">
 	<!-- article title -->
 	<div class="article_title">
-		<h1><{$article.title}></h1>
+		<h1><{$article.title}>
 		<{if $article.article_is_new}>
 			<img style="vertical-align: middle;" class="icon_middle" src="<{$article.article_is_new}>" title="<{$smarty.const._MD_ARTICLE_NEW}>" />
 		<{/if}>
@@ -11,7 +11,7 @@
 		<{/if}>
 		<{if $article.article_popular}>
 			<img style="vertical-align: middle;" class="icon_middle" src="<{$article.article_popular}>" title="<{$smarty.const._MD_ARTICLE_POPULAR}>" />
-		<{/if}>
+		<{/if}></h1>
 	</div>
 	<!-- article categories -->
 	<div class="article_categories">

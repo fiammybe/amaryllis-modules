@@ -23,7 +23,7 @@ function article_display_new($time) {
 	global $articleConfig;
 	$new = ( time() - ( 86400 * intval( $articleConfig['article_daysnew'] ) ) );
 	if ( icms::$module->config['article_daysnew'] !== 0) {
-		if ( $new > $time ) {
+		if ( $new < $time ) {
 			$new = ARTICLE_IMAGES_URL . 'new.png';
 			
 		} else {
@@ -39,7 +39,7 @@ function article_display_updated($time) {
 	global $articleConfig;
 	$updated = ( time() - ( 86400 * intval( $articleConfig['article_daysupdated'] ) ) );
 	if ( icms::$module->config['article_daysupdated'] !== 0) {
-		if ( $updated > $time ) {
+		if ( $updated < $time ) {
 			$updated = ARTICLE_IMAGES_URL . 'updated.png';
 			
 		} else {

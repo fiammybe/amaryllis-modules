@@ -25,7 +25,7 @@ $icmsTpl->assign('thumbnail_height', $articleConfig['thumbnail_height']);
 $icmsTpl->assign('display_width', $articleConfig['display_width']);
 $icmsTpl->assign('display_height', $articleConfig['display_height']);
 
-$icmsTpl->assign("article_adminpage", "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_ARTICLE_ADMIN_PAGE . "</a>");
+$icmsTpl->assign("article_adminpage", "<a class='article_adminlinks' href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_ARTICLE_ADMIN_PAGE . "</a>");
 $icmsTpl->assign("article_is_admin", icms_userIsAdmin(ARTICLE_DIRNAME));
 $icmsTpl->assign('article_url', ARTICLE_URL);
 $icmsTpl->assign('article_module_home', '<a href="' . ARTICLE_URL . '" title="' . icms::$module->getVar('name') . '">' . icms::$module->getVar('name') . '</a>');
