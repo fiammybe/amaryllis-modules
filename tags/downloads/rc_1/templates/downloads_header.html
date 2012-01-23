@@ -1,0 +1,27 @@
+<link href="<{$downloads_url}>module_downloads.css" rel="stylesheet" type="text/css" />
+
+<{if $downloads_show_breadcrumb}>
+	<!-- module breadcrumb -->
+	<div class="downloads_headertable">
+		<{if $downloads_module_home}><span class="downloads_modulename"><{$downloads_module_home}></span><{/if}>
+		<{if $downloads_cat_path}>
+			<span class="downloads_breadcrumb">
+				<{if $downloads_module_home}>&nbsp;:&nbsp;<{/if}><{$downloads_cat_path}>
+			</span>
+		<{/if}>
+	</div>
+<{/if}>
+
+<{if $downloads_show_rss}>
+	<div class="downloads_rss">
+		<a href="<{$downloads_url}>rss.php" title="RSS-Feeds">
+			<img src="<{$downloads_images_url}>rss.png" alt="RSS-Feeds" />
+		</a>
+	</div>
+	<div class="downloads_clear_both">&nbsp;</div>
+<{else}>
+	<div class="downloads_clear_left">&nbsp;</div>
+<{/if}>
+
+<!-- display index_image -->
+<{$downloads_index.image}>
