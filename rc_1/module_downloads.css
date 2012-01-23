@@ -1,0 +1,461 @@
+/**
+ * 'Downloads' is a light weight download handling module for ImpressCMS
+ *
+ * File: /module_downloads.css
+ * 
+ * some module related styles
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Downloads
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		downloads
+ *
+ */
+
+	.downloads_headertable {
+		margin-bottom: 2em;
+		float: left;
+	}
+	
+	.downloads_rss {
+		float: right;
+	}
+
+	.downloads_clear_both {
+		clear: both;
+		height: 1px;
+	}
+	
+	.downloads_clear_left {
+		clear: left;
+		height: 1px;
+	}
+	
+	.downloads_clear_right {
+		clear: right;
+		height: 1px;
+	}
+
+	.downloads_indeximage {
+		text-align: center;
+	}
+	
+	.downloads_indexheader {
+		text-align: center;
+		font-size: 2em;
+		margin: 2em auto;
+	}
+	
+	.downloads_indexheading, .downloads_indexfooter {
+		margin: 1em auto;
+	}
+	
+	
+
+	.downloads_cats {
+		margin: 1.5em auto;
+		display: table;
+		width: 100%;
+		padding: 5px;
+	}
+	
+	.downloads_cat_img {
+		vertical-align: top;
+	}
+	.downloads_cat_img2 {
+		vertical-align: top;
+		float:right;
+		margin: 0 0 0 10px;
+	}
+	
+	.downloads_cat_title a{
+	}
+	
+	.downloads_category_info {
+		float:left;
+	}
+	
+	.downloads_category_info a{
+		font-weight: normal;
+		font-size: 100%;
+		float:left;
+	}
+	
+	.downloads_cat_dsc {
+	}
+	
+	.info_download_div {
+		float: left;
+	}
+	
+	.div_download_counter {
+		float: right;
+	}
+	
+	.download_cat_teaser {
+		float: left;
+	}
+	
+	.downloads_cat_desc {
+		font-size: 100%;
+		margin-bottom: 10px;
+	}
+	
+	.downloads_cat_subs {
+		float: right;
+		font-size: .8em;
+		padding-right: 45px;
+	}
+	
+	.downloads_downloads_title {
+		font-size: 1.5em;
+		margin: 2em 0;
+		text-align: center;
+	}
+	
+	.downloads_images {
+		margin: 1.5em auto;
+		display: table;
+		width: 100%;
+		padding: 5px;
+	}
+	
+	.downloads_adminlinks {
+		text-align: center;
+	}
+	
+	
+	.downloads_file {
+		width: 100%;
+		margin: 2em auto;
+	}
+
+	.downloads_file #file_tabs{
+		padding: 0;
+	}
+	
+	div.ui-widget{
+		font-size:100%;
+	}
+	
+	.ui-widget-content{
+		border:medium none;
+		border-left:1px solid #AAAAAA;
+		border-right:1px solid #AAAAAA;
+		border-bottom:1px solid #AAAAAA;
+	}
+	
+	.downloads_cat_icons {
+	}
+	
+	.file_header {
+		display: block;
+	}
+	
+	.file_image {
+		float: left;
+		padding-right: 10px;
+		vertical-align: top;
+	}
+	
+	.file_title {
+		float: left;
+		font-size: 1.1em;
+		font-weight: bold;
+		width: 220px;
+		overflow: auto;
+	}
+	
+	.icon_middle {
+		vertical-align: middle;
+	}
+	
+	.file_info {
+		font-size: .8em;
+		font-weight: normal;
+		margin: .5em 0;
+	}
+	
+	.file_links {
+		position: relative;
+		width: 188px;
+		float: right;
+		overflow: auto;
+		padding: .750em;
+		border-color: #FF7F2A;
+		border-width: 2px;
+		margin: 0.75em auto 0.75em 10px;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+		border: 1px solid #AAAAAA;
+	}
+	
+	
+	.down_link {
+		position: relative;
+		background: #FFAA2A url(images/download.png) left center no-repeat;
+		padding: 15px 20px 15px 40px;
+		margin: 1em auto;
+		display: block;
+		font-size: 1.5em;
+		-webkit-border-radius: .5em;
+		-moz-border-radius: .5em;
+		border-radius: .5em;
+	}
+	
+	.file_dsc{
+		
+		margin: 1em auto 2em auto;
+		display: inline;
+		position: relative;
+		
+	}
+	#file_description{
+		max-height: 300px;
+    overflow: auto;
+	}
+	.file_req, .file_keys, .file_related {
+		position: relative;
+		display: inline-block;
+		background: #ccc;
+		width: 100%;
+		margin-bottom: 1em;
+		height: auto;
+		max-height: 150px;
+		overflow: auto;
+		text-align: left;
+		vertical-align: middle;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+	}
+	
+	#file_history{
+		max-height: 300px;
+    overflow: auto;
+	}
+	
+	#file_reviews{
+		max-height: 300px;
+    overflow: auto;
+	}
+	
+	ul.downloads_check {
+		
+	}
+	
+	.downloads_check li {
+		padding-left: 5px;
+	}
+	
+	.file_descriptions {
+		text-align: center;
+	}
+	
+	.file_image_row {
+	}
+	
+	.file_informations {
+		display: table;
+		font-size: .8em;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+		width: 100%;
+	}
+	
+	.table_row {
+		display: table-row;
+		padding: .250em;
+		line-height: 3em;
+	}
+	
+	.table_row span{
+		border-top:1px solid #FFFFFF;
+		border-bottom:1px solid #FFFFFF;
+	}
+	
+	.table_row:hover span{
+		border-top:1px solid #AAAAAA;
+		border-bottom:1px solid #AAAAAA;
+	}
+	
+	.table_cell {
+		display: table-cell;
+	}
+	
+	.file_dev, .file_dev_hp, .file_version, .file_version_status, .file_limits, .file_platform, .file_license, .file_counter, .file_language {
+		display: table-cell;
+		padding-left: 45px;
+	}
+	
+	.file_dev {
+		background: url(images/dev.png) left center no-repeat;
+	}
+	.file_counter {
+		background: url(images/counter.png) left center no-repeat;
+		width:50%;
+	}
+	.file_language {
+		background: url(images/language.png) left center no-repeat;
+	}
+	.file_dev_hp {
+		background: url(images/dev_hp.png) left center no-repeat;
+	}
+	.file_version {
+		background: url(images/version.png) left center no-repeat;
+	}
+	
+	.file_version_status {
+		background: url(images/version_status.png) left center no-repeat;
+	}
+	.file_limits{
+		background: url(images/limits.png) left center no-repeat;
+	}
+	
+	.file_license{
+		background: url(images/license.png) left center no-repeat;
+	}
+	
+	.file_platform {
+		background: url(images/platform.png) left center no-repeat;
+	}
+	
+	.file_screens {
+		float:right;
+		padding-left: 10px;
+	}
+
+	.file_screens_detail {
+		float:right;
+	}
+	
+	.file_screens2 {
+		vertical-align: top;
+	}
+		
+	.file_footer {
+		background-color: #ccc;
+		line-height: 1.1em;
+		margin: 1.5em auto;
+		padding: .5em;
+	}
+	
+	.download_file {
+		margin: 3em auto;
+		width: 75%;
+	}
+	.download_progress {
+		font-size: 2em;
+		text-align: center;
+	}
+	.download_wait {
+		font-size: 1.1em;
+		margin-top: 2em;
+	}
+	
+	.popup, .popup_tag {
+		display: none;
+	}
+	
+	.file_reviews {
+		display: table;
+	}
+	
+	.review_poster {
+		width: 25%;
+		height: auto;
+		float: left;
+	}
+	
+	.review_case {
+		font-weight:bold;
+	}
+	
+	.review_name, .review_email, .review_date {
+		display: block;
+		padding: 0;
+		margin: 0;
+	}
+	
+	.review_message {
+		float: left;
+		width: 70%;
+		margin: 1em auto;
+	}
+	
+	/*override*/
+	.ui-tabs .ui-tabs-nav li {
+		list-style: none outside none !important;
+	}
+	
+	/* download button */
+
+	.btn {
+	float:left;
+	display:inline-block;
+	height:44px;
+	line-height:44px;
+	padding:0 10px 0 50px;
+	background: url("images/white.jpg") repeat-x scroll 0 0 transparent;
+	color:#999;
+	font-weight:bold;
+	font-size:13px;
+	text-shadow:0 1px 0 #fff;
+	position:relative;
+	border:1px solid #DFDFDF;
+	margin:0 10px 10px 0;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	}
+
+	.btn:hover {
+	border-color:#cacaca;
+	background:#F8F8F8;
+	text-decoration: none;
+	}
+
+	.btn span {
+	display:block;
+	position:absolute;
+	top:6px;
+	left:9px;
+	width:32px;
+	height:32px;
+	background-repeat:no-repeat;
+	background-position:center;
+	}
+
+.btn.download span {
+    background-image: url("images/download.png");background-repeat: no-repeat;
+}
+
+a.vote_up {
+    vertical-align: middle;
+    background-image: url("images/like.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+}
+
+a.vote_down {
+    vertical-align: middle;
+    background-image: url("images/dislike.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+}
+
+a.vote_up:hover {
+    vertical-align: middle;
+    background-image: url("images/like_shadow.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+}
+a.vote_down:hover {
+    vertical-align: middle;
+    background-image: url("images/dislike_shadow.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+}
+
+span.download_tag img {
+    vertical-align: middle;
+}
+
