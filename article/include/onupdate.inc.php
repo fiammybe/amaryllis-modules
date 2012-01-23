@@ -44,6 +44,24 @@ function article_upload_paths() {
 		return TRUE;
 }
 
+function copyWaitingPlugin() {
+	$dir = ICMS_ROOT_PATH . '/modules/article/extras/plugins/waiting/';
+	$file = 'article.php';
+	$plugin_folder = ICMS_ROOT_PATH . '/plugins/waiting/';
+	if(is_dir($dir)) {
+		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
+	}
+}
+
+function copySitemapPlugin() {
+	$dir = ICMS_ROOT_PATH . '/modules/article/extras/modules/sitemap/';
+	$file = 'article.php';
+	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
+	if(is_dir($plugin_folder)) {
+		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
+	}
+}
+
 function article_indexpage() {
 	$article_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'article' );
 	$indexpageObj = $article_indexpage_handler -> create(TRUE);
@@ -80,6 +98,12 @@ function icms_module_install_article($module) {
 	
 	//prepare indexpage
 	article_indexpage();
+	
+	// copy waiting
+	copyWaitingPlugin();
+	
+	// copy sitemap plugin
+	copySitemapPlugin();
 
 	return TRUE;
 }
