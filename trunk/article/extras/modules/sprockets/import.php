@@ -57,6 +57,15 @@ function sprockets_import_imtaxonomy_tags() {
 		echo '</code>';
 		echo '<code><b>Tag tag table successfully dropped.</b></code><br />';
 	}
+	unset($table);
+
+	$feedback = ob_get_clean();
+	if (method_exists(icms::$module, "setMessage")) {
+		icms::$module->messages = icms::$module->setMessage($feedback);
+	} else {
+		echo $feedback;
+	}
+	return TRUE;
 }
 
 function sprockets_import_imtaxonomy_taglinks() {
@@ -83,9 +92,18 @@ function sprockets_import_imtaxonomy_taglinks() {
 			
 			echo '&nbsp;&nbsp;-- <b>' . $row['tag_id'] . '</b> successfully imported!<br />';
 		}
-	}
 		echo '</code>';
 		echo '<code><b>Tag tag_link table successfully dropped.</b></code><br />';
+	}
+	unset($table);
+
+	$feedback = ob_get_clean();
+	if (method_exists(icms::$module, "setMessage")) {
+		icms::$module->messages = icms::$module->setMessage($feedback);
+	} else {
+		echo $feedback;
+	}
+	return TRUE;
 }
 
 include_once 'admin_header.php';

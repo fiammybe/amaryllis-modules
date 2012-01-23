@@ -86,6 +86,15 @@ function article_import_smartsection_articles() {
 		echo '</code>';
 		echo '<code><b>Smartsection item table successfully dropped.</b></code><br />';
 	}
+	unset($table);
+
+	$feedback = ob_get_clean();
+	if (method_exists(icms::$module, "setMessage")) {
+		icms::$module->messages = icms::$module->setMessage($feedback);
+	} else {
+		echo $feedback;
+	}
+	return TRUE;
 }
 
 function article_import_smartsection_categories() {
@@ -129,11 +138,19 @@ function article_import_smartsection_categories() {
 			
 			echo '&nbsp;&nbsp;-- <b>' . $row['name'] . '</b> successfully imported!<br />';
 		}
-		
-	}
 		echo '</code>';
 		echo '<code><b>Smartsection categories table successfully dropped.</b></code><br />';
+	}
 	
+	unset($table);
+
+	$feedback = ob_get_clean();
+	if (method_exists(icms::$module, "setMessage")) {
+		icms::$module->messages = icms::$module->setMessage($feedback);
+	} else {
+		echo $feedback;
+	}
+	return TRUE;
 }
 
 function article_import_smartsection_files() {
@@ -164,15 +181,52 @@ function article_import_smartsection_files() {
 			
 			echo '&nbsp;&nbsp;-- <b>' . $row['filename'] . '</b> successfully imported!<br />';
 		}	
-	
-	}
 		echo '</code>';
 		echo '<code><b>Smartsection files table successfully dropped.</b></code><br />';
+	}
+	unset($table);
+
+	$feedback = ob_get_clean();
+	if (method_exists(icms::$module, "setMessage")) {
+		icms::$module->messages = icms::$module->setMessage($feedback);
+	} else {
+		echo $feedback;
+	}
+	return TRUE;
+}
+
+function article_import_linked_tags() {
+	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
+	$sprockets_taglink_handler = icms_getModuleHandler("taglink", basename(dirname(dirname(__FILE__))), "article");
+	$mid_sql = "SELECT `mid` FROM" . icms::$xoopsDB->prefix('modules') . "WHERE dirname = smartsection";
+	$mid = icms::$xoopsDB->query($mid_sql);
+	
+	$articleObjects = $article_article_handler->getObjects(FALSE, TRUE, FALSE);
+	foreach ($articleObjects as $key => $object) {
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item("mid", (int)$mid));
+		$criteria->add(new icms_db_criteria_Item("iid", $object->getVar("article_id")));
+		$tagObjects = $sprockets_taglink_handler->getObjects($criteria, TRUE, FALSE);
+		$tags = array();
+		foreach ($tagObjects as $key => $tagObj) {
+			$tags = $tagObj->getVar("tid", "e");
+		}
+		$object->setVar("article_tags", $tags);
+	}
+
+	$feedback = ob_get_clean();
+	if (method_exists(icms::$module, "setMessage")) {
+		icms::$module->messages = icms::$module->setMessage($feedback);
+	} else {
+		echo $feedback;
+	}
+	return TRUE;
+
 }
 
 include_once 'admin_header.php';
 
-$valid_op = array ('1', '2', '3', '');
+$valid_op = array ('1', '2', '3', '4', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
@@ -186,6 +240,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms::$module->displayAdminMenu(0);
 			// at first import smartsection articles
 			article_import_smartsection_articles();
+			
+			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
 			break;
 			
 		case '2':
@@ -193,6 +249,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms::$module->displayAdminMenu(0);
 			// import articles
 			article_import_smartsection_categories();
+			
+			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
 			break;
 			
 		case '3':
@@ -200,6 +258,17 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms::$module->displayAdminMenu(0);
 			// import files
 			article_import_smartsection_files();
+			
+			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
+			break;
+			
+		case '4':
+			icms_cp_header();
+			icms::$module->displayAdminMenu(0);
+			// import files
+			article_import_linked_tags();
+			
+			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
 			break;
 		
 		default:
@@ -245,6 +314,17 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	            $form->addElement($label3);
 	        }
 			
+			// for tags
+			$sql4 = "SELECT * FROM " . icms::$xoopsDB->prefix('sprockets_taglink');
+			$result4 = icms::$xoopsDB->query($sql4);
+	        if ($result4) {
+	            $button4 = new icms_form_elements_Button("Import data from sprockets taglinks", "tags_button", "Import", "submit");
+	            $button4->setExtra("onclick='document.forms.form.op.value=\"4\"'");
+	            $form->addElement($button4);
+	        } else {
+	            $label4 = new icms_form_elements_Label("Import data from sprockets taglinks", "sprockets_taglink tables not found on this site.");
+	            $form->addElement($label4);
+	        }
 			
 			$form->addElement(new icms_form_elements_Hidden('op', 0));
         	$form->display();
