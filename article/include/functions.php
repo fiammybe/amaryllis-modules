@@ -107,3 +107,12 @@ function articleFileSizeType ($type) {
 			break;
 	}
 }
+
+function articleCopySitemapPlugin() {
+	$dir = ICMS_ROOT_PATH . '/modules/article/extras/modules/sitemap/';
+	$file = 'article.php';
+	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
+	if(is_dir($plugin_folder)) {
+		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
+	}
+}
