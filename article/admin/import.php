@@ -20,7 +20,8 @@
 function article_import_smartsection_articles() {
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 	$gperm_handler = icms::handler('icms_member_groupperm');
-
+	$mid_sql = "SELECT `mid` FROM" . icms::$xoopsDB->prefix('modules') . "WHERE dirname = smartsection";
+	$mid = icms::$xoopsDB->query($mid_sql);
 	$table = new icms_db_legacy_updater_Table('smartsection_items');
 	if ($table->exists()) {
 		echo '<code><b>Importing data from smartsection article table</b></code><br />';
@@ -64,21 +65,34 @@ function article_import_smartsection_articles() {
 				$obj->setVar('article_active', 1);
 				$obj->setVar('article_approve', 1);
 			}
-
+			$groups = $gperm_handler->getGroupIds('item_read', $row['itemid']);
+			$obj->setVar("article_grpperm", implode(",", $groups));
+			
 			$article_article_handler->insert($obj, TRUE);
+			
+			/**
+			 * delet all old permissions from smartsection items
+			 */
+			$criteria = new icms_db_criteria_Compo();
+			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', 'item_read'));
+			$criteria->add($crit);
+			$criteria->add(new icms_db_criteria_Item('gperm_itemid', $row['itemid']));
+			$criteria->add(new icms_db_criteria_Item('gperm_modid', $mid));
+			$gperm_handler->deleteAll($criteria);
+			
 			
 			echo '&nbsp;&nbsp;-- <b>' . $row['title'] . '</b> successfully imported!<br />';
 		}
 		echo '</code>';
 		echo '<code><b>Smartsection item table successfully dropped.</b></code><br />';
 	}
-	return TRUE;
 }
 
 function article_import_smartsection_categories() {
 	$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
 	$gperm_handler = icms::handler('icms_member_groupperm');
-
+	$mid_sql = "SELECT `mid` FROM" . icms::$xoopsDB->prefix('modules') . "WHERE dirname = smartsection";
+	
 	$table = new icms_db_legacy_updater_Table('smartsection_categories');
 	if ($table->exists()) {
 		echo '<code><b>Importing data from smartsection category table</b></code><br />';
@@ -95,7 +109,23 @@ function article_import_smartsection_categories() {
 			$obj->setVar('weight', $row['weight']);
 			$obj->setVar('category_published_date', (int)$row['created']);
 			$obj->setVar('short_url', 'short_url');
+			$groups = $gperm_handler->getGroupIds('category_read', $row['categoryid']);
+			$obj->setVar("category_grpperm", implode(",", $groups));
+			
+			$submitter = $gperm_handler->getGroupIds('item_submit', $row['categoryid']);
+			$obj->setVar("category_grpperm", implode(",", $submitter));
+			
 			$article_category_handler->insert($obj, TRUE);
+			
+			/**
+			 * delet all old permissions from smartsection items
+			 */
+			$criteria = new icms_db_criteria_Compo();
+			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', 'category_read'));
+			$criteria->add($crit);
+			$criteria->add(new icms_db_criteria_Item('gperm_itemid', $row['categoryid']));
+			$criteria->add(new icms_db_criteria_Item('gperm_modid', $mid));
+			$gperm_handler->deleteAll($criteria);
 		}
 		echo '&nbsp;&nbsp;-- <b>' . $row['name'] . '</b> successfully imported!<br />';
 	}
