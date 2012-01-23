@@ -148,7 +148,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		
 		$sprocketsModule = icms_getModuleInfo("sprockets");
 		if($downloadsConfig['use_sprockets'] == 1 && $sprocketsModule) {
-			$this->setControl("download_tags", array("name" => "select_multi", "itemHandler" => "download", "method" => "getDownloadTags", "module" => "Downloads"));
+			$this->setControl("download_tags", array("name" => "select_multi", "itemHandler" => "download", "method" => "getDownloadTags", "module" => "downloads"));
 		} else {
 			$this->hideFieldFromForm("download_tags");
 			$this->hideFieldFromSingleView("download_tags");
@@ -237,12 +237,6 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 			}
 		}
 		return implode(" | ", $ret);
-	}
-	
-	function download_tags() {
-		$ret = $this->getVar('download_tags', 's');
-		$tags = $this->handler->getDownloadTags();
-		return $tags;
 	}
 	
 	public function getDownloadTags($itemlink = FALSE) {

@@ -35,8 +35,6 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	
 	private $_download_cid = array();
 	
-	private $_download_tags = array();
-	
 	public $_moduleName;
 
 	public function __construct(&$db) {
@@ -394,23 +392,20 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	}
 	
 	public function getDownloadTags() {
-		if(!$this->_download_tags) {
-			$sprocketsModule = icms_getModuleInfo("sprockets");
-			if($sprocketsModule) {
-				$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
-				$criteria = new icms_db_criteria_Compo();
-				$criteria->add(new icms_db_criteria_Item("label_type", 0));
-				$criteria->add(new icms_db_criteria_Item("navigation_element", 0));
-				
-				$tags = $sprockets_tag_handler->getObjects(FALSE, TRUE, FALSE);
-				$ret[] = '------------';
-				foreach(array_keys($tags) as $i) {
-					$ret[$tags[$i]['tag_id']] = $tags[$i]['title'];
-				}
-				return $ret;
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($sprocketsModule) {
+			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item("label_type", 0));
+			$criteria->add(new icms_db_criteria_Item("navigation_element", 0));
+			
+			$tags = $sprockets_tag_handler->getObjects($criteria, TRUE, FALSE);
+			$ret[] = '------------';
+			foreach(array_keys($tags) as $i) {
+				$ret[$tags[$i]['tag_id']] = $tags[$i]['title'];
 			}
+			return $ret;
 		}
-		return $this->_download_tags;
 	}
 
 	public function getGroups($criteria = null) {
