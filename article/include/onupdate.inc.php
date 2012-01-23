@@ -90,9 +90,6 @@ function icms_module_install_article($module) {
 	//prepare indexpage
 	article_indexpage();
 	
-	// copy waiting
-	copyWaitingPlugin();
-	
 	// copy sitemap plugin
 	copySitemapPlugin();
 
