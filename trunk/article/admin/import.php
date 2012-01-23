@@ -126,8 +126,10 @@ function article_import_smartsection_categories() {
 			$criteria->add(new icms_db_criteria_Item('gperm_itemid', $row['categoryid']));
 			$criteria->add(new icms_db_criteria_Item('gperm_modid', $mid));
 			$gperm_handler->deleteAll($criteria);
+			
+			echo '&nbsp;&nbsp;-- <b>' . $row['name'] . '</b> successfully imported!<br />';
 		}
-		echo '&nbsp;&nbsp;-- <b>' . $row['name'] . '</b> successfully imported!<br />';
+		
 	}
 		echo '</code>';
 		echo '<code><b>Smartsection categories table successfully dropped.</b></code><br />';
@@ -159,8 +161,10 @@ function article_import_smartsection_files() {
 			$articleObj = $article_article_handler->get($row['itemid']);
 			$articleObj->setVar('article_attachment', $file_id);
 			$article_article_handler->insert($articleObj, TRUE);
+			
+			echo '&nbsp;&nbsp;-- <b>' . $row['filename'] . '</b> successfully imported!<br />';
 		}	
-	echo '&nbsp;&nbsp;-- <b>' . $row['filename'] . '</b> successfully imported!<br />';
+	
 	}
 		echo '</code>';
 		echo '<code><b>Smartsection files table successfully dropped.</b></code><br />';
@@ -249,4 +253,3 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	}
 	icms_cp_footer();
 }
-
