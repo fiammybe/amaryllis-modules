@@ -138,6 +138,10 @@
 		padding: 0;
 	}
 	
+	div.ui-widget{
+		font-size:100%;
+	}
+	
 	.ui-widget-content{
 		border:medium none;
 		border-left:1px solid #AAAAAA;
@@ -337,7 +341,6 @@
 		
 	.file_footer {
 		background-color: #ccc;
-		width: 100%;
 		line-height: 1.1em;
 		margin: 1.5em auto;
 		padding: .5em;
