@@ -1,0 +1,37 @@
+<!-- album ACP -->
+<{if $album_album_title}>
+	<h1><{$album_album_title}></h1>
+<{/if}>
+<{if $album_album_info}>
+	<p><{$album_album_info}></p>
+<{/if}>
+<{if $album_album_table}>
+	<{$album_album_table}>
+<{/if}>
+<{if $addalbum}>
+	<{includeq file='db:system_common_form.html' form=$addalbum}>
+<{/if}>
+<!-- images ACP -->
+<{if $album_images_title}>
+	<h1><{$album_images_title}></h1>
+<{/if}>
+<{if $album_images_info}>
+	<p><{$album_images_info}></p>
+<{/if}>
+<{if $album_images_table}>
+	<{$album_images_table}>
+<{/if}>
+<{if $addimages}>
+	<{includeq file='db:system_common_form.html' form=$addimages}>
+<{/if}>
+<!-- indexpage ACP -->
+<{if $album_indexpage_title}>
+	<h1><{$album_indexpage_title}></h1>
+<{/if}>
+	<{if $album_indexpage_info}><p><{$album_indexpage_info}></p>
+<{/if}>
+	<{if $album_indexpage_table}><{$album_indexpage_table}>
+<{/if}>
+<{if $addindexpage}>
+	<{includeq file='db:system_common_form.html' form=$addindexpage}>
+<{/if}>

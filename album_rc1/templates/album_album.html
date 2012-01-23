@@ -1,0 +1,49 @@
+<div class="album_album table_cell" original-title="<{$album.title}>">
+			
+	<!-- Album image -->
+	<span style="float: left; padding-right: 10px; vertical-align: top;">
+		<a href="<{$album.itemURL}>">
+			<img src="<{$album.img}>" alt="" title="<{$album.title}>" />
+		</a>
+	</span>
+	
+	<!-- Album title -->
+	<span style="float: left; font-size: 1.1em; font-weight: bold;">
+		<{$album.itemLink}>&nbsp;&nbsp;
+		<span style="font-size: small; font-weight: normal;"> &nbsp;
+			(&nbsp;<{$album.images_count}>&nbsp;<{$smarty.const._MD_ALBUM_IMAGES}>&nbsp;
+			|&nbsp;<{$album.album_count}>&nbsp;<{$smarty.const._MD_ALBUM_SUBALBUMS}>&nbsp;)&nbsp;
+		</span>
+		<{if $album.album_is_new}>
+			<{$album.album_is_new}>
+		<{/if}>
+		<{if $album.album_is_updated}>
+			<{$album.album_is_updated}>
+		<{/if}>
+		<{if $album.album_popular}>
+			<{$album.popular}>
+		<{/if}>
+		<{if $album.userCanEditAndDelete}>
+			<{$album.editItemLink}><{$album.deleteItemLink}>
+		<{/if}>
+		<{if $album.user_upload}>
+			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$album.user_upload}>" title="<{$smarty.const._MD_ALBUM_UPLOAD}>">
+				<img src="<{$album_images_url}>add_file.png" title="<{$smarty.const._MD_ALBUM_UPLOAD}>" alt="<{$smarty.const._MD_ALBUM_UPLOAD}>" />
+			</a>
+		<{/if}>
+	</span>
+</div>
+
+<div class="popup">
+	<span class="album_album_info">
+		(&nbsp;<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;
+		:&nbsp;<{$album.publisher}>&nbsp;
+		|&nbsp;<{$smarty.const._MD_ALBUM_PUBLISHED_ON}>&nbsp;
+		:&nbsp;<{$album.published_on}>&nbsp;)
+	</span>
+	<span class="album_album_dsc">
+		<{$album.dsc}>
+	</span>
+</div>
+
+<div style="clear: both; height: 1px; margin: 4px 5px 4px 0;">&nbsp;</div>
