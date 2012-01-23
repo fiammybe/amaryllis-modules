@@ -184,14 +184,16 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	
 	public function getAlbumList() {
 		$albumModule = icms_getModuleInfo('album');
-		$album_album_handler = icms_getModuleHandler ('album', $albumModule->getVar('dirname'), 'album');
-		$albumObjects = $album_album_handler->getAlbumsForBlocks($start = 0, $limit = 0, $order = 'album_title', $sort = 'ASC');
-		$ret = array();
-		$ret[0] = '--None--';
-		foreach(array_keys($albumObjects) as $i) {
-			$ret[$albumObjects[$i]['album_id']] = $albumObjects[$i]['album_title'];
+		if($albumModule) {
+			$album_album_handler = icms_getModuleHandler ('album', $albumModule->getVar('dirname'), 'album');
+			$albumObjects = $album_album_handler->getAlbumsForBlocks($start = 0, $limit = 0, $order = 'album_title', $sort = 'ASC');
+			$ret = array();
+			$ret[0] = '--None--';
+			foreach(array_keys($albumObjects) as $i) {
+				$ret[$albumObjects[$i]['album_id']] = $albumObjects[$i]['album_title'];
+			}
+			return $ret;
 		}
-		return $ret;
 	}
 
 	public function userCanSubmit($category_id) {

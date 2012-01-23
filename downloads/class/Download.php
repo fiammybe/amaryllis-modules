@@ -132,7 +132,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		
 		$albumModule = icms_getModuleInfo('album');
 		if ($downloadsConfig['use_album'] == 1 && $albumModule){
-			$this->setControl('download_album', array('name' => 'select', 'itemhandler' => 'download', 'method' => 'getAlbumList', 'module' => 'downloads'));
+			$this->setControl('download_album', array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getAlbumList', 'module' => 'downloads'));
 		} else {
 			$this->hideFieldFromForm('download_album');
 			$this->hideFieldFromSingleView('download_album');
@@ -140,7 +140,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		
 		$catalogueModule = icms_getModuleInfo('catalogue');
 		if ($downloadsConfig['use_catalogue'] == 1 && $catalogueModule){
-			$this->setControl('catalogue_item', array('name' => 'select', 'itemhandler' => 'download', 'method' => 'getCatalogueItems', 'module' => 'downloads'));
+			$this->setControl('catalogue_item', array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getCatalogueItems', 'module' => 'downloads'));
 		} else {
 			$this->hideFieldFromForm('catalogue_item');
 			$this->hideFieldFromSingleView('catalogue_item');
@@ -148,7 +148,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		
 		$sprocketsModule = icms_getModuleInfo("sprockets");
 		if($downloadsConfig['use_sprockets'] == 1 && $sprocketsModule) {
-			$this->setControl("download_tags", array("name" => "select_multi", "itemhandler" => "download", "method" => "getDownloadTags", "module" => "Downloads"));
+			$this->setControl("download_tags", array("name" => "select_multi", "itemHandler" => "download", "method" => "getDownloadTags", "module" => "Downloads"));
 		} else {
 			$this->hideFieldFromForm("download_tags");
 			$this->hideFieldFromSingleView("download_tags");

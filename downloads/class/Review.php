@@ -35,7 +35,7 @@ class DownloadsReview extends icms_ipf_Object {
 		$this->quickInitVar("review_date",XOBJ_DTYPE_LTIME);
 		$this->initCommonVar('dohtml', FALSE, 1);
 		
-		$this->setControl("review_case", array("name" => "radio", "itemhandler" => "review", "method" => "getCase", "module" => "downloads"));
+		$this->setControl("review_case", array("name" => "radio", "itemHandler" => "review", "method" => "getCase", "module" => "downloads"));
 		
 		$this->hideFieldFromForm(array("review_item_id", "review_uid", "review_ip", "review_date" ));
 		
