@@ -32,6 +32,7 @@ define("_AM_SPROCKETS_IMPORT_TAGTABLE", "Import Table tag_tag");
 define("_AM_SPROCKETS_IMPORT_TAGLINKS", "Import from Table tag_link");
 define("_AM_SPROCKETS_IMPORT_TAG_WARNING", "PLEASE; HANDLE THIS IMPORTER CAREFULLY! YOU'LL NEED A CLEAN SPROCKETS INSTALLATION! DO NOT ADD TAGS! AT FIRST IMPORT TAGS, LATER TAGLINKS!");
 
+ini_set('max_execution_time', 0);
  
 function sprockets_import_imtaxonomy_tags() {
 	$sprockets_tag_handler = icms_getModuleHandler("tag", basename(dirname(dirname(__FILE__))), "sprockets");
