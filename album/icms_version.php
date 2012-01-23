@@ -27,7 +27,7 @@ $modversion = array(
 					'name'						=> _MI_ALBUM_NAME,
 					'version'					=> 1.0,
 					'description'				=> _MI_ALBUM_DSC,
-					'author'					=> "QM-B &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';",
+					'author'					=> "QM-B &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>",
 					'credits'					=> "Thanks to McDonald for the nice index layer and also thanks to Madfish and the developers of ALBUM-Module for the code snippets, where I could see how to develope a Module using IPF!",
 					'help'						=> "",
 					'license'					=> "GNU General Public License (GPL)",
@@ -52,7 +52,7 @@ $modversion = array(
 					'developer_website_name' 	=> "Amaryllis Modules",
 					'developer_email' 			=> "qm-b@hotmail.de");
 
-$modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';";
+$modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>";
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
