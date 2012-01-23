@@ -17,6 +17,8 @@
  *
  */
 
+ini_set('max_execution_time', 0);
+ 
 function article_import_smartsection_articles() {
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 	$gperm_handler = icms::handler('icms_member_groupperm');
@@ -238,6 +240,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case '1':
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0);
+			// set time limit off to prevent stopping import for a lot of tags
+			set_time_limit( 0 );
 			// at first import smartsection articles
 			article_import_smartsection_articles();
 			
@@ -247,6 +251,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case '2':
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0);
+			// set time limit off to prevent stopping import for a lot of categories
+			set_time_limit( 0 );
 			// import articles
 			article_import_smartsection_categories();
 			
@@ -256,6 +262,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case '3':
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0);
+			// set time limit off to prevent stopping import for a lot of files
+			set_time_limit( 0 );
 			// import files
 			article_import_smartsection_files();
 			
@@ -265,6 +273,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case '4':
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0);
+			// set time limit off to prevent stopping import for a lot of tags
+			set_time_limit( 0 );
 			// import files
 			article_import_linked_tags();
 			
