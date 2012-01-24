@@ -549,6 +549,10 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		return $popular;
 	}
 	
+	public function userCanComment() {
+		return ($this->getVar("article_cancomment", "e") == 1) ? TRUE : FALSE;
+	}
+	
 	
 	
 	public function toArray() {
