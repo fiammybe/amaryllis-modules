@@ -64,6 +64,15 @@
 			<div id="pagingControls"></div>
 		<{/if}>
 	</div>
+	
+	<{if $article.related}>
+		<h2><{$smarty.const._MD_ARTICLE_RELATED}></h2>
+		<div class="article_related">
+			<ul>
+				<{$article.related}>
+			</ul>
+		</div>
+	<{/if}>
 	<!-- article footer -->
 	<div class="article_footer">
 		<{if $article.file}>
