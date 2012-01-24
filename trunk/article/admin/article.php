@@ -114,9 +114,9 @@ if($categories > 0) {
 				$show = $article_article_handler -> changeBroken( $clean_article_id );
 				$ret = 'article.php';
 				if ($show == 0) {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_OFFLINE );
-				} else {
 					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_ONLINE );
+				} else {
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_OFFLINE );
 				}
 				break;
 			
@@ -124,11 +124,11 @@ if($categories > 0) {
 				$approve = $article_article_handler -> changeApprove( $clean_article_id );
 				$ret = 'article.php';
 				if ($approve == 0) {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_APPROVE_FALSE );
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_DENIED );
 				} else {
 					$articleObj = $article_article_handler->get($clean_article_id);
 					$articleObj->sendArticleNotification('article_approved');
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_APPROVE_TRUE );
+					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_APPROVED );
 				}
 				break;
 				

@@ -96,9 +96,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$show = $article_category_handler -> changeShow( $clean_category_id );
 			$ret = 'category.php';
 			if ($show == 0) {
-				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_INBLOCK_FALSE );
+				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_CATEGORY_INBLOCK_FALSE );
 			} else {
-				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_INBLOCK_TRUE );
+				redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_CATEGORY_INBLOCK_TRUE );
 			}
 			break;
 		
