@@ -217,11 +217,11 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	public function changeBroken($article_id) {
 		$broken = '';
 		$articleObj = $this->get($article_id);
-		if ($articleObj->getVar('article_broken', 'e') == TRUE) {
-			$articleObj->setVar('article_broken', 0);
+		if ($articleObj->getVar('article_broken_file', 'e') == TRUE) {
+			$articleObj->setVar('article_broken_file', 0);
 			$broken = 0;
 		} else {
-			$articleObj->setVar('article_broken', 1);
+			$articleObj->setVar('article_broken_file', 1);
 			$broken = 1;
 		}
 		$this->insert($articleObj, TRUE);
