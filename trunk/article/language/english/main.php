@@ -29,7 +29,7 @@ define("_MD_ARTICLE_ARTICLE_CREATE", "Submit a new Article");
 define("_MD_ARTICLE_ARTICLELIST", "Articles in this category");
 define("_MD_ARTICLE_READ_MORE", "Read more...");
 define("_MD_ARTICLE_ARTICLE_FILELIST", "Articles in this category");
-
+define("_MD_ARTICLE_CATEGORY_SUBCATLIST", "Subcategories for this category");
 // constants for single view
 define("_MD_ARTICLE_CATS", "Categories");
 define("_MD_ARTICLE_TAGS", "Tags");
