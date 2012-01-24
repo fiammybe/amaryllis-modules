@@ -107,6 +107,7 @@
 			$("#dialog-confirm-disclaimer").dialog('option', 'buttons', {
 				"I Agree" : function() {
 					window.location.href = targetUrl;
+					$(this).dialog("close");
 				},
 				"Cancel" : function() {
 					$(this).dialog("close");

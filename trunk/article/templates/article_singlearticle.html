@@ -41,6 +41,13 @@
 		<{/if}>
 		<{if $article.file}>
 			<{$smarty.const._MD_ARTICLE_FILE}><{$article.file}>&nbsp;(&nbsp;<{$article.filesize}>&nbsp;|&nbsp;<{$article.filetype}>&nbsp;)
+			
+			<{if $show_down_disclaimer}>
+				<div id="dialog-confirm-disclaimer" title="Download Disclaimer" class="ui-helper-hidden">
+					<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$down_disclaimer}></p>
+				</div>
+			<{/if}>
+			
 		<{/if}>
 	</div>
 	
