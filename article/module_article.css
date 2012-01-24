@@ -93,6 +93,7 @@
 	
 	.article_screens {
 		float: left;
+		margin-right: 1em;
 	}
 	
 	.article_cat_teaser {
