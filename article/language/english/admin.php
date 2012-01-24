@@ -54,6 +54,7 @@ define("_AM_ARTICLE_CATEGORY_WEIGHTS_UPDATED", "Weights have successfully been u
 
 // constants for /admin/indexpage.php
 define("_AM_ARTICLE_INDEXPAGE_EDIT", "Edit the Indexpage");
+define("_AM_ARTICLE_INDEXPAGE_MODIFIED", "Indexpage modified");
 
 //constants for admin/index.php
 define("_AM_ARTICLE_INDEX_WARNING", "PLEASE READ MANUAL BEFORE USING");
@@ -66,4 +67,6 @@ define("_AM_ARTICLE_INDEX_NEED_APPROVAL_CATS", "Categories need approval");
 define("_AM_ARTICLE_INDEX", "Article Index");
 
 // import site
-define("_AM_ARTICLE_IMPORT_SMARTSECTION_WARNING", "Please handle carefully! You should have a clean updated ImpressCMS 1.3.x site. Please beware, that you don't have used 'Downloads'-Module before and you don't have created articles/files!");
+define("_AM_ARTICLE_IMPORT_SMARTSECTION_WARNING", "Please handle carefully! You should have a clean updated ImpressCMS 1.3.x site.<br />
+Please beware, that you don't have used 'Downloads'-Module before and you don't have created articles/files/categories!<br />
+If you already have used old tags module, note that you first need to import tags to sprockets.");
