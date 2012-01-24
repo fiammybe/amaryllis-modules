@@ -566,6 +566,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['filesize'] = $this->getFileSize();
 		$ret['filetype'] = $this->getFileType();
 		$ret['tags'] = $this->getArticleTags(TRUE);
+		$ret['related'] = $this->getArticleRelated();
 		$ret['publisher'] = $this->getArticlePublishers();
 		$ret['submitter'] = $this->article_submitter();
 		$ret['updater'] = $this->article_updater();
