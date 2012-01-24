@@ -154,7 +154,7 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	/**
 	 * include the comment rules
 	 */
-	if ($articleConfig['com_rule']) {
+	if ($articleConfig['com_rule'] && $articleObj->userCanComment()) {
 		$icmsTpl->assign('article_article_comment', true);
 		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 	}
