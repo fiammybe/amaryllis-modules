@@ -59,7 +59,7 @@ function article_indexpage() {
 	echo '<code>';
 	$indexpageObj -> setVar( 'index_header', 'Articles' );
 	$indexpageObj -> setVar( 'index_heading', 'Here you can search our articles. ' );
-	$indexpageObj -> setVar( 'index_footer', '&copy; 2011 | Article module footer');
+	$indexpageObj -> setVar( 'index_footer', '&copy; 2012 | Article module footer');
 	$indexpageObj -> setVar( 'index_image', 'article_indeximage.png');
 	$indexpageObj->setVar('dohtml', 1);
 	$indexpageObj->setVar('dobr', 1);

@@ -58,7 +58,7 @@ if(in_array($clean_op, $valid_op)) {
 	switch ($clean_op) {
 		case 'getByTags':
 			$clean_tag_id = isset($_GET['tag']) ? filter_input(INPUT_GET, 'tag', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$article = $article_article_handler->getArticles($clean_files_start, icms::$module->config['show_article'], $clean_tag_id, FALSE, FALSE,  FALSE);
+			$article = $article_article_handler->getArticles($clean_files_start, icms::$module->config['show_articles'], $clean_tag_id, FALSE, FALSE,  FALSE);
 			$icmsTpl->assign('articles', $article);
 			$icmsTpl->assign("byTags", TRUE);
 			break;

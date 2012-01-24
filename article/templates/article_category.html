@@ -1,14 +1,13 @@
 <div class="download_cat_frame table_cell">
 	<div class="article_category" original-title="<{$category.title}>">
-		<!-- Category title -->
-		<h3><a href="<{$category.itemURL}>" title=""><{$category.title}></a></h3>
-		
-		<!-- category image -->
-		<div class="article_cat_img">
-			<a href="<{$category.itemURL}>">
-				<img src="<{$category.img}>" alt="" title="<{$category.title}>" />
+		<h3>
+			<!-- category image -->
+			<a href="<{$category.itemURL}>" title="<{$category.title}>">
+				<img class="article_cat_img" src="<{$category.img}>" alt="<{$category.title}>" title="<{$category.title}>" />
 			</a>
-		</div>
+			<!-- Category title -->
+			<a href="<{$category.itemURL}>" title=""><{$category.title}></a>
+		</h3>
 											
 		<div class="article_cat_icons">
 			<{if $category.userCanEditAndDelete}>
