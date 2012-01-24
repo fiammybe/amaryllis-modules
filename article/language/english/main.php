@@ -30,6 +30,7 @@ define("_MD_ARTICLE_ARTICLELIST", "Articles in this category");
 define("_MD_ARTICLE_READ_MORE", "Read more...");
 define("_MD_ARTICLE_ARTICLE_FILELIST", "Articles in this category");
 define("_MD_ARTICLE_CATEGORY_SUBCATLIST", "Subcategories for this category");
+define("_MD_ARTICLE_BROKEN_REPORTED", "Thank you for reporting a broken File. We will fix this as soon as possible.");
 // constants for single view
 define("_MD_ARTICLE_CATS", "Categories");
 define("_MD_ARTICLE_TAGS", "Tags");

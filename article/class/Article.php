@@ -287,6 +287,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	}
 	
 	public function getArticleAttachment($url = TRUE, $path = FALSE ) {
+		global $articleConfig;
 		$file_alt = $this->getVar("article_attachment_alt", "e");
 		$file = $this->getVar("article_attachment", "e");
 		
@@ -299,7 +300,12 @@ class ArticleArticle extends icms_ipf_seo_Object {
 				$filelink = $fileObj->getVar("url", "e");
 				$titlelink = explode("/",$filelink);
 				$last = (isset($titlelink[count($titlelink)-1])) ? $titlelink[count($titlelink)-1] : null;
-				$url = '<a href="' . $filelink . '" title="' . $last . '"> ' . $last . '</a>';
+				if($articleConfig['show_down_disclaimer'] == 1) {
+					$down_link = 'down_disclaimer';
+				} else {
+					$down_link = '';
+				}
+				$url = '<a class="' . $down_link . ' btn download" href="' . $filelink . '" title="' . $last . '"> ' . $last . '</a>';
 			} else {
 				$url = FALSE;
 			}

@@ -32,10 +32,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$article_article_handler = icms_getModuleHandler('article', basename(dirname(__FILE__)),'article');
 			$articleObj = $article_article_handler->get($article_id);
 			if ($articleObj->isNew()) return FALSE;
-			$articleObj->setVar('article_broken', TRUE);
+			$articleObj->setVar('article_broken_file', TRUE);
 			$articleObj->store(TRUE);
 			$articleObj->sendArticleNotification('article_file_broken');
-			return redirect_header(icms_getPreviousPage(), 3, _MD_ARTICLE_BROKEN_REPORTED);
+			return redirect_header(icms_getPreviousPage(), 5, _MD_ARTICLE_BROKEN_REPORTED);
 			break;
 		
 		case 'addtags':
