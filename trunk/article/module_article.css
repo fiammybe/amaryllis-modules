@@ -16,7 +16,9 @@
  *
  */
 
-
+	/**
+	 * 	styles used throughout the site
+	 */
 	.article_headertable {
 		margin-bottom: 2em;
 		float: left;
@@ -24,6 +26,10 @@
 	
 	.article_rss {
 		float: right;
+	}
+	
+	.article_adminlinks {
+		text-align: center;
 	}
 
 	.article_clear_both {
@@ -52,9 +58,14 @@
 	}
 	
 	.article_indexheading, .article_indexfooter {
-		margin: 1em auto;
+		margin: 1em .5em;
+		padding-left: .5em;
+		padding-right: .5em;
 	}
 	
+	/**
+	 * 	styles used in index
+	 */
 	
 	.article_cats {
 		margin: 1.5em auto;
@@ -64,7 +75,7 @@
 	}
 	
 	.article_cat_img {
-		vertical-align: top;
+		vertical-align: middle;
 	}
 	.article_cat_img2 {
 		vertical-align: top;
@@ -72,8 +83,28 @@
 		margin: 0 0 0 10px;
 	}
 	
+	.article_cat_desc {
+		margin: 1em 0em;
+	}
+	
 	.popup, .popup_tag {
 		display: none;
+	}
+	
+	.article_screens {
+		float: left;
+	}
+	
+	.article_cat_teaser {
+		
+	}
+	
+	
+	/**
+	 * 	some styles for single view
+	 */
+	.article_content {
+		margin: .5em;
 	}
 	
 	#article_body {
@@ -91,6 +122,10 @@
     	margin: 0.4em; padding: 5px;
     	background: #1A1A1A;
     	color: #FFF;
+    	border-radius: 5px;
+    	-moz-border-radius: 5px;
+    	-webkit-border-radius: 5px;
+    	border: 1px solid black;
 	}
 	
 	.article_footer {
@@ -104,10 +139,6 @@
 	.article_button_bar {
 		float: right;
 		margin-left: 1em;
-	}
-	
-	.article_adminlinks {
-		text-align: center;
 	}
 	
 

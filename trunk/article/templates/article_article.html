@@ -1,6 +1,6 @@
 <!-- File title -->
-<h3><a href="<{$article.itemURL}>" title="<{$article.title}>"><{$article.title}></a></h3>
 <div class="article_cat_title">
+	<h3><a href="<{$article.itemURL}>" title="<{$article.title}>"><{$article.title}></a></h3>
 	<{if $article.article_is_new}>
 		<img style="vertical-align: middle;" class="icon_middle" src="<{$article.article_is_new}>" title="<{$smarty.const._MD_ARTICLE_NEW}>" />
 	<{/if}>
@@ -20,7 +20,7 @@
 </div>
 <!-- File description -->
 <div class="article_cat_dsc">
-	<p class="article_cat_teaser">
+	
 
 	<!-- File image -->
 	<{if $article.index_img}>
@@ -28,18 +28,18 @@
 			<{resized_image file=$article.index_img width=$thumbnail_width height=$thumbnail_height fit="inside"}>
 		</a>
 	<{/if}>
+	<span class="article_cat_teaser">
+		<{if $article.teaser}>
+			<{$article.teaser}>
+		<{else}>
+			<{$smarty.const._MD_ARTICLE_NO_TEASER_TEXT}>
+		<{/if}>
+	</span>
 
-	<{if $article.teaser}>
-		<{$article.teaser}>
-	<{else}>
-		<{$smarty.const._MD_ARTICLE_NO_TEASER_TEXT}>
-	<{/if}>
-	</p>
-
-	</div>
-	<div class="article_clear_both">&nbsp;</div>
+</div>
+	
 	<div class="box">
-	<a href="<{$article.itemURL}>" class="btn article" title="<{$smarty.const._MD_ARTICLE_READ_MORE}>" ><{$smarty.const._MD_ARTICLE_READ_MORE}><span class="helper"></span></a><span class="helper"></span>
+		<a href="<{$article.itemURL}>" class="btn article" title="<{$smarty.const._MD_ARTICLE_READ_MORE}>" ><{$smarty.const._MD_ARTICLE_READ_MORE}><span class="helper"></span></a><span class="helper"></span>
 	</div>
 	
 <div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;">&nbsp;</div>
