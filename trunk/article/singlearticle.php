@@ -59,7 +59,7 @@ $icmsTpl->assign('article_index', $index);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $clean_article_id = isset($_GET['article_id']) ? filter_input(INPUT_GET, 'article_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_category_id = isset($_GET['cid']) ? filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_review_start = isset($_GET['rev_nav']) ? filter_input(INPUT_GET, 'rev_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 $article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
 $articleObj = $article_article_handler->get($clean_article_id);
