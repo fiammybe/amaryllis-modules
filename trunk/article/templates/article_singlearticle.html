@@ -53,6 +53,13 @@
 	
 	<!-- article main content -->
 	<div>
+		<{if $article.image}>
+			<div id="article_image">
+				<a class="article_screens" href="<{$article.image}>" title="<{$article.title}>">
+					<{resized_image file=$article.image width=$display_width height=$display_height fit="inside"}>
+				</a>
+			</div>
+		<{/if}>
 		<div id="article_body">
 			<{foreach item=body from=$article.body_array}>
 				<div class="z">
