@@ -24,7 +24,7 @@
 
 	<!-- File image -->
 	<{if $article.index_img}>
-		<a class="article_screens" href="<{$article.index_img}>" title="file image">
+		<a class="article_screens" href="<{$article.index_img}>" title="<{$article.title}>">
 			<{resized_image file=$article.index_img width=$thumbnail_width height=$thumbnail_height fit="inside"}>
 		</a>
 	<{/if}>
