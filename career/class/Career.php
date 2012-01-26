@@ -189,11 +189,31 @@ class CareerCareer extends icms_ipf_seo_Object {
 	public function sendCareerNotification($case) {
 		$valid_case = array('message_submitted');
 		if(in_array($case, $valid_case, TRUE)) {
+			$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+			$mid = $module->getVar('mid');
+			$tags ['CAREER_TITLE'] = $this->getVar('career_title');
+			$tags ['CAREER_DEPARTMENT'] = $this->getCareerDid(TRUE);
 			switch ($case) {
 				case 'message_submitted':
-					
+					$category = 'global';
+					$tags ['CAREER_URL'] = ICMS_URL . '/modules/career/message.php';
+					$item_id = 0;
+					$recipient = $this->getVar("career_uid", "s");
+					break;
+				case 'new_career':
+					$tags ['CAREER_URL'] = $this->getItemLink(FALSE);
+					$category = 'global';
+					$item_id = 0;
+					$recipient = array();
+					break;
+				case 'career_modified':
+					$tags ['CAREER_URL'] = $this->getItemLink(FALSE);
+					$category = 'global';
+					$item_id = 0;
+					$recipient = array();
 					break;
 			}
+			icms::handler('icms_data_notification')->triggerEvent($category, $item_id, $case, $tags, $recipient, $mid);
 		}
 	}
 

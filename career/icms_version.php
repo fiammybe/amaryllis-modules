@@ -347,7 +347,7 @@ $modversion['config'][$i] = array(
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-$modversion['hasNotification'] = 0;
+$modversion['hasNotification'] = 1;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';
 $modversion['notification']['lookup_func'] = 'career_notify_iteminfo';
 
@@ -384,7 +384,7 @@ $modversion['notification']['event'][$i]['mail_template'] = 'career_modified';
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_CAREER_CAREER_MODIFIED_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'message_submitted';
-$modversion['notification']['event'][$i]['category'] = 'career';
+$modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['admin_only'] = 1;
 $modversion['notification']['event'][$i]['title'] = _MI_CAREER_CAREER_MESSAGE_SUBMIT_NOTIFY;
 $modversion['notification']['event'][$i]['caption'] = _MI_CAREER_CAREER_MESSAGE_SUBMIT_NOTIFY_CAP;
