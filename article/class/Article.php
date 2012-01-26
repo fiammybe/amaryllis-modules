@@ -553,8 +553,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		return ($this->getVar("article_cancomment", "e") == 1) ? TRUE : FALSE;
 	}
 	
-	
-	
 	public function toArray() {
 		global $articleConfig;
 		$ret = parent::toArray();

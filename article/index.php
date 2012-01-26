@@ -155,20 +155,5 @@ if(in_array($clean_op, $valid_op)) {
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderImageNav());
 			break;
 	}
-	/**
-	 * check, if rss feeds are enabled. if so, display link
-	 */
-	if($articleConfig['use_rss'] == 1) {
-		$icmsTpl->assign("article_show_rss", TRUE);
-	}
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////// BREADCRUMB ////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-		if( $articleConfig['show_breadcrumbs'] == true ) {
-			$icmsTpl->assign('article_show_breadcrumb', true);
-		} else {
-			$icmsTpl->assign('article_show_breadcrumb', false);
-		}
 	include_once 'footer.php';
 }
