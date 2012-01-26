@@ -67,7 +67,7 @@ if(!$career_isAdmin) {
 				/**
 				 * include the comment rules
 				 */
-				if ($downloadsConfig['com_rule']) {
+				if ($careerConfig['com_rule']) {
 					$icmsTpl->assign('career_message_comment', TRUE);
 					include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 				}

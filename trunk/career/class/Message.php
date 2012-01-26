@@ -93,7 +93,8 @@ class CareerMessage extends icms_ipf_Object {
 	public function getMessageMail() {
 		$mail = $this->getVar("message_mail", "s");
 		$mail = icms_core_DataFilter::checkVar($mail, "email", 0, 0);
-		return $mail;
+		$title = $this->getVar("message_title", "e");
+		return '<a href="maito:' . $mail . '?subject=RE: ' . $title . '" title="' . _CO_CAREER_MESSAGE_REPLY . '">' . $mail . '</a>';
 	}
 	
 	public function getMessageBody() {
@@ -105,7 +106,10 @@ class CareerMessage extends icms_ipf_Object {
 	public function getMessageFile() {
 		$file = 'message_file';
 		$fileObj = $this->getFileObj($file);
-		$url = $fileObj->render();
+		$filelink = $fileObj->getVar("url", "e");
+		$titlelink = explode("/",$filelink);
+		$last = (isset($titlelink[count($titlelink)-1])) ? $titlelink[count($titlelink)-1] : null;
+		$url = '<a class="btn download" href="' . $filelink . '" title="' . $last . '" rel="external"> ' . $last . '</a>';
 		return $url;
 	}
 	

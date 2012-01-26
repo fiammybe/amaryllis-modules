@@ -25,6 +25,7 @@ define("_CO_CAREER_DELETE", "delete");
 define("_CO_CAREER_VIEW", "view");
 if(!defined("_NO_PERM")) define("_NO_PERM", "Sorry, you don't have permissions to access this area");
 if(!defined("_ER_UP_UNKNOWNFILETYPEREJECTED")) define("_ER_UP_UNKNOWNFILETYPEREJECTED", "unknown Filetype");
+define("_CO_CAREER_MESSAGE_REPLY", "Reply");
 // constants used in career form
 define("_CO_CAREER_CAREER_CAREER_TITLE", "Title");
 define("_CO_CAREER_CAREER_CAREER_TITLE_DSC", "");
