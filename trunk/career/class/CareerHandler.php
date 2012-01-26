@@ -147,5 +147,4 @@ class CareerCareerHandler extends icms_ipf_Handler {
 		}
 		return TRUE;
 	}
-	
 }

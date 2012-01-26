@@ -194,12 +194,6 @@ class CareerCareer extends icms_ipf_seo_Object {
 			$tags ['CAREER_TITLE'] = $this->getVar('career_title');
 			$tags ['CAREER_DEPARTMENT'] = $this->getCareerDid(TRUE);
 			switch ($case) {
-				case 'message_submitted':
-					$category = 'global';
-					$tags ['CAREER_URL'] = ICMS_URL . '/modules/career/message.php';
-					$item_id = 0;
-					$recipient = $this->getVar("career_uid", "s");
-					break;
 				case 'new_career':
 					$tags ['CAREER_URL'] = $this->getItemLink(FALSE);
 					$category = 'global';
@@ -215,6 +209,21 @@ class CareerCareer extends icms_ipf_seo_Object {
 			}
 			icms::handler('icms_data_notification')->triggerEvent($category, $item_id, $case, $tags, $recipient, $mid);
 		}
+	}
+
+	public function sendMessageIncoming() {
+		$recievers = $this->getVar("career_uid", "s");
+		foreach ($recievers as $key => $reciever) {
+			$uid = is_object(icms::$user) ? icms::$user : new icms_member_user_Object;
+			$pmObj = new icms_messaging_Handler();
+			$pmObj->setFromUser($uid);
+			$message = _CO_CAREER_CAREER_MESSAGE_BDY;
+			$message .= '<br />' . _CO_CAREER_CAREER_CAREER_DID . ' : ' . $this->getCareerDid(TRUE);
+			$message .= '<br />' . _CO_CAREER_CAREER_CAREER_TITLE . ' : ' . $this->getItemLink(FALSE);
+			$sbj = _CO_CAREER_CAREER_MESSAGE_SBJ;
+			$pmObj->sendPM($reciever, $sbj, $message);
+		}
+		return TRUE;
 	}
 
 }
