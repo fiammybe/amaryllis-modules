@@ -101,11 +101,4 @@ if(is_object($careerObj) && !$careerObj->isNew() && $careerObj->accessGranted())
 		$icmsTpl->assign('career_cat_path',FALSE);
 	}
 }
-
-if( $careerConfig['show_breadcrumbs'] == TRUE ) {
-	$icmsTpl->assign('career_show_breadcrumb', TRUE);
-} else {
-	$icmsTpl->assign('career_show_breadcrumb', FALSE);
-}
-
 include_once 'footer.php';

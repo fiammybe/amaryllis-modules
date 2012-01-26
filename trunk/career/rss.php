@@ -33,7 +33,7 @@ $career_feed->charset = _CHARSET;
 $career_feed->category = $icmsModule->name();
 
 $career_career_handler = icms_getModuleHandler("career", basename(dirname(__FILE__)), "career");
-$postsArray = $career_career_handler->getCareers(TRUE, "career_pdate", "DESC", 0, 10, FALSE);
+$postsArray = $career_career_handler->getCareers(TRUE, "career_p_date", "DESC", 0, 10, FALSE);
 
 foreach($postsArray as $postArray) {
 	

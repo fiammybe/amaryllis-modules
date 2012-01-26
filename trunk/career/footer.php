@@ -20,6 +20,22 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
+/**
+ * check, if breadcrumb should be displayed
+ */
+if( $careerConfig['show_breadcrumbs'] == TRUE ) {
+	$icmsTpl->assign('career_show_breadcrumb', TRUE);
+} else {
+	$icmsTpl->assign('career_show_breadcrumb', FALSE);
+}
+
+/**
+ * check, if rss feeds are enabled. if so, display link
+ */
+if($careerConfig['use_rss'] == 1) {
+	$icmsTpl->assign("career_show_rss", TRUE);
+}
+
 $icmsTpl->assign("career_company_name", $careerConfig['career_display_company']);
 
 $icmsTpl->assign("career_adminpage", "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_CAREER_ADMIN_PAGE . "</a>");
