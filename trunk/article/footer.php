@@ -20,6 +20,21 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
+/**
+ * check, if rss feeds are enabled. if so, display link
+ */
+if($articleConfig['use_rss'] == 1) {
+	$icmsTpl->assign("article_show_rss", TRUE);
+}
+/**
+ * check, if breadcrumb should be displayed
+ */
+if( $articleConfig['show_breadcrumbs'] == true ) {
+	$icmsTpl->assign('article_show_breadcrumb', true);
+} else {
+	$icmsTpl->assign('article_show_breadcrumb', false);
+}
+
 $icmsTpl->assign('thumbnail_width', $articleConfig['thumbnail_width']);
 $icmsTpl->assign('thumbnail_height', $articleConfig['thumbnail_height']);
 $icmsTpl->assign('display_width', $articleConfig['display_width']);
