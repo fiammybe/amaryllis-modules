@@ -496,14 +496,15 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
 		$agroups = $gperm_handler->getGroupIds('module_admin', $module->getVar("mid"));
-		$allowed_groups = array_intersect($groups, $agroups);
+		$allowed_groups = array_intersect_key($groups, $agroups);
 		$viewperm = $gperm_handler->checkRight('article_grpperm', $this->getVar('article_id', 'e'), $groups, $module->getVar("mid"));
 		if ($this->userCanEditAndDelete()) {
 			return TRUE;
 		}
-		if ($viewperm && ($this->getVar("article_active", "e") == TRUE) && ($this->getVar("article_approve", "e")) && (count($allowed_groups) > 0)) {
+		if ($viewperm && ($this->getVar("article_active", "e") == TRUE) && ($this->getVar("article_approve", "e")) && (count($allowed_groups) > 0) ) {
 			return TRUE;
 		}
+		
 		return FALSE;
 	}
 	

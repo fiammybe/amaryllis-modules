@@ -26,9 +26,8 @@ function b_article_random_articles_show($options) {
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
 
-	$articles = $article_article_handler->getArticlesForBlocks(0, $options[0]);
-	$randomarticles = shuffle($articles);
-	$block['article_random'] = $randomarticles;
+	$articles = $article_article_handler->getArticlesForBlocks(0, $options[0], FALSE, FALSE, FALSE, "RAND()", FALSE);
+	$block['article_random'] = $articles;
 	
 	return $block;
 }
