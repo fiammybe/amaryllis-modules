@@ -69,6 +69,10 @@ define("_CO_CAREER_CAREER_CAREER_ACTIVE", "Active?");
 define("_CO_CAREER_CAREER_CAREER_ACTIVE_DSC", "");
 define("_CO_CAREER_CAREER_WEIGHT", "Weight");
 
+// PM for recieved Messages for any career
+define("_CO_CAREER_CAREER_MESSAGE_BDY", "You have recieved a new message for the career/department below:");
+define("_CO_CAREER_CAREER_MESSAGE_SBJ", "New Message awaiting for you");
+
 // constants used in departments form
 define("_CO_CAREER_DEPARTMENT_DEPARTMENT_TITLE", "Title");
 define("_CO_CAREER_DEPARTMENT_DEPARTMENT_TITLE_DSC", "");

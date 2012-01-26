@@ -81,11 +81,6 @@ define("_MI_CAREER_CAREER_MODIFIED_NOTIFY_CAP", "Notify me when any career is mo
 define("_MI_CAREER_CAREER_MODIFIED_NOTIFY_DSC", "Receive notification when a career is modified.");
 define("_MI_CAREER_CAREER_MODIFIED_NOTIFY_SBJ", "[{X_SITENAME}] {X_MODULE} auto-notify : Career modified'");
 
-define("_MI_CAREER_CAREER_MESSAGE_SUBMIT_NOTIFY", "Message submitted");
-define("_MI_CAREER_CAREER_MESSAGE_SUBMIT_NOTIFY_CAP", "Notify me when any message is submitted.");
-define("_MI_CAREER_CAREER_MESSAGE_SUBMIT_NOTIFY_DSC", "Receive notification when a message is submitted.");
-define("_MI_CAREER_CAREER_MESSAGE_SUBMIT_NOTIFY_SBJ", "[{X_SITENAME}] {X_MODULE} auto-notify : Message submitted'");
-
 // ACP Menu
 define("_MI_CAREER_MENU_CAREER", "Manage Offerings");
 define("_MI_CAREER_MENU_DEPARTMENT", "Manage departments");
