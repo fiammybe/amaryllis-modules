@@ -125,6 +125,13 @@
 		margin-top: 1em;
 	}
 	
+	.career_notfound {
+		font: 1.5em Georgia, Arial, Helvetica, sans-serif;
+		font-style: italic;
+		margin: 2em 0em;
+		color: red;
+	}
+	
 	/**
 	 * 	single department view
 	 */

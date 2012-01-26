@@ -154,6 +154,11 @@ class CareerCareer extends icms_ipf_seo_Object {
 		return $ret;
 	}
 	
+	public function accessGranted() {
+		$active = $this->getVar("career_active", "e");
+		return ($active == TRUE) ? TRUE : FALSE;
+	}
+	
 	public function toArray() {
 		$ret = parent::toArray();
 		$ret['id'] = $this->getVar("career_id", "e");

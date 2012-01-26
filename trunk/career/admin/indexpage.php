@@ -52,7 +52,7 @@ if ( in_array( $clean_op, $valid_op, true ) ) {
 		break;
   	case "addindexpage":
 		$controller = new icms_ipf_Controller( $career_indexpage_handler );
-  		$controller->storeFromDefaultForm( _AM_CAREER_INDEXPAGE_MODIFIED );
+  		$controller->storeFromDefaultForm( _AM_CAREER_INDEXPAGE_MODIFIED, _AM_CAREER_INDEXPAGE_MODIFIED );
   		break;
   }
   icms_cp_footer();

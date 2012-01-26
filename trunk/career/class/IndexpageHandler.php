@@ -63,6 +63,7 @@ class CareerIndexpageHandler extends icms_ipf_Handler {
 		$footer = $obj->getVar("index_footer", "s");
 		$footer = icms_core_DataFilter::checkVar($footer, "html", "input");
 		$obj->setVar("index_footer", $footer);
+		return TRUE;
 	}
 	
 	// some related functions for storing
