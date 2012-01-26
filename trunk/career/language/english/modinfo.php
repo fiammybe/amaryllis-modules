@@ -60,6 +60,11 @@ define("_MI_CAREER_USE_RSS", "Use RSS");
 define("_MI_CAREER_USE_RSS_DSC", "");
 define("_MI_CAREER_GUEST_CAN_APPLY", "Allow guests to send an apply?");
 define("_MI_CAREER_GUEST_CAN_APPLY_DSC", "Do you like to provide a link for guests to apply? Otherwise they will get a link to register or login.");
+define("_MI_CAREER_PRINT_FOOTER", "Print footer");
+define("_MI_CAREER_PRINT_FOOTER_DSC", "");
+define("_MI_CAREER_PRINT_LOGO", "Print logo path");
+define("_MI_CAREER_PRINT_LOGO_DSC", "e.g.: /themes/mytheme/logo.png");
+
 // constants for notifications
 define("_MI_CAREER_GLOBAL_NOTIFY", "Global");
 define("_MI_CAREER_GLOBAL_NOTIFY_DSC", "Global Career notification options.");
