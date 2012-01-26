@@ -94,7 +94,7 @@ define("_CO_ARTICLE_ARTICLE_ARTICLE_PERMISSIONS", "Permission control");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_STATICS", "Static fields");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_ADDITIONALS", "Article Meta informations");
 // some general constants
-define("_ER_UP_UNKNOWNFILETYPEREJECTED", "Filetype unknown.");
+if(!defined("_ER_UP_UNKNOWNFILETYPEREJECTED")) define("_ER_UP_UNKNOWNFILETYPEREJECTED", "Filetype unknown.");
 define("_CO_ARTICLE_PREVIEW", "preview");
 define("_CO_ARTICLE_EDIT", "edit");
 if(!defined("_CO_SUBMIT")) define("_CO_SUBMIT", "submit");

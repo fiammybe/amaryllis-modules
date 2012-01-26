@@ -34,7 +34,6 @@ $icmsTpl->assign('article_images_url', ARTICLE_IMAGES_URL);
 /**
  * force article.js to header
  */
-
 $xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/jquery.qtip.js', array('type' => 'text/javascript'));
 $xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/scripts/jquery.qtip.css');
 $xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article.js', array('type' => 'text/javascript'));
