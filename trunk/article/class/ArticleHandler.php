@@ -140,10 +140,10 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	public function getArticlesForBlocks($start = 0, $limit = 0, $article_cid = FALSE,$updated = FALSE,$popular = FALSE, $order = 'article_published_date', $sort = 'DESC') {
 		global $articleConfig;
 		$criteria = new icms_db_criteria_Compo();
-		$criteria->setStart(0);
-		$criteria->setLimit($limit);
-		$criteria->setSort($order);
-		$criteria->setOrder($sort);
+		if($start) $criteria->setStart($start);
+	 	if($limit) $criteria->setLimit($limit);
+		if($order)$criteria->setSort($order);
+		if($sort) $criteria->setOrder($sort);
 		$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
 		$criteria->add(new icms_db_criteria_Item('article_inblocks', TRUE));
 		$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
