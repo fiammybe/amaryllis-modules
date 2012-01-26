@@ -111,7 +111,7 @@ class CareerCareer extends icms_ipf_seo_Object {
 	
 	public function getCareerMail() {
 		$mail = $this->getVar("career_cemail", "s");
-		$mail = icms_core_DataFilter::checkVar($mail, "email", 1, 0);
+		$mail = icms_core_DataFilter::checkVar($mail, "email", 0, 0);
 		return $mail;
 	}
 	

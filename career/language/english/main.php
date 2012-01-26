@@ -29,4 +29,5 @@ define("_MD_CAREER_VCARD", "Contact informations");
 define("_MD_CAREER_CAREERLIST", "Job offers for this department");
 define("_MD_CAREER_NO_CAREERS", "Sorry, currently there are no job offers for this department.");
 define("_MD_CAREER_CAREER_NOT_FOUND", "Sorry, the requested career wasn't found.");
-
+define("_MD_CAREER_MAILTO_SBJ", "I%20found%20a%20great%20Job%20Offering%20for%20you");
+define("_MD_CAREER_MAILTO_BDY", "I%20found%20a%20great%20Job%20Offering%20for%20you");
