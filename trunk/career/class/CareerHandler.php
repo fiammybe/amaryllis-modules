@@ -137,7 +137,15 @@ class CareerCareerHandler extends icms_ipf_Handler {
 		$mail = icms_core_DataFilter::checkVar($mail, "email", 0, 0);
 		$obj->setVar("career_cemail", $mail);
 		return TRUE;
-		
+	}
+	
+	protected function afterSave(&$obj) {
+		if($obj->isNew()) {
+			$obj->sendCareerNotification('new_career');
+		} else {
+			$obj->sendCareerNotification('career_modified');
+		}
+		return TRUE;
 	}
 	
 }
