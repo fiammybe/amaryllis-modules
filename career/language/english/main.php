@@ -31,3 +31,10 @@ define("_MD_CAREER_NO_CAREERS", "Sorry, currently there are no job offers for th
 define("_MD_CAREER_CAREER_NOT_FOUND", "Sorry, the requested career wasn't found.");
 define("_MD_CAREER_MAILTO_SBJ", "I%20found%20a%20great%20Job%20Offering%20for%20you");
 define("_MD_CAREER_MAILTO_BDY", "I%20found%20a%20great%20Job%20Offering%20for%20you");
+define("_MD_CAREER_PDF", "Get PDF");
+define("_MD_CAREER_PRINT", "Print");
+define("_MD_CAREER_PUBLISHER", "Submitted by");
+define("_MD_CAREER_CATS", "Department:");
+define("_MD_CAREER_UPDATED_ON", "Updated on");
+define("_MD_CAREER_PUBLISHED_ON", "Published on");
+define("_MD_CAREER_UPDATER", "Last updated by");

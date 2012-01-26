@@ -138,6 +138,11 @@ $modversion['templates'][$i] = array(
 								);
 $i++;
 $modversion['templates'][$i] = array(
+										'file'			=> 'career_print.html',
+										'description'	=> ''
+								);
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'career_admin.html',
 										'description'	=> _MI_CAREER_ADMIN_TPL
 								);
@@ -316,6 +321,24 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 0
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'career_print_footer',
+								'title' 		=> '_MI_CAREER_PRINT_FOOTER',
+								'description' 	=> '_MI_CAREER_PRINT_FOOTER_DSC',
+								'formtype' 		=> 'textarea',
+								'valuetype' 	=> 'txt',
+								'default' 		=> ''
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'career_print_logo',
+								'title' 		=> '_MI_CAREER_PRINT_LOGO',
+								'description' 	=> '_MI_CAREER_PRINT_LOGO_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'txt',
+								'default' 		=> ''
 							);
 
 
