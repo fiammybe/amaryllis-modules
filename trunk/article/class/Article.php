@@ -631,17 +631,18 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	}
 
 	public function sendMessageBroken() {
-		$recievers = $this->getVar("article_publisher", "s");
-		foreach ($recievers as $key => $reciever) {
-			$myuid = is_object(icms::$user) ? icms::$user : new icms_member_user_Object;
-			$pmObj = new icms_messaging_Handler();
-			$pmObj->setFromUser($myuid);
-			$message = _CO_ARTICLE_ARTICLE_MESSAGE_BDY;
-			$message .= '<br />' . _CO_ARTICLE_ARTICLE_ARTICLE_CID . ' : ' . $this->getArticleCid(TRUE);
-			$message .= '<br />' . _CO_ARTICLE_ARTICLE_ARTICLE_TITLE . ' : ' . $this->getItemLink(FALSE);
-			$sbj = _CO_ARTICLE_ARTICLE_MESSAGE_SBJ;
-			$pmObj->sendPM($reciever, $sbj, $message);
-		}
+		$message = _CO_ARTICLE_ARTICLE_MESSAGE_BDY;
+		$message .= '<br />' . _CO_ARTICLE_ARTICLE_ARTICLE_CID . ' : ' . $this->getArticleCid(TRUE);
+		$message .= '<br />' . _CO_ARTICLE_ARTICLE_ARTICLE_TITLE . ' : ' . $this->getItemLink(FALSE);
+		$myuid = is_object(icms::$user) ? icms::$user : new icms_member_user_Object;
+		$group = icms_member_group_Handler::get("1");
+		$pmObj = new icms_messaging_Handler();
+		$pmObj->setFromUser($myuid);
+		$pmObj->setBody($message);
+		$pmObj->setSubject(_CO_ARTICLE_ARTICLE_MESSAGE_SBJ);
+		$pmObj->usePM();
+		$pmObj->setToGroups($group);
+		$pmObj->send();
 		return TRUE;
 	}
 
