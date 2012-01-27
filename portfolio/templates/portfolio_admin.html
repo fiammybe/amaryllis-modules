@@ -1,0 +1,55 @@
+<!-- admin portfolio page -->
+<{if $portfolio_portfolio_title}>
+	<h1><{$portfolio_portfolio_title}></h1>
+<{/if}>
+<{if $portfolio_portfolio_info}>
+	<p><{$portfolio_portfolio_info}></p>
+<{/if}>
+<{if $portfolio_portfolio_table}>
+	<{$portfolio_portfolio_table}>
+<{/if}>
+<{if $addportfolio}>
+	<{includeq file='db:system_common_form.html' form=$addportfolio}>
+<{/if}>
+
+<!-- admin category page -->
+<{if $portfolio_category_title}>
+	<h1><{$portfolio_category_title}></h1>
+<{/if}>
+<{if $portfolio_category_info}>
+	<p><{$portfolio_category_info}></p>
+<{/if}>
+<{if $portfolio_category_table}>
+	<{$portfolio_category_table}>
+<{/if}>
+<{if $addcategory}>
+	<{includeq file='db:system_common_form.html' form=$addcategory}>
+<{/if}>
+
+<!-- admin index page -->
+<{if $portfolio_indexpage_title}>
+	<h1><{$portfolio_indexpage_title}></h1>
+<{/if}>
+<{if $portfolio_indexpage_info}>
+	<p><{$portfolio_indexpage_info}></p>
+<{/if}>
+<{if $portfolio_indexpage_table}>
+	<{$portfolio_indexpage_table}>
+<{/if}>
+<{if $addindexpage}>
+	<{includeq file='db:system_common_form.html' form=$addindexpage}>
+<{/if}>
+
+<!-- admin contact page -->
+<{if $portfolio_contact_title}>
+	<h1><{$portfolio_contact_title}></h1>
+<{/if}>
+<{if $portfolio_contact_info}>
+	<p><{$portfolio_contact_info}></p>
+<{/if}>
+<{if $portfolio_contact_table}>
+	<{$portfolio_contact_table}>
+<{/if}>
+<{if $addcontact}>
+	<{includeq file='db:system_common_form.html' form=$addcontact}>
+<{/if}>
