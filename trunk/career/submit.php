@@ -48,7 +48,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$careerObj->sendMessageIncoming();
 				$controller = new icms_ipf_Controller($career_message_handler);
 				$controller->storeFromDefaultForm(_THANKS_SUBMISSION_REV, _THANKS_SUBMISSION_REV, CAREER_URL . 'career.php?career_id=' . $career_id);
-				return redirect_header (CAREER_URL . 'career.php?career_id=' . $career_id, 3, _THANKS_SUBMISSION);
+				return redirect_header (CAREER_URL . 'career.php?career_id=' . $career_id, 3, _THANKS_SUBMISSION_REV);
 			} else {
 				return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
 			}
