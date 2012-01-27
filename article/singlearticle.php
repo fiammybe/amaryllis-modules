@@ -73,7 +73,7 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	/**
 	 * forwarding new reports for broken links
 	 */
-	$icmsTpl->assign("broken_link", ARTICLE_URL . "submit.php?op=report_broken&article_id=" . $articleObj->id() );
+	$icmsTpl->assign("broken_link", ARTICLE_URL . "submit.php?op=report_broken&article_id=" . $articleObj->id());
 	
 	/**
 	 * display disclaimer yes/no?

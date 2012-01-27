@@ -19,8 +19,6 @@
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
-if(!$articleConfig) $articleConfig = icms_getModuleConfig(basename(dirname(dirname(__FILE__))));
-
 function article_display_new($time) {
 	global $articleConfig;
 	$new = ( time() - ( 86400 * intval( $articleConfig['article_daysnew'] ) ) );
