@@ -22,8 +22,10 @@ ini_set('max_execution_time', 0);
 function article_import_smartsection_articles() {
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$mid_sql = "SELECT `mid` FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname = smartsection";
-	$mid = icms::$xoopsDB->query($mid_sql);
+	$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname = 'smartsection'";
+	$result2 = icms::$xoopsDB->query($mid_sql);
+	$mid = mysql_fetch_assoc($result2);
+	
 	$table = new icms_db_legacy_updater_Table('smartsection_items');
 	if ($table->exists()) {
 		echo '<code><b>Importing data from smartsection article table</b></code><br />';
@@ -79,7 +81,7 @@ function article_import_smartsection_articles() {
 			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', 'item_read'));
 			$criteria->add($crit);
 			$criteria->add(new icms_db_criteria_Item('gperm_itemid', $row['itemid']));
-			$criteria->add(new icms_db_criteria_Item('gperm_modid', $mid));
+			$criteria->add(new icms_db_criteria_Item('gperm_modid', $mid['']));
 			$gperm_handler->deleteAll($criteria);
 			
 			
@@ -88,21 +90,16 @@ function article_import_smartsection_articles() {
 		echo '</code>';
 		echo '<code><b>Smartsection item table successfully dropped.</b></code><br />';
 	}
-	unset($table);
-
-	$feedback = ob_get_clean();
-	if (method_exists(icms::$module, "setMessage")) {
-		icms::$module->messages = icms::$module->setMessage($feedback);
-	} else {
-		echo $feedback;
-	}
+	
 	return TRUE;
 }
 
 function article_import_smartsection_categories() {
 	$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$mid_sql = "SELECT `mid` FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname = smartsection";
+	$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname = 'smartsection'";
+	$result2 = icms::$xoopsDB->query($mid_sql);
+	$mid = mysql_fetch_assoc($result2);
 	
 	$table = new icms_db_legacy_updater_Table('smartsection_categories');
 	if ($table->exists()) {
@@ -135,7 +132,7 @@ function article_import_smartsection_categories() {
 			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', 'category_read'));
 			$criteria->add($crit);
 			$criteria->add(new icms_db_criteria_Item('gperm_itemid', $row['categoryid']));
-			$criteria->add(new icms_db_criteria_Item('gperm_modid', $mid));
+			$criteria->add(new icms_db_criteria_Item('gperm_modid', $mid['mid']));
 			$gperm_handler->deleteAll($criteria);
 			
 			echo '&nbsp;&nbsp;-- <b>' . $row['name'] . '</b> successfully imported!<br />';
@@ -143,16 +140,6 @@ function article_import_smartsection_categories() {
 		echo '</code>';
 		echo '<code><b>Smartsection categories table successfully dropped.</b></code><br />';
 	}
-	
-	unset($table);
-
-	$feedback = ob_get_clean();
-	if (method_exists(icms::$module, "setMessage")) {
-		icms::$module->messages = icms::$module->setMessage($feedback);
-	} else {
-		echo $feedback;
-	}
-	return TRUE;
 }
 
 function article_import_smartsection_files() {
@@ -186,15 +173,6 @@ function article_import_smartsection_files() {
 		echo '</code>';
 		echo '<code><b>Smartsection files table successfully dropped.</b></code><br />';
 	}
-	unset($table);
-
-	$feedback = ob_get_clean();
-	if (method_exists(icms::$module, "setMessage")) {
-		icms::$module->messages = icms::$module->setMessage($feedback);
-	} else {
-		echo $feedback;
-	}
-	return TRUE;
 }
 
 function article_import_linked_tags() {
@@ -202,10 +180,11 @@ function article_import_linked_tags() {
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 	$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
 	$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname='smartsection'";
-	$result = icms::$xoopsDB->query($mid_sql);
-	$mid = mysql_fetch_assoc($result);
+	$result2 = icms::$xoopsDB->query($mid_sql);
+	$mid = mysql_fetch_assoc($result2);
 	
 	$articleObjects = $article_article_handler->getObjects(FALSE, TRUE);
+	echo '<code><b>Importing data from sprockets taglink table</b></code><br />';
 	foreach ($articleObjects as $key => &$object) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item("mid", (int)$mid['mid']));
@@ -218,15 +197,7 @@ function article_import_linked_tags() {
 		$object->setVar("article_tags", $tags);
 		$article_article_handler->insert($object, TRUE);
 	}
-
-	$feedback = ob_get_clean();
-	if (method_exists(icms::$module, "setMessage")) {
-		icms::$module->messages = icms::$module->setMessage($feedback);
-	} else {
-		echo $feedback;
-	}
-	return TRUE;
-
+	echo '<code><b>Sprockets taglinks table successfully imported.</b></code><br />';
 }
 
 include_once 'admin_header.php';
