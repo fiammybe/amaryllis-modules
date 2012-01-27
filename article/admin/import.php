@@ -22,7 +22,7 @@ ini_set('max_execution_time', 0);
 function article_import_smartsection_articles() {
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$mid_sql = "SELECT `mid` FROM" . icms::$xoopsDB->prefix('modules') . "WHERE dirname = smartsection";
+	$mid_sql = "SELECT `mid` FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname = smartsection";
 	$mid = icms::$xoopsDB->query($mid_sql);
 	$table = new icms_db_legacy_updater_Table('smartsection_items');
 	if ($table->exists()) {
@@ -102,7 +102,7 @@ function article_import_smartsection_articles() {
 function article_import_smartsection_categories() {
 	$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	$mid_sql = "SELECT `mid` FROM" . icms::$xoopsDB->prefix('modules') . "WHERE dirname = smartsection";
+	$mid_sql = "SELECT `mid` FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname = smartsection";
 	
 	$table = new icms_db_legacy_updater_Table('smartsection_categories');
 	if ($table->exists()) {
@@ -202,12 +202,13 @@ function article_import_linked_tags() {
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 	$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
 	$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname='smartsection'";
-	$mid = icms::$xoopsDB->query($mid_sql);
+	$result = icms::$xoopsDB->query($mid_sql);
+	$mid = mysql_fetch_assoc($result);
 	
 	$articleObjects = $article_article_handler->getObjects(FALSE, TRUE);
 	foreach ($articleObjects as $key => &$object) {
 		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item("mid", (int)$mid));
+		$criteria->add(new icms_db_criteria_Item("mid", (int)$mid['mid']));
 		$criteria->add(new icms_db_criteria_Item("iid", $object->getVar("article_id")));
 		$tagObjects = $sprockets_taglink_handler->getObjects($criteria, TRUE);
 		$tags = array();
@@ -340,7 +341,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			$form->addElement(new icms_form_elements_Hidden('op', 0));
         	$form->display();
-			
 			break;
 	}
 	icms_cp_footer();
