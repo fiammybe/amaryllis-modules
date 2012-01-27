@@ -198,22 +198,24 @@ function article_import_smartsection_files() {
 }
 
 function article_import_linked_tags() {
+	$sprocketsModule = icms_getModuleInfo("sprockets");
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
-	$sprockets_taglink_handler = icms_getModuleHandler("taglink", basename(dirname(dirname(__FILE__))), "article");
-	$mid_sql = "SELECT `mid` FROM" . icms::$xoopsDB->prefix('modules') . "WHERE dirname = smartsection";
+	$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
+	$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname='smartsection'";
 	$mid = icms::$xoopsDB->query($mid_sql);
 	
-	$articleObjects = $article_article_handler->getObjects(FALSE, TRUE, FALSE);
-	foreach ($articleObjects as $key => $object) {
+	$articleObjects = $article_article_handler->getObjects(FALSE, TRUE);
+	foreach ($articleObjects as $key => &$object) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item("mid", (int)$mid));
 		$criteria->add(new icms_db_criteria_Item("iid", $object->getVar("article_id")));
-		$tagObjects = $sprockets_taglink_handler->getObjects($criteria, TRUE, FALSE);
+		$tagObjects = $sprockets_taglink_handler->getObjects($criteria, TRUE);
 		$tags = array();
-		foreach ($tagObjects as $key => $tagObj) {
+		foreach ($tagObjects as $key => &$tagObj) {
 			$tags = $tagObj->getVar("tid", "e");
 		}
 		$object->setVar("article_tags", $tags);
+		$article_article_handler->insert($object, TRUE);
 	}
 
 	$feedback = ob_get_clean();
