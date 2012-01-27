@@ -28,6 +28,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'report_broken':
 			$article_id = (int)filter_input(INPUT_GET, 'article_id');
+			$category_id = (int)filter_input(INPUT_GET, 'category_id');
 			if ($article_id <= 0) return FALSE;
 			$article_article_handler = icms_getModuleHandler('article', basename(dirname(__FILE__)),'article');
 			$articleObj = $article_article_handler->get($article_id);
@@ -36,8 +37,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$articleObj->setVar('article_broken_file', TRUE);
 			$articleObj->store(TRUE);
 			
-			$articleObj->sendArticleNotification('article_file_broken');
-			return redirect_header(icms_getPreviousPage(), 5, _MD_ARTICLE_BROKEN_REPORTED);
+			$articleObj->sendMessageBroken();
+			//$articleObj->sendArticleNotification('article_file_broken');
+			
+			return redirect_header(ARTICLE_URL . 'singlearticle.php?article_id=' . $article_id . '&category_id=' . $category_id, 5, _MD_ARTICLE_BROKEN_REPORTED);
 			break;
 		
 		case 'addtags':
