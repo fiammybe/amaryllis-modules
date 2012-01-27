@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Career' is an career management module for ImpressCMS
+ * 'Career' is an portfolio management module for ImpressCMS
  *
  * File: /comment_new.php
  * 
@@ -13,7 +13,7 @@
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		career
+ * @package		portfolio
  *
  */
 
@@ -21,15 +21,15 @@ include_once 'header.php';
 
 $com_itemid = isset($_GET['com_itemid']) ? filter_input(INPUT_GET, 'com_itemid', FILTER_SANITIZE_NUMBER_INT) : 0;
 if ($com_itemid > 0) {
-	$career_message_handler = icms_getModuleHandler("message", basename(dirname(__FILE__)),"career");
-	$messageObj = $career_message_handler->get($com_itemid);
-	if ($messageObj && !$messageObj->isNew()) {
+	$portfolio_portfolio_handler = icms_getModuleHandler("portfolio", basename(dirname(__FILE__)),"portfolio");
+	$portfolioObj = $portfolio_portfolio_handler->get($com_itemid);
+	if ($portfolioObj && !$portfolioObj->isNew()) {
 		$com_replytext = "test...";
-		$bodytext = $messageObj->getVar('message_body');
+		$bodytext = $portfolioObj->getVar('portfolio_body');
 		if ($bodytext != '') {
 			$com_replytext .= $bodytext;
 		}
-		$com_replytitle = $messageObj->getVar('message_title');
+		$com_replytitle = $portfolioObj->getVar('portfolio_title');
 		include_once ICMS_ROOT_PATH .'/include/comment_new.php';
 	}
 }
