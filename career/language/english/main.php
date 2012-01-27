@@ -38,3 +38,4 @@ define("_MD_CAREER_CATS", "Department:");
 define("_MD_CAREER_UPDATED_ON", "Updated on");
 define("_MD_CAREER_PUBLISHED_ON", "Published on");
 define("_MD_CAREER_UPDATER", "Last updated by");
+define("_THANKS_SUBMISSION_REV", "Thank you for submitting your application. We'll contact you as soon as possible.");
