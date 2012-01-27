@@ -8,7 +8,7 @@
 
 	<div class="portfolio_catlist">
 		<{foreach item=category from=$categories}>
-			<div class="portfolio_cat">
+			<div class="portfolio_cat" original-title="<{$category.title}>">
 				<div class="portfolio_cat_title">
 					<h2><{$category.itemLink}></h2>
 				</div>
@@ -17,6 +17,9 @@
 						<img src="<{$category.logo}>" title="<{$category.title}>" alt="<{$category.title}>" />
 					</a>
 				</div>
+			</div>
+			<div class="popup">
+				<{$category.dsc}>
 			</div>
 		<{/foreach}>
 	</div>
