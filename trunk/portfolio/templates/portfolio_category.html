@@ -1,0 +1,75 @@
+<{includeq file='db:portfolio_header.html'}>
+
+<{if $categories}>
+	<!-- display index header -->
+	<{$portfolio_index.header}>
+	<!-- display index heading -->
+	<{$portfolio_index.heading}>
+
+	<div class="portfolio_catlist">
+		<{foreach item=category from=$categories}>
+			<div class="portfolio_cat">
+				<div class="portfolio_cat_title">
+					<h2><{$category.itemLink}></h2>
+				</div>
+				<div class="portfolio_cat_img">
+					<a href="<{$category.itemURL}>" title="<{$category.title}>">
+						<img src="<{$category.logo}>" title="<{$category.title}>" alt="<{$category.title}>" />
+					</a>
+				</div>
+			</div>
+		<{/foreach}>
+	</div>
+<{elseif $portfolio_single_cat}>
+	<div class="portfolio_scat">
+		<div class="portfolio_scat_title">
+			<h1><{$portfolio_single_cat.title}></h1>
+		</div>
+		<div class="portfolio_scat_img">
+			<img src="<{$portfolio_single_cat.logo}>" title="<{$portfolio_single_cat.title}>" alt="<{$portfolio_single_cat.title}>" />
+		</div>
+		<div class="portfolio_scat_dsc">
+			<{$portfolio_single_cat.dsc}>
+		</div>
+		<div class="portfolio_clear_left">&nbsp;</div>
+		
+		<!-- display portfolio columns -->
+		<{if $portfolio_columns}>
+			<{if $pagenav}><{$pagenav}><{/if}>
+			<div class="portfolio_container">
+				<{foreach item=row from=$portfolio_columns}>
+					<div class="portfolio_row">
+						<{foreach item=portfolio from=$row}>
+							<div class="portfolio" original-title="<{$portfolio.title}>">
+								<div class="portfolio_title">
+									<{$portfolio.itemLink}><{if $portfolio.customer}>&nbsp;:&nbsp;<span class="portfolio_customer"><{$portfolio.customer}></span><{/if}>
+								</div>
+								<a href="<{$portfolio.cat_img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
+									<{resized_image file=$portfolio.cat_img width=$display_width height=$display_height fit="inside"}>
+								</a>
+								<div class="portfolio_read_more">
+									<a href="<{$portfolio.itemURL}>" title="<{$smarty.const._MD_PORTFOLIO_VIEW_DETAIL}>"><{$smarty.const._MD_PORTFOLIO_VIEW_DETAIL}></a>
+								</div>
+							</div>
+							<div class="popup">
+								<{$portfolio.summary}>
+							</div>
+						<{/foreach}>
+					</div>
+				<{/foreach}>
+			</div>
+			<{if $pagenav}><{$pagenav}><{/if}>
+		<{/if}>
+	</div>
+<{/if}>
+
+<div id="portfolio_viewall">
+	<p>
+		<{$smarty.const._MD_PORTFOLIO_HIRE_ME}>
+		<span class="portfolio_contact">
+			<a href="<{$contact_link}>" class="<{if $contact_perm_denied == TRUE}>perm_contact_link<{else}>contact_link<{/if}>" title="<{$smarty.const._MD_PORTFOLIO_CONTACT_ME}>"><{$smarty.const._MD_PORTFOLIO_CONTACT_ME}></a>
+		</span>
+	</p>
+</div>
+
+<{includeq file='db:portfolio_footer.html'}>

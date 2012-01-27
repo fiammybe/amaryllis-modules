@@ -1,0 +1,26 @@
+<link href="<{$portfolio_url}>module_portfolio.css" rel="stylesheet" type="text/css" />
+
+<{if $portfolio_show_breadcrumb}>
+	<!-- module breadcrumb -->
+	<div class="portfolio_headertable">
+		<{if $portfolio_module_home}><span class="portfolio_modulename"><{$portfolio_module_home}></span><{/if}>
+		<{if $portfolio_cat_path}>
+			<span class="portfolio_breadcrumb">
+				<{if $portfolio_module_home}>&nbsp;:&nbsp;<{/if}><{$portfolio_cat_path}>
+			</span>
+		<{/if}>
+	</div>
+<{/if}>
+
+<{if $portfolio_show_rss}>
+	<div class="portfolio_rss">
+		<a href="<{$portfolio_url}>rss.php" title="RSS-Feeds">
+			<img src="<{$portfolio_images_url}>rss.png" alt="RSS-Feeds" />
+		</a>
+	</div>
+	<div class="portfolio_clear_both">&nbsp;</div>
+<{else}>
+	<div class="portfolio_clear_left">&nbsp;</div>
+<{/if}>
+
+<{$portfolio_index.image}>
