@@ -184,5 +184,9 @@
 	 */
 	.message_submitter, .message_mail, .message_phone, .message_date, .message_career, .message_department, .message_file {
 		display: block;
-		margin: .5em auto;
+		margin: .5em 0;
+	}
+	
+	.message_message {
+		margin: 2em 0em;
 	}

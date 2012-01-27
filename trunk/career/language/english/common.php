@@ -145,6 +145,7 @@ define("_CO_CAREER_MESSAGE_MESSAGE_CID_DSC", "");
 define("_CO_CAREER_MESSAGE_MESSAGE_DID", "Department");
 define("_CO_CAREER_MESSAGE_MESSAGE_DID_DSC", "");
 define("_CO_CAREER_MESSAGE_MESSAGE_APPROVE", "Possible?");
+define("_CO_CAREER_MESSAGE_MESSAGE_FAVORITE", "Favorite?");
 define("_CO_CAREER_MESSAGE_WEIGHT", "Weight");
 // constants for /admin/message.php and /message.php
 define("_CO_CAREER_MESSAGE_REJECTED", "Rejected");

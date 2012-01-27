@@ -117,15 +117,12 @@ if(!$career_isAdmin) {
 				// create message table
 				$objectTable = new icms_ipf_view_Table($career_message_handler, $criteria, array('delete'));
 				$objectTable->isForUserSide();
-				$objectTable->addColumn( new icms_ipf_view_Column('message_approve', 'center', FALSE, 'message_approve_userside'));
-				$objectTable->addColumn( new icms_ipf_view_Column('message_favorite', 'center', FALSE, 'message_favorite_userside'));
+				$objectTable->addColumn( new icms_ipf_view_Column('message_approve', 'center', 50, 'message_approve_userside'));
+				$objectTable->addColumn( new icms_ipf_view_Column('message_favorite', 'center', 50, 'message_favorite_userside'));
 				$objectTable->addColumn( new icms_ipf_view_Column('message_title', FALSE, FALSE, 'getPreviewItemLink'));
 				$objectTable->addColumn(new icms_ipf_view_Column("message_cid", FALSE, FALSE, 'getMessageCid'));
 				$objectTable->addColumn(new icms_ipf_view_Column("message_did", FALSE, FALSE, 'getMessageDepartment'));
-				$objectTable->addColumn( new icms_ipf_view_Column('message_date', 'center', 100, "getMessageDate"));
-				$objectTable->addColumn( new icms_ipf_view_Column('message_submitter', 'center', TRUE, 'getMessageSubmitter'));
-				$objectTable->addColumn( new icms_ipf_view_Column('message_email', 'center', TRUE, 'getMessageMail'));
-				$objectTable->addColumn( new icms_ipf_view_Column('message_phone', 'center', TRUE));
+				$objectTable->addColumn( new icms_ipf_view_Column('message_date', 'center', 75, 'getMessageDate'));
 				
 				$objectTable->addFilter('message_cid', 'getCareers');
 				$objectTable->addFilter('message_did', 'getDepartments');
