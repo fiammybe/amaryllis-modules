@@ -121,8 +121,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			// create portfolio table
 			$objectTable = new icms_ipf_view_Table($portfolio_portfolio_handler, $criteria);
 			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_active','center', 50, 'portfolio_active'));
-			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_cid', FALSE, FALSE, 'getPortfolioCid'));
 			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_title', FALSE, FALSE, 'getPreviewItemLink'));
+			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_cid', FALSE, FALSE, 'getPortfolioCid'));
 			$objectTable->addColumn( new icms_ipf_view_Column('counter', 'center', 50));
 			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_p_date', 'center', 100, TRUE));
 			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_submitter', 'center', TRUE, 'getPortfolioSubmitter'));
