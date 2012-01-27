@@ -54,7 +54,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		
 		$this->quickInitVar("article_informations", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar("article_submitter", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("article_publisher", XOBJ_DTYPE_ARRAY, FALSE);
+		$this->quickInitVar("article_publisher", XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar("article_updater", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("article_published_date", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("article_updated_date", XOBJ_DTYPE_LTIME, TRUE);
@@ -628,6 +628,21 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			}
 			icms::handler('icms_data_notification')->triggerEvent($category, $file_id, $case, $tags, $recipient, $mid);
 		}
+	}
+
+	public function sendMessageBroken() {
+		$recievers = $this->getVar("article_publisher", "s");
+		foreach ($recievers as $key => $reciever) {
+			$myuid = is_object(icms::$user) ? icms::$user : new icms_member_user_Object;
+			$pmObj = new icms_messaging_Handler();
+			$pmObj->setFromUser($myuid);
+			$message = _CO_ARTICLE_ARTICLE_MESSAGE_BDY;
+			$message .= '<br />' . _CO_ARTICLE_ARTICLE_ARTICLE_CID . ' : ' . $this->getArticleCid(TRUE);
+			$message .= '<br />' . _CO_ARTICLE_ARTICLE_ARTICLE_TITLE . ' : ' . $this->getItemLink(FALSE);
+			$sbj = _CO_ARTICLE_ARTICLE_MESSAGE_SBJ;
+			$pmObj->sendPM($reciever, $sbj, $message);
+		}
+		return TRUE;
 	}
 
 	function getReads() {
