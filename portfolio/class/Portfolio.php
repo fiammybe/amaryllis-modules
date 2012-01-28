@@ -56,6 +56,9 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		$albumModule = icms_getModuleInfo("album");
 		if($albumModule && $portfolioConfig['use_album'] == 1) {
 			$this->setControl("portfolio_album", array("name" => "select", "itemHandler" => "album", "method" => "getAlbumListForPid", "module" => "album"));
+		} else {
+			$this->hideFieldFromForm("portfolio_album");
+			$this->hideFieldFromSingleView("portfolio_album");
 		}
 		$this->hideFieldFromForm(array("portfolio_submitter", "portfolio_updater", "portfolio_p_date", "portfolio_u_date"));
 		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley", "weight"));
