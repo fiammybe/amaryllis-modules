@@ -16,8 +16,13 @@
  * @package		article
  *
  */
+ini_set('max_execution_time', 0);
 
- 
+ini_set('memory_limit', '256M');
+
+set_time_limit(0);
+
+
 function article_import_smartsection_articles() {
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 	$gperm_handler = icms::handler('icms_member_groupperm');
@@ -82,7 +87,6 @@ function article_import_smartsection_articles() {
 			$criteria->add(new icms_db_criteria_Item('gperm_itemid', $row['itemid']));
 			$criteria->add(new icms_db_criteria_Item('gperm_modid', $mid['']));
 			$gperm_handler->deleteAll($criteria);
-			
 			
 			echo '&nbsp;&nbsp;-- <b>' . $row['title'] . '</b> successfully imported!<br />';
 		}
@@ -176,27 +180,31 @@ function article_import_smartsection_files() {
 
 function article_import_linked_tags() {
 	$sprocketsModule = icms_getModuleInfo("sprockets");
-	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
-	$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
-	$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname='smartsection'";
-	$result2 = icms::$xoopsDB->query($mid_sql);
-	$mid = mysql_fetch_assoc($result2);
-	
-	$articleObjects = $article_article_handler->getObjects(FALSE, TRUE);
-	echo '<code><b>Importing data from sprockets taglink table</b></code><br />';
-	foreach ($articleObjects as $key => &$object) {
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item("mid", (int)$mid['mid']));
-		$criteria->add(new icms_db_criteria_Item("iid", $object->getVar("article_id")));
-		$tagObjects = $sprockets_taglink_handler->getObjects($criteria, TRUE);
-		$tags = array();
-		foreach ($tagObjects as $key => &$tagObj) {
-			$tags = $tagObj->getVar("tid", "e");
+	if($sprocketsModule) {
+		$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
+		$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
+		$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname='smartsection'";
+		$result2 = icms::$xoopsDB->query($mid_sql);
+		$mid = mysql_fetch_assoc($result2);
+		
+		$articleObjects = $article_article_handler->getObjects(FALSE, TRUE);
+		echo '<code><b>Importing data from sprockets taglink table</b></code><br />';
+		foreach ($articleObjects as $key => &$object) {
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item("mid", (int)$mid['mid']));
+			$criteria->add(new icms_db_criteria_Item("iid", $object->getVar("article_id")));
+			$tagObjects = $sprockets_taglink_handler->getObjects($criteria, TRUE);
+			$tags = array();
+			foreach ($tagObjects as $key => &$tagObj) {
+				$tags = $tagObj->getVar("tid", "e");
+			}
+			$object->setVar("article_tags", $tags);
+			$article_article_handler->insert($object, TRUE);
 		}
-		$object->setVar("article_tags", $tags);
-		$article_article_handler->insert($object, TRUE);
+		echo '<code><b>Sprockets taglinks table successfully imported.</b></code><br />';
+	} else {
+		echo '<code><b>Sprockets not found.</b></code><br />';
 	}
-	echo '<code><b>Sprockets taglinks table successfully imported.</b></code><br />';
 }
 
 include_once 'admin_header.php';
@@ -213,8 +221,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case '1':
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0);
-			// set time limit off to prevent stopping import for a lot of tags
-			set_time_limit( 0 );
 			// at first import smartsection articles
 			article_import_smartsection_articles();
 			
@@ -224,8 +230,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case '2':
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0);
-			// set time limit off to prevent stopping import for a lot of categories
-			set_time_limit( 0 );
 			// import articles
 			article_import_smartsection_categories();
 			
@@ -235,8 +239,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case '3':
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0);
-			// set time limit off to prevent stopping import for a lot of files
-			set_time_limit( 0 );
+			
 			// import files
 			article_import_smartsection_files();
 			
@@ -246,8 +249,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case '4':
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0);
-			// set time limit off to prevent stopping import for a lot of tags
-			set_time_limit( 0 );
+			
 			// import files
 			article_import_linked_tags();
 			
@@ -262,10 +264,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			 //ask what to do
 	        $form = new icms_form_Theme('Importing',"form", $_SERVER['REQUEST_URI']);
 	        // for article table
-	        $sql = "SELECT * FROM " . icms::$xoopsDB->prefix('smartsection_items');
+	        $sql = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('smartsection_items');
 			$result = icms::$xoopsDB->query($sql);
-	        if ($result) {
-	            $button = new icms_form_elements_Button("Import data from smartsection_items", "button", "Import", "submit");
+			list($count) = icms::$xoopsDB->fetchRow($result);
+	        if ($result > 0) {
+	            $button = new icms_form_elements_Button("Import " . $count . " items from smartsection_items", "button", "Import", "submit");
 	            $button->setExtra("onclick='document.forms.form.op.value=\"1\"'");
 	            $form->addElement($button);
 	        } else {
@@ -274,10 +277,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	        }
 			
 			//for category table
-			$sql2 = "SELECT * FROM " . icms::$xoopsDB->prefix('smartsection_categories');
+			$sql2 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('smartsection_categories');
 			$result2 = icms::$xoopsDB->query($sql2);
-	        if ($result2) {
-	            $button2 = new icms_form_elements_Button("Import data from smartsection_categories", "cat_button", "Import", "submit");
+			list($count2) = icms::$xoopsDB->fetchRow($result2);
+	        if ($result2 > 0) {
+	            $button2 = new icms_form_elements_Button("Import " . $count2 . " categories from smartsection_categories", "cat_button", "Import", "submit");
 	            $button2->setExtra("onclick='document.forms.form.op.value=\"2\"'");
 	            $form->addElement($button2);
 	        } else {
@@ -286,10 +290,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	        }
 			
 			// for files
-			$sql3 = "SELECT * FROM " . icms::$xoopsDB->prefix('smartsection_files');
+			$sql3 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('smartsection_files');
 			$result3 = icms::$xoopsDB->query($sql3);
-	        if ($result3) {
-	            $button3 = new icms_form_elements_Button("Import data from smartsection_files", "files_button", "Import", "submit");
+			list($count3) = icms::$xoopsDB->fetchRow($result3);
+	        if ($result3 > 0) {
+	            $button3 = new icms_form_elements_Button("Import " . $count3 . " files from smartsection_files", "files_button", "Import", "submit");
 	            $button3->setExtra("onclick='document.forms.form.op.value=\"3\"'");
 	            $form->addElement($button3);
 	        } else {
@@ -298,10 +303,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	        }
 			
 			// for tags
-			$sql4 = "SELECT * FROM " . icms::$xoopsDB->prefix('sprockets_taglink');
+			$sql4 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('sprockets_taglink');
 			$result4 = icms::$xoopsDB->query($sql4);
-	        if ($result4) {
-	            $button4 = new icms_form_elements_Button("Import data from sprockets taglinks", "tags_button", "Import", "submit");
+	        if ($result4 > 0) {
+	            $button4 = new icms_form_elements_Button("Import tags from sprockets taglinks", "tags_button", "Import", "submit");
 	            $button4->setExtra("onclick='document.forms.form.op.value=\"4\"'");
 	            $form->addElement($button4);
 	        } else {
