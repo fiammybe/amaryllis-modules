@@ -20,6 +20,8 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
+icms_loadLanguageFile("article", "common");
+
 class ArticleArticleHandler extends icms_ipf_Handler {
 	
 	private $_article_grpperm = array();
