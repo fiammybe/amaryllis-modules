@@ -52,7 +52,6 @@ function article_import_smartsection_articles() {
 			$obj->setVar('article_cancomment', $row['cancomment']);
 			$obj->setVar('article_comments', $row['comments']);
 			$obj->setVar('article_notification_sent', $row['notifypub']);
-			$obj->setVar('article_tags', explode(",", $row['item_tag']));
 			$obj->setVar('dohtml', $row['dohtml']);
 			$obj->setVar('dobr', $row['dobr']);
 			$obj->setVar('doimage', $row['doimage']);
