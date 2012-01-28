@@ -17,7 +17,6 @@
  *
  */
 
-ini_set('max_execution_time', 0);
  
 function article_import_smartsection_articles() {
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
