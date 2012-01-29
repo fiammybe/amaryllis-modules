@@ -104,7 +104,11 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		if ($limit) $criteria->setLimit((int)$limit);
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
-		if ($article_publisher) $criteria->add(new icms_db_criteria_Item('article_publisher', $article_publisher));
+		if ($article_publisher) {
+			$tray = new icms_db_criteria_Compo();
+			$tray->add(new icms_db_criteria_Item("article_publisher", '%:"' . $article_publisher . '";%', "LIKE"));
+			$criteria->add($tray);
+		}
 		if ($article_id) {
 			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('short_url', $article_id,'LIKE'));
 			$alt_article_id = str_replace('-',' ',$article_id);

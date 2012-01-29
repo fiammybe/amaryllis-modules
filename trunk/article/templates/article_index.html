@@ -92,6 +92,29 @@
 	</div>
 <{/if}>
 
+<{if $byAuthor}>
+	<!-- display index header -->
+	<{$article_index.header}>
+	<!-- display index heading -->
+	<{$article_index.heading}>
+	<div class="article_content">
+		<h2><{$smarty.const._MD_ARTICLE_ARTICLE_FILELIST}></h2>
+		<div class="article_articlelist">
+			<{if $article_pagenav }><!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+			<!-- article rule -->
+			<{foreach item=article from=$articles}>
+				<{includeq file='db:article_article.html'}>
+			<{/foreach}>
+			
+			<{if $article_pagenav }> <!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+		</div>
+	</div>
+<{/if}>
+
 <{if $category_columns}>
 	<!-- display index header -->
 	<{$article_index.header}>

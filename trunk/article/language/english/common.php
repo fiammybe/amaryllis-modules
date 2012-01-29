@@ -93,9 +93,10 @@ define("_CO_ARTICLE_ARTICLE_ARTICLE_INFORMATIONS", "Additional informations");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_PERMISSIONS", "Permission control");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_STATICS", "Static fields");
 define("_CO_ARTICLE_ARTICLE_ARTICLE_ADDITIONALS", "Article Meta informations");
-// PM for recieved Messages for any career
+// PM for recieved Messages for any article
 define("_CO_ARTICLE_ARTICLE_MESSAGE_BDY", "You have recieved a new message for a broken attachment:");
 define("_CO_ARTICLE_ARTICLE_MESSAGE_SBJ", "Broken attachment reported");
+define("_CO_ARTICLE_ARTICLE_GET_BY_AUTHOR", "Get more by this Author");
 
 // some general constants
 if(!defined("_ER_UP_UNKNOWNFILETYPEREJECTED")) define("_ER_UP_UNKNOWNFILETYPEREJECTED", "Filetype unknown.");
