@@ -50,7 +50,7 @@ $clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'ca
 $article_category_handler = icms_getModuleHandler( 'category', icms::$module -> getVar( 'dirname' ), 'article' );
 $article_article_handler = icms_getModuleHandler( 'article', icms::$module -> getVar( 'dirname' ), 'article' );
 
-$valid_op = array ('getByTags', '');
+$valid_op = array ('getByTags', 'getMostPopular', 'viewRecentUpdated', 'viewRecentArticles', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
