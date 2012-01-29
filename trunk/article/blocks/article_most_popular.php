@@ -20,13 +20,17 @@
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
 function b_article_most_popular_show($options) {
-	global $articleConfig;
+	global $articleConfig, $xoTheme;
 	
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
-
-	$block['article_popular'] = $article_article_handler->getArticlesForBlocks(0, $options[0],FALSE, FALSE, TRUE, "article_published_date", "DESC");
+	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewMostPopular';
+	$block['article_popular'] = $article_article_handler->getArticlesForBlocks(0, $options[0],FALSE, FALSE, TRUE, "counter", "DESC");
+	$block['thumbnail_width'] = $articleConfig['thumbnail_width'];
+	$block['thumbnail_height'] = $articleConfig['thumbnail_height'];
+	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article_block.js', array('type' => 'text/javascript'));
+	$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/module_article_block.css');
 	
 	return $block;
 }

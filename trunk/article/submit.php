@@ -53,7 +53,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$articleModule = icms_getModuleInfo("article");
 			$article_modid = $articleModule->getVar("mid");
 			$clean_tag_id = isset($_GET['tag_id']) ? filter_input(INPUT_GET, 'tag_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$sprocketsModule = icms_getModuleInfo("sprockets");
+			$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
 			$tagObj = $sprockets_tag_handler->get($clean_tag_id);
 			if($tagObj->isNew() ) {

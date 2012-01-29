@@ -178,7 +178,7 @@ function article_import_smartsection_files() {
 }
 
 function article_import_linked_tags() {
-	$sprocketsModule = icms_getModuleInfo("sprockets");
+	$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 	if($sprocketsModule) {
 		$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 		$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
