@@ -41,7 +41,6 @@ function article_upload_paths() {
 		icms_core_Filesystem::mkdir($path . '/indeximages');
 		$image2 = 'article_indeximage.png';
 		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2, $path . '/indeximages/' . $image2);
-		return TRUE;
 }
 
 function copySitemapPlugin() {

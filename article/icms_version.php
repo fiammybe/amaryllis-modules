@@ -165,7 +165,17 @@ $modversion['blocks'][$i]['show_func']		= 'b_article_recent_article_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_article_recent_article_edit';
 $modversion['blocks'][$i]['options']		= '10|0';
 $modversion['blocks'][$i]['template']		= 'article_block_recent_articles.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE;
+// Recent articles block
+$i++;
+$modversion['blocks'][$i]['file']			= 'article_recent_articles_list.php';
+$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_RECENT_ARTICLE_LIST;
+$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_RECENT_ARTICLE_LIST_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_article_recent_article_list_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_article_recent_article_list_edit';
+$modversion['blocks'][$i]['options']		= '10|0';
+$modversion['blocks'][$i]['template']		= 'article_block_recent_articles_list.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 // recent updated block
 $i++;
 $modversion['blocks'][$i]['file']			= 'article_recent_updated.php';
@@ -175,7 +185,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_article_recent_updated_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_article_recent_updated_edit';
 $modversion['blocks'][$i]['options']		= '10|0';
 $modversion['blocks'][$i]['template']		= 'article_block_recent_updated.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 // most popular block
 $i++;
 $modversion['blocks'][$i]['file']			= 'article_most_popular.php';
@@ -185,7 +195,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_article_most_popular_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_article_most_popular_edit';
 $modversion['blocks'][$i]['options']		= '10|0';
 $modversion['blocks'][$i]['template']		= 'article_block_most_popular.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 // category menu block
 $i++;
 $modversion['blocks'][$i]['file']			= 'article_category_menu.php';
@@ -195,7 +205,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_article_category_menu_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_article_category_menu_edit';
 $modversion['blocks'][$i]['options']		= 'category_title|ASC|1|0';
 $modversion['blocks'][$i]['template']		= 'article_block_category_menu.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 // article spotlight block
 $i++;
 $modversion['blocks'][$i]['file']			= 'article_spotlight.php';
@@ -205,8 +215,8 @@ $modversion['blocks'][$i]['show_func']		= 'b_article_spotlight_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_article_spotlight_edit';
 $modversion['blocks'][$i]['options']		= '10|0';
 $modversion['blocks'][$i]['template']		= 'article_block_article_spotlight.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
-// article spotlight block
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
+// article random block
 $i++;
 $modversion['blocks'][$i]['file']			= 'article_random_articles.php';
 $modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_RANDOM_ARTICLES;
@@ -215,7 +225,17 @@ $modversion['blocks'][$i]['show_func']		= 'b_article_random_articles_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_article_random_articles_edit';
 $modversion['blocks'][$i]['options']		= '10|0';
 $modversion['blocks'][$i]['template']		= 'article_block_random_articles.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
+// article gallery block
+$i++;
+$modversion['blocks'][$i]['file']			= 'article_spotlight_gallery.php';
+$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_SPOTLIGHT_IMAGE;
+$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_SPOTLIGHT_IMAGE_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_article_spotlight_image_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_article_spotlight_image_edit';
+$modversion['blocks'][$i]['options']		= '10|0|1';
+$modversion['blocks'][$i]['template']		= 'article_block_article_gallery.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
@@ -590,34 +610,6 @@ $modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_CAT
 $modversion['notification']['event'][$i]['mail_template'] = 'global_category_modified';
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_SBJ;
 $i++;
-$modversion['notification']['event'][$i]['name'] = 'category_approved';
-$modversion['notification']['event'][$i]['category'] = 'global';
-$modversion['notification']['event'][$i]['invisible'] = 1;
-$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_CAP;
-$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_DSC;
-$modversion['notification']['event'][$i]['mail_template'] = 'category_approved';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_SBJ;
-$i++;
-$modversion['notification']['event'][$i]['name'] = 'category_submitted';
-$modversion['notification']['event'][$i]['category'] = 'global';
-$modversion['notification']['event'][$i]['admin_only'] = 1;
-$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_CATSUBMIT_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_CATSUBMIT_NOTIFY_CAP;
-$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_CATSUBMIT_NOTIFY_DSC;
-$modversion['notification']['event'][$i]['mail_template'] = 'global_category_submitted';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_CATSUBMIT_NOTIFY_SBJ;
-
-$i++;
-$modversion['notification']['event'][$i]['name'] = 'article_submitted';
-$modversion['notification']['event'][$i]['category'] = 'category';
-$modversion['notification']['event'][$i]['admin_only'] = 1;
-$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_CATEGORY_ARTICLESUBMIT_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_CATEGORY_ARTICLESUBMIT_NOTIFY_CAP;
-$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_CATEGORY_ARTICLESUBMIT_NOTIFY_DSC;
-$modversion['notification']['event'][$i]['mail_template'] = 'category_article_submitted';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_CATEGORY_ARTICLESUBMIT_NOTIFY_SBJ;
-$i++;
 $modversion['notification']['event'][$i]['name'] = 'new_article';
 $modversion['notification']['event'][$i]['category'] = 'global';
 $modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_NEWARTICLE_NOTIFY;
@@ -633,15 +625,6 @@ $modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_CATEGORY_NEWAR
 $modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_CATEGORY_NEWARTICLE_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'category_article_new';
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_CATEGORY_NEWARTICLE_NOTIFY_SBJ;
-$i++;
-$modversion['notification']['event'][$i]['name'] = 'article_approved';
-$modversion['notification']['event'][$i]['category'] = 'article';
-$modversion['notification']['event'][$i]['invisible'] = 1;
-$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_CAP;
-$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_DSC;
-$modversion['notification']['event'][$i]['mail_template'] = 'article_approved';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_ARTICLE_APPROVE_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'article_modified';
 $modversion['notification']['event'][$i]['category'] = 'article';
@@ -666,12 +649,3 @@ $modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_ARTICLE
 $modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY_DSC;
 $modversion['notification']['event'][$i]['mail_template'] = 'global_article_modified';
 $modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY_SBJ;
-$i++;
-$modversion['notification']['event'][$i]['name'] = 'article_file_broken';
-$modversion['notification']['event'][$i]['category'] = 'global';
-$modversion['notification']['event'][$i]['admin_only'] = 1;
-$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY_CAP;
-$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY_DSC;
-$modversion['notification']['event'][$i]['mail_template'] = 'file_broken';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_ARTICLEBROKEN_NOTIFY_SBJ;

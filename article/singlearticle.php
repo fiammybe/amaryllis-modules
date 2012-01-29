@@ -22,7 +22,7 @@ function addtags($clean_tag_id = 0, $clean_article_id = 0){
 	
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
 	$articleObj = $article_article_handler->get($clean_article_id);
-	$sprocketsModule = icms_getModuleInfo("sprockets");
+	$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 	$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
 	$tagObj = $sprockets_tag_handler->get($clean_tag_id);
 	$tagObj->hideFieldFromForm(array("label_type", "parent_id", "navigation_element", "rss", "short_url", "meta_description", "meta_keywords"));
@@ -63,8 +63,9 @@ $clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'cate
 $clean_review_start = isset($_GET['rev_nav']) ? filter_input(INPUT_GET, 'rev_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 $article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
 $articleObj = $article_article_handler->get($clean_article_id);
-$article_article_handler->updateCounter($clean_article_id);
 if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
+	
+	$article_article_handler->updateCounter($clean_article_id);
 	/**
 	 * Get the requested article and send it to Array
 	 */	
@@ -87,7 +88,7 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	/**
 	 * check if Sprockets Module can be used and if it's available
 	 */
-	$sprocketsModule = icms_getModuleInfo("sprockets");
+	$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 	if($articleConfig['use_sprockets'] == 1 && $sprocketsModule) {
 		$icmsTpl->assign("sprockets_module", TRUE);
 	

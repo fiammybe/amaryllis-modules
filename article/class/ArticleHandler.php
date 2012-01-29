@@ -283,7 +283,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	
 	public function getArticleTags() {
 		global $articleConfig;
-		$sprocketsModule = icms_getModuleInfo("sprockets");
+		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 		if($sprocketsModule && ($articleConfig['use_sprockets'] == 1)) {
 			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
 			$criteria = new icms_db_criteria_Compo();

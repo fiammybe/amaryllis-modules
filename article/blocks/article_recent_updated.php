@@ -20,13 +20,16 @@
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
 function b_article_recent_updated_show($options) {
-	global $articleConfig;
+	global $articleConfig, $xoTheme;
 	
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
-
-	$block['article_updated'] = $article_article_handler->getArticlesForBlocks(0, $options[0],FALSE, TRUE, FALSE, "article_updated_date", "DESC");
+	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewRecentUpdated&category_id=' . $options[1];
+	$block['article_updated'] = $article_article_handler->getArticlesForBlocks(0, $options[0],$option[1], TRUE, FALSE, "article_updated_date", "DESC");
+	
+	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article_block.js', array('type' => 'text/javascript'));
+	$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/module_article_block.css');
 	
 	return $block;
 }

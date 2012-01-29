@@ -30,7 +30,6 @@ function b_article_category_menu_show($options) {
 	
 	$article_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
 
-	//$block['article_category'] = $article_category_handler->getCategoryListForMenu($options[0], $options[1], true, true, true, $options[3], $options[2]);
 	$block['article_category'] = getArticleCategories($options[2],$options[0],$options[1],$options[3]);
 	return $block;
 }

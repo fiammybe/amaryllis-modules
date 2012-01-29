@@ -19,6 +19,8 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
+include_once ICMS_ROOT_PATH . '/modules/' . basename(dirname(dirname(__FILE__))) . '/include/functions.php';
+
 class ArticleArticle extends icms_ipf_seo_Object {
 	
 	public $updating_counter = FALSE;
@@ -368,7 +370,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	
 	public function getArticleTags($itemlink = FALSE) {
 		$tags = $this->getVar("article_tags", "s");
-		$sprocketsModule = icms_getModuleInfo("sprockets");
+		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 		if($sprocketsModule && $tags != "") {
 			$sprockets_tag_handler = icms_getModuleHandler ( "tag", $sprocketsModule->getVar("dirname"), "sprockets");
 			$ret = array();

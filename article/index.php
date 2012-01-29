@@ -39,7 +39,7 @@ $icmsTpl->assign('article_index', $index);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $clean_category_start = isset($_GET['cat_nav']) ? filter_input(INPUT_GET, 'cat_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_files_start = isset($_GET['file_nav']) ? filter_input(INPUT_GET, 'file_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_article_start = isset($_GET['article_nav']) ? filter_input(INPUT_GET, 'article_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
 $clean_article_id = isset($_GET['article_id']) ? filter_input(INPUT_GET, 'article_id', FILTER_SANITIZE_NUMBER_INT) : 0;
@@ -58,9 +58,65 @@ if(in_array($clean_op, $valid_op)) {
 	switch ($clean_op) {
 		case 'getByTags':
 			$clean_tag_id = isset($_GET['tag']) ? filter_input(INPUT_GET, 'tag', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$article = $article_article_handler->getArticles($clean_files_start, icms::$module->config['show_articles'], $clean_tag_id, FALSE, FALSE,  FALSE);
+			$article = $article_article_handler->getArticles($clean_article_start, icms::$module->config['show_articles'], $clean_tag_id, FALSE, FALSE,  FALSE);
 			$icmsTpl->assign('articles', $article);
 			$icmsTpl->assign("byTags", TRUE);
+			
+			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			
+			if (!empty($clean_tag_id)) {
+				$extra_arg = 'op=getByTags&tag_id=' . $clean_tag_id;
+			} else {
+				$extra_arg = false;
+			}
+			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
+			break;
+			
+		case 'getMostPopular':
+			$articles = $article_article_handler->getArticlesForBlocks($clean_article_start, icms::$module->config['show_articles'],FALSE, FALSE, TRUE, "counter", "DESC");
+			$icmsTpl->assign('articles', $articles);
+			$icmsTpl->assign("byPopular", TRUE);
+			
+			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			
+			if (!empty($clean_category_id)) {
+				$extra_arg = 'op=getMostPopular&category_id=' . $clean_category_id;
+			} else {
+				$extra_arg = 'op=getMostPopular';
+			}
+			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
+			break;
+		
+		case 'viewRecentUpdated':
+			$articles = $article_article_handler->getArticlesForBlocks($clean_article_start, icms::$module->config['show_articles'],$clean_category_id, FALSE, TRUE, "article_updated_date", "DESC");
+			$icmsTpl->assign('articles', $articles);
+			$icmsTpl->assign("byRecentUpdated", TRUE);
+			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			
+			if (!empty($clean_category_id)) {
+				$extra_arg = 'op=viewRecentUpdated&category_id=' . $clean_category_id;
+			} else {
+				$extra_arg = 'op=viewRecentUpdated';
+			}
+			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
+			break;
+		
+		case 'viewRecentArticles':
+			$articles = $article_article_handler->getArticlesForBlocks($clean_article_start, icms::$module->config['show_articles'],$clean_category_id, FALSE, TRUE, "article_published_date", "DESC");
+			$icmsTpl->assign('articles', $articles);
+			$icmsTpl->assign("byRecentArticles", TRUE);
+			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			
+			if (!empty($clean_category_id)) {
+				$extra_arg = 'op=viewviewRecentArticles&category_id=' . $clean_category_id;
+			} else {
+				$extra_arg = 'op=viewRecentArticles';
+			}
+			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
 			break;
 		
 		default:
@@ -77,7 +133,7 @@ if(in_array($clean_op, $valid_op)) {
 				$article_category_handler->updateCounter($clean_category_id);
 				$category = $categoryObj->toArray();
 				$icmsTpl->assign('article_single_cat', $category);
-				$article = $article_article_handler->getArticles($clean_files_start, icms::$module->config['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id);
+				$article = $article_article_handler->getArticles($clean_article_start, icms::$module->config['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id);
 				$icmsTpl->assign('article_files', $article);
 				if ($articleConfig['show_breadcrumbs']){
 					$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($categoryObj->getVar('category_id', 'e'), 1));
@@ -121,12 +177,12 @@ if(in_array($clean_op, $valid_op)) {
 			/**
 			 * check, if user can submit
 			 */
-				if($article_category_handler->userCanSubmit()) {
-					$icmsTpl->assign('user_submit', true);
-					$icmsTpl->assign('user_submit_link', ARTICLE_URL . 'category.php?op=mod&amp;category_id=' . $clean_category_id);
-				} else {
-					$icmsTpl->assign('user_submit', false);
-				}
+			if($article_category_handler->userCanSubmit()) {
+				$icmsTpl->assign('user_submit', true);
+				$icmsTpl->assign('user_submit_link', ARTICLE_URL . 'category.php?op=mod&amp;category_id=' . $clean_category_id);
+			} else {
+				$icmsTpl->assign('user_submit', false);
+			}
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////
@@ -141,7 +197,7 @@ if(in_array($clean_op, $valid_op)) {
 					$extra_arg = false;
 				}
 				$category_pagenav = new icms_view_PageNav($category_count, $articleConfig['show_categories'], $clean_category_start, 'cat_nav', $extra_arg);
-				$icmsTpl->assign('category_pagenav', $category_pagenav->renderImageNav());
+				$icmsTpl->assign('category_pagenav', $category_pagenav->renderNav());
 			
 			$files_count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',false,false, $clean_category_id);
 			
@@ -151,8 +207,8 @@ if(in_array($clean_op, $valid_op)) {
 			} else {
 				$extra_arg = false;
 			}
-			$article_pagenav = new icms_view_PageNav($files_count, $articleConfig['show_articles'], $clean_files_start, 'file_nav', $extra_arg);
-			$icmsTpl->assign('article_pagenav', $article_pagenav->renderImageNav());
+			$article_pagenav = new icms_view_PageNav($files_count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
 			break;
 	}
 	include_once 'footer.php';
