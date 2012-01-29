@@ -30,14 +30,15 @@
 	
 	<!-- article additional informations -->
 	<div class="article_info">
-		<{$smarty.const._MD_ARTICLE_PUBLISHER}>&nbsp;:&nbsp;<{$article.publisher}>
-		<{$smarty.const._MD_ARTICLE_PUBLISHED_ON}>&nbsp;:&nbsp;<{$article.published_on}>
-		<{$smarty.const._MD_ARTICLE_SUBMITTER}>&nbsp;:&nbsp;<{$article.submitter}>
+		<p><{$smarty.const._MD_ARTICLE_PUBLISHER}>&nbsp;:&nbsp;<{$article.publisher}></p>
+		<p><{$smarty.const._MD_ARTICLE_MORE_BY_PUBLISHER}>&nbsp;:&nbsp;<{$article.bypublisher}></p>
+		<p><{$smarty.const._MD_ARTICLE_PUBLISHED_ON}>&nbsp;:&nbsp;<{$article.published_on}></p>
+		<p><{$smarty.const._MD_ARTICLE_SUBMITTER}>&nbsp;:&nbsp;<{$article.submitter}></p>
 		<{if $article.updated_on}>
-			<{$smarty.const._MD_ARTICLE_UPDATED_ON}>&nbsp;:&nbsp;<{$article.updated_on}>
+			<p><{$smarty.const._MD_ARTICLE_UPDATED_ON}>&nbsp;:&nbsp;<{$article.updated_on}></p>
 		<{/if}>
 		<{if $article.updater}>
-			<{$smarty.const._MD_ARTICLE_UPDATER}>&nbsp;:&nbsp;<{$article.updater}>
+			<p><{$smarty.const._MD_ARTICLE_UPDATER}>&nbsp;:&nbsp;<{$article.updater}></p>
 		<{/if}>
 		<{if $article.file}>
 			<{$smarty.const._MD_ARTICLE_FILE}><{$article.file}>&nbsp;(&nbsp;<{$article.filesize}>&nbsp;|&nbsp;<{$article.filetype}>&nbsp;)

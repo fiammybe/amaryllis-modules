@@ -36,6 +36,7 @@ define("_MD_ARTICLE_RELATED", "Related Articles");
 define("_MD_ARTICLE_CATS", "Categories");
 define("_MD_ARTICLE_TAGS", "Tags");
 define("_MD_ARTICLE_PUBLISHER", "Published by");
+define("_MD_ARTICLE_MORE_BY_PUBLISHER", "Get more Items by these Publisher(s)");
 define("_MD_ARTICLE_UPDATER", "Last updated by");
 define("_MD_ARTICLE_SUBMITTER", "Submitted by");
 define("_MD_ARTICLE_PUBLISHED_ON", "Published on");

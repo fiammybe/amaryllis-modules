@@ -473,11 +473,18 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		}
 	}
 	
-	public function getArticlePublishers() {
+	public function getArticlePublishers($userlink = TRUE) {
 		$publishers = $this->getVar("article_publisher", "s");
 		$ret = array();
-		foreach ($publishers as $publisher) {
-			$ret[$publisher] = icms_member_user_Handler::getUserLink($publisher);
+		if($userlink) {
+			foreach ($publishers as $publisher) {
+				$ret[$publisher] = icms_member_user_Handler::getUserLink($publisher);
+			}
+		} else {
+			foreach ($publishers as $publisher) {
+				$uname = icms::handler('icms_member')->getUser($publisher)->getVar("uname");
+				$ret[$publisher] = '<a href="' . ARTICLE_URL . 'index.php?op=getByAuthor&uid=' . $publisher . '" title="' . _CO_ARTICLE_ARTICLE_GET_BY_AUTHOR . '">' . $uname . '</a>';
+			}
 		}
 		return implode(", ", $ret);
 	}
@@ -576,7 +583,8 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['filetype'] = $this->getFileType();
 		$ret['tags'] = $this->getArticleTags(TRUE);
 		$ret['related'] = $this->getArticleRelated();
-		$ret['publisher'] = $this->getArticlePublishers();
+		$ret['publisher'] = $this->getArticlePublishers(TRUE);
+		$ret['bypublisher'] = $this->getArticlePublishers(FALSE);
 		$ret['submitter'] = $this->article_submitter();
 		$ret['updater'] = $this->article_updater();
 		$ret['published_on'] = $this->getArticlePublishedDate();

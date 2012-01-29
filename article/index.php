@@ -41,7 +41,7 @@ $icmsTpl->assign('article_index', $index);
 $clean_category_start = isset($_GET['cat_nav']) ? filter_input(INPUT_GET, 'cat_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_article_start = isset($_GET['article_nav']) ? filter_input(INPUT_GET, 'article_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-
+$clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_article_id = isset($_GET['article_id']) ? filter_input(INPUT_GET, 'article_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
 $clean_category_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : false;
@@ -50,7 +50,7 @@ $clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'ca
 $article_category_handler = icms_getModuleHandler( 'category', icms::$module -> getVar( 'dirname' ), 'article' );
 $article_article_handler = icms_getModuleHandler( 'article', icms::$module -> getVar( 'dirname' ), 'article' );
 
-$valid_op = array ('getByTags', 'getMostPopular', 'viewRecentUpdated', 'viewRecentArticles', '');
+$valid_op = array ('getByTags', 'getMostPopular', 'viewRecentUpdated', 'viewRecentArticles', 'getByAuthor', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
@@ -65,7 +65,7 @@ if(in_array($clean_op, $valid_op)) {
 			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
 			
 			if (!empty($clean_tag_id)) {
-				$extra_arg = 'op=getByTags&tag_id=' . $clean_tag_id;
+				$extra_arg = 'op=getByTags&tag=' . $clean_tag_id;
 			} else {
 				$extra_arg = false;
 			}
@@ -114,6 +114,21 @@ if(in_array($clean_op, $valid_op)) {
 				$extra_arg = 'op=viewviewRecentArticles&category_id=' . $clean_category_id;
 			} else {
 				$extra_arg = 'op=viewRecentArticles';
+			}
+			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
+			break;
+		
+		case 'getByAuthor':
+			$articles = $article_article_handler->getArticles($clean_article_start, icms::$module->config['show_articles'], FALSE, $clean_uid);
+			$icmsTpl->assign('articles', $articles);
+			$icmsTpl->assign("byAuthor", TRUE);
+			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			
+			if (!empty($clean_category_id)) {
+				$extra_arg = 'op=getByAuthor&category_id=' . $clean_category_id;
+			} else {
+				$extra_arg = 'op=getByAuthor';
 			}
 			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
