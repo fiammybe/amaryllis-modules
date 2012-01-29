@@ -4,9 +4,11 @@
 	<{foreach item=article_popular from=$block.article_popular}>
 		<a href="<{$article_popular.itemURL}>" title="<{$article_popular.title}>"><{$article_popular.title}></a> (<{$article_popular.published_on}>)
 		
-		<div class="article_img">
-			<img class="article_b3_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
-		</div>
+		<{if $article_article.imgpath}>
+			<div class="article_img">
+				<img class="article_b3_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+			</div>
+		<{/if}>
 		
 		<div class="article_teaser">
 			<{$article_article.teaser}>

@@ -529,8 +529,12 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	
 	public function getArticleImagePath() {
 		$image = $this->getVar("article_img", "e");
-		$path = ICMS_URL . '/uploads/article/article/' . $image;
-		return $path;
+		if($image != "") {
+			$path = ICMS_URL . '/uploads/article/article/' . $image;
+			return $path;
+		} else {
+			return FALSE;
+		}
 	}
 	
 	public function displayNewIcon() {
