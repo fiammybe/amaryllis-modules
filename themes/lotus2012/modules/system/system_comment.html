@@ -1,0 +1,40 @@
+<div>
+<div class="ncomment_l">
+<div class="ncomment_t">
+<div class="ncomment_r">
+<div class="ncomment_b">
+<div class="ncomment_tr">
+<div class="ncomment_br">
+<div class="ncomment_tl">
+<div class="ncomment">
+
+<a id="comment<{$comment.id}>"></a>
+
+<div class="comTitle"><{$comment.image}><{$comment.title}></div><div class="comText"><{$comment.text}></div>
+
+
+          <{if $icms_iscommentadmin == true}>
+          <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$icms_url}>/images/icons/edit.gif" alt="<{$lang_edit}>" /></a><a href="<{$deletecomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$icms_url}>/images/icons/delete.gif" alt="<{$lang_delete}>" /></a><a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$icms_url}>/images/icons/reply.gif" alt="<{$lang_reply}>" /></a>
+
+          <{elseif $icms_isuser == true && $icms_userid == $comment.poster.id}>
+
+            <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$icms_url}>/images/icons/edit.gif" alt="<{$lang_edit}>" /></a><a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$icms_url}>/images/icons/reply.gif" alt="<{$lang_reply}>" /></a>
+
+          <{elseif $icms_isuser == true || $anon_canpost == true}>
+
+            <a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$icms_url}>/images/icons/reply.gif" alt="<{$lang_reply}>" /></a>
+        <{else}>
+          <{/if}>
+		  </div>
+		  </div>
+		  </div>
+		  </div>
+		  </div>
+		  </div>
+		  </div>
+		  </div>
+		  
+		  
+		  <div class="ncomment_user"><img align="absmiddle" class="comUserImg" src="<{$icms_upload_url}>/<{$comment.poster.avatar}>" alt="" width="35" height="35"/> <{$comment.poster.uname}>
+&nbsp; &nbsp; <span class="comDateCaption"><{$lang_posted}>:</span> <{$comment.date_posted}>&nbsp;&nbsp;<span class="comDateCaption"><{$lang_updated}>:</span> <{$comment.date_modified}></div>
+</div>

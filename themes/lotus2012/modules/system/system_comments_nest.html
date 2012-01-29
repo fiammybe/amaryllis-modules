@@ -1,0 +1,22 @@
+<{section name=i loop=$comments}>
+<br />
+
+  <{include file="db:system_comment.html" comment=$comments[i]}>
+
+
+<!-- start comment replies -->
+<{foreach item=reply from=$comments[i].replies}>
+<br />
+<table cellspacing="0" border="0">
+  <tr>
+    <td width="<{$reply.prefix}>"></td>
+    <td>
+
+        <{include file="db:system_comment.html" comment=$reply}>
+      
+    </td>
+  </tr>
+</table>
+<{/foreach}>
+<!-- end comment tree -->
+<{/section}>
