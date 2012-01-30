@@ -1,0 +1,21 @@
+<a href="<{$block.view_all}>" class="viewmore" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
+<div class="article_list">
+	<{foreach item=article_article from=$block.article_spotlight}>
+		<div class="single_article">
+			<div class="article_img">
+				<img class="article_galleryimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+			</div>
+			<{if $block.showteaser == 1}>
+				<div class="article_teaser">
+					<{$article_article.teaser}>
+				</div>
+			<{/if}>
+		</div>
+	<{/foreach}>
+</div>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+  $('.article_galleryimage').jScale({ls:'<{$block.display_width}>px'})
+})
+</script>
