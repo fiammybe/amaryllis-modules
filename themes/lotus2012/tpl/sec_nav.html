@@ -1,4 +1,31 @@
-					<a href="<{$icms_url}>" title="Link To The Home Page">Home</a><span>|</span>					
-					<a href="#" title="Link To The Services Page">About us</a><span>|</span>
-					<a href="#" title="Link To The Contact Page">Contact us</a><span>|</span>
-					<a href="<{$icms_url}>/user.php" title="Link To The Contact Page">Login</a><span>|</span>
+					<ul id="menu">
+					<li class="menuli"><a href="<{$icms_url}>" title="Link To The Home Page">Home</a><span>|</span></li>					
+					<li class="menuli"><a href="#" title="Link To The About us Page">About us</a><span>|</span></li>
+					<li class="menuli"><a href="#" title="Link To The Contact Page">Contact us</a><span>|</span></li>
+					
+						<li class="menuli"><a href="<{$icms_url}>/user.php" class="drop" title="Link To The User Page"><{if !$icms_isuser}>Login<{else}>User Menu<{/if}></a>
+						 	<div class="dropdown_column">
+								<div class="col">			
+								<!-- Block- login -->
+								<{php }>
+									$block_id = 2; 
+									$theme = $GLOBALS['icmsConfig']['theme_set']; 
+									include XOOPS_THEME_PATH.'/'.$theme.'/tpl/block_engine.php';
+								<{/php}>
+								<{$block.content}>
+								<!-- Block- usermenu -->
+								<{php }>
+									$block_id = 1; 
+									$theme = $GLOBALS['icmsConfig']['theme_set']; 
+									include XOOPS_THEME_PATH.'/'.$theme.'/tpl/block_engine.php';
+								<{/php}>
+								<{$block.content}>		 
+								</div>
+							</div>	
+							<span>|</span>						
+						</li>
+					</ul>
+		
+					
+						
+					

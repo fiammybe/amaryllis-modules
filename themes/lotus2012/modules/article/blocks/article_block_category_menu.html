@@ -1,0 +1,18 @@
+<div class="article_menu">
+	<ul class="primary-nav blue">
+		<{foreach item=category from=$block.article_category}>
+			<li>
+				<a class="menuMain" href="<{$category.itemURL}>"><{$category.title}></a>				
+				<{if $category.hassubs == 1}>
+					<ul>
+						<{foreach item=subcategory from=$category.subcategories}>
+							<li>
+								<a class="menuMain" href="<{$subcategory.itemURL}>"><{$subcategory.title}></a>
+							</li>
+						<{/foreach}>
+					</ul>
+				<{/if}>
+			</li>
+		<{/foreach}>
+	</ul>
+</div>

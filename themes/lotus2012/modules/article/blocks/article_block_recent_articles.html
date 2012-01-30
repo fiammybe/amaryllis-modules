@@ -1,0 +1,21 @@
+<a href="<{$block.view_all}>" class="viewmore" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
+	<{foreach item=article_article from=$block.article_article}>
+		<div class="article_title">
+			<a href="<{$article_article.itemURL}>" title="<{$article_article.title}>"><{$article_article.article_title}></a>
+		</div>
+		
+		<div class="article_img">
+			<img class="article_b2_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+		</div>
+		
+		<div class="article_teaser">
+			<{$article_article.teaser}>
+		</div>
+		
+	<{/foreach}>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+  $('.article_b2_leadimage').jScale({ls:'<{$block.thumbnail_width}>px'})
+})
+</script>
