@@ -1,6 +1,6 @@
-
+<{if $block.show_view_all == 1}>
 	<a href="<{$block.view_all}>" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
-
+<{/if}>
 	<{foreach item=article_popular from=$block.article_popular}>
 		<a href="<{$article_popular.itemURL}>" title="<{$article_popular.title}>"><{$article_popular.title}></a> (<{$article_popular.published_on}>)
 		
