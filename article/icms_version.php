@@ -575,8 +575,24 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
 							);
-
-
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'need_demo_link',
+								'title' 		=> '_MI_ARTICLE_NEED_DEMO',
+								'description' 	=> '_MI_ARTICLE_NEED_DEMO_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'need_conclusion',
+								'title' 		=> '_MI_ARTICLE_NEED_CONCLUSION',
+								'description' 	=> '_MI_ARTICLE_NEED_CONCLUSION_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
