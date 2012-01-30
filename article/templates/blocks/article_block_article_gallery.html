@@ -1,4 +1,6 @@
-<a href="<{$block.view_all}>" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
+<{if $block.show_view_all == 1}>
+	<a href="<{$block.view_all}>" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
+<{/if}>
 <div class="article_list">
 	<{foreach item=article_article from=$block.article_spotlight}>
 		<div class="single_article">

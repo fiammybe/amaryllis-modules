@@ -29,6 +29,7 @@ function b_article_spotlight_image_show($options) {
 	$articleConfig = icms_getModuleConfig(basename(dirname(dirname(__FILE__))));
 	$articles = $article_article_handler->getArticlesForBlocks(0, $options[0], $options[1]);
 	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewRecentArticles&categor_id=' . $options[1];
+	$block['show_view_all'] = $options[3];
 	$block['showteaser'] = $options[2];
 	$block['display_width'] = $articleConfig['display_width'];
 	$block['display_height'] = $articleConfig['display_height'];
@@ -50,6 +51,7 @@ function b_article_spotlight_image_edit($options) {
 	$selcats = new icms_form_elements_Select('', 'options[1]', $options[1]);
 	$selcats->addOptionArray($article_category_handler->getCategoryListForPid($groups=array(), 'category_grpperm', TRUE, TRUE, TRUE, NULL, TRUE));
 	$showsubs = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
+	$showmore = new icms_form_elements_Radioyn('', 'options[3]', $options[3]);
 	
 	$form = '<table><tr>';
 	$form .= '<tr><td>' . _MB_ARTICLE_ARTICLE_RECENT_LIMIT . '</td>';
@@ -62,6 +64,10 @@ function b_article_spotlight_image_edit($options) {
 	$form .= '<tr>';
 	$form .= '<td>' . _MB_ARTICLE_SHOWTEASER . '</td>';
 	$form .= '<td>' . $showsubs->render() . '</td>';
+	$form .= '</tr>';
+	$form .= '<tr>';
+	$form .= '<td>' . _MB_ARTICLE_SHOWMORE . '</td>';
+	$form .= '<td>' . $showmore->render() . '</td>';
 	$form .= '</tr>';
 	$form .= '</table>';
 	return $form;

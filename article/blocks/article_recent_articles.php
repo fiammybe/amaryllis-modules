@@ -26,6 +26,7 @@ function b_article_recent_article_show($options) {
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
 	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewRecentArticles&category_id=' . $options[1];
+	$block['show_view_all'] = $options[2];
 	$block['article_article'] = $article_article_handler->getArticlesForBlocks(0, $options[0], $options[1]);
 	$block['thumbnail_width'] = $articleConfig['thumbnail_width'];
 	$block['thumbnail_height'] = $articleConfig['thumbnail_height'];
@@ -43,6 +44,7 @@ function b_article_recent_article_edit($options) {
 	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	$selcats = new icms_form_elements_Select('', 'options[1]', $options[1]);
 	$selcats->addOptionArray($article_category_handler->getCategoryListForPid($groups=array(), 'category_grpperm', TRUE, TRUE, TRUE, NULL, TRUE));
+	$showmore = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
 	
 	$form = '<table><tr>';
 	$form .= '<tr><td>' . _MB_ARTICLE_ARTICLE_RECENT_LIMIT . '</td>';
@@ -51,6 +53,10 @@ function b_article_recent_article_edit($options) {
 	$form .= '<tr>';
 	$form .= '<td width="30%">' . _MB_ARTICLE_CATEGORY_CATSELECT . '</td>';
 	$form .= '<td>' . $selcats->render() . '</td>';
+	$form .= '</tr>';
+	$form .= '<tr>';
+	$form .= '<td>' . _MB_ARTICLE_SHOWMORE . '</td>';
+	$form .= '<td>' . $showmore->render() . '</td>';
 	$form .= '</tr>';
 	$form .= '</table>';
 	return $form;
