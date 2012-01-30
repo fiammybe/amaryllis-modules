@@ -45,11 +45,13 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->quickInitVar("article_teaser", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("article_show_teaser", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar("article_body", XOBJ_DTYPE_TXTAREA, TRUE);
+		$this->quickInitVar("article_conclusion", XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar("article_descriptions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->initCommonVar("article_additionals", XOBJ_DTYPE_FORM_SECTION);
 		$this->quickInitVar("article_attachment", XOBJ_DTYPE_FILE, FALSE);
 		$this->quickInitVar("article_attachment_alt", XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar("article_demo", XOBJ_DTYPE_URLLINK);
 		$this->quickInitVar("article_related", XOBJ_DTYPE_ARRAY);
 		$this->quickInitVar("article_tags", XOBJ_DTYPE_ARRAY);
 		$this->initCommonVar("article_additionals", XOBJ_DTYPE_FORM_SECTION_CLOSE);
@@ -134,6 +136,18 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			$this->hideFieldFromSingleView("article_related");
 		} else {
 			$this->setControl("article_related", array("name" => "select_multi", "itemHandler" => "article", "method" => "getRelated", "module" => "article"));
+		}
+		
+		if($articleConfig['need_demo_link'] == 0) {
+			$this->hideFieldFromForm("article_demo");
+			$this->hideFieldFromSingleView("article_demo");
+		}
+		
+		if($articleConfig['need_conclusion'] == 0) {
+			$this->hideFieldFromForm("article_conclusion");
+			$this->hideFieldFromSingleView("article_conclusion");
+		} else {
+			$this->setControl("article_conclusion", "dhtmltextarea");
 		}
 		
 		$this->initiateSEO();
@@ -354,6 +368,15 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		}
 	}
 	
+	public function getDemoLink() {
+		if($this->getVar("article_demo") != 0) {
+			$demo = 'article_demo';
+			$linkObj = $this-> getUrlLinkObj($demo);
+			$url = $linkObj->getVar("url");
+			return $url;
+		}
+	}
+	
 	public function getArticleRelated() {
 		$related_array = $this->getVar("article_related" , 's');
 		$relateds = implode(",", $related_array);
@@ -552,9 +575,11 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['imgpath'] = $this->getArticleImagePath();
 		$ret['teaser'] = $this->getArticleTeaser();
 		$ret['body_array'] = $this->getArticleBody();
+		$ret['conclusion'] = $this->getVar("article_conclusion", "e");
 		$ret['file'] = $this->getArticleAttachment(TRUE, FALSE);
 		$ret['filesize'] = $this->getFileSize();
 		$ret['filetype'] = $this->getFileType();
+		$ret['demo'] = $this->getDemoLink();
 		$ret['tags'] = $this->getArticleTags(TRUE);
 		$ret['related'] = $this->getArticleRelated();
 		$ret['publisher'] = $this->getArticlePublishers(TRUE);

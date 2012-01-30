@@ -1,7 +1,7 @@
 <{if $block.show_view_all == 1}>
 	<a href="<{$block.view_all}>" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
 <{/if}>
-	<{foreach item=$article_article from=$block.article_commented}>
+	<{foreach item=article_article from=$block.article_commented}>
 		<a href="<{$article_article.itemURL}>" title="<{$article_article.title}>"><{$article_article.title}></a> (<{$article_article.published_on}>)
 		
 		<{if $article_article.imgpath}>

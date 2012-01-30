@@ -89,6 +89,13 @@
 			<{/if}>
 		</div>
 	<{/if}>
+	
+	<{if $article.demo}>
+		<div class="article_demo">
+			<h2><{$smarty.const._MD_ARTICLE_DEMO_LINK}></h2>
+			<a class="article_demo_link" href="<{$article.demo}>" title="<{$smarty.const._MD_ARTICLE_DEMO_LINK}>"><{$smarty.const._MD_ARTICLE_DEMO_LINK}></a>
+		</div>
+	<{/if}>
 	<!-- article footer -->
 	<div class="article_footer">
 		<{if $article.file}>

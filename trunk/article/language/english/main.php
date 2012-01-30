@@ -55,3 +55,4 @@ define("_MD_ARTICLE_NEW", "Article is new");
 define("_MD_ARTICLE_UPDATED", "Article is updated");
 define("_MD_ARTICLE_POPULAR", "Article is popular");
 define("_MD_ARTICLE_VIEW_MORE", "Read More");
+define("_MD_ARTICLE_DEMO_LINK", "Demo");
