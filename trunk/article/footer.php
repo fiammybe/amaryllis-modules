@@ -4,7 +4,7 @@
  *
  * File: /footer.php
  * 
- * fotter included in frontend
+ * footer included in frontend
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -19,6 +19,14 @@
 
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+
+/**
+ * make a newsticker block available throughout the module, if this is enabled in module configuration
+ */
+if($articleConfig['display_newsticker'] == 1) {
+	$newsticker_articles = $article_article_handler->getArticlesforBlocks(0, 10, FALSE, FALSE, FALSE, 'article_published_date', 'DESC');
+	$icmsTpl->assign("newsticker_articles", $newsticker_articles);
+}
 
 /**
  * check, if rss feeds are enabled. if so, display link

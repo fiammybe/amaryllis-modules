@@ -13,44 +13,17 @@
 			<img style="vertical-align: middle;" class="icon_middle" src="<{$article.article_popular}>" title="<{$smarty.const._MD_ARTICLE_POPULAR}>" />
 		<{/if}></h1>
 	</div>
+	<div class="article_info">
+		<p><{$smarty.const._MD_ARTICLE_PUBLISHER}>&nbsp;:&nbsp;<{$article.publisher}></p>
+		<p><{$smarty.const._MD_ARTICLE_PUBLISHED_ON}>&nbsp;:&nbsp;<{$article.published_on}></p>
+	</div>
 	<!-- article categories -->
 	<div class="article_categories">
 		<{$smarty.const._MD_ARTICLE_CATS}>&nbsp;:&nbsp;<{$article.cats}>
 	</div>
 	
-	<!-- article tags -->
-	<{if $sprockets_module && $article.tags}>
-		<{$smarty.const._MD_ARTICLE_TAGS}>&nbsp;:&nbsp;<{$article.tags}>
-		<span class="article_tag">
-			<a href="<{$tag_link}>" class="<{if $tag_perm_denied == TRUE}>perm_tag_link<{else}>tag_link<{/if}>" >
-				<img style="vertical-align: middle;" src="<{$article_images_url}>add_tag.png" title="<{$smarty.const._MD_ARTICLE_TAG_ADD}>" alt="<{$smarty.const._MD_ARTICLE_TAG_ADD}>" />
-			</a>
-		</span>
-	<{/if}>
+	<div class="article_clear_right">&nbsp;</div>
 	
-	<!-- article additional informations -->
-	<div class="article_info">
-		<p><{$smarty.const._MD_ARTICLE_PUBLISHER}>&nbsp;:&nbsp;<{$article.publisher}></p>
-		<p><{$smarty.const._MD_ARTICLE_MORE_BY_PUBLISHER}>&nbsp;:&nbsp;<{$article.bypublisher}></p>
-		<p><{$smarty.const._MD_ARTICLE_PUBLISHED_ON}>&nbsp;:&nbsp;<{$article.published_on}></p>
-		<p><{$smarty.const._MD_ARTICLE_SUBMITTER}>&nbsp;:&nbsp;<{$article.submitter}></p>
-		<{if $article.updated_on}>
-			<p><{$smarty.const._MD_ARTICLE_UPDATED_ON}>&nbsp;:&nbsp;<{$article.updated_on}></p>
-		<{/if}>
-		<{if $article.updater}>
-			<p><{$smarty.const._MD_ARTICLE_UPDATER}>&nbsp;:&nbsp;<{$article.updater}></p>
-		<{/if}>
-		<{if $article.file}>
-			<{$smarty.const._MD_ARTICLE_FILE}><{$article.file}>&nbsp;(&nbsp;<{$article.filesize}>&nbsp;|&nbsp;<{$article.filetype}>&nbsp;)
-			
-			<{if $show_down_disclaimer}>
-				<div id="dialog-confirm-disclaimer" title="Download Disclaimer" class="ui-helper-hidden">
-					<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$down_disclaimer}></p>
-				</div>
-			<{/if}>
-			
-		<{/if}>
-	</div>
 	
 	<!-- article main content -->
 	<div>
@@ -72,13 +45,48 @@
 			<div id="pagingControls"></div>
 		<{/if}>
 	</div>
+	<div class="article_read_more">
+		<h2><{$smarty.const._MD_ARTICLE_VIEW_MORE}></h2>
+		<!-- article additional informations -->
+		<p><{$smarty.const._MD_ARTICLE_SUBMITTER}>&nbsp;:&nbsp;<{$article.submitter}></p>
+		<{if $article.updated_on}>
+			<p><{$smarty.const._MD_ARTICLE_UPDATED_ON}>&nbsp;:&nbsp;<{$article.updated_on}></p>
+		<{/if}>
+		<{if $article.updater}>
+			<p><{$smarty.const._MD_ARTICLE_UPDATER}>&nbsp;:&nbsp;<{$article.updater}></p>
+		<{/if}>
+		<h3><{$smarty.const._MD_ARTICLE_MORE_BY_PUBLISHER}></h3>	
+		<p><{$article.bypublisher}></p>
+		<!-- article tags -->
+		<{if $sprockets_module && $article.tags}>
+			<h3><{$smarty.const._MD_ARTICLE_TAGS}></h3>
+			<{$article.tags}>
+			<span class="article_tag">
+				<a href="<{$tag_link}>" class="<{if $tag_perm_denied == TRUE}>perm_tag_link<{else}>tag_link<{/if}>" >
+					<img style="vertical-align: middle;" src="<{$article_images_url}>add_tag.png" title="<{$smarty.const._MD_ARTICLE_TAG_ADD}>" alt="<{$smarty.const._MD_ARTICLE_TAG_ADD}>" />
+				</a>
+			</span>
+		<{/if}>
+			
+		<{if $article.related}>
+			<h3><{$smarty.const._MD_ARTICLE_RELATED}></h3>
+			<div class="article_related">
+				<ul>
+					<{$article.related}>
+				</ul>
+			</div>
+		<{/if}>
+	</div>
 	
-	<{if $article.related}>
-		<h2><{$smarty.const._MD_ARTICLE_RELATED}></h2>
-		<div class="article_related">
-			<ul>
-				<{$article.related}>
-			</ul>
+	<{if $article.file}>
+		<div class="article_attachment">
+			<h2><{$smarty.const._MD_ARTICLE_FILE}></h2>
+			<p><{$article.file}>&nbsp;(&nbsp;<{$article.filesize}>&nbsp;|&nbsp;<{$article.filetype}>&nbsp;)</p>
+			<{if $show_down_disclaimer}>
+				<div id="dialog-confirm-disclaimer" title="Download Disclaimer" class="ui-helper-hidden">
+					<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$down_disclaimer}></p>
+				</div>
+			<{/if}>
 		</div>
 	<{/if}>
 	<!-- article footer -->
@@ -88,10 +96,10 @@
 				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$smarty.const._MD_ARTICLE_SURE_BROKEN}></p>
 			</div>
 		
-		<span class="article_broken">
-			<a href="<{$broken_link}>" class="broken_link" ><{$smarty.const._MD_ARTICLE_REPORT_BROKEN}></a>
-		</span>
-		&nbsp;|&nbsp;
+			<span class="article_broken">
+				<a href="<{$broken_link}>" class="broken_link" ><{$smarty.const._MD_ARTICLE_REPORT_BROKEN}></a>
+			</span>
+			&nbsp;|&nbsp;
 		<{/if}>
 		<{if $sprockets_module}>
 			<span class="article_tag">

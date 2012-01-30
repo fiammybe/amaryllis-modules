@@ -12,7 +12,7 @@
 	</div>
 <{/if}>
 
-<{if $article_show_rss}>
+<{if $article_show_rss}> <!-- display rss fedd link -->
 	<div class="article_rss">
 		<a href="<{$article_url}>rss.php" title="RSS-Feeds">
 			<img src="<{$article_images_url}>rss.png" alt="RSS-Feeds" />
@@ -23,5 +23,12 @@
 	<div class="article_clear_left">&nbsp;</div>
 <{/if}>
 
+<{if $newsticker_articles}><!-- display newsticker -->
+	<ul id="newsticker_articles">
+		<{foreach item=newsticker from=$newsticker_articles}>
+			<li><span><{$newsticker.published_on}></span><{$newsticker.itemLink}></li>
+		<{/foreach}>
+	</ul>
+<{/if}>
 <!-- display index_image -->
 <{$article_index.image}>

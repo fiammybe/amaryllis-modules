@@ -34,7 +34,7 @@ define("_MD_ARTICLE_BROKEN_REPORTED", "Thank you for reporting a broken File. We
 define("_MD_ARTICLE_RELATED", "Related Articles");
 // constants for single view
 define("_MD_ARTICLE_CATS", "Categories");
-define("_MD_ARTICLE_TAGS", "Tags");
+define("_MD_ARTICLE_TAGS", "Get related Articles by Tags");
 define("_MD_ARTICLE_PUBLISHER", "Published by");
 define("_MD_ARTICLE_MORE_BY_PUBLISHER", "Get more Items by these Publisher(s)");
 define("_MD_ARTICLE_UPDATER", "Last updated by");
@@ -54,3 +54,4 @@ define("_MD_ARTICLE_PRINT", "Print article");
 define("_MD_ARTICLE_NEW", "Article is new");
 define("_MD_ARTICLE_UPDATED", "Article is updated");
 define("_MD_ARTICLE_POPULAR", "Article is popular");
+define("_MD_ARTICLE_VIEW_MORE", "Read More");
