@@ -4,7 +4,9 @@
 	<{foreach item=article_article from=$block.article_updated}>
 		<{if $article_article.imgpath}>
 			<div class="article_img">
-				<img class="article_b4_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+				<a href="<{$article_article.itemURL}>" title="<{$article_article.title}>">
+					<img class="article_b4_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+				</a>
 			</div>
 		<{/if}>
 		<div class="article_img">

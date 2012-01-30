@@ -1,12 +1,14 @@
 <{if $block.show_view_all == 1}>
 	<a href="<{$block.view_all}>" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
 <{/if}>
-	<{foreach item=article_popular from=$block.article_popular}>
-		<a href="<{$article_popular.itemURL}>" title="<{$article_popular.title}>"><{$article_popular.title}></a> (<{$article_popular.published_on}>)
+	<{foreach item=$article_article from=$block.article_popular}>
+		<a href="<{$article_article.itemURL}>" title="<{$article_article.title}>"><{$article_article.title}></a> (<{$article_article.published_on}>)
 		
 		<{if $article_article.imgpath}>
 			<div class="article_img">
-				<img class="article_b3_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+				<a href="<{$article_article.itemURL}>" title="<{$article_article.title}>">
+					<img class="article_b3_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+				</a>
 			</div>
 		<{/if}>
 		
