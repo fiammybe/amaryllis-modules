@@ -112,15 +112,9 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
 			}
 		}
-		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('category_active', TRUE));
-		}
-		if (isset($approved)) {
-			$criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
-		}
-		if (isset($inblocks)) {
-			$criteria->add(new icms_db_criteria_Item('category_inblocks', TRUE));
-		}
+		if(isset($status)) $criteria->add(new icms_db_criteria_Item('category_active', TRUE));
+		if(isset($approved)) $criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
+		if(isset($inblocks)) $criteria->add(new icms_db_criteria_Item('category_inblocks', TRUE));
 		if (is_null($category_id)) $category_id = 0;
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
 		$categories = & $this->getObjects($criteria, TRUE);
@@ -133,43 +127,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 			$subcategories = $this->getCategoryListForPid($groups, $perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'), $showNull);
 			foreach(array_keys($subcategories) as $j) {
 				$ret[$j] = '-' . $subcategories[$j];
-			}
-		}
-		return $ret;
-	}
-	
-	public function getCategoryListForMenu($order = 'weight', $sort = 'ASC', $status = NULL,$approved = NULL,$inblocks = NULL, $category_id = NULL, $showSubs = NULL) {
-	
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->setSort($order);
-		$criteria->setOrder($sort);
-		
-		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('category_active', TRUE));
-		}
-		if (isset($approved)) {
-			$criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
-		}
-		if (isset($inblocks)) {
-			$criteria->add(new icms_db_criteria_Item('category_inblocks', TRUE));
-		}
-		if (is_null($category_id)) $category_id = 0;
-		if($category_id) $criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
-		$categories = $this->getObjects($criteria, TRUE, FALSE);
-		$ret = array();
-		foreach ($categories as $category){
-			if ($category['accessgranted']){
-				$ret[$category['category_id']] = $category;
-				if ($showSubs) {
-					$subcategories = $this->getCategoryListForMenu($order, $sort,$status, $approved, $inblocks, $category['category_id'], $showSubs);					
-					if(!count($subcategories) == 0) {
-						
-						$ret[$category['hassub']] = 1;
-						$ret[$category['subcategories']] = $subcategories;
-					} else {
-						$ret[$category['hassub']] = 0;
-					}
-				}
 			}
 		}
 		return $ret;

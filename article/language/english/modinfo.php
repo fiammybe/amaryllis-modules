@@ -48,6 +48,8 @@ define("_MI_ARTICLE_BLOCK_SPOTLIGHT_IMAGE", "Gallery");
 define("_MI_ARTICLE_BLOCK_SPOTLIGHT_IMAGE_DSC", "Spotlight Block for article images");
 define("_MI_ARTICLE_BLOCK_RECENT_ARTICLE_LIST", "Article List");
 define("_MI_ARTICLE_BLOCK_RECENT_ARTICLE_LIST_DSC", "Display a simple list of articles");
+define("_MI_ARTICLE_BLOCK_MOST_COMMENTED", "Most commented");
+define("_MI_ARTICLE_BLOCK_MOST_COMMENTED_DSC", "Display most commented articles by category");
 // preferences
 define("_MI_ARTICLE_AUTHORIZED_GROUPS", "Authorized groups for submitting categories from frontend");
 define("_MI_ARTICLE_AUTHORIZED_GROUPS_DSC", "All selected groups will be allowed to submit new categories from frontend");
@@ -128,6 +130,8 @@ define("_MI_ARTICLE_PRINT_FOOTER", "Print Footer");
 define("_MI_ARTICLE_PRINT_FOOTER_DSC", "This footer will be used in print layouts");
 define("_MI_ARTICLE_PRINT_LOGO", "Print Logo");
 define("_MI_ARTICLE_PRINT_LOGO_DSC", "Enter the path to logo to be printed. E.g.: /themes/example/images/logo.gif");
+define("_MI_ARTICLE_DISPLAY_NEWSTICKER", "Display Newsticker?");
+define("_MI_ARTICLE_DISPLAY_NEWSTICKER_DSC", "Select yes to enable newsticker to be displayed");
 
 // Notifications
 define('_MI_ARTICLE_GLOBAL_NOTIFY', 'Global');

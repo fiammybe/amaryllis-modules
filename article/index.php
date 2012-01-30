@@ -50,7 +50,7 @@ $clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'ca
 $article_category_handler = icms_getModuleHandler( 'category', icms::$module -> getVar( 'dirname' ), 'article' );
 $article_article_handler = icms_getModuleHandler( 'article', icms::$module -> getVar( 'dirname' ), 'article' );
 
-$valid_op = array ('getByTags', 'getMostPopular', 'viewRecentUpdated', 'viewRecentArticles', 'getByAuthor', '');
+$valid_op = array ('getByTags', 'getMostPopular', 'viewRecentUpdated', 'viewRecentArticles', 'getByAuthor', 'getMostCommented', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
@@ -87,6 +87,16 @@ if(in_array($clean_op, $valid_op)) {
 			}
 			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
+			/**
+			 * assign breadcrumb cat-path
+			 */
+			if ($articleConfig['show_breadcrumbs'] == TRUE) {
+				$article_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'article');
+				$icmsTpl->assign('article_show_breadcrumb', TRUE);
+				$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($clean_category_id, 1));
+			} else {
+				$icmsTpl->assign('article_cat_path', FALSE);
+			}
 			break;
 		
 		case 'viewRecentUpdated':
@@ -102,6 +112,16 @@ if(in_array($clean_op, $valid_op)) {
 			}
 			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
+			/**
+			 * assign breadcrumb cat-path
+			 */
+			if ($articleConfig['show_breadcrumbs'] == TRUE) {
+				$article_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'article');
+				$icmsTpl->assign('article_show_breadcrumb', TRUE);
+				$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($clean_category_id, 1));
+			} else {
+				$icmsTpl->assign('article_cat_path', FALSE);
+			}
 			break;
 		
 		case 'viewRecentArticles':
@@ -117,6 +137,16 @@ if(in_array($clean_op, $valid_op)) {
 			}
 			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
+			/**
+			 * assign breadcrumb cat-path
+			 */
+			if ($articleConfig['show_breadcrumbs'] == TRUE) {
+				$article_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'article');
+				$icmsTpl->assign('article_show_breadcrumb', TRUE);
+				$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($clean_category_id, 1));
+			} else {
+				$icmsTpl->assign('article_cat_path', FALSE);
+			}
 			break;
 		
 		case 'getByAuthor':
@@ -132,6 +162,32 @@ if(in_array($clean_op, $valid_op)) {
 			}
 			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
+			break;
+		
+		case 'getMostCommented':
+			$articles = $article_article_handler->getArticlesForBlocks($clean_article_start, icms::$module->config['show_articles'],FALSE, FALSE, TRUE, "counter", "DESC");
+			$icmsTpl->assign('articles', $articles);
+			$icmsTpl->assign("getMostCommented", TRUE);
+			
+			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			
+			if (!empty($clean_category_id)) {
+				$extra_arg = 'op=getMostCommented&category_id=' . $clean_category_id;
+			} else {
+				$extra_arg = 'op=getMostCommented';
+			}
+			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
+			/**
+			 * assign breadcrumb cat-path
+			 */
+			if ($articleConfig['show_breadcrumbs'] == TRUE) {
+				$article_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'article');
+				$icmsTpl->assign('article_show_breadcrumb', TRUE);
+				$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($clean_category_id, 1));
+			} else {
+				$icmsTpl->assign('article_cat_path', FALSE);
+			}
 			break;
 		
 		default:

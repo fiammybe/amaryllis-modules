@@ -25,9 +25,9 @@ function b_article_most_popular_show($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
-	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewMostPopular';
+	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewMostPopular&category_id=' . $options[1];
 	$block['show_view_all'] = $options[2];
-	$block['article_popular'] = $article_article_handler->getArticlesForBlocks(0, $options[0],FALSE, FALSE, TRUE, "counter", "DESC");
+	$block['article_popular'] = $article_article_handler->getArticlesForBlocks(0, $options[0],$options[1], FALSE, TRUE, "counter", "DESC");
 	$block['thumbnail_width'] = $articleConfig['thumbnail_width'];
 	$block['thumbnail_height'] = $articleConfig['thumbnail_height'];
 	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article_block.js', array('type' => 'text/javascript'));

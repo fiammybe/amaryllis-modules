@@ -236,6 +236,16 @@ $modversion['blocks'][$i]['edit_func']		= 'b_article_spotlight_image_edit';
 $modversion['blocks'][$i]['options']		= '10|0|1|1';
 $modversion['blocks'][$i]['template']		= 'article_block_article_gallery.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE ;
+// article most commented
+$i++;
+$modversion['blocks'][$i]['file']			= 'article_most_commented.php';
+$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_MOST_COMMENTED;
+$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_MOST_COMMENTED_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_article_most_commented_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_article_most_commented_edit';
+$modversion['blocks'][$i]['options']		= '10|0|1';
+$modversion['blocks'][$i]['template']		= 'article_block_most_commented.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
@@ -487,7 +497,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '',
 								'formtype' 		=> 'select',
 								'valuetype' 	=> 'int',
-								'options' 		=> array('0' => 0, '5' => 5, '10' => 10, '50' => 50, '100' => 100, '200' => 200, '500' => 500, '1000' => 1000),
+								'options' 		=> array('0' => 0, '5' => 5, '10' => 10, '50' => 50, '100' => 100, '200' => 200, '500' => 500, '1000' => 1000, '1500' => 1500, '2000' => 2000, '3000' => 3000),
 								'default' 		=> 100
 							);
 $i++;
@@ -556,7 +566,15 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'txt',
 								'default' 		=> ''
 							);
-
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'display_newsticker',
+								'title' 		=> '_MI_ARTICLE_DISPLAY_NEWSTICKER',
+								'description' 	=> '_MI_ARTICLE_DISPLAY_NEWSTICKER_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
 
 
 

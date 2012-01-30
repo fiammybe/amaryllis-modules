@@ -433,43 +433,17 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		}
 	}
 	
-	public function getArticleSubmitter($link = FALSE) {
+	public function getArticleSubmitter() {
 		$publisher_uid = $this->getVar("article_submitter", "e");
-		$userinfo = array();
-		$userObj = icms::handler('icms_member')->getuser($publisher_uid);
-		if (is_object($userObj)) {
-			$userinfo['uid'] = $publisher_uid;
-			$userinfo['uname'] = $userObj->getVar('uname');
-			$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
-		} else {
-			global $icmsConfig;
-			$userinfo['uid'] = 0;
-			$userinfo['uname'] = $icmsConfig['anonymous'];
-		}
-		if ($link && $userinfo['uid']) {
-			return $userinfo['link'];
-		} else {
-			return $userinfo['uname'];
+		if($publisher_uid != "") {
+			return icms_member_user_Handler::getUserLink($publisher_uid);
 		}
 	}
 
-	public function getArticleUpdater($link = FALSE) {
+	public function getArticleUpdater() {
 		$publisher_uid = $this->getVar("article_updater", "e");
-		$userinfo = array();
-		$userObj = icms::handler('icms_member')->getuser($publisher_uid);
-		if (is_object($userObj)) {
-			$userinfo['uid'] = $publisher_uid;
-			$userinfo['uname'] = $userObj->getVar('uname');
-			$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
-		} else {
-			global $icmsConfig;
-			$userinfo['uid'] = 0;
-			$userinfo['uname'] = $icmsConfig['anonymous'];
-		}
-		if ($link && $userinfo['uid']) {
-			return $userinfo['link'];
-		} else {
-			return $userinfo['uname'];
+		if($publisher_uid != "") {
+			return icms_member_user_Handler::getUserLink($publisher_uid);
 		}
 	}
 	
@@ -483,7 +457,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		} else {
 			foreach ($publishers as $publisher) {
 				$uname = icms::handler('icms_member')->getUser($publisher)->getVar("uname");
-				$ret[$publisher] = '<a href="' . ARTICLE_URL . 'index.php?op=getByAuthor&uid=' . $publisher . '" title="' . _CO_ARTICLE_ARTICLE_GET_BY_AUTHOR . '">' . $uname . '</a>';
+				$ret[$publisher] = '<a href="' . ARTICLE_URL . 'index.php?op=getByAuthor&uid=' . $publisher . '" title="' . _CO_ARTICLE_ARTICLE_GET_BY_AUTHOR . '&nbsp;' . $uname . '">' . $uname . '</a>';
 			}
 		}
 		return implode(", ", $ret);
