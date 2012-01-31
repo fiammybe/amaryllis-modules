@@ -133,7 +133,7 @@ define("_MI_ARTICLE_PRINT_FOOTER_DSC", "This footer will be used in print layout
 define("_MI_ARTICLE_PRINT_LOGO", "Print Logo");
 define("_MI_ARTICLE_PRINT_LOGO_DSC", "Enter the path to logo to be printed. E.g.: /themes/example/images/logo.gif");
 define("_MI_ARTICLE_DISPLAY_NEWSTICKER", "Display Newsticker?");
-define("_MI_ARTICLE_DISPLAY_NEWSTICKER_DSC", "Select yes to enable newsticker to be displayed");
+define("_MI_ARTICLE_DISPLAY_NEWSTICKER_DSC", "Select yes to enable newsticker to be displayed.<br />Note: you also can use a block to display a newsticker throughout your website.");
 define("_MI_ARTICLE_NEED_DEMO", "Need a demo link?");
 define("_MI_ARTICLE_NEED_DEMO_DSC", "Do you need demo links for your articles/attachments?");
 define("_MI_ARTICLE_NEED_CONCLUSION", "Do you need conclusions for your article?");
@@ -141,43 +141,34 @@ define("_MI_ARTICLE_NEED_CONCLUSION_DSC", "Select yes to get a conclusion for ar
 // Notifications
 define('_MI_ARTICLE_GLOBAL_NOTIFY', 'Global');
 define('_MI_ARTICLE_GLOBAL_NOTIFY_DSC', 'Global Article notification options.');
-
 define('_MI_ARTICLE_CATEGORY_NOTIFY', 'Category');
 define('_MI_ARTICLE_CATEGORY_NOTIFY_DSC', 'Notification options that apply to the current file category.');
-
 define('_MI_ARTICLE_ARTICLE_NOTIFY', 'Article');
 define('_MI_ARTICLE_ARTICLE_NOTIFY_DSC', 'Notification options that apply to the current article.');
-
 define('_MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY', 'New Category');
 define('_MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_CAP', 'Notify me when a new file category is created.');
 define('_MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_DSC', 'Receive notification when a new file category is created.');
 define('_MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file category');
-
 define('_MI_ARTICLE_GLOBAL_CATEGORYMODIFIED_NOTIFY', 'Category Modified');
 define('_MI_ARTICLE_GLOBAL_CATEGORYMODIFIED_NOTIFY_CAP', 'Notify me when any category is modified.');
 define('_MI_ARTICLE_GLOBAL_CATEGORYMODIFIED_NOTIFY_DSC', 'Receive notification when any category is modified.');
 define('_MI_ARTICLE_GLOBAL_CATEGORYMODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Category Modified');
-
 define('_MI_ARTICLE_GLOBAL_NEWARTICLE_NOTIFY', 'New Article');
 define('_MI_ARTICLE_GLOBAL_NEWARTICLE_NOTIFY_CAP', 'Notify me when any new file is posted.');
 define('_MI_ARTICLE_GLOBAL_NEWARTICLE_NOTIFY_DSC', 'Receive notification when any new file is posted.');
 define('_MI_ARTICLE_GLOBAL_NEWARTICLE_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file');
-
 define('_MI_ARTICLE_CATEGORY_NEWARTICLE_NOTIFY', 'New Article');
 define('_MI_ARTICLE_CATEGORY_NEWARTICLE_NOTIFY_CAP', 'Notify me when a new file is posted to the current category.');   
 define('_MI_ARTICLE_CATEGORY_NEWARTICLE_NOTIFY_DSC', 'Receive notification when a new file is posted to the current category.');      
 define('_MI_ARTICLE_CATEGORY_NEWARTICLE_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file in category'); 
-
 define('_MI_ARTICLE_ARTICLE_ARTICLEMODIFIED_NOTIFY', 'Article Modified');
 define('_MI_ARTICLE_ARTICLE_ARTICLEMODIFIED_NOTIFY_CAP', 'Notify me when this file is modified.');
 define('_MI_ARTICLE_ARTICLE_ARTICLEMODIFIED_NOTIFY_DSC', 'Receive notification when this file is modified.');
 define('_MI_ARTICLE_ARTICLE_ARTICLEMODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Article Modified');
-
 define('_MI_ARTICLE_CATEGORY_ARTICLEMODIFIED_NOTIFY', 'Article Modified');
 define('_MI_ARTICLE_CATEGORY_ARTICLEMODIFIED_NOTIFY_CAP', 'Notify me when a file in this category is modified.');
 define('_MI_ARTICLE_CATEGORY_ARTICLEMODIFIED_NOTIFY_DSC', 'Receive notification when a file in this category is modified.');
 define('_MI_ARTICLE_CATEGORY_ARTICLEMODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Article Modified');
-
 define('_MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY', 'Article Modified');
 define('_MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY_CAP', 'Notify me when any file is modified.');
 define('_MI_ARTICLE_GLOBAL_ARTICLEMODIFIED_NOTIFY_DSC', 'Receive notification when any file is modified.');

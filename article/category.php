@@ -26,7 +26,7 @@ function editcategory($categoryObj = 0) {
 		$categoryObj->setVar('category_updater', icms::$user->getVar("uid"));
 		$sform = $categoryObj->getSecureForm(_MD_ARTICLE_CATEGORY_EDIT, 'addcategory');
 		$sform->assign($icmsTpl, 'article_category_form');
-		$icmsTpl->assign('article_cat_path', $categoryObj->getVar('category_title') . ' : ' . _EDIT);
+		$icmsTpl->assign('article_cat_path', $categoryObj->getVar('category_title') . ' : ' . _MD_ARTICLE_CATEGORY_EDIT);
 	} else {
 		$categoryObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'category_updated', 'category_publisher', 'category_submitter', 'category_active', 'category_inblocks', 'category_approve', 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar('category_published_date', (time() - 100) );
@@ -40,7 +40,7 @@ function editcategory($categoryObj = 0) {
 		$categoryObj->setVar('category_published_date', (time() - 200));
 		$sform = $categoryObj->getSecureForm(_MD_ARTICLE_CATEGORY_CREATE, 'addcategory');
 		$sform->assign($icmsTpl, 'article_category_form');
-		$icmsTpl->assign('article_cat_path', _SUBMIT);
+		$icmsTpl->assign('article_cat_path', _MD_ARTICLE_CATEGORY_CREATE);
 	}
 } 
 
@@ -89,7 +89,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'mod':
 			$categoryObj = $article_category_handler->get($clean_category_id);
 			if ($clean_category_id > 0 && $categoryObj->isNew()) {
-				redirect_header(ARTICLE_URL, 3, _NOPERM);
+				redirect_header(ARTICLE_URL, 3, _NO_PERM);
 			}
 			editcategory($categoryObj);
 			
@@ -112,6 +112,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if (!$categoryObj->userCanEditAndDelete()) {
 				redirect_header($categoryObj->getItemLink(true), 3, _NO_PERM);
 			}
+			$icmsTpl->assign('article_cat_path', _MD_ARTICLE_CATEGORY_DELETE);
+			
 			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {
 					redirect_header('index.php', 3, _MD_ARTICLE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
@@ -124,9 +126,4 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	}
 }
 
-if( $articleConfig['show_breadcrumbs'] == 1 ) {
-	$icmsTpl->assign('article_show_breadcrumb', true);
-} else {
-	$icmsTpl->assign('article_show_breadcrumb', false);
-}
 include_once 'footer.php';
