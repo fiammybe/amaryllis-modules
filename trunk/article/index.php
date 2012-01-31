@@ -47,8 +47,8 @@ $clean_article_id = isset($_GET['article_id']) ? filter_input(INPUT_GET, 'articl
 $clean_category_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : false;
 $clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'category_pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_category_uid ? false : 0);
 
-$article_category_handler = icms_getModuleHandler( 'category', icms::$module -> getVar( 'dirname' ), 'article' );
-$article_article_handler = icms_getModuleHandler( 'article', icms::$module -> getVar( 'dirname' ), 'article' );
+$article_category_handler = icms_getModuleHandler( 'category', ARTICLE_DIRNAME, 'article' );
+$article_article_handler = icms_getModuleHandler( 'article', ARTICLE_DIRNAME, 'article' );
 
 $valid_op = array ('getByTags', 'getMostPopular', 'viewRecentUpdated', 'viewRecentArticles', 'getByAuthor', 'getMostCommented', '');
 
@@ -74,7 +74,7 @@ if(in_array($clean_op, $valid_op)) {
 			break;
 			
 		case 'getMostPopular':
-			$articles = $article_article_handler->getArticlesForBlocks($clean_article_start, icms::$module->config['show_articles'],FALSE, FALSE, TRUE, "counter", "DESC");
+			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "counter", "DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byPopular", TRUE);
 			
@@ -100,7 +100,7 @@ if(in_array($clean_op, $valid_op)) {
 			break;
 		
 		case 'viewRecentUpdated':
-			$articles = $article_article_handler->getArticlesForBlocks($clean_article_start, icms::$module->config['show_articles'],$clean_category_id, FALSE, TRUE, "article_updated_date", "DESC");
+			$article = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "article_updated_date", "DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byRecentUpdated", TRUE);
 			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
@@ -125,13 +125,14 @@ if(in_array($clean_op, $valid_op)) {
 			break;
 		
 		case 'viewRecentArticles':
-			$articles = $article_article_handler->getArticlesForBlocks($clean_article_start, icms::$module->config['show_articles'],$clean_category_id, FALSE, TRUE, "article_published_date", "DESC");
+			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "article_published_date", "DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byRecentArticles", TRUE);
+			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
 			
 			if (!empty($clean_category_id)) {
-				$extra_arg = 'op=viewviewRecentArticles&category_id=' . $clean_category_id;
+				$extra_arg = 'op=viewRecentArticles&category_id=' . $clean_category_id;
 			} else {
 				$extra_arg = 'op=viewRecentArticles';
 			}
@@ -150,7 +151,7 @@ if(in_array($clean_op, $valid_op)) {
 			break;
 		
 		case 'getByAuthor':
-			$articles = $article_article_handler->getArticles($clean_article_start, icms::$module->config['show_articles'], FALSE, $clean_uid);
+			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, $clean_uid, FALSE, FALSE, "article_published_date", "DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byAuthor", TRUE);
 			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
@@ -165,7 +166,7 @@ if(in_array($clean_op, $valid_op)) {
 			break;
 		
 		case 'getMostCommented':
-			$articles = $article_article_handler->getArticlesForBlocks($clean_article_start, icms::$module->config['show_articles'],FALSE, FALSE, TRUE, "counter", "DESC");
+			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "article_comments", "DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("getMostCommented", TRUE);
 			
@@ -204,7 +205,7 @@ if(in_array($clean_op, $valid_op)) {
 				$article_category_handler->updateCounter($clean_category_id);
 				$category = $categoryObj->toArray();
 				$icmsTpl->assign('article_single_cat', $category);
-				$article = $article_article_handler->getArticles($clean_article_start, icms::$module->config['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id);
+				$article = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id);
 				$icmsTpl->assign('article_files', $article);
 				if ($articleConfig['show_breadcrumbs']){
 					$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($categoryObj->getVar('category_id', 'e'), 1));
