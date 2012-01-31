@@ -109,8 +109,8 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->openFormSection("article_informations", _CO_ARTICLE_ARTICLE_ARTICLE_INFORMATIONS);
 		$this->openFormSection("article_permissions", _CO_ARTICLE_ARTICLE_ARTICLE_PERMISSIONS);
 		//$this->openFormSection("article_statics", _CO_ARTICLE_ARTICLE_ARTICLE_STATICS);
-		
-		if($articleConfig['use_sprockets'] == 1) {
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($articleConfig['use_sprockets'] == 1 && $sprocketsModule->registerClassPath(TRUE)) {
 			$this->setControl("article_tags", array("name" => "select_multi", "itemHandler" => "article", "method" => "getArticleTags", "module" => "article"));
 		} else {
 			$this->hideFieldFromForm("article_tags");
@@ -393,8 +393,8 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	
 	public function getArticleTags($itemlink = FALSE) {
 		$tags = $this->getVar("article_tags", "s");
-		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-		if($sprocketsModule && $tags != "") {
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if($sprocketsModule->registerClassPath(TRUE) && $tags != "") {
 			$sprockets_tag_handler = icms_getModuleHandler ( "tag", $sprocketsModule->getVar("dirname"), "sprockets");
 			$ret = array();
 			if($itemlink == FALSE) {

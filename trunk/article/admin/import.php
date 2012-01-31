@@ -145,9 +145,9 @@ function article_import_smartsection_categories() {
 }
 
 function article_import_smartsection_files() {
-	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
+	$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
 	$file_handler = icms::handler("icms_data_file");
-	$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+	$module = icms::handler('icms_module')->getByDirname(ARTICLE_DIRNAME);
 	$mid = $module->getVar('mid');
 	$url = ICMS_URL . '/uploads/article/article/';
 	$table = new icms_db_legacy_updater_Table('smartsection_files');
@@ -178,9 +178,9 @@ function article_import_smartsection_files() {
 }
 
 function article_import_linked_tags() {
-	$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-	if($sprocketsModule) {
-		$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
+	$sprocketsModule = icms_getModuleInfo("sprockets");
+	if($sprocketsModule->registerClassPath(TRUE)) {
+		$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
 		$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
 		$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname='smartsection'";
 		$result2 = icms::$xoopsDB->query($mid_sql);
