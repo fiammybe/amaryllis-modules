@@ -89,7 +89,7 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	 * check if Sprockets Module can be used and if it's available
 	 */
 	$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-	if($articleConfig['use_sprockets'] == 1 && $sprocketsModule) {
+	if($articleConfig['use_sprockets'] == 1 && $sprocketsModule->registerClassPath(TRUE)) {
 		$icmsTpl->assign("sprockets_module", TRUE);
 	
 		if(is_object(icms::$user)) {

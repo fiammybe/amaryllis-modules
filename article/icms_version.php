@@ -213,7 +213,7 @@ $modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_SPOTLIGHT;
 $modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_SPOTLIGHT_DSC;
 $modversion['blocks'][$i]['show_func']		= 'b_article_spotlight_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_article_spotlight_edit';
-$modversion['blocks'][$i]['options']		= '10|0|1';
+$modversion['blocks'][$i]['options']		= '10|array(0)|1';
 $modversion['blocks'][$i]['template']		= 'article_block_article_spotlight.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE ;
 // article random block

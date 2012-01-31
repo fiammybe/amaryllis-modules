@@ -54,6 +54,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$article_modid = $articleModule->getVar("mid");
 			$clean_tag_id = isset($_GET['tag_id']) ? filter_input(INPUT_GET, 'tag_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+			if($sprocketsModule->registerClassPath(TRUE)) {
 			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
 			$tagObj = $sprockets_tag_handler->get($clean_tag_id);
 			if($tagObj->isNew() ) {
@@ -82,6 +83,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$controller = new icms_ipf_Controller($sprockets_tag_handler);
 				$controller->storeFromDefaultForm(_THANKS_SUBMISSION_TAG, _THANKS_SUBMISSION_TAG, ARTICLE_URL . 'singlearticle.php?article_id=' . $article_id);
 				return redirect_header (ARTICLE_URL . 'singlearticle.php?article_id=' . $article_id, 3, _THANKS_SUBMISSION);
+				}
 			} else {
 				return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
 			}
