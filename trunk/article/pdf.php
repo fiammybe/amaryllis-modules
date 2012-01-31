@@ -20,7 +20,7 @@
 include_once 'header.php';
 
 $clean_article_id = isset($_GET['article_id']) ? filter_input(INPUT_GET, 'article_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$item_page_id = isset($_GET['page']) ? intval($_GET['page']) : -1;
+$item_page_id = isset($_GET['page']) ? (int)($_GET['page']) : -1;
 
 if ($clean_article_id == 0) {
 	redirect_header(icms_getPreviousPage(), 3, _MD_ARTICLE_NO_ARTICLE);

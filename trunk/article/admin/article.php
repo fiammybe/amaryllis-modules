@@ -138,7 +138,7 @@ if($categories > 0) {
 					$articleObj = $article_article_handler -> get( $value );
 	
 					if ($articleObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
-						$articleObj->setVar('weight', intval($_POST['weight'][$key]));
+						$articleObj->setVar('weight', (int)($_POST['weight'][$key]));
 						$changed = true;
 					}
 					if ($changed) {

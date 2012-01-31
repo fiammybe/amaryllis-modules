@@ -34,6 +34,9 @@ $i++;
 $adminmenu[$i]['title'] = _MI_ARTICLE_MENU_INDEXPAGE;
 $adminmenu[$i]['link'] = 'admin/indexpage.php?op=mod&index_id=1';
 
+$i++;
+$adminmenu[$i]['title'] = _MI_ARTICLE_MENU_PERMISSIONS;
+$adminmenu[$i]['link'] = 'admin/permissions.php';
 
 global $icmsConfig;
 $articleModule = icms_getModuleInfo( basename( dirname( dirname( __FILE__) ) ) );

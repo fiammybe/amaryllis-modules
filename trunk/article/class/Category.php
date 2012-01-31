@@ -25,7 +25,6 @@ class ArticleCategory extends icms_ipf_seo_Object {
 	
 	public $categories = TRUE;
 	
-	
 	/**
 	 * Constructor
 	 *
@@ -42,7 +41,6 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$this->quickInitVar("category_image", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("category_image_upl", XOBJ_DTYPE_IMAGE, FALSE);
 		$this->quickInitVar("category_grpperm", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("category_uplperm", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("category_submitter", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("category_publisher", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("category_updater", XOBJ_DTYPE_INT, FALSE);
@@ -66,7 +64,6 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$this->setControl("category_image_upl", "image");
 		$this->setControl("category_publisher", "user");
 		$this->setControl("category_grpperm", array("name" => "select_multi", "itemHandler" => "category", "method" => "getGroups", "module" => "article"));
-		$this->setControl("category_uplperm", "group_multi");
 		$this->setControl("category_active", "yesno");
 		$this->setControl("category_approve", "yesno");
 		$this->setControl("category_inblocks", "yesno");
@@ -245,13 +242,6 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$groups = $this->handler->getGroups();
 		return $groups;
 	}
-	
-	// Retrieving the visibility of the category/category-set
-	function category_uplperm() {
-		$ret = $this->getVar('category_uplperm', 'e');
-		$groups = $this->handler->getUplGroups();
-		return $groups;
-	}
 
 	function accessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
@@ -300,8 +290,10 @@ class ArticleCategory extends icms_ipf_seo_Object {
 	}
 	
 	function getEditAndDelete() {
-		$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
-		if($article_article_handler->userCanSubmit($this->id())) {
+		$gperm_handler = icms::handler('icms_member_groupperm');
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$viewperm = $gperm_handler->checkRight('submit_article', $this->getVar('category_id', 'e'), $groups, icms::$module->getVar("mid"));
+		if($viewperm) {
 			return ARTICLE_URL . 'article.php?op=mod&amp;category_id=' . $this->id();
 		} else {
 			return FALSE;

@@ -25,8 +25,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 	
 	private $_category_grpperm = array();
 	
-	private $_category_uplperm = array();
-	
 	public $_moduleName;
 	
 	public $_uploadPath;
@@ -35,7 +33,8 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 
 	public function __construct($db) {
 		parent::__construct($db, 'category', 'category_id', 'category_title', 'category_description', 'article');
-		$this->addPermission('category_grpperm', _CO_ARTICLE_CATEGORY_CATEGORY_GRPPERM, _CO_ARTICLE_CATEGORY_CATEGORY_GRPPERM_DSC);
+		$this->addPermission('category_grpperm', _CO_ARTICLE_CATEGORY_CATEGORY_GRPPERM);
+		$this->addPermission('submit_article', _CO_ARTICLE_CATEGORY_CATEGORY_GRPPERM);
 		
 		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/categoryimages/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
@@ -89,8 +88,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
-	
-	
 	
 	public function getCategory($category_id) {
 		$ret = $this->getArticleCategories(0, 0, FALSE, $category_id);
@@ -286,15 +283,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 			return $groups;
 		}
 		return $this->_category_grpperm;
-	}
-	
-	public function getUplGroups($criteria = NULL) {
-		if (!$this->_category_uplperm) {
-			$member_handler =& icms::handler('icms_member');
-			$groups = $member_handler->getGroupList($criteria, TRUE);
-			return $groups;
-		}
-		return $this->_category_uplperm;
 	}
 
 	public function userCanSubmit() {
