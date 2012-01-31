@@ -120,10 +120,12 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 			$ret[0] = '-----------------------';
 		}
 		foreach(array_keys($categories) as $i) {
-			$ret[$i] = $categories[$i]->getVar('category_title');
-			$subcategories = $this->getCategoryListForPid($groups, $perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'), $showNull);
-			foreach(array_keys($subcategories) as $j) {
-				$ret[$j] = '-' . $subcategories[$j];
+			if($categories[$i]->submitAccessGranted()) {
+				$ret[$i] = $categories[$i]->getVar('category_title');
+				$subcategories = $this->getCategoryListForPid($groups, $perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'), $showNull);
+				foreach(array_keys($subcategories) as $j) {
+					$ret[$j] = '-' . $subcategories[$j];
+				}
 			}
 		}
 		return $ret;
