@@ -323,18 +323,6 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $this->_article_grpperm;
 	}
 	
-	
-	public function userCanSubmit($category_id) {
-		global $article_isAdmin;
-		$article_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
-		$categoryObject = $article_category_handler->get($category_id);
-		if (!is_object(icms::$user)) return FALSE;
-		if ($article_isAdmin) return TRUE;
-		$user_groups = icms::$user->getGroups();
-		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
-		return count(array_intersect(array($categoryObject->getVar('category_uplperm')), $user_groups)) > 0;
-	}
-	
 	public function makeLink($article) {
 		$count = $this->getCount(new icms_db_criteria_Item("short_url", $article->getVar("short_url")));
 
@@ -422,7 +410,6 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$this->insert($articleObj, TRUE);
 		}
 	}
-	
 	
 	protected function beforeInsert(&$obj) {
 		$teaser = $obj->getVar("article_teaser", "s");

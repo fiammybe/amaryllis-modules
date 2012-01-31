@@ -120,7 +120,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$categoryObj = $article_category_handler -> get( $value );
 
 				if ($categoryObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
-					$categoryObj->setVar('weight', intval($_POST['weight'][$key]));
+					$categoryObj->setVar('weight', (int)($_POST['weight'][$key]));
 					$changed = TRUE;
 				}
 				if ($changed) {

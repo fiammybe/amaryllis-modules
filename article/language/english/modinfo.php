@@ -179,6 +179,7 @@ define("_MI_ARTICLE_MENU_INDEX", "Index");
 define("_MI_ARTICLE_MENU_ARTICLE", "Manage Articles");
 define("_MI_ARTICLE_MENU_CATEGORY", "Manage Categories");
 define("_MI_ARTICLE_MENU_INDEXPAGE", "Edit Indexpage");
+define("_MI_ARTICLE_MENU_PERMISSIONS", "Permissions");
 define("_MI_ARTICLE_MENU_TEMPLATES", "Templates");
 define("_MI_ARTICLE_MENU_MANUAL", "Manual");
 define("_MI_ARTICLE_MENU_IMPORT", "Import");
