@@ -117,7 +117,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$crit->add(new icms_db_criteria_Item('article_id', $article_id),'OR');
 			$criteria->add($crit);
 		}
-		if ($article_cid != FALSE)	{
+		if ($article_cid != FALSE && $article_cid > 0)	{
 			$critTray = new icms_db_criteria_Compo();
 			$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
