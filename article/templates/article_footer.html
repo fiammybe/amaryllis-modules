@@ -1,3 +1,10 @@
+<{if $newsticker_articles}><!-- display newsticker -->
+	<ul id="articles_newsticker">
+		<{foreach item=newsticker from=$newsticker_articles}>
+			<li><span><{$newsticker.published_on}></span><{$newsticker.itemLink}></li>
+		<{/foreach}>
+	</ul>
+<{/if}>
 <!-- Index footer -->
 <{$article_index.footer}>
 

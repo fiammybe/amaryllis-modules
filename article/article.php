@@ -75,7 +75,7 @@ $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 
-$article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
+$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
 
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {

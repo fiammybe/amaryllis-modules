@@ -213,7 +213,7 @@
 			slideshowAuto: false
 		});
 		// use newsticker
-		$("ul#newsticker_articles").liScroll({travelocity: 0.10});
+		$("ul#articles_newsticker").liScroll({travelocity: 0.10});
 		
 		//initiate qtip for category description
 		$('div.article_category').each(function(){
