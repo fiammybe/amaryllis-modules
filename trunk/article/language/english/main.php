@@ -23,9 +23,7 @@ define("_MD_ARTICLE_ADMIN_PAGE", ":: Admin page ::");
 
 // constants for indexview
 define("_MD_ARTICLE_SUBMIT_CAT", "Submit new category");
-define("_MD_ARTICLE_CATEGORY_CREATE", "Create a new category");
 define("_MD_ARTICLE_UPLOAD", "Submit new article");
-define("_MD_ARTICLE_ARTICLE_CREATE", "Submit a new Article");
 define("_MD_ARTICLE_ARTICLELIST", "Articles in this category");
 define("_MD_ARTICLE_READ_MORE", "Read more...");
 define("_MD_ARTICLE_ARTICLE_FILELIST", "Articles in this category");
@@ -56,3 +54,14 @@ define("_MD_ARTICLE_UPDATED", "Article is updated");
 define("_MD_ARTICLE_POPULAR", "Article is popular");
 define("_MD_ARTICLE_VIEW_MORE", "Read More");
 define("_MD_ARTICLE_DEMO_LINK", "Demo");
+// constants used for forms
+define("_MD_ARTICLE_CATEGORY_CREATED", "Category succsessfully submitted. Thank you for your submission.");
+define("_MD_ARTICLE_CATEGORY_MODIFIED", "Category succsessfully modified. Thank you for your submission.");
+define("_MD_ARTICLE_CATEGORY_CREATE", "Create a new category");
+define("_MD_ARTICLE_CATEGORY_EDIT", "Edit this new category");
+define("_MD_ARTICLE_CATEGORY_DELETE", "Delete this categerory");
+define("_MD_ARTICLE_ARTICLE_DELETE", "Delete this article");
+define("_MD_ARTICLE_ARTICLE_CREATE", "Submit a new Article");
+define("_MD_ARTICLE_ARTICLE_EDIT", "Edit this new Article");
+define("_MD_ARTICLE_ARTICLE_CREATED", "Article succsessfully submitted. Thank you for your submission.");
+define("_MD_ARTICLE_ARTICLE_MODIFIED", "Article succsessfully modified. Thank you for your submission.");

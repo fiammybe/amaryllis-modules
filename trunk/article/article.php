@@ -27,7 +27,7 @@ function editarticle($articleObj) {
 		
 		$sform = $articleObj->getSecureForm(_MD_ARTICLE_ARTICLE_EDIT, 'addarticle');
 		$sform->assign($icmsTpl, 'article_article_form');
-		$icmsTpl->assign('article_cat_path', $articleObj->getVar('article_title') . ' > ' . _EDIT);
+		$icmsTpl->assign('article_cat_path', $articleObj->getVar('article_title') . ' > ' . _MD_ARTICLE_ARTICLE_EDIT);
 	} else {
 		$articleObj->hideFieldFromForm(array('article_updated', 'article_broken_file','article_approve', 'meta_description', 'meta_keywords', 'article_additionals', 'article_updated', 'article_submitter', 'article_inblocks', 'article_active', 'article_published_date', 'article_updated_date' ) );
 		$articleObj->setVar('article_published_date', (time() - 100) );
@@ -40,7 +40,7 @@ function editarticle($articleObj) {
 		
 		$sform = $articleObj->getSecureForm(_MD_ARTICLE_ARTICLE_CREATE, 'addarticle');
 		$sform->assign($icmsTpl, 'article_article_form');
-		$icmsTpl->assign('article_cat_path', _SUBMIT);
+		$icmsTpl->assign('article_cat_path', _MD_ARTICLE_ARTICLE_CREATE);
 	}
 }
 
@@ -105,6 +105,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if (!$articleObj->userCanEditAndDelete()) {
 				redirect_header($articleObj->getItemLink(TRUE), 3, _NO_PERM);
 			}
+			$icmsTpl->assign('article_cat_path', _MD_ARTICLE_ARTICLE_DELETE);
 			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {
 					redirect_header('index.php', 3, _MD_ARTICLE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
@@ -117,11 +118,4 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 } else {
 	redirect_header(ARTICLE_URL, 3, _NO_PERM);
 }
-
-if( $articleConfig['show_breadcrumbs'] == true ) {
-	$icmsTpl->assign('article_show_breadcrumb', true);
-} else {
-	$icmsTpl->assign('article_show_breadcrumb', false);
-}
-
 include_once "footer.php";
