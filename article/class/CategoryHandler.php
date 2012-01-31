@@ -34,7 +34,7 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 	public function __construct($db) {
 		parent::__construct($db, 'category', 'category_id', 'category_title', 'category_description', 'article');
 		$this->addPermission('category_grpperm', _CO_ARTICLE_CATEGORY_CATEGORY_GRPPERM);
-		$this->addPermission('submit_article', _CO_ARTICLE_CATEGORY_CATEGORY_GRPPERM);
+		$this->addPermission('submit_article', _CO_ARTICLE_CATEGORY_CATEGORY_UPLPERM);
 		
 		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/categoryimages/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
