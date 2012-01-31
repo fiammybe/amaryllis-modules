@@ -24,6 +24,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
  * make a newsticker block available throughout the module, if this is enabled in module configuration
  */
 if($articleConfig['display_newsticker'] == 1) {
+	$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
 	$newsticker_articles = $article_article_handler->getArticlesforBlocks(0, 10, FALSE, FALSE, FALSE, 'article_published_date', 'DESC');
 	$icmsTpl->assign("newsticker_articles", $newsticker_articles);
 }

@@ -50,6 +50,8 @@ define("_MI_ARTICLE_BLOCK_RECENT_ARTICLE_LIST", "Article List");
 define("_MI_ARTICLE_BLOCK_RECENT_ARTICLE_LIST_DSC", "Display a simple list of articles");
 define("_MI_ARTICLE_BLOCK_MOST_COMMENTED", "Most commented");
 define("_MI_ARTICLE_BLOCK_MOST_COMMENTED_DSC", "Display most commented articles by category");
+define("_MI_ARTICLE_BLOCK_NEWSTICKER", "Newsticker");
+define("_MI_ARTICLE_BLOCK_NEWSTICKER_DSC", "Please, remove Blocktitle to get a nice newsticker.");
 // preferences
 define("_MI_ARTICLE_AUTHORIZED_GROUPS", "Authorized groups for submitting categories from frontend");
 define("_MI_ARTICLE_AUTHORIZED_GROUPS_DSC", "All selected groups will be allowed to submit new categories from frontend");

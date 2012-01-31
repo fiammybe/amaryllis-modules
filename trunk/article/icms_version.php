@@ -246,6 +246,16 @@ $modversion['blocks'][$i]['edit_func']		= 'b_article_most_commented_edit';
 $modversion['blocks'][$i]['options']		= '10|0|1';
 $modversion['blocks'][$i]['template']		= 'article_block_most_commented.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE ;
+// article newsticker
+$i++;
+$modversion['blocks'][$i]['file']			= 'article_newsticker.php';
+$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_NEWSTICKER;
+$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_NEWSTICKER_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_article_newsticker_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_article_newsticker_edit';
+$modversion['blocks'][$i]['options']		= '10|0';
+$modversion['blocks'][$i]['template']		= 'article_block_newsticker.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////

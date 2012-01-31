@@ -23,12 +23,5 @@
 	<div class="article_clear_left">&nbsp;</div>
 <{/if}>
 
-<{if $newsticker_articles}><!-- display newsticker -->
-	<ul id="newsticker_articles">
-		<{foreach item=newsticker from=$newsticker_articles}>
-			<li><span><{$newsticker.published_on}></span><{$newsticker.itemLink}></li>
-		<{/foreach}>
-	</ul>
-<{/if}>
 <!-- display index_image -->
 <{$article_index.image}>

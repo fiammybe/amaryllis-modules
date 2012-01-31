@@ -46,6 +46,26 @@
 		clear: right;
 		height: 1px;
 	}
+	
+	.table_row {
+		display: table-row;
+		padding: .250em;
+		line-height: 3em;
+	}
+	
+	.table_row span{
+		border-top:1px solid #FFFFFF;
+		border-bottom:1px solid #FFFFFF;
+	}
+	
+	.table_row:hover span{
+		border-top:1px solid #AAAAAA;
+		border-bottom:1px solid #AAAAAA;
+	}
+	
+	.table_cell {
+		display: table-cell;
+	}
 
 	.article_indeximage {
 		text-align: center;
@@ -74,13 +94,13 @@
 		padding: 5px;
 	}
 	
+	.article_cat_frame {
+		display: inline-block;
+		width: 50%;
+	}
+	
 	.article_cat_img {
 		vertical-align: middle;
-	}
-	.article_cat_img2 {
-		vertical-align: top;
-		float:right;
-		margin: 0 0 0 10px;
 	}
 	
 	.article_cat_desc {
@@ -162,9 +182,9 @@
 	.tickercontainer { /* the outer div with the black border */
 		border: 1px solid #000;
 		background: #fff; 
-		width: 100%; 
+		width: 95%; 
 		height: 27px; 
-		margin: 2em 0;
+		margin: 2em auto;;
 		padding: 0;
 		overflow: hidden; 
 	}
@@ -172,7 +192,7 @@
 		position: relative;
 		left: 10px;
 		top: 8px;
-		width: 718px;
+		width: 90%;
 		overflow: hidden;
 	}
 	ul.article_newsticker { /* that's your list */
@@ -180,7 +200,7 @@
 		left: 750px;
 		font: bold 10px Verdana;
 		list-style-type: none;
-		margin: 0;
+		margin: 0 auto;
 		padding: 0;
 	}
 	ul.article_newsticker li {
