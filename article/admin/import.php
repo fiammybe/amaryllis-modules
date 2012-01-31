@@ -179,7 +179,7 @@ function article_import_smartsection_files() {
 
 function article_import_linked_tags() {
 	$sprocketsModule = icms_getModuleInfo("sprockets");
-	if($sprocketsModule->registerClassPath(TRUE)) {
+	if(icms_get_module_status($sprocketsModule->getVar("dirname"))) {
 		$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
 		$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
 		$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname='smartsection'";
