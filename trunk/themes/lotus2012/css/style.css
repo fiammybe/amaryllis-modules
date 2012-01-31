@@ -525,7 +525,7 @@ input[type="submit"], input[type="reset"], input[type="button"] {
 	
 input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover {opacity:0.9;}
 
-
+/*Comments */
 .ncomment {
 	padding-top: 20px;
 	padding-right: 20px;
@@ -576,7 +576,19 @@ input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hove
 padding-left:15px;
 padding-bottom:20px;
 }
-
+/* Tooltip box */ 
+.caption-text img {float: right; padding-top: 2px;} 
+span.helptext {position: absolute; right: 50px; z-index: 9000; background-color:#000; outline:1px solid #669; border:2px solid #fff; padding:10px 15px; width:200px; display:none; color:#fff; text-align:left; font-size:12px; font-weight:normal; 
+/* outline radius for mozilla/firefox only */  
+outline-radius:4px;  
+-moz-outline-radius:4px;  
+-webkit-outline-radius:4px; 
+/* opacity for tooltip box */  
+filter:alpha(opacity=70); 
+-moz-opacity:0.75; 
+-khtml-opacity: 0.75; 
+opacity: 0.75; 
+}
 /* CSS for the "article"-module */
 .viewmore{
 	float: right; 
@@ -591,11 +603,16 @@ padding-bottom:20px;
 .single_article_spot{
 	float:left;	
 	margin:15px 5px 10px 0;
-	width: 130px;	
-
+	width: 128px;	
+	height: 180px;
+	border: 1px solid #bebebe; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+}
+.single_article_spot :hover{
+ background-color: #eee;
 }
 .article_img_spot{
 	text-align: center;
+	border: 1px solid #bebebe; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
 }
 .article_img_spot img:hover{
 	opacity:0.7;
@@ -605,44 +622,53 @@ padding-bottom:20px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 10em;
+  width: 9em;
+  padding-left: 5px;
+  font-weight: bold;
+  padding-bottom: 3px;
+}
+.article_title_spot a:hover{
+	text-decoration:underline !important; 
 }
 .article_teaser_spot{
   overflow: hidden;
   text-overflow: ellipsis;
   height: 5em; 
+  padding-left: 5px;
 }
+.article_informations_spot{
+	text-align: center;
+	margin-top: 5px;
+	padding: 2px;	
+	font-size: 0.8em;
+}
+
 /* sliding gallery for articles*/
-#myGallery
-{
+#myGallery{
 	width: 760px !important;
 	height: 345px;
 	z-index:5;
 	display: none;	
 }
 
-.jdGallery
-{
+.jdGallery{
 	overflow: hidden;
 	position: relative;
 }
 
-.jdGallery img
-{
+.jdGallery img{
 	border: 0;
 	margin: 0;
 }
 
-.jdGallery .slideElement
-{
+.jdGallery .slideElement{
 	width: 100%;
 	height: 100%;
 	background-color: #fff;
 	background-repeat: no-repeat;
 }
 
-.jdGallery .loadingElement
-{
+.jdGallery .loadingElement{
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -653,8 +679,7 @@ padding-bottom:20px;
 	background-position: center center;
 }
 
-.jdGallery .slideInfoZone
-{
+.jdGallery .slideInfoZone{
 	position: absolute;
 	z-index: 10;
 	width: 100%;
@@ -668,13 +693,11 @@ padding-bottom:20px;
 	overflow: hidden;
 }
 
-* html .jdGallery .slideInfoZone
-{
+* html .jdGallery .slideInfoZone{
 	bottom: -1px;
 }
 
-.jdGallery .slideInfoZone h2
-{
+.jdGallery .slideInfoZone h2{
 	padding: 0;	
 	margin: 0;
 	margin: 2px 5px;
@@ -682,8 +705,7 @@ padding-bottom:20px;
 	color: inherit;
 }
 
-.jdGallery .slideInfoZone p
-{
+.jdGallery .slideInfoZone p{
 	padding: 0;
 	margin: 2px 5px;
 	color: #eee;
@@ -693,8 +715,7 @@ padding-bottom:20px;
  	 width: 50em;
 }
 
-.jdGallery div.carouselContainer
-{
+.jdGallery div.carouselContainer{
 	position: absolute;
 	height: 135px;
 	width: 100%;
@@ -704,8 +725,7 @@ padding-bottom:20px;
 	top: 0;
 }
 
-.jdGallery a.carouselBtn
-{
+.jdGallery a.carouselBtn{
 	position: absolute;
 	bottom: 0;
 	right: 30px;
@@ -719,8 +739,7 @@ padding-bottom:20px;
 	cursor: pointer;
 }
 
-.jdGallery .carousel
-{
+.jdGallery .carousel{
 	position: absolute;
 	width: 100%;
 	margin: 0px;
@@ -733,14 +752,12 @@ padding-bottom:20px;
 	overflow: hidden;
 }
 
-.jdExtCarousel
-{
+.jdExtCarousel{
 	overflow: hidden;
 	position: relative;
 }
 
-.jdGallery .carousel .carouselWrapper, .jdExtCarousel .carouselWrapper
-{
+.jdGallery .carousel .carouselWrapper, .jdExtCarousel .carouselWrapper{
 	position: absolute;
 	width: 100%;
 	height: 78px;
@@ -749,13 +766,11 @@ padding-bottom:20px;
 	overflow: hidden;
 }
 
-.jdGallery .carousel .carouselInner, .jdExtCarousel .carouselInner
-{
+.jdGallery .carousel .carouselInner, .jdExtCarousel .carouselInner{
 	position: relative;
 }
 
-.jdGallery .carousel .carouselInner .thumbnail, .jdExtCarousel .carouselInner .thumbnail
-{
+.jdGallery .carousel .carouselInner .thumbnail, .jdExtCarousel .carouselInner .thumbnail{
 	cursor: pointer;
 	background: #000;
 	background-position: center center;
@@ -763,8 +778,7 @@ padding-bottom:20px;
 	border: solid 1px #fff;
 }
 
-.jdGallery .carousel .label, .jdExtCarousel .label
-{
+.jdGallery .carousel .label, .jdExtCarousel .label{
 	font-size: 13px;
 	position: absolute;
 	bottom: 5px;
@@ -773,20 +787,17 @@ padding-bottom:20px;
 	margin: 0;
 }
 
-.jdGallery .carousel .label .number, .jdExtCarousel .label .number
-{
+.jdGallery .carousel .label .number, .jdExtCarousel .label .number{
 	color: #b5b5b5;
 }
 
-.jdGallery a
-{
+.jdGallery a{	
 	font-size: 100%;
 	text-decoration: none;
 	color: inherit;
 }
 
-.jdGallery a.right, .jdGallery a.left
-{
+.jdGallery a.right, .jdGallery a.left{
 	position: absolute;
 	height: 99%;
 	width: 25%;
@@ -798,21 +809,18 @@ padding-bottom:20px;
 	opacity: 0.2;
 }
 
-* html .jdGallery a.right, * html .jdGallery a.left
-{
+* html .jdGallery a.right, * html .jdGallery a.left{
 	filter:alpha(opacity=50);
 }
 
-.jdGallery a.right:hover, .jdGallery a.left:hover
-{
+.jdGallery a.right:hover, .jdGallery a.left:hover{
 	filter:alpha(opacity=80);
 	-moz-opacity:0.8;
 	-khtml-opacity: 0.8;
 	opacity: 0.8;
 }
 
-.jdGallery a.left
-{
+.jdGallery a.left{
 	left: 0;
 	top: 0;
 	background: url('img/fleche1.png') no-repeat center left;
@@ -820,8 +828,7 @@ padding-bottom:20px;
 
 * html .jdGallery a.left { background: url('img/fleche1.gif') no-repeat center left; }
 
-.jdGallery a.right
-{
+.jdGallery a.right{
 	right: 0;
 	top: 0;
 	background: url('img/fleche2.png') no-repeat center right;
@@ -829,16 +836,14 @@ padding-bottom:20px;
 
 * html .jdGallery a.right { background: url('img/fleche2.gif') no-repeat center right; }
 
-.jdGallery a.open
-{
+.jdGallery a.open{
 	left: 0;
 	top: 0;
 	width: 100%;
 	height: 100%;
 }
 
-.withArrows a.open
-{
+.withArrows a.open{
 	position: absolute;
 	top: 0;
 	left: 25%;
