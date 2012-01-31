@@ -59,28 +59,30 @@ $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if(in_array($clean_op, $valid_op)) {
 	switch ($clean_op) {
 		case 'getByTags':
-			$clean_tag_id = isset($_GET['tag']) ? filter_input(INPUT_GET, 'tag', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, icms::$module->config['show_images'], 'weight', 'ASC', FALSE, $clean_tag_id);
-			$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
-			$icmsTpl->assign('album_image_rows', $album_image_rows);
-			$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
-			$album_image_margins = 'align="center" style="display:inline-block; margin: 0px ' . $albumConfig['thumbnail_margin_right'] . 'px 0px ' . $albumConfig['thumbnail_margin_left'] . 'px;"';
-			$icmsTpl->assign('album_row_margins', $album_row_margins);
-			$icmsTpl->assign('album_image_margins', $album_image_margins);
-			$icmsTpl->assign('byTags', TRUE);
-			
-			$images_count = count($images);
-			$extra_arg = 'tag=' . $clean_tag_id;
-			$imagesnav = new icms_view_PageNav($images_count, $albumConfig['show_images'], $clean_img_start, 'img_nav', $extra_arg);
-			
-			/**
-			 * check if Sprockets Module can be used and if it's available
-			 */
-			$sprocketsModule = icms_getModuleInfo("sprockets");
-			if($albumConfig['use_sprockets'] == 1 && $sprocketsModule) {
-				$icmsTpl->assign("sprockets_module", TRUE);
+			$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+			if($albumConfig['use_sprockets'] == 1 && $sprocketsModule->registerClassPath(TRUE)) {
+				$clean_tag_id = isset($_GET['tag']) ? filter_input(INPUT_GET, 'tag', FILTER_SANITIZE_NUMBER_INT) : 0;
+				$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, icms::$module->config['show_images'], 'weight', 'ASC', FALSE, $clean_tag_id);
+				$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
+				$icmsTpl->assign('album_image_rows', $album_image_rows);
+				$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
+				$album_image_margins = 'align="center" style="display:inline-block; margin: 0px ' . $albumConfig['thumbnail_margin_right'] . 'px 0px ' . $albumConfig['thumbnail_margin_left'] . 'px;"';
+				$icmsTpl->assign('album_row_margins', $album_row_margins);
+				$icmsTpl->assign('album_image_margins', $album_image_margins);
+				$icmsTpl->assign('byTags', TRUE);
+				
+				$images_count = count($images);
+				$extra_arg = 'tag=' . $clean_tag_id;
+				$imagesnav = new icms_view_PageNav($images_count, $albumConfig['show_images'], $clean_img_start, 'img_nav', $extra_arg);
+				
+				/**
+				 * check if Sprockets Module can be used and if it's available
+				 */
+				$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+				if($albumConfig['use_sprockets'] == 1 && $sprocketsModule) {
+					$icmsTpl->assign("sprockets_module", TRUE);
+				}
 			}
-			
 			break;
 		
 		default:
@@ -114,8 +116,8 @@ if(in_array($clean_op, $valid_op)) {
 				/**
 				 * check if Sprockets Module can be used and if it's available
 				 */
-				$sprocketsModule = icms_getModuleInfo("sprockets");
-				if($albumConfig['use_sprockets'] == 1 && $sprocketsModule) {
+				$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+				if($albumConfig['use_sprockets'] == 1 && $sprocketsModule->registerClassPath(TRUE)) {
 					$icmsTpl->assign("sprockets_module", TRUE);
 				}
 				/**

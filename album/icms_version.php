@@ -201,7 +201,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ALBUM_USE_SPROCKETS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
-								'default' 		=>  1
+								'default' 		=>  0
 							);
 $i++;
 $modversion['config'][$i] = array(

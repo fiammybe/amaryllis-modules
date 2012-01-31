@@ -55,9 +55,9 @@ class AlbumImages extends icms_ipf_Object {
 		$path = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$this->setImageDir($url, $path);
 		
-		$sprocketsModule = icms_getModuleInfo("sprockets");
-		if($albumConfig['use_sprockets'] == 1 && $sprocketsModule) {
-			$this->setControl("img_tags", array("name" => "select_multi", "itemhandler" => "images", "method" => "getImagesTags", "module" => "album"));
+		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+		if($albumConfig['use_sprockets'] == 1 && $sprocketsModule->registerClassPath(TRUE)) {
+			$this->setControl("img_tags", array("name" => "select_multi", "itemHandler" => "images", "method" => "getImagesTags", "module" => "album"));
 		} else {
 			$this->hideFieldFromForm("img_tags");
 			$this->hideFieldFromSingleView("img_tags");
@@ -169,8 +169,8 @@ class AlbumImages extends icms_ipf_Object {
 	
 	public function getImagesTags($itemlink = FALSE) {
 		$tags = $this->getVar('img_tags', 's');
-		$sprocketsModule = icms_getModuleInfo("sprockets");
-		if($sprocketsModule && $tags != "") {
+		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+		if($sprocketsModule->registerClassPath(TRUE) && $tags != "") {
 			$sprockets_tag_handler = icms_getModuleHandler ( 'tag', $sprocketsModule->getVar("dirname"), 'sprockets' );
 			$ret = array();
 			if($itemlink == FALSE) {

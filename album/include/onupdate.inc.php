@@ -120,6 +120,15 @@ function album_indexpage() {
 	
 }
 
+function copySitemapPlugin() {
+	$dir = ICMS_ROOT_PATH . '/modules/album/extras/modules/sitemap/';
+	$file = 'album.php';
+	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
+	if(is_dir($plugin_folder)) {
+		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////// UPDATE ALBUM MODULE /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,6 +152,9 @@ function icms_module_install_album($module) {
 	
 	//prepare indexpage
 	album_indexpage();
+	
+	// copy sitemap plugin, if sitemap is installed
+	copySitemapPlugin();
 
 	return true;
 }

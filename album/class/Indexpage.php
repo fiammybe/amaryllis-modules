@@ -55,8 +55,8 @@ class AlbumIndexpage extends icms_ipf_Object {
 		$indeximage = $this->getVar('index_image', 'e');
 		if (!empty($indeximage)) {
 			$image_tag = ALBUM_UPLOAD_URL . 'indeximages/' . $indeximage;
+			return '<div class="album_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
-		return '<div class="album_indeximage"><img src="' . $image_tag . '" /></div>';
 	}
 	
 	public function getIndexHeader() {
