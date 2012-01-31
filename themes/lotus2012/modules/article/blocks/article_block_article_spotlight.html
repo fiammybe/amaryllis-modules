@@ -2,7 +2,9 @@
 <{foreach item=article_article from=$block.article_spotlight}>
 	<div class="single_article_spot">	
 		<div class="article_img_spot">
+			<a href="<{$article_article.itemURL}>" title="<{$article_article.article_title}>">
 			<img class="article_b1_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+			</a>
 		</div>
 		<div class="article_title_spot">
 			<a href="<{$article_article.itemURL}>" title="<{$article_article.article_title}>"><{$article_article.article_title}></a>
@@ -10,7 +12,7 @@
 		<div class="article_teaser_spot">
 			<{$article_article.teaser}>
 		</div> 
-		<div class="article_informations">
+		<div class="article_informations_spot">
 			(<{$article_article.published_on}>&nbsp;|&nbsp;<{$article_article.publisher}>)
 		</div>
 	</div>					
