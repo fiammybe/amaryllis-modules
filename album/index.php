@@ -117,7 +117,7 @@ if(in_array($clean_op, $valid_op)) {
 				 * check if Sprockets Module can be used and if it's available
 				 */
 				$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-				if($albumConfig['use_sprockets'] == 1 && $sprocketsModule->registerClassPath(TRUE)) {
+				if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
 					$icmsTpl->assign("sprockets_module", TRUE);
 				}
 				/**
