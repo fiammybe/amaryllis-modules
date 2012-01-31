@@ -67,6 +67,7 @@ $icmsTpl->assign('article_index', $index);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $clean_article_id = isset($_GET['article_id']) ? filter_input(INPUT_GET, 'article_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start', FILTER_SANITIZE_NUMBER_INT) : 0;
 
 $valid_op = array ('mod', 'addarticle', 'del');

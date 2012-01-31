@@ -84,15 +84,21 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	/**
 	 * some ways to retrieve articles
 	 */
-	public function getList($article_active = null) {
+	public function getList($article_active = null, $approve = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($article_active)) {
 			$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
 		}
+		if (isset($approve)) {
+			$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
+		}
+		
 		$articles = $this->getObjects($criteria, TRUE);
 		$ret[0] = '-----------';
 		foreach(array_keys($articles) as $i) {
-			$ret[$i] = $articles[$i]->getVar('article_title');
+			if($articles[$i]->accessGranted()) {
+				$ret[$i] = $articles[$i]->getVar('article_title');
+			}
 		}
 		return $ret;
 	}
@@ -102,8 +108,8 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo();
 		if ($start) $criteria->setStart($start);
 		if ($limit) $criteria->setLimit((int)$limit);
-		$criteria->setSort($order);
-		$criteria->setOrder($sort);
+		if ($order) $criteria->setSort($order);
+		if ($sort) $criteria->setOrder($sort);
 		if ($article_publisher) {
 			$tray = new icms_db_criteria_Compo();
 			$tray->add(new icms_db_criteria_Item("article_publisher", '%:"' . $article_publisher . '";%', "LIKE"));
@@ -268,6 +274,13 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	public function getCategories() {
+		$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$categories = $article_category_handler->getCategoryListForPid($groups=array(), 'category_grpperm', TRUE, TRUE, FALSE, NULL, FALSE);
+		return $categories;
+	}
+	
 	/**
 	 * handle some object fields
 	 */
@@ -310,7 +323,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function getRelated() {
-		$related = $this->getList(TRUE);
+		$related = $this->getList(TRUE, TRUE);
 		return $related;
 	}
 	
