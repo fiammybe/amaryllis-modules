@@ -69,9 +69,6 @@ define("_AM_ARTICLE_INDEX", "Article Index");
 define("_AM_ARTICLE_PREMISSION_ARTICLE_VIEW", "View Articles");
 define("_AM_ARTICLE_PREMISSION_CATEGORY_VIEW", "View Categories");
 define("_AM_ARTICLE_PREMISSION_CATEGORY_SUBMIT", "Submit Articles");
-define("", "");
-define("", "");
-define("", "");
 // import site
 define("_AM_ARTICLE_IMPORT_SMARTSECTION_WARNING", "Please handle carefully! You should have a clean updated ImpressCMS 1.3.x site.<br />
 Please beware, that you don't have used 'Downloads'-Module before and you don't have created articles/files/categories!<br />
