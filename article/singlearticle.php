@@ -23,16 +23,18 @@ function addtags($clean_tag_id = 0, $clean_article_id = 0){
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
 	$articleObj = $article_article_handler->get($clean_article_id);
 	$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-	$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
-	$tagObj = $sprockets_tag_handler->get($clean_tag_id);
-	$tagObj->hideFieldFromForm(array("label_type", "parent_id", "navigation_element", "rss", "short_url", "meta_description", "meta_keywords"));
-	if ($tagObj->isNew()){
-		$tagObj->setVar("label_type", 0);
-		$tagObj->setVar("navigation_element", 0);
-		$tagObj = $tagObj->getSecureForm(_MD_ARTICLE_TAG_ADD, 'addtags', ARTICLE_URL . "submit.php?op=addtags&article_id=" . $articleObj->id() , 'OK', TRUE, TRUE);
-		$tagObj->assign($icmsTpl, 'article_tag_form');
-	} else {
-		exit;
+	if(icms_get_module_status("sprockets")) {
+		$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
+		$tagObj = $sprockets_tag_handler->get($clean_tag_id);
+		$tagObj->hideFieldFromForm(array("label_type", "parent_id", "navigation_element", "rss", "short_url", "meta_description", "meta_keywords"));
+		if ($tagObj->isNew()){
+			$tagObj->setVar("label_type", 0);
+			$tagObj->setVar("navigation_element", 0);
+			$tagObj = $tagObj->getSecureForm(_MD_ARTICLE_TAG_ADD, 'addtags', ARTICLE_URL . "submit.php?op=addtags&article_id=" . $articleObj->id() , 'OK', TRUE, TRUE);
+			$tagObj->assign($icmsTpl, 'article_tag_form');
+		} else {
+			exit;
+		}
 	}
 }
 
