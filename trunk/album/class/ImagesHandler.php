@@ -125,7 +125,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	public function getImagesTags() {
 		global $albumConfig;
 		$sprocketsModule = icms_getModuleInfo("sprockets");
-		if($sprocketsModule && $albumConfig['use_sprockets'] == 1) {
+		if($sprocketsModule->registerClassPath(TRUE) && $albumConfig['use_sprockets'] == 1) {
 			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->add(new icms_db_criteria_Item("label_type", 0));
