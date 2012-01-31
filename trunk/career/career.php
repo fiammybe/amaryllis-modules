@@ -70,7 +70,7 @@ $career_career_handler = icms_getModuleHandler( "career", icms::$module->getVar(
 $careerObj = $career_career_handler->get($clean_career_id);
 
 if(is_object($careerObj) && !$careerObj->isNew() && $careerObj->accessGranted()) {
-	$career_career_handler->updateCounter($clean_department_id);
+	$career_career_handler->updateCounter($clean_career_id);
 	$career = $careerObj->toArray();
 	$icmsTpl->assign("career", $career);
 	$departmentObj = $career_department_handler->get($careerObj->getVar("career_did", "e"));
