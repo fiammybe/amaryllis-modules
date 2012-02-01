@@ -12,12 +12,12 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-define("_MI_VISITORVOICE_NAME", "visitorvoice");
-define("_MI_VISITORVOICE_DSC", "ImpressCMS Simple visitorvoice");
+define("_MI_VISITORVOICE_NAME", "VisitorVoice");
+define("_MI_VISITORVOICE_DSC", "ImpressCMS Simple VisitorVoice");
 // Templates
-define("_MI_VISITORVOICE_VISITORVOICE_TPL", "Visitorvoice index page");
-define("_MI_VISITORVOICE_ADMIN_TPL", "visitorvoice admin Template");
-define("_MI_VISITORVOICE_REQUIREMENTS_TPL", "visitorvoice requirements");
+define("_MI_VISITORVOICE_VISITORVOICE_TPL", "VisitorVoice index page");
+define("_MI_VISITORVOICE_ADMIN_TPL", "VisitorVoice admin Template");
+define("_MI_VISITORVOICE_REQUIREMENTS_TPL", "VisitorVoice requirements");
 // Blocks
 define("_MI_VISITORVOICE_BLOCK_RECENT_ENTRIES", "Last entries");
 define("_MI_VISITORVOICE_BLOCK_RECENT_ENTRIES_DSC", "Displaying recent entries in a block");
@@ -57,10 +57,6 @@ define("_MI_VISITORVOICE_DISPLAY_MAIL_IMGPROT", "usual email without checking ba
 define("_MI_VISITORVOICE_DISPLAY_MAIL_SPAMPROT_BANNED", "Text spam protected with checking banned list");
 define("_MI_VISITORVOICE_DISPLAY_MAIL_IMGPROT_BANNED", "usual email with checking banned list");
 // ACP menu
-define("_MI_VISITORVOICE_MENU_VISITORVOICE", "Visitorvoice");
+define("_MI_VISITORVOICE_MENU_VISITORVOICE", "VisitorVoice");
 define("_MI_VISITORVOICE_MENU_INDEXPAGE", "Edit Indexpage");
 define("_MI_VISITORVOICE_MENU_TEMPLATES", "Templates");
-
-
-
-

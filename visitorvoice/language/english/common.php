@@ -14,7 +14,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 // visitorvoice
 define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_UID", "Username");
-define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_UID_DSC", "If the Visitorvoice entry is from a valid user..");
+define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_UID_DSC", "If the VisitorVoice entry is from a valid user..");
 define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_NAME", "Name");
 define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_NAME_DSC", "");
 define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_TITLE", "Title");
@@ -22,7 +22,7 @@ define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_TITLE_DSC", "");
 define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_EMAIL", "E-Mail");
 define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_EMAIL_DSC", "Enter a valid E-Mail");
 define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_URL", "Homepage");
-define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_URL_DSC", "You have a Hompage and want to share? Enter a valid URL here.");
+define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_URL_DSC", "You have a Hompage and want to share? Enter a valid URL here and start with 'http://'");
 define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_ENTRY", "Message");
 define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_ENTRY_DSC", "You can use some HTML for your message: &lt;b&gt; for <b>bold</b> and &lt;i&gt; for <i>italic</i> Text. &lt;a&gt; for a link. ALL other tags will completly be stripped from message.");
 define("_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_PID", "Parent entry");
