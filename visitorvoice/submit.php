@@ -87,7 +87,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$visitorvoice_id = isset($_GET['visitorvoice_id']) ? filter_input(INPUT_GET, 'visitorvoice_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$visitorvoice_pid = isset($_GET['visitorvoice_pid']) ? filter_input(INPUT_GET, 'visitorvoice_pid', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$visitorvoice_visitorvoice_handler = icms_getModuleHandler("visitorvoice", basename(dirname(__FILE__)), "visitorvoice");
-			editmessage($clean_visitorvoice_id, $visitorvoice_pid);
+			editmessage($visitorvoice_id, $visitorvoice_pid);
 			include_once ICMS_ROOT_PATH . '/footer.php';
 			break;
 	}
