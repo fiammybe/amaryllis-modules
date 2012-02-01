@@ -35,7 +35,7 @@
 		<{/if}>
 		<{if $entry.img}>
 		<div class="visitorvoice_image">
-			<p><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></p>
+			<p><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></p>
 		</div> <!-- E N D .VISITORVOICE_image -->
 		<{/if}>
 	</div> <!-- E N D .VISITORVOICE_row -->
