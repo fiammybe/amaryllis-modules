@@ -94,5 +94,6 @@ $icmsTpl->assign("visitorvoice_is_admin", icms_userIsAdmin(VISITORVOICE_DIRNAME)
 $icmsTpl->assign('visitorvoice_url', VISITORVOICE_URL);
 $icmsTpl->assign('visitorvoice_images_url', VISITORVOICE_IMAGES_URL);
 $xoTheme->addScript('/modules/' . VISITORVOICE_DIRNAME . '/scripts/visitorvoice.js', array('type' => 'text/javascript'));
+$xoTheme->addScript('/modules/' . VISITORVOICE_DIRNAME . '/scripts/jquery.curvycorners.packed.js', array('type' => 'text/javascript'));
 
 include_once ICMS_ROOT_PATH . '/footer.php';

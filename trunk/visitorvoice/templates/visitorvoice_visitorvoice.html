@@ -1,3 +1,9 @@
+<script type="text/javascript">
+//<![CDATA[
+SetSpeechBubble();
+//]]>
+</script>
+
 <link href="<{$visitorvoice_url}>module_visitorvoice.css" rel="stylesheet" type="text/css" />
 
 <{if $visitorvoice_show_breadcrumb}>
@@ -17,16 +23,20 @@
 <{$visitorvoice_index.header}>
 
 <{$visitorvoice_index.heading}>
-
+<div class="visitorvoice_submit">
+	<span class="visitorvoice_link">
+		<a class="<{if $submit_link}>submit_link<{else}>register_link<{/if}>"><{$smarty.const._MD_VISITORVOICE_ADD_ENTRY}></a>
+	</span>
+</div>
 <{if $entries}>
+	<div class="speech_bubble">
 	<div class="visitorvoice_entries">
 		<{foreach item=entry from=$entries}>
 			<{includeq file="db:visitorvoice_singleentry.html"}>
 			<{if $entry.reply && $visitorvoice_is_admin}>
-				
-				<span class="visitorvoice_reply_link">
-					<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_VISITORVOICE_REPLY}></a>
-				</span>
+					<div style="padding: 10px 0 25px 15px;">
+						<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_VISITORVOICE_REPLY}></a>
+					</div>
 			<{/if}>
 			
 			<{if $entry.hassub}>
@@ -38,6 +48,7 @@
 			<{/if}>
 		
 		<{/foreach}>
+	</div>
 	</div>
 <{/if}>
 <div class="visitorvoice_submit">
