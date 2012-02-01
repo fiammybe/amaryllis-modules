@@ -23,12 +23,13 @@ SetSpeechBubble();
 <{$visitorvoice_index.header}>
 
 <{$visitorvoice_index.heading}>
-<div class="visitorvoice_submit">
-	<span class="visitorvoice_link">
-		<a class="<{if $submit_link}>submit_link<{else}>register_link<{/if}>"><{$smarty.const._MD_VISITORVOICE_ADD_ENTRY}></a>
-	</span>
-</div>
+
 <{if $entries}>
+	<div class="visitorvoice_submit">
+		<span class="visitorvoice_link">
+			<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" href="<{$submit_link}>"><{$smarty.const._MD_VISITORVOICE_ADD_ENTRY}></a>
+		</span>
+	</div>
 	<div class="speech_bubble">
 	<div class="visitorvoice_entries">
 		<{foreach item=entry from=$entries}>
@@ -51,11 +52,14 @@ SetSpeechBubble();
 	</div>
 	</div>
 <{/if}>
-<div class="visitorvoice_submit">
-	<span class="visitorvoice_link">
-		<a class="<{if $submit_link}>submit_link<{else}>register_link<{/if}>"><{$smarty.const._MD_VISITORVOICE_ADD_ENTRY}></a>
-	</span>
-</div>
+
+<{if !$smarty.get.op == addreply}>
+	<div class="visitorvoice_submit">
+		<span class="visitorvoice_link">
+			<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" href="<{$submit_link}>"><{$smarty.const._MD_VISITORVOICE_ADD_ENTRY}></a>
+		</span>
+	</div>
+<{/if}>
 <div class="ui-helper-hidden visitorvoice_form">
 	<{if $visitorvoice_form}>
 		<{includeq file='db:system_common_form.html' form=$visitorvoice_form}>
