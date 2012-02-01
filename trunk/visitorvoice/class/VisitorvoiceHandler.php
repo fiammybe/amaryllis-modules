@@ -28,8 +28,18 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		global $visitorvoiceConfig;
 		parent::__construct($db, "visitorvoice", "visitorvoice_id", "visitorvoice_title", "visitorvoice_entry", "visitorvoice");
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/visitorvoice/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, $visitorvoiceConfig['image_file_size'], $visitorvoiceConfig['image_upload_width'], $visitorvoiceConfig['image_upload_height']);
+	}
+	
+	public function getImagePath() {
+		$dir = $this->_uploadPath;
+		if (!file_exists($dir)) {
+			$moddir = basename(dirname(dirname(__FILE__)));
+			icms_core_Filesystem::mkdir($dir, "0777", ICMS_ROOT_PATH . '/uploads/' . $moddir . '/' );
+		}
+		return $dir . "/";
 	}
 	
 	public function changeApprove($visitorvoice_id) {

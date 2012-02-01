@@ -157,12 +157,6 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		}
 		return $link;
 	}
-
-	public function getReplyForm() {
-		$pid = $this->getVar("visitorvoice_id", "e");
-		//$sform = $this->getSecureForm(_MD_VISITORVOICE_CREATE, "addentry", 'submit.php?op=addentry&visitorvoice_pid=' . $pid, FALSE, TRUE);
-		return $sform;
-	}
 	
 	public function getItemLink() {
 		$id = $this->getVar("visitorvoice_id", "e");

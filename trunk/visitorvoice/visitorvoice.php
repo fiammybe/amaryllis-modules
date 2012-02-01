@@ -78,18 +78,21 @@ if($visitorvoiceConfig['use_moderation'] == 1) {
 if($visitorvoiceConfig["show_avatar"] == 1) {
 	$icmsTpl->assign("show_avatar", TRUE);
 }
-if($visitorvoiceConfig["guest_entry"] == 1) {
-	$icmsTpl->assign("submit_link", TRUE);
+if($guestbookConfig["guest_entry"] == 1) {
+	$icmsTpl->assign("link_class", TRUE);
+	$icmsTpl->assign("submit_link", VISITORVOICE_URL . "submit.php?op=addentry");
 } else {
 	if(is_object(icms::$user)) {
-		$icmsTpl->assign("submit_link", TRUE);
+		$icmsTpl->assign("link_class", TRUE);
+		$icmsTpl->assign("submit_link", VISITORVOICE_URL . "submit.php?op=addentry");
 	} else {
-	$icmsTpl->assign("submit_link", FALSE);
+		$icmsTpl->assign("link_class", FALSE);
+		$icmsTpl->assign("submit_link", ICMS_URL . "/user.php");
 	}
 }
 editmessage();
 $icmsTpl->assign("visitorvoice_module_home", '<a href="' . ICMS_URL . '/modules/' . icms::$module->getVar("dirname") . '/">' . icms::$module->getVar("name") . '</a>');
-$icmsTpl->assign("visitorvoice_adminpage", '<a href="' . VISITORVOICE_ADMIN_URL . '">' . _MD_VISITORVOICE_ADMIN_PAGE . '</a>');
+$icmsTpl->assign("visitorvoice_adminpage", '<a href="' . VISITORVOICE_ADMIN_URL . 'visitorvoice.php">' . _MD_VISITORVOICE_ADMIN_PAGE . '</a>');
 $icmsTpl->assign("visitorvoice_is_admin", icms_userIsAdmin(VISITORVOICE_DIRNAME));
 $icmsTpl->assign('visitorvoice_url', VISITORVOICE_URL);
 $icmsTpl->assign('visitorvoice_images_url', VISITORVOICE_IMAGES_URL);

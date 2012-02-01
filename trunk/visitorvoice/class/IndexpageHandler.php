@@ -42,7 +42,8 @@ class VisitorvoiceIndexpageHandler extends icms_ipf_Handler {
 	public function getImagePath() {
 		$dir = $this->_uploadPath;
 		if (!file_exists($dir)) {
-			icms_core_Filesystem::mkdir($dir);
+			$moddir = basename(dirname(dirname(__FILE__)));
+			icms_core_Filesystem::mkdir($dir, "0777", ICMS_ROOT_PATH . '/uploads/' . $moddir . '/' );
 		}
 		return $dir . "/";
 	}
