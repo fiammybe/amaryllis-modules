@@ -21,3 +21,5 @@ define("_MD_VISITORVOICE_PUBLISHED_BY", "Published by");
 define("_MD_VISITORVOICE_PUBLISHED_ON", "Published on");
 define("_MD_VISITORVOICE_PERM", "Sorry, no permissions");
 define("_MD_VISITORVOICE_PERMISSION", "You currently have no permissions. Please login or register to submit an entry.");
+define("_MD_VISITORVOICE_CREATED", "Visitorvoice entry created, thank you.");
+define("_MD_VISITORVOICE_MODIFIED", "Visitorvoice entry ,modified.");
