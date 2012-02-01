@@ -1,43 +1,37 @@
+<div class="bubble">
 <div id="entry_<{$entry.id}>" class="visitorvoice_entry">
 	<!-- title -->
-	<div class="visitorvoice_title"><{$entry.title}></div>
+	<div class="block-title"><{$entry.title}></div>
 	
 	<div class="visitorvoice_row">
-		<div class="visitorvoice_uinfo">
+		<div class="visitorvoice_message">
+			<span class="visitorvoice_message">
+				<{$entry.message}>
+			</span>
+		</div> <!-- E N D .VISITORVOICE_message -->
+		<{if $visitorvoice_is_admin}>
+			<div class="entry_info">
+				<span class="visitorvoice_ip">
+					<{$entry.ip}> <{$smarty.const._MD_VISITORVOICE_PUBLISHED_BY}>: <{$entry.published_by}>
+				</span>
+			</div> <!-- E N D .VISITORVOICE_info -->
+		<{/if}>
+		<{if $entry.email}>
+			<div class="visitorvoice_email">
+				<span><{$entry.email}></span>
+			</div> <!-- E N D .VISITORVOICE_email -->
+		<{/if}>
 			<{if $show_avatar}>
 				<span class="visitorvoice_avatar">
 					<{$entry.avatar}>
 				</span>
 			<{/if}>
-			<span class="visitorvoice_publisher">
-				<{$smarty.const._MD_VISITORVOICE_PUBLISHED_BY}>&nbsp;:&nbsp;<{$entry.published_by}>
-			</span>
-			<span class="visitorvoice_published_date">
-				<{$smarty.const._MD_VISITORVOICE_PUBLISHED_ON}>&nbsp;:&nbsp;<{$entry.published_on}>
-			</span>
-		</div> <!-- E N D .VISITORVOICE_uinfo -->
-		<div class="visitorvoice_message">
-			<span class="entry_info">
-				<{if $visitorvoice_is_admin}>&nbsp;&nbsp;
-					<span class="visitorvoice_ip">
-						<{$entry.ip}>
-					</span>
-				<{/if}>
-			</span>
-			<span class="visitorvoice_message">
-				<{$entry.message}>
-			</span>
-		</div> <!-- E N D .VISITORVOICE_message -->
-		<{if $entry.homepage}>
-		<div class="visitorvoice_homepage">
-			<p><a href="<{$entry.homepage}>" title="<{$entry.homepage}>"><{$entry.homepage}></a></p>
-		</div> <!-- E N D .VISITORVOICE_homepage -->
-		<{/if}>
 		<{if $entry.img}>
-		<div class="visitorvoice_image">
-			<p><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></p>
-		</div> <!-- E N D .VISITORVOICE_image -->
+			<div class="visitorvoice_image">
+				<span><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></span>
+			</div> <!-- E N D .VISITORVOICE_image -->
 		<{/if}>
 	</div> <!-- E N D .VISITORVOICE_row -->
 </div> <!-- E N D .VISITORVOICE_entry -->
-
+</div>
+<p><strong><{$entry.name}> |<{if $entry.homepage}> <a href="<{$entry.homepage}>?&campaign=impresscms_visitorvoice" title="<{$entry.homepage}>"><{$entry.homepage}></a> |<{/if}> <{$entry.published_on}></strong></p>
