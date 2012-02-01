@@ -29,7 +29,7 @@
 	<div>
 		<{if $article.image}>
 			<div id="article_image">
-				<a class="article_screens" href="<{$article.image}>" title="<{$article.title}>">
+				<a class="article_screens" href="<{$article.image}>" title="<{$article.title}>" rel="lightbox">
 					<{resized_image file=$article.image width=$display_width height=$display_height fit="inside"}>
 				</a>
 			</div>
