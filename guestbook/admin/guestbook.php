@@ -101,7 +101,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$criteria = NULL;
 			}
 			
-			$objectTable = new icms_ipf_view_Table($guestbook_guestbook_handler, $criteria, array('edit'));
+			$objectTable = new icms_ipf_view_Table($guestbook_guestbook_handler, $criteria);
 			$objectTable->addColumn(new icms_ipf_view_Column("guestbook_approve", "center", 50, "guestbook_approve"));
 			$objectTable->addColumn(new icms_ipf_view_Column("guestbook_title"));
 			if($guestbookConfig["use_moderation"] == 1) {

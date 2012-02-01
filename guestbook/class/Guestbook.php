@@ -69,10 +69,10 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$active = $this->getVar('guestbook_approve', 'e');
 		if ($active == false) {
 			return '<a href="' . GUESTBOOK_ADMIN_URL . 'guestbook.php?guestbook_id=' . $this->getVar('guestbook_id') . '&amp;op=changeApprove">
-				<img src="' . DOWNLOADS_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
+				<img src="' . GUESTBOOK_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
 		} else {
 			return '<a href="' . GUESTBOOK_ADMIN_URL . 'guestbook.php?guestbook_id=' . $this->getVar('guestbook_id') . '&amp;op=changeApprove">
-				<img src="' . DOWNLOADS_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
+				<img src="' . GUESTBOOK_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
 		}
 	}
 	
@@ -150,12 +150,6 @@ class GuestbookGuestbook extends icms_ipf_Object {
 			$link = FALSE;
 		}
 		return $link;
-	}
-
-	public function getReplyForm() {
-		$pid = $this->getVar("guestbook_id", "e");
-		//$sform = $this->getSecureForm(_MD_GUESTBOOK_CREATE, "addentry", 'submit.php?op=addentry&guestbook_pid=' . $pid, FALSE, TRUE);
-		return $sform;
 	}
 	
 	public function getItemLink() {
