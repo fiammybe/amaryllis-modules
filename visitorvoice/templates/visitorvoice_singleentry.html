@@ -28,8 +28,16 @@
 				<{$entry.message}>
 			</span>
 		</div> <!-- E N D .VISITORVOICE_message -->
+		<{if $entry.homepage}>
+		<div class="visitorvoice_homepage">
+			<p><a href="<{$entry.homepage}>" title="<{$entry.homepage}>"><{$entry.homepage}></a></p>
+		</div> <!-- E N D .VISITORVOICE_homepage -->
+		<{/if}>
+		<{if $entry.img}>
+		<div class="visitorvoice_image">
+			<p><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></p>
+		</div> <!-- E N D .VISITORVOICE_image -->
+		<{/if}>
 	</div> <!-- E N D .VISITORVOICE_row -->
 </div> <!-- E N D .VISITORVOICE_entry -->
 
-<{$entry.homepage}>
-<{$entry.img}>
