@@ -1,4 +1,11 @@
+<script type="text/javascript">
+//<![CDATA[
+SetSpeechBubble();
+//]]>
+</script>
+
 <link href="<{$guestbook_url}>module_guestbook.css" rel="stylesheet" type="text/css" />
+
 <{if $guestbook_show_breadcrumb}>
 	<!-- module breadcrumb -->
 	<div class="guestbook_headertable">
@@ -18,14 +25,19 @@
 <{$guestbook_index.heading}>
 
 <{if $entries}>
+	<div class="guestbook_submit">
+		<span class="guestbook_link">
+			<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" href="<{$submit_link}>"><{$smarty.const._MD_GUESTBOOK_ADD_ENTRY}></a>
+		</span>
+	</div>
+	<div class="speech_bubble">
 	<div class="guestbook_entries">
 		<{foreach item=entry from=$entries}>
 			<{includeq file="db:guestbook_singleentry.html"}>
 			<{if $entry.reply && $guestbook_is_admin}>
-				
-				<span class="guestbook_reply_link">
-					<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_GUESTBOOK_REPLY}></a>
-				</span>
+					<div style="padding: 10px 0 25px 15px;">
+						<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_GUESTBOOK_REPLY}></a>
+					</div>
 			<{/if}>
 			
 			<{if $entry.hassub}>
@@ -38,12 +50,15 @@
 		
 		<{/foreach}>
 	</div>
+	</div>
 <{/if}>
-<div class="guestbook_submit">
-	<span class="guestbook_link">
-		<a class="<{if $submit_link}>submit_link<{else}>register_link<{/if}>"><{$smarty.const._MD_GUESTBOOK_ADD_ENTRY}></a>
-	</span>
-</div>
+<{if !$smarty.get.op == addreply}>
+	<div class="guestbook_submit">
+		<span class="guestbook_link">
+			<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" href="<{$submit_link}>"><{$smarty.const._MD_GUESTBOOK_ADD_ENTRY}></a>
+		</span>
+	</div>
+<{/if}>
 <div class="ui-helper-hidden guestbook_form">
 	<{if $guestbook_form}>
 		<{includeq file='db:system_common_form.html' form=$guestbook_form}>
@@ -59,6 +74,7 @@
 <{/if}>
 
 <{$guestbook_index.footer}>
+
 <{if $guestbook_reply_form}>
 	<{includeq file='db:system_common_form.html' form=$guestbook_reply_form}>
 <{/if}>

@@ -90,20 +90,24 @@ if($guestbookConfig["show_avatar"] == 1) {
 }
 
 if($guestbookConfig["guest_entry"] == 1) {
-	$icmsTpl->assign("submit_link", TRUE);
+	$icmsTpl->assign("link_class", TRUE);
+	$icmsTpl->assign("submit_link", GUESTBOOK_URL . "submit.php?op=addentry");
 } else {
 	if(is_object(icms::$user)) {
-		$icmsTpl->assign("submit_link", TRUE);
+		$icmsTpl->assign("link_class", TRUE);
+		$icmsTpl->assign("submit_link", GUESTBOOK_URL . "submit.php?op=addentry");
 	} else {
-	$icmsTpl->assign("submit_link", FALSE);
+		$icmsTpl->assign("link_class", FALSE);
+		$icmsTpl->assign("submit_link", ICMS_URL . "/user.php");
 	}
 }
 editmessage($clean_guestbook_id);
 $icmsTpl->assign("guestbook_module_home", '<a href="' . ICMS_URL . '/modules/' . icms::$module->getVar("dirname") . '/">' . icms::$module->getVar("name") . '</a>');
-$icmsTpl->assign("guestbook_adminpage", '<a href="' . GUESTBOOK_ADMIN_URL . '">' . _MD_GUESTBOOK_ADMIN_PAGE . '</a>');
+$icmsTpl->assign("guestbook_adminpage", '<a href="' . GUESTBOOK_ADMIN_URL . 'guestbook.php">' . _MD_GUESTBOOK_ADMIN_PAGE . '</a>');
 $icmsTpl->assign("guestbook_is_admin", icms_userIsAdmin(GUESTBOOK_DIRNAME));
 $icmsTpl->assign('guestbook_url', GUESTBOOK_URL);
 $icmsTpl->assign('guestbook_images_url', GUESTBOOK_IMAGES_URL);
 $xoTheme->addScript('/modules/' . GUESTBOOK_DIRNAME . '/scripts/guestbook.js', array('type' => 'text/javascript'));
+$xoTheme->addScript('/modules/' . GUESTBOOK_DIRNAME . '/scripts/jquery.curvycorners.packed.js', array('type' => 'text/javascript'));
 
 include_once ICMS_ROOT_PATH . '/footer.php';

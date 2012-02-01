@@ -27,15 +27,11 @@ function guestbook_upload_paths() {
 	
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$guestbook = ICMS_ROOT_PATH . '/uploads/guestbook';
-	if ( !is_dir( $guestbook . '/indeximages' ) ) {
-		mkdir( $guestbook . '/indeximages', 0777, true );
-		copy( ICMS_ROOT_PATH . '/uploads/index.html', ICMS_ROOT_PATH . '/uploads/' . $moddir . '/indeximages/index.html' );
-		$contentx =@file_get_contents( ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/guestbook_indeximage.png' );
-		$openedfile = fopen( $guestbook . '/indeximages/guestbook_indeximage.png', "w" ); 
-		fwrite( $openedfile, $contentx ); 
-		fclose( $openedfile );
-	}
+	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
+		icms_core_Filesystem::mkdir($path . '/indeximages');
+		$image = 'guestbook_indeximage.png';
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
+		return TRUE;
 }
 
 function guestbook_indexpage() {

@@ -42,7 +42,7 @@ class GuestbookIndexpageHandler extends icms_ipf_Handler {
 	public function getImagePath() {
 		$dir = $this->_uploadPath;
 		if (!file_exists($dir)) {
-			icms_core_Filesystem::mkdir($dir);
+			icms_core_Filesystem::mkdir($dir, "0777", '');
 		}
 		return $dir . "/";
 	}
