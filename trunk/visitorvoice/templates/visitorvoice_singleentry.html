@@ -4,9 +4,17 @@
 	<div class="block-title"><{$entry.title}></div>
 	
 	<div class="visitorvoice_row">
-		<div class="visitorvoice_message">
+		<div class="entry_message">
 			<span class="visitorvoice_message">
+				<{if $entry.img}>
+					<div class="visitorvoice_image">
+						<span><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></span>
+					</div> <!-- E N D .VISITORVOICE_image -->
+				<{/if}>
 				<{$entry.message}>
+				<{if $entry.email}>
+						<br /><br /><span><{$smarty.const._MD_VISITORVOICE_MAIL_CONTACT}>: <{$entry.email}></span>
+				<{/if}>
 			</span>
 		</div> <!-- E N D .VISITORVOICE_message -->
 		<{if $visitorvoice_is_admin}>
@@ -16,22 +24,14 @@
 				</span>
 			</div> <!-- E N D .VISITORVOICE_info -->
 		<{/if}>
-		<{if $entry.email}>
-			<div class="visitorvoice_email">
-				<span><{$entry.email}></span>
-			</div> <!-- E N D .VISITORVOICE_email -->
-		<{/if}>
-			<{if $show_avatar}>
-				<span class="visitorvoice_avatar">
-					<{$entry.avatar}>
-				</span>
-			<{/if}>
-		<{if $entry.img}>
-			<div class="visitorvoice_image">
-				<span><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></span>
-			</div> <!-- E N D .VISITORVOICE_image -->
-		<{/if}>
 	</div> <!-- E N D .VISITORVOICE_row -->
 </div> <!-- E N D .VISITORVOICE_entry -->
 </div>
-<p><strong><{$entry.name}> |<{if $entry.homepage}> <a href="<{$entry.homepage}>?&campaign=impresscms_visitorvoice" title="<{$entry.homepage}>"><{$entry.homepage}></a> |<{/if}> <{$entry.published_on}></strong></p>
+<p>
+	<{if $show_avatar}>
+		<span>
+			<{$entry.avatar}>
+		</span>
+	<{/if}>
+	<strong><{$entry.name}> |<{if $entry.homepage}> <a href="<{$entry.homepage}>?&campaign=impresscms_visitorvoice" title="<{$entry.homepage}>"><{$entry.homepage}></a> |<{/if}> <{$entry.published_on}></strong>
+</p>

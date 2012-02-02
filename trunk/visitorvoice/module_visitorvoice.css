@@ -20,21 +20,6 @@
 		margin-bottom: 2em;
 	}
 
-	.visitorvoice_clear_both {
-		clear: both;
-		height: 1px;
-	}
-	
-	.visitorvoice_clear_left {
-		clear: left;
-		height: 1px;
-	}
-	
-	.visitorvoice_clear_right {
-		clear: right;
-		height: 1px;
-	}
-
 	.visitorvoice_indeximage {
 		text-align: center;
 		margin: 2em auto;
@@ -63,25 +48,25 @@
 		display: table;
 		width: 100%;
 	}
-	
-	.visitorvoice_uinfo {
-		display: table-cell;
-		width: 25%;
-	}
-	
+		
 	.visitorvoice_message {
-		display: table-cell;
-		margin: 0em 2em;
 	}
-	
+	.entry_message {
+	}
+	.visitorvoice_avatar, img.visitorvoice_avatar {
+	height:32px;
+	width:32px;
+	vertical-align: middle;
+	}
+	.visitorvoice_image {
+	float:right;
+	margin: 0 0 5px 5px;
+	}
 	.visitorvoice_row {
-		display: table-row;
-		padding: 0em 2em;
 		width: 100%;
 	}
 
 	.visitorvoice_title {
-		display: table-caption;
 		width: 100%;
 		line-height: 2em;
 		text-align: center;
@@ -89,15 +74,7 @@
 		background: #ccc;
 		
 	}
-	
-	.visitorvoice_publisher {
-		display: block;
-	}
-	
-	.visitorvoice_published_on {
-		display: block;
-	}
-	
+		
 	.visitorvoice_replies {
 		margin-left: 5em;
 	}

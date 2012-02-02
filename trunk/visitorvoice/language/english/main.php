@@ -23,3 +23,4 @@ define("_MD_VISITORVOICE_PERM", "Sorry, no permissions");
 define("_MD_VISITORVOICE_PERMISSION", "You currently have no permissions. Please login or register to submit an entry.");
 define("_MD_VISITORVOICE_CREATED", "VisitorVoice entry created, thank you.");
 define("_MD_VISITORVOICE_MODIFIED", "VisitorVoice entry ,modified.");
+define("_MD_VISITORVOICE_MAIL_CONTACT", "Contact");
