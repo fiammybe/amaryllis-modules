@@ -26,14 +26,14 @@ switch ($op) {
 	case 'viewarticle':
 		$title_of_form = _AM_ARTICLE_PREMISSION_ARTICLE_VIEW;
 		$perm_name = "article_grpperm";
-		$restriction = "article_grpperm";
+		$restriction = "";
 		$anonymous = TRUE;
 		break;
 		
 	case 'viewcategory':
 		$title_of_form = _AM_ARTICLE_PREMISSION_CATEGORY_VIEW;
 		$perm_name = "category_grpperm";
-		$restriction = "category_grpperm";
+		$restriction = "";
 		$anonymous = TRUE;
 		break;
 		
@@ -67,7 +67,7 @@ if($op == 'viewarticle') {
 	$article_article_handler = icms_getmodulehandler("article", ARTICLE_DIRNAME, "article");
 	$articles = $article_article_handler->getObjects(FALSE, TRUE);
 	foreach (array_keys($articles) as $i) {
-		if ($restriction == "" || $articles[$i]->getVar($restriction)) {
+		if ($restriction == "") {
 			$form->addItem($articles[$i]->getVar('article_id'),
 			$articles[$i]->getVar('article_title'));
 		}
@@ -76,7 +76,7 @@ if($op == 'viewarticle') {
 	$article_category_handler = icms_getmodulehandler("category", ARTICLE_DIRNAME, "article");
 	$categories = $article_category_handler->getObjects(FALSE, TRUE);
 	foreach (array_keys($categories) as $i) {
-		if ($restriction == "" || $categories[$i]->getVar($restriction)) {
+		if ($restriction == "") {
 			$form->addItem($categories[$i]->getVar('category_id'),
 			$categories[$i]->getVar('category_title'));
 		}
@@ -85,7 +85,7 @@ if($op == 'viewarticle') {
 	$article_category_handler = icms_getmodulehandler("category", ARTICLE_DIRNAME, "article");
 	$categories = $article_category_handler->getObjects(FALSE, TRUE);
 	foreach (array_keys($categories) as $i) {
-		if ($restriction == "" || $categories[$i]->getVar($restriction)) {
+		if ($restriction == "") {
 			$form->addItem($categories[$i]->getVar('category_id'),
 			$categories[$i]->getVar('category_title'));
 		}

@@ -182,24 +182,15 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		return $ret;
 	}
 	
-	// Retrieving the visibility of the category/category-set
-	function category_grpperm() {
-		$ret = $this->getVar('category_grpperm', 'e');
-		$groups = $this->handler->getGroups();
-		return $groups;
-	}
-	
 	function submitAccessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-		$agroups = $gperm_handler->getGroupIds('module_admin', $module->getVar("mid"));
-		$allowed_groups = array_intersect_key($groups, $agroups);
 		$viewperm = $gperm_handler->checkRight('submit_article', $this->getVar('category_id', 'e'), $groups, $module->getVar("mid"));
 		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('category_publisher', 'e')) {
 			return TRUE;
 		}
-		if ($viewperm && ($this->getVar('category_active', 'e') == TRUE) && ($this->getVar('category_approve', 'e') == TRUE) && (count($allowed_groups) > 0)) {
+		if ($viewperm && ($this->getVar('category_active', 'e') == TRUE) && ($this->getVar('category_approve', 'e') == TRUE)) {
 			return TRUE;
 		}
 		return FALSE;
