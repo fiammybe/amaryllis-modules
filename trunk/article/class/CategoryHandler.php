@@ -77,18 +77,16 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		$criteria = $this->getCategoryCriteria($start, $limit, $category_publisher, $category_id,  $category_pid, $order, $sort);
 		if($approved) $criteria->add(new icms_db_criteria_Item("category_approve", TRUE));
 		if ($active) $criteria->add(new icms_db_criteria_Item("category_active", TRUE));
+		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
 		$categories = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($categories as $category){
-			if ($category['accessgranted'] === TRUE){
-				$ret[$category['category_id']] = $category;
-			}
+			$ret[$category['category_id']] = $category;
 		}
 		return $ret;
 	}
 	
 	public function getCategoryListForPid($groups = array(), $perm = 'category_grpperm', $status = NULL,$approved = NULL,$inblocks = NULL, $category_id = NULL, $showNull = TRUE) {
-	
 		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
 			$criteriaTray = new icms_db_criteria_Compo();
@@ -106,18 +104,17 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		if(isset($inblocks)) $criteria->add(new icms_db_criteria_Item('category_inblocks', TRUE));
 		if (is_null($category_id)) $category_id = 0;
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
+		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
 		$categories = & $this->getObjects($criteria, TRUE);
 		$ret = array();
 		if ($showNull) {
 			$ret[0] = '-----------------------';
 		}
 		foreach(array_keys($categories) as $i) {
-			if($categories[$i]->submitAccessGranted()) {
-				$ret[$i] = $categories[$i]->getVar('category_title');
-				$subcategories = $this->getCategoryListForPid($groups, $perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'), $showNull);
-				foreach(array_keys($subcategories) as $j) {
-					$ret[$j] = '-' . $subcategories[$j];
-				}
+			$ret[$i] = $categories[$i]->getVar('category_title');
+			$subcategories = $this->getCategoryListForPid($groups, $perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'), $showNull);
+			foreach(array_keys($subcategories) as $j) {
+				$ret[$j] = '-' . $subcategories[$j];
 			}
 		}
 		return $ret;
@@ -199,6 +196,7 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		if (isset($approved)) {
 			$criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
 		}
+		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
 		return $this->getCount($criteria);
 	}
@@ -213,10 +211,8 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		if (!$toarray) return $categories;
 		$ret = array();
 		foreach(array_keys($categories) as $i) {
-			if ($categories[$i]->accessGranted()){
-				$ret[$i] = $categories[$i]->toArray();
-				$ret[$i]['category_description'] = icms_core_DataFilter::icms_substr(icms_cleanTags($categories[$i]->getVar('category_description','n'),array()),0,300);
-			}
+			$ret[$i] = $categories[$i]->toArray();
+			$ret[$i]['category_description'] = icms_core_DataFilter::icms_substr(icms_cleanTags($categories[$i]->getVar('category_description','n'),array()),0,300);
 		}
 		return $ret;
 	}
@@ -246,7 +242,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 	
 	public function getCategoriesCount ($active = NULL, $approve = NULL, $groups = array(), $perm = 'category_grpperm', $category_publisher = FALSE, $category_id = NULL, $category_pid = NULL) {
 		$criteria = new icms_db_criteria_Compo();
-		
 		if (isset($active)) {
 			$criteria->add(new icms_db_criteria_Item('category_active', TRUE));
 		}
@@ -257,17 +252,9 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		if($category_id) $criteria->add(new icms_db_criteria_Item('category_id', $category_id));
 		if (is_null($category_pid)) $category_pid == 0;
 		if($category_pid) $criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
-		
-		$categories = $this->getObjects($criteria, TRUE, FALSE);
-		$ret = array();
-		foreach ($categories as $category){
-			if ($category['accessgranted']){
-				$ret[$category['category_id']] = $category;
-			}
-		}
-		
-		return count($ret);
-	
+		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
+		$categories = $this->getCount($criteria);
+		return $categories;
 	}
 
 	public function userCanSubmit() {

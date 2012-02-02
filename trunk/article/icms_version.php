@@ -25,7 +25,7 @@ $modversion = array(
 						"version"					=> 1.0,
 						"description"				=> _MI_ARTICLE_MD_DSC,
 						"author"					=> "QM-B",
-						"credits"					=> "",
+						"credits"					=> "Thanks to Lotus for his testings and McDonald for the nice Layer for the index-Image",
 						"help"						=> "",
 						"license"					=> "GNU General Public License (GPL)",
 						"official"					=> 0,
@@ -39,10 +39,10 @@ $modversion = array(
 					
 					/**  Development information */
 						"status_version"			=> "1.0",
-						"status"					=> "Beta",
+						"status"					=> "Release Candidate",
 						"date"						=> "Unreleased",
 						"author_word"				=> "",
-						"warning"					=> _CO_ICMS_WARNING_BETA,
+						"warning"					=> _CO_ICMS_WARNING_RC,
 					
 					/** Contributors */
 						"developer_website_url"		=> "http://code.google.com/p/amaryllis-modules/",
@@ -68,6 +68,7 @@ $modversion = array(
 
 /** other possible types: testers, translators, documenters and other */
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
+$modversion['people']['tester'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 
 /** Manual */
 $modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Article' target='_blank'>English</a>";

@@ -178,6 +178,14 @@
     	border: 1px solid black;
 	}
 	
+	.article_demo {
+		margin-top: 1em;
+	}
+	
+	.article_conclusion {
+		margin-top: 1em;
+	}
+	
 	.article_footer {
 		background: #ccc;
 		line-height: 2.5em;
@@ -230,6 +238,4 @@
 	} 
 	ul#article_newsticker span {
 		margin: 0 10px 0 0;
-	} 
-	
-
+	}
