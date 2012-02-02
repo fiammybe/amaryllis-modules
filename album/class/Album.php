@@ -262,13 +262,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('album_uid', 'e')) {
 			return true;
 		}
-		if ($viewperm && $this->getVar('album_active', 'e') == true) {
-			return true;
-		}
-		if ($viewperm && $this->getVar('album_approve', 'e') == true) {
-			return true;
-		}
-		if ($viewperm && count($allowed_groups) > 0) {
+		if ($viewperm && ($this->getVar('album_active', 'e') == true) && ($this->getVar('album_approve', 'e') == true)) {
 			return true;
 		}
 		return false;
