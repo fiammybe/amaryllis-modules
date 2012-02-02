@@ -92,13 +92,11 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		if (isset($approve)) {
 			$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
 		}
-		
+		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
 		$articles = $this->getObjects($criteria, TRUE);
 		$ret[0] = '-----------';
 		foreach(array_keys($articles) as $i) {
-			if($articles[$i]->accessGranted()) {
-				$ret[$i] = $articles[$i]->getVar('article_title');
-			}
+			$ret[$i] = $articles[$i]->getVar('article_title');
 		}
 		return $ret;
 	}
@@ -132,19 +130,17 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function getArticles($start = 0, $limit = 0,$tag_id = FALSE, $article_publisher = FALSE, $article_id = FALSE,  $article_cid = FALSE, $order = 'weight', $sort = 'ASC') {
-		
 		$criteria = $this->getArticleCriteria($start, $limit, $article_publisher, $article_id,  $article_cid, $order, $sort);
 		if($tag_id) {
 			$critTray = new icms_db_criteria_Compo();
 			$critTray->add(new icms_db_criteria_Item("article_tags", '%:"' . $tag_id . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
+		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
 		$article = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($article as $article){
-			if ($article['accessgranted']){
-				$ret[$article['article_id']] = $article;
-			}
+			$ret[$article['article_id']] = $article;
 		}
 		return $ret;
 	}
@@ -167,16 +163,15 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$criteria->add($critTray);
 		}
 		if ($article_cid != FALSE)	{
-			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
-			$criteria->add($critTray);
+			$crit = new icms_db_criteria_Compo();
+			$crit->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
+			$criteria->add($crit);
 		}
+		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
 		$articles = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
-		foreach ($articles as $key => &$article){
-			if ($article['accessgranted']){
-				$ret[$article['article_id']] = $article;
-			}
+		foreach ($articles as $article){
+			$ret[$article['article_id']] = $article;
 		}
 		return $ret;
 	}
@@ -284,20 +279,6 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	/**
 	 * handle some object fields
 	 */
-	
-	public function getArticleCategories()	{
-		if(!$this->_article_cid) {
-			$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
-			$categories = $article_category_handler->getObjects(FALSE, TRUE, FALSE);
-			$ret = array();
-			foreach(array_keys($categories) as $i) {
-				$ret[$categories[$i]['category_id']] = $categories[$i]['title'];
-			}
-			return $ret;
-		}
-		return $this->_article_cid;
-	}
-	
 	public function getArticleTags() {
 		global $articleConfig;
 		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
@@ -363,13 +344,11 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
-		
+		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
 		$articles = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($articles as $article){
-			if ($article['accessgranted']){
-				$ret[$article['article_id']] = $article;
-			}
+			$ret[$article['article_id']] = $article;
 		}
 		return count($ret);
 	

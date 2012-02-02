@@ -65,7 +65,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->quickInitVar("article_informations_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		$this->quickInitVar("article_permissions", XOBJ_DTYPE_FORM_SECTION);
-		$this->quickInitVar("article_grpperm", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("article_approve", XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
 		$this->quickInitVar("article_active", XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
 		$this->quickInitVar("article_updated", XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 0);
