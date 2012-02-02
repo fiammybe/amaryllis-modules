@@ -298,9 +298,8 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		}
 	}
 	
-	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'article_grpperm', $article_publisher = FALSE, $article_id = FALSE, $article_cid = FALSE) {
+	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'article_grpperm', $article_publisher = FALSE, $article_id = FALSE, $article_cid = FALSE, $tag_id = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
-		
 		if (isset($active)) {
 			$criteria->add(new icms_db_criteria_Item('article_active', true));
 		}
@@ -313,6 +312,11 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
+		if($tag_id) {
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("article_tags", '%:"' . $tag_id . '";%', "LIKE"));
+			$criteria->add($critTray);
+		}
 		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
 		$articles = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
@@ -320,7 +324,6 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$ret[$article['article_id']] = $article;
 		}
 		return count($ret);
-	
 	}
 	
 	//update hit-counter

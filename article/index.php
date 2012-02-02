@@ -68,7 +68,7 @@ if(in_array($clean_op, $valid_op)) {
 				$icmsTpl->assign("article_tag", $tag->getVar("title"));
 			}
 			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id, $clean_tag_id);
 			/**
 			 * pagination
 			 */
