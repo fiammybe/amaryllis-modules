@@ -302,6 +302,14 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		return $body_array;
 	}
 	
+	public function getArticleConclusion() {
+		$conclusion = $this->getVar("article_conclusion", "s");
+		if($conclusion != "") {
+			$conclusion = icms_core_DataFilter::checkVar($conclusion, "html", "output");
+			return $conclusion;
+		}
+	}
+	
 	public function getArticleAttachment($url = TRUE, $path = FALSE ) {
 		global $articleConfig;
 		$file_alt = $this->getVar("article_attachment_alt", "e");
@@ -575,7 +583,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['imgpath'] = $this->getArticleImagePath();
 		$ret['teaser'] = $this->getArticleTeaser();
 		$ret['body_array'] = $this->getArticleBody();
-		$ret['conclusion'] = $this->getVar("article_conclusion", "e");
+		$ret['conclusion'] = $this->getArticleConclusion();
 		$ret['file'] = $this->getArticleAttachment(TRUE, FALSE);
 		$ret['filesize'] = $this->getFileSize();
 		$ret['filetype'] = $this->getFileType();

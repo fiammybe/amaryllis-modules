@@ -118,8 +118,9 @@
 			});	
 	};
 	
-	//report broken Link
+	var pager = new Imtech.Pager();
 	$(document).ready(function(){
+		//report broken Link
 		$("#dialog-confirm-broken").dialog({
 			modal: true,
 			width: 500,
@@ -141,10 +142,7 @@
 			});
 			$("#dialog-confirm-broken").dialog("open");
 		});
-	});
-	
-	// call disclaimer for article-confirmation
-	$(document).ready(function(){
+		//call disclaimer for article-confirmation
 		$(".down_disclaimer").click(function(e) {
 			var $link = $(this);
 			e.preventDefault();
@@ -168,10 +166,7 @@
 			resizable: true,
 			draggable: true
 		});
-	});
-	
-	// call disclaimer for upload-confirmation
-	$(document).ready(function(){
+		// call disclaimer for upload-confirmation
 		$(".upl_disclaimer").click(function(e) {
 			var $link = $(this);
 			
@@ -195,10 +190,6 @@
 			resizable: true,
 			draggable: true
 		});
-	});
-	
-	var pager = new Imtech.Pager();
-	$(document).ready(function(){
 		// use pagination
 	    pager.paragraphsPerPage = 1; // set amount elements per page
 	    pager.pagingContainer = $('#article_body'); // set of main container
@@ -261,11 +252,13 @@
 				},
 			});
 		});
+		// related to initiate g+
 		(function() {
 		    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
 		    po.src = 'https://apis.google.com/js/plusone.js';
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 		})();
+		// related to fb-like
 		(function(d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) {return;}
@@ -275,12 +268,7 @@
 		  }
 		  (document, 'script', 'facebook-jssdk'));
 		if($('#socialshareprivacy').length > 0){ $('#socialshareprivacy').socialSharePrivacy(); }
-		
-	});
-	
-	
-	// initiate tag form
-	$(document).ready(function(){
+		// initiate tag form
 		$(".tag_form").dialog({
 			modal: true,
 			width: 700,
@@ -302,10 +290,7 @@
 			});
 			$(".tag_form").dialog("open");
 		});
-	});
-
-	//tag permission denied
-	$(document).ready(function(){
+		//tag permission denied
 		$("#dialog-confirm-perm-tag").dialog({
 			modal: true,
 			width: 500,

@@ -62,6 +62,13 @@ if(in_array($clean_op, $valid_op)) {
 			$icmsTpl->assign('articles', $article);
 			$icmsTpl->assign("byTags", TRUE);
 			
+			$sprocketsModule = icms_getModuleInfo("sprockets");
+			if(icms_get_module_status("sprockets")) {
+				$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
+				$tag = $sprockets_tag_handler->get($clean_tag_id);
+				$icmsTpl->assign("article_tag", $tag->getVar("title"));
+			}
+			
 			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
 			
 			if (!empty($clean_tag_id)) {
@@ -154,6 +161,7 @@ if(in_array($clean_op, $valid_op)) {
 			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, $clean_uid, FALSE, FALSE, "article_published_date", "DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byAuthor", TRUE);
+			$icmsTpl->assign("article_user", icms_member_user_Handler::getUserLink($clean_uid));
 			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
 			
 			if (!empty($clean_category_id)) {

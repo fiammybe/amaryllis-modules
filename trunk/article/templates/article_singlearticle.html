@@ -1,6 +1,13 @@
 <{includeq file='db:article_header.html'}>
 <div class="article_content">
 	<!-- article title -->
+	<{if $article.image}>
+		<div class="article_image">
+			<a class="article_screens" href="<{$article.image}>" title="<{$article.title}>">
+				<{resized_image file=$article.image width=$display_width height=$display_height fit="inside"}>
+			</a>
+		</div>
+	<{/if}>
 	<div class="article_title">
 		<h1><{$article.title}>
 		<{if $article.article_is_new}>
@@ -23,17 +30,9 @@
 	</div>
 	
 	<div class="article_clear_right">&nbsp;</div>
-	
-	
+
 	<!-- article main content -->
 	<div>
-		<{if $article.image}>
-			<div id="article_image">
-				<a class="article_screens" href="<{$article.image}>" title="<{$article.title}>" rel="lightbox">
-					<{resized_image file=$article.image width=$display_width height=$display_height fit="inside"}>
-				</a>
-			</div>
-		<{/if}>
 		<div id="article_body">
 			<{foreach item=body from=$article.body_array}>
 				<div class="z">
@@ -96,8 +95,15 @@
 			<a class="article_demo_link" href="<{$article.demo}>" title="<{$smarty.const._MD_ARTICLE_DEMO_LINK}>"><{$smarty.const._MD_ARTICLE_DEMO_LINK}></a>
 		</div>
 	<{/if}>
+	<{if $article.conclusion}>
+		<div class="article_conclusion">
+			<h2><{$smarty.const._MD_ARTICLE_CONCLUSION}></h2>
+			<{$article.conclusion}>
+		</div>
+	<{/if}>
 	<!-- article footer -->
 	<div class="article_footer">
+		
 		<{if $article.file}>
 			<div id="dialog-confirm-broken" title="<{$smarty.const._MD_ARTICLE_REPORT_BROKEN}>" class="ui-helper-hidden" >
 				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$smarty.const._MD_ARTICLE_SURE_BROKEN}></p>
@@ -115,7 +121,7 @@
 				</a>
 			</span>
 		<{/if}>
-		
+		&nbsp;
 		<span class="article_button_bar">
 			<a href="mailto:?subject=<{$smarty.const._MD_ARTICLE_MAILTO_SBJ}>&body=<{$smarty.const._MD_ARTICLE_MAILTO_BDY}>" title="<{$smarty.const._MD_ARTICLE_MAILTO}>">
 				<img style="vertical-align: middle;" src="<{$article_images_url}>mail.png" alt="<{$smarty.const._MD_ARTICLE_MAILTO}>" title="<{$smarty.const._MD_ARTICLE_MAILTO}>" />
