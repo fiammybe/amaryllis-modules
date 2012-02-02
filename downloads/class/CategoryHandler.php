@@ -36,6 +36,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 	public function __construct($db) {
 		parent::__construct($db, 'category', 'category_id', 'category_title', 'category_description', 'downloads');
 		$this->addPermission('category_grpperm', _CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM, _CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM_DSC);
+		$this->addPermission('category_uplperm', _CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM, _CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM_DSC);
 		
 		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/categoryimages/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
