@@ -27,10 +27,8 @@ include_once ICMS_ROOT_PATH . '/header.php';
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
 $article_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'article' );
-
-$indexpageObj = $article_indexpage_handler->get($clean_index_key);
+$indexpageObj = $article_indexpage_handler->get(1);
 $index = $indexpageObj->toArray();
 $icmsTpl->assign('article_index', $index);
 
