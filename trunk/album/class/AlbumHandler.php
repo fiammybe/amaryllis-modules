@@ -110,10 +110,12 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 			$ret[0] = '-----------------------';
 		}
 		foreach(array_keys($albums) as $i) {
-			$ret[$i] = $albums[$i]->getVar('album_title');
-			$subalbums = $this->getAlbumListForPid($groups, $perm, $status, $albums[$i]->getVar('album_id'), $showNull);
-			foreach(array_keys($subalbums) as $j) {
-				$ret[$j] = '-' . $subalbums[$j];
+			if($albums[$i]->accessGranted()) {
+				$ret[$i] = $albums[$i]->getVar('album_title');
+				$subalbums = $this->getAlbumListForPid($groups, $perm, $status, $albums[$i]->getVar('album_id'), $showNull);
+				foreach(array_keys($subalbums) as $j) {
+					$ret[$j] = '-' . $subalbums[$j];
+				}
 			}
 		}
 		return $ret;
