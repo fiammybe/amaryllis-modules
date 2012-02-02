@@ -386,17 +386,17 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	}
 	
 	public function getArticleRelated() {
-		$related_array = $this->getVar("article_related" , 's');
-		$relateds = implode(",", $related_array);
-		$relateds2 = explode(",", $relateds);
-		$result = '';
-		foreach ($relateds2 as $related) {
-			if($related != 0) {
-				$link = $this->handler->getLink($related);
-				$result .= '<li>' . $link . '</li>';
+		$related_array = $this->getVar("article_related" , "s");
+		if(!$related_array == "" && $related_array != 0) {
+			$result = '';
+			foreach ($related_array as $related) {
+				if($related != 0) {
+					$link = $this->handler->getLink($related);
+					$result .= '<li>' . $link . '</li>';
+				}
 			}
+			return $result;
 		}
-		return $result;
 	}
 	
 	public function getArticleTags($itemlink = FALSE) {

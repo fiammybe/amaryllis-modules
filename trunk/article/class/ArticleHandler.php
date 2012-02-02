@@ -443,13 +443,25 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	protected function afterSave(&$obj) {
-		if ($obj->updating_counter)
-		return TRUE;
+		if ($obj->updating_counter) return TRUE;
 
 		if (!$obj->getVar('article_notification_sent') && $obj->getVar('article_active', 'e') == TRUE && $obj->getVar('article_approve', 'e') == TRUE) {
 			$obj->sendArticleNotification('article_published');
 			$obj->setVar('article_notification_sent', TRUE);
 			$this->insert($obj);
+		}
+		if(icms_get_module_status("sprockets")) {
+			$tags = $obj->getVar("article_tags", "s");
+				$sprocketsModule = icms_getModuleInfo("sprockets");
+				$sprockets_taglink_handler = icms_getModuleHandler("taglink", "sprockets");
+				foreach ($tags as $tag) {
+					$tagObj = $sprockets_taglink_handler->create(TRUE);
+					$tagObj->setVar("tid", (int)$tag);
+					$tagObj->setVar("mid", icms::$module->getVar("mid", "e"));
+					$tagObj->setVar("item", $obj->getVar("article_title", "e"));
+					$tagObj->setVar("iid", $obj->getVar("article_id", "e"));
+					$sprockets_taglink_handler->insertD($tagObj, TRUE);
+				}
 		}
 		return TRUE;
 	}
