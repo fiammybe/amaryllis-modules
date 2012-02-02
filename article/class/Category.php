@@ -40,7 +40,6 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$this->quickInitVar("category_pid", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("category_image", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("category_image_upl", XOBJ_DTYPE_IMAGE, FALSE);
-		$this->quickInitVar("category_grpperm", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("category_submitter", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("category_publisher", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("category_updater", XOBJ_DTYPE_INT, FALSE);
