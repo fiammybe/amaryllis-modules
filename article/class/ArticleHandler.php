@@ -24,8 +24,6 @@ icms_loadLanguageFile("article", "common");
 
 class ArticleArticleHandler extends icms_ipf_Handler {
 	
-	private $_article_grpperm = array();
-	
 	/**
 	 * Constructor
 	 *
