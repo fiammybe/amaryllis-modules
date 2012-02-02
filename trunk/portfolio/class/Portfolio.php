@@ -235,15 +235,4 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		return $ret;
 	}
 
-	public function sendPortfolioNotification($case) {
-		$valid_case = array('message_submitted');
-		if(in_array($case, $valid_case, TRUE)) {
-			switch ($case) {
-				case 'message_submitted':
-					
-					break;
-			}
-		}
-	}
-
 }
