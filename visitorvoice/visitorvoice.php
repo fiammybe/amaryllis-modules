@@ -78,7 +78,7 @@ if($visitorvoiceConfig['use_moderation'] == 1) {
 if($visitorvoiceConfig["show_avatar"] == 1) {
 	$icmsTpl->assign("show_avatar", TRUE);
 }
-if($guestbookConfig["guest_entry"] == 1) {
+if($visitorvoiceConfig["guest_entry"] == 1) {
 	$icmsTpl->assign("link_class", TRUE);
 	$icmsTpl->assign("submit_link", VISITORVOICE_URL . "submit.php?op=addentry");
 } else {
