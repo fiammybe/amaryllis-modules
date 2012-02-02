@@ -344,7 +344,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ARTICLE_THUMBNAIL_WIDTH_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> 110
+								'default' 		=> 150
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -353,7 +353,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ARTICLE_THUMBNAIL_HEIGHT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> 150
+								'default' 		=> 110
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -362,7 +362,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ARTICLE_DISPLAY_WIDTH_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> 110
+								'default' 		=> 260
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -371,7 +371,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ARTICLE_DISPLAY_HEIGHT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> 150
+								'default' 		=> 160
 							);
 $i++;
 $modversion['config'][$i] = array(
