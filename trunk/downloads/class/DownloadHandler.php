@@ -43,7 +43,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$this->addPermission('download_grpperm', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM_DSC);
 		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/download/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
-		$this->enableUpload($allowedMimeTypes = true, $downloadsConfig['image_file_size'], $downloadsConfig['image_upload_width'], $downloadsConfig['image_upload_height']);
+		$this->enableUpload($allowedMimeTypes = TRUE, $downloadsConfig['image_file_size'], $downloadsConfig['image_upload_width'], $downloadsConfig['image_upload_height']);
 		
 		$mimetypes = $this->checkMimeType();
 		$filesize = $downloadsConfig['downloads_file_size'];
@@ -65,7 +65,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$modulename = basename(dirname(dirname(__FILE__)));
 		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
 			icms_file_MediaUploadHandler::setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
-			return false;
+			return FALSE;
 		}
 		$AllowedMimeTypes = $mimetypeHandler->AllowedModules($this->mediaRealType, $modulename);
 		if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes))
@@ -73,12 +73,12 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 				|| (empty($this->allowedMimeTypes) && !$AllowedMimeTypes))
 			{
 			icms_file_MediaUploadHandler::setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
-			return false;
+			return FALSE;
 		}
-		return true;
+		return TRUE;
 	}
 	
-	public function getList($download_active = null) {
+	public function getList($download_active = NULL) {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($download_active)) {
 			$criteria->add(new icms_db_criteria_Item('download_active', TRUE));
@@ -92,7 +92,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	}
 	
 	// some criterias used by other requests
-	public function getDownloadsCriteria($start = 0, $limit = 0, $download_publisher = false, $download_id = false,$download_cid = false, $order = 'download_published_date', $sort = 'DESC') {
+	public function getDownloadsCriteria($start = 0, $limit = 0, $download_publisher = FALSE, $download_id = FALSE,$download_cid = FALSE, $order = 'download_published_date', $sort = 'DESC') {
 		$criteria = new icms_db_criteria_Compo();
 		if ($start) $criteria->setStart($start);
 		if ($limit) $criteria->setLimit((int)$limit);
@@ -107,7 +107,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$crit->add(new icms_db_criteria_Item('download_id', $download_id),'OR');
 			$criteria->add($crit);
 		}
-		if ($download_cid != false)	{
+		if ($download_cid != FALSE)	{
 			$critTray = new icms_db_criteria_Compo();
 			$critTray->add(new icms_db_criteria_Item("download_cid", '%:"' . $download_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
@@ -116,14 +116,14 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	}
 	
 	public function getDownloads($start = 0, $limit = 0,$tag_id = FALSE, $download_publisher = FALSE, $download_id = FALSE,  $download_cid = FALSE, $order = 'weight', $sort = 'ASC') {
-		
 		$criteria = $this->getDownloadsCriteria($start, $limit, $download_publisher, $download_id,  $download_cid, $order, $sort);
 		if($tag_id) {
 			$critTray = new icms_db_criteria_Compo();
 			$critTray->add(new icms_db_criteria_Item("download_tags", '%:"' . $tag_id . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
-		$downloads = $this->getObjects($criteria, true, false);
+		$this->setGrantedObjectsCriteria($criteria, "downloads_grpperm");
+		$downloads = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($downloads as $download){
 			if ($download['accessgranted']){
@@ -145,9 +145,9 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$criteria->setLimit($limit);
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
-		$criteria->add(new icms_db_criteria_Item('download_active', true));
-		$criteria->add(new icms_db_criteria_Item('download_inblocks', true));
-		$criteria->add(new icms_db_criteria_Item('download_approve', true));
+		$criteria->add(new icms_db_criteria_Item('download_active', TRUE));
+		$criteria->add(new icms_db_criteria_Item('download_inblocks', TRUE));
+		$criteria->add(new icms_db_criteria_Item('download_approve', TRUE));
 		if($updated == TRUE) $criteria->add(new icms_db_criteria_Item('download_updated', TRUE));
 		if($popular == TRUE) {
 			$pop = $downloadsConfig['downloads_popular'];
@@ -156,7 +156,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$criteria->add($critTray);
 			
 		}
-		$downloads = $this->getObjects($criteria, true, false);
+		$this->setGrantedObjectsCriteria($criteria, "download_grpperm");
+		$downloads = $this->getObjects($criteria, TRUE, FALSE);
 		$ret=array();
 		foreach ($downloads as $key => &$download){
 			if ($download['accessgranted']){
@@ -171,8 +172,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if(icms_get_module_status("catalogue")) {
 			$catalogue_item_handler = icms_getModuleHandler ('item', $catalogueModule->getVar('dirname'), 'catalogue');
 			$criteria = new icms_db_criteria_Compo();
-			$criteria->add (new icms_db_criteria_Item('online_status', true));
-			$catalogueObjects = $catalogue_item_handler->getObjects($criteria, true, false);
+			$criteria->add (new icms_db_criteria_Item('online_status', TRUE));
+			$catalogueObjects = $catalogue_item_handler->getObjects($criteria, TRUE, FALSE);
 			$ret = array();
 			$ret[0] = '--None--';
 			foreach(array_keys($catalogueObjects) as $i) {
@@ -196,8 +197,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		global $downloads_isAdmin;
 		$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 		$categoryObject = $downloads_category_handler->get($category_id);
-		if (!is_object(icms::$user)) return false;
-		if ($downloads_isAdmin) return true;
+		if (!is_object(icms::$user)) return FALSE;
+		if ($downloads_isAdmin) return TRUE;
 		$user_groups = icms::$user->getGroups();
 		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))));
 		return count(array_intersect_key(array($categoryObject->getVar('category_uplperm', 'e')), $user_groups)) > 0;
@@ -210,70 +211,70 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	public function changeVisible($download_id) {
 		$visibility = '';
 		$downloadObj = $this->get($download_id);
-		if ($downloadObj->getVar('download_active', 'e') == true) {
+		if ($downloadObj->getVar('download_active', 'e') == TRUE) {
 			$downloadObj->setVar('download_active', 0);
 			$visibility = 0;
 		} else {
 			$downloadObj->setVar('download_active', 1);
 			$visibility = 1;
 		}
-		$this->insert($downloadObj, true);
+		$this->insert($downloadObj, TRUE);
 		return $visibility;
 	}
 	
 	public function changeShow($download_id) {
 		$show = '';
 		$downloadObj = $this->get($download_id);
-		if ($downloadObj->getVar('download_inblocks', 'e') == true) {
+		if ($downloadObj->getVar('download_inblocks', 'e') == TRUE) {
 			$downloadObj->setVar('download_inblocks', 0);
 			$show = 0;
 		} else {
 			$downloadObj->setVar('download_inblocks', 1);
 			$show = 1;
 		}
-		$this->insert($downloadObj, true);
+		$this->insert($downloadObj, TRUE);
 		return $show;
 	}
 	
 	public function changeApprove($download_id) {
 		$approve = '';
 		$downloadObj = $this->get($download_id);
-		if ($downloadObj->getVar('download_approve', 'e') == true) {
+		if ($downloadObj->getVar('download_approve', 'e') == TRUE) {
 			$downloadObj->setVar('download_approve', 0);
 			$approve = 0;
 		} else {
 			$downloadObj->setVar('download_approve', 1);
 			$approve = 1;
 		}
-		$this->insert($downloadObj, true);
+		$this->insert($downloadObj, TRUE);
 		return $approve;
 	}
 	
 	public function changeMirrorApprove($download_id) {
 		$mirror_approve = '';
 		$downloadObj = $this->get($download_id);
-		if ($downloadObj->getVar('download_mirror_approve', 'e') == true) {
+		if ($downloadObj->getVar('download_mirror_approve', 'e') == TRUE) {
 			$downloadObj->setVar('download_mirror_approve', 0);
 			$mirror_approve = 0;
 		} else {
 			$downloadObj->setVar('download_mirror_approve', 1);
 			$mirror_approve = 1;
 		}
-		$this->insert($downloadObj, true);
+		$this->insert($downloadObj, TRUE);
 		return $mirror_approve;
 	}
 	
 	public function changeBroken($download_id) {
 		$broken = '';
 		$downloadObj = $this->get($download_id);
-		if ($downloadObj->getVar('download_broken', 'e') == true) {
+		if ($downloadObj->getVar('download_broken', 'e') == TRUE) {
 			$downloadObj->setVar('download_broken', 0);
 			$broken = 0;
 		} else {
 			$downloadObj->setVar('download_broken', 1);
 			$broken = 1;
 		}
-		$this->insert($downloadObj, true);
+		$this->insert($downloadObj, TRUE);
 		return $broken;
 	}
 	
@@ -374,21 +375,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		}
 		return $this->_download_related;
 	}
-	
-	public function getDownloadCategories()	{
-		if(!$this->_download_cid) {
-			$downloads_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "downloads");
-			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$categories = $downloads_category_handler->getObjects(FALSE, TRUE, FALSE);
-			$ret = array();
-			foreach(array_keys($categories) as $i) {
-				$ret[$categories[$i]['category_id']] = $categories[$i]['title'];
-			}
-			return $ret;
-		}
-		return $this->_download_cid;
-	}
-	
+
 	public function getDownloadTags() {
 		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 		if($sprocketsModule->registerClassPath(TRUE)) {
@@ -406,24 +393,10 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		}
 	}
 
-	public function getGroups($criteria = null) {
-		if (!$this->_download_grpperm) {
-			$member_handler =& icms::handler('icms_member');
-			$groups = $member_handler->getGroupList($criteria, true);
-			return $groups;
-		}
-		return $this->_download_grpperm;
-	}
-
 	public function getPostersArray() {
 		return icms::handler('icms_member')->getUserList();
 	}
-	
-	public function getDownloadsCount($download_publisher) {
-		$criteria = $this->getDownloadsCriteria(false, false, $download_publisher);
-		return $this->getCount($criteria);
-	}
-	
+
 	public function makeLink($download) {
 		$count = $this->getCount(new icms_db_criteria_Item("short_url", $download->getVar("short_url")));
 
@@ -435,46 +408,37 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		}
 	}
 	
-	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'download_grpperm', $download_publisher = false, $download_id = false, $download_cid = false) {
+	public function getCountCriteria ($active = NULL, $approve = NULL, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $download_cid = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
-		
 		if (isset($active)) {
-			$criteria->add(new icms_db_criteria_Item('download_active', true));
+			$criteria->add(new icms_db_criteria_Item('download_active', TRUE));
 		}
 		if (isset($approve)) {
-			$criteria->add(new icms_db_criteria_Item('download_approve', true));
+			$criteria->add(new icms_db_criteria_Item('download_approve', TRUE));
 		}
-		if (is_null($download_cid)) $download_cid = 0;
-		if ($download_cid != false)	{
+		if (is_NULL($download_cid)) $download_cid = 0;
+		if ($download_cid != FALSE)	{
 			$critTray = new icms_db_criteria_Compo();
 			$critTray->add(new icms_db_criteria_Item("download_cid", '%:"' . $download_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
-		$critTray = new icms_db_criteria_Compo();
-		/**
-		 * @TODO : not the best way to check, if the user-group is in array of allowed groups. Does work, but only if there are not 10+ groups.
-		 */
-		foreach ($groups as $group) {
-			$critTray->add(new icms_db_criteria_Item("download_grpperm", "%" . $group . "%", "LIKE"), "OR");
-		}
-		$criteria->add($critTray);
+		$this->setGrantedObjectsCriteria($criteria, "download_grpperm");
 		return $this->getCount($criteria);
-	
 	}
 	
 	//update hit-counter
 	public function updateCounter($download_id) {
 		global $download_isAdmin;
 		$downloadObj = $this->get($download_id);
-		if (!is_object($downloadObj)) return false;
+		if (!is_object($downloadObj)) return FALSE;
 
 		if (isset($downloadObj->vars['counter']) && !is_object(icms::$user) || (!$download_isAdmin && $downloadObj->getVar('download_publisher', 'e') != icms::$user->getVar("uid")) ) {
 			$new_counter = $downloadObj->getVar('counter') + 1;
 			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
 				. ' WHERE ' . $this->keyName . '=' . $downloadObj->id();
-			$this->query($sql, null, true);
+			$this->query($sql, NULL, TRUE);
 		}
-		return true;
+		return TRUE;
 	}
 	
 	// some fuctions related to icms core functions
@@ -495,16 +459,17 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			}
 			$criteria->add($criteriaKeywords);
 		}
-		$criteria->add(new icms_db_criteria_Item('download_active', true));
-		$criteria->add(new icms_db_criteria_Item('download_approve', true));
-		return $this->getObjects($criteria, true, false);
+		$this->setGrantedObjectsCriteria($criteria, "download_grpperm");
+		$criteria->add(new icms_db_criteria_Item('download_active', TRUE));
+		$criteria->add(new icms_db_criteria_Item('download_approve', TRUE));
+		return $this->getObjects($criteria, TRUE, FALSE);
 	}
 
 	public function updateComments($download_id, $total_num) {
 		$downloadObj = $this->get($download_id);
 		if ($downloadObj && !$downloadObj->isNew()) {
 			$downloadObj->setVar('download_comments', $total_num);
-			$this->insert($downloadObj, true);
+			$this->insert($downloadObj, TRUE);
 		}
 	}
 	
@@ -530,7 +495,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	protected function afterSave(&$obj) {
 		global $downloadsConfig;
 		if ($obj->updating_counter)
-		return true;
+		return TRUE;
 		if (!$obj->getVar('download_notification_sent') && $obj->getVar('download_active', 'e') == TRUE && $obj->getVar('download_approve', 'e') == TRUE) {
 			$obj->sendDownloadNotification('new_file');
 			$obj->setVar('download_notification_sent', TRUE);
@@ -551,7 +516,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$download_id = $obj->id();
 		// delete global notifications
 		$notification_handler->unsubscribeByItem($module_id, $category, $download_id);
-		return true;
+		return TRUE;
 		$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "downloads");
 		if (!is_object(icms::$user)) {
 			$log_uid = 0;
