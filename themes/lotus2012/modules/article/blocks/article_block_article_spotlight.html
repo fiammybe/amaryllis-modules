@@ -1,11 +1,15 @@
-<a href="<{$block.view_all}>" class="viewmore" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>    
+<{if $block.show_view_all == 1}>
+	<a href="<{$block.view_all}>" class="viewmore" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>    
+<{/if}>
 <{foreach item=article_article from=$block.article_spotlight}>
 	<div class="single_article_spot">	
+	  <{if $article_article.imgpath}>
 		<div class="article_img_spot">
 			<a href="<{$article_article.itemURL}>" title="<{$article_article.article_title}>">
 			<img class="article_b1_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
 			</a>
 		</div>
+	  <{/if}>	
 		<div class="article_title_spot">
 			<a href="<{$article_article.itemURL}>" title="<{$article_article.article_title}>"><{$article_article.article_title}></a>
 		</div>
