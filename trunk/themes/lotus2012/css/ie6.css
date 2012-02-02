@@ -22,3 +22,6 @@
 #myGallery{
 	width: 730px !important;
 }
+.article_img_spot {
+	height: expression(this.hight > 79 ? 80: true);
+}

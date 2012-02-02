@@ -1,5 +1,3 @@
-#content { min-height: 966px; }
-
 /* Layout  */
 #maincontent {float: left; width: 740px;}
 	.eyecatcher{float:left; width:730px; padding:0 5px;}
@@ -17,7 +15,6 @@
 	.rightblocks{float:right; width:160px; padding:0 5px;}
 	.topright{float:right; width:160px;padding:0 5px;}
 	.buttonblock-right{float:right; width:160px;padding:0 5px;}
-
 
 .icmsCode, .xoopsCode {
 	 width:580px;
