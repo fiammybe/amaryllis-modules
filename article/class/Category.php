@@ -73,77 +73,25 @@ class ArticleCategory extends icms_ipf_seo_Object {
 
 	}
 
-	public function getVar($key, $format = 's') {
-		if ($format == 's' && in_array($key, array('category_grpperm', 'category_pid'))) {
-			return call_user_func(array($this,$key));
-		}
-		return parent::getVar($key, $format);
-	}
-
-	// get uname instead of id for publisher
-	function category_publisher() {
-		return icms_member_user_Handler::getUserLink($this->getVar('category_publisher', 'e'));
-	}
-	
-	function category_updater() {
-		return icms_member_user_Handler::getUserLink($this->getVar('category_updater', 'e'));
-	}
-	
 	// get publisher for frontend
 	function getCategoryPublisher($link = FALSE) {		
-		$publisher_uid = $this->getVar('category_publisher', 'e');
-		$userinfo = array();
-		$userObj = icms::handler('icms_member')->getuser($publisher_uid);
-		if (is_object($userObj)) {
-			$userinfo['uid'] = $publisher_uid;
-			$userinfo['uname'] = $userObj->getVar('uname');
-			$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
-		} else {
-			global $icmsConfig;
-			$userinfo['uid'] = 0;
-			$userinfo['uname'] = $icmsConfig['anonymous'];
-		}
-		if ($link && $userinfo['uid']) {
-			return $userinfo['link'];
-		} else {
-			return $userinfo['uname'];
-		}
+		return icms_member_user_Handler::getUserLink($this->getVar('category_publisher', 'e'));
 	}
 	
 	// get publisher for frontend
 	function getCategoryUpdater($link = FALSE) {		
-		$publisher_uid = $this->getVar('category_updater', 'e');
-		$userinfo = array();
-		$userObj = icms::handler('icms_member')->getuser($publisher_uid);
-		if (is_object($userObj)) {
-			$userinfo['uid'] = $publisher_uid;
-			$userinfo['uname'] = $userObj->getVar('uname');
-			$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
-		} else {
-			global $icmsConfig;
-			$userinfo['uid'] = 0;
-			$userinfo['uname'] = $icmsConfig['anonymous'];
-		}
-		if ($link && $userinfo['uid']) {
-			return $userinfo['link'];
-		} else {
-			return $userinfo['uname'];
-		}
+		return icms_member_user_Handler::getUserLink($this->getVar('category_updater', 'e'));
 	}
 	
 	public function getCategoryPublishedDate() {
 		global $articleConfig;
-		$date = '';
 		$date = $this->getVar('category_published_date', 'e');
-		
 		return date($articleConfig['article_dateformat'], $date);
 	}
 
 	public function getCategoryUpdatedDate() {
 		global $articleConfig;
-		$date = '';
 		$date = $this->getVar('category_updated_date', 'e');
-		
 		return date($articleConfig['article_dateformat'], $date);
 	}
 	
@@ -203,7 +151,6 @@ class ArticleCategory extends icms_ipf_seo_Object {
 	// get sub category
 	function category_sub() {
 		$ret = $this->handler->getCategorySubCount($this->getVar('category_id', 'e'));
-
 		if ($ret > 0) {
 			$ret = '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_pid=' . $this->getVar('category_id', 'e') . '">' . $ret . ' <img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag+.png" align="absmiddle" /></a>';
 		}

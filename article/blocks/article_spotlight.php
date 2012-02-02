@@ -46,7 +46,7 @@ function b_article_spotlight_edit($options) {
 	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
 	$article_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
 	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-	$selcats = new icms_form_elements_Select('', 'options[1]', $options[1], 5, TRUE);
+	$selcats = new icms_form_elements_Select('', 'options[1]', $options[1]);
 	$selcats->addOptionArray($article_category_handler->getList());
 	$showmore = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
 	

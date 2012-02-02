@@ -152,21 +152,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->initiateSEO();
 	}
 
-	/**
-	 * Overriding the icms_ipf_Object::getVar method to assign a custom method on some
-	 * specific fields to handle the value before returning it
-	 *
-	 * @param str $key key of the field
-	 * @param str $format format that is requested
-	 * @return mixed value of the field that is requested
-	 */
-	public function getVar($key, $format = "s") {
-		if ($format == "s" && in_array($key, array())) {
-			return call_user_func(array ($this,	$key));
-		}
-		return parent::getVar($key, $format);
-	}
-	
 	public function article_active() {
 		$active = $this->getVar('article_active', 'e');
 		if ($active == FALSE) {
@@ -215,23 +200,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$control = new icms_form_elements_Text( '', 'weight[]', 5, 7,$this -> getVar( 'weight', 'e' ) );
 		$control->setExtra( 'style="text-align:center;"' );
 		return $control->render();
-	}
-
-	function article_grpperm() {
-		$ret = $this->getVar('article_grpperm', 'e');
-		$groups = $this->handler->getGroups();
-		return $groups;
-	}
-	
-	public function article_updater() {
-		$updater = $this->getVar("article_updater");
-		if($updater != 0) {
-			return icms_member_user_Handler::getUserLink($this->getVar('article_updater', 'e'));
-		}
-	}
-
-	public function article_submitter() {
-		return icms_member_user_Handler::getUserLink($this->getVar('article_submitter', 'e'));
 	}
 	
 	/**
@@ -508,13 +476,11 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-		$agroups = $gperm_handler->getGroupIds('module_admin', $module->getVar("mid"));
-		$allowed_groups = array_intersect_key($groups, $agroups);
 		$viewperm = $gperm_handler->checkRight('article_grpperm', $this->getVar('article_id', 'e'), $groups, $module->getVar("mid"));
 		if ($this->userCanEditAndDelete()) {
 			return TRUE;
 		}
-		if ($viewperm && ($this->getVar("article_active", "e") == TRUE) && ($this->getVar("article_approve", "e")) && (count($allowed_groups) > 0) ) {
+		if ($viewperm && ($this->getVar("article_active", "e") == TRUE) && ($this->getVar("article_approve", "e") == TRUE) ) {
 			return TRUE;
 		}
 		
@@ -591,8 +557,8 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['related'] = $this->getArticleRelated();
 		$ret['publisher'] = $this->getArticlePublishers(TRUE);
 		$ret['bypublisher'] = $this->getArticlePublishers(FALSE);
-		$ret['submitter'] = $this->article_submitter();
-		$ret['updater'] = $this->article_updater();
+		$ret['submitter'] = $this->getArticleSubmitter();
+		$ret['updater'] = $this->getArticleUpdater();
 		$ret['published_on'] = $this->getArticlePublishedDate();
 		$ret['updated_on'] = $this->getArticleUpdatedDate();
 		$ret['counter'] = $this->getVar("counter", "e");

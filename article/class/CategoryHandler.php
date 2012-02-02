@@ -22,9 +22,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 icms_loadLanguageFile("article", "common");
 
 class ArticleCategoryHandler extends icms_ipf_Handler {
-	
-	private $_category_grpperm = array();
-	
+
 	public $_moduleName;
 	
 	public $_uploadPath;
@@ -87,12 +85,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 			}
 		}
 		return $ret;
-	}
-	
-	public function getCategory($category_id) {
-		$ret = $this->getArticleCategories(0, 0, FALSE, $category_id);
-		
-		return isset($ret[$category_id]) ? $ret[$category_id] : FALSE;
 	}
 	
 	public function getCategoryListForPid($groups = array(), $perm = 'category_grpperm', $status = NULL,$approved = NULL,$inblocks = NULL, $category_id = NULL, $showNull = TRUE) {
@@ -276,15 +268,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		
 		return count($ret);
 	
-	}
-
-	public function getGroups($criteria = NULL) {
-		if (!$this->_category_grpperm) {
-			$member_handler =& icms::handler('icms_member');
-			$groups = $member_handler->getGroupList($criteria, TRUE);
-			return $groups;
-		}
-		return $this->_category_grpperm;
 	}
 
 	public function userCanSubmit() {
