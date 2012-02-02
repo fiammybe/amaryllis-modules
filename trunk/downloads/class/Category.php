@@ -40,7 +40,6 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$this->quickInitVar('category_inblocks',XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
 		$this->quickInitVar('category_approve',XOBJ_DTYPE_INT);
 		$this->quickInitVar('category_grpperm', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('category_uplperm', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('category_published_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('category_updated_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('category_publisher', XOBJ_DTYPE_TXTBOX);
@@ -261,11 +260,16 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 	
 	function getEditAndDelete() {
 		$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
-		if($downloads_download_handler->userCanSubmit($this->id())) {
+		if($downloads_download_handler->userCanSubmit($this->getVar("category_id", "e"))) {
 			return DOWNLOADS_URL . 'download.php?op=mod&amp;category_id=' . $this->id();
 		} else {
 			return FALSE;
 		}
+	}
+	
+	public function getUserCanSubmitFile() {
+		$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(dirname(__FILE__))), "downloads");
+		
 	}
 	
 	public function userCanSubmit() {

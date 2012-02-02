@@ -168,29 +168,27 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	
 	public function getCatalogueItems() {
 		$catalogueModule = icms_getModuleInfo('catalogue');
-		$catalogue_item_handler = icms_getModuleHandler ('item', $catalogueModule->getVar('dirname'), 'catalogue');
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add (new icms_db_criteria_Item('online_status', true));
-		$catalogueObjects = $catalogue_item_handler->getObjects($criteria, true, false);
-		$ret = array();
-		$ret[0] = '--None--';
-		foreach(array_keys($catalogueObjects) as $i) {
-			$ret[$catalogueObjects[$i]['item_id']] = $catalogueObjects[$i]['title'];
+		if(icms_get_module_status("catalogue")) {
+			$catalogue_item_handler = icms_getModuleHandler ('item', $catalogueModule->getVar('dirname'), 'catalogue');
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add (new icms_db_criteria_Item('online_status', true));
+			$catalogueObjects = $catalogue_item_handler->getObjects($criteria, true, false);
+			$ret = array();
+			$ret[0] = '--None--';
+			foreach(array_keys($catalogueObjects) as $i) {
+				$ret[$catalogueObjects[$i]['item_id']] = $catalogueObjects[$i]['title'];
+			}
+			return $ret;
 		}
-		return $ret;
 	}
 	
 	public function getAlbumList() {
 		$albumModule = icms_getModuleInfo('album');
-		if($albumModule) {
+		if(icms_get_module_status("album")) {
 			$album_album_handler = icms_getModuleHandler ('album', $albumModule->getVar('dirname'), 'album');
-			$albumObjects = $album_album_handler->getAlbumsForBlocks($start = 0, $limit = 0, $order = 'album_title', $sort = 'ASC');
-			$ret = array();
-			$ret[0] = '--None--';
-			foreach(array_keys($albumObjects) as $i) {
-				$ret[$albumObjects[$i]['album_id']] = $albumObjects[$i]['album_title'];
-			}
-			return $ret;
+			$albumObjects = $album_album_handler->getAlbumListForPid();
+			
+			return $albumObjects;
 		}
 	}
 
@@ -201,8 +199,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if (!is_object(icms::$user)) return false;
 		if ($downloads_isAdmin) return true;
 		$user_groups = icms::$user->getGroups();
-		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
-		return count(array_intersect(array($categoryObject->getVar('category_uplperm')), $user_groups)) > 0;
+		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))));
+		return count(array_intersect_key(array($categoryObject->getVar('category_uplperm', 'e')), $user_groups)) > 0;
 		
 	}
 
@@ -392,8 +390,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	}
 	
 	public function getDownloadTags() {
-		$sprocketsModule = icms_getModuleInfo("sprockets");
-		if($sprocketsModule) {
+		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+		if($sprocketsModule->registerClassPath(TRUE)) {
 			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->add(new icms_db_criteria_Item("label_type", 0));

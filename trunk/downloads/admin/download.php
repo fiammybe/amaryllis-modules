@@ -146,8 +146,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if ($show == 0) {
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_MIRROR_FALSE );
 			} else {
-				$obj = $downloads_download_handler->get($clean_download_id);
-				$obj->sendDownloadNotification('mirror_approved');
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_MIRROR_TRUE );
 			}
 			break;
@@ -158,15 +156,13 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if ($approve == 0) {
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_APPROVE_FALSE );
 			} else {
-				$obj = $downloads_download_handler->get($clean_download_id);
-				$obj->sendDownloadNotification('file_approved');
 				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_APPROVE_TRUE );
 			}
 			
 			break;
 			
 		case "changeWeight":
-			foreach ($_POST['DownloadsCategory_objects'] as $key => $value) {
+			foreach ($_POST['DownloadsDownload_objects'] as $key => $value) {
 				$changed = false;
 				$downloadObj = $downloads_download_handler -> get( $value );
 

@@ -47,17 +47,19 @@ function addtags($clean_tag_id = 0, $clean_download_id = 0){
 	
 	$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 	$downloadObj = $downloads_download_handler->get($clean_download_id);
-	$sprocketsModule = icms_getModuleInfo("sprockets");
-	$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
-	$tagObj = $sprockets_tag_handler->get($clean_tag_id);
-	$tagObj->hideFieldFromForm(array("label_type", "parent_id", "navigation_element", "rss", "short_url", "meta_description", "meta_keywords"));
-	if ($tagObj->isNew()){
-		$tagObj->setVar("label_type", 0);
-		$tagObj->setVar("navigation_element", 0);
-		$tagObj = $tagObj->getSecureForm(_MD_DOWNLOADS_TAG_ADD, 'addtags', DOWNLOADS_URL . "ajax.php?op=addtags&download_id=" . $downloadObj->id() , 'OK', TRUE, TRUE);
-		$tagObj->assign($icmsTpl, 'downloads_tag_form');
-	} else {
-		exit;
+	$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+	if(icms_get_module_status("sprockets")) {
+		$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
+		$tagObj = $sprockets_tag_handler->get($clean_tag_id);
+		$tagObj->hideFieldFromForm(array("label_type", "parent_id", "navigation_element", "rss", "short_url", "meta_description", "meta_keywords"));
+		if ($tagObj->isNew()){
+			$tagObj->setVar("label_type", 0);
+			$tagObj->setVar("navigation_element", 0);
+			$tagObj = $tagObj->getSecureForm(_MD_DOWNLOADS_TAG_ADD, 'addtags', DOWNLOADS_URL . "ajax.php?op=addtags&download_id=" . $downloadObj->id() , 'OK', TRUE, TRUE);
+			$tagObj->assign($icmsTpl, 'downloads_tag_form');
+		} else {
+			exit;
+		}
 	}
 	
 }
@@ -212,7 +214,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 * check, if album module is used
 				 */
 				$albumModule = icms_getModuleInfo('album');
-				if ($downloadsConfig['use_album'] == 1 && $albumModule){
+				if ($downloadsConfig['use_album'] == 1 && icms_get_module_status("album")){
 					$album_id = $downloadObj-> getVar("download_album");
 					if($album_id > 0){
 						$icmsTpl->assign('album_module', true);
@@ -250,8 +252,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				/**
 				 * check if Sprockets Module can be used and if it's available
 				 */
-				$sprocketsModule = icms_getModuleInfo("sprockets");
-				if($downloadsConfig['use_sprockets'] == 1 && $sprocketsModule) {
+				$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+				if($downloadsConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
 					$icmsTpl->assign("sprockets_module", TRUE);
 				
 					if(is_object(icms::$user)) {
@@ -269,7 +271,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 * check if catalogue module is installed and link to item
 				 */
 				$catalogueModule = icms_getModuleInfo('catalogue');
-				if ($downloadsConfig['use_catalogue'] == 1 && $catalogueModule){
+				if ($downloadsConfig['use_catalogue'] == 1 && icms_get_module_status("catalogue")){
 					$item_id = $downloadObj->getVar('catalogue_item');
 					if (!$item_id == 0) {
 						$icmsTpl->assign('catalogue_module', true);
@@ -293,11 +295,13 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				/**
 				 * review form
 				 */
-				addreview(0, $clean_download_id);
+				
 				if($downloadsConfig['guest_review'] == 1) {
+					addreview(0, $clean_download_id);
 					$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->getVar("download_id") );
 				} else {
 					if(is_object(icms::$user)){
+						addreview(0, $clean_download_id);
 						$icmsTpl->assign("review_link", DOWNLOADS_URL . "ajax.php?op=addreview&amp;download_id=" . $downloadObj->getVar("download_id") );
 						$icmsTpl->assign("review_perm_denied", FALSE);
 					} else {
@@ -337,7 +341,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					$review_count = $downloads_review_handler->getCount($criteria);
 					$extra_arg = 'download_id=' . $clean_download_id . '&amp;file=' . $downloadObj->getVar("short_url");
 					$review_pagenav = new icms_view_PageNav($review_count, $downloadsConfig['show_reviews_count'], $clean_review_start, 'rev_nav', $extra_arg);
-					$icmsTpl->assign('review_pagenav', $review_pagenav->renderImageNav());
+					$icmsTpl->assign('review_pagenav', $review_pagenav->renderNav());
 				
 				} else {
 					$icmsTpl->assign("show_reviews", FALSE);

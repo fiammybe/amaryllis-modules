@@ -66,7 +66,7 @@ if(in_array($clean_op, $valid_op)) {
 			
 			$icmsTpl->assign('files_count', $files_count);
 			if (!empty($clean_tag_id)) {
-				$extra_arg = '?op=getByTags&tag_id=' . $clean_tag_id;
+				$extra_arg = 'op=getByTags&tag_id=' . $clean_tag_id;
 			} else {
 				$extra_arg = false;
 			}

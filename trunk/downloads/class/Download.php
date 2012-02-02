@@ -131,7 +131,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->hideFieldFromSingleView(array('download_has_mirror', 'download_version_link', 'download_status_set', 'download_comments','download_notification_sent','download_fb_like', 'download_fb_dislike','download_g_like', 'counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
 		
 		$albumModule = icms_getModuleInfo('album');
-		if ($downloadsConfig['use_album'] == 1 && $albumModule){
+		if ($downloadsConfig['use_album'] == 1 && icms_get_module_status("album")){
 			$this->setControl('download_album', array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getAlbumList', 'module' => 'downloads'));
 		} else {
 			$this->hideFieldFromForm('download_album');
@@ -139,15 +139,15 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		}
 		
 		$catalogueModule = icms_getModuleInfo('catalogue');
-		if ($downloadsConfig['use_catalogue'] == 1 && $catalogueModule){
+		if ($downloadsConfig['use_catalogue'] == 1 && icms_get_module_status("catalogue")){
 			$this->setControl('catalogue_item', array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getCatalogueItems', 'module' => 'downloads'));
 		} else {
 			$this->hideFieldFromForm('catalogue_item');
 			$this->hideFieldFromSingleView('catalogue_item');
 		}
 		
-		$sprocketsModule = icms_getModuleInfo("sprockets");
-		if($downloadsConfig['use_sprockets'] == 1 && $sprocketsModule) {
+		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+		if($downloadsConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
 			$this->setControl("download_tags", array("name" => "select_multi", "itemHandler" => "download", "method" => "getDownloadTags", "module" => "downloads"));
 		} else {
 			$this->hideFieldFromForm("download_tags");
@@ -241,8 +241,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	
 	public function getDownloadTags($itemlink = FALSE) {
 		$tags = $this->getVar('download_tags', 's');
-		$sprocketsModule = icms_getModuleInfo("sprockets");
-		if($sprocketsModule && $tags != "") {
+		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+		if(icms_get_module_status("sprockets") && $tags != "") {
 			$sprockets_tag_handler = icms_getModuleHandler ( 'tag', $sprocketsModule->getVar("dirname"), 'sprockets' );
 			$ret = array();
 			if($itemlink == FALSE) {
@@ -668,18 +668,12 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$allowed_groups = array_intersect($groups, $agroups);
 		$viewperm = $gperm_handler->checkRight('download_grpperm', $this->getVar('download_id', 'e'), $groups, $module->getVar("mid"));
 		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('download_publisher', 'e')) {
-			return true;
+			return TRUE;
 		}
-		if ($viewperm && $this->getVar('download_active', 'e') == true) {
-			return true;
+		if ($viewperm && ($this->getVar('download_active', 'e') == TRUE) && ($this->getVar('download_approve', 'e') == TRUE) && (count($allowed_groups) > 0)) {
+			return TRUE;
 		}
-		if ($viewperm && $this->getVar('download_approve', 'e') == true) {
-			return true;
-		}
-		if ($viewperm && count($allowed_groups) > 0) {
-			return true;
-		}
-		return false;
+		return FALSEa;
 	}
 	
 	function userCanEditAndDelete() {
@@ -788,17 +782,12 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['accessgranted'] = $this->accessGranted();
 		
-		$ret['thumbnail_width'] = $downloadsConfig['thumbnail_width'];
-		$ret['thumbnail_height'] = $downloadsConfig['thumbnail_height'];
-		$ret['file_thumbnail_width'] = $downloadsConfig['file_img_thumbnail_width'];
-		$ret['file_thumbnail_height'] = $downloadsConfig['file_img_thumbnail_height'];
-		
 		return $ret;
 	}
 
 	function sendDownloadNotification($case) {
-		$valid_case = array("new_file", "file_submit", "file_modified", "file_approved", "mirror_approved", "file_broken", "review_submitted");
-		if(in_array($case, $valid_case, TRUE)) {
+		$valid_case = array('new_file', 'file_submit', 'file_modified', 'review_submitted');
+		if(in_array($case, $valid_case)) {
 			$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
 			$mid = $module->getVar('mid');
 			$tags ['DOWNLOAD_TITLE'] = $this->getVar('download_title');
@@ -807,7 +796,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 			switch ($case) {
 				case 'new_file':
 					$category = 'global';
-					$file_id = 0;
+					$file_id = $this->id();
 					$recipient = array();
 					break;
 				
@@ -822,27 +811,9 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 					$file_id = 0;
 					$recipient = array();
 					break;
-				
-				case 'file_approved':
-					$category = 'file';
-					$file_id = $this->id();
-					$recipient = $this->getVar("download_publisher", "e");
-					break;
-				
-				case 'mirror_approved':
-					$category = 'file';
-					$file_id = $this->id();
-					$recipient = $this->getVar("download_publisher", "e");
-					break;
-					
-				case 'file_broken':
-					$category = 'file';
-					$file_id = $this->id();
-					$recipient = array();
-					break;
 					
 				case 'review_submitted':
-					$category = 'file';
+					$category = 'global';
 					$file_id = 0;
 					$recipient = array();
 					break;
