@@ -253,29 +253,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	public function article_broken_filter() {
 		return array(0 => 'Online', 1 => 'Broken');
 	}
-	
-	function getCategoryList($active = NULL, $approve = NULL ) {
 		
-		$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
-		$criteria = new icms_db_criteria_Compo();
-		
-		if(isset($approve)) $criteria->add(new icms_db_criteria_Item("category_approve", TRUE));
-		if(isset($active)) $criteria->add(new icms_db_criteria_Item("category_active", TRUE));
-		
-		$categories = $article_category_handler->getObjects($criteria, TRUE);
-		foreach(array_keys($categories) as $i ) {
-			$ret[$categories[$i]->getVar('category_id')] = $categories[$i]->getVar('category_title');
-		}
-		return $ret;
-	}
-	
-	public function getCategories() {
-		$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
-		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-		$categories = $article_category_handler->getCategoryListForPid($groups=array(), 'category_grpperm', TRUE, TRUE, FALSE, NULL, FALSE);
-		return $categories;
-	}
-	
 	/**
 	 * handle some object fields
 	 */
@@ -307,15 +285,6 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	public function getRelated() {
 		$related = $this->getList(TRUE, TRUE);
 		return $related;
-	}
-	
-	public function getGroups($criteria = null) {
-		if (!$this->_article_grpperm) {
-			$member_handler =& icms::handler('icms_member');
-			$groups = $member_handler->getGroupList($criteria, true);
-			return $groups;
-		}
-		return $this->_article_grpperm;
 	}
 	
 	public function makeLink($article) {

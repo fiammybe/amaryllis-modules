@@ -44,8 +44,8 @@ $clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'cate
 $clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_article_id = isset($_GET['article_id']) ? filter_input(INPUT_GET, 'article_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
-$clean_category_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : false;
-$clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'category_pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_category_uid ? false : 0);
+$clean_category_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : FALSE;
+$clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'category_pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_category_uid ? FALSE : 0);
 
 $article_category_handler = icms_getModuleHandler( 'category', ARTICLE_DIRNAME, 'article' );
 $article_article_handler = icms_getModuleHandler( 'article', ARTICLE_DIRNAME, 'article' );
@@ -67,14 +67,15 @@ if(in_array($clean_op, $valid_op)) {
 				$tag = $sprockets_tag_handler->get($clean_tag_id);
 				$icmsTpl->assign("article_tag", $tag->getVar("title"));
 			}
-			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
 			/**
 			 * pagination
 			 */
 			if (!empty($clean_tag_id)) {
 				$extra_arg = 'op=getByTags&tag=' . $clean_tag_id;
 			} else {
-				$extra_arg = false;
+				$extra_arg = FALSE;
 			}
 			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
@@ -84,7 +85,7 @@ if(in_array($clean_op, $valid_op)) {
 			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "counter", "DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byPopular", TRUE);
-			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
 			if (!empty($clean_category_id)) {
 				$extra_arg = 'op=getMostPopular&category_id=' . $clean_category_id;
 			} else {
@@ -108,7 +109,7 @@ if(in_array($clean_op, $valid_op)) {
 			$article = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "article_updated_date", "DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byRecentUpdated", TRUE);
-			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
 			if (!empty($clean_category_id)) {
 				$extra_arg = 'op=viewRecentUpdated&category_id=' . $clean_category_id;
 			} else {
@@ -133,7 +134,7 @@ if(in_array($clean_op, $valid_op)) {
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byRecentArticles", TRUE);
 			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
 			if (!empty($clean_category_id)) {
 				$extra_arg = 'op=viewRecentArticles&category_id=' . $clean_category_id;
 			} else {
@@ -158,7 +159,8 @@ if(in_array($clean_op, $valid_op)) {
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byAuthor", TRUE);
 			$icmsTpl->assign("article_user", icms_member_user_Handler::getUserLink($clean_uid));
-			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
 			if (!empty($clean_category_id)) {
 				$extra_arg = 'op=getByAuthor&category_id=' . $clean_category_id;
 			} else {
@@ -172,7 +174,7 @@ if(in_array($clean_op, $valid_op)) {
 			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "article_comments", "DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("getMostCommented", TRUE);
-			$count = $article_article_handler->getCountCriteria(true, true, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
+			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
 			if (!empty($clean_category_id)) {
 				$extra_arg = 'op=getMostCommented&category_id=' . $clean_category_id;
 			} else {
@@ -210,15 +212,15 @@ if(in_array($clean_op, $valid_op)) {
 				if ($articleConfig['show_breadcrumbs']){
 					$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($categoryObj->getVar('category_id', 'e'), 1));
 				}else{
-					$icmsTpl->assign('article_cat_path',false);
+					$icmsTpl->assign('article_cat_path',FALSE);
 				}
 				if($article_category_handler->userCanSubmit()) {
-					$icmsTpl->assign('user_submit', true);
+					$icmsTpl->assign('user_submit', TRUE);
 					$icmsTpl->assign('user_submit_link', ARTICLE_URL . 'category.php?op=mod&category_id=' . $categoryObj->id());
 				} else {
-					$icmsTpl->assign('user_submit', false);
+					$icmsTpl->assign('user_submit', FALSE);
 				}
-				$categories = $article_category_handler->getArticleCategories($clean_category_start, $articleConfig['show_categories'], $clean_category_uid,  false, $clean_category_id, "weight", "ASC", TRUE, TRUE);
+				$categories = $article_category_handler->getArticleCategories($clean_category_start, $articleConfig['show_categories'], $clean_category_uid,  FALSE, $clean_category_id, "weight", "ASC", TRUE, TRUE);
 				$article_category_columns = array_chunk($categories, $articleConfig['show_category_columns']);
 				$icmsTpl->assign('sub_category_columns', $article_category_columns);
 				/**
@@ -241,7 +243,7 @@ if(in_array($clean_op, $valid_op)) {
 			 * if there's no valid category, retrieve a list of all primary categories
 			 */
 			} elseif ($clean_category_id == 0) {
-				$categories = $article_category_handler->getArticleCategories($clean_category_start, $articleConfig['show_categories'], $clean_category_uid,  false, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
+				$categories = $article_category_handler->getArticleCategories($clean_category_start, $articleConfig['show_categories'], $clean_category_uid,  FALSE, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
 				$article_category_columns = array_chunk($categories, $articleConfig['show_category_columns']);
 				$icmsTpl->assign('category_columns', $article_category_columns);
 				/**
@@ -264,19 +266,19 @@ if(in_array($clean_op, $valid_op)) {
 			 */
 			
 			if($articleConfig['show_upl_disclaimer'] == 1) {
-				$icmsTpl->assign('article_upl_disclaimer', true );
+				$icmsTpl->assign('article_upl_disclaimer', TRUE );
 				$icmsTpl->assign('up_disclaimer', $articleConfig['upl_disclaimer']);
 			} else {
-				$icmsTpl->assign('article_upl_disclaimer', false);
+				$icmsTpl->assign('article_upl_disclaimer', FALSE);
 			}
 			/**
 			 * check, if user can submit
 			 */
 			if($article_category_handler->userCanSubmit()) {
-				$icmsTpl->assign('user_submit', true);
+				$icmsTpl->assign('user_submit', TRUE);
 				$icmsTpl->assign('user_submit_link', ARTICLE_URL . 'category.php?op=mod&amp;category_id=' . $clean_category_id);
 			} else {
-				$icmsTpl->assign('user_submit', false);
+				$icmsTpl->assign('user_submit', FALSE);
 			}
 			break;
 	}
