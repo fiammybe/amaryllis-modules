@@ -76,12 +76,11 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		$criteria = $this->getCategoryCriteria($start, $limit, $category_publisher, $category_id,  $category_pid, $order, $sort);
 		if($approved) $criteria->add(new icms_db_criteria_Item("category_approve", true));
 		if ($active) $criteria->add(new icms_db_criteria_Item("category_active", true));
+		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
 		$categories = $this->getObjects($criteria, true, false);
 		$ret = array();
 		foreach ($categories as $category){
-			if ($category['accessgranted'] === TRUE){
-				$ret[$category['category_id']] = $category;
-			}
+			$ret[$category['category_id']] = $category;
 		}
 		return $ret;
 	}
@@ -89,17 +88,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 	public function getCategoryListForPid($groups = array(), $perm = 'category_grpperm', $status = null,$approved = null, $category_id = null, $showNull = true) {
 	
 		$criteria = new icms_db_criteria_Compo();
-		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
-			foreach($groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
-			}
-			$criteria->add($criteriaTray);
-			if ($perm == 'category_grpperm' || $perm == 'downloads_admin') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
-			}
-		}
+		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
 		if (isset($status)) {
 			$criteria->add(new icms_db_criteria_Item('category_active', true));
 		}
@@ -118,43 +107,6 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 			$subcategories = $this->getCategoryListForPid($groups, $perm, $status, $approved, $categories[$i]->getVar('category_id'), $showNull);
 			foreach(array_keys($subcategories) as $j) {
 				$ret[$j] = '-' . $subcategories[$j];
-			}
-		}
-		return $ret;
-	}
-	
-	public function getCategoryListForMenu($order = 'weight', $sort = 'ASC', $status = null,$approved = null,$inblocks = null, $category_id = null, $showSubs = null) {
-	
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->setSort($order);
-		$criteria->setOrder($sort);
-		
-		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('category_active', true));
-		}
-		if (isset($approved)) {
-			$criteria->add(new icms_db_criteria_Item('category_approve', true));
-		}
-		if (isset($inblocks)) {
-			$criteria->add(new icms_db_criteria_Item('category_inblocks', true));
-		}
-		if (is_null($category_id)) $category_id = 0;
-		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
-		$categories = $this->getObjects($criteria, TRUE, FALSE);
-		$ret = array();
-		foreach ($categories as $category){
-			if ($category['accessgranted']){
-				$ret[$category['category_id']] = $category;
-				if ($showSubs) {
-					$subcategories = $this->getCategoryListForMenu($order, $sort,$status, $approved, $inblocks, $category['category_id'], $showSubs);					
-					if(!count($subcategories) == 0) {
-						
-						$ret[$category['hassub']] = 1;
-						$ret[$category['subcategories']] = $subcategories;
-					} else {
-						$ret[$category['hassub']] = 0;
-					}
-				}
 			}
 		}
 		return $ret;
@@ -252,33 +204,8 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		if($category_id) $criteria->add(new icms_db_criteria_Item('category_id', $category_id));
 		if (is_null($category_pid)) $category_pid == 0;
 		if($category_pid) $criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
-		$critTray = new icms_db_criteria_Compo();
-		/**
-		 * @TODO : not the best way to check, if the user-group is in array of allowed groups. Does work, but only if there are not 10+ groups.
-		 */
-		foreach ($groups as $group) {
-			$critTray->add(new icms_db_criteria_Item("category_grpperm", "%" . $group . "%", "LIKE"), "OR");
-		}
-		$criteria->add($critTray);
+		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
 		return $this->getCount($criteria);
-	}
-
-	public function getGroups($criteria = null) {
-		if (!$this->_category_grpperm) {
-			$member_handler =& icms::handler('icms_member');
-			$groups = $member_handler->getGroupList($criteria, true);
-			return $groups;
-		}
-		return $this->_category_grpperm;
-	}
-	
-	public function getUplGroups($criteria = null) {
-		if (!$this->_category_uplperm) {
-			$member_handler =& icms::handler('icms_member');
-			$groups = $member_handler->getGroupList($criteria, true);
-			return $groups;
-		}
-		return $this->_category_uplperm;
 	}
 
 	public function userCanSubmit() {
@@ -287,7 +214,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		if ($downloads_isAdmin) return true;
 		$user_groups = icms::$user->getGroups();
 		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
-		return count(array_intersect($module->config['downloads_allowed_groups'], $user_groups)) > 0;
+		return count(array_intersect_key($module->config['downloads_allowed_groups'], $user_groups)) > 0;
 	}
 	
 	// get breadcrumb

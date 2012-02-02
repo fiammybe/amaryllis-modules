@@ -49,9 +49,9 @@ function editdownload($download_id = 0) {
 		
 	} else {
 		$downloadObj->hideFieldFromForm(array( 'download_published_date', 'download_updated_date', 'download_approve' ) );
-		$downloadObj->setVar('download_approve', true);
-		$downloadObj->setVar('download_mirror_approve', true);
-		$downloadObj->setVar('download_has_mirror', true);
+		$downloadObj->setVar('download_approve', TRUE);
+		$downloadObj->setVar('download_mirror_approve', TRUE);
+		$downloadObj->setVar('download_has_mirror', TRUE);
 		$downloadObj->setVar( 'download_published_date', (time() - 100) );
 		$downloadObj->setVar('download_submitter', icms::$user->getVar("uid"));
 		downloads_adminmenu( 1, _MI_DOWNLOADS_MENU_DOWNLOAD . " > " . _MI_DOWNLOADS_DOWNLOAD_CREATINGNEW);
@@ -73,7 +73,7 @@ function editdownload($download_id = 0) {
 include_once "admin_header.php";
 
 $downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
-$count = $downloads_category_handler -> getCount(false, true, false);
+$count = $downloads_category_handler -> getCount(FALSE, TRUE, FALSE);
 if( $count <= 0 ) {
 	redirect_header (DOWNLOADS_ADMIN_URL . 'category.php', 3, _AM_DOWNLOADS_NO_CAT_FOUND);
 } else {
@@ -163,12 +163,12 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 		case "changeWeight":
 			foreach ($_POST['DownloadsDownload_objects'] as $key => $value) {
-				$changed = false;
+				$changed = FALSE;
 				$downloadObj = $downloads_download_handler -> get( $value );
 
 				if ($downloadObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 					$downloadObj->setVar('weight', (int)($_POST['weight'][$key]));
-					$changed = true;
+					$changed = TRUE;
 				}
 				if ($changed) {
 					$downloads_download_handler -> insert($downloadObj);
@@ -194,28 +194,27 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			// create downloads table
 			$objectTable = new icms_ipf_view_Table($downloads_download_handler, $criteria);
 			$objectTable->addColumn( new icms_ipf_view_Column( 'download_active', 'center', 50, 'download_active' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'download_title', false, false, 'getPreviewItemLink' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'download_cid', false, false, 'getDownloadCid' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'download_title', FALSE, FALSE, 'getPreviewItemLink' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'download_cid', FALSE, FALSE, 'getDownloadCid' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'counter', 'center', 50));
 			$objectTable->addColumn( new icms_ipf_view_Column( 'download_inblocks', 'center', 50, 'download_inblocks' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'download_approve', 'center', 50, 'download_approve' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'download_mirror_approve', 'center', 50, 'download_mirror_approve' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'download_broken', 'center', 50, 'download_broken' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'download_published_date', 'center', 100, true ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'download_publisher', 'center', true, 'download_publisher' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getDownloadWeightControl' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'download_published_date', 'center', 100, TRUE ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'download_publisher', 'center', TRUE, 'getDownloadPublisher' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', TRUE, 'getDownloadWeightControl' ) );
 			
-			$objectTable->addFilter( 'download_active', 'download_active_filter' );
-			$objectTable->addFilter( 'download_inblocks', 'download_inblocks_filter' );
-			$objectTable->addFilter( 'download_approve', 'download_approve_filter' );
-			$objectTable->addFilter( 'download_broken', 'download_broken_filter' );
-			$objectTable->addFilter( 'download_has_mirror', 'download_has_mirror_filter' );
-			//$objectTable->addFilter( 'download_cid', 'getCategoryList' );
+			$objectTable->addFilter('download_active', 'download_active_filter');
+			$objectTable->addFilter('download_inblocks', 'download_inblocks_filter');
+			$objectTable->addFilter('download_approve', 'download_approve_filter');
+			$objectTable->addFilter('download_broken', 'download_broken_filter');
+			$objectTable->addFilter('download_has_mirror', 'download_has_mirror_filter');
 			
 			$objectTable->addQuickSearch(array('download_title', 'download_keyfeatures', 'download_requirements', 'download_platform', 'download_dev'));
 			
 			$objectTable->addIntroButton( 'adddownload', 'download.php?op=mod', _AM_DOWNLOADS_DOWNLOAD_ADD );
-			$objectTable->addActionButton( 'changeWeight', false, _SUBMIT );
+			$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
 			
 			$objectTable->addCustomAction( 'getViewItemLink' );
 			

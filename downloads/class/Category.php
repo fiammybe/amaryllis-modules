@@ -39,7 +39,6 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$this->quickInitVar('category_active', XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
 		$this->quickInitVar('category_inblocks',XOBJ_DTYPE_INT, FALSE, FALSE,FALSE, 1);
 		$this->quickInitVar('category_approve',XOBJ_DTYPE_INT);
-		$this->quickInitVar('category_grpperm', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('category_published_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('category_updated_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('category_publisher', XOBJ_DTYPE_TXTBOX);
@@ -73,52 +72,20 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$this->initiateSEO();
 	}
 
-	public function getVar($key, $format = 's') {
-		if ($format == 's' && in_array($key, array('category_grpperm', 'category_pid'))) {
-			return call_user_func(array($this,$key));
-		}
-		return parent::getVar($key, $format);
-	}
-
-	// get uname instead of id for publisher
-	function category_publisher() {
-		return icms_member_user_Handler::getUserLink($this->getVar('category_publisher', 'e'));
-	}
-	
-	// get publisher for frontend
+	// get publisher as userlink
 	function getCategoryPublisher($link = FALSE) {		
-		$publisher_uid = $this->getVar('category_publisher', 'e');
-		$userinfo = array();
-		$userObj = icms::handler('icms_member')->getuser($publisher_uid);
-		if (is_object($userObj)) {
-			$userinfo['uid'] = $publisher_uid;
-			$userinfo['uname'] = $userObj->getVar('uname');
-			$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
-		} else {
-			global $icmsConfig;
-			$userinfo['uid'] = 0;
-			$userinfo['uname'] = $icmsConfig['anonymous'];
-		}
-		if ($link && $userinfo['uid']) {
-			return $userinfo['link'];
-		} else {
-			return $userinfo['uname'];
-		}
+		return icms_member_user_Handler::getUserLink($this->getVar('category_publisher', 'e'));
 	}
 	
 	public function getCategoryPublishedDate() {
 		global $downloadsConfig;
-		$date = '';
 		$date = $this->getVar('category_published_date', 'e');
-		
 		return date($downloadsConfig['downloads_dateformat'], $date);
 	}
 
 	public function getCategoryUpdatedDate() {
 		global $downloadsConfig;
-		$date = '';
 		$date = $this->getVar('category_updated_date', 'e');
-		
 		return date($downloadsConfig['downloads_dateformat'], $date);
 	}
 	
@@ -189,48 +156,18 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		}
 		return $ret;
 	}
-	
-	// Retrieving the visibility of the category/category-set
-	function category_grpperm() {
-		$ret = $this->getVar('category_grpperm', 'e');
-		$groups = $this->handler->getGroups();
-		return $groups;
-	}
-	
-	// Retrieving the visibility of the category/category-set
-	function category_uplperm() {
-		$ret = $this->getVar('category_uplperm', 'e');
-		$groups = $this->handler->getUplGroups();
-		return $groups;
-	}
 
 	function accessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-
 		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-
-		$agroups = $gperm_handler->getGroupIds('module_admin', $module->getVar("mid"));
-		$allowed_groups = array_intersect($groups, $agroups);
-
-		$viewperm = $gperm_handler->checkRight('category_grpperm', $this->getVar('category_id', 'e'), $groups, $module->getVar("mid"));
-
+		$viewperm = $gperm_handler->checkRight('category_grpperm', $this->getVar('category_id', 'e'), $groups, icms::$module->getVar("mid"));
 		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('category_publisher', 'e')) {
 			return TRUE;
 		}
-		
-		if ($viewperm && ($this->getVar('category_active', 'e') == TRUE)) {
+		if ($viewperm && ($this->getVar('category_active', 'e') == TRUE) && ($this->getVar('category_approve', 'e') == TRUE)) {
 			return TRUE;
 		}
-		
-		if ($viewperm && ($this->getVar('category_approve', 'e') == TRUE)) {
-			return TRUE;
-		}
-
-		if ($viewperm && (count($allowed_groups) > 0)) {
-			return TRUE;
-		}
-		
 		return FALSE;
 	}
 
