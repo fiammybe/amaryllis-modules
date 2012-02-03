@@ -54,6 +54,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		if (isset($album_approve)) {
 			$criteria->add(new icms_db_criteria_Item('album_approve', true));
 		}
+		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		$albums = & $this->getObjects($criteria, true);
 		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		foreach(array_keys($albums) as $i) {
@@ -242,6 +243,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		$criteria = $this->getAlbumsCriteria();
 		$criteria->add(new icms_db_criteria_Item('album_pid', $album_id));
 		$criteria->add(new icms_db_criteria_Item('album_active', true ) );
+		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		$albums = $this->getObjects($criteria);
 		if (!$toarray) return $albums;
 		$ret = array();
@@ -268,8 +270,9 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($album_id)) {
 			$criteria->add( new icms_db_criteria_Item( 'album_id', (int)$album_id ) );
-			$criteria->add( new icms_db_criteria_Item( 'album_active', true ) );
 		}
+		$criteria->add( new icms_db_criteria_Item( 'album_active', true ) );
+		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		$albums = & $this -> getObjects( $criteria, true );
 		foreach( array_keys( $albums ) as $i ) {
 			$ret[$albums[$i]->getVar( 'album_id' )] = $albums[$i] -> getVar( 'album_title' );
@@ -398,7 +401,9 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 			}
 			$criteria->add($criteriaKeywords);
 		}
+		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		$criteria->add(new icms_db_criteria_Item('album_active', TRUE));
+		$criteria->add(new icms_db_criteria_Item('album_approve', TRUE));
 		return $this->getObjects($criteria, TRUE, FALSE);
 	}
 	
