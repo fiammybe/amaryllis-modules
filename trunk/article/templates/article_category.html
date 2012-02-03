@@ -1,9 +1,11 @@
 <div class="article_cat_frame table_cell">
 	<div class="article_category" original-title="<{$category.title}>">
 			<!-- category image -->
-			<a href="<{$category.itemURL}>" title="<{$category.title}>">
-				<img class="article_cat_img" src="<{$category.img}>" alt="<{$category.title}>" title="<{$category.title}>" />
-			</a>
+			<{if $category.img}>
+				<a href="<{$category.itemURL}>" title="<{$category.title}>">
+					<img class="article_cat_img" src="<{$category.img}>" alt="<{$category.title}>" title="<{$category.title}>" />
+				</a>
+			<{/if}>
 			<!-- Category title -->
 			<a href="<{$category.itemURL}>" title=""><{$category.title}></a>
 		

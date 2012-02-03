@@ -104,6 +104,19 @@
 		position: relative;
 	}
 	
+	.article_category {
+		width: 100%;
+	}
+	
+	div.article_subcatlist {
+		width: 100%;
+		margin: 0.5em 0;
+		padding: 0.5em;
+	}
+	.category_row {
+		width: 100%;
+	}
+	
 	.article_cat_img {
 		vertical-align: middle;
 	}
