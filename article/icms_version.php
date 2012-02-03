@@ -68,7 +68,7 @@ $modversion = array(
 
 /** other possible types: testers, translators, documenters and other */
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
-$modversion['people']['tester'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
+$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 
 /** Manual */
 $modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Article' target='_blank'>English</a>";

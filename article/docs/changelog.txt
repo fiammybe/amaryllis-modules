@@ -1,3 +1,5 @@
-<b><u>=> Unreleased: Version 1.0 Beta</u></b>
+= *Article* Changelog =
 
-- First public release of the module.
+== Unreleased: Version 1.0 RC1 ==
+
+* First public release of the module.
