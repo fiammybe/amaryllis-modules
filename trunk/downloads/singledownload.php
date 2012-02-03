@@ -19,7 +19,6 @@
 
 function addreview($clean_review_id = 0, $clean_download_id = 0){
 	global $downloads_review_handler, $downloadsConfig, $icmsTpl;
-	
 	$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 	$downloadObj = $downloads_download_handler->get($clean_download_id);
 	$downloads_review_handler = icms_getModuleHandler("review", basename(dirname(__FILE__)), "downloads");
@@ -39,12 +38,10 @@ function addreview($clean_review_id = 0, $clean_download_id = 0){
 	} else {
 		exit;
 	}
-	
 }
 
 function addtags($clean_tag_id = 0, $clean_download_id = 0){
 	global $sprockets_tag_handler, $downloadsConfig, $icmsTpl;
-	
 	$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 	$downloadObj = $downloads_download_handler->get($clean_download_id);
 	$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
@@ -61,7 +58,6 @@ function addtags($clean_tag_id = 0, $clean_download_id = 0){
 			exit;
 		}
 	}
-	
 }
 
 include_once "header.php";
@@ -74,11 +70,8 @@ include_once ICMS_ROOT_PATH . "/header.php";
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_index_key = $indexpageObj = $downloads_indexpage_handler = $indexpageObj = '';
-$clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
-$downloads_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'downloads' );
-
-$indexpageObj = $downloads_indexpage_handler->get($clean_index_key);
+$downloads_indexpage_handler = icms_getModuleHandler("indexpage", DOWNLOADS_DIRNAME, "downloads");
+$indexpageObj = $downloads_indexpage_handler->get(1);
 $index = $indexpageObj->toArray();
 $icmsTpl->assign('downloads_index', $index);
 
@@ -103,17 +96,16 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					$icmsTpl->assign("download_file", TRUE);
 					// force header
 					header("Cache-Control: no-store, no-cache, must-revalidate");
-					header("Cache-Control: post-check=0, pre-check=0", false);
+					header("Cache-Control: post-check=0, pre-check=0", FALSE);
 					header("Pragma: no-cache");
 					header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 					header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 					header("Refresh: 3; url=$url");
-					
 				} else {
 					return redirect_header (DOWNLOADS_URL . 'singledownload.php', 3, _NO_PERM);
 				}
 			}
-			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == true);	
+			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == TRUE);	
 			break;
 			
 		case('downfileMirror'):
@@ -127,17 +119,16 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					$icmsTpl->assign("download_file", TRUE);
 					// force header
 					header("Cache-Control: no-store, no-cache, must-revalidate");
-					header("Cache-Control: post-check=0, pre-check=0", false);
+					header("Cache-Control: post-check=0, pre-check=0", FALSE);
 					header("Pragma: no-cache");
 					header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 					header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 					header("Refresh: 3; url=$url");
-					
 				} else {
 					return redirect_header (DOWNLOADS_URL . 'singledownload.php', 3, _NO_PERM);
 				}
 			}
-			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == true);	
+			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == TRUE);	
 			break;
 			
 		default:
@@ -163,52 +154,22 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 */
 				$icmsTpl->assign("broken_link", DOWNLOADS_URL . "ajax.php?op=report_broken&download_id=" . $downloadObj->id() );
 				/**
-				 * display File as popular
-				 */
-				$popular = downloads_display_popular($downloadObj->getVar("counter"));
-				if($popular) {
-					$icmsTpl->assign('file_is_popular', TRUE );
-					$icmsTpl->assign('file_is_popular_img', $popular );
-				}
-				/**
-				 * display image if file is new or updated
-				 */
-				$newfile = downloads_display_new( $downloadObj->getVar( 'download_published_date' ) );
-				if($newfile) {
-					$icmsTpl->assign('file_is_new', TRUE );
-					$icmsTpl->assign('file_is_new_img', $newfile );
-				} else {
-					$icmsTpl->assign('file_is_new', FALSE );
-				}
-				if( $downloadObj->getVar('download_updated') == true && $downloadObj->getVar('download_updated_date') != 0) {
-					$newfile = downloads_display_updated( $downloadObj->getVar( 'download_published_date' ) );
-					if($newfile) {
-						$icmsTpl->assign('file_is_updated', TRUE );
-						$icmsTpl->assign('file_is_updated_img', $newfile );
-					} else {
-						$icmsTpl->assign('file_is_updated', FALSE );
-					}
-				}
-				if($downloadObj->getVar('download_updated_date', 'e') > 0) {
-					$icmsTpl->assign("show_updated", TRUE);
-				}
-				/**
 				 * mirror yes/no?
 				 */
 				if($downloadsConfig['use_mirror'] == 1 && !$downloadObj->getVar("download_mirror_url", "e") == 0 ) {
-					$icmsTpl->assign('show_mirror', true);
+					$icmsTpl->assign('show_mirror', TRUE);
 					$icmsTpl->assign('down_mirror_link', DOWNLOADS_URL . 'ajax.php?op=getFileMirror&download_id=' . $downloadObj->getVar("download_id") );
 				} else {
-					$icmsTpl->assign('show_mirror', false);
+					$icmsTpl->assign('show_mirror', FALSE);
 				}
 				/**
 				 * display disclaimer yes/no?
 				 */
 				if($downloadsConfig['downloads_show_down_disclaimer'] == 1) {
-					$icmsTpl->assign('show_down_disclaimer', true );
+					$icmsTpl->assign('show_down_disclaimer', TRUE );
 					$icmsTpl->assign('down_disclaimer', $downloadsConfig['downloads_down_disclaimer']);
 				} else {
-					$icmsTpl->assign('show_down_disclaimer', false);
+					$icmsTpl->assign('show_down_disclaimer', FALSE);
 				}
 				/**
 				 * check, if album module is used
@@ -217,7 +178,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				if ($downloadsConfig['use_album'] == 1 && icms_get_module_status("album")){
 					$album_id = $downloadObj-> getVar("download_album");
 					if($album_id > 0){
-						$icmsTpl->assign('album_module', true);
+						$icmsTpl->assign('album_module', TRUE);
 						$directory_name = basename(dirname( __FILE__ ) );
 						$script_name = getenv("SCRIPT_NAME");
 						$document_root = str_replace('modules/' . $directory_name . '/singledownload.php', '', $script_name);
@@ -227,7 +188,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 						$criteria = new icms_db_criteria_Compo();
 						$criteria->add(new icms_db_criteria_Item('img_active', 1));
 						$criteria->add(new icms_db_criteria_Item('a_id', $album_id ));
-						$imagesObjects = $album_images_handler->getObjects($criteria, true, true);
+						$imagesObjects = $album_images_handler->getObjects($criteria, TRUE, TRUE);
 						$album_images = array();
 						foreach ( $imagesObjects as $imagesObj ) {
 							$image = $imagesObj -> toArray();
@@ -246,16 +207,14 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 						$icmsTpl->assign('album_image_margins', $album_image_margins);
 					}
 				} else {
-					$icmsTpl->assign('album_module', false );
+					$icmsTpl->assign('album_module', FALSE );
 				}
-				
 				/**
 				 * check if Sprockets Module can be used and if it's available
 				 */
 				$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 				if($downloadsConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
 					$icmsTpl->assign("sprockets_module", TRUE);
-				
 					if(is_object(icms::$user)) {
 						$icmsTpl->assign("tag_link", DOWNLOADS_URL . "ajax.php?op=addtags&amp;download_id=" . $downloadObj->getVar("download_id") );
 						$icmsTpl->assign("tag_perm_denied", FALSE);
@@ -265,8 +224,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 						$icmsTpl->assign("tag_perm_denied", TRUE);
 					}
 				}
-				
-
 				/**
 				 * check if catalogue module is installed and link to item
 				 */
@@ -274,18 +231,18 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				if ($downloadsConfig['use_catalogue'] == 1 && icms_get_module_status("catalogue")){
 					$item_id = $downloadObj->getVar('catalogue_item');
 					if (!$item_id == 0) {
-						$icmsTpl->assign('catalogue_module', true);
+						$icmsTpl->assign('catalogue_module', TRUE);
 						$catalogueConfig = icms_getModuleConfig ($catalogueModule->getVar('dirname') );
 						$catalogue_item_handler = icms_getModuleHandler ('item', $catalogueModule->getVar('dirname'), 'catalogue');
 						$catalogueObj = $catalogue_item_handler->get($item_id);
 						$item_price = $catalogueObj->getVar('price');
 						$base_currency = $catalogueConfig['base_currency'];
 						if($catalogueConfig['show_prices'] == 1) {
-							$icmsTpl->assign('show_price', true);
+							$icmsTpl->assign('show_price', TRUE);
 							$icmsTpl->assign('base_currency', $base_currency);
 							$icmsTpl->assign('item_price', $item_price);
 						} else {
-							$icmsTpl->assign('show_price', false);
+							$icmsTpl->assign('show_price', FALSE);
 						}
 						$catalogue_item_link = ICMS_URL . "/modules/" . $catalogueModule->getVar('dirname') . "/item.php?item_id=" . $catalogueObj->id();
 						$icmsTpl->assign('item_link', $catalogue_item_link);
@@ -313,7 +270,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 * include the comment rules
 				 */
 				if ($downloadsConfig['com_rule']) {
-					$icmsTpl->assign('downloads_download_comment', true);
+					$icmsTpl->assign('downloads_download_comment', TRUE);
 					include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 				}
 				/**
@@ -324,11 +281,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					$reviews = $downloads_review_handler->getReviews($clean_review_start, $downloadsConfig['show_reviews_count'], 'review_date', $downloadsConfig['review_order'], $downloadObj->getVar("download_id") );
 					$icmsTpl->assign("show_reviews", TRUE);
 					$icmsTpl->assign('file_reviews', $reviews);
-					
 					if($downloadsConfig['show_reviews_email'] == 1) {
 						$icmsTpl->assign("show_reviews_email", TRUE);
 					}
-					
 					if($downloadsConfig['show_reviews_avatar'] == 1) {
 						$icmsTpl->assign("show_reviews_avatar", TRUE);
 					}
@@ -342,11 +297,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					$extra_arg = 'download_id=' . $clean_download_id . '&amp;file=' . $downloadObj->getVar("short_url");
 					$review_pagenav = new icms_view_PageNav($review_count, $downloadsConfig['show_reviews_count'], $clean_review_start, 'rev_nav', $extra_arg);
 					$icmsTpl->assign('review_pagenav', $review_pagenav->renderNav());
-				
 				} else {
 					$icmsTpl->assign("show_reviews", FALSE);
 				}
-				
 				/**
 				 * voting -> can vote?
 				 */
@@ -360,16 +313,15 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 						$icmsTpl->assign("register_link", ICMS_URL . "/user.php");
 					}
 				}
-				
 				/**
 				 * 
 				 */
-				if ($downloadsConfig['show_breadcrumbs'] == true) {
-					$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'downloads');
+				if ($downloadsConfig['show_breadcrumbs'] == TRUE) {
+					$downloads_category_handler = icms_getModuleHandler("category", DOWNLOADS_DIRNAME, "downloads");
 					$icmsTpl->assign('downloads_show_breadcrumb', TRUE);
 					$icmsTpl->assign('downloads_cat_path', $downloads_category_handler->getBreadcrumbForPid($clean_category_id, 1));
 				} else {
-					$icmsTpl->assign('downloads_cat_path', false);
+					$icmsTpl->assign('downloads_cat_path', FALSE);
 				}
 				/**
 				 * get the meta informations
@@ -379,7 +331,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			} else {
 				redirect_header (DOWNLOADS_URL, 3, _NO_PERM);
 			}
-			
 	}
 } else {
 	redirect_header (DOWNLOADS_URL, 3, _NO_PERM);

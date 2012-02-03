@@ -18,7 +18,6 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
 /**
  * check, if rss feeds are enabled. if so, display link
  */
@@ -28,29 +27,24 @@ if($downloadsConfig['use_rss'] == 1) {
 /**
  * check, if breadcrumb should be displayed
  */
-if( $downloadsConfig['show_breadcrumbs'] == true ) {
-	$icmsTpl->assign('downloads_show_breadcrumb', true);
+if( $downloadsConfig['show_breadcrumbs'] == TRUE ) {
+	$icmsTpl->assign('downloads_show_breadcrumb', TRUE);
 } else {
-	$icmsTpl->assign('downloads_show_breadcrumb', false);
+	$icmsTpl->assign('downloads_show_breadcrumb', FALSE);
 }
-
 $icmsTpl->assign('thumbnail_width', $downloadsConfig['thumbnail_width']);
 $icmsTpl->assign('thumbnail_height', $downloadsConfig['thumbnail_height']);
 $icmsTpl->assign('file_thumbnail_width', $downloadsConfig['file_img_thumbnail_width']);
 $icmsTpl->assign('file_thumbnail_height', $downloadsConfig['file_img_thumbnail_height']);
-
 $icmsTpl->assign("downloads_adminpage", "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_DOWNLOADS_ADMIN_PAGE . "</a>");
 $icmsTpl->assign("downloads_is_admin", icms_userIsAdmin(DOWNLOADS_DIRNAME));
 $icmsTpl->assign('downloads_url', DOWNLOADS_URL);
 $icmsTpl->assign('downloads_module_home', '<a href="' . DOWNLOADS_URL . '" title="' . icms::$module->getVar('name') . '">' . icms::$module->getVar('name') . '</a>');
 $icmsTpl->assign('downloads_images_url', DOWNLOADS_IMAGES_URL);
-
 /**
  * force downloads.js to header
  */
-
-$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.qtip.js', array('type' => 'text/javascript'));
-$xoTheme->addStylesheet('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.qtip.css');
+$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.qtip.min.js', array('type' => 'text/javascript'));
+$xoTheme->addStylesheet('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.qtip.min.css');
 $xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/downloads.js', array('type' => 'text/javascript'));
-
 include_once ICMS_ROOT_PATH . '/footer.php';

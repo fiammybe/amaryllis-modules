@@ -22,10 +22,6 @@ defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 icms_loadLanguageFile('downloads', 'common');
 
 class DownloadsCategoryHandler extends icms_ipf_Handler {
-
-	private $_category_grpperm = array();
-	
-	private $_category_uplperm = array();
 	
 	public $_moduleName;
 	
@@ -97,6 +93,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		}
 		if (is_null($category_id)) $category_id = 0;
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
+		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
 		$categories = & $this->getObjects($criteria, true);
 		$ret = array();
 		if ($showNull) {
@@ -319,4 +316,3 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 	}
 
 }
-	
