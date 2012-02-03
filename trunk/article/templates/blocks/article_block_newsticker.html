@@ -11,13 +11,13 @@ $.fn.liScroll = function(settings) {
 		}, settings);		
 		return this.each(function(){
 				var $strip = jQuery(this);
-				$strip.addClass("article_newsticker")
+				$strip.addClass("newsticker_articles")
 				var stripWidth = 1;
 				$strip.find("li").each(function(i){
 				stripWidth += jQuery(this, i).outerWidth(true);
 				});
-				var $mask = $strip.wrap("<div class='mask'></div>");
-				var $tickercontainer = $strip.parent().wrap("<div class='tickercontainer'></div>");								
+				var $mask = $strip.wrap("<div class='mymask'></div>");
+				var $tickercontainer = $strip.parent().wrap("<div class='news_tickercontainer'></div>");								
 				var containerWidth = $strip.parent().parent().width();
 				$strip.width(stripWidth);			
 				var totalTravel = stripWidth+containerWidth;
