@@ -15,112 +15,8 @@
  * @package		article
  *
  */
-
-
-	/**
-	 * jQuery imtech pager plugin
-	 *
-	 * Copyright (c) 2011 www.script tutorials.com
-	 *
-	 */
-
-	var Imtech = {};
-	Imtech.Pager = function() {
-	    this.paragraphsPerPage = 1;
-	    this.currentPage = 1;
-	    this.pagingControlsContainer = '#pagingControls';
-	    this.pagingContainerPath = '#article_body';
-	
-	    this.numPages = function() {
-	        var numPages = 0;
-	        if (this.paragraphs != null && this.paragraphsPerPage != null) {
-	            numPages = Math.ceil(this.paragraphs.length / this.paragraphsPerPage);
-	        }
-	
-	        return numPages;
-	    };
-	
-	    this.showPage = function(page) {
-	        this.currentPage = page;
-	        var html = '';
-	
-	        this.paragraphs.slice((page-1) * this.paragraphsPerPage,
-	            ((page-1)*this.paragraphsPerPage) + this.paragraphsPerPage).each(function() {
-	            html += '<div>' + $(this).html() + '</div>';
-	        });
-	
-	        $(this.pagingContainerPath).html(html);
-	
-	        renderControls(this.pagingControlsContainer, this.currentPage, this.numPages());
-	    }
-	
-	    var renderControls = function(container, currentPage, numPages) {
-	        var pagingControls = '<ul>';
-	        for (var i = 1; i <= numPages; i++) {
-	            if (i != currentPage) {
-	                pagingControls += '<li><a href="#" onclick="pager.showPage(' + i + '); return false;">' + i + '</a></li>';
-	            } else {
-	                pagingControls += '<li>' + i + '</li>';
-	            }
-	        }
-	
-	        pagingControls += '</ul>';
-	
-	        $(container).html(pagingControls);
-	    }
-	}
-	/**
-	 * E N D jquery imTech pager plugin
-	 */
-	/*!
-	 * liScroll 1.0
-	 * Examples and documentation at: 
-	 * http://www.gcmingati.net/wordpress/wp-content/lab/jquery/newsticker/jq-liscroll/scrollanimate.html
-	 * 2007-2010 Gian Carlo Mingati
-	 * Version: 1.0.2.1 (22-APRIL-2011)
-	 * Dual licensed under the MIT and GPL licenses:
-	 * http://www.opensource.org/licenses/mit-license.php
-	 * http://www.gnu.org/licenses/gpl.html
-	 * Requires:
-	 * jQuery v1.2.x or later
-	 * 
-	 */
-	jQuery.fn.liScroll = function(settings) {
-			settings = jQuery.extend({
-			travelocity: 0.07
-			}, settings);		
-			return this.each(function(){
-					var $strip = jQuery(this);
-					$strip.addClass("article_newsticker")
-					var stripWidth = 1;
-					$strip.find("li").each(function(i){
-					stripWidth += jQuery(this, i).outerWidth(true);
-					});
-					var $mask = $strip.wrap("<div class='mask'></div>");
-					var $tickercontainer = $strip.parent().wrap("<div class='tickercontainer'></div>");								
-					var containerWidth = $strip.parent().parent().width();
-					$strip.width(stripWidth);			
-					var totalTravel = stripWidth+containerWidth;
-					var defTiming = totalTravel/settings.travelocity;
-					function scrollnews(spazio, tempo){
-					$strip.animate({left: '-='+ spazio}, tempo, "linear", function(){$strip.css("left", containerWidth); scrollnews(totalTravel, defTiming);});
-					}
-					scrollnews(totalTravel, defTiming);				
-					$strip.hover(function(){
-					jQuery(this).stop();
-					},
-					function(){
-					var offset = jQuery(this).offset();
-					var residualSpace = offset.left + stripWidth;
-					var residualTime = residualSpace/settings.travelocity;
-					scrollnews(residualSpace, residualTime);
-					});			
-			});	
-	};
-	
-	var pager = new Imtech.Pager();
+	//report broken Link
 	$(document).ready(function(){
-		//report broken Link
 		$("#dialog-confirm-broken").dialog({
 			modal: true,
 			width: 500,
@@ -142,7 +38,10 @@
 			});
 			$("#dialog-confirm-broken").dialog("open");
 		});
-		//call disclaimer for article-confirmation
+	});
+	
+	// call disclaimer for article-confirmation
+	$(document).ready(function(){
 		$(".down_disclaimer").click(function(e) {
 			var $link = $(this);
 			e.preventDefault();
@@ -166,7 +65,10 @@
 			resizable: true,
 			draggable: true
 		});
-		// call disclaimer for upload-confirmation
+	});
+	
+	// call disclaimer for upload-confirmation
+	$(document).ready(function(){
 		$(".upl_disclaimer").click(function(e) {
 			var $link = $(this);
 			
@@ -190,6 +92,10 @@
 			resizable: true,
 			draggable: true
 		});
+	});
+	
+	var pager = new Imtech.Pager();
+	$(document).ready(function(){
 		// use pagination
 	    pager.paragraphsPerPage = 1; // set amount elements per page
 	    pager.pagingContainer = $('#article_body'); // set of main container
@@ -252,13 +158,11 @@
 				},
 			});
 		});
-		// related to initiate g+
 		(function() {
 		    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
 		    po.src = 'https://apis.google.com/js/plusone.js';
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 		})();
-		// related to fb-like
 		(function(d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) {return;}
@@ -268,7 +172,12 @@
 		  }
 		  (document, 'script', 'facebook-jssdk'));
 		if($('#socialshareprivacy').length > 0){ $('#socialshareprivacy').socialSharePrivacy(); }
-		// initiate tag form
+		
+	});
+	
+	
+	// initiate tag form
+	$(document).ready(function(){
 		$(".tag_form").dialog({
 			modal: true,
 			width: 700,
@@ -290,7 +199,10 @@
 			});
 			$(".tag_form").dialog("open");
 		});
-		//tag permission denied
+	});
+
+	//tag permission denied
+	$(document).ready(function(){
 		$("#dialog-confirm-perm-tag").dialog({
 			modal: true,
 			width: 500,

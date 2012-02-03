@@ -60,6 +60,8 @@ $icmsTpl->assign('article_images_url', ARTICLE_IMAGES_URL);
  */
 $xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/jquery.qtip.min.js', array('type' => 'text/javascript'));
 $xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/scripts/jquery.qtip.min.css');
-//$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article.js', array('type' => 'text/javascript'));
+$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/pagination.js', array('type' => 'text/javascript'));
+$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/newsticker.js', array('type' => 'text/javascript'));
+$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article.js', array('type' => 'text/javascript'));
 
 include_once ICMS_ROOT_PATH . '/footer.php';
