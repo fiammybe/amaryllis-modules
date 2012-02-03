@@ -13,7 +13,7 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
+include_once ICMS_ROOT_PATH . '/modules/article/include/common.php';
 function article_search($queryarray, $andor, $limit, $offset, $userid) {
 	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
 	$articleArray = $article_article_handler->getArticlesForSearch($queryarray, $andor, $limit, $offset, $userid);
@@ -21,7 +21,7 @@ function article_search($queryarray, $andor, $limit, $offset, $userid) {
 	$ret = array();
 
 	foreach ($articleArray as $articleArray) {
-		$item['image'] = "images/article_icon.png";
+		$item['image'] = "images/article_icon_big.png";
 		$item['link'] = $articleArray['itemURL'];
 		$item['title'] = $articleArray['article_title'];
 		$item['time'] = strtotime($articleArray['article_published_date']);
