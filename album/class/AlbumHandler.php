@@ -55,6 +55,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('album_approve', true));
 		}
 		$albums = & $this->getObjects($criteria, true);
+		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		foreach(array_keys($albums) as $i) {
 			$ret[$albums[$i]->getVar('album_id')] = $albums[$i]->getVar('album_title');
 		}
@@ -104,18 +105,17 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		}
 		if (is_null($album_id)) $album_id = 0;
 		$criteria->add(new icms_db_criteria_Item('album_pid', $album_id));
+		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		$albums = & $this->getObjects($criteria, true);
 		$ret = array();
 		if ($showNull) {
 			$ret[0] = '-----------------------';
 		}
 		foreach(array_keys($albums) as $i) {
-			if($albums[$i]->accessGranted()) {
-				$ret[$i] = $albums[$i]->getVar('album_title');
-				$subalbums = $this->getAlbumListForPid($groups, $perm, $status, $albums[$i]->getVar('album_id'), $showNull);
-				foreach(array_keys($subalbums) as $j) {
-					$ret[$j] = '-' . $subalbums[$j];
-				}
+			$ret[$i] = $albums[$i]->getVar('album_title');
+			$subalbums = $this->getAlbumListForPid($groups, $perm, $status, $albums[$i]->getVar('album_id'), $showNull);
+			foreach(array_keys($subalbums) as $j) {
+				$ret[$j] = '-' . $subalbums[$j];
 			}
 		}
 		return $ret;
@@ -126,12 +126,11 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		if(isset($approve)) $criteria->add(new icms_db_criteria_Item("album_active", TRUE));
 		if(isset($onindex)) $criteria->add(new icms_db_criteria_Item("album_onindex", TRUE));
 		if(isset($active)) $criteria->add(new icms_db_criteria_Item("album_active", TRUE));
+		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		$albums = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($albums as $album){
-			if ($album['accessgranted']){
-				$ret[$album['album_id']] = $album;
-			}
+			$ret[$album['album_id']] = $album;
 		}
 		return $ret;
 	}
@@ -146,14 +145,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		if($album_id) $criteria->add(new icms_db_criteria_Item('album_id', $album_id));
 		if (is_null($album_pid)) $album_pid == 0;
 		if($album_pid) $criteria->add(new icms_db_criteria_Item('album_pid', $album_pid));
-		$critTray = new icms_db_criteria_Compo();
-		/**
-		 * @TODO : not the best way to check, if the user-group is in array of allowed groups. Does work, but only if there are not 10+ groups.
-		 */
-		foreach ($groups as $group) {
-			$critTray->add(new icms_db_criteria_Item("album_grpperm", "%" . $group . "%", "LIKE"), "OR");
-		}
-		$criteria->add($critTray);
+		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		return $this->getCount($criteria);
 	}
 	
@@ -167,12 +159,11 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		$criteria->setLimit($limit);
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
+		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		$albums = $this->getObjects($criteria, true, false);
 		$ret = array();
 		foreach ($albums as $key => &$album){
-			if ($album['accessgranted']){
-				$ret[$album['album_id']] = $album;
-			}
+			$ret[$album['album_id']] = $album;
 		}
 		return $ret;
 	}
@@ -255,11 +246,9 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		if (!$toarray) return $albums;
 		$ret = array();
 		foreach(array_keys($albums) as $i) {
-			if ($albums[$i]->accessGranted()){
-				$ret[$i] = $albums[$i]->toArray();
-				$ret[$i]['album_description'] = icms_core_DataFilter::icms_substr(icms_cleanTags($albums[$i]->getVar('album_description','n'),array()),0,300);
-				$ret[$i]['album_url'] = $albums[$i]->getItemLink();
-			}
+			$ret[$i] = $albums[$i]->toArray();
+			$ret[$i]['album_description'] = icms_core_DataFilter::icms_substr(icms_cleanTags($albums[$i]->getVar('album_description','n'),array()),0,300);
+			$ret[$i]['album_url'] = $albums[$i]->getItemLink();
 		}
 		return $ret;
 	}

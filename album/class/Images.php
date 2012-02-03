@@ -47,7 +47,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->setControl('img_active', 'yesno');
 		$this->setControl('img_approve', 'yesno');
 		$this->setControl('img_publisher', 'user');
-		$this->setControl('a_id', array('itemHandler' => 'album', 'method' => 'getAlbumList', 'module' => 'album'));
+		$this->setControl('a_id', array('itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
 		$this->setControl('img_description', 'dhtmltextarea' );
 		
 		$this->setControl( 'img_url', array( 'name' => 'image' ) );
