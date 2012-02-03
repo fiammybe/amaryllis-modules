@@ -43,39 +43,39 @@ class VisitorvoiceIndexpage extends icms_ipf_Object {
 		
 	}
 
-	public function getVar($key, $format = "s") {
-		if ($format == "s" && in_array($key, array())) {
-			return call_user_func(array ($this,	$key));
-		}
-		return parent::getVar($key, $format);
-	}
-
 	public function getIndexImg() {
 		$indeximage = $image_tag = '';
 		$indeximage = $this->getVar('index_image', 'e');
 		if (!empty($indeximage)) {
-			$image_tag = VISITORVOICE_UPLOAD_URL . 'indeximages/' . $indeximage;
+			$image_tag = GUESTBOOK_UPLOAD_URL . 'indeximages/' . $indeximage;
+			return '<div class="visitorvoice_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
-		return '<div class="visitorvoice_indeximage"><img src="' . $image_tag . '" /></div>';
 	}
 	
 	public function getIndexHeader() {
 		$indexheader = '';
 		$indexheader = $this->getVar('index_header', 'e');
-		return '<div class="visitorvoice_indexheader">' . $indexheader . '</div>';
+		if($indexheader != "") {
+			return '<div class="visitorvoice_indexheader">' . $indexheader . '</div>';
+		}
 	}
 
 	public function getIndexHeading() {
 		$indexheading = '';
-		$indexheading = $this->getVar('index_heading', 'e');
-		return '<div class="visitorvoice_indexheading">' . $indexheading . '</div>';
+		$indexheading = $this->getVar('index_heading', 's');
+		if($indexheading != "") {
+			$indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
+			return '<div class="visitorvoice_indexheading">' . $indexheading . '</div>';
+		}
 	}
 	
 	public function getIndexFooter() {
 		$indexfooter = '';
 		$indexfooter = $this->getVar('index_footer', 's');
-		$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
-		return '<div class="visitorvoice_indexfooter">' . $indexfooter . '</div>';
+		if($indexfooter != "") {
+			$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
+			return '<div class="visitorvoice_indexfooter">' . $indexfooter . '</div>';
+		}
 	}
 
 	function toArray() {
