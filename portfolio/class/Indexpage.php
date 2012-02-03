@@ -57,38 +57,39 @@ class PortfolioIndexpage extends icms_ipf_Object {
 		
 	}
 
-	public function getVar($key, $format = "s") {
-		if ($format == "s" && in_array($key, array())) {
-			return call_user_func(array ($this,	$key));
-		}
-		return parent::getVar($key, $format);
-	}
-
 	public function getIndexImg() {
 		$indeximage = $image_tag = '';
 		$indeximage = $this->getVar('index_image', 'e');
 		if (!empty($indeximage)) {
-			$image_tag = PORTFOLIO_UPLOAD_URL . 'indeximages/' . $indeximage;
+			$image_tag = GUESTBOOK_UPLOAD_URL . 'indeximages/' . $indeximage;
+			return '<div class="portfolio_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
-		return '<div class="portfolio_indeximage"><img src="' . $image_tag . '" /></div>';
 	}
 	
 	public function getIndexHeader() {
 		$indexheader = '';
 		$indexheader = $this->getVar('index_header', 'e');
-		return '<div class="portfolio_indexheader">' . $indexheader . '</div>';
+		if($indexheader != "") {
+			return '<div class="portfolio_indexheader">' . $indexheader . '</div>';
+		}
 	}
 
 	public function getIndexHeading() {
 		$indexheading = '';
-		$indexheading = icms_core_DataFilter::checkVar($this->getVar('index_heading', 's'), 'html', 'output');
-		return '<div class="portfolio_indexheading">' . $indexheading . '</div>';
+		$indexheading = $this->getVar('index_heading', 's');
+		if($indexheading != "") {
+			$indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
+			return '<div class="portfolio_indexheading">' . $indexheading . '</div>';
+		}
 	}
 	
 	public function getIndexFooter() {
 		$indexfooter = '';
-		$indexfooter = icms_core_DataFilter::checkVar($this->getVar('index_footer', 's'), 'html', 'output');
-		return '<div class="portfolio_indexfooter">' . $indexfooter . '</div>';
+		$indexfooter = $this->getVar('index_footer', 's');
+		if($indexfooter != "") {
+			$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
+			return '<div class="portfolio_indexfooter">' . $indexfooter . '</div>';
+		}
 	}
 	
 	public function getSkill1() {

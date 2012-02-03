@@ -59,7 +59,10 @@ class PortfolioIndexpageHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function beforeInsert(&$obj) {
+	protected function beforeInsert(&$obj) {
+		$heading = $obj->getVar("index_heading", "s");
+		$heading = icms_core_DataFilter::checkVar($heading, "html", "input");
+		$obj->setVar("index_heading", $heading);
 		$footer = $obj->getVar("index_footer", "s");
 		$footer = icms_core_DataFilter::checkVar($footer, "html", "input");
 		$obj->setVar("index_footer", $footer);
