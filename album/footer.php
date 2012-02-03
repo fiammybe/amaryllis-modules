@@ -31,8 +31,8 @@ $icmsTpl->assign('dirname', icms::$module -> getVar( 'dirname' ) );
  * force js-files to header
  */
 
-$xoTheme->addScript('/modules/' . ALBUM_DIRNAME . '/scripts/jquery.qtip.js', array('type' => 'text/javascript'));
-$xoTheme->addStylesheet('/modules/' . ALBUM_DIRNAME . '/scripts/jquery.qtip.css');
+$xoTheme->addScript('/modules/' . ALBUM_DIRNAME . '/scripts/jquery.qtip.min.js', array('type' => 'text/javascript'));
+$xoTheme->addStylesheet('/modules/' . ALBUM_DIRNAME . '/scripts/jquery.qtip.min.css');
 $xoTheme->addScript('/modules/' . ALBUM_DIRNAME . '/scripts/album.js', array('type' => 'text/javascript'));
 
 

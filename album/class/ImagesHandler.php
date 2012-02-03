@@ -56,14 +56,14 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getImagesCount ($active = NULL, $approve = NULL, $a_id = NULL) {
+	public function getImagesCount ($active = FALSE, $approve = FALSE, $a_id = NULL) {
 		$criteria = new icms_db_criteria_Compo();
 		if(isset($active))	$criteria->add(new icms_db_criteria_Item('img_active', TRUE));
 		if(isset($approve)) $criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
 		
 		if (is_null($a_id)) $a_id == 0;
 		if($a_id) $criteria->add(new icms_db_criteria_Item('a_id', $a_id));
-		$images = $this->getCount($criteria);
+		return $this->getCount($criteria);
 	}
 	
 	public function changeVisible($img_id) {

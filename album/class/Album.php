@@ -305,7 +305,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	
 	function getImagesCount() {
 		$album_images_handler = icms_getModuleHandler('images', basename(dirname(dirname(__FILE__))), 'album');
-		$images_count = $album_images_handler->getImagesCount(TRUE, TRUE, $this->getVar("album_id"));
+		$images_count = $album_images_handler->getImagesCount(TRUE, TRUE, $this->getVar("album_id", "e"));
 		return $images_count;
 	}
 
