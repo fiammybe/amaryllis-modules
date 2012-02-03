@@ -38,16 +38,9 @@ class GuestbookIndexpage extends icms_ipf_Object {
 
 		$this->setControl('index_img_upload', 'image');
 		$this->setControl('index_heading','dhtmltextarea');
-		$this->setControl('index_footer', 'textarea');
+		$this->setControl('index_footer', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl('index_image', array( 'name' => 'select', 'itemHandler' => 'indexpage', 'method' => 'getImageList', 'module' => 'guestbook'));
 		
-	}
-
-	public function getVar($key, $format = "s") {
-		if ($format == "s" && in_array($key, array())) {
-			return call_user_func(array ($this,	$key));
-		}
-		return parent::getVar($key, $format);
 	}
 
 	public function getIndexImg() {
@@ -55,27 +48,34 @@ class GuestbookIndexpage extends icms_ipf_Object {
 		$indeximage = $this->getVar('index_image', 'e');
 		if (!empty($indeximage)) {
 			$image_tag = GUESTBOOK_UPLOAD_URL . 'indeximages/' . $indeximage;
+			return '<div class="guestbook_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
-		return '<div class="guestbook_indeximage"><img src="' . $image_tag . '" /></div>';
 	}
 	
 	public function getIndexHeader() {
 		$indexheader = '';
 		$indexheader = $this->getVar('index_header', 'e');
-		return '<div class="guestbook_indexheader">' . $indexheader . '</div>';
+		if($indexheader != "") {
+			return '<div class="guestbook_indexheader">' . $indexheader . '</div>';
+		}
 	}
 
 	public function getIndexHeading() {
 		$indexheading = '';
-		$indexheading = $this->getVar('index_heading', 'e');
-		return '<div class="guestbook_indexheading">' . $indexheading . '</div>';
+		$indexheading = $this->getVar('index_heading', 's');
+		if($indexheading != "") {
+			$indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
+			return '<div class="guestbook_indexheading">' . $indexheading . '</div>';
+		}
 	}
 	
 	public function getIndexFooter() {
 		$indexfooter = '';
 		$indexfooter = $this->getVar('index_footer', 's');
-		$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
-		return '<div class="guestbook_indexfooter">' . $indexfooter . '</div>';
+		if($indexfooter != "") {
+			$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
+			return '<div class="guestbook_indexfooter">' . $indexfooter . '</div>';
+		}
 	}
 
 	function toArray() {
@@ -86,6 +86,4 @@ class GuestbookIndexpage extends icms_ipf_Object {
 		$ret['footer'] = $this->getIndexFooter();
 		return $ret;
 	}
-	
 }
-	
