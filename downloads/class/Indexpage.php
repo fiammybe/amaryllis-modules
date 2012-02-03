@@ -36,18 +36,10 @@ class DownloadsIndexpage extends icms_ipf_seo_Object {
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		$this->initCommonVar("docxode", FALSE, FALSE, FALSE, 1);
 
-		$this->setControl( 'index_img_upload', 'image' );
-		$this -> setControl( 'index_heading','dhtmltextarea' );
-		$this -> setControl( 'index_footer', 'textarea' );
-		$this -> setControl( 'index_image', array( 'name' => 'select', 'itemHandler' => 'indexpage', 'method' => 'getImageList', 'module' => 'downloads' ) );
-		
-	}
-
-	public function getVar($key, $format = "s") {
-		if ($format == "s" && in_array($key, array())) {
-			return call_user_func(array ($this,	$key));
-		}
-		return parent::getVar($key, $format);
+		$this->setControl('index_img_upload', 'image');
+		$this->setControl('index_heading','dhtmltextarea');
+		$this->setControl('index_footer', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
+		$this->setControl('index_image', array( 'name' => 'select', 'itemHandler' => 'indexpage', 'method' => 'getImageList', 'module' => 'downloads'));
 	}
 
 	public function getIndexImg() {
@@ -55,8 +47,8 @@ class DownloadsIndexpage extends icms_ipf_seo_Object {
 		$indeximage = $this->getVar('index_image', 'e');
 		if (!empty($indeximage)) {
 			$image_tag = DOWNLOADS_UPLOAD_URL . 'indeximages/' . $indeximage;
+			return '<div class="downloads_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
-		return '<div class="downloads_indeximage"><img src="' . $image_tag . '" /></div>';
 	}
 	
 	public function getIndexHeader() {
@@ -67,13 +59,13 @@ class DownloadsIndexpage extends icms_ipf_seo_Object {
 
 	public function getIndexHeading() {
 		$indexheading = '';
-		$indexheading = icms_core_DataFilter::checkVar($this->getVar('index_heading', 's'), 'str', 'encodelow');
+		$indexheading = icms_core_DataFilter::checkVar($this->getVar('index_heading', 's'), 'html', 'output');
 		return '<div class="downloads_indexheading">' . $indexheading . '</div>';
 	}
 	
 	public function getIndexFooter() {
 		$indexfooter = '';
-		$indexfooter = icms_core_DataFilter::checkVar($this->getVar('index_footer', 's'), 'str', 'encodelow');
+		$indexfooter = icms_core_DataFilter::checkVar($this->getVar('index_footer', 's'), 'html', 'output');
 		return '<div class="downloads_indexfooter">' . $indexfooter . '</div>';
 	}
 

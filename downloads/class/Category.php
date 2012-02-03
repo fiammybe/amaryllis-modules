@@ -293,4 +293,3 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$this->setVar('counter', $t);
 	}
 }
-		

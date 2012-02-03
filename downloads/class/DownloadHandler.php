@@ -21,8 +21,6 @@ defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
 class DownloadsDownloadHandler extends icms_ipf_Handler {
 
-	private $_download_grpperm = array();
-	
 	private $_download_limitations = array();
 	
 	private $_download_related = array();
@@ -122,22 +120,15 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$critTray->add(new icms_db_criteria_Item("download_tags", '%:"' . $tag_id . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
-		$this->setGrantedObjectsCriteria($criteria, "downloads_grpperm");
+		$this->setGrantedObjectsCriteria($criteria, "download_grpperm");
 		$downloads = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($downloads as $download){
-			if ($download['accessgranted']){
-				$ret[$download['download_id']] = $download;
-			}
+			$ret[$download['download_id']] = $download;
 		}
 		return $ret;
 	}
-	
-	public function getDownload($download_id) {
-		$ret = $this->getDownloads(0, 0, FALSE, FALSE, $download_id);
-		return isset($ret[$download_id]) ? $ret[$download_id] : FALSE;
-	}
-	
+
 	public function getDownloadsForBlocks($start = 0, $limit = 0,$updated = FALSE,$popular = FALSE, $order = 'download_published_date', $sort = 'DESC') {
 		global $downloadsConfig;
 		$criteria = new icms_db_criteria_Compo();
@@ -188,7 +179,6 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if(icms_get_module_status("album")) {
 			$album_album_handler = icms_getModuleHandler ('album', $albumModule->getVar('dirname'), 'album');
 			$albumObjects = $album_album_handler->getAlbumListForPid();
-			
 			return $albumObjects;
 		}
 	}
@@ -408,7 +398,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		}
 	}
 	
-	public function getCountCriteria ($active = NULL, $approve = NULL, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $download_cid = FALSE) {
+	public function getCountCriteria ($active = NULL, $approve = NULL, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $download_cid = FALSE, $tag_id = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($active)) {
 			$criteria->add(new icms_db_criteria_Item('download_active', TRUE));
@@ -420,6 +410,11 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if ($download_cid != FALSE)	{
 			$critTray = new icms_db_criteria_Compo();
 			$critTray->add(new icms_db_criteria_Item("download_cid", '%:"' . $download_cid . '";%', "LIKE"));
+			$criteria->add($critTray);
+		}
+		if($tag_id) {
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("download_tags", '%:"' . $tag_id . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
 		$this->setGrantedObjectsCriteria($criteria, "download_grpperm");
