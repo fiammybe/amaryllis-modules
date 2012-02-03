@@ -59,6 +59,16 @@ class VisitorvoiceIndexpageHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	protected function beforeInsert(&$obj) {
+		$heading = $obj->getVar("index_heading", "s");
+		$heading = icms_core_DataFilter::checkVar($heading, "html", "input");
+		$obj->setVar("index_heading", $heading);
+		$footer = $obj->getVar("index_footer", "s");
+		$footer = icms_core_DataFilter($footer, "html", "input");
+		$obj->setVar("index_footer", $footer);
+		return TRUE;
+	}
+	
 	// some related functions for storing
 	protected function beforeSave(&$obj) {
 		
