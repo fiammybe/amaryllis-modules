@@ -215,7 +215,7 @@
 		width: 90%;
 		overflow: hidden;
 	}
-	ul#article_newsticker { /* that's your list */
+	ul#articles_newsticker { /* that's your list */
 		position: relative;
 		left: 750px;
 		font: bold 10px Verdana;
@@ -223,19 +223,19 @@
 		margin: 0 auto;
 		padding: 0;
 	}
-	ul#article_newsticker li {
+	ul#articles_newsticker li {
 		float: left; /* important: display inline gives incorrect results when you check for elem's width */
 		margin: 0;
 		padding: 0;
 		background: #fff;
 	}
-	ul#article_newsticker a {
+	ul#articles_newsticker a {
 		white-space: nowrap;
 		padding: 0;
 		color: #ff0000;
 		font: bold 10px Verdana;
 		margin: 0 50px 0 0;
 	} 
-	ul#article_newsticker span {
+	ul#articles_newsticker span {
 		margin: 0 10px 0 0;
 	}
