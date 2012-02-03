@@ -38,6 +38,9 @@ $i++;
 $adminmenu[$i]['title'] = _MI_DOWNLOADS_MENU_REVIEW;
 $adminmenu[$i]['link'] = 'admin/review.php';
 
+$i++;
+$adminmenu[$i]['title'] = _MI_DOWNLOADS_MENU_PERMISSIONS;
+$adminmenu[$i]['link'] = 'admin/permissions.php';
 
 global $icmsConfig;
 $downloadsModule = icms_getModuleInfo( basename( dirname( dirname( __FILE__) ) ) );

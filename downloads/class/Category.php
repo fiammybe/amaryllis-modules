@@ -156,6 +156,20 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		}
 		return $ret;
 	}
+	
+	function submitAccessGranted() {
+		$gperm_handler = icms::handler('icms_member_groupperm');
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+		$viewperm = $gperm_handler->checkRight('submit_downloads', $this->getVar('category_id', 'e'), $groups, $module->getVar("mid"));
+		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('category_publisher', 'e')) {
+			return TRUE;
+		}
+		if ($viewperm && ($this->getVar('category_active', 'e') == TRUE) && ($this->getVar('category_approve', 'e') == TRUE)) {
+			return TRUE;
+		}
+		return FALSE;
+	}
 
 	function accessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
@@ -195,15 +209,6 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		return $ret;
 	}
 	
-	function getEditAndDelete() {
-		$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
-		if($downloads_download_handler->userCanSubmit($this->getVar("category_id", "e"))) {
-			return DOWNLOADS_URL . 'download.php?op=mod&amp;category_id=' . $this->id();
-		} else {
-			return FALSE;
-		}
-	}
-	
 	public function getUserCanSubmitFile() {
 		$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(dirname(__FILE__))), "downloads");
 		
@@ -236,7 +241,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret['itemLink'] = $this->getItemLink(TRUE);
 		$ret['catlink'] = $this->getItemLink(FALSE);
 		$ret['accessgranted'] = $this->accessGranted();
-		$ret['user_upload'] = $this->getEditAndDelete();
+		$ret['user_upload'] = $this->submitAccessGranted();
 		$ret['user_submit'] = $this->userCanSubmit();
 		return $ret;
 	}

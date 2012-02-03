@@ -238,6 +238,7 @@ define("_MI_DOWNLOADS_MENU_TEMPLATES", "Templates");
 define("_MI_DOWNLOADS_MENU_RATINGS", "Ratings");
 define("_MI_DOWNLOADS_MENU_MANUAL", "Manual");
 define("_MI_DOWNLOADS_MENU_REVIEW", "Review");
+define("_MI_DOWNLOADS_MENU_PERMISSIONS", "Permissions");
 define("_MI_DOWNLOADS_MENU_LOG", "Log");
 // Submenu while calling a tab
 define("_MI_DOWNLOADS_DOWNLOAD_EDIT", "Edit your File");
