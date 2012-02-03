@@ -60,3 +60,8 @@ define("_AM_DOWNLOADS_MIRROR_FALSE", "Mirror denied");
 define("_AM_DOWNLOADS_MIRROR_TRUE", "Mirror approved");
 
 define("_AM_DOWNLOADS_NO_CAT_FOUND", "No category was found. Please create a category first. If you have any further questions, please read the manual first.");
+
+// constants for permission Form
+define("_AM_DOWNLOADS_PREMISSION_DOWNLOADS_VIEW", "View Files");
+define("_AM_DOWNLOADS_PREMISSION_CATEGORY_VIEW", "View Categories");
+define("_AM_DOWNLOADS_PREMISSION_CATEGORY_SUBMIT", "Submit Files");

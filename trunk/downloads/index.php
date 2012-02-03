@@ -28,7 +28,7 @@ include_once ICMS_ROOT_PATH . '/header.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $downloads_indexpage_handler = icms_getModuleHandler( "indexpage", DOWNLOADS_DIRNAME, "downloads");
-$indexpageObj = $downloads_indexpage_handler->get($clean_index_key);
+$indexpageObj = $downloads_indexpage_handler->get(1);
 $index = $indexpageObj->toArray();
 $icmsTpl->assign('downloads_index', $index);
 
