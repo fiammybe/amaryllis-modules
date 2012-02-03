@@ -199,21 +199,23 @@
 		
 		<{if $article_single_cat.hassub}> <!-- subcategories -->
 			<h2><{$smarty.const._MD_ARTICLE_CATEGORY_SUBCATLIST}></h2>
-			<!-- pagination control -->
-			<{if $category_pagenav }><{$category_pagenav}><{/if}>
-			
-			<{foreach item=category_column from=$sub_category_columns}>
-				<div class="category_row table_row">
-					<{foreach item=category from=$category_column}>
-						<!-- category rule -->
-						<{includeq file='db:article_category.html'}>
-					<{/foreach}>
-					<div style="clear: both; height: 1px; border-bottom: 1px solid #D9D9D9; margin: 4px 5px 4px 0;"></div>
-				</div>
-			<{/foreach}>
-			
-			<!-- pagination control -->
-			<{if $category_pagenav }><{$category_pagenav}><{/if}>
+			<div class="article_subcatlist">
+				<!-- pagination control -->
+				<{if $category_pagenav }><{$category_pagenav}><{/if}>
+				
+				<{foreach item=category_column from=$sub_category_columns}>
+					<div class="category_row table_row">
+						<{foreach item=category from=$category_column}>
+							<!-- category rule -->
+							<{includeq file='db:article_category.html'}>
+						<{/foreach}>
+						<div class="article_clear_both">&nbsp;</div>
+					</div>
+				<{/foreach}>
+				
+				<!-- pagination control -->
+				<{if $category_pagenav }><{$category_pagenav}><{/if}>
+			</div>
 		<{/if}>
 		
 		<{if $article_files }>
