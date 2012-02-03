@@ -355,7 +355,9 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			for($i = 0; $i < count($queryarray); $i ++) {
 				$criteriaKeyword = new icms_db_criteria_Compo();
 				$criteriaKeyword->add(new icms_db_criteria_Item('article_title', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-				$criteriaKeyword->add(new icms_db_criteria_Item('article_description', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+				$criteriaKeyword->add(new icms_db_criteria_Item('article_body', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+				$criteriaKeyword->add(new icms_db_criteria_Item('article_teaser', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+				$criteriaKeyword->add(new icms_db_criteria_Item('article_conclusion', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
 				$criteriaKeywords->add($criteriaKeyword, $andor);
 				unset($criteriaKeyword);
 			}
@@ -363,6 +365,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		}
 		$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
 		$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
+		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
 		return $this->getObjects($criteria, TRUE, FALSE);
 	}
 
