@@ -19,7 +19,6 @@
 
 function addcontact($clean_contact_id = 0){
 	global $portfolio_contact_handler, $icmsTpl;
-	
 	$portfolio_contact_handler = icms_getModuleHandler("contact", basename(dirname(__FILE__)), "portfolio");
 	$contactObj = $portfolio_contact_handler->get($clean_contact_id);
 	if ($contactObj->isNew()){
@@ -31,7 +30,7 @@ function addcontact($clean_contact_id = 0){
 		$contactObj->setVar("contact_submitter", $uid);
 		$contactObj->setVar("contact_date", time() - 200);
 		$contactObj->setVar("contact_isnew", 0);
-		$contactObj = $contactObj->getSecureForm(_MD_PORTFOLIO_ADD_CONTACT, 'addcontact', PORTFOLIO_URL . "submit.php?op=addcontact&portfolio_id = $clean_portfolio_id", 'OK', TRUE, TRUE);
+		$contactObj = $contactObj->getSecureForm(_MD_PORTFOLIO_ADD_CONTACT, 'addcontact', PORTFOLIO_URL . "submit.php?op=addcontact", 'OK', TRUE, TRUE);
 		$contactObj->assign($icmsTpl, 'portfolio_contact_form');
 	} else {
 		exit;
