@@ -18,7 +18,7 @@
  */
 ini_set('max_execution_time', 0);
 
-ini_set('memory_limit', '256M');
+ini_set('memory_limit', '512M');
 
 set_time_limit(0);
 
@@ -144,6 +144,10 @@ function article_import_smartsection_categories() {
 	}
 }
 
+/**
+ * import from smartsection files
+ */
+
 function article_import_smartsection_files() {
 	$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
 	$file_handler = icms::handler("icms_data_file");
@@ -177,6 +181,10 @@ function article_import_smartsection_files() {
 	}
 }
 
+/**
+ * linked tags for smartsection
+ */
+
 function article_import_linked_tags() {
 	$sprocketsModule = icms_getModuleInfo("sprockets");
 	if(icms_get_module_status($sprocketsModule->getVar("dirname"))) {
@@ -205,10 +213,162 @@ function article_import_linked_tags() {
 		echo '<code><b>Sprockets not found.</b></code><br />';
 	}
 }
+/**
+ * Import from news topics
+ */
+function article_import_news_topics() {
+	$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
+	
+	$table = new icms_db_legacy_updater_Table('topics');
+	if ($table->exists()) {
+		echo '<code><b>Importing data from News topics table</b></code><br />';
+
+		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('topics');
+		$result = icms::$xoopsDB->query($sql);
+		echo '<code>';
+		while ($row = icms::$xoopsDB->fetchArray($result)) {
+			$obj = $article_category_handler->create(TRUE);
+			$obj->setVar('category_title', $row['topic_title']);
+			$obj->setVar('category_pid', $row['topic_pid']);
+			$obj->setVar('category_description', $row['topic_description']);
+			$obj->setVar('category_image', $row['topic_imgurl']);
+			
+			$article_category_handler->insert($obj, TRUE);
+			
+			echo '&nbsp;&nbsp;-- <b>' . $row['topic_title'] . '</b> successfully imported!<br />';
+		}
+		echo '</code>';
+		echo '<code><b>Smartsection item table successfully dropped.</b></code><br />';
+	}
+	
+	return TRUE;
+}
+
+/**
+ * import news stories
+ */
+function article_import_news_stories() {
+	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
+	$table = new icms_db_legacy_updater_Table('stories');
+	if ($table->exists()) {
+		echo '<code><b>Importing data from news stories table</b></code><br />';
+
+		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('stories');
+		$result = icms::$xoopsDB->query($sql);
+		echo '<code>';
+		while ($row = icms::$xoopsDB->fetchArray($result)) {
+			$obj = $article_article_handler->create(TRUE);
+			$obj->setVar('article_title', $row['title']);
+			$obj->setVar('article_cid', explode(",", $row['topiccid']));
+			$obj->setVar('article_teaser', $row['hometext']);
+			$obj->setVar('article_body', $row['bodytext']);
+			$obj->setVar('article_img', $row['picture']);
+			$obj->setVar('article_publisher', explode(",", $row['uid']));
+			$obj->setVar('article_submitter', $row['uid']);
+			$obj->setVar('article_published_date', (int)$row['published']);
+			$obj->setVar('article_comments', $row['comments']);
+			$obj->setVar('article_notification_sent', $row['notifypub']);
+			$obj->setVar('article_inblocks', 1);
+			$obj->setVar('article_broken_file', 0);
+			$obj->setVar('article_updated', 0);
+			$article_article_handler->insert($obj, TRUE);
+			
+			echo '&nbsp;&nbsp;-- <b>' . $row['title'] . '</b> successfully imported!<br />';
+		}
+		echo '</code>';
+		echo '<code><b>News stories table successfully dropped.</b></code><br />';
+	}
+	
+	return TRUE;
+}
+
+/**
+ * import from news files
+ */
+
+function article_import_news_files() {
+	$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
+	$file_handler = icms::handler("icms_data_file");
+	$module = icms::handler('icms_module')->getByDirname(ARTICLE_DIRNAME);
+	$mid = $module->getVar('mid');
+	$url = ICMS_URL . '/uploads/article/article/';
+	$table = new icms_db_legacy_updater_Table('stories_files');
+	if ($table->exists()) {
+		echo '<code><b>Importing data from smartsection files table</b></code><br />';
+
+		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('stories_files');
+		$result = icms::$xoopsDB->query($sql);
+		echo '<code>';
+		while ($row = icms::$xoopsDB->fetchArray($result)) {
+			$obj = $file_handler->create(TRUE);
+			$obj->setVar('mid', $mid);
+			$obj->setVar('caption', '');
+			$obj->setVar('description', '');
+			$obj->setVar('url', $url . $row['downloadname']);
+			
+			$file_handler->insert($obj, TRUE);
+			$file_id = mysql_insert_id();
+			$articleObj = $article_article_handler->get($row['storyid']);
+			$articleObj->setVar('article_attachment', $file_id);
+			$article_article_handler->insert($articleObj, TRUE);
+			
+			echo '&nbsp;&nbsp;-- <b>' . $row['downloadname'] . '</b> successfully imported!<br />';
+		}	
+		echo '</code>';
+		echo '<code><b>News files table successfully dropped.</b></code><br />';
+	}
+}
+/**
+ * import news view permissions
+ */
+function import_news_view_permissions() {
+	$gperm_handler = icms::handler('icms_member_groupperm');
+	$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname = 'news'";
+	$result2 = icms::$xoopsDB->query($mid_sql);
+	$mid = mysql_fetch_assoc($result2);
+	
+	/**
+	 * delet all old permissions from smartsection items
+	 */
+	$criteria = new icms_db_criteria_Compo();
+	$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', 'news_view'));
+	$criteria->add($crit);
+	$criteria->add(new icms_db_criteria_Item('gperm_modid', $mid['mid']));
+	$permissions = $gperm_handler->getObjects($criteria, TRUE);
+	foreach (array_keys($permissions) as $i) {
+		$permissions[$i]->setVar("gperm_modid", icms::$module->getVar("mid"));
+		$permissions[$i]->setVar("gperm_name", "article_grpperm");
+		$gperm_handler->insert($permissions[$i], TRUE);
+	}
+}
+
+/**
+ * import news submit permissions
+ */
+function import_news_submit_permissions() {
+	$gperm_handler = icms::handler('icms_member_groupperm');
+	$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname = 'news'";
+	$result2 = icms::$xoopsDB->query($mid_sql);
+	$mid = mysql_fetch_assoc($result2);
+	
+	/**
+	 * delet all old permissions from smartsection items
+	 */
+	$criteria = new icms_db_criteria_Compo();
+	$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', 'news_submit'));
+	$criteria->add($crit);
+	$criteria->add(new icms_db_criteria_Item('gperm_modid', $mid['mid']));
+	$permissions = $gperm_handler->getObjects($criteria, TRUE);
+	foreach (array_keys($permissions) as $i) {
+		$permissions[$i]->setVar("gperm_modid", icms::$module->getVar("mid"));
+		$permissions[$i]->setVar("gperm_name", "submit_article");
+		$gperm_handler->insert($permissions[$i], TRUE);
+	}
+}
 
 include_once 'admin_header.php';
 
-$valid_op = array ('1', '2', '3', '4', '');
+$valid_op = array ('1', '2', '3', '4', '5', '6', '7', '8', '9', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
@@ -254,7 +414,57 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
 			break;
+			
+		case '5':
+			icms_cp_header();
+			icms::$module->displayAdminMenu(0);
+			
+			// import topics
+			article_import_news_topics();
+			
+			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
+			break;
 		
+		case '6':
+			icms_cp_header();
+			icms::$module->displayAdminMenu(0);
+			
+			// import stories
+			article_import_news_stories();
+			
+			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
+			break;
+			
+		case '7':
+			icms_cp_header();
+			icms::$module->displayAdminMenu(0);
+			
+			// import files
+			article_import_news_files();
+			
+			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
+			break;
+			
+		case '8':
+			icms_cp_header();
+			icms::$module->displayAdminMenu(0);
+			
+			// import news view permissions
+			import_news_view_permissions();
+			
+			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
+			break;
+			
+		case '9':
+			icms_cp_header();
+			icms::$module->displayAdminMenu(0);
+			
+			// import news submit permissions
+			import_news_submit_permissions();
+			
+			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
+			break;
+			
 		default:
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0);
@@ -313,8 +523,72 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	            $form->addElement($label4);
 	        }
 			
+			// for news topics
+			$sql5 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('topics');
+			$result5 = icms::$xoopsDB->query($sql5);
+			list($count5) = icms::$xoopsDB->fetchRow($result5);
+	        if ($result5 > 0) {
+	            $button5 = new icms_form_elements_Button("Import " . $count5 .  " topics from old News Module", "topics_button", "Import", "submit");
+	            $button5->setExtra("onclick='document.forms.form.op.value=\"5\"'");
+	            $form->addElement($button5);
+	        } else {
+	            $label5 = new icms_form_elements_Label("Import data from old News Module", "topics tables not found on this site.");
+	            $form->addElement($label5);
+	        }
+	        
+			// for news stories
+			$sql6 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('stories');
+			$result6 = icms::$xoopsDB->query($sql6);
+			list($count6) = icms::$xoopsDB->fetchRow($result6);
+	        if ($result6 > 0) {
+	            $button6 = new icms_form_elements_Button("Import "  . $count6 . " stories from old news module", "stories_button", "Import", "submit");
+	            $button6->setExtra("onclick='document.forms.form.op.value=\"6\"'");
+	            $form->addElement($button6);
+	        } else {
+	            $label6 = new icms_form_elements_Label("Import data from news stories", "stories tables not found on this site.");
+	            $form->addElement($label6);
+	        }
+			
+			// for news stories files
+			$sql7 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('stories_files');
+			$result7 = icms::$xoopsDB->query($sql7);
+			list($count7) = icms::$xoopsDB->fetchRow($result7);
+	        if ($result7 > 0) {
+	            $button7 = new icms_form_elements_Button("Import "  . $count7 . " stories files from old news module", "stories_files_button", "Import", "submit");
+	            $button7->setExtra("onclick='document.forms.form.op.value=\"7\"'");
+	            $form->addElement($button7);
+	        } else {
+	            $label7 = new icms_form_elements_Label("Import data from news stories files", "stories_files tables not found on this site.");
+	            $form->addElement($label7);
+	        }
+			
+			// for news stories view perm
+			$sql8 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('group_permissions') . " WHERE gperm_name = 'news_view'";
+			$result8 = icms::$xoopsDB->query($sql8);
+	        if ($result8 > 0) {
+	            $button8 = new icms_form_elements_Button("Import stories view permissions from old news module", "view_stories_button", "Import", "submit");
+	            $button8->setExtra("onclick='document.forms.form.op.value=\"8\"'");
+	            $form->addElement($button8);
+	        } else {
+	            $label8 = new icms_form_elements_Label("Import stories view permissions from old news module", "news_view not found on this site.");
+	            $form->addElement($label8);
+	        }
+			
+			// for news stories submit perm
+			$sql9 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('group_permissions') . " WHERE gperm_name = 'news_submit'";
+			$result9 = icms::$xoopsDB->query($sql7);
+	        if ($result9 > 0) {
+	            $button9 = new icms_form_elements_Button("Import stories submit permission from old news module", "stories_files_button", "Import", "submit");
+	            $button9->setExtra("onclick='document.forms.form.op.value=\"9\"'");
+	            $form->addElement($button9);
+	        } else {
+	            $label9 = new icms_form_elements_Label("Import stories submit permission from old news module", "news_submit tables not found on this site.");
+	            $form->addElement($label9);
+	        }
+			
 			$form->addElement(new icms_form_elements_Hidden('op', 0));
         	$form->display();
+
 			break;
 	}
 	icms_cp_footer();
