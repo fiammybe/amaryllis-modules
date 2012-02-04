@@ -265,8 +265,23 @@ function article_import_news_topics() {
 /**
  * import news stories
  */
-function article_import_news_stories() {
+function article_store_news_stories($row) {
 	$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
+	$obj = $article_article_handler->create(TRUE);
+	$obj->setVar('article_title', $row['title']);
+	$obj->setVar('article_cid', explode(",", $row['topiccid']));
+	$obj->setVar('article_teaser', $row['hometext']);
+	$obj->setVar('article_body', $row['bodytext']);
+	$obj->setVar('article_img', $row['picture']);
+	$obj->setVar('article_publisher', explode(",", $row['uid']));
+	$obj->setVar('article_submitter', $row['uid']);
+	$obj->setVar('article_published_date', (int)$row['published']);
+	$obj->setVar('article_comments', (int)$row['comments']);
+	$obj->setVar('article_notification_sent', (int)$row['notifypub']);
+	$article_article_handler->insert($obj, TRUE);
+	unset ($row);
+}
+function article_import_news_stories() {
 	$table = new icms_db_legacy_updater_Table('stories');
 	if ($table->exists()) {
 		echo '<code><b>Importing data from news stories table</b></code><br />';
@@ -275,18 +290,7 @@ function article_import_news_stories() {
 		$result = icms::$xoopsDB->query($sql);
 		echo '<code>';
 		while ($row = icms::$xoopsDB->fetchArray($result)) {
-			$obj = $article_article_handler->create(TRUE);
-			$obj->setVar('article_title', $row['title']);
-			$obj->setVar('article_cid', explode(",", $row['topiccid']));
-			$obj->setVar('article_teaser', $row['hometext']);
-			$obj->setVar('article_body', $row['bodytext']);
-			$obj->setVar('article_img', $row['picture']);
-			$obj->setVar('article_publisher', explode(",", $row['uid']));
-			$obj->setVar('article_submitter', $row['uid']);
-			$obj->setVar('article_published_date', (int)$row['published']);
-			$obj->setVar('article_comments', (int)$row['comments']);
-			$obj->setVar('article_notification_sent', (int)$row['notifypub']);
-			$article_article_handler->insert($obj, TRUE);
+			article_store_news_stories($row);
 		}
 		echo '</code>';
 		unset($table);
