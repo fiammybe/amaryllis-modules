@@ -87,7 +87,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$guestbook_id = isset($_GET['guestbook_id']) ? filter_input(INPUT_GET, 'guestbook_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$guestbook_pid = isset($_GET['guestbook_pid']) ? filter_input(INPUT_GET, 'guestbook_pid', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$guestbook_guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(__FILE__)), "guestbook");
-			editmessage($clean_guestbook_id, $guestbook_pid);
+			editmessage($guestbook_id, $guestbook_pid);
 			include_once ICMS_ROOT_PATH . '/footer.php';
 			break;
 	}
