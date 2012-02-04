@@ -23,7 +23,7 @@ if ($com_itemid > 0) {
 	$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(__FILE__)),'downloads');
 	$downloadObj = $downloads_download_handler->get($com_itemid);
 	if ($downloadObj && !$downloadObj->isNew()) {
-		$com_replytext = "test...";
+		$com_replytext = "";
 		$bodytext = $downloadObj->getVar('download_description');
 		if ($bodytext != '') {
 			$com_replytext .= $bodytext;

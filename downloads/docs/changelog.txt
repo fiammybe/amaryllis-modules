@@ -1,5 +1,11 @@
 = *Downloads* Changelog =
 
+== First Release: Version 1.0 => Release Date: 04.02.2012 ==
+
+* First final relase of Downloads Module
+* Changed the way of checking permissions
+* added admin/permissions.php to change permissions faster
+
 == Unreleased: Version 1.0 RC1 => Release-Date: xx.xx.2012 ==
 
 * First public release of the module.

@@ -10,3 +10,8 @@ After successfull installation read manual first! You'll find the manual in ACP 
 Further you'll find a folder "extras" inside my module folder.There you can find :
 * plugin for sitemap module -> copy the file inside sitemap/plugins folder to use sitemap with downloads
 * plugin for waiting block -> copy the file to rootpath/plugins/waiting to make use of icms waiting block in ACP.
+
+The Module enables correspondending with several other Modules: 
+* You can enable Sprockets Module for Tags support. Requires Sprockets Module to be installed seperately
+* You can enabel Album Module to get More Images for Files. Requires Album module to be installed seperately.
+* You can enable Catalogue Module to sell your files. Requires Catalogue module to be installed seperately.
