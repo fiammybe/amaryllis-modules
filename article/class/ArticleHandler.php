@@ -404,6 +404,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		}
 		if(icms_get_module_status("sprockets")) {
 			$tags = $obj->getVar("article_tags", "s");
+			if($tags != "" && $tags != "0") {
 				$sprocketsModule = icms_getModuleInfo("sprockets");
 				$sprockets_taglink_handler = icms_getModuleHandler("taglink", "sprockets");
 				foreach ($tags as $tag) {
@@ -414,6 +415,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 					$tagObj->setVar("iid", $obj->getVar("article_id", "e"));
 					$sprockets_taglink_handler->insertD($tagObj, TRUE);
 				}
+			}
 		}
 		return TRUE;
 	}

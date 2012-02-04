@@ -44,7 +44,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->quickInitVar("article_img_upl", XOBJ_DTYPE_IMAGE, FALSE);
 		$this->quickInitVar("article_teaser", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("article_show_teaser", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
-		$this->quickInitVar("article_body", XOBJ_DTYPE_TXTAREA, TRUE);
+		$this->quickInitVar("article_body", XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar("article_conclusion", XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar("article_descriptions_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
