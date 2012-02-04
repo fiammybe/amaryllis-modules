@@ -61,7 +61,7 @@ class PortfolioIndexpage extends icms_ipf_Object {
 		$indeximage = $image_tag = '';
 		$indeximage = $this->getVar('index_image', 'e');
 		if (!empty($indeximage)) {
-			$image_tag = GUESTBOOK_UPLOAD_URL . 'indeximages/' . $indeximage;
+			$image_tag = PORTFOLIO_UPLOAD_URL . 'indeximages/' . $indeximage;
 			return '<div class="portfolio_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
 	}
