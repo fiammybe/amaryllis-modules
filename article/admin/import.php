@@ -580,7 +580,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	            $button5->setExtra("onclick='document.forms.form.op.value=\"5\"'");
 	            $form->addElement($button5);
 	        } else {
-	            $label5 = new icms_form_elements_Label("Import data from old News Module", "topics tables not found on this site.");
+	            $label5 = new icms_form_elements_Label("Import topics from old News Module", "topics tables not found on this site.");
 	            $form->addElement($label5);
 	        }
 	        
@@ -638,11 +638,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$sql10 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('sprockets_taglink');
 			$result10 = icms::$xoopsDB->query($sql10);
 	        if ($result10 > 0) {
-	            $button10 = new icms_form_elements_Button("Import tags from sprockets taglinks", "tags_button", "Import", "submit");
+	            $button10 = new icms_form_elements_Button("Import tags for old news from sprockets taglinks", "tags_button", "Import", "submit");
 	            $button10->setExtra("onclick='document.forms.form.op.value=\"10\"'");
 	            $form->addElement($button10);
 	        } else {
-	            $label10 = new icms_form_elements_Label("Import data from sprockets taglinks", "sprockets_taglink tables not found on this site.");
+	            $label10 = new icms_form_elements_Label("Import tags for old News from sprockets taglinks", "sprockets_taglink tables not found on this site.");
 	            $form->addElement($label10);
 	        }
 			
