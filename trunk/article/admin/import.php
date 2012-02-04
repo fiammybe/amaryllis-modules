@@ -22,7 +22,9 @@ ini_set('memory_limit', '512M');
 
 set_time_limit(0);
 
-
+/**
+ * import smartsection articles
+ */
 function article_import_smartsection_articles() {
 	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 	$gperm_handler = icms::handler('icms_member_groupperm');
@@ -96,6 +98,9 @@ function article_import_smartsection_articles() {
 	return TRUE;
 }
 
+/**
+ * import smartsection categories
+ */
 function article_import_smartsection_categories() {
 	$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
 	$gperm_handler = icms::handler('icms_member_groupperm');
@@ -366,6 +371,39 @@ function import_news_submit_permissions() {
 	}
 }
 
+/**
+ * linked tags for news
+ */
+
+function article_import_linked_news_tags() {
+	$sprocketsModule = icms_getModuleInfo("sprockets");
+	if(icms_get_module_status("sprockets")) {
+		$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
+		$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
+		$mid_sql = "SELECT mid FROM " . icms::$xoopsDB->prefix('modules') . " WHERE dirname='news'";
+		$result2 = icms::$xoopsDB->query($mid_sql);
+		$mid = mysql_fetch_assoc($result2);
+		
+		$articleObjects = $article_article_handler->getObjects(FALSE, TRUE);
+		echo '<code><b>Importing data from sprockets taglink table</b></code><br />';
+		foreach ($articleObjects as $key => &$object) {
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item("mid", (int)$mid['mid']));
+			$criteria->add(new icms_db_criteria_Item("iid", $object->getVar("article_id")));
+			$tagObjects = $sprockets_taglink_handler->getObjects($criteria, TRUE);
+			$tags = array();
+			foreach ($tagObjects as $key => &$tagObj) {
+				$tags = $tagObj->getVar("tid", "e");
+			}
+			$object->setVar("article_tags", $tags);
+			$article_article_handler->insert($object, TRUE);
+		}
+		echo '<code><b>Sprockets taglinks table successfully imported.</b></code><br />';
+	} else {
+		echo '<code><b>Sprockets not found.</b></code><br />';
+	}
+}
+
 include_once 'admin_header.php';
 
 $valid_op = array ('1', '2', '3', '4', '5', '6', '7', '8', '9', '');
@@ -461,6 +499,16 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			// import news submit permissions
 			import_news_submit_permissions();
+			
+			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
+			break;
+			
+		case '10':
+			icms_cp_header();
+			icms::$module->displayAdminMenu(0);
+			
+			// import news submit permissions
+			article_import_linked_news_tags();
 			
 			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
 			break;
@@ -584,6 +632,18 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	        } else {
 	            $label9 = new icms_form_elements_Label("Import stories submit permission from old news module", "news_submit tables not found on this site.");
 	            $form->addElement($label9);
+	        }
+			
+			// for news taglinks
+			$sql10 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('sprockets_taglink');
+			$result10 = icms::$xoopsDB->query($sql10);
+	        if ($result10 > 0) {
+	            $button10 = new icms_form_elements_Button("Import tags from sprockets taglinks", "tags_button", "Import", "submit");
+	            $button10->setExtra("onclick='document.forms.form.op.value=\"10\"'");
+	            $form->addElement($button10);
+	        } else {
+	            $label10 = new icms_form_elements_Label("Import data from sprockets taglinks", "sprockets_taglink tables not found on this site.");
+	            $form->addElement($label10);
 	        }
 			
 			$form->addElement(new icms_form_elements_Hidden('op', 0));
