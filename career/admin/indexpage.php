@@ -18,7 +18,7 @@
  */
 
 
-function editform($indexkey = 1, $indeximage = true) {
+function editform($indexkey = 1, $indeximage = TRUE) {
 
 	global $career_indexpage_handler, $icmsAdminTpl;
 
@@ -43,12 +43,12 @@ $valid_op = array ( 'mod','addindexpage' );
 
 $clean_indexkey = isset($_GET['index_id']) ? (int) $_GET['index_id'] : 1 ;
 
-if ( in_array( $clean_op, $valid_op, true ) ) {
+if ( in_array( $clean_op, $valid_op, TRUE ) ) {
   switch ($clean_op) {
   	case "mod":
 		icms_cp_header();
 		career_adminmenu( 3, _MI_CAREER_MENU_INDEXPAGE );
-		editform($indexkey=1, false);
+		editform($indexkey=1, FALSE);
 		break;
   	case "addindexpage":
 		$controller = new icms_ipf_Controller( $career_indexpage_handler );

@@ -139,6 +139,6 @@ class CareerDepartmentHandler extends icms_ipf_Handler {
 		$summary = $obj->getVar("department_summary", "s");
 		$summary = icms_core_DataFilter::checkVar($summary, "html", "input");
 		$obj->setVar("department_summary", $summary);
-		return true;
+		return TRUE;
 	}
 }

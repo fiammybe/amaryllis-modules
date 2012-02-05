@@ -40,7 +40,7 @@ function career_upload_paths() {
 
 function career_indexpage() {
 	$career_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'career' );
-	$indexpageObj = $career_indexpage_handler -> create(true);
+	$indexpageObj = $career_indexpage_handler -> create(TRUE);
 	echo '<code>';
 	$indexpageObj->setVar('index_header', 'Career');
 	$indexpageObj->setVar('index_heading', 'Here you can search our job offerings.');
@@ -51,7 +51,7 @@ function career_indexpage() {
 	$indexpageObj->setVar('doimage', 1);
 	$indexpageObj->setVar('dosmiley', 1);
 	$indexpageObj->setVar('doxcode', 1);
-	$career_indexpage_handler -> insert( $indexpageObj, true );
+	$career_indexpage_handler -> insert( $indexpageObj, TRUE );
 	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
 	echo '</code>';
 	
@@ -74,5 +74,5 @@ function icms_module_install_career($module) {
 	//prepare indexpage
 	career_indexpage();
 
-	return true;
+	return TRUE;
 }

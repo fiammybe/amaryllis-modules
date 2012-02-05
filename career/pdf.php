@@ -47,7 +47,7 @@ $content .= $careerConfig['career_print_footer'];
 $doc_keywords = $careerObj->getVar('meta_kewywords');
 require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 	icms_loadLanguageFile('core', 'pdf');
-	$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true);
+	$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, TRUE);
 	// set document information
 	$pdf->SetCreator(PDF_CREATOR);
 	$pdf->SetAuthor(PDF_AUTHOR);
@@ -78,6 +78,6 @@ require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 	//initialize document
 	$pdf->AliasNbPages();
 	$pdf->AddPage();
-	$pdf->writeHTML($content, true, 0);
+	$pdf->writeHTML($content, TRUE, 0);
 	return $pdf->Output();
 

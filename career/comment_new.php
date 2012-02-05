@@ -24,7 +24,7 @@ if ($com_itemid > 0) {
 	$career_message_handler = icms_getModuleHandler("message", basename(dirname(__FILE__)),"career");
 	$messageObj = $career_message_handler->get($com_itemid);
 	if ($messageObj && !$messageObj->isNew()) {
-		$com_replytext = "test...";
+		$com_replytext = "";
 		$bodytext = $messageObj->getVar('message_body');
 		if ($bodytext != '') {
 			$com_replytext .= $bodytext;
