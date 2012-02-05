@@ -143,7 +143,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getArticlesForBlocks($start = 0, $limit = 0, $article_cid = FALSE,$updated = FALSE,$popular = FALSE, $order = 'article_published_date', $sort = 'DESC') {
+	public function getArticlesForBlocks($start = 0, $limit = 0, $article_cid = FALSE,$updated = FALSE,$popular = FALSE, $order = 'article_published_date', $sort = 'DESC', $img_req = FALSE) {
 		global $articleConfig;
 		$criteria = new icms_db_criteria_Compo();
 		if($start) $criteria->setStart($start);
@@ -164,6 +164,9 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$crit = new icms_db_criteria_Compo();
 			$crit->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
 			$criteria->add($crit);
+		}
+		if($img_req != FALSE) {
+			$criteria->add(new icms_db_criteria_Item("article_img", "0", "!="));
 		}
 		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
 		$articles = $this->getObjects($criteria, TRUE, FALSE);
