@@ -22,10 +22,6 @@ ini_set('max_execution_time', 0);
 
 ini_set('memory_limit', '256M');
 
-ini_set('output_buffering', 0);
-
-header("Cache-Control: no-store, no-cache");
-
 /**
  * import smartsection articles
  */
@@ -286,7 +282,7 @@ function article_import_news_stories() {
 	if ($table->exists()) {
 		echo '<code><b>Importing data from news stories table</b></code><br />';
 
-		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('stories');
+		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('stories') . " ORDER BY 'storyid'";
 		$result = icms::$xoopsDB->query($sql);
 		echo '<code>';
 		while ($row = icms::$xoopsDB->fetchArray($result)) {
