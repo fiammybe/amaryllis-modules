@@ -48,7 +48,7 @@ function editcategory($category_id = 0) {
 	} else {
 		$categoryObj->hideFieldFromForm(array('category_approve', 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar('category_published_date', (time() - 100) );
-		$categoryObj->setVar('category_approve', true );
+		$categoryObj->setVar('category_approve', TRUE );
 		$categoryObj->setVar('category_submitter', icms::$user->getVar("uid"));
 		
 		$logObj = $downloads_log_handler->create();
@@ -136,12 +136,12 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 		case "changeWeight":
 			foreach ($_POST['DownloadsCategory_objects'] as $key => $value) {
-				$changed = false;
+				$changed = FALSE;
 				$categoryObj = $downloads_category_handler -> get( $value );
 
 				if ($categoryObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 					$categoryObj->setVar('weight', (int)($_POST['weight'][$key]));
-					$changed = true;
+					$changed = TRUE;
 				}
 				if ($changed) {
 					$downloads_category_handler -> insert($categoryObj);
@@ -167,21 +167,21 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			// create downloads table
 			$objectTable = new icms_ipf_view_Table($downloads_category_handler, $criteria);
 			$objectTable->addColumn( new icms_ipf_view_Column( 'category_active','center', 50, 'category_active' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'category_title', false, false, 'getPreviewItemLink' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'category_pid', false, false, 'category_pid' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'category_title', FALSE, FALSE, 'getPreviewItemLink' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'category_pid', FALSE, FALSE, 'category_pid' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'counter', 'center', 50));
 			$objectTable->addColumn( new icms_ipf_view_Column( 'category_inblocks', 'center', 50, 'category_inblocks' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'category_approve', 'center', 50, 'category_approve' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'category_published_date', 'center', 100, true ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'category_publisher', 'center', true, 'category_publisher' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getCategoryWeightControl' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'category_published_date', 'center', 100, TRUE ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'category_publisher', 'center', TRUE, 'category_publisher' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', TRUE, 'getCategoryWeightControl' ) );
 			
 			$objectTable->addFilter( 'category_active', 'category_active_filter' );
 			$objectTable->addFilter( 'category_inblocks', 'category_inblocks_filter' );
 			$objectTable->addFilter( 'category_pid', 'getCategoryListForPid' );
 			
 			$objectTable->addIntroButton( 'addcategory', 'category.php?op=mod', _AM_DOWNLOADS_CATEGORY_ADD );
-			$objectTable->addActionButton( 'changeWeight', false, _SUBMIT );
+			$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
 			
 			$objectTable->addCustomAction( 'getViewItemLink' );
 			

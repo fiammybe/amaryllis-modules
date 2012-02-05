@@ -45,7 +45,7 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_ACTIVE_DSC", " Set 'YES' to set file onl
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_INBLOCKS", "In Block?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_INBLOCKS_DSC", " Set 'YES' to show file in block 'recent downloads' ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_APPROVE", "Approved?");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_APPROVE_DSC", "This will be true, if you&#039;re adding new files from backend. If an user adds a file from frontend and you chose to use approvals in module settings, this will be false and you need to approve from backend");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_APPROVE_DSC", "This will be TRUE, if you&#039;re adding new files from backend. If an user adds a file from frontend and you chose to use approvals in module settings, this will be FALSE and you need to approve from backend");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISHER", "Publisher");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PUBLISHER_DSC", "Select the Publisher of the File");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_SUBMITTER", "Submitter");

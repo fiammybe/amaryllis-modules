@@ -84,7 +84,7 @@ function downloads_upload_paths() {
 
 function downloads_indexpage() {
 	$downloads_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'downloads' );
-	$indexpageObj = $downloads_indexpage_handler -> create(true);
+	$indexpageObj = $downloads_indexpage_handler -> create(TRUE);
 	echo '<code>';
 	$indexpageObj->setVar('index_header', 'Shared Files');
 	$indexpageObj->setVar('index_heading', 'Here you can search our shared files.');
@@ -94,7 +94,7 @@ function downloads_indexpage() {
 	$indexpageObj->setVar('doimage', 1);
 	$indexpageObj->setVar('dosmiley', 1);
 	$indexpageObj->setVar('doxcode', 1);
-	$downloads_indexpage_handler -> insert( $indexpageObj, true );
+	$downloads_indexpage_handler -> insert( $indexpageObj, TRUE );
 	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
 	echo '</code>';
 	

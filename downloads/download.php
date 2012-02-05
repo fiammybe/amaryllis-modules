@@ -130,7 +130,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case('del'):
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			if (!$downloadObj->userCanEditAndDelete()) {
-				redirect_header($downloadObj->getItemLink(true), 3, _NO_PERM);
+				redirect_header($downloadObj->getItemLink(TRUE), 3, _NO_PERM);
 			}
 			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {
@@ -145,10 +145,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 	redirect_header(DOWNLOADS_URL, 3, _NOPERM);
 }
 
-if( $downloadsConfig['show_breadcrumbs'] == true ) {
-	$icmsTpl->assign('downloads_show_breadcrumb', true);
+if( $downloadsConfig['show_breadcrumbs'] == TRUE ) {
+	$icmsTpl->assign('downloads_show_breadcrumb', TRUE);
 } else {
-	$icmsTpl->assign('downloads_show_breadcrumb', false);
+	$icmsTpl->assign('downloads_show_breadcrumb', FALSE);
 }
 
 include_once "footer.php";
