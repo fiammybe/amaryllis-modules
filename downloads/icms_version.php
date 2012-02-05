@@ -31,7 +31,7 @@ $modversion = array(
 					'credits'					=> "Thanks to Phoenyx for his great help while developing the module and McDonald for the nice layer for my Indeximage.",
 					'help'						=> "admin/manual.php",
 					'license'					=> "GNU General Public License (GPL)",
-					'official'					=> 0,
+					'official'					=> 1,
 					'dirname'					=> basename( dirname( __FILE__ ) ),
 					'modname'					=> "downloads",
 
@@ -42,10 +42,10 @@ $modversion = array(
 
 					/**  Development information */
 					'status_version'			=> "1.0",
-					'status'					=> "rc",
+					'status'					=> "final",
 					'date'						=> "Unreleased",
 					'author_word'				=> "",
-					'warning'					=> _CO_ICMS_WARNING_RC,
+					'warning'					=> _CO_ICMS_WARNING_FINAL,
 
 					/** Contributors */
 					'developer_website_url' 	=> "http://code.google.com/p/amaryllis-modules/",

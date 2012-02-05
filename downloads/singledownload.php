@@ -138,7 +138,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			$downloads_download_handler->updateCounter($clean_download_id);
-			if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted()) {
+			if(is_object($downloadObj) && !$downloadObj->isNew() && $downloadObj->accessGranted()) {
 				/**
 				 * Get the requested file and send it to Array
 				 */	
