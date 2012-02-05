@@ -21,7 +21,7 @@ include_once 'admin_header.php';
 icms_cp_header();
 
 icms::$module->displayAdminMenu(4, _MI_ARTICLE_MENU_PERMISSIONS);
-$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : 'viewarticle';
+$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : 'viewcategory';
 switch ($op) {
 	case 'viewarticle':
 		$title_of_form = _AM_ARTICLE_PREMISSION_ARTICLE_VIEW;
