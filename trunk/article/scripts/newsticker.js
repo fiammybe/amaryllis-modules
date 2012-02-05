@@ -11,8 +11,8 @@
 	 * jQuery v1.2.x or later
 	 * 
 	 */
-	jQuery.fn.liScroll = function(settings) {
-			settings = jQuery.extend({
+	$.fn.liScroll = function(settings) {
+			settings = $.extend({
 			travelocity: 0.07
 			}, settings);		
 			return this.each(function(){
