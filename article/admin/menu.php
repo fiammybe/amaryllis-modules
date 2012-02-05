@@ -17,8 +17,6 @@
  *
  */
 
-icms_loadLanguageFile("article", "modinfo");
- 
 $i = 0;
 
 $adminmenu[$i]['title'] = _MI_ARTICLE_MENU_INDEX;
