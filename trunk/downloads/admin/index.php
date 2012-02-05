@@ -38,8 +38,8 @@ global $downloadsConfig;
 //check broken downloads
 $criteria = '';
 $criteria = new icms_db_criteria_Compo();
-$criteria->add(new icms_db_criteria_Item('download_broken', true));
-$broken = $downloads_download_handler->getCount($criteria, true, false);
+$criteria->add(new icms_db_criteria_Item('download_broken', TRUE));
+$broken = $downloads_download_handler->getCount($criteria, TRUE, FALSE);
 
 
 // get all files count
@@ -52,14 +52,14 @@ if ($downloadsConfig['downloads_needs_approve'] == 1) {
 	$criteria2 = '';
 	$criteria2 = new icms_db_criteria_Compo();
 	$criteria2 -> add(new icms_db_criteria_Item('download_approve', 0));
-	$download_approve = $downloads_download_handler->getCount($criteria2, true, false);
+	$download_approve = $downloads_download_handler->getCount($criteria2, TRUE, FALSE);
 }
 
 // check mirrors to approve
 	$criteria3 = '';
 	$criteria3 = new icms_db_criteria_Compo();
 	$criteria3->add(new icms_db_criteria_Item('download_mirror_approve', 0));
-	$mirrors = $downloads_download_handler->getCount($criteria3, true, false);
+	$mirrors = $downloads_download_handler->getCount($criteria3, TRUE, FALSE);
 
 
 //check categories to approve
@@ -67,14 +67,14 @@ if ($downloadsConfig['category_needs_approve'] == 1) {
 	$criteria4 = '';
 	$criteria4 = new icms_db_criteria_Compo();
 	$criteria4 -> add(new icms_db_criteria_Item('category_approve', 0));
-	$category_approve = $downloads_category_handler->getCount($criteria4, true, false);
+	$category_approve = $downloads_category_handler->getCount($criteria4, TRUE, FALSE);
 }
 
 function getMimeTypes() {
 	$mimetype_handler = icms_getModuleHandler('mimetype', 'system');
 	$criteria = "";
 	$criteria = new icms_db_criteria_Compo();
-	$mimetypeObjects = $mimetype_handler->getObjects($criteria, true, false);
+	$mimetypeObjects = $mimetype_handler->getObjects($criteria, TRUE, FALSE);
 	$mimetype = '';
 	foreach (array_keys($mimetypeObjects) as $key => $mimetypeObj) {
 		if(in_array(icms::$module->getVar("dirname"), array($mimetypeObj['dirname'])))	{

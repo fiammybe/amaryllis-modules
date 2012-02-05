@@ -30,7 +30,7 @@ function b_downloads_category_menu_show($options) {
 	
 	$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
 
-	//$block['downloads_category'] = $downloads_category_handler->getCategoryListForMenu($options[0], $options[1], true, true, true, $options[3], $options[2]);
+	//$block['downloads_category'] = $downloads_category_handler->getCategoryListForMenu($options[0], $options[1], TRUE, TRUE, TRUE, $options[3], $options[2]);
 	$block['downloads_category'] = getDownloadCategories($options[2],$options[0],$options[1],$options[3]);
 	return $block;
 }
@@ -48,7 +48,7 @@ function b_downloads_category_menu_edit($options) {
 	$selorder->addOptionArray($order);
 	$showsubs = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
 	$selcats = new icms_form_elements_Select('', 'options[3]', $options[3]);
-	$selcats->addOptionArray($downloads_category_handler->getCategoryListForPid($groups = array(), 'category_grpperm', true, true, null, true));
+	$selcats->addOptionArray($downloads_category_handler->getCategoryListForPid($groups = array(), 'category_grpperm', TRUE, TRUE, null, TRUE));
 	
 	$form = '<table width="100%">';
 	$form .= '<tr>';
@@ -76,7 +76,7 @@ function b_downloads_category_menu_edit($options) {
  */
 
 
-function getDownloadCategories($showsubs = true, $sort='weight', $order='ASC', $category_id = 0 ) {
+function getDownloadCategories($showsubs = TRUE, $sort='weight', $order='ASC', $category_id = 0 ) {
 	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	$uid = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
 	$downloads_category_handler =& icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
@@ -87,7 +87,7 @@ function getDownloadCategories($showsubs = true, $sort='weight', $order='ASC', $
 	
 	$criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
 	$crit = new icms_db_criteria_Compo();
-	$crit->add(new icms_db_criteria_Item('category_active', true));
+	$crit->add(new icms_db_criteria_Item('category_active', TRUE));
 	$criteria->add($crit);
 	$criteria->setSort($sort);
 	$criteria->setOrder($order);

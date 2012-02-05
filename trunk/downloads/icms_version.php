@@ -164,7 +164,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_downloads_recent_downloads_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_downloads_recent_downloads_edit';
 $modversion['blocks'][$i]['options']		= '10';
 $modversion['blocks'][$i]['template']		= 'downloads_block_recent_downloads.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 // recent updated block
 $i++;
 $modversion['blocks'][$i]['file']			= 'downloads_recent_updated.php';
@@ -174,7 +174,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_downloads_recent_updated_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_downloads_recent_updated_edit';
 $modversion['blocks'][$i]['options']		= '10';
 $modversion['blocks'][$i]['template']		= 'downloads_block_recent_updated.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 // most popular block
 $i++;
 $modversion['blocks'][$i]['file']			= 'downloads_most_popular.php';
@@ -184,7 +184,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_downloads_most_popular_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_downloads_most_popular_edit';
 $modversion['blocks'][$i]['options']		= '10';
 $modversion['blocks'][$i]['template']		= 'downloads_block_most_popular.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 // category menu block
 $i++;
 $modversion['blocks'][$i]['file']			= 'downloads_category_menu.php';
@@ -194,7 +194,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_downloads_category_menu_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_downloads_category_menu_edit';
 $modversion['blocks'][$i]['options']		= 'category_title|ASC|1|0';
 $modversion['blocks'][$i]['template']		= 'downloads_block_category_menu.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

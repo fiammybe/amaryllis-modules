@@ -33,10 +33,10 @@ function downloads_display_new($time) {
 			$new = DOWNLOADS_IMAGES_URL . 'new.png';
 			
 		} else {
-			return false;
+			return FALSE;
 		}
 	} else {
-		return false;
+		return FALSE;
 	}
 	return $new;
 }
@@ -49,10 +49,10 @@ function downloads_display_updated($time) {
 			$updated = DOWNLOADS_IMAGES_URL . 'updated.png';
 			
 		} else {
-			return false;
+			return FALSE;
 		}
 	} else {
-		return false;
+		return FALSE;
 	}
 	return $updated;
 }
@@ -65,10 +65,10 @@ function downloads_display_popular($counter) {
 			$popular = DOWNLOADS_IMAGES_URL . 'popular.png';
 			
 		} else {
-			return false;
+			return FALSE;
 		}
 	} else {
-		return false;
+		return FALSE;
 	}
 	return $popular;
 }
@@ -117,7 +117,7 @@ function downloadsFileSizeType ($type) {
 /**
  * Writes entire admin menu into cache
  * @param string  $content  content to write to the admin menu file
- * @return true
+ * @return TRUE
  * @todo create language constants for the error messages
  */
 function Downloads_write_admin_menu($content) {
@@ -125,16 +125,16 @@ function Downloads_write_admin_menu($content) {
 	$filename = ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php';
 	if (! $file = fopen($filename, "w")) {
 		echo 'failed open file';
-		return false;
+		return FALSE;
 	}
-	if (fwrite($file, var_export($content, true)) == FALSE) {
+	if (fwrite($file, var_export($content, TRUE)) == FALSE) {
 		echo 'failed write file';
-		return false;
+		return FALSE;
 	}
 	fclose($file);
 
 	// write index.html file in cache folder
 	// file is delete after clear_cache (smarty)
 	icms_core_Filesystem::writeIndexFile(ICMS_CACHE_PATH);
-	return true;
+	return TRUE;
 }

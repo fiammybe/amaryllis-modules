@@ -29,7 +29,7 @@ function editcategory($categoryObj = 0) {
 	
 	if (!$categoryObj->isNew()){
 		if (!$categoryObj->userCanEditAndDelete()) {
-			redirect_header($categoryObj->getItemLink(true), 3, _NOPERM);
+			redirect_header($categoryObj->getItemLink(TRUE), 3, _NOPERM);
 		}
 		$categoryObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'category_updated', 'category_publisher', 'category_submitter', 'category_approve', 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar( 'category_updated_date', (time() - 100) );
@@ -97,8 +97,8 @@ $icmsTpl->assign('downloads_index', $index);
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_category_id = ($clean_category_id == 0 && isset($_POST['category_id'])) ? filter_input(INPUT_POST, 'category_id', FILTER_SANITIZE_NUMBER_INT) : $clean_category_id;
-$clean_category_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : false;
-$clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'category_pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_category_uid ? false : 0);
+$clean_category_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : FALSE;
+$clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'category_pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_category_uid ? FALSE : 0);
 
 $downloads_category_handler = icms_getModuleHandler( 'category', icms::$module -> getVar( 'dirname' ), 'downloads' );
 
@@ -138,7 +138,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'del':
 			$categoryObj = $downloads_category_handler->get($clean_category_id);
 			if (!$categoryObj->userCanEditAndDelete()) {
-				redirect_header($categoryObj->getItemLink(true), 3, _NOPERM);
+				redirect_header($categoryObj->getItemLink(TRUE), 3, _NOPERM);
 			}
 			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {
@@ -153,8 +153,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 }
 
 if( $downloadsConfig['show_breadcrumbs'] == 1 ) {
-	$icmsTpl->assign('downloads_show_breadcrumb', true);
+	$icmsTpl->assign('downloads_show_breadcrumb', TRUE);
 } else {
-	$icmsTpl->assign('downloads_show_breadcrumb', false);
+	$icmsTpl->assign('downloads_show_breadcrumb', FALSE);
 }
 include_once 'footer.php';
