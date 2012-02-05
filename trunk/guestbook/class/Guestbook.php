@@ -67,7 +67,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	
 	public function guestbook_approve() {
 		$active = $this->getVar('guestbook_approve', 'e');
-		if ($active == false) {
+		if ($active == FALSE) {
 			return '<a href="' . GUESTBOOK_ADMIN_URL . 'guestbook.php?guestbook_id=' . $this->getVar('guestbook_id') . '&amp;op=changeApprove">
 				<img src="' . GUESTBOOK_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
 		} else {
@@ -105,7 +105,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	}
 	
 	// get publisher for frontend
-	function getPublisher($link = false) {
+	function getPublisher($link = FALSE) {
 			$publisher_uid = $this->getVar('guestbook_uid', 'e');
 			$userinfo = array();
 			$userObj = icms::handler('icms_member')->getuser($publisher_uid);
