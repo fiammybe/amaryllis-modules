@@ -54,7 +54,7 @@ function copySitemapPlugin() {
 
 function portfolio_indexpage() {
 	$portfolio_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'portfolio' );
-	$indexpageObj = $portfolio_indexpage_handler -> create(true);
+	$indexpageObj = $portfolio_indexpage_handler -> create(TRUE);
 	echo '<code>';
 	$indexpageObj->setVar('index_header', 'My Portfolio');
 	$indexpageObj->setVar('index_heading', '<p>Lorem ipsum dolor sit amet, ratio iuvenis. Praesta enim ad suis ut diem obiecti invidunt cum suam ut a lenoni vero cum. Habes qui enim me in modo genito in fuerat se in rei sensibilium iussit hoc puella. Quique non coepit amatrix tolle auri. Neque revertisset meam celebrabantur Apollonius non coepit cognitionis omnium ascende ad suis. Peractoque convocatis secessit civitatis ne civitatis intelligitur sicut gaudio. Filiae tibi cum obiectum est cum magna anima Apollonium sit audivit mihi. Sadipscing fac mea Christianis aedificatur ergo quod non dum. Atqui plurium venenosamque serpentium ne videret quaeritur sed eu fugiens laudo in lucem in modo ad nomine Maria non solutionem inveni. Qui dicens mea vero diam omni magnis dotem ad suis alteri formam! Indulgentia pedes Dianae feminis introeunte instat manu certas parturiens a lenoni vidit pater ostendit qui auri in! Inquisivi ecce adhibitis amor ea complacuit leno est in, scola somnis angelorum haec puella est Apollonius eius.</p>
@@ -76,7 +76,7 @@ function portfolio_indexpage() {
 	$indexpageObj->setVar('doimage', 1);
 	$indexpageObj->setVar('dosmiley', 1);
 	$indexpageObj->setVar('doxcode', 1);
-	$portfolio_indexpage_handler -> insert( $indexpageObj, true );
+	$portfolio_indexpage_handler -> insert( $indexpageObj, TRUE );
 	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
 	echo '</code>';
 	
@@ -101,5 +101,5 @@ function icms_module_install_portfolio($module) {
 	
 	copySitemapPlugin();
 
-	return true;
+	return TRUE;
 }

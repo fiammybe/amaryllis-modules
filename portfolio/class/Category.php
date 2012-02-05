@@ -57,7 +57,7 @@ class PortfolioCategory extends icms_ipf_Object {
 
 	public function category_active() {
 		$active = $this->getVar("category_active", "e");
-		if ($active == false) {
+		if ($active == FALSE) {
 			return '<a href="' . PORTFOLIO_ADMIN_URL . 'category.php?category_id=' . $this->getVar("category_id") . '&amp;op=visible">
 				<img src="' . PORTFOLIO_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
@@ -113,7 +113,7 @@ class PortfolioCategory extends icms_ipf_Object {
 		}
 	}
 	
-	function getItemLink($onlyUrl = false) {
+	function getItemLink($onlyUrl = FALSE) {
 		$seo = $this->handler->makelink($this);
 		$url = PORTFOLIO_URL . 'category.php?category_id=' . $this -> getVar("category_id", "e") . '&amp;category=' . $seo;
 		if ($onlyUrl) return $url;

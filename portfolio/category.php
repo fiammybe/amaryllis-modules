@@ -87,7 +87,7 @@ if (is_object($categoryObj) && (!$categoryObj->isNew()) && ($categoryObj->access
 	if (!empty($clean_category_id)) {
 		$extra_arg = 'category_id=' . $clean_category_id;
 	} else {
-		$extra_arg = false;
+		$extra_arg = FALSE;
 	}
 	$pagenav = new icms_view_PageNav($count, $limit, $clean_start, 'start', $extra_arg);
 	$icmsTpl->assign('pagenav', $pagenav->renderNav());
@@ -95,7 +95,7 @@ if (is_object($categoryObj) && (!$categoryObj->isNew()) && ($categoryObj->access
 	if ($portfolioConfig['show_breadcrumbs']){
 		$icmsTpl->assign('portfolio_cat_path', $categoryObj->getitemLink());
 	}else{
-		$icmsTpl->assign('portfolio_cat_path',false);
+		$icmsTpl->assign('portfolio_cat_path',FALSE);
 	}
 	
 	/**

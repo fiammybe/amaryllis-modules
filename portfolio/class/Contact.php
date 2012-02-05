@@ -85,7 +85,7 @@ class PortfolioContact extends icms_ipf_Object {
 		return date($portfolioConfig['portfolio_dateformat'], $date);
 	}
 	
-	public function getItemLink($onlyUrl = false) {
+	public function getItemLink($onlyUrl = FALSE) {
 		$url = PORTFOLIO_URL . 'contact.php?contact_id=' . $this->getVar("contact_id", "e");
 		if ($onlyUrl) return $url;
 		return '<a href="' . $url . '" title="' . $this->getVar("contact_title", "e") . ' ">' . $this -> getVar( "contact_title" ) . '</a>';

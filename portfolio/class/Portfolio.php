@@ -68,7 +68,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 	
 	public function portfolio_active() {
 		$active = $this->getVar("portfolio_active", "e");
-		if ($active == false) {
+		if ($active == FALSE) {
 			return '<a href="' . PORTFOLIO_ADMIN_URL . 'portfolio.php?portfolio_id=' . $this->getVar("portfolio_id") . '&amp;op=visible">
 				<img src="' . PORTFOLIO_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
@@ -184,7 +184,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		}
 	}
 	
-	function getItemLink($onlyUrl = false) {
+	function getItemLink($onlyUrl = FALSE) {
 		$seo = $this->handler->makelink($this);
 		$url = PORTFOLIO_URL . 'portfolio.php?portfolio_id=' . $this -> getVar("portfolio_id", "e") . '&amp;portfolio=' . $seo;
 		if ($onlyUrl) return $url;

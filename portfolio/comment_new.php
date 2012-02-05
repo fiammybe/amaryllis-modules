@@ -24,7 +24,7 @@ if ($com_itemid > 0) {
 	$portfolio_portfolio_handler = icms_getModuleHandler("portfolio", basename(dirname(__FILE__)),"portfolio");
 	$portfolioObj = $portfolio_portfolio_handler->get($com_itemid);
 	if ($portfolioObj && !$portfolioObj->isNew()) {
-		$com_replytext = "test...";
+		$com_replytext = "";
 		$bodytext = $portfolioObj->getVar('portfolio_body');
 		if ($bodytext != '') {
 			$com_replytext .= $bodytext;
