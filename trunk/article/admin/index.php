@@ -38,8 +38,8 @@ global $articleConfig;
 //check broken article
 $criteria = '';
 $criteria = new icms_db_criteria_Compo();
-$criteria->add(new icms_db_criteria_Item('article_broken_file', true));
-$broken = $article_article_handler->getCount($criteria, true, false);
+$criteria->add(new icms_db_criteria_Item('article_broken_file', TRUE));
+$broken = $article_article_handler->getCount($criteria, TRUE, FALSE);
 
 
 // get all files count
@@ -52,7 +52,7 @@ if ($articleConfig['article_needs_approval'] == 1) {
 	$criteria2 = '';
 	$criteria2 = new icms_db_criteria_Compo();
 	$criteria2 -> add(new icms_db_criteria_Item('article_approve', 0));
-	$article_approve = $article_article_handler->getCount($criteria2, true, false);
+	$article_approve = $article_article_handler->getCount($criteria2, TRUE, FALSE);
 }
 
 //check categories to approve
@@ -60,7 +60,7 @@ if ($articleConfig['category_needs_approval'] == 1) {
 	$criteria4 = '';
 	$criteria4 = new icms_db_criteria_Compo();
 	$criteria4 -> add(new icms_db_criteria_Item('category_approve', 0));
-	$category_approve = $article_category_handler->getCount($criteria4, true, false);
+	$category_approve = $article_category_handler->getCount($criteria4, TRUE, FALSE);
 }
 
 //$mimetypes = $article_article_handler->checkMimeType();

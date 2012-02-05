@@ -82,10 +82,10 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	 * display disclaimer yes/no?
 	 */
 	if($articleConfig['show_down_disclaimer'] == 1) {
-		$icmsTpl->assign('show_down_disclaimer', true );
+		$icmsTpl->assign('show_down_disclaimer', TRUE );
 		$icmsTpl->assign('down_disclaimer', $articleConfig['down_disclaimer']);
 	} else {
-		$icmsTpl->assign('show_down_disclaimer', false);
+		$icmsTpl->assign('show_down_disclaimer', FALSE);
 	}
 	/**
 	 * check if Sprockets Module can be used and if it's available
@@ -134,7 +134,7 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 				$counter = 'box_count';
 				break;
 		}
-		$fb = '<div data-href="' . $articleObj->getItemLink(TRUE) . '" class="fb-like" data-send="false" data-layout="' . $counter . '" data-show-faces="false"></div>';
+		$fb = '<div data-href="' . $articleObj->getItemLink(TRUE) . '" class="fb-like" data-send="FALSE" data-layout="' . $counter . '" data-show-faces="FALSE"></div>';
 		$icmsTpl->assign("article_facebook", $fb);
 	}
 	
@@ -158,19 +158,19 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	 * include the comment rules
 	 */
 	if ($articleConfig['com_rule'] && $articleObj->userCanComment()) {
-		$icmsTpl->assign('article_article_comment', true);
+		$icmsTpl->assign('article_article_comment', TRUE);
 		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 	}
 	
 	/**
 	 * 
 	 */
-	if ($articleConfig['show_breadcrumbs'] == true) {
+	if ($articleConfig['show_breadcrumbs'] == TRUE) {
 		$article_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'article');
 		$icmsTpl->assign('article_show_breadcrumb', TRUE);
 		$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($clean_category_id, 1));
 	} else {
-		$icmsTpl->assign('article_cat_path', false);
+		$icmsTpl->assign('article_cat_path', FALSE);
 	}
 	/**
 	 * get the meta informations

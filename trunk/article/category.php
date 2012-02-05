@@ -68,8 +68,8 @@ $icmsTpl->assign('article_index', $index);
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_category_id = ($clean_category_id == 0 && isset($_POST['category_id'])) ? filter_input(INPUT_POST, 'category_id', FILTER_SANITIZE_NUMBER_INT) : $clean_category_id;
-$clean_category_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : false;
-$clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'category_pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_category_uid ? false : 0);
+$clean_category_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : FALSE;
+$clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'category_pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_category_uid ? FALSE : 0);
 
 $article_category_handler = icms_getModuleHandler( 'category', icms::$module -> getVar( 'dirname' ), 'article' );
 
@@ -110,7 +110,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'del':
 			$categoryObj = $article_category_handler->get($clean_category_id);
 			if (!$categoryObj->userCanEditAndDelete()) {
-				redirect_header($categoryObj->getItemLink(true), 3, _NO_PERM);
+				redirect_header($categoryObj->getItemLink(TRUE), 3, _NO_PERM);
 			}
 			$icmsTpl->assign('article_cat_path', _MD_ARTICLE_CATEGORY_DELETE);
 			

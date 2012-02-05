@@ -38,10 +38,10 @@ if($articleConfig['use_rss'] == 1) {
 /**
  * check, if breadcrumb should be displayed
  */
-if( $articleConfig['show_breadcrumbs'] == true ) {
-	$icmsTpl->assign('article_show_breadcrumb', true);
+if( $articleConfig['show_breadcrumbs'] == TRUE ) {
+	$icmsTpl->assign('article_show_breadcrumb', TRUE);
 } else {
-	$icmsTpl->assign('article_show_breadcrumb', false);
+	$icmsTpl->assign('article_show_breadcrumb', FALSE);
 }
 
 $icmsTpl->assign('thumbnail_width', $articleConfig['thumbnail_width']);
