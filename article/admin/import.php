@@ -275,7 +275,12 @@ function article_store_news_stories($row) {
 	$obj->setVar('article_img', $row['picture']);
 	$obj->setVar('article_publisher', explode(",", $row['uid']));
 	$obj->setVar('article_submitter', $row['uid']);
-	$obj->setVar('article_published_date', (int)$row['published']);
+	if((int)$row['published'] != 0) {
+		$obj->setVar('article_published_date', (int)$row['published']);
+	} else {
+		$obj->setVar('article_published_date', (int)$row['created']);
+		$obj->setVar('article_active', 0);
+	}
 	$obj->setVar('article_comments', (int)$row['comments']);
 	$obj->setVar('counter', (int)$row['counter']);
 	$obj->setVar('article_notification_sent', (int)$row['notifypub']);
