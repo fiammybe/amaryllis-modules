@@ -65,6 +65,6 @@ class PortfolioContactHandler extends icms_ipf_Handler {
 		$summary = $obj->getVar("contact_body", "s");
 		$summary = icms_core_DataFilter::checkVar($summary, "html", "input");
 		$obj->setVar("contact_body", $summary);
-		return true;
+		return TRUE;
 	}
 }

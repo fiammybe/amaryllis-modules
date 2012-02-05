@@ -139,6 +139,6 @@ class PortfolioCategoryHandler extends icms_ipf_Handler {
 		$summary = $obj->getVar("category_summary", "s");
 		$summary = icms_core_DataFilter::checkVar($summary, "html", "input");
 		$obj->setVar("category_summary", $summary);
-		return true;
+		return TRUE;
 	}
 }

@@ -147,7 +147,7 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 				$counter = 'box_count';
 				break;
 		}
-		$fb = '<div data-href="' . $portfolioObj->getItemLink(TRUE) . '" class="fb-like" data-send="false" data-layout="' . $counter . '" data-show-faces="false"></div>';
+		$fb = '<div data-href="' . $portfolioObj->getItemLink(TRUE) . '" class="fb-like" data-send="FALSE" data-layout="' . $counter . '" data-show-faces="FALSE"></div>';
 		$icmsTpl->assign("portfolio_facebook", $fb);
 	}
 	
@@ -175,14 +175,14 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 	 * include the comment rules
 	 */
 	if ($portfolioConfig['com_rule']) {
-		$icmsTpl->assign('portfolio_portfolio_comment', true);
+		$icmsTpl->assign('portfolio_portfolio_comment', TRUE);
 		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 	}
 	
 	if ($portfolioConfig['show_breadcrumbs']){
 		$icmsTpl->assign('portfolio_cat_path', $portfolioObj->getPortfolioCid(TRUE));
 	}else{
-		$icmsTpl->assign('portfolio_cat_path',false);
+		$icmsTpl->assign('portfolio_cat_path',FALSE);
 	}
 }
 

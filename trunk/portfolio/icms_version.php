@@ -195,7 +195,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_portfolio_spotlight_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_portfolio_spotlight_edit';
 $modversion['blocks'][$i]['options']		= '10|0';
 $modversion['blocks'][$i]['template']		= 'portfolio_block_portfolio_spotlight.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 // portfolio spotlight block
 $i++;
 $modversion['blocks'][$i]['file']			= 'portfolio_random_portfolios.php';
@@ -205,7 +205,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_portfolio_random_portfolios_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_portfolio_random_portfolios_edit';
 $modversion['blocks'][$i]['options']		= '10|0';
 $modversion['blocks'][$i]['template']		= 'portfolio_block_random_portfolios.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// SEARCH //////////////////////////////////////////////////////
