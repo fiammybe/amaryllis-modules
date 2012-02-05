@@ -273,6 +273,7 @@ function article_store_news_stories($row) {
 	$obj->setVar('article_submitter', $row['uid']);
 	$obj->setVar('article_published_date', (int)$row['published']);
 	$obj->setVar('article_comments', (int)$row['comments']);
+	$obj->setVar('counter', (int)$row['counter']);
 	$obj->setVar('article_notification_sent', (int)$row['notifypub']);
 	$article_article_handler->insert($obj, TRUE);
 	unset ($row);
@@ -293,6 +294,17 @@ function article_import_news_stories() {
 	}
 	
 	return TRUE;
+}
+
+function article_convert_stories(){
+	$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
+	$articles = $article_article_handler->getObjects(FALSE, TRUE);
+	foreach ($articles as $key => $article) {
+		$articleObj = $article_article_handler->get($article);
+		$articleObj->setVar("article_cid", explode(",",$articleObj->getVar("article_cid", "e")));
+		$articleObj->setVar("article_publisher", explode(",",$articleObj->getVar("article_publisher", "e")));
+		$article_article_handler->insert($articleObj, TRUE);
+	}
 }
 
 /**
@@ -471,7 +483,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms::$module->displayAdminMenu(0);
 			
 			// import stories
-			article_import_news_stories();
+			article_convert_stories();
 			
 			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
 			break;
