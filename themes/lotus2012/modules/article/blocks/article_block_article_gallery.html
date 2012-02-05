@@ -15,8 +15,8 @@
 	<a href="<{$block.view_all}>" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
 <{/if}>
 
-<div id="myGallery">
-	<{foreach item=article_article from=$block.article_spotlight}>
+<div id="myGallery"> 
+	<{foreach item=article_article from=$block.article_gallery}>
 	 <div class="imageElement">
 	 	<h3><{$article_article.article_title}></h3>
 		 <{if $block.showteaser == 1}>
@@ -28,7 +28,7 @@
 			 <img src="<{$article_article.imgpath}>" class="thumbnail" width="<{$block.thumbnail_width}>"/>
  		<{/if}>
 	 </div>
-	<{/foreach}>
+	<{/foreach}>	
 </div>
 
 
