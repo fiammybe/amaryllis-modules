@@ -250,7 +250,8 @@ function article_import_news_topics() {
 			$obj->setVar('category_pid', $row['topic_pid']);
 			$obj->setVar('category_description', $row['topic_description']);
 			$obj->setVar('category_image', $row['topic_imgurl']);
-			
+			$obj->setVar('category_publisher', 1);
+			$obj->setVar('category_submitter', 1);
 			$article_category_handler->insert($obj, TRUE);
 		}
 		echo '</code>';
