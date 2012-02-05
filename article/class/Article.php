@@ -455,7 +455,9 @@ class ArticleArticle extends icms_ipf_seo_Object {
 				$ret[$publisher] = '<div class="article_publisher"><div class="article_avatar"><img src="' . $avatar . '" alt="' . $publisher . '" /></div><div class="article_pub">' . $link .'</div></div>';
 			}
 		} elseif ($userlink) {
-			$ret[$publisher] = icms_member_user_Handler::getUserLink($publisher);
+			foreach ($publishers as $publisher) {
+				$ret[$publisher] = icms_member_user_Handler::getUserLink($publisher);
+			}
 		} else {
 			foreach ($publishers as $publisher) {
 				$uname = icms::handler('icms_member')->getUser($publisher)->getVar("uname");
