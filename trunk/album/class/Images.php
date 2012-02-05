@@ -85,7 +85,7 @@ class AlbumImages extends icms_ipf_Object {
 	
 	public function img_active() {
 		$img_active = $this->getVar('img_active', 'e');
-		if ($img_active == false) {
+		if ($img_active == FALSE) {
 			return '<a href="' . ALBUM_ADMIN_URL . 'images.php?img_id=' . $this->getVar('img_id') . '&amp;op=visible">
 				<img src="' . ALBUM_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
@@ -96,7 +96,7 @@ class AlbumImages extends icms_ipf_Object {
 	
 	public function img_approve() {
 		$active = $this->getVar('img_approve', 'e');
-		if ($active == false) {
+		if ($active == FALSE) {
 			return '<a href="' . ALBUM_ADMIN_URL . 'images.php?img_id=' . $this->getVar('img_id') . '&amp;op=changeApprove">
 				<img src="' . ALBUM_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
 		} else {
@@ -113,12 +113,12 @@ class AlbumImages extends icms_ipf_Object {
 	
 	function userCanEditAndDelete() {
 		global $album_isAdmin;
-		if (!is_object(icms::$user)) return false;
-		if ($album_isAdmin) return true;
+		if (!is_object(icms::$user)) return FALSE;
+		if ($album_isAdmin) return TRUE;
 		return $this->getVar('image_publisher', 'e') == icms::$user->getVar("uid");
 	}
 	
-	public function getImageTag($indexview = true) {
+	public function getImageTag($indexview = TRUE) {
 		$img = $image_tag = '';
 		$directory_name = basename(dirname( dirname( __FILE__ ) ));
 		$script_name = getenv("SCRIPT_NAME");
@@ -128,13 +128,13 @@ class AlbumImages extends icms_ipf_Object {
 			if (!$img == "") {
 				$image_tag = $document_root . 'uploads/' . $directory_name . '/images/' . $img;
 			} else {
-				$image_tag = false;
+				$image_tag = FALSE;
 			}
 		} else {
 			if (!$img == "") {
 				$image_tag = ICMS_URL . '/uploads/album/images/' . $img;
 			} else {
-				$image_tag = false;
+				$image_tag = FALSE;
 			}
 		}
 		return $image_tag;
@@ -145,7 +145,7 @@ class AlbumImages extends icms_ipf_Object {
 	}
 	
 	// get publisher for frontend
-	function getPublisher($link = false) {
+	function getPublisher($link = FALSE) {
 		
 			$publisher_uid = $this->getVar('img_publisher', 'e');
 			$userinfo = array();

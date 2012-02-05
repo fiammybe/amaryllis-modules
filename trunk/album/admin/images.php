@@ -105,11 +105,11 @@ if($count == 0) {
 				
 			case "changeWeight":
 				foreach ($_POST['AlbumImages_objects'] as $key => $value) {
-					$changed = false;
+					$changed = FALSE;
 					$imagesObj = $album_images_handler -> get( $value );
 					if ($imagesObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 						$imagesObj->setVar('weight', (int)($_POST['weight'][$key]));
-						$changed = true;
+						$changed = TRUE;
 					}
 					if ($changed) {
 						$album_images_handler -> insert($imagesObj);
@@ -135,19 +135,19 @@ if($count == 0) {
 				}
 				
 				$objectTable = new icms_ipf_view_Table($album_images_handler, $criteria);
-				$objectTable->addColumn( new icms_ipf_view_Column( 'img_active', 'center', true, 'img_active' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'a_id', false, false, 'image_aid' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'img_approve', 'center', true, 'img_approve' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_active', 'center', TRUE, 'img_active' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'a_id', FALSE, FALSE, 'image_aid' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_approve', 'center', TRUE, 'img_approve' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'img_title' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getWeightControl' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'img_published_date', 'center', true ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', TRUE, 'getWeightControl' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_published_date', 'center', TRUE ) );
 				
 				$objectTable->addFilter( 'img_active', 'img_active_filter' );
 				$objectTable->addFilter( 'img_approve', 'img_approve_filter' );
 				$objectTable->addFilter( 'a_id', 'getAlbumList' );
 		  		
 				$objectTable->addIntroButton( 'addform', 'images.php?op=mod', _AM_ALBUM_ADD );
-				$objectTable->addActionButton( 'changeWeight', false, _SUBMIT );
+				$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
 		  				
 				$icmsAdminTpl->assign( 'album_images_table', $objectTable->fetch() );
 		  		$icmsAdminTpl->display( 'db:album_admin.html' );

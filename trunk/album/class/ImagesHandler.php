@@ -69,14 +69,14 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	public function changeVisible($img_id) {
 		$visibility = '';
 		$imagesObj = $this->get($img_id);
-		if ($imagesObj->getVar('img_active', 'e') == true) {
+		if ($imagesObj->getVar('img_active', 'e') == TRUE) {
 			$imagesObj->setVar('img_active', 0);
 			$visibility = 0;
 		} else {
 			$imagesObj->setVar('img_active', 1);
 			$visibility = 1;
 		}
-		$this->insert($imagesObj, true);
+		$this->insert($imagesObj, TRUE);
 		return $visibility;
 	}
 	

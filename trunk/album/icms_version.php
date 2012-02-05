@@ -31,7 +31,7 @@ $modversion = array(
 					'credits'					=> "Thanks to McDonald for the nice index layer and also thanks to Madfish and the developers of ALBUM-Module for the code snippets, where I could see how to develope a Module using IPF!",
 					'help'						=> "",
 					'license'					=> "GNU General Public License (GPL)",
-					'official'					=> 0,
+					'official'					=> 1,
 					'dirname'					=> basename( dirname( __FILE__ ) ),
 					'modname'					=> "album",
 
@@ -42,10 +42,10 @@ $modversion = array(
 
 					/**  Development information */
 					'status_version'			=> "1.0",
-					'status'					=> "rc",
-					'date'						=> "Unreleased",
+					'status'					=> "final",
+					'date'						=> "01:46 05.02.2012",
 					'author_word'				=> "",
-					'warning'					=> _CO_ICMS_WARNING_RC,
+					'warning'					=> _CO_ICMS_WARNING_FINAL,
 
 					/** Contributors */
 					'developer_website_url' 	=> "http://code.google.com/p/amaryllis-modules/",
@@ -157,7 +157,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_album_album_recent_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_album_album_recent_edit';
 $modversion['blocks'][$i]['options']		= '10';
 $modversion['blocks'][$i]['template']		= 'album_block_recent_albums.html';
-$modversion['blocks'][$i]['can_clone']		= true ;
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

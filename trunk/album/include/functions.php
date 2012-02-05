@@ -32,10 +32,10 @@ function album_display_new($time, $timestamp) {
 			$new_img = '<img src="' . ALBUM_IMAGES_URL . 'new.png" title="new" alt="new" />';
 			
 		} else {
-			$new_img = false;
+			$new_img = FALSE;
 		}
 	} else {
-		$new_img = false;
+		$new_img = FALSE;
 	}
 	return $new_img;
 }
@@ -48,10 +48,10 @@ function album_display_updated($time, $timestamp) {
 			$updated_img = '<img src="' . ALBUM_IMAGES_URL . 'updated.png" title="updated" alt="updated" />';
 			
 		} else {
-			$updated_img = false;
+			$updated_img = FALSE;
 		}
 	} else {
-		$updated_img = false;
+		$updated_img = FALSE;
 	}
 	return $updated_img;
 }
@@ -64,10 +64,10 @@ function album_display_popular($counter) {
 			$popular = '<img src="' . ALBUM_IMAGES_URL . 'popular.png" title="popular" alt="popular" />';
 			
 		} else {
-			$popular = false;
+			$popular = FALSE;
 		}
 	} else {
-		$popular = false;
+		$popular = FALSE;
 	}
 	return $popular;
 }

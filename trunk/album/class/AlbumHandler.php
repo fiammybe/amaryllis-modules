@@ -49,13 +49,13 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	public function getList($album_active = null, $album_approve = null) {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($album_active)) {
-			$criteria->add(new icms_db_criteria_Item('album_active', true));
+			$criteria->add(new icms_db_criteria_Item('album_active', TRUE));
 		}
 		if (isset($album_approve)) {
-			$criteria->add(new icms_db_criteria_Item('album_approve', true));
+			$criteria->add(new icms_db_criteria_Item('album_approve', TRUE));
 		}
 		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
-		$albums = & $this->getObjects($criteria, true);
+		$albums = & $this->getObjects($criteria, TRUE);
 		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		foreach(array_keys($albums) as $i) {
 			$ret[$albums[$i]->getVar('album_id')] = $albums[$i]->getVar('album_title');
@@ -64,7 +64,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	}
 	
 	// some criterias used by other requests
-	public function getAlbumsCriteria($start = 0, $limit = 0, $album_uid = false, $album_id = false,  $album_pid = false, $order = 'album_published_date', $sort = 'DESC') {
+	public function getAlbumsCriteria($start = 0, $limit = 0, $album_uid = FALSE, $album_id = FALSE,  $album_pid = FALSE, $order = 'album_published_date', $sort = 'DESC') {
 		$criteria = new icms_db_criteria_Compo();
 		if ($start) $criteria->setStart($start);
 		if ($limit) $criteria->setLimit((int)$limit);
@@ -79,12 +79,12 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 			$crit->add(new icms_db_criteria_Item('album_id', $album_id),'OR');
 			$criteria->add($crit);
 		}
-		if ($album_pid !== false)	$criteria->add(new icms_db_criteria_Item('album_pid', $album_pid));
+		if ($album_pid !== FALSE)	$criteria->add(new icms_db_criteria_Item('album_pid', $album_pid));
 		return $criteria;
 	}
 	
 	// get a album List for pid
-	public function getAlbumListForPid($groups = array(), $perm = 'album_grpperm', $status = null, $approve = null, $album_id = null, $showNull = true) {
+	public function getAlbumListForPid($groups = array(), $perm = 'album_grpperm', $status = null, $approve = null, $album_id = null, $showNull = TRUE) {
 	
 		$criteria = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
@@ -99,15 +99,15 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 			}
 		}
 		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('album_active', true));
+			$criteria->add(new icms_db_criteria_Item('album_active', TRUE));
 		}
 		if (isset($approve)) {
-			$criteria->add(new icms_db_criteria_Item('album_approve', true));
+			$criteria->add(new icms_db_criteria_Item('album_approve', TRUE));
 		}
 		if (is_null($album_id)) $album_id = 0;
 		$criteria->add(new icms_db_criteria_Item('album_pid', $album_id));
 		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
-		$albums = & $this->getObjects($criteria, true);
+		$albums = & $this->getObjects($criteria, TRUE);
 		$ret = array();
 		if ($showNull) {
 			$ret[0] = '-----------------------';
@@ -122,7 +122,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getAlbums($approve = NULL, $onindex = NULL, $active = NULL, $start = 0, $limit = 0, $album_uid = false, $album_id = false,  $album_pid = false, $order = 'weight', $sort = 'ASC') {
+	public function getAlbums($approve = NULL, $onindex = NULL, $active = NULL, $start = 0, $limit = 0, $album_uid = FALSE, $album_id = FALSE,  $album_pid = FALSE, $order = 'weight', $sort = 'ASC') {
 		$criteria = $this->getAlbumsCriteria($start, $limit, $album_uid, $album_id,  $album_pid, $order, $sort);
 		if(isset($approve)) $criteria->add(new icms_db_criteria_Item("album_active", TRUE));
 		if(isset($onindex)) $criteria->add(new icms_db_criteria_Item("album_onindex", TRUE));
@@ -152,16 +152,16 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	
 	public function getAlbumsForBlocks($start = 0, $limit = 0, $order = 'weight', $sort = 'ASC') {
 		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('album_active', true));
-		$criteria->add(new icms_db_criteria_Item('album_inblocks', true));
-		$criteria->add(new icms_db_criteria_Item('album_approve', true));
-		$criteria->add(new icms_db_criteria_Item('album_onindex', true));
+		$criteria->add(new icms_db_criteria_Item('album_active', TRUE));
+		$criteria->add(new icms_db_criteria_Item('album_inblocks', TRUE));
+		$criteria->add(new icms_db_criteria_Item('album_approve', TRUE));
+		$criteria->add(new icms_db_criteria_Item('album_onindex', TRUE));
 		$criteria->setStart($start);
 		$criteria->setLimit($limit);
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
 		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
-		$albums = $this->getObjects($criteria, true, false);
+		$albums = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($albums as $key => &$album){
 			$ret[$album['album_id']] = $album;
@@ -188,14 +188,14 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	public function changeShow($album_id) {
 		$show = '';
 		$albumObj = $this->get($album_id);
-		if ($albumObj->getVar('album_inblocks', 'e') == true) {
+		if ($albumObj->getVar('album_inblocks', 'e') == TRUE) {
 			$albumObj->setVar('album_inblocks', 0);
 			$show = 0;
 		} else {
 			$albumObj->setVar('album_inblocks', 1);
 			$show = 1;
 		}
-		$this->insert($albumObj, true);
+		$this->insert($albumObj, TRUE);
 		return $show;
 	}
 
@@ -203,14 +203,14 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	public function changeApprove($album_id) {
 		$approve = '';
 		$albumObj = $this->get($album_id);
-		if ($albumObj->getVar('album_approve', 'e') == true) {
+		if ($albumObj->getVar('album_approve', 'e') == TRUE) {
 			$albumObj->setVar('album_approve', 0);
 			$approve = 0;
 		} else {
 			$albumObj->setVar('album_approve', 1);
 			$approve = 1;
 		}
-		$this->insert($albumObj, true);
+		$this->insert($albumObj, TRUE);
 		return $approve;
 	}
 	
@@ -220,14 +220,14 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	public function changeIndex($album_id) {
 		$onindex = '';
 		$albumObj = $this->get($album_id);
-		if ($albumObj->getVar('album_onindex', 'e') == true) {
+		if ($albumObj->getVar('album_onindex', 'e') == TRUE) {
 			$albumObj->setVar('album_onindex', 0);
 			$onindex = 0;
 		} else {
 			$albumObj->setVar('album_onindex', 1);
 			$onindex = 1;
 		}
-		$this->insert($albumObj, true);
+		$this->insert($albumObj, TRUE);
 		return $onindex;
 	}
 
@@ -239,10 +239,10 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	}
 	
 	// call sub-albums
-	public function getAlbumSub($album_id = 0, $toarray=false) {
+	public function getAlbumSub($album_id = 0, $toarray=FALSE) {
 		$criteria = $this->getAlbumsCriteria();
 		$criteria->add(new icms_db_criteria_Item('album_pid', $album_id));
-		$criteria->add(new icms_db_criteria_Item('album_active', true ) );
+		$criteria->add(new icms_db_criteria_Item('album_active', TRUE ) );
 		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		$albums = $this->getObjects($criteria);
 		if (!$toarray) return $albums;
@@ -271,9 +271,9 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		if (isset($album_id)) {
 			$criteria->add( new icms_db_criteria_Item( 'album_id', (int)$album_id ) );
 		}
-		$criteria->add( new icms_db_criteria_Item( 'album_active', true ) );
+		$criteria->add( new icms_db_criteria_Item( 'album_active', TRUE ) );
 		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
-		$albums = & $this -> getObjects( $criteria, true );
+		$albums = & $this -> getObjects( $criteria, TRUE );
 		foreach( array_keys( $albums ) as $i ) {
 			$ret[$albums[$i]->getVar( 'album_id' )] = $albums[$i] -> getVar( 'album_title' );
 		}
@@ -319,7 +319,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	public function getGroups($criteria = null) {
 		if (!$this->_album_grpperm) {
 			$member_handler =& icms::handler('icms_member');
-			$groups = $member_handler->getGroupList($criteria, true);
+			$groups = $member_handler->getGroupList($criteria, TRUE);
 			return $groups;
 		}
 		return $this->_album_grpperm;
@@ -330,17 +330,17 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	 */
 	public function userCanSubmit() {
 		global $album_isAdmin;
-		if (!is_object(icms::$user)) return false;
-		if ($album_isAdmin) return true;
+		if (!is_object(icms::$user)) return FALSE;
+		if ($album_isAdmin) return TRUE;
 		$user_groups = icms::$user->getGroups();
 		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
 		return count(array_intersect($module->config['uploader_groups'], $user_groups)) > 0;
 	}
 	
 	// get breadcrumb
-	public function getBreadcrumbForPid($album_id, $userside=false){
-		$ret = false;
-		if ($album_id == false) {
+	public function getBreadcrumbForPid($album_id, $userside=FALSE){
+		$ret = FALSE;
+		if ($album_id == FALSE) {
 			return $ret;
 		} else {
 			if ($album_id > 0) {
@@ -380,7 +380,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 				. ' WHERE ' . $this->keyName . '=' . $albumObj->id();
 			$this->query($sql, NULL, TRUE);
 		}
-		return true;
+		return TRUE;
 	}
 	
 	// some fuctions related to icms core functions
@@ -436,7 +436,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 			$this->insert ($obj);
 			}
 		}
-		return true;
+		return TRUE;
 	}
 	
 	protected function afterDelete(& $obj) {
@@ -448,7 +448,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		$album_id = $obj->id();
 		// delete global notifications
 		$notification_handler->unsubscribeByItem($module_id, $category, $album_id);
-		return true;
+		return TRUE;
 	}
 
 }
