@@ -270,7 +270,7 @@ function article_store_news_stories($row) {
 	$obj = $article_article_handler->create(TRUE);
 	$obj->setVar("article_id", $row['storyid']);
 	$obj->setVar('article_title', $row['title']);
-	$obj->setVar('article_cid', explode(",", $row['topiccid']));
+	$obj->setVar('article_cid', explode(",", $row['topicid']));
 	$obj->setVar('article_teaser', $row['hometext']);
 	$obj->setVar('article_body', $row['bodytext']);
 	$obj->setVar('article_img', $row['picture']);
