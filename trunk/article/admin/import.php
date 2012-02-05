@@ -29,33 +29,34 @@ function store_smartsection_article($row) {
 	$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
 	
 	$obj = $article_article_handler->create(TRUE);
-			$obj->setVar('article_title', $row['title']);
-			$obj->setVar('article_cid', explode(",", $row['categoryid']));
-			$obj->setVar('short_url', $row['short_url']);
-			$obj->setVar('article_teaser', $row['summary']);
-			$obj->setVar('article_show_teaser', $row['display_summary']);
-			$obj->setVar('article_body', $row['body']);
-			$obj->setVar('article_img', $row['image']);
-			$obj->setVar('article_publisher', explode(",", $row['uid']));
-			$obj->setVar('article_submitter', $row['uid']);
-			$obj->setVar('article_published_date', (int)$row['datesub']);
-			$obj->setVar('article_cancomment', $row['cancomment']);
-			$obj->setVar('article_comments', $row['comments']);
-			$obj->setVar('article_notification_sent', $row['notifypub']);
-			$obj->setVar('counter', $row['counter']);
-			$obj->setVar('weight', $row['weight']);
-			$obj->setVar('meta_keywords', $row['meta_keywords']);
-			$obj->setVar('meta_description', $row['meta_description']);
-			if($row['status'] == 4) {
-				$obj->setVar('article_approve', 0);
-			} elseif($row['status'] == 3) {
-				$obj->setVar('article_active', 0);
-			} else {
-				$obj->setVar('article_active', 1);
-				$obj->setVar('article_approve', 1);
-			}
-			$article_article_handler->insert($obj, TRUE);
-			unset($row);
+	$obj->setVar("article_id", $row['itemid']);
+	$obj->setVar('article_title', $row['title']);
+	$obj->setVar('article_cid', explode(",", $row['categoryid']));
+	$obj->setVar('short_url', $row['short_url']);
+	$obj->setVar('article_teaser', $row['summary']);
+	$obj->setVar('article_show_teaser', $row['display_summary']);
+	$obj->setVar('article_body', $row['body']);
+	$obj->setVar('article_img', $row['image']);
+	$obj->setVar('article_publisher', explode(",", $row['uid']));
+	$obj->setVar('article_submitter', $row['uid']);
+	$obj->setVar('article_published_date', (int)$row['datesub']);
+	$obj->setVar('article_cancomment', $row['cancomment']);
+	$obj->setVar('article_comments', $row['comments']);
+	$obj->setVar('article_notification_sent', $row['notifypub']);
+	$obj->setVar('counter', $row['counter']);
+	$obj->setVar('weight', $row['weight']);
+	$obj->setVar('meta_keywords', $row['meta_keywords']);
+	$obj->setVar('meta_description', $row['meta_description']);
+	if($row['status'] == 4) {
+		$obj->setVar('article_approve', 0);
+	} elseif($row['status'] == 3) {
+		$obj->setVar('article_active', 0);
+	} else {
+		$obj->setVar('article_active', 1);
+		$obj->setVar('article_approve', 1);
+	}
+	$article_article_handler->insert($obj, TRUE);
+	unset($row);
 }
 
 function article_import_smartsection_articles() {
@@ -86,6 +87,7 @@ function article_import_smartsection_categories() {
 		echo '<code>';
 		while ($row = icms::$xoopsDB->fetchArray($result)) {
 			$obj = $article_category_handler->create(TRUE);
+			$obj->setVar("category_id", $row['categoryid']);
 			$obj->setVar('category_title', $row['name']);
 			$obj->setVar('category_pid', $row['parentid']);
 			$obj->setVar('category_description', $row['description']);
@@ -243,6 +245,7 @@ function article_import_news_topics() {
 		echo '<code>';
 		while ($row = icms::$xoopsDB->fetchArray($result)) {
 			$obj = $article_category_handler->create(TRUE);
+			$obj->setVar("category_id", $row['topic_id']);
 			$obj->setVar('category_title', $row['topic_title']);
 			$obj->setVar('category_pid', $row['topic_pid']);
 			$obj->setVar('category_description', $row['topic_description']);
@@ -264,6 +267,7 @@ function article_import_news_topics() {
 function article_store_news_stories($row) {
 	$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
 	$obj = $article_article_handler->create(TRUE);
+	$obj->setVar("article_id", $row['storyid']);
 	$obj->setVar('article_title', $row['title']);
 	$obj->setVar('article_cid', explode(",", $row['topiccid']));
 	$obj->setVar('article_teaser', $row['hometext']);
@@ -294,17 +298,6 @@ function article_import_news_stories() {
 	}
 	
 	return TRUE;
-}
-
-function article_convert_stories(){
-	$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
-	$articles = $article_article_handler->getObjects(FALSE, TRUE);
-	foreach ($articles as $key => $article) {
-		$articleObj = $article_article_handler->get($article);
-		$articleObj->setVar("article_cid", explode(",",$articleObj->getVar("article_cid", "e")));
-		$articleObj->setVar("article_publisher", explode(",",$articleObj->getVar("article_publisher", "e")));
-		$article_article_handler->insert($articleObj, TRUE);
-	}
 }
 
 /**
@@ -483,7 +476,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms::$module->displayAdminMenu(0);
 			
 			// import stories
-			article_convert_stories();
+			article_import_news_stories();
 			
 			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
 			break;
