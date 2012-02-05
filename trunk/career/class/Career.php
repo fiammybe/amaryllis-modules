@@ -67,7 +67,7 @@ class CareerCareer extends icms_ipf_seo_Object {
 	
 	public function career_active() {
 		$active = $this->getVar("career_active", "e");
-		if ($active == false) {
+		if ($active == FALSE) {
 			return '<a href="' . CAREER_ADMIN_URL . 'career.php?career_id=' . $this->getVar("career_id") . '&amp;op=visible">
 				<img src="' . CAREER_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
@@ -137,7 +137,7 @@ class CareerCareer extends icms_ipf_seo_Object {
 		}
 	}
 	
-	function getItemLink($onlyUrl = false) {
+	function getItemLink($onlyUrl = FALSE) {
 		$seo = $this->handler->makelink($this);
 		$url = CAREER_URL . 'career.php?career_id=' . $this -> getVar("career_id", "e") . '&amp;career=' . $seo;
 		if ($onlyUrl) return $url;

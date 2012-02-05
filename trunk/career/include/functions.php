@@ -33,10 +33,10 @@ function career_display_new($time) {
 			$new = CAREER_IMAGES_URL . 'new.png';
 			
 		} else {
-			return false;
+			return FALSE;
 		}
 	} else {
-		return false;
+		return FALSE;
 	}
 	return $new;
 }
@@ -49,10 +49,10 @@ function career_display_updated($time) {
 			$updated = CAREER_IMAGES_URL . 'updated.png';
 			
 		} else {
-			return false;
+			return FALSE;
 		}
 	} else {
-		return false;
+		return FALSE;
 	}
 	return $updated;
 }

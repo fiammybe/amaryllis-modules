@@ -35,7 +35,7 @@ class CareerMessageHandler extends icms_ipf_Handler {
 		$modulename = basename(dirname(dirname(__FILE__)));
 		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
 			icms_file_MediaUploadHandler::setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
-			return false;
+			return FALSE;
 		}
 		$AllowedMimeTypes = $mimetypeHandler->AllowedModules($this->mediaRealType, $modulename);
 		if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes))
@@ -43,9 +43,9 @@ class CareerMessageHandler extends icms_ipf_Handler {
 				|| (empty($this->allowedMimeTypes) && !$AllowedMimeTypes))
 			{
 			icms_file_MediaUploadHandler::setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
-			return false;
+			return FALSE;
 		}
-		return true;
+		return TRUE;
 	}
 	
 	public function getMessages($cid = FALSE, $did = FALSE, $order = "message_date", $sort = "DESC", $start = 0, $limit = 0) {
@@ -146,6 +146,6 @@ class CareerMessageHandler extends icms_ipf_Handler {
 		$summary = $obj->getVar("message_body", "s");
 		$summary = icms_core_DataFilter::checkVar($summary, "html", "input");
 		$obj->setVar("message_body", $summary);
-		return true;
+		return TRUE;
 	}
 }

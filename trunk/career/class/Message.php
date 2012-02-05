@@ -48,7 +48,7 @@ class CareerMessage extends icms_ipf_Object {
 
 	public function message_approve() {
 		$approve = $this->getVar("message_approve", "e");
-		if ($approve == false) {
+		if ($approve == FALSE) {
 			return '<a href="' . CAREER_ADMIN_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeApprove">
 				<img src="' . CAREER_IMAGES_URL . 'approved.png" alt="Rejected" /></a>';
 		} else {
@@ -59,7 +59,7 @@ class CareerMessage extends icms_ipf_Object {
 	
 	public function message_approve_userside() {
 		$approve = $this->getVar("message_approve", "e");
-		if ($approve == false) {
+		if ($approve == FALSE) {
 			return '<a href="' . CAREER_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeApprove">
 				<img src="' . CAREER_IMAGES_URL . 'approved.png" alt="Rejected" /></a>';
 		} else {
@@ -70,7 +70,7 @@ class CareerMessage extends icms_ipf_Object {
 	
 	public function message_favorite() {
 		$favorite = $this->getVar("message_favorite", "e");
-		if ($favorite == false) {
+		if ($favorite == FALSE) {
 			return '<a href="' . CAREER_ADMIN_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeFavorite">
 				<img src="' . CAREER_IMAGES_URL . 'favorite.png" alt="Neutral" /></a>';
 		} else {
@@ -81,7 +81,7 @@ class CareerMessage extends icms_ipf_Object {
 	
 	public function message_favorite_userside() {
 		$favorite = $this->getVar("message_favorite", "e");
-		if ($favorite == false) {
+		if ($favorite == FALSE) {
 			return '<a href="' . CAREER_URL . 'message.php?message_id=' . $this->getVar("message_id") . '&amp;op=changeFavorite">
 				<img src="' . CAREER_IMAGES_URL . 'favorite.png" alt="Neutral" /></a>';
 		} else {
@@ -138,7 +138,7 @@ class CareerMessage extends icms_ipf_Object {
 		return $department;
 	}
 	
-	public function getItemLink($onlyUrl = false) {
+	public function getItemLink($onlyUrl = FALSE) {
 		$url = CAREER_URL . 'message.php?message_id=' . $this->getVar("message_id", "e");
 		if ($onlyUrl) return $url;
 		return '<a href="' . $url . '" title="' . $this->getVar("message_title", "e") . ' ">' . $this -> getVar( "message_title" ) . '</a>';

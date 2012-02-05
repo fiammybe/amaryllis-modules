@@ -66,7 +66,7 @@ class CareerDepartment extends icms_ipf_Object {
 
 	public function department_active() {
 		$active = $this->getVar("department_active", "e");
-		if ($active == false) {
+		if ($active == FALSE) {
 			return '<a href="' . CAREER_ADMIN_URL . 'department.php?department_id=' . $this->getVar("department_id") . '&amp;op=visible">
 				<img src="' . CAREER_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
@@ -134,7 +134,7 @@ class CareerDepartment extends icms_ipf_Object {
 		}
 	}
 	
-	function getItemLink($onlyUrl = false) {
+	function getItemLink($onlyUrl = FALSE) {
 		$seo = $this->handler->makelink($this);
 		$url = CAREER_URL . 'index.php?department_id=' . $this -> getVar("department_id", "e") . '&amp;department=' . $seo;
 		if ($onlyUrl) return $url;
