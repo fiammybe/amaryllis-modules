@@ -273,7 +273,11 @@ function article_store_news_stories($row) {
 	$obj->setVar('article_cid', explode(",", $row['topicid']));
 	$obj->setVar('article_teaser', $row['hometext']);
 	$obj->setVar('article_body', $row['bodytext']);
-	$obj->setVar('article_img', $row['picture']);
+	if($row['picture'] == "" || !$row['picture']) {
+		$obj->setVar('article_img', 0);
+	} else {
+		$obj->setVar('article_img', $row['picture']);
+	}
 	$obj->setVar('article_publisher', explode(",", $row['uid']));
 	$obj->setVar('article_submitter', $row['uid']);
 	if((int)$row['published'] != 0) {

@@ -450,7 +450,9 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret = array();
 		if($userlink) {
 			foreach ($publishers as $publisher) {
-				$ret[$publisher] = icms_member_user_Handler::getUserLink($publisher);
+				$link = icms_member_user_Handler::getUserLink($publisher);
+				$avatar = icms::handler("icms_member")->getUser($publisher)->gravatar();
+				$ret[$publisher] = '<div class="article_publisher"><div class="article_avatar"><img src="' . $avatar . '" alt="' . $publisher . '" /></div><div class="article_pub">' . $link .'</div></div>';
 			}
 		} else {
 			foreach ($publishers as $publisher) {
@@ -458,7 +460,14 @@ class ArticleArticle extends icms_ipf_seo_Object {
 				$ret[$publisher] = '<a href="' . ARTICLE_URL . 'index.php?op=getByAuthor&uid=' . $publisher . '" title="' . _CO_ARTICLE_ARTICLE_GET_BY_AUTHOR . '&nbsp;' . $uname . '">' . $uname . '</a>';
 			}
 		}
-		return implode(", ", $ret);
+		return implode("<br />", $ret);
+	}
+	
+	public function getPublishersAvatar() {
+		$publishers = $this->getVar("article_publisher", "s");
+		foreach ($publishers as $publisher) {
+			
+		}
 	}
 	
 	function userCanEditAndDelete() {
