@@ -27,10 +27,10 @@ function article_display_new($time) {
 			$new = ARTICLE_IMAGES_URL . 'new.png';
 			
 		} else {
-			return false;
+			return FALSE;
 		}
 	} else {
-		return false;
+		return FALSE;
 	}
 	return $new;
 }
@@ -43,10 +43,10 @@ function article_display_updated($time) {
 			$updated = ARTICLE_IMAGES_URL . 'updated.png';
 			
 		} else {
-			return false;
+			return FALSE;
 		}
 	} else {
-		return false;
+		return FALSE;
 	}
 	return $updated;
 }
@@ -59,10 +59,10 @@ function article_display_popular($counter) {
 			$popular = ARTICLE_IMAGES_URL . 'popular.png';
 			
 		} else {
-			return false;
+			return FALSE;
 		}
 	} else {
-		return false;
+		return FALSE;
 	}
 	return $popular;
 }

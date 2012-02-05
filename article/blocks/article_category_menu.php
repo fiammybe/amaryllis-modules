@@ -75,7 +75,7 @@ function b_article_category_menu_edit($options) {
  */
 
 
-function getArticleCategories($showsubs = true, $sort='weight', $order='ASC', $category_id = 0 ) {
+function getArticleCategories($showsubs = TRUE, $sort='weight', $order='ASC', $category_id = 0 ) {
 	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	$uid = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
 	$article_category_handler =& icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
@@ -86,7 +86,7 @@ function getArticleCategories($showsubs = true, $sort='weight', $order='ASC', $c
 	
 	$criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
 	$crit = new icms_db_criteria_Compo();
-	$crit->add(new icms_db_criteria_Item('category_active', true));
+	$crit->add(new icms_db_criteria_Item('category_active', TRUE));
 	$criteria->add($crit);
 	$criteria->setSort($sort);
 	$criteria->setOrder($order);

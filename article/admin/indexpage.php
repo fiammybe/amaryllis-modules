@@ -17,7 +17,7 @@
  *
  */
 
-function editform($indexkey = 1, $indeximage = true) {
+function editform($indexkey = 1, $indeximage = TRUE) {
 
 	global $article_indexpage_handler, $icmsAdminTpl;
 
@@ -42,12 +42,12 @@ $valid_op = array ( 'mod','addindexpage' );
 
 $clean_indexkey = isset($_GET['index_id']) ? (int) $_GET['index_id'] : 1 ;
 
-if ( in_array( $clean_op, $valid_op, true ) ) {
+if ( in_array( $clean_op, $valid_op, TRUE ) ) {
   switch ($clean_op) {
   	case "mod":
 		icms_cp_header();
 		icms::$module->displayAdminMenu( 3, _MI_ARTICLE_MENU_INDEXPAGE );
-		editform($clean_indexkey, false);
+		editform($clean_indexkey, FALSE);
 		break;
   	case "addindexpage":
 		$controller = new icms_ipf_Controller( $article_indexpage_handler );

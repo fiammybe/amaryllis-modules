@@ -65,7 +65,7 @@ class ArticleIndexpageHandler extends icms_ipf_Handler {
 		$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "input");
 		$obj->setVar("index_footer", $indexfooter);
 		
-		return true;
+		return TRUE;
 	}
 
 

@@ -299,7 +299,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'article_grpperm', $article_publisher = FALSE, $article_id = FALSE, $article_cid = FALSE, $tag_id = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if (isset($active)) {
-			$criteria->add(new icms_db_criteria_Item('article_active', true));
+			$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
 		}
 		if (isset($approve)) {
 			$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
@@ -328,15 +328,15 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	public function updateCounter($article_id) {
 		global $article_isAdmin;
 		$articleObj = $this->get($article_id);
-		if (!is_object($articleObj)) return false;
+		if (!is_object($articleObj)) return FALSE;
 
 		if (isset($articleObj->vars['counter']) && !is_object(icms::$user) || (!$article_isAdmin && $articleObj->getVar('article_submitter', 'e') != icms::$user->getVar("uid")) ) {
 			$new_counter = $articleObj->getVar('counter') + 1;
 			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
 				. ' WHERE ' . $this->keyName . '=' . $articleObj->id();
-			$this->query($sql, null, true);
+			$this->query($sql, null, TRUE);
 		}
-		return true;
+		return TRUE;
 	}
 	
 	// some fuctions related to icms core functions

@@ -282,7 +282,7 @@ function article_import_news_stories() {
 	if ($table->exists()) {
 		echo '<code><b>Importing data from news stories table</b></code><br />';
 
-		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('stories') . " ORDER BY 'storyid'";
+		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('stories');
 		$result = icms::$xoopsDB->query($sql);
 		echo '<code>';
 		while ($row = icms::$xoopsDB->fetchArray($result)) {

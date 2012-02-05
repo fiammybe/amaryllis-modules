@@ -134,12 +134,12 @@ if($categories > 0) {
 				
 			case "changeWeight":
 				foreach ($_POST['ArticleArticle_objects'] as $key => $value) {
-					$changed = false;
+					$changed = FALSE;
 					$articleObj = $article_article_handler -> get( $value );
 	
 					if ($articleObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 						$articleObj->setVar('weight', (int)($_POST['weight'][$key]));
-						$changed = true;
+						$changed = TRUE;
 					}
 					if ($changed) {
 						$article_article_handler -> insert($articleObj);
@@ -165,8 +165,8 @@ if($categories > 0) {
 				// create article table
 				$objectTable = new icms_ipf_view_Table($article_article_handler, $criteria);
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_active', 'center', 50, 'article_active' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'article_title', false, false, 'getPreviewItemLink' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'article_cid', false, false, 'getArticleCid' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'article_title', FALSE, FALSE, 'getPreviewItemLink' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'article_cid', FALSE, FALSE, 'getArticleCid' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'counter', 'center', 50));
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_inblocks', 'center', 50, 'article_inblocks' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_approve', 'center', 50, 'article_approve' ) );
@@ -174,8 +174,8 @@ if($categories > 0) {
 					$objectTable->addColumn( new icms_ipf_view_Column( 'article_broken_file', 'center', 50, 'article_broken_file' ) );
 				}
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_published_date', 'center', 100, 'getArticlePublishedDate' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'article_publisher', 'center', true, 'getArticlePublishers' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', true, 'getArticleWeightControl' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'article_publisher', 'center', TRUE, 'getArticlePublishers' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', TRUE, 'getArticleWeightControl' ) );
 				
 				$objectTable->addFilter('article_active', 'article_active_filter');
 				$objectTable->addFilter('article_inblocks', 'article_inblocks_filter');
@@ -187,7 +187,7 @@ if($categories > 0) {
 				$objectTable->addQuickSearch(array('article_title', 'article_teaser', 'article_history', 'article_body', 'article_steps', 'article_tips'));
 				
 				$objectTable->addIntroButton( 'addarticle', 'article.php?op=mod', _AM_ARTICLE_ARTICLE_ADD );
-				$objectTable->addActionButton( 'changeWeight', false, _SUBMIT );
+				$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
 				
 				$objectTable->addCustomAction( 'getViewItemLink' );
 				
