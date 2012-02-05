@@ -21,3 +21,5 @@ include_once "../../../include/cp_header.php";
 include_once ICMS_ROOT_PATH . "/modules/" . basename(dirname(dirname(__FILE__))) . "/include/common.php";
 if (!defined("ARTICLE_ADMIN_URL")) define("ARTICLE_ADMIN_URL", ARTICLE_URL . "admin/");
 include_once ARTICLE_ROOT_PATH . "include/requirements.php";
+
+icms_loadLanguageFile("article", "modinfo");
