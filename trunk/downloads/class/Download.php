@@ -629,10 +629,10 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('download_publisher', 'e')) {
 			return TRUE;
 		}
-		if ($viewperm && ($this->getVar('download_active', 'e') == TRUE) && ($this->getVar('download_approve', 'e') == TRUE) && (count($allowed_groups) > 0)) {
+		if ($viewperm && ($this->getVar('download_active', 'e') == TRUE) && ($this->getVar('download_approve', 'e') == TRUE)) {
 			return TRUE;
 		}
-		return FALSEa;
+		return FALSE;
 	}
 	
 	function userCanEditAndDelete() {
