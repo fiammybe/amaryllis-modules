@@ -100,7 +100,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case('del'):
 			$imagesObj = $album_images_handler->get($clean_images_id);
 			if (!$imagesObj->userCanEditAndDelete()) {
-				redirect_header($imagesObj->getItemLink(true), 3, _NO_PERM);
+				redirect_header($imagesObj->getItemLink(TRUE), 3, _NO_PERM);
 			}
 			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {
@@ -115,10 +115,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 	redirect_header(ALBUM_URL, 3, _NO_PERM);
 }
 
-if( $albumConfig['show_breadcrumbs'] == true ) {
-	$icmsTpl->assign('album_show_breadcrumb', true);
+if( $albumConfig['show_breadcrumbs'] == TRUE ) {
+	$icmsTpl->assign('album_show_breadcrumb', TRUE);
 } else {
-	$icmsTpl->assign('album_show_breadcrumb', false);
+	$icmsTpl->assign('album_show_breadcrumb', FALSE);
 }
 
 include_once "footer.php";

@@ -103,7 +103,7 @@ function album_upload_paths() {
 
 function album_indexpage() {
 	$album_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'album' );
-	$indexpageObj = $album_indexpage_handler -> create(true);
+	$indexpageObj = $album_indexpage_handler -> create(TRUE);
 	echo '<code>';
 	$indexpageObj -> setVar( 'index_header', 'My Photo Albums' );
 	$indexpageObj -> setVar( 'index_heading', 'Here you can see my photo Albums' );
@@ -114,7 +114,7 @@ function album_indexpage() {
 	$indexpageObj->setVar('doimage', 1);
 	$indexpageObj->setVar('dosmiley', 1);
 	$indexpageObj->setVar('doxcode', 1);
-	$album_indexpage_handler -> insert( $indexpageObj, true );
+	$album_indexpage_handler -> insert( $indexpageObj, TRUE );
 	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
 	echo '</code>';
 	
@@ -156,5 +156,5 @@ function icms_module_install_album($module) {
 	// copy sitemap plugin, if sitemap is installed
 	copySitemapPlugin();
 
-	return true;
+	return TRUE;
 }

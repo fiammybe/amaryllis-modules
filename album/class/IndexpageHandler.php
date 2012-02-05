@@ -64,7 +64,7 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 		if ($obj->getVar('index_img_upload') != '') {
 			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
 		}
-		return true;
+		return TRUE;
 	}
 
 
