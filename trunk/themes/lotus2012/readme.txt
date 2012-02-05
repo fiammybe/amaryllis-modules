@@ -41,7 +41,7 @@ There for: go to your administration, click "Blocks" in the Controll-Panel.
 -Give an informative Title like "my Navigation".
 -For the content, we need the HTML-Code we like to include. 
 For our example, go to the folder *icms-rootpath*/themes/lotus2012/tpl/ and open the navigation.html with an texteditor.
-Copy the full text and include the text into the Block-Content. Your Content should now look like:
+Copy the full text and include the text into the Block-Content via the TinyMCE HTML-Area. Your Content should now look like:
 
    										<a href="<{$icms_url}>/#" title="Link To The World-News Page">WORLD NEWS</a>                                    
                                         <a href="#" title="Link To The Sport Page">SPORTS</a>
@@ -53,7 +53,7 @@ Copy the full text and include the text into the Block-Content. Your Content sho
                                         <a href="<{$icms_url}>/#" title="Link To The Financial-News Page">FINANCIAL</a>
 
 - Set the "Visible *"-option to NO
-- Set the "Content Type*"-option to "Auto Format (smilies disabled)"
+- Set the "Content Type*"-option to "Auto Format (smilies enabled)"
 - Take a look to the URL in your browser-bar. At the end you find a number. This number is your block_ID. Remeber this number.
 - Save the Block.
 - Go back to the "navigation.html"

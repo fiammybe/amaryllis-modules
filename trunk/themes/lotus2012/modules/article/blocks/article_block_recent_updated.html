@@ -1,6 +1,26 @@
-<a href="<{$block.view_all}>" class="viewmore" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
-<ul>
-	<{foreach item=article_updated from=$block.article_updated}>
-		<li><a href="<{$article_updated.itemURL}>" title="<{$article_updated.title}>"><{$article_updated.title}></a> (<{$article_updated.updated_on}>)</li>
+<{if $block.show_view_all == 1}>
+	<a href="<{$block.view_all}>" class="viewmore" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
+<{/if}>
+	<{foreach item=article_article from=$block.article_updated}>
+		<{if $article_article.imgpath}>
+			<div class="article_img">
+				<a href="<{$article_article.itemURL}>" title="<{$article_article.title}>">
+					<img class="article_b4_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+				</a>
+			</div>
+		<{/if}>
+		<div class="article_img">
+			<img class="article_b2_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+		</div>
+		
+		<div class="article_teaser">
+			<{$article_article.teaser}>
+		</div>
+		
 	<{/foreach}>
-</ul>
+	
+<script type="text/javascript">
+jQuery(document).ready(function($){
+  $('.article_b4_leadimage').jScale({ls:'<{$block.thumbnail_width}>px'})
+})
+</script>

@@ -1,4 +1,6 @@
 <div id="block">
-<div class="block_title"><h2><{$block.title}></h2></div>
-<div class="block_content"><{$block.content}></div>
+	<{if $block.title}>
+		<div class="block_title"><h2><{$block.title}></h2></div>
+	<{/if}>	
+	<div class="block_content"><{$block.content}></div>
 </div>
