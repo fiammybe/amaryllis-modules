@@ -445,15 +445,17 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		}
 	}
 	
-	public function getArticlePublishers($userlink = TRUE) {
+	public function getArticlePublishers($userlink = TRUE, $avatar= FALSE) {
 		$publishers = $this->getVar("article_publisher", "s");
 		$ret = array();
-		if($userlink) {
+		if($avatar) {
 			foreach ($publishers as $publisher) {
 				$link = icms_member_user_Handler::getUserLink($publisher);
 				$avatar = icms::handler("icms_member")->getUser($publisher)->gravatar();
 				$ret[$publisher] = '<div class="article_publisher"><div class="article_avatar"><img src="' . $avatar . '" alt="' . $publisher . '" /></div><div class="article_pub">' . $link .'</div></div>';
 			}
+		} elseif ($userlink) {
+			$ret[$publisher] = icms_member_user_Handler::getUserLink($publisher);
 		} else {
 			foreach ($publishers as $publisher) {
 				$uname = icms::handler('icms_member')->getUser($publisher)->getVar("uname");
@@ -564,8 +566,9 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['demo'] = $this->getDemoLink();
 		$ret['tags'] = $this->getArticleTags(TRUE);
 		$ret['related'] = $this->getArticleRelated();
-		$ret['publisher'] = $this->getArticlePublishers(TRUE);
-		$ret['bypublisher'] = $this->getArticlePublishers(FALSE);
+		$ret['publisher'] = $this->getArticlePublishers(TRUE, FALSE);
+		$ret['bypublisher'] = $this->getArticlePublishers(FALSE, FALSE);
+		$ret['avatar'] = $this->getArticlePublishers(FALSE, TRUE);
 		$ret['submitter'] = $this->getArticleSubmitter();
 		$ret['updater'] = $this->getArticleUpdater();
 		$ret['published_on'] = $this->getArticlePublishedDate();
