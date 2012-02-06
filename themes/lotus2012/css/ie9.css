@@ -22,3 +22,7 @@
 #myGallery{
 	width: 730px !important;
 }
+
+.icmsQuote, .xoopsQuote {
+	width:460px;	
+}
