@@ -79,9 +79,8 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	public function getGuestbookAvatar() {
 		$review_uid = $this->getVar("guestbook_uid", "e");
 		if(intval($review_uid > 0)) {
-			$review_user = icms::handler("icms_member")->getUser($review_uid);
-			$review_avatar = $review_user->getVar("user_avatar");
-			$avatar_image = "<img src='" . ICMS_UPLOAD_URL . "/" . $review_avatar . "' alt='avatar' />";
+			$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
+			$avatar_image = "<img src='" . $avatar . "' alt='avatar' />";
 			return $avatar_image;
 		} else {
 			$review_avatar = "blank.gif";
