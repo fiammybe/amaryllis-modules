@@ -22,8 +22,6 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 icms_loadLanguageFile('album', 'common');
 
 class AlbumAlbumHandler extends icms_ipf_Handler {
-
-	private $_album_grpperm = array();
 	
 	public $_moduleName;
 	
@@ -230,39 +228,10 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		$this->insert($albumObj, TRUE);
 		return $onindex;
 	}
-
-	// count sub-albums
-	public function getAlbumSubCount($album_id = 0) {
-		$criteria = $this->getAlbumsCriteria();
-		$criteria->add(new icms_db_criteria_Item('album_pid', $album_id));
-		return $this->getCount($criteria);
-	}
-	
-	// call sub-albums
-	public function getAlbumSub($album_id = 0, $toarray=FALSE) {
-		$criteria = $this->getAlbumsCriteria();
-		$criteria->add(new icms_db_criteria_Item('album_pid', $album_id));
-		$criteria->add(new icms_db_criteria_Item('album_active', TRUE ) );
-		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
-		$albums = $this->getObjects($criteria);
-		if (!$toarray) return $albums;
-		$ret = array();
-		foreach(array_keys($albums) as $i) {
-			$ret[$i] = $albums[$i]->toArray();
-			$ret[$i]['album_description'] = icms_core_DataFilter::icms_substr(icms_cleanTags($albums[$i]->getVar('album_description','n'),array()),0,300);
-			$ret[$i]['album_url'] = $albums[$i]->getItemLink();
-		}
-		return $ret;
-	}
 	
 	public function makeLink($album) {
-		$count = $this->getCount(new icms_db_criteria_Item("short_url", $album->getVar("short_url")));
-		if ($count > 1) {
-			return $album->getVar('album_id');
-		} else {
-			$seo = str_replace(" ", "-", $album->getVar('short_url'));
-			return $seo;
-		}
+		$seo = str_replace(" ", "-", $album->getVar('short_url'));
+		return $seo;
 	}
 	
 	public function getAlbumList() {
@@ -313,18 +282,6 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 
-	/**
-	 * retrieve groups for permission control
-	 */
-	public function getGroups($criteria = null) {
-		if (!$this->_album_grpperm) {
-			$member_handler =& icms::handler('icms_member');
-			$groups = $member_handler->getGroupList($criteria, TRUE);
-			return $groups;
-		}
-		return $this->_album_grpperm;
-	}
-	
 	/**
 	 * frontend permission control
 	 */

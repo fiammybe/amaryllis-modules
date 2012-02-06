@@ -17,6 +17,8 @@
  *
  */
 
+icms_loadLanguageFile("album", "modinfo");
+
 $i = 0;
 
 $adminmenu[$i]['title'] = _MI_ALBUM_MENU_ALBUM;

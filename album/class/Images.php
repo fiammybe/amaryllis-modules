@@ -68,13 +68,6 @@ class AlbumImages extends icms_ipf_Object {
 
 	}
 
-	public function getVar($key, $format = 's') {
-		if ($format == 's' && in_array($key, array())) {
-			return call_user_func(array ($this,	$key));
-		}
-		return parent::getVar($key, $format);
-	}
-	
 	public function image_aid() {
 		$cid = $this->getVar ( 'a_id', 'e' );
 		$album_album_handler = icms_getModuleHandler ( 'album',basename(dirname(dirname(__FILE__))), 'album' );
@@ -220,9 +213,7 @@ class AlbumImages extends icms_ipf_Object {
 	 */
 	public function getPublishedDate() {
 		global $albumConfig;
-		$date = '';
 		$date = $this->getVar('img_published_date', 'e');
-		
 		return date($albumConfig['album_dateformat'], $date);
 	}
 	

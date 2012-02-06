@@ -159,7 +159,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_inblocks', 'center', 50, 'album_inblocks' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_onindex', 'center', 50, 'album_onindex' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_published_date', 'center', 100, TRUE ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'album_uid', 'center', FALSE, 'album_uid' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'album_uid', 'center', FALSE, 'getPublisher' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', TRUE, 'getWeightControl' ) );
 			
 			$objectTable->addFilter( 'album_active', 'album_active_filter' );
