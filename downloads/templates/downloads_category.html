@@ -1,11 +1,33 @@
-<{includeq file='db:downloads_header.html'}>
-<div style="margin: 2em auto;">
-	<{if $downloads_category_form}>
-		<{includeq file='db:system_common_form.html' form=$downloads_category_form}>
-	<{/if}>
-	
-	<{if $icmspersistable_delete_confirm}>
-		<{$icmspersistable_delete_confirm}>
-	<{/if}>
+<!-- category rule -->
+<div class="download_cat_frame table_cell">
+	<div class="downloads_category" original-title="<{$categories.title}>">
+		<!-- category image -->
+		<span class="downloads_cat_img">
+			<a href="<{$categories.itemLink}>">
+				<img src="<{$categories.img}>" alt="" title="<{$categories.title}>" />
+			</a>
+		</span>
+		
+		<!-- Category title -->
+		<h3><a href="<{$categories.itemLink}>" title=""><{$categories.title}></a></h3>
+		<div class="downloads_cat_title">
+			<{if $categories.userCanEditAndDelete}>
+				<{$categories.editItemLink}><{$categories.deleteItemLink}>
+			<{/if}>
+			<{if $categories.user_upload}>
+				<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$categories.user_upload}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
+					<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
+				</a>
+			<{/if}>
+		</div>
+	</div><!-- E N D .downloads_category -->
+	<div class="popup">
+		<span class="downloads_cat_desc">
+			<{if $categories.dsc}>
+				<{$categories.dsc}>
+			<{else}>
+				<{$smarty.const._MD_DOWNLOADS_NO_CATEGORY_DSC}>
+			<{/if}>
+		</span>
+	</div>
 </div>
-<{includeq file='db:downloads_footer.html'}>

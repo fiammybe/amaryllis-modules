@@ -59,6 +59,26 @@
 	/**
 	 * E N D jquery cookie plugin
 	 */
+	function SetSpeechBubble()
+	{
+		$(function()
+		{
+			settings=
+			{
+				tl:{ radius:10 },
+				tr:{ radius:10 },
+				bl:{ radius:10 },
+				br:{ radius:10 },
+				antiAlias:true,
+				autoPad:true,
+				validTags:["div"]
+			}
+			
+			$('div.bubble').corner(settings);
+		});
+	}
+	
+	
 	//report broken Link
 	$(document).ready(function(){
 		$("#dialog-confirm-broken").dialog({

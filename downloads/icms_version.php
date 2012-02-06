@@ -140,6 +140,14 @@ $modversion['templates'][] = array(
 										'description'	=> _MI_DOWNLOADS_DOWNLOAD_TPL
 								);
 $modversion['templates'][] = array(
+										'file'			=> 'downloads_singlereview.html',
+										'description'	=> _MI_DOWNLOADS_DOWNLOAD_TPL
+								);
+$modversion['templates'][] = array(
+										'file'			=> 'downloads_forms.html',
+										'description'	=> _MI_DOWNLOADS_DOWNLOAD_TPL
+								);
+$modversion['templates'][] = array(
 										'file'			=> 'downloads_admin.html',
 										'description'	=> _MI_DOWNLOADS_ADMIN_FORM_TPL
 								);

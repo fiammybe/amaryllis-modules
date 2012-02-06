@@ -363,30 +363,13 @@
 		display: none;
 	}
 	
-	.file_reviews {
-		display: table;
-	}
-	
-	.review_poster {
-		width: 25%;
-		height: auto;
-		float: left;
-	}
-	
 	.review_case {
 		font-weight:bold;
 	}
 	
-	.review_name, .review_email, .review_date {
-		display: block;
-		padding: 0;
-		margin: 0;
-	}
-	
-	.review_message {
-		float: left;
-		width: 70%;
-		margin: 1em auto;
+	.review_entry {
+		display: table;
+		width: 100%;
 	}
 	
 	/*override*/
@@ -397,65 +380,75 @@
 	/* download button */
 
 	.btn {
-	float:left;
-	display:inline-block;
-	height:44px;
-	line-height:44px;
-	padding:0 10px 0 50px;
-	background: url("images/white.jpg") repeat-x scroll 0 0 transparent;
-	color:#999;
-	font-weight:bold;
-	font-size:13px;
-	text-shadow:0 1px 0 #fff;
-	position:relative;
-	border:1px solid #DFDFDF;
-	margin:0 10px 10px 0;
-	-moz-border-radius:8px;
-	-webkit-border-radius:8px;
-	border-radius:8px;
+		float:left;
+		display:inline-block;
+		height:44px;
+		line-height:44px;
+		padding:0 10px 0 50px;
+		background: url("images/white.jpg") repeat-x scroll 0 0 transparent;
+		color:#999;
+		font-weight:bold;
+		font-size:13px;
+		text-shadow:0 1px 0 #fff;
+		position:relative;
+		border:1px solid #DFDFDF;
+		margin:0 10px 10px 0;
+		-moz-border-radius:8px;
+		-webkit-border-radius:8px;
+		border-radius:8px;
 	}
 
 	.btn:hover {
-	border-color:#cacaca;
-	background:#F8F8F8;
-	text-decoration: none;
+		border-color:#cacaca;
+		background:#F8F8F8;
+		text-decoration: none;
 	}
 
 	.btn span {
-	display:block;
-	position:absolute;
-	top:6px;
-	left:9px;
-	width:32px;
-	height:32px;
-	background-repeat:no-repeat;
-	background-position:center;
+		display:block;
+		position:absolute;
+		top:6px;
+		left:9px;
+		width:32px;
+		height:32px;
+		background-repeat:no-repeat;
+		background-position:center;
 	}
 
-.btn.download span {
-    background-image: url("images/download.png");background-repeat: no-repeat;
-}
+	.btn.download span {
+	    background-image: url("images/download.png");background-repeat: no-repeat;
+	}
+	
+	a.vote_up {
+	    vertical-align: middle;
+	    background-image: url("images/like.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+	}
+	
+	a.vote_down {
+	    vertical-align: middle;
+	    background-image: url("images/dislike.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+	}
+	
+	a.vote_up:hover {
+	    vertical-align: middle;
+	    background-image: url("images/like_shadow.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+	}
+	a.vote_down:hover {
+	    vertical-align: middle;
+	    background-image: url("images/dislike_shadow.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
+	}
+	
+	span.download_tag img {
+	    vertical-align: middle;
+	}
+	div.speech_bubble {margin-bottom:10px;}
+	div.speech_bubble div.bubble {margin-bottom:5px;padding:10px;line-height:14px;background-color:#B7E0FF;border:3px solid #FBFBFB; }
+	div.speech_bubble p { margin:0;padding:15px 0 0 15px;position:relative;top:-8px;background:url(images/tip.gif) no-repeat 15px 0; }
 
-a.vote_up {
-    vertical-align: middle;
-    background-image: url("images/like.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
-}
-
-a.vote_down {
-    vertical-align: middle;
-    background-image: url("images/dislike.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
-}
-
-a.vote_up:hover {
-    vertical-align: middle;
-    background-image: url("images/like_shadow.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
-}
-a.vote_down:hover {
-    vertical-align: middle;
-    background-image: url("images/dislike_shadow.png");background-repeat: no-repeat;padding: 10px 0 0 23px;
-}
-
-span.download_tag img {
-    vertical-align: middle;
-}
-
+	.visitorvoice_title {
+		width: 100%;
+		line-height: 2em;
+		text-align: center;
+		font-weight: bold;
+		background: #ccc;
+	}

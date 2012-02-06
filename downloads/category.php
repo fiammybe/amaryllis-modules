@@ -46,7 +46,7 @@ function editcategory($categoryObj = 0) {
 		
 		$sform = $categoryObj->getSecureForm(_MD_DOWNLOADS_CATEGORY_EDIT, 'addcategory');
 		$sform->assign($icmsTpl, 'downloads_category_form');
-		$icmsTpl->assign('downloads_cat_path', $categoryObj->getVar('category_title') . ' : ' . _EDIT);
+		$icmsTpl->assign('downloads_cat_path', $categoryObj->getVar('category_title') . ' : ' . _MD_DOWNLOADS_CATEGORY_EDIT);
 	} else {
 		$categoryObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'category_updated', 'category_publisher', 'category_submitter', 'category_approve', 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar('category_published_date', (time() - 100) );
@@ -69,13 +69,13 @@ function editcategory($categoryObj = 0) {
 		
 		$sform = $categoryObj->getSecureForm(_MD_DOWNLOADS_CATEGORY_CREATE, 'addcategory');
 		$sform->assign($icmsTpl, 'downloads_category_form');
-		$icmsTpl->assign('downloads_cat_path', _SUBMIT);
+		$icmsTpl->assign('downloads_cat_path', _MD_DOWNLOADS_CATEGORY_CREATE);
 	}
 } 
 
 include_once 'header.php';
 
-$xoopsOption['template_main'] = 'downloads_category.html';
+$xoopsOption['template_main'] = 'downloads_forms.html';
 
 include_once ICMS_ROOT_PATH . '/header.php';
 
@@ -150,11 +150,5 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$icmsTpl->assign('downloads_cat_path', $downloads_category_handler->getBreadcrumbForPid($categoryObj->getVar('category_id', 'e'), 1) . ' > ' . _DELETE);
 			break;
 	}
-}
-
-if( $downloadsConfig['show_breadcrumbs'] == 1 ) {
-	$icmsTpl->assign('downloads_show_breadcrumb', TRUE);
-} else {
-	$icmsTpl->assign('downloads_show_breadcrumb', FALSE);
 }
 include_once 'footer.php';

@@ -43,7 +43,7 @@ function editdownload($downloadObj) {
 		
 		$sform = $downloadObj->getSecureForm(_MD_DOWNLOADS_DOWNLOAD_EDIT, 'adddownload');
 		$sform->assign($icmsTpl, 'downloads_download_form');
-		$icmsTpl->assign('downloads_cat_path', $downloadObj->getVar('download_title') . ' > ' . _EDIT);
+		$icmsTpl->assign('downloads_cat_path', $downloadObj->getVar('download_title') . ' > ' . _MD_DOWNLOADS_DOWNLOAD_EDIT);
 	} else {
 		$downloadObj->hideFieldFromForm(array('download_updated', 'download_broken','download_mirror_approve', 'meta_description', 'meta_keywords', 'download_updated', 'download_publisher', 'download_submitter', 'download_approve', 'download_published_date', 'download_updated_date' ) );
 		$downloadObj->setVar('download_published_date', (time() - 100) );
@@ -71,13 +71,13 @@ function editdownload($downloadObj) {
 		
 		$sform = $downloadObj->getSecureForm(_MD_DOWNLOADS_DOWNLOAD_CREATE, 'adddownload');
 		$sform->assign($icmsTpl, 'downloads_download_form');
-		$icmsTpl->assign('downloads_cat_path', _SUBMIT);
+		$icmsTpl->assign('downloads_cat_path', _MD_DOWNLOADS_DOWNLOAD_CREATE);
 	}
 }
 
 include_once 'header.php';
 
-$xoopsOption['template_main'] = 'downloads_download.html';
+$xoopsOption['template_main'] = 'downloads_forms.html';
 
 include_once ICMS_ROOT_PATH . '/header.php';
 
@@ -143,12 +143,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 	}
 } else {
 	redirect_header(DOWNLOADS_URL, 3, _NOPERM);
-}
-
-if( $downloadsConfig['show_breadcrumbs'] == TRUE ) {
-	$icmsTpl->assign('downloads_show_breadcrumb', TRUE);
-} else {
-	$icmsTpl->assign('downloads_show_breadcrumb', FALSE);
 }
 
 include_once "footer.php";
