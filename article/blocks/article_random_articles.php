@@ -29,7 +29,7 @@ function b_article_random_articles_show($options) {
 	$articles = $article_article_handler->getArticlesForBlocks(0, $options[0], FALSE, FALSE, FALSE, "RAND()", FALSE);
 	$block['article_random'] = $articles;
 	$block['show_view_all'] = $options[2];
-	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewRecentArticles&categor_id=' . $options[1];
+	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewRecentArticles&category_id=' . $options[1];
 	$block['thumbnail_width'] = $articleConfig['thumbnail_width'];
 	$block['thumbnail_height'] = $articleConfig['thumbnail_height'];
 	

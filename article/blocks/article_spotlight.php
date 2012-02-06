@@ -28,7 +28,7 @@ function b_article_spotlight_show($options) {
 	
 	$articleConfig = icms_getModuleConfig(basename(dirname(dirname(__FILE__))));
 	$articles = $article_article_handler->getArticlesForBlocks(0, $options[0], $options[1]);
-	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewRecentArticles&categor_id=' . $options[1];
+	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewRecentArticles&category_id=' . $options[1];
 	$block['show_view_all'] = $options[2];
 	$block['thumbnail_width'] = $articleConfig['thumbnail_width'];
 	$block['thumbnail_height'] = $articleConfig['thumbnail_height'];
@@ -46,7 +46,7 @@ function b_article_spotlight_edit($options) {
 	$article_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
 	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	$selcats = new icms_form_elements_Select('', 'options[1]', $options[1]);
-	$selcats->addOptionArray($article_category_handler->getList());
+	$selcats->addOptionArray($article_category_handler->getCategoryListForPid());
 	$showmore = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
 	
 	$form = '<table><tr>';
