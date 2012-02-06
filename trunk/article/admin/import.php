@@ -36,7 +36,11 @@ function store_smartsection_article($row) {
 	$obj->setVar('article_teaser', $row['summary']);
 	$obj->setVar('article_show_teaser', $row['display_summary']);
 	$obj->setVar('article_body', $row['body']);
-	$obj->setVar('article_img', $row['image']);
+	if($row['image'] == "blank.png") {
+		$obj->setVar('article_img', 0);
+	} else {
+		$obj->setVar('article_img', $row['image']);
+	}
 	$obj->setVar('article_publisher', explode(",", $row['uid']));
 	$obj->setVar('article_submitter', $row['uid']);
 	$obj->setVar('article_published_date', (int)$row['datesub']);
@@ -95,6 +99,8 @@ function article_import_smartsection_categories() {
 			$obj->setVar('weight', $row['weight']);
 			$obj->setVar('category_published_date', (int)$row['created']);
 			$obj->setVar('short_url', 'short_url');
+			$obj->setVar('category_publisher', 1);
+			$obj->setVar('category_submitter', 1);
 			$article_category_handler->insert($obj, TRUE);
 		}
 		echo '</code>';
@@ -567,7 +573,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			echo ' <div style="margin: 2em 0em; color: red; font-weight: bold;"><p>' . _AM_ARTICLE_IMPORT_SMARTSECTION_WARNING . '</p></div>';
 			
 			 //ask what to do
-	        $form = new icms_form_Theme('Importing',"form", $_SERVER['REQUEST_URI']);
+	        $form = new icms_form_Theme('Importing from Smartsection',"form", $_SERVER['REQUEST_URI']);
 	        // for article table
 	        $sql = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('smartsection_items');
 			$result = icms::$xoopsDB->query($sql);
@@ -654,7 +660,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	            $label4 = new icms_form_elements_Label("Import data from sprockets taglinks", "sprockets_taglink tables not found on this site.");
 	            $form->addElement($label4);
 	        }
+			$form->addElement(new icms_form_elements_Hidden('op', 0));
+        	$form->display();
 			
+			
+			$form2 = new icms_form_Theme('Importing from old News',"form", $_SERVER['REQUEST_URI']);
 			// for news topics
 			$sql5 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('topics');
 			$result5 = icms::$xoopsDB->query($sql5);
@@ -662,10 +672,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	        if ($result5 > 0) {
 	            $button5 = new icms_form_elements_Button("Import " . $count5 .  " topics from old News Module", "topics_button", "Import", "submit");
 	            $button5->setExtra("onclick='document.forms.form.op.value=\"5\"'");
-	            $form->addElement($button5);
+	            $form2->addElement($button5);
 	        } else {
 	            $label5 = new icms_form_elements_Label("Import topics from old News Module", "topics tables not found on this site.");
-	            $form->addElement($label5);
+	            $form2->addElement($label5);
 	        }
 	        
 			// for news stories
@@ -675,10 +685,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	        if ($result6 > 0) {
 	            $button6 = new icms_form_elements_Button("Import "  . $count6 . " stories from old news module", "stories_button", "Import", "submit");
 	            $button6->setExtra("onclick='document.forms.form.op.value=\"6\"'");
-	            $form->addElement($button6);
+	            $form2->addElement($button6);
 	        } else {
 	            $label6 = new icms_form_elements_Label("Import data from news stories", "stories tables not found on this site.");
-	            $form->addElement($label6);
+	            $form2->addElement($label6);
 	        }
 			
 			// for news stories files
@@ -688,10 +698,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	        if ($result7 > 0) {
 	            $button7 = new icms_form_elements_Button("Import "  . $count7 . " stories files from old news module", "stories_files_button", "Import", "submit");
 	            $button7->setExtra("onclick='document.forms.form.op.value=\"7\"'");
-	            $form->addElement($button7);
+	            $form2->addElement($button7);
 	        } else {
 	            $label7 = new icms_form_elements_Label("Import data from news stories files", "stories_files tables not found on this site.");
-	            $form->addElement($label7);
+	            $form2->addElement($label7);
 	        }
 			
 			// for news stories view perm
@@ -700,10 +710,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	        if ($result8 > 0) {
 	            $button8 = new icms_form_elements_Button("Import stories view permissions from old news module", "view_stories_button", "Import", "submit");
 	            $button8->setExtra("onclick='document.forms.form.op.value=\"8\"'");
-	            $form->addElement($button8);
+	            $form2->addElement($button8);
 	        } else {
 	            $label8 = new icms_form_elements_Label("Import stories view permissions from old news module", "news_view not found on this site.");
-	            $form->addElement($label8);
+	            $form2->addElement($label8);
 	        }
 			
 			// for news stories submit perm
@@ -712,10 +722,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	        if ($result9 > 0) {
 	            $button9 = new icms_form_elements_Button("Import stories submit permission from old news module", "stories_files_button", "Import", "submit");
 	            $button9->setExtra("onclick='document.forms.form.op.value=\"9\"'");
-	            $form->addElement($button9);
+	            $form2->addElement($button9);
 	        } else {
 	            $label9 = new icms_form_elements_Label("Import stories submit permission from old news module", "news_submit tables not found on this site.");
-	            $form->addElement($label9);
+	            $form2->addElement($label9);
 	        }
 			
 			// for news taglinks
@@ -724,14 +734,14 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	        if ($result10 > 0) {
 	            $button10 = new icms_form_elements_Button("Import tags for old news from sprockets taglinks", "tags_button", "Import", "submit");
 	            $button10->setExtra("onclick='document.forms.form.op.value=\"10\"'");
-	            $form->addElement($button10);
+	            $form2->addElement($button10);
 	        } else {
 	            $label10 = new icms_form_elements_Label("Import tags for old News from sprockets taglinks", "sprockets_taglink tables not found on this site.");
-	            $form->addElement($label10);
+	            $form2->addElement($label10);
 	        }
 			
-			$form->addElement(new icms_form_elements_Hidden('op', 0));
-        	$form->display();
+			$form2->addElement(new icms_form_elements_Hidden('op', 0));
+        	$form2->display();
 
 			break;
 	}
