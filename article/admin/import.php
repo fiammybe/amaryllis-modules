@@ -664,14 +664,14 @@ if(in_array($clean_op, $valid_op, TRUE)) {
         	$form->display();
 			
 			
-			$form2 = new icms_form_Theme('Importing from old News',"form", $_SERVER['REQUEST_URI']);
+			$form2 = new icms_form_Theme('Importing from old News',"form2", $_SERVER['REQUEST_URI']);
 			// for news topics
 			$sql5 = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('topics');
 			$result5 = icms::$xoopsDB->query($sql5);
 			list($count5) = icms::$xoopsDB->fetchRow($result5);
 	        if ($result5 > 0) {
 	            $button5 = new icms_form_elements_Button("Import " . $count5 .  " topics from old News Module", "topics_button", "Import", "submit");
-	            $button5->setExtra("onclick='document.forms.form.op.value=\"5\"'");
+	            $button5->setExtra("onclick='document.forms.form2.op.value=\"5\"'");
 	            $form2->addElement($button5);
 	        } else {
 	            $label5 = new icms_form_elements_Label("Import topics from old News Module", "topics tables not found on this site.");
@@ -684,7 +684,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			list($count6) = icms::$xoopsDB->fetchRow($result6);
 	        if ($result6 > 0) {
 	            $button6 = new icms_form_elements_Button("Import "  . $count6 . " stories from old news module", "stories_button", "Import", "submit");
-	            $button6->setExtra("onclick='document.forms.form.op.value=\"6\"'");
+	            $button6->setExtra("onclick='document.forms.form2.op.value=\"6\"'");
 	            $form2->addElement($button6);
 	        } else {
 	            $label6 = new icms_form_elements_Label("Import data from news stories", "stories tables not found on this site.");
@@ -697,7 +697,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			list($count7) = icms::$xoopsDB->fetchRow($result7);
 	        if ($result7 > 0) {
 	            $button7 = new icms_form_elements_Button("Import "  . $count7 . " stories files from old news module", "stories_files_button", "Import", "submit");
-	            $button7->setExtra("onclick='document.forms.form.op.value=\"7\"'");
+	            $button7->setExtra("onclick='document.forms.form2.op.value=\"7\"'");
 	            $form2->addElement($button7);
 	        } else {
 	            $label7 = new icms_form_elements_Label("Import data from news stories files", "stories_files tables not found on this site.");
@@ -709,7 +709,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$result8 = icms::$xoopsDB->query($sql8);
 	        if ($result8 > 0) {
 	            $button8 = new icms_form_elements_Button("Import stories view permissions from old news module", "view_stories_button", "Import", "submit");
-	            $button8->setExtra("onclick='document.forms.form.op.value=\"8\"'");
+	            $button8->setExtra("onclick='document.forms.form2.op.value=\"8\"'");
 	            $form2->addElement($button8);
 	        } else {
 	            $label8 = new icms_form_elements_Label("Import stories view permissions from old news module", "news_view not found on this site.");
@@ -721,7 +721,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$result9 = icms::$xoopsDB->query($sql7);
 	        if ($result9 > 0) {
 	            $button9 = new icms_form_elements_Button("Import stories submit permission from old news module", "stories_files_button", "Import", "submit");
-	            $button9->setExtra("onclick='document.forms.form.op.value=\"9\"'");
+	            $button9->setExtra("onclick='document.forms.form2.op.value=\"9\"'");
 	            $form2->addElement($button9);
 	        } else {
 	            $label9 = new icms_form_elements_Label("Import stories submit permission from old news module", "news_submit tables not found on this site.");
@@ -733,7 +733,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$result10 = icms::$xoopsDB->query($sql10);
 	        if ($result10 > 0) {
 	            $button10 = new icms_form_elements_Button("Import tags for old news from sprockets taglinks", "tags_button", "Import", "submit");
-	            $button10->setExtra("onclick='document.forms.form.op.value=\"10\"'");
+	            $button10->setExtra("onclick='document.forms.form2.op.value=\"10\"'");
 	            $form2->addElement($button10);
 	        } else {
 	            $label10 = new icms_form_elements_Label("Import tags for old News from sprockets taglinks", "sprockets_taglink tables not found on this site.");
