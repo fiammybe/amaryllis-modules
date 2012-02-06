@@ -519,7 +519,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	
 	public function getArticleImagePath() {
 		$image = $this->getVar("article_img", "e");
-		if($image != "") {
+		if(($image != "") && ($image != "0")) {
 			$path = ICMS_URL . '/uploads/article/article/' . $image;
 			return $path;
 		} else {
