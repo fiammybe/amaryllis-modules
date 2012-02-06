@@ -82,13 +82,8 @@ class CareerDepartmentHandler extends icms_ipf_Handler {
 	}
 	
 	public function makeLink($department) {
-		$count = $this->getCount(new icms_db_criteria_Item("short_url", $department->getVar("short_url", "e")));
-		if ($count > 1) {
-			return $department->getVar("department_id", "e");
-		} else {
-			$seo = str_replace(" ", "-", $department->getVar("short_url"));
-			return $seo;
-		}
+		$seo = str_replace(" ", "-", $department->getVar("short_url"));
+		return $seo;
 	}
 	
 	//set category online/offline
