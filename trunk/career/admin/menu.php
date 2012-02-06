@@ -17,7 +17,8 @@
  *
  */
 
- 
+icms_loadLanguageFile("career", "modinfo");
+
 $i = 0;
 
 $adminmenu[$i]['title'] = _MI_CAREER_MENU_CAREER;

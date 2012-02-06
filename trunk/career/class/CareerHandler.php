@@ -53,13 +53,8 @@ class CareerCareerHandler extends icms_ipf_Handler {
 	}
 	
 	public function makeLink($career) {
-		$count = $this->getCount(new icms_db_criteria_Item("short_url", $career->getVar("short_url", "e")));
-		if ($count > 1) {
-			return $career->getVar("career_id", "e");
-		} else {
-			$seo = str_replace(" ", "-", $career->getVar("short_url"));
-			return $seo;
-		}
+		$seo = str_replace(" ", "-", $career->getVar("short_url"));
+		return $seo;
 	}
 	
 	//set category online/offline
@@ -104,6 +99,7 @@ class CareerCareerHandler extends icms_ipf_Handler {
 				$criteriaKeyword = new icms_db_criteria_Compo();
 				$criteriaKeyword->add(new icms_db_criteria_Item('career_title', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
 				$criteriaKeyword->add(new icms_db_criteria_Item('career_description', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+				$criteriaKeyword->add(new icms_db_criteria_Item('career_summary', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
 				$criteriaKeywords->add($criteriaKeyword, $andor);
 				unset($criteriaKeyword);
 			}

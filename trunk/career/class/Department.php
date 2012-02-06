@@ -176,5 +176,4 @@ class CareerDepartment extends icms_ipf_Object {
 		return $ret;
 	}
 
-
 }
