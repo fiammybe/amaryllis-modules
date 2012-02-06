@@ -289,14 +289,8 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function makeLink($article) {
-		$count = $this->getCount(new icms_db_criteria_Item("short_url", $article->getVar("short_url")));
-
-		if ($count > 1) {
-			return $article->getVar('article_id');
-		} else {
-			$seo = str_replace(" ", "-", $article->getVar('short_url'));
-			return $seo;
-		}
+		$seo = str_replace(" ", "-", $article->getVar('short_url'));
+		return $seo;
 	}
 	
 	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'article_grpperm', $article_publisher = FALSE, $article_id = FALSE, $article_cid = FALSE, $tag_id = FALSE) {
@@ -319,12 +313,8 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$criteria->add($critTray);
 		}
 		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
-		$articles = $this->getObjects($criteria, TRUE, FALSE);
-		$ret = array();
-		foreach ($articles as $article){
-			$ret[$article['article_id']] = $article;
-		}
-		return count($ret);
+		$count = $this->getCount($criteria);
+		return $count;
 	}
 	
 	//update hit-counter

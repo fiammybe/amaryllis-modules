@@ -121,14 +121,8 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 	}
 	
 	public function makeLink($category) {
-		$count = $this->getCount(new icms_db_criteria_Item("short_url", $category->getVar("short_url")));
-
-		if ($count > 1) {
-			return $category->getVar('category_id');
-		} else {
-			$seo = str_replace(" ", "-", $category->getVar('short_url'));
-			return $seo;
-		}
+		$seo = str_replace(" ", "-", $category->getVar('short_url'));
+		return $seo;
 	}
 	
 	//set category online/offline
@@ -179,17 +173,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 	// count sub-categories
 	public function getCategorySubCount($groups = array(), $perm = 'category_grpperm', $status = NULL,$approved = NULL, $category_id = 0) {
 		$criteria = new icms_db_criteria_Compo();
-		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
-			foreach($groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
-			}
-			$criteria->add($criteriaTray);
-			if ($perm == 'category_grpperm' || $perm == 'article_admin') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
-			}
-		}
 		if (isset($status)) {
 			$criteria->add(new icms_db_criteria_Item('category_active', TRUE));
 		}
