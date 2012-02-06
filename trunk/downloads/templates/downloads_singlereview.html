@@ -1,0 +1,29 @@
+<div class="bubble">
+	<div id="entry_<{$entry.id}>" class="review_entry">
+		<!-- title -->
+		<div class="block-title">
+			<div class="review_case">
+				<{$review.case}>
+			</div>
+		</div>
+		
+		<div class="review_row">
+			<div class="review_message">
+				<span class="message">
+					<{$review.message}>
+					<{if $show_reviews_email}>
+							<br /><br /><span><{$smarty.const._MD_DOWNLOADS_PUBLISHER_MAIL}>:&nbsp;<{$review.email}></span>
+					<{/if}>
+				</span>
+			</div> <!-- E N D .VISITORVOICE_message -->
+		</div> <!-- E N D .VISITORVOICE_row -->
+	</div> <!-- E N D .VISITORVOICE_entry -->
+</div>
+<p>
+	<{if $show_reviews_avatar}>
+		<span>
+			<{$review.avatar}>
+		</span>
+	<{/if}>
+	<strong><{$review.name}> | <{$smarty.const._MD_DOWNLOADS_PUBLISHED_ON}>:&nbsp;<{$review.date}></strong>
+</p>

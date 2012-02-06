@@ -335,4 +335,5 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 } else {
 	redirect_header (DOWNLOADS_URL, 3, _NO_PERM);
 }
+$xoTheme->addScript('/modules/' . DOWNLOADS_DIRNAME . '/scripts/jquery.curvycorners.packed.js', array('type' => 'text/javascript'));
 include_once "footer.php";
