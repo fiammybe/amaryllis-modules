@@ -1,31 +1,31 @@
 <div class="bubble">
-<div id="entry_<{$entry.id}>" class="visitorvoice_entry">
-	<!-- title -->
-	<div class="block-title"><{$entry.title}></div>
-	
-	<div class="visitorvoice_row">
-		<div class="entry_message">
-			<span class="visitorvoice_message">
-				<{if $entry.img}>
-					<div class="visitorvoice_image">
-						<span><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></span>
-					</div> <!-- E N D .VISITORVOICE_image -->
-				<{/if}>
-				<{$entry.message}>
-				<{if $entry.email}>
-						<br /><br /><span><{$smarty.const._MD_VISITORVOICE_MAIL_CONTACT}>: <{$entry.email}></span>
-				<{/if}>
-			</span>
-		</div> <!-- E N D .VISITORVOICE_message -->
-		<{if $visitorvoice_is_admin}>
-			<div class="entry_info">
-				<span class="visitorvoice_ip">
-					<{$entry.ip}> <{$smarty.const._MD_VISITORVOICE_PUBLISHED_BY}>: <{$entry.published_by}>
+	<div id="entry_<{$entry.id}>" class="visitorvoice_entry">
+		<!-- title -->
+		<div class="block-title"><{$entry.title}></div>
+		
+		<div class="visitorvoice_row">
+			<div class="entry_message">
+				<span class="visitorvoice_message">
+					<{if $entry.img}>
+						<div class="visitorvoice_image">
+							<span><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></span>
+						</div> <!-- E N D .VISITORVOICE_image -->
+					<{/if}>
+					<{$entry.message}>
+					<{if $entry.email}>
+							<br /><br /><span><{$smarty.const._MD_VISITORVOICE_MAIL_CONTACT}>: <{$entry.email}></span>
+					<{/if}>
 				</span>
-			</div> <!-- E N D .VISITORVOICE_info -->
-		<{/if}>
-	</div> <!-- E N D .VISITORVOICE_row -->
-</div> <!-- E N D .VISITORVOICE_entry -->
+			</div> <!-- E N D .VISITORVOICE_message -->
+			<{if $visitorvoice_is_admin}>
+				<div class="entry_info">
+					<span class="visitorvoice_ip">
+						<{$entry.ip}> <{$smarty.const._MD_VISITORVOICE_PUBLISHED_BY}>: <{$entry.published_by}>
+					</span>
+				</div> <!-- E N D .VISITORVOICE_info -->
+			<{/if}>
+		</div> <!-- E N D .VISITORVOICE_row -->
+	</div> <!-- E N D .VISITORVOICE_entry -->
 </div>
 <p>
 	<{if $show_avatar}>

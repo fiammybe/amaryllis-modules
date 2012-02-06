@@ -47,7 +47,7 @@ class VisitorvoiceIndexpage extends icms_ipf_Object {
 		$indeximage = $image_tag = '';
 		$indeximage = $this->getVar('index_image', 'e');
 		if (!empty($indeximage)) {
-			$image_tag = GUESTBOOK_UPLOAD_URL . 'indeximages/' . $indeximage;
+			$image_tag = VISITORVOICE_UPLOAD_URL . 'indeximages/' . $indeximage;
 			return '<div class="visitorvoice_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
 	}
