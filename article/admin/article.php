@@ -184,7 +184,7 @@ if($categories > 0) {
 					$objectTable->addFilter('article_broken_file', 'article_broken_filter');
 				}
 				
-				$objectTable->addQuickSearch(array('article_title', 'article_teaser', 'article_history', 'article_body', 'article_steps', 'article_tips'));
+				$objectTable->addQuickSearch(array('article_title', 'article_teaser', 'article_body', 'article_publisher'));
 				
 				$objectTable->addIntroButton( 'addarticle', 'article.php?op=mod', _AM_ARTICLE_ARTICLE_ADD );
 				$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
