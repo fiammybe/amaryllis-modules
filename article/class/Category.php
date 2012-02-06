@@ -143,31 +143,6 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		return $control->render();
 	}
 	
-	function getSubsCount(){
-		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-		$count = $this->handler->getCategoriesCount (TRUE, TRUE, $groups,'category_grpperm', FALSE, FALSE, $this->getVar("category_id", "e"));
-		return $count;
-	}
-	// get sub category
-	function category_sub() {
-		$ret = $this->handler->getCategorySubCount($this->getVar('category_id', 'e'));
-		if ($ret > 0) {
-			$ret = '<a href="' . ARTICLE_ADMIN_URL . 'category.php?category_pid=' . $this->getVar('category_id', 'e') . '">' . $ret . ' <img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag+.png" align="absmiddle" /></a>';
-		}
-		return $ret;
-	}
-
-	function getCategorySub($toarray) {
-		return $this->handler->getCategorySub($this->getVar('category_id', 'e'), $toarray);
-	}
-	
-	function getArticlesCount() {
-		$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
-		$files_count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups = array(), $perm = 'category_grpperm', $article_publisher = FALSE, $article_id = FALSE, $this->getVar("category_id"));
-		
-		return $files_count;
-	}
-	
 	function category_pid() {
 		static $category_pidArray;
 		if (!is_array($category_pidArray)) {
@@ -269,8 +244,6 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$ret['title'] = $this->getVar('category_title');
 		$ret['img'] = $this->getCategoryImageTag();
 		$ret['dsc'] = $this->getVar('category_description');
-		$ret['sub'] = $this->getCategorySub($this->getVar('category_id', 'e'), TRUE);
-		$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
 		$ret['published_date'] = $this->getCategoryPublishedDate();
 		$ret['updated_date'] = $this->getCategoryUpdatedDate();
 		$ret['publisher'] = $this->getCategoryPublisher(TRUE);
@@ -282,8 +255,6 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
-		$ret['cat_count'] = $this->getSubsCount();
-		$ret['articles_count'] = $this->getArticlesCount();
 		$ret['user_upload'] = $this->getEditAndDelete();
 		$ret['user_submit'] = $this->userCanSubmit();
 		return $ret;
