@@ -23,12 +23,11 @@ p {
 a {
 	text-decoration: none;
 	border: none;
-	color: #b00;
+	color: #990000;
 	font-family: "Helvetica", "Arial", "Trebuchet MS", sans-serif;
 }
 a:hover {
-	text-decoration: underline;
-	
+	text-decoration: underline;	
 }
 /*Headlines*/
 h1 { font-size: 1.6em; margin: 0 0 30px 0; }
@@ -95,7 +94,7 @@ dd {color:#666666;font-size:12px;margin:0 0 0 10px;padding:5px 0 10px 10px;}
 
 #menu li a{
 	text-decoration: none; 
-	color: #b00; 
+	color: #990000; 
 	padding:0px 10px;
 }
 #menu li:hover a{
@@ -237,19 +236,19 @@ dd {color:#666666;font-size:12px;margin:0 0 0 10px;padding:5px 0 10px 10px;}
 #block{
 	margin: 0 0 15px 0;
 }
-.block_title{color:#202020; border-bottom: 3px #bb0000 solid; letter-spacing: -1px;}
+.block_title{color:#202020; border-bottom: 3px #990000 solid; letter-spacing: -1px;}
 
 /* block user menu */
 #usermenu {}
-#usermenu a {display:block; text-decoration: none;color:#202020; margin: 3px 0 0 15px; border-bottom:1px #bb0000 dotted;}
-#usermenu a:hover { border-bottom:1px #bb0000 solid;}
+#usermenu a {display:block; text-decoration: none;color:#202020; margin: 3px 0 0 15px; border-bottom:1px #990000 dotted;}
+#usermenu a:hover { border-bottom:1px #990000 solid;}
 #usermenu a.menuTop {}
 #usermenu a.highlight {background-color:#DDDDDD;}
 
 /* block main menu */
 #mainmenu {}
-#mainmenu a {display:block; text-decoration: none;color:#202020; margin: 3px 0 0 15px; border-bottom:1px #bb0000 dotted;}
-#mainmenu a:hover { border-bottom:1px #bb0000 solid;}
+#mainmenu a {display:block; text-decoration: none;color:#202020; margin: 3px 0 0 15px; border-bottom:1px #990000 dotted;}
+#mainmenu a:hover { border-bottom:1px #990000 solid;}
 #mainmenu a.menuTop {}
 #mainmenu a.menuMain {}
 #mainmenu a.menuSub {background:none;}
@@ -317,7 +316,7 @@ tr.odd td {
 	}
 tr.odd:hover td, tr.even:hover td {
 	background:#fff none repeat scroll 0 0;
-	border-bottom:1px solid #bb0000; 
+	border-bottom:1px solid #990000; 
 	 
 	}
 tr {background:none;}
@@ -657,9 +656,54 @@ opacity: 0.75;
 	text-align: center;
 	margin-top: 5px;
 	padding: 2px;	
-	font-size: 0.8em;
+	font-size: 0.7em;
 }
+.article_content{
+	border-right: 2px dashed #dedede; 
+	padding: 0 10px 0 0;
+}
+.article_title h1{
+	margin: 0 0 0 0;
+}
+.article_info{
+	float:inherit !important;
+	padding: 5px !important;
+	font-weight: bold !important;
+}
+.article_info a{
+	font-weight: normal;
+}
+.article_image{
+	margin: 5px !important;	
+}
+#article_body{
+	margin: 5px !important;
+}
+.singlearticle_notes{
+	border: 1px solid #bebebe; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+	margin-bottom: 10px;
+}
+.article_read_more_content{
+	padding:8px;
+}
+.article_read_more h2{
+	color:#fff;
+	background-color: #333;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#111), to(#555));
+	background-image: -webkit-linear-gradient(top, #111, #555);
+	background-image:    -moz-linear-gradient(top, #111, #555);
+	background-image:     -ms-linear-gradient(top, #111, #555);
+	background-image:      -o-linear-gradient(top, #111, #555);
+	background-image:         linear-gradient(top, #111, #555);	
+}
+.article_read_more_left{float:left;}
+.article_read_more_right{float:right;}
+.article_conclusion_avatar{float:left; padding:10px;}
+.article_conclusion_avatar img{padding-left: 6px;}
 
+.news_tickercontainer{
+	border: 1px solid #bebebe; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+}
 /* sliding gallery for articles*/
 #myGallery{
 	width: 760px !important;
