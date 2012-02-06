@@ -170,36 +170,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		return $approve;
 	}
 	
-	// count sub-categories
-	public function getCategorySubCount($groups = array(), $perm = 'category_grpperm', $status = NULL,$approved = NULL, $category_id = 0) {
-		$criteria = new icms_db_criteria_Compo();
-		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('category_active', TRUE));
-		}
-		if (isset($approved)) {
-			$criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
-		}
-		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
-		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
-		return $this->getCount($criteria);
-	}
-	
-	// call sub-categories
-	public function getCategorySub($category_id = 0, $toarray=FALSE) {
-		$criteria = $this->getCategoryCriteria();
-		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
-		$criteria->add(new icms_db_criteria_Item('category_active', TRUE ) );
-		$criteria->add(new icms_db_criteria_Item('category_approve', TRUE ) );
-		$categories = $this->getObjects($criteria);
-		if (!$toarray) return $categories;
-		$ret = array();
-		foreach(array_keys($categories) as $i) {
-			$ret[$i] = $categories[$i]->toArray();
-			$ret[$i]['category_description'] = icms_core_DataFilter::icms_substr(icms_cleanTags($categories[$i]->getVar('category_description','n'),array()),0,300);
-		}
-		return $ret;
-	}
-	
 	public function category_active_filter() {
 		return array(0 => 'Offline', 1 => 'Online');
 	}
