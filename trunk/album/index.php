@@ -98,11 +98,11 @@ if(in_array($clean_op, $valid_op)) {
 				$album_album_handler->updateCounter($clean_album_id);
 				$album = $albumObj->toArray();
 				$icmsTpl->assign('single_album', $album);
-				if($album['hassub'] == TRUE) {
+				
 					$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], $clean_album_uid, FALSE, $album['id'], 'weight', 'ASC');
 					$subalbum_columns = array_chunk($albums, $albumConfig['show_album_columns']);
 					$icmsTpl->assign('subalbum_columns', $subalbum_columns);
-				}
+				
 				/**
 				 * retrieve the images of these album, if there are some
 				 */

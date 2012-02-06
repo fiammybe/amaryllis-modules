@@ -10,10 +10,6 @@
 	<!-- Album title -->
 	<span style="float: left; font-size: 1.1em; font-weight: bold;">
 		<{$album.itemLink}>&nbsp;&nbsp;
-		<span style="font-size: small; font-weight: normal;"> &nbsp;
-			(&nbsp;<{$album.images_count}>&nbsp;<{$smarty.const._MD_ALBUM_IMAGES}>&nbsp;
-			|&nbsp;<{$album.album_count}>&nbsp;<{$smarty.const._MD_ALBUM_SUBALBUMS}>&nbsp;)&nbsp;
-		</span>
 		<{if $album.album_is_new}>
 			<{$album.album_is_new}>
 		<{/if}>
@@ -28,7 +24,7 @@
 		<{/if}>
 		<{if $album.user_upload}>
 			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$album.user_upload}>" title="<{$smarty.const._MD_ALBUM_UPLOAD}>">
-				<img src="<{$album_images_url}>add_file.png" title="<{$smarty.const._MD_ALBUM_UPLOAD}>" alt="<{$smarty.const._MD_ALBUM_UPLOAD}>" />
+				<img style="vertical-align: middle;" src="<{$album_images_url}>add_file.png" title="<{$smarty.const._MD_ALBUM_UPLOAD}>" alt="<{$smarty.const._MD_ALBUM_UPLOAD}>" />
 			</a>
 		<{/if}>
 	</span>
