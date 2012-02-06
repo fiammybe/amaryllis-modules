@@ -1,37 +1,38 @@
 <div class="bubble">
-<div id="entry_<{$entry.id}>" class="guestbook_entry">
-	<!-- title -->
-	<div class="block-title"><{$entry.title}></div>
-	
-	<div class="guestbook_row">
-		<div class="guestbook_message">
-			<span class="guestbook_message">
-				<{$entry.message}>
-			</span>
-		</div> <!-- E N D .GUESTBOOK_message -->
-		<{if $guestbook_is_admin}>
-			<div class="entry_info">
-				<span class="guestbook_ip">
-					<{$entry.ip}> <{$smarty.const._MD_GUESTBOOK_PUBLISHED_BY}>: <{$entry.published_by}>
+	<div id="entry_<{$entry.id}>" class="guestbook_entry">
+		<!-- title -->
+		<div class="block-title"><{$entry.title}></div>
+		
+		<div class="guestbook_row">
+			<div class="guestbook_message">
+				<span class="guestbook_message">
+					<{$entry.message}>
 				</span>
-			</div> <!-- E N D .GUESTBOOK_info -->
-		<{/if}>
-		<{if $entry.email}>
-			<div class="guestbook_email">
-				<span><{$entry.email}></span>
-			</div> <!-- E N D .GUESTBOOK_email -->
-		<{/if}>
-			<{if $show_avatar}>
-				<span class="guestbook_avatar">
-					<{$entry.avatar}>
-				</span>
+			</div> <!-- E N D .GUESTBOOK_message -->
+			<{if $guestbook_is_admin}>
+				<div class="entry_info">
+					<span class="guestbook_ip">
+						<{$entry.ip}> <{$smarty.const._MD_GUESTBOOK_PUBLISHED_BY}>: <{$entry.published_by}>
+					</span>
+				</div> <!-- E N D .GUESTBOOK_info -->
 			<{/if}>
-		<{if $entry.img}>
-			<div class="guestbook_image">
-				<span><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></span>
-			</div> <!-- E N D .GUESTBOOK_image -->
-		<{/if}>
-	</div> <!-- E N D .GUESTBOOK_row -->
-</div> <!-- E N D .GUESTBOOK_entry -->
+			<{if $entry.email}>
+				<div class="guestbook_email">
+					<span><{$entry.email}></span>
+				</div> <!-- E N D .GUESTBOOK_email -->
+			<{/if}>
+			<{if $entry.img}>
+				<div class="guestbook_image">
+					<span><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></span>
+				</div> <!-- E N D .GUESTBOOK_image -->
+			<{/if}>
+		</div> <!-- E N D .GUESTBOOK_row -->
+	</div> <!-- E N D .GUESTBOOK_entry -->
 </div>
-<p><strong><{$entry.name}> |<{if $entry.homepage}> <a href="<{$entry.homepage}>?&campaign=impresscms_guestbook" title="<{$entry.homepage}>"><{$entry.homepage}></a> |<{/if}> <{$entry.published_on}></strong></p>
+<p>
+	<{if $show_avatar}>
+		<span class="guestbook_avatar">
+			<{$entry.avatar}>
+		</span>
+	<{/if}>
+	<strong><{$entry.name}> |<{if $entry.homepage}> <a href="<{$entry.homepage}>?&campaign=impresscms_guestbook" title="<{$entry.homepage}>"><{$entry.homepage}></a> |<{/if}> <{$entry.published_on}></strong></p>
