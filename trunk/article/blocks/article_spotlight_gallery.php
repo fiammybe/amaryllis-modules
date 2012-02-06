@@ -28,7 +28,7 @@ function b_article_spotlight_image_show($options) {
 	
 	$articleConfig = icms_getModuleConfig(basename(dirname(dirname(__FILE__))));
 	$articles = $article_article_handler->getArticlesForBlocks(0, $options[0], $options[1], FALSE, FALSE, 'article_published_date', 'DESC', TRUE);
-	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewRecentArticles&categor_id=' . $options[1];
+	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewRecentArticles&category_id=' . $options[1];
 	$block['show_view_all'] = $options[3];
 	$block['showteaser'] = $options[2];
 	$block['display_width'] = $articleConfig['display_width'];
