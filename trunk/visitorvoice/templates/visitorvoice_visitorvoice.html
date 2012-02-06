@@ -31,25 +31,25 @@ SetSpeechBubble();
 		</span>
 	</div>
 	<div class="speech_bubble">
-	<div class="visitorvoice_entries">
-		<{foreach item=entry from=$entries}>
-			<{includeq file="db:visitorvoice_singleentry.html"}>
-			<{if $entry.reply && $visitorvoice_is_admin}>
-					<div style="padding: 10px 0 25px 15px;">
-						<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_VISITORVOICE_REPLY}></a>
+		<div class="visitorvoice_entries">
+			<{foreach item=entry from=$entries}>
+				<{includeq file="db:visitorvoice_singleentry.html"}>
+				<{if $entry.reply && $visitorvoice_is_admin}>
+						<div style="padding: 10px 0 25px 15px;">
+							<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_VISITORVOICE_REPLY}></a>
+						</div>
+				<{/if}>
+				
+				<{if $entry.hassub}>
+					<div class="visitorvoice_replies">
+						<{foreach item=entry from=$entry.sub}>
+							<{includeq file="db:visitorvoice_singleentry.html"}>
+						<{/foreach}>
 					</div>
-			<{/if}>
+				<{/if}>
 			
-			<{if $entry.hassub}>
-				<div class="visitorvoice_replies">
-					<{foreach item=entry from=$entry.sub}>
-						<{includeq file="db:visitorvoice_singleentry.html"}>
-					<{/foreach}>
-				</div>
-			<{/if}>
-		
-		<{/foreach}>
-	</div>
+			<{/foreach}>
+		</div>
 	</div>
 <{/if}>
 
