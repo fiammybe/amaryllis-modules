@@ -70,8 +70,8 @@ class DownloadsReview extends icms_ipf_Object {
 		$review_uid = $this->getVar("review_uid", "e");
 		if((int)($review_uid > 0)) {
 			$review_user = icms::handler("icms_member")->getUser($review_uid);
-			$review_avatar = $review_user->getVar("user_avatar");
-			$avatar_image = "<img src='" . ICMS_UPLOAD_URL . "/" . $review_user->getVar("user_avatar") . "' alt='avatar' />";
+			$review_avatar = $review_user->gravatar();
+			$avatar_image = "<img src='" . $review_avatar . "' alt='avatar' />";
 			return $avatar_image;
 		} else {
 			$review_avatar = "blank.gif";
