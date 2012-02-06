@@ -34,7 +34,6 @@ function b_article_spotlight_show($options) {
 	$block['thumbnail_height'] = $articleConfig['thumbnail_height'];
 	$block['article_spotlight'] = $articles;
 	
-	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article_block.js', array('type' => 'text/javascript'));
 	$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/module_article_block.css');
 	
 	return $block;

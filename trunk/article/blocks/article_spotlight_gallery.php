@@ -34,9 +34,7 @@ function b_article_spotlight_image_show($options) {
 	$block['display_width'] = $articleConfig['display_width'];
 	$block['display_height'] = $articleConfig['display_height'];
 	$block['article_gallery'] = $articles;
-	
-	
-	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article_block.js', array('type' => 'text/javascript'));
+
 	$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/module_article_block.css');
 	
 	return $block;

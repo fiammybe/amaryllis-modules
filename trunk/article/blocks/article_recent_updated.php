@@ -29,7 +29,6 @@ function b_article_recent_updated_show($options) {
 	$block['show_view_all'] = $options[2];
 	$block['article_updated'] = $article_article_handler->getArticlesForBlocks(0, $options[0],$options[1], TRUE, FALSE, "article_updated_date", "DESC");
 	
-	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article_block.js', array('type' => 'text/javascript'));
 	$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/module_article_block.css');
 	
 	return $block;
