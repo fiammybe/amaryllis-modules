@@ -110,14 +110,8 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 	}
 	
 	public function makeLink($category) {
-		$count = $this->getCount(new icms_db_criteria_Item("short_url", $category->getVar("short_url")));
-
-		if ($count > 1) {
-			return $category->getVar('category_id');
-		} else {
-			$seo = str_replace(" ", "-", $category->getVar('short_url'));
-			return $seo;
-		}
+		$seo = str_replace(" ", "-", $category->getVar('short_url'));
+		return $seo;
 	}
 	
 	//set category online/offline
