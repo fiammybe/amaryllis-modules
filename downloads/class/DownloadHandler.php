@@ -151,9 +151,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$downloads = $this->getObjects($criteria, TRUE, FALSE);
 		$ret=array();
 		foreach ($downloads as $key => &$download){
-			if ($download['accessgranted']){
-				$ret[$download['download_id']] = $download;
-			}
+			$ret[$download['download_id']] = $download;
 		}
 		return $ret;
 	}
@@ -388,14 +386,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	}
 
 	public function makeLink($download) {
-		$count = $this->getCount(new icms_db_criteria_Item("short_url", $download->getVar("short_url")));
-
-		if ($count > 1) {
-			return $download->getVar('download_id');
-		} else {
-			$seo = str_replace(" ", "-", $download->getVar('short_url'));
-			return $seo;
-		}
+		$seo = str_replace(" ", "-", $download->getVar('short_url'));
+		return $seo;
 	}
 	
 	public function getCountCriteria ($active = NULL, $approve = NULL, $groups = array(), $perm = 'download_grpperm', $download_publisher = FALSE, $download_id = FALSE, $download_cid = FALSE, $tag_id = FALSE) {
