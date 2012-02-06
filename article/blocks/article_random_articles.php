@@ -33,7 +33,6 @@ function b_article_random_articles_show($options) {
 	$block['thumbnail_width'] = $articleConfig['thumbnail_width'];
 	$block['thumbnail_height'] = $articleConfig['thumbnail_height'];
 	
-	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article_block.js', array('type' => 'text/javascript'));
 	$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/module_article_block.css');
 	
 	return $block;
