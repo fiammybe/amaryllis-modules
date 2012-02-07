@@ -161,9 +161,10 @@ class AlbumImages extends icms_ipf_Object {
 	}
 	
 	public function getImagesTags($itemlink = FALSE) {
+		global $albumConfig;
 		$tags = $this->getVar('img_tags', 's');
 		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-		if(icms_get_module_status("sprockets") && ($tags != "")) {
+		if(icms_get_module_status("sprockets") && ($tags != "") && ($albumConfig['use_sprockets'] == 1)) {
 			$sprockets_tag_handler = icms_getModuleHandler ( 'tag', $sprocketsModule->getVar("dirname"), 'sprockets' );
 			$ret = array();
 			if($itemlink == FALSE) {
