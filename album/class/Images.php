@@ -33,7 +33,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->quickInitVar('img_updated_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_description', XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar('img_url', XOBJ_DTYPE_IMAGE, TRUE);
-		$this->quickInitVar("img_tags", XOBJ_DTYPE_ARRAY,FALSE, FALSE, FALSE, '');
+		$this->quickInitVar("img_tags", XOBJ_DTYPE_ARRAY,FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar('img_active', XOBJ_DTYPE_INT,TRUE, FALSE, FALSE, 1);
 		$this->quickInitVar('img_approve', XOBJ_DTYPE_INT, TRUE, FALSE, FALSE,1);
 		$this->initCommonVar( 'weight', XOBJ_DTYPE_INT );
@@ -163,7 +163,7 @@ class AlbumImages extends icms_ipf_Object {
 	public function getImagesTags($itemlink = FALSE) {
 		$tags = $this->getVar('img_tags', 's');
 		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-		if(icms_get_module_status("sprockets") && $tags != "") {
+		if(icms_get_module_status("sprockets") && ($tags != "")) {
 			$sprockets_tag_handler = icms_getModuleHandler ( 'tag', $sprocketsModule->getVar("dirname"), 'sprockets' );
 			$ret = array();
 			if($itemlink == FALSE) {
