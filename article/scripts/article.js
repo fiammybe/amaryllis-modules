@@ -94,14 +94,7 @@
 		});
 	});
 	
-	var pager = new Imtech.Pager();
 	$(document).ready(function(){
-		// use pagination
-	    pager.paragraphsPerPage = 1; // set amount elements per page
-	    pager.pagingContainer = $('#article_body'); // set of main container
-	    pager.paragraphs = $('div.z', pager.pagingContainer); // set of required containers
-	    pager.showPage(1);
-		// use colorbox for indeximage
 		$('a.article_screens').colorbox({
 			transition:'fade',
 			speed:500,
