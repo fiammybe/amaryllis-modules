@@ -454,17 +454,19 @@ class ArticleArticle extends icms_ipf_seo_Object {
 				$avatar = icms::handler("icms_member")->getUser($publisher)->gravatar();
 				$ret[$publisher] = '<div class="article_publisher"><div class="article_avatar"><img src="' . $avatar . '" alt="' . $publisher . '" /></div><div class="article_pub">' . $link .'</div></div>';
 			}
+			return implode("<br />", $ret);
 		} elseif ($userlink) {
 			foreach ($publishers as $publisher) {
 				$ret[$publisher] = icms_member_user_Handler::getUserLink($publisher);
 			}
+			return implode("| ", $ret);
 		} else {
 			foreach ($publishers as $publisher) {
 				$uname = icms::handler('icms_member')->getUser($publisher)->getVar("uname");
 				$ret[$publisher] = '<a href="' . ARTICLE_URL . 'index.php?op=getByAuthor&uid=' . $publisher . '" title="' . _CO_ARTICLE_ARTICLE_GET_BY_AUTHOR . '&nbsp;' . $uname . '">' . $uname . '</a>';
 			}
+			return implode("| ", $ret);
 		}
-		return implode("<br />", $ret);
 	}
 	
 	public function getPublishersAvatar() {
