@@ -20,3 +20,5 @@ define("_MB_ARTICLE_CATEGORY_SORT", "Sort by");
 define("_MB_ARTICLE_CATEGORY_ORDER", "Order by");
 define("_MB_ARTICLE_SHOWTEASER", "Display Teaser?");
 define("_MB_ARTICLE_SHOWMORE", "Display 'Show more' Link?");
+define("_MB_ARTICLE_READ_MORE", "Read more...");
+define("_MB_ARTICLE_READS", "reads");
