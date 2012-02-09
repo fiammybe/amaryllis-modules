@@ -77,7 +77,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 	}
 	
 	public function getVisitorvoiceAvatar() {
-		$review_uid = $this->getVar("guestbook_uid", "e");
+		$review_uid = $this->getVar("visitorvoice_uid", "e");
 		if(intval($review_uid > 0)) {
 			$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
 			$avatar_image = "<img src='" . $avatar . "' alt='avatar' />";
