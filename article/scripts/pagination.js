@@ -6,8 +6,6 @@
 			var o = $.meta ? $.extend({}, opts, $this.data()) : opts;
 			var selectedpage = o.start;
 			$.fn.draw(o,$this,selectedpage);
-			$("a.article_screens").colorbox({});
-			$("a[rel='lightbox']").colorbox();
 		});
 	};
 	var outsidewidth_tmp = 0;
@@ -33,8 +31,6 @@
 		onChange				: function(){return false;}
 	};
 	$.fn.draw = function(o,obj,selectedpage){
-		$("a.article_screens").colorbox({});
-		$("a[rel='lightbox']").colorbox();
 		if(o.display > o.count)
 			o.display = o.count;
 		$this.empty();
