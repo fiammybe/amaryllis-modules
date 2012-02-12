@@ -10,13 +10,21 @@
 				<p><{$article_article.published_on}></p>
 			</div>
 			
-			<{if $article_article.imgpath}>
-				<div class="article_b_img">
-					<p><a href="<{$article_article.itemURL}>" title="<{$article_article.title}>">
-						<img class="article_b2_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
-					</a></p>
+			<div class="article_middle">
+				<{if $article_article.imgpath}>
+					<div class="article_b_img">
+						<p><a href="<{$article_article.itemURL}>" title="<{$article_article.title}>">
+							<img class="article_b2_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+						</a></p>
+					</div>
+				<{/if}>
+			
+				<div class="read_more">
+					<a href="<{$article_article.itemURL}>" class="btn article" title="<{$smarty.const.$article_article}>">
+						<{$smarty.const._MB_ARTICLE_READ_MORE}>
+					</a>
 				</div>
-			<{/if}>
+			</div>
 			
 			<div class="article_block_add">
 				<div class="article_spot_cats">
@@ -33,10 +41,9 @@
 				</div>
 				<div class="article_teaser">
 					<p><{$article_article.teaser}></p>
-					<a href="<{$article_article.itemURL}>" title="<{$smarty.const._MB_ARTICLE_READ_MORE}>">
-						<{$smarty.const._MB_ARTICLE_READ_MORE}>
-					</a>
 				</div>
+				
+				
 			</div>
 			<div class="article_clear_both">&nbsp;</div>
 		</div>

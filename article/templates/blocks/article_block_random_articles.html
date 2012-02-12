@@ -6,13 +6,23 @@
 <div class="article_list">
 	<{foreach item=article_article from=$block.article_random}>
 		<div class="single_article">
-			<{if $article_article.imgpath}>
-				<div class="article_spot_img">
-					<a href="<{$article_article.itemURL}>" title="<{$article_article.title}>">
-						<img class="article_b1_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+			<div class="article_spot_left">
+				<{if $article_article.imgpath}>
+					<div class="article_b_img">
+						<p><a href="<{$article_article.itemURL}>" title="<{$article_article.title}>">
+							<img class="article_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+						</a></p>
+					</div>
+				<{/if}>
+			
+				<div class="read_more">
+					<a href="<{$article_article.itemURL}>" class="btn article" title="<{$smarty.const.$article_article}>">
+						<{$smarty.const._MB_ARTICLE_READ_MORE}>
 					</a>
 				</div>
-			<{/if}>
+			</div>
+			
+			
 			<div class="article_article_block">
 				<div class="article_spot_cats">
 					<{$article_article.cats}>
@@ -20,9 +30,10 @@
 				<div class="article_title">
 					<h2>
 						<a href="<{$article_article.itemURL}>" title="<{$article_article.article_title}>"><{$article_article.article_title}></a>
+						<span class="article_block_counter"><{$article_article.counter}>&nbsp;<{$smarty.const._MB_ARTICLE_READS}></span>
 					</h2>
 				</div>
-				<div class="article_informations">
+				<div class="article_block_info">
 					 (<{$article_article.published_on}>&nbsp;|&nbsp;<{$article_article.publisher}>)
 				</div>
 				<div class="article_teaser">
@@ -35,6 +46,7 @@
 		</div>
 	<{/foreach}>
 </div>
+
 
 <script type="text/javascript">
 jQuery.jScale={

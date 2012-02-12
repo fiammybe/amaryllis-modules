@@ -3,7 +3,7 @@
 	<!-- article title -->
 	<{if $article.image}>
 		<div class="article_image">
-			<a class="article_screens" href="<{$article.image}>" title="<{$article.title}>" rel="lightbox">
+			<a class="article_screen" href="<{$article.image}>" title="<{$article.title}>" rel="lightbox">
 				<{resized_image file=$article.image width=$display_width height=$display_height fit="inside"}>
 			</a>
 		</div>
@@ -193,6 +193,11 @@
 									  }
 		});
 	});
+	$("a[rel='lightbox']").live(function(){
+		var $link = $(this);
+   		$link.colorbox();
+	});
+
 </script>
 
 <{includeq file='db:article_footer.html'}>
