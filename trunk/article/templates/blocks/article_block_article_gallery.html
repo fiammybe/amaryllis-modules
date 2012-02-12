@@ -3,23 +3,25 @@
 <{/if}>
 <div class="article_list">
 	<{foreach item=article_article from=$block.article_gallery}>
-		<div class="single_article">
+		<div class="single_article_img">
 			<{if $article_article.imgpath}>
-				<div class="article_img">
+				<div class="article_gal_img" original-title="<{$article_article.title}>">
 					<a href="<{$article_article.itemURL}>" title="<{$article_article.title}>">
 						<img class="article_galleryimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
 					</a>
 				</div>
 			<{/if}>
 			<{if $block.showteaser == 1}>
-				<div class="article_teaser">
+				<div class="article_popup">
 					<{$article_article.teaser}>
 				</div>
 			<{/if}>
 		</div>
 	<{/foreach}>
 </div>
-
+<div class="article_clear_both">&nbsp;</div>
+<script src="<{$icms_url}>/modules/article/scripts/jquery.qtip.min.js"></script>
+<link href="<{$icms_url}>/modules/article/scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 jQuery.jScale={
 	getnewSize:function(side, nvalue){
@@ -72,9 +74,33 @@ $.fn.jScale=function(setting, callback){
 	})
 };
 
-
-
 jQuery(document).ready(function($){
-  $('.article_galleryimage').jScale({ls:'<{$block.display_width}>px'})
+	$('.article_galleryimage').jScale({ls:'<{$block.display_width}>px'})
+	
+	//initiate qtip for category description
+	$('div.article_gal_img').each(function(){
+		$(this).qtip({
+			content: {
+				text: $(this).next('div.article_popup').html(),
+				title: $(this).attr('original-title')
+			},
+			style: {
+				width:500,
+				viewport: $(window), // Keep it on-screen at all times if possible
+				textAlign:'left',
+				tip:'bottomLeft',
+				classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
+			},
+			position:   {
+				target: 'mouse',
+				my:'bottomLeft',
+				adjust: {
+					x: 0,  y: -5
+				}
+			},
+		});
+	});
 })
+
+
 </script>

@@ -1,24 +1,54 @@
 <{if $block.show_view_all == 1}>
-	<a href="<{$block.view_all}>" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
+	<div class="article_more">
+		<a href="<{$block.view_all}>" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
+	</div>
 <{/if}>
+<div class="article_list">
 	<{foreach item=article_article from=$block.article_updated}>
-		<{if $article_article.imgpath}>
-			<div class="article_img">
-				<a href="<{$article_article.itemURL}>" title="<{$article_article.title}>">
-					<img class="article_b4_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
-				</a>
+		<div class="single_article">
+			<div class="article_block_pdate">
+				<p><{$article_article.published_on}></p>
 			</div>
-		<{/if}>
-		<div class="article_img">
-			<img class="article_b2_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+			
+			<div class="article_middle">
+				<{if $article_article.imgpath}>
+					<div class="article_b_img">
+						<p><a href="<{$article_article.itemURL}>" title="<{$article_article.title}>">
+							<img class="article_b4_leadimage" src="<{$article_article.imgpath}>" width="<{$block.thumbnail_width}>" alt="<{$article_article.title}>" title="<{$article_article.title}>" />
+						</a></p>
+					</div>
+				<{/if}>
+			
+				<div class="read_more">
+					<a href="<{$article_article.itemURL}>" class="btn article" title="<{$smarty.const.$article_article}>">
+						<{$smarty.const._MB_ARTICLE_READ_MORE}>
+					</a>
+				</div>
+			</div>
+			
+			<div class="article_block_add">
+				<div class="article_spot_cats">
+					<{$article_article.cats}>
+				</div>
+				
+				<div class="article_title">
+					<h2>
+						<a href="<{$article_article.itemURL}>" title="<{$article_article.article_title}>"><{$article_article.article_title}></a>
+					</h2>
+				</div>
+				<div class="article_block_info">
+					 (<{$article_article.published_on}>&nbsp;|&nbsp;<{$article_article.publisher}>&nbsp;|&nbsp;<{$article_article.counter}>&nbsp;<{$smarty.const._MB_ARTICLE_READS}>)
+				</div>
+				<div class="article_teaser">
+					<p><{$article_article.teaser}></p>
+				</div>
+				
+				
+			</div>
+			<div class="article_clear_both">&nbsp;</div>
 		</div>
-		
-		<div class="article_teaser">
-			<{$article_article.teaser}>
-		</div>
-		
 	<{/foreach}>
-	
+</div>
 <script type="text/javascript">
 jQuery.jScale={
 	getnewSize:function(side, nvalue){
