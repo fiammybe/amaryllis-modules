@@ -39,13 +39,8 @@
 					<{$body}>
 				</div>
 			<{/foreach}>
-			<div id="articlez"></div>
+			<div id="Paginate"><div id="articlez"></div></div>
 		</div>
-		
-		<{if $article.body_array|@count gt 1}>
-			<div id="Pagination" class="pagination"></div>
-		<{/if}>
-		
 	</div>
 	<div class="article_read_more">
 		<h2><{$smarty.const._MD_ARTICLE_VIEW_MORE}></h2>
