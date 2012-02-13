@@ -65,12 +65,26 @@
 		<!-- article tags -->
 		<{if $sprockets_module && $article.tags}>
 			<h3><{$smarty.const._MD_ARTICLE_TAGS}></h3>
-			<{$article.tags}>
-			<span class="article_tag">
-				<a href="<{$tag_link}>" class="<{if $tag_perm_denied == TRUE}>perm_tag_link<{else}>tag_link<{/if}>" >
-					<img style="vertical-align: middle;" src="<{$article_images_url}>add_tag.png" title="<{$smarty.const._MD_ARTICLE_TAG_ADD}>" alt="<{$smarty.const._MD_ARTICLE_TAG_ADD}>" />
-				</a>
-			</span>
+			<div class="article_tags">
+				<{foreach item=tag from=$article.tags}>
+					<span class="article_tag" original-title="<{$tag.title}>">
+						<{if $tag.icon}>
+							<img width=16px height=16px src="<{$tag.icon}>" title="<{$tag.title}>" alt="<{$tag.title}>" />
+						<{/if}>
+						<a href="<{$tag.link}>" title="<{$tag.title}>">
+							<{$tag.title}>
+						</a>&nbsp;|&nbsp;
+					</span>
+					<{if $tag.dsc}>
+						<span class="popup_tag"><{$tag.dsc}></span>
+					<{/if}>
+				<{/foreach}>
+				<span class="article_tag">
+					<a href="<{$tag_link}>" class="<{if $tag_perm_denied == TRUE}>perm_tag_link<{else}>tag_link<{/if}>" >
+						<img style="vertical-align: middle;" src="<{$article_images_url}>add_tag.png" title="<{$smarty.const._MD_ARTICLE_TAG_ADD}>" alt="<{$smarty.const._MD_ARTICLE_TAG_ADD}>" />
+					</a>
+				</span>
+			</div>
 		<{/if}>
 			
 		<{if $article.related}>
