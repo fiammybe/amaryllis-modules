@@ -53,7 +53,15 @@
 			<p><{$smarty.const._MD_ARTICLE_UPDATER}>&nbsp;:&nbsp;<{$article.updater}></p>
 		<{/if}>
 		<h3><{$smarty.const._MD_ARTICLE_MORE_BY_PUBLISHER}></h3>	
-		<p><{$article.bypublisher}></p>
+		<{foreach item=user from=$article.bypublisher}>
+			<div class="article_publisher">
+				<div class="article_avatar">
+					<img src="<{$user.avatar}>" alt="avatar" />
+				</div>
+				<div class="article_pub"><{$user.publisher}></div>
+			</div>
+		<{/foreach}>
+		<div class="article_clear_left">&nbsp;</div>
 		<!-- article tags -->
 		<{if $sprockets_module && $article.tags}>
 			<h3><{$smarty.const._MD_ARTICLE_TAGS}></h3>
@@ -101,7 +109,16 @@
 	<{/if}>
 	
 	<!-- avatar -->
-	<{$article.avatar}>
+	<{foreach item=user from=$article.avatar}>
+		<div class="article_publisher">
+			<div class="article_avatar">
+				<img src="<{$user.avatar}>" alt="avatar" />
+			</div>
+			<div class="article_pub"><{$user.publisher}></div>
+		</div>
+	<{/foreach}>
+	<div class="article_clear_left">&nbsp;</div>
+	
 	<!-- article footer -->
 	<div class="article_footer">
 		

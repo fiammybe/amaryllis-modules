@@ -451,21 +451,22 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		if($avatar) {
 			foreach ($publishers as $publisher) {
 				$link = icms_member_user_Handler::getUserLink($publisher);
-				$avatar = icms::handler("icms_member")->getUser($publisher)->gravatar();
-				$ret[$publisher] = '<div class="article_publisher"><div class="article_avatar"><img src="' . $avatar . '" alt="' . $publisher . '" /></div><div class="article_pub">' . $link .'</div></div>';
+				$ret[$publisher]['avatar'] = icms::handler("icms_member")->getUser($publisher)->gravatar();
+				$ret[$publisher]['publisher'] = icms_member_user_Handler::getUserLink($publisher);
 			}
-			return implode("<br />", $ret);
+			return $ret;
 		} elseif ($userlink) {
 			foreach ($publishers as $publisher) {
 				$ret[$publisher] = icms_member_user_Handler::getUserLink($publisher);
 			}
-			return implode("| ", $ret);
+			return implode(", ", $ret);
 		} else {
 			foreach ($publishers as $publisher) {
 				$uname = icms::handler('icms_member')->getUser($publisher)->getVar("uname");
-				$ret[$publisher] = '<a href="' . ARTICLE_URL . 'index.php?op=getByAuthor&uid=' . $publisher . '" title="' . _CO_ARTICLE_ARTICLE_GET_BY_AUTHOR . '&nbsp;' . $uname . '">' . $uname . '</a>';
+				$ret[$publisher]['avatar'] = icms::handler("icms_member")->getUser($publisher)->gravatar();
+				$ret[$publisher]['publisher'] = '<a href="' . ARTICLE_URL . 'index.php?op=getByAuthor&uid=' . $publisher . '" title="' . _CO_ARTICLE_ARTICLE_GET_BY_AUTHOR . '&nbsp;' . $uname . '">' . $uname . '</a>';
 			}
-			return implode("| ", $ret);
+			return $ret;
 		}
 	}
 	
