@@ -387,23 +387,16 @@ class ArticleArticle extends icms_ipf_seo_Object {
 					$dsc = icms_core_DataFilter::undoHtmlSpecialChars($dsc);
 					$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodelow");
 					if($icon != "") {
-						$image = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
-						$ret[$tag] = '<span class="article_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag)
-									 . '" title="' . $title . '"><img width=16px height=16px src="'
-									. $image . '" title="' . $title . '" alt="' . $title . '" />&nbsp;&nbsp;' . $title . '</a></span>';
-						if($dsc != "") {
-							$ret[$tag] .= '<span class="popup_tag">' . $dsc . '</span>';
-						}
-					} else {
-						$ret[$tag] = '<span class="article_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag) 
-									. '" title="' . $title . '">' . $title . '</a></span>';
-						if($dsc != "") {
-							$ret[$tag] .= '<span class="popup_tag">' . $dsc . '</span>';
-						}
+						$ret[$tag]['icon'] = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
+					}
+					$ret[$tag]['title'] = $title;
+					$ret[$tag]['link'] = $this->getTaglink($tag);
+					if($dsc != "") {
+						$ret[$tag]['dsc'] = $dsc;
 					}
 				}
 			}
-			return implode(" | ", $ret);
+			return $ret;
 		} else {
 			return FALSE;
 		}
