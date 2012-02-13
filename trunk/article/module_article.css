@@ -204,6 +204,11 @@
 		width: 37%;
 	}
 	
+	.article_publisher {
+		float: left;
+		margin: 0 15px;
+	}
+	
 	/**
 	 * 	newsticker
 	 */
