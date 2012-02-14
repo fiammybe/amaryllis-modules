@@ -17,6 +17,8 @@
  *
  */
 
+icms_loadLanguageFile("guestbook", "modinfo");
+ 
 $i = 0;
 
 $adminmenu[$i]['title'] = _MI_GUESTBOOK_MENU_GUESTBOOK;
