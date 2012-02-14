@@ -22,7 +22,6 @@
 				</div>
 			</div>
 			
-			
 			<div class="article_article_block">
 				<div class="article_spot_cats">
 					<{$article_article.cats}>
@@ -30,11 +29,10 @@
 				<div class="article_title">
 					<h2>
 						<a href="<{$article_article.itemURL}>" title="<{$article_article.article_title}>"><{$article_article.article_title}></a>
-						<span class="article_block_counter"><{$article_article.counter}>&nbsp;<{$smarty.const._MB_ARTICLE_READS}></span>
 					</h2>
 				</div>
 				<div class="article_block_info">
-					 (<{$article_article.published_on}>&nbsp;|&nbsp;<{$article_article.publisher}>)
+					 (<{$article_article.published_on}>&nbsp;|&nbsp;<{$article_article.publisher}>&nbsp;|&nbsp;<{$article_article.counter}>&nbsp;<{$smarty.const._MB_ARTICLE_READS}>)
 				</div>
 				<div class="article_teaser">
 					<p><{$article_article.teaser}></p>
