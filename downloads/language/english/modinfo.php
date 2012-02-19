@@ -55,7 +55,7 @@ define("_MI_DOWNLOADS_SHOW_CATEGORY_COLUMNS_DSC", "You can select how many colum
 define("_MI_DOWNLOADS_THUMBNAIL_WIDTH", "Screenshot Thumbnail width");
 define("_MI_DOWNLOADS_THUMBNAIL_WIDTH_DSC", "choose width of screenshot thumbnails");
 define("_MI_DOWNLOADS_THUMBNAIL_HEIGHT", "Screenshot Thumbnail height");
-define("_MI_DOWNLOADS_THUMBNAIL_HEIGHT_DSC", "choose width of screenshot thumbnails");
+define("_MI_DOWNLOADS_THUMBNAIL_HEIGHT_DSC", "choose height of screenshot thumbnails");
 define("_MI_DOWNLOADS_FILE_THUMBNAIL_WIDTH", "File image Thumbnail width");
 define("_MI_DOWNLOADS_FILE_THUMBNAIL_WIDTH_DSC", "choose width of file image thumbnails");
 define("_MI_DOWNLOADS_FILE_THUMBNAIL_HEIGHT", "Screenshot Thumbnail height");

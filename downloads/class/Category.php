@@ -137,12 +137,6 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		return $control->render();
 	}
 	
-	function getSubsCount(){
-		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-		$count = $this->handler->getCategoriesCount (TRUE, TRUE, $groups, 'category_grpperm', FALSE, FALSE, $this->getVar("category_id", "e"));
-		return $count;
-	}
-	
 	function category_pid() {
 		static $category_pidArray;
 		if (!is_array($category_pidArray)) {
@@ -233,8 +227,6 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$ret['published_date'] = $this->getCategoryPublishedDate();
 		$ret['updated_date'] = $this->getCategoryUpdatedDate();
 		$ret['publisher'] = $this->getCategoryPublisher(TRUE);
-		$ret['cat_count'] = $this->getSubsCount();
-		$ret['hassub'] = (count($ret['cat_count']) > 0) ? TRUE : FALSE;
 		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();

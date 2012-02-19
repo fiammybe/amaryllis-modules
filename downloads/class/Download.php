@@ -227,7 +227,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	public function getDownloadTags($itemlink = FALSE) {
 		$tags = $this->getVar('download_tags', 's');
 		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-		if(icms_get_module_status("sprockets") && $tags != "") {
+		if(icms_get_module_status("sprockets") && ($tags != "") && ($downloadsConfig['use_sprockets'] == 1)) {
 			$sprockets_tag_handler = icms_getModuleHandler ( 'tag', $sprocketsModule->getVar("dirname"), 'sprockets' );
 			$ret = array();
 			if($itemlink == FALSE) {
