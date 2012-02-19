@@ -96,7 +96,7 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_URL", "Download Mirror");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_URL_DSC", "Enter the full url to your file on the mirror. e.g.: 'http://www.myhomepage.de/files/file.rar'");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_TITLE", "Mirror title");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_TITLE_DSC", "Enter the title of the mirror. This will be displayed in Frontend instead of url");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEV_HP", "Develovers Homepage");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEV_HP", "Developers Homepage");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEV_HP_DSC", "Enter the full url to publishers homepage(or owners hp) e.g: 'http://www.example.com/' ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEMO", "demo Homepage");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEMO_DSC", "Enter the full url to publishers homepage(or owners hp) e.g: 'http://www.example.com/'");

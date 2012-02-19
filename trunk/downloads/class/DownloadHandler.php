@@ -81,6 +81,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if (isset($download_active)) {
 			$criteria->add(new icms_db_criteria_Item('download_active', TRUE));
 		}
+		$this->setGrantedObjectsCriteria($criteria, "download_grpperm");
 		$downloads = $this->getObjects($criteria, TRUE);
 		$ret[0] = '-----------';
 		foreach(array_keys($downloads) as $i) {
@@ -94,8 +95,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo();
 		if ($start) $criteria->setStart($start);
 		if ($limit) $criteria->setLimit((int)$limit);
-		$criteria->setSort($order);
-		$criteria->setOrder($sort);
+		if ($order) $criteria->setSort($order);
+		if ($sort) $criteria->setOrder($sort);
 		if ($download_publisher) $criteria->add(new icms_db_criteria_Item('download_publisher', $download_publisher));
 		if ($download_id) {
 			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('short_url', $download_id,'LIKE'));
@@ -179,18 +180,6 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$albumObjects = $album_album_handler->getAlbumListForPid();
 			return $albumObjects;
 		}
-	}
-
-	public function userCanSubmit($category_id) {
-		global $downloads_isAdmin;
-		$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'downloads');
-		$categoryObject = $downloads_category_handler->get($category_id);
-		if (!is_object(icms::$user)) return FALSE;
-		if ($downloads_isAdmin) return TRUE;
-		$user_groups = icms::$user->getGroups();
-		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))));
-		return count(array_intersect_key(array($categoryObject->getVar('category_uplperm', 'e')), $user_groups)) > 0;
-		
 	}
 
 	/**
@@ -288,23 +277,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	public function download_has_mirror_filter() {
 		return array(0 => 'No Mirror', 1 => 'Has Mirror');
 	}
-	
-	function getCategoryList($active = NULL, $approve = NULL ) {
-		
-		$downloads_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "downloads");
-		$criteria = new icms_db_criteria_Compo();
-		
-		if(isset($approve)) $criteria->add(new icms_db_criteria_Item("category_approve", TRUE));
-		if(isset($active)) $criteria->add(new icms_db_criteria_Item("category_active", TRUE));
-		
-		$categories = $downloads_category_handler->getObjects($criteria, TRUE);
-		$ret = array();
-		foreach(array_keys($categories) as $i ) {
-			$ret[$categories[$i]->getVar('category_id')] = $categories[$i]->getVar('category_title');
-		}
-		return $ret;
-	}
-	
+
 	public function getDownloadVersionStatus() {
 		if (!$this->_download_version_status) {
 			$version_status = array(1 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_FINAL, 2 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_ALPHA, 3 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_BETA, 4 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_RC, 5 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_NONE);
@@ -366,7 +339,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 
 	public function getDownloadTags() {
 		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-		if($sprocketsModule->registerClassPath(TRUE)) {
+		if($sprocketsModule && icms_get_module_status("sprockets")) {
 			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->add(new icms_db_criteria_Item("label_type", 0));
