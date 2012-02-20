@@ -64,7 +64,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if((strpos(xoops_getenv('HTTP_REFERER'), ICMS_URL) !== FALSE) ) {
 				return redirect_header (DOWNLOADS_URL . 'singledownload.php?op=downfile&amp;download_id=' . $download_id, 3, _MD_DOWNLOADS_DOWNLOAD_START);
 			} else {
-				return redirect_header (DOWNLOADS_URL . 'singledownload.php', 3, _NO_PERM);
+				return redirect_header (DOWNLOADS_URL . 'singledownload.php?download_id=' . $download_id, 3, _NO_PERM);
 			}
 			break;
 			
