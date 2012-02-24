@@ -27,3 +27,9 @@ define('_MB_DOWNLOADS_CATEGORY_SHOWSUBS','<b>Show Subcategories:</b>');
 define("_MB_DOWNLOADS_CATEGORY_SORT", "<b>Sort:</b>");
 define("_MB_DOWNLOADS_CATEGORY_ORDER", "<b>Order:</b>");
 define("_MB_DOWNLOADS_CATEGORY_CATSELECT", '<b>Show only Subcategories from:</b> <br /><small>Select "---------------" to not filter and show all categories.</small>');
+//Gallery block, added in 1.1
+define("_MB_DOWNLOADS_CATEGORY_CATSEL", "Select category to be displayed or select nothing to display from all categories");
+define("_MB_DOWNLOADS_SHOWTEASER", "Display Teaser (in a popup box)?");
+define("_MB_DOWNLOADS_SHOWMORE", "Display 'View More' Link?");
+define("_MB_DOWNLOADS_DISPLAY_SIZE", "Display width (image)");
+define("_MB_DOWNLOADS_VIEW_ALL", "View more");

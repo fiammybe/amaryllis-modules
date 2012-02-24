@@ -1,0 +1,47 @@
+/**
+ * 'Downloads' is a light weight download handling module for ImpressCMS
+ *
+ * File: /module_downloads_blocks.css
+ * 
+ * some module related styles
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Downloads
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		downloads
+ *
+ */
+
+	.downloads_clear_both {
+		clear: both;
+		height: 1px;
+	}
+	
+	.downloads_clear_left {
+		clear: left;
+		height: 1px;
+	}
+	
+	.downloads_clear_right {
+		clear: right;
+		height: 1px;
+	}
+	
+	.downloads_gal_img {
+		margin: 15px;
+		float: left;
+	}
+	
+	.downloads_popup {
+		display: none;
+	}
+	
+	.downloads_more {
+		text-align: right;
+		width: 100%;
+		display: block;
+	}

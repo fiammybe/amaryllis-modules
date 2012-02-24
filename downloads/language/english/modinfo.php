@@ -39,6 +39,14 @@ define("_MI_DOWNLOADS_BLOCK_MOST_POPULAR", "Most popular");
 define("_MI_DOWNLOADS_BLOCK_MOST_POPULAR_DSC", "most popular downloads");
 define("_MI_DOWNLOADS_BLOCK_CATEGORY_MENU", "Category Menu");
 define("_MI_DOWNLOADS_BLOCK_CATEGORY_MENU_DSC", "List all categories or select one to display subcategories");
+/**
+ * Added in 1.1
+ */
+define("_MI_DOWNLOADS_BLOCK_SPOTLIGHT_IMAGE", "Gallery Block");
+define("_MI_DOWNLOADS_BLOCK_SPOTLIGHT_IMAGE_DSC", "Gallery Block for recent Downloads. Note: The Block will only display Downloads with file image.");
+/**
+ * E N D added in 1.1
+ */
 // config
 define("_MI_DOWNLOADS_AUTHORIZED_GROUPS", "Groups allowed to add categories");
 define("_MI_DOWNLOADS_AUTHORIZED_GROUPS_DSC", "Select the groups which are allowed to create new categories. Please note that a user belonging to one of these groups will be able to create categories directly on the site. The module currently has no moderation feature.");

@@ -19,6 +19,24 @@
 		</div>
 	<{/if}>
 	
+	<{if $byRecentDownloads}>
+		<h2><{$smarty.const._MD_DOWNLOADS_DOWNLOAD_FILELIST}></h2>
+		<div class="downloads_filelist">
+		
+			<!-- pagination control -->
+			<{if $download_pagenav }><{$download_pagenav}><{/if}>
+		
+			<!-- File rule -->
+			<{foreach item=download from=$downloads}>
+				<{includeq file='db:downloads_download.html'}>
+			<{/foreach}>
+			
+			<!-- pagination control -->
+			<{if $download_pagenav }><{$download_pagenav}><{/if}>
+	
+		</div>
+	<{/if}>
+	
 	<{if $category_columns}>
 			
 		<!-- display index header -->
