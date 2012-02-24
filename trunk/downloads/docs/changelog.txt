@@ -1,5 +1,15 @@
 = *Downloads* Changelog =
 
+== Version 1.1 => Release Date: 26.02.2012 ==
+
+* Fixed error with sprockets
+* Fixed trouble with opera
+* Added "Gallery Block" for recent downloads
+* Updated Manual
+* Updated Language constants for
+** /blocks.php
+** /modinfo.php
+
 == First Release: Version 1.0 => Release Date: 04.02.2012 ==
 
 * First final relase of Downloads Module

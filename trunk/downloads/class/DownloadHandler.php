@@ -130,7 +130,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 
-	public function getDownloadsForBlocks($start = 0, $limit = 0,$updated = FALSE,$popular = FALSE, $order = 'download_published_date', $sort = 'DESC') {
+	public function getDownloadsForBlocks($start = 0, $limit = 0,$updated = FALSE,$popular = FALSE, $order = 'download_published_date', $sort = 'DESC', $cid = FALSE, $img_req = FALSE) {
 		global $downloadsConfig;
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->setStart(0);
@@ -147,6 +147,14 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$critTray->add(new icms_db_criteria_Item('counter', $pop, ">="));
 			$criteria->add($critTray);
 			
+		}
+		if ($cid != FALSE)	{
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("download_cid", '%:"' . $cid . '";%', "LIKE"));
+			$criteria->add($critTray);
+		}
+		if($img_req != FALSE) {
+			$criteria->add(new icms_db_criteria_Item("download_img", "0", "!="));
 		}
 		$this->setGrantedObjectsCriteria($criteria, "download_grpperm");
 		$downloads = $this->getObjects($criteria, TRUE, FALSE);

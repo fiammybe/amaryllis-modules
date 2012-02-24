@@ -203,7 +203,16 @@ $modversion['blocks'][$i]['edit_func']		= 'b_downloads_category_menu_edit';
 $modversion['blocks'][$i]['options']		= 'category_title|ASC|1|0';
 $modversion['blocks'][$i]['template']		= 'downloads_block_category_menu.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE ;
-
+// downloads gallery block
+$i++;
+$modversion['blocks'][$i]['file']			= 'downloads_spotlight_gallery.php';
+$modversion['blocks'][$i]['name']			= _MI_DOWNLOADS_BLOCK_SPOTLIGHT_IMAGE;
+$modversion['blocks'][$i]['description']	= _MI_DOWNLOADS_BLOCK_SPOTLIGHT_IMAGE_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_downloads_spotlight_image_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_downloads_spotlight_image_edit';
+$modversion['blocks'][$i]['options']		= '10|0|1|1|260';
+$modversion['blocks'][$i]['template']		= 'downloads_block_download_gallery.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE ;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// SEARCH //////////////////////////////////////////////////////

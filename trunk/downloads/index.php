@@ -48,7 +48,7 @@ $clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'ca
 $downloads_category_handler = icms_getModuleHandler("category", DOWNLOADS_DIRNAME, "downloads");
 $downloads_download_handler = icms_getModuleHandler("download", DOWNLOADS_DIRNAME, "downloads");
 
-$valid_op = array ('getByTags', '');
+$valid_op = array ('getByTags', 'viewRecentDownloads', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
@@ -68,6 +68,31 @@ if(in_array($clean_op, $valid_op)) {
 			}
 			$download_pagenav = new icms_view_PageNav($files_count, $downloadsConfig['show_downloads'], $clean_files_start, 'file_nav', $extra_arg);
 			$icmsTpl->assign('download_pagenav', $download_pagenav->renderNav());
+			break;
+		
+		case 'viewRecentDownloads':
+			$downloads = $downloads_download_handler->getDownloads($clean_files_start, icms::$module->config['show_downloads'], FALSE, FALSE, FALSE,  $clean_category_id);
+			$icmsTpl->assign('downloads', $downloads);
+			$icmsTpl->assign("byRecentDownloads", TRUE);
+			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+			$count = $downloads_download_handler->getCountCriteria(TRUE, TRUE, $groups,'download_grpperm',FALSE,FALSE, $clean_category_id);
+			if (!empty($clean_category_id)) {
+				$extra_arg = 'op=viewRecentDownloads&category_id=' . $clean_category_id;
+			} else {
+				$extra_arg = 'op=viewRecentDownloads';
+			}
+			$download_pagenav = new icms_view_PageNav($count, $downloadsConfig['show_downloads'], $clean_files_start, 'file_nav', $extra_arg);
+			$icmsTpl->assign('download_pagenav', $download_pagenav->renderNav());
+			/**
+			 * assign breadcrumb cat-path
+			 */
+			if ($downloadsConfig['show_breadcrumbs'] == TRUE) {
+				$downloads_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'downloads');
+				$icmsTpl->assign('downloads_show_breadcrumb', TRUE);
+				$icmsTpl->assign('downloads_cat_path', $downloads_category_handler->getBreadcrumbForPid($clean_category_id, 1));
+			} else {
+				$icmsTpl->assign('downloads_cat_path', FALSE);
+			}
 			break;
 		
 		default:

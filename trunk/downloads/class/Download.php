@@ -682,6 +682,16 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		return $ret;
 	}
 	
+	public function getDownloadImagePath() {
+		$image = $this->getVar("download_img", "e");
+		if(($image != "") && ($image != "0")) {
+			$path = ICMS_URL . '/uploads/downloads/download/' . $image;
+			return $path;
+		} else {
+			return FALSE;
+		}
+	}
+	
 	public function toArray() {
 		global $icmsConfig, $downloadsConfig;
 		$ret = parent::toArray();
@@ -696,6 +706,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$ret['filesize'] = $this->getFileSize();
 		$ret['filetype'] = $this->getFileType();
 		
+		$ret['imgpath'] = $this->getDownloadImagePath();
 		$ret['index_img'] = $this->getDownloadImageTag(FALSE);
 		$ret['img'] = $this->getDownloadImageTag(TRUE);
 		$ret['screen_1'] = $this->getDownloadScreen1Tag();
