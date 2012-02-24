@@ -61,7 +61,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$downloadObj->setVar("download_downcounter", ((int)($down_counter) + 1));
 			$downloadObj->store(TRUE);
 			
-			return redirect_header (DOWNLOADS_URL . 'singledownload.php?op=downfile&amp;download_id=' . $download_id, 3, _MD_DOWNLOADS_DOWNLOAD_START);
+			return redirect_header (DOWNLOADS_URL . 'singledownload.php?op=downfile&download_id=' . $download_id, 3, _MD_DOWNLOADS_DOWNLOAD_START);
 			
 			break;
 			

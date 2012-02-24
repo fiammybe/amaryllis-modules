@@ -90,20 +90,18 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted() ) {
-				
-					$url = $downloadObj->getDownloadTag();
-					$icmsTpl->assign("download_get_link", $url);
-					$icmsTpl->assign("download_file", TRUE);
-					// force header
-					header("Cache-Control: no-store, no-cache, must-revalidate");
-					header("Cache-Control: post-check=0, pre-check=0", FALSE);
-					header("Pragma: no-cache");
-					header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-					header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-					header("Refresh: 3; url=$url");
-				
+				$url = $downloadObj->getDownloadTag();
+				$icmsTpl->assign("download_get_link", $url);
+				$icmsTpl->assign("download_file", TRUE);
+				// force header
+				header("Cache-Control: no-store, no-cache, must-revalidate");
+				header("Cache-Control: post-check=0, pre-check=0", FALSE);
+				header("Pragma: no-cache");
+				header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+				header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+				header("Refresh: 3; url=$url");
 			}
-			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == TRUE);	
+			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == TRUE);
 			break;
 			
 		case('downfileMirror'):
@@ -111,20 +109,16 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
 			$downloadObj = $downloads_download_handler->get($clean_download_id);
 			if($downloadObj && !$downloadObj->isNew() && $downloadObj->accessGranted() ) {
-				if((strpos($_SERVER['HTTP_REFERER'], ICMS_URL) !== FALSE) ) {
-					$url = $downloadObj->getMirrorLink();
-					$icmsTpl->assign("download_get_link", $url);
-					$icmsTpl->assign("download_file", TRUE);
-					// force header
-					header("Cache-Control: no-store, no-cache, must-revalidate");
-					header("Cache-Control: post-check=0, pre-check=0", FALSE);
-					header("Pragma: no-cache");
-					header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-					header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-					header("Refresh: 3; url=$url");
-				} else {
-					return redirect_header (DOWNLOADS_URL . 'singledownload.php', 3, _NO_PERM);
-				}
+				$url = $downloadObj->getMirrorLink();
+				$icmsTpl->assign("download_get_link", $url);
+				$icmsTpl->assign("download_file", TRUE);
+				// force header
+				header("Cache-Control: no-store, no-cache, must-revalidate");
+				header("Cache-Control: post-check=0, pre-check=0", FALSE);
+				header("Pragma: no-cache");
+				header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+				header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+				header("Refresh: 3; url=$url");
 			}
 			$icmsTpl->assign('downloads_show_breadcrumb', $downloadsConfig['show_breadcrumbs'] == TRUE);	
 			break;
