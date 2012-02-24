@@ -88,7 +88,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		
 		
 		$this->setControl("article_cid", array("name" => "select_multi", "itemHandler" => "category", "method" => "getCategoryListForPid", "module" => "article"));
-		$this->setControl("article_img_upl", "image");
+		$this->setControl("article_img_upl", "imageupload");
 		$this->setControl("article_img", array( "name" => "select", "itemHandler" => "article", "method" => "getImageList", "module" => "article"));
 		$this->setControl("article_teaser", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("article_show_teaser", "yesno");
