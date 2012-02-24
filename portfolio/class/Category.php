@@ -48,7 +48,7 @@ class PortfolioCategory extends icms_ipf_Object {
 		$this->setControl("category_summary", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("category_description", "dhtmltextarea");
 		$this->setControl("category_active", "yesno");
-		$this->setControl("category_logo_upl", "image");
+		$this->setControl("category_logo_upl", "imageupload");
 		
 		$this->hideFieldFromForm(array("category_p_date", "category_u_date", "category_submitter", "category_updater"));
 		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley"));
