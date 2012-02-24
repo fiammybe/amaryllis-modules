@@ -156,7 +156,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item("download_img", "0", "!="));
 		}
 		$this->setGrantedObjectsCriteria($criteria, "download_grpperm");
-		$downloads = $this->getObjectsD($criteria, TRUE, FALSE);
+		$downloads = $this->getObjects($criteria, TRUE, FALSE);
 		$ret=array();
 		foreach ($downloads as $download){
 			$ret[$download['download_id']] = $download;
