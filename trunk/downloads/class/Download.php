@@ -109,11 +109,11 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->setControl('download_description', 'dhtmltextarea');
 		$this->setControl('download_teaser', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl('download_file', 'file');
-		$this->setControl('download_img', 'image');
-		$this->setControl('download_screen_1','image');
-		$this->setControl('download_screen_2','image');
-		$this->setControl('download_screen_3','image');
-		$this->setControl('download_screen_4','image');
+		$this->setControl('download_img', 'imageupload');
+		$this->setControl('download_screen_1','imageupload');
+		$this->setControl('download_screen_2','imageupload');
+		$this->setControl('download_screen_3','imageupload');
+		$this->setControl('download_screen_4','imageupload');
 		$this->setControl('download_limitations',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadLimitations', 'module' => 'downloads'));
 		$this->setControl('download_license',array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadLicense', 'module' => 'downloads'));
 		$this->setControl('download_platform',array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadPlatform', 'module' => 'downloads'));
