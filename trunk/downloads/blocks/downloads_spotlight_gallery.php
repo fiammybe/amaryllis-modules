@@ -27,7 +27,7 @@ function b_downloads_spotlight_image_show($options) {
 	$downloads_download_handler = icms_getModuleHandler('download', basename(dirname(dirname(__FILE__))), 'downloads');
 	
 	$downloadsConfig = icms_getModuleConfig(basename(dirname(dirname(__FILE__))));
-	$downloads = $downloads_download_handler->getDownloadsForBlocks(0, $options[0], FALSE, FALSE, 'download_published_date', 'DESC', $options[1], TRUE);
+	$downloads = $downloads_download_handler->getDownloadsForBlocks(0, $options[0], FALSE, FALSE, 'weight', 'DESC', $options[1], TRUE);
 	$block['view_all'] = DOWNLOADS_URL . 'index.php?op=viewRecentDownloads&category_id=' . $options[1];
 	$block['show_view_all'] = $options[3];
 	$block['showteaser'] = $options[2];
