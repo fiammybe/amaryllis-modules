@@ -46,7 +46,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$this->initCommonVar("doimage", FALSE, 1);
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		
-		$this->setControl("visitorvoice_image", "image");
+		$this->setControl("visitorvoice_image", "imageupload");
 		$this->setControl("visitorvoice_approve", "yesno");
 		if($visitorvoiceConfig['allow_imageupload'] == 0) {
 			$this->hideFieldFromForm("visitorvoice_image");
@@ -94,7 +94,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		return $message;
 	}
 	
-	function getMessageTeaser() {
+	public function getMessageTeaser() {
 		$ret = $this->getVar("visitorvoice_entry", "s");
 		$ret = icms_core_DataFilter::icms_substr(icms_cleanTags($ret, array()), 0, 140);
 		return $ret;
@@ -110,7 +110,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 	}
 	
 	// get publisher for frontend
-	function getPublisher($link = FALSE) {
+	public function getPublisher($link = FALSE) {
 			$publisher_uid = $this->getVar('visitorvoice_uid', 'e');
 			$userinfo = array();
 			$userObj = icms::handler('icms_member')->getuser($publisher_uid);
