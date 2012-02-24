@@ -57,7 +57,7 @@ class CareerDepartment extends icms_ipf_Object {
 		$this->setControl("department_summary", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("department_description", "dhtmltextarea");
 		$this->setControl("department_active", "yesno");
-		$this->setControl("department_logo_upl", "image");
+		$this->setControl("department_logo_upl", "imageupload");
 		
 		$this->hideFieldFromForm(array("department_p_date", "department_u_date", "department_submitter", "department_updater"));
 		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley"));
