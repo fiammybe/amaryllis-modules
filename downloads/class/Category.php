@@ -56,7 +56,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$this->setControl('category_pid', 'parentcategory');
 		$this->setControl('category_description', 'dhtmltextarea');
 		$this->setControl('category_img', array( 'name' => 'select', 'itemHandler' => 'category', 'method' => 'getImageList', 'module' => 'downloads'));
-		$this->setControl('category_img_upload', 'image');
+		$this->setControl('category_img_upload', 'imageupload');
 		$this->setControl('category_active', 'yesno');
 		$this->setControl('category_inblocks', 'yesno');
 		$this->setControl('category_approve', 'yesno');
