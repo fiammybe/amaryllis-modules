@@ -30,14 +30,14 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	 * @param AlbumAlbum $handler Object handler
 	 */
 	public function __construct(&$handler) {
-		icms_ipf_object::__construct($handler);
+		parent::__construct($handler);
 
 		$this->quickInitVar('album_id', XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar('album_title', XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->initCommonVar('short_url');
 		$this->quickInitVar('album_pid', XOBJ_DTYPE_INT, FALSE);
 		
-		$this->quickInitVar('album_img', XOBJ_DTYPE_TXTAREA, FALSE);
+		$this->quickInitVar('album_img', XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->initVar('album_img_upload', XOBJ_DTYPE_IMAGE);
 		
 		$this->quickInitVar('album_published_date', XOBJ_DTYPE_LTIME, FALSE);
@@ -45,24 +45,24 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->quickInitVar('album_description', XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar('album_active', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar('album_inblocks', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
-		$this->quickInitVar('album_approve', XOBJ_DTYPE_INT, TRUE, '', '', 1);
+		$this->quickInitVar('album_approve', XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
 		$this->quickInitVar('album_onindex', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar('album_updated', XOBJ_DTYPE_INT);
-		$this->quickInitVar('album_grpperm', XOBJ_DTYPE_TXTBOX, TRUE );
+		
 		$this->quickInitVar('album_uid', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar('album_comments', XOBJ_DTYPE_INT, FALSE);
 		$this->initCommonVar('weight');
 		$this->initCommonVar('counter');
 		$this->initCommonVar('dohtml', FALSE, 1);
-		$this->initCommonVar('doimage', TRUE, 1);
-		$this->initCommonVar('dosmiley', TRUE, 1);
-		$this->initCommonVar('docxode', TRUE, 1);
+		$this->initCommonVar('doimage', FALSE, 1);
+		$this->initCommonVar('dosmiley', FALSE, 1);
+		$this->initCommonVar('docxode', FALSE, 1);
 		$this->initNonPersistableVar('album_sub', XOBJ_DTYPE_INT);
 		$this->quickInitVar('album_notification_sent', XOBJ_DTYPE_INT);
 		// set controls
-		$this->setControl( 'album_img_upload', array( 'name' => 'imageupload' ) );
+		$this->setControl( 'album_img_upload', 'imageupload');
 		
-		$this->setControl('album_pid', array("name" => "select", "itemHandler" => "album", "method" => "getAlbumListForPid", "module" => "album"));
+		$this->setControl('album_pid', array('name' => 'select', 'itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
 		$this->setControl('album_description', 'dhtmltextarea');
 		$this->setControl('album_active', 'yesno');
 		$this->setControl('album_inblocks', 'yesno');
@@ -72,8 +72,8 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->setControl('album_uid', 'user');
 		$this->setControl('album_img', array( 'name' => 'select', 'itemHandler' => 'album', 'method' => 'getImageList', 'module' => 'album'));
 		// hide static fields from forms/single views
-		$this->hideFieldFromForm( array('album_updated_date','album_published_date','album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter', 'dohtml', 'doimage', 'dosmiley', 'docxcode' ) );
-		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter', 'dohtml', 'doimage', 'dosmiley', 'docxcode' ) );
+		$this->hideFieldFromForm( array('album_updated_date','album_published_date','album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter'));
+		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter'));
 
 		$this->initiateSEO();
 	}
