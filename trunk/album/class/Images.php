@@ -50,7 +50,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->setControl('a_id', array('itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
 		$this->setControl('img_description', 'dhtmltextarea' );
 		
-		$this->setControl( 'img_url', array( 'name' => 'image' ) );
+		$this->setControl( 'img_url', array( 'name' => 'imageupload' ) );
 		$url = ICMS_URL . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$path = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$this->setImageDir($url, $path);
