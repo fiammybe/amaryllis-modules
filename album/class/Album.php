@@ -38,7 +38,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->quickInitVar('album_pid', XOBJ_DTYPE_INT, FALSE);
 		
 		$this->quickInitVar('album_img', XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->initVar('album_img_upload', XOBJ_DTYPE_IMAGE);
+		$this->quickInitVar('album_img_upload', XOBJ_DTYPE_IMAGE);
 		
 		$this->quickInitVar('album_published_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('album_updated_date', XOBJ_DTYPE_LTIME, FALSE);
@@ -57,7 +57,6 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->initCommonVar('doimage', FALSE, 1);
 		$this->initCommonVar('dosmiley', FALSE, 1);
 		$this->initCommonVar('docxode', FALSE, 1);
-		$this->initNonPersistableVar('album_sub', XOBJ_DTYPE_INT);
 		$this->quickInitVar('album_notification_sent', XOBJ_DTYPE_INT);
 		// set controls
 		$this->setControl( 'album_img_upload', 'imageupload');
@@ -72,8 +71,8 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->setControl('album_uid', 'user');
 		$this->setControl('album_img', array( 'name' => 'select', 'itemHandler' => 'album', 'method' => 'getImageList', 'module' => 'album'));
 		// hide static fields from forms/single views
-		$this->hideFieldFromForm( array('album_updated_date','album_published_date','album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter'));
-		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_sub', 'album_comments', 'weight', 'counter'));
+		$this->hideFieldFromForm( array('album_updated_date','album_published_date','album_notification_sent', 'album_comments', 'weight', 'counter'));
+		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_comments', 'weight', 'counter'));
 
 		$this->initiateSEO();
 	}
@@ -115,17 +114,13 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	 */
 	public function getPublishedDate() {
 		global $albumConfig;
-		$date = '';
 		$date = $this->getVar('album_published_date', 'e');
-		
 		return date($albumConfig['album_dateformat'], $date);
 	}
 	
 	public function getUpdatedDate() {
 		global $albumConfig;
-		$date = '';
 		$date = $this->getVar('album_updated_date', 'e');
-		
 		return date($albumConfig['album_dateformat'], $date);
 	}
 	
