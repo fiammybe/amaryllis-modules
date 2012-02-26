@@ -32,7 +32,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->quickInitVar('img_published_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_updated_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_description', XOBJ_DTYPE_TXTAREA, FALSE);
-		$this->quickInitVar('img_url', XOBJ_DTYPE_IMAGE, TRUE);
+		$this->quickInitVar('img_url', XOBJ_DTYPE_IMAGE);
 		$this->quickInitVar("img_tags", XOBJ_DTYPE_ARRAY,FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar('img_active', XOBJ_DTYPE_INT,TRUE, FALSE, FALSE, 1);
 		$this->quickInitVar('img_approve', XOBJ_DTYPE_INT, TRUE, FALSE, FALSE,1);
@@ -50,7 +50,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->setControl('a_id', array('itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
 		$this->setControl('img_description', 'dhtmltextarea' );
 		
-		$this->setControl( 'img_url', array( 'name' => 'imageupload' ) );
+		$this->setControl( 'img_url', 'image');
 		$url = ICMS_URL . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$path = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$this->setImageDir($url, $path);
