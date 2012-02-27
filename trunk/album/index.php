@@ -69,6 +69,7 @@ if(in_array($clean_op, $valid_op)) {
 				$icmsTpl->assign('album_row_margins', $album_row_margins);
 				$icmsTpl->assign('album_image_margins', $album_image_margins);
 				$icmsTpl->assign('byTags', TRUE);
+				$icmsTpl->assign('tag_id', $clean_tag_id);
 				/**
 				 * pagination control
 				 */
