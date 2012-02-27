@@ -7,7 +7,7 @@
 	<div class="img_content" id="image-<{$album_images.id}>">
 		<title><{$album_images.title}></title>
 		<{resized_image file=$album_images.img width=$album_images.inner_width height=$album_images.inner_height fit="inside"}>
-		<div class="img_info" width="$album_images.inner_width" >
+		<div class="img_info">
 			<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$album_images.publisher}>&nbsp;|&nbsp;
 			<{if $album_images.updated_on}>
 				<{$smarty.const._MD_ALBUM_UPDATED_ON}>&nbsp;:&nbsp;<{$album_images.updated_on}>&nbsp;|&nbsp;
@@ -72,7 +72,7 @@
 					<input type="hidden" name="item" value="<{$album_images.id}>" />
 					
 					<textarea name="img_comment" class="comment" cols="40" rows="4"></textarea>
-					<input type="submit" value="Submit Comment" />
+					<input class="formButton" type="submit" value="<{$smarty.const._MD_ALBUM_SUBMIT}>" />
 				</form>
 				<{if $smarty.get.imglink}>
 					<script type="text/javascript">

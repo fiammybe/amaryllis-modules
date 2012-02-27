@@ -23,7 +23,6 @@ define('_MD_ALBUM_IMAGES_CREATE', 'Upload new Image');
 define('_MD_ALBUM_SUBMIT_CAT', 'Submit new album');
 define('_MD_ALBUM_ALBUM_CREATE', 'Create New Album');
 
-
 define('_MD_ALBUM_PUBLISHED_ON', 'Published on');
 define('_MD_ALBUM_UPDATED_ON', 'Updated on');
 define('_MD_ALBUM_PUBLISHED_BY', 'Published by');
@@ -38,3 +37,4 @@ define('_MD_ALBUM_ADMIN_PAGE', ':: Admin page ::');
  */
 define("_MD_ALBUM_MESSAGE_THANKS", "Thank you for your comment.");
 define("_MD_ALBUM_MESSAGE_THANKS_APPROVAL", "Thank you for submitting new comment. Your comment is awaiting approval.");
+define("_MD_ALBUM_SUBMIT", "Submit");
