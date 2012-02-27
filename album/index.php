@@ -59,7 +59,7 @@ if(in_array($clean_op, $valid_op)) {
 	switch ($clean_op) {
 		case 'getByTags':
 			$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-			if($albumConfig['use_sprockets'] == 1 && $sprocketsModule->registerClassPath(TRUE)) {
+			if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
 				$clean_tag_id = isset($_GET['tag']) ? filter_input(INPUT_GET, 'tag', FILTER_SANITIZE_NUMBER_INT) : 0;
 				$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, icms::$module->config['show_images'], 'weight', 'ASC', FALSE, $clean_tag_id);
 				$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
@@ -69,11 +69,13 @@ if(in_array($clean_op, $valid_op)) {
 				$icmsTpl->assign('album_row_margins', $album_row_margins);
 				$icmsTpl->assign('album_image_margins', $album_image_margins);
 				$icmsTpl->assign('byTags', TRUE);
-				
+				/**
+				 * pagination control
+				 */
 				$images_count = count($images);
 				$extra_arg = 'tag=' . $clean_tag_id;
 				$imagesnav = new icms_view_PageNav($images_count, $albumConfig['show_images'], $clean_img_start, 'img_nav', $extra_arg);
-				
+				$icmsTpl->assign('imgnav', $imagesnav->renderNav());
 				/**
 				 * check if Sprockets Module can be used and if it's available
 				 */

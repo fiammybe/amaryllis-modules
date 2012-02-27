@@ -22,16 +22,18 @@ include_once 'header.php';
 
 include_once ICMS_ROOT_PATH . '/header.php';
 
-$valid_op = array ('addcomment');
+$valid_op = array ('addcomment', 'addmycomment');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
+		case 'addmycomment':
 		case 'addcomment':
 			$clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$clean_img_id = isset($_GET['img_id']) ? filter_input(INPUT_GET, 'img_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+			$clean_tag_id = isset($_GET['tag']) ? filter_input(INPUT_GET, 'tag', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$clean_img_start = isset($_GET['img_nav']) ? (int)($_GET['img_nav']) : 0;
 			$body = filter_input(INPUT_POST, 'img_comment');
 			$album_images_handler = icms_getModuleHandler("images", ALBUM_DIRNAME, "album");
@@ -49,10 +51,18 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					$messageObj->setVar("message_approve", 1);
 				}
 				$album_message_handler->insert($messageObj, TRUE);
-				if($albumConfig['message_needs_approval'] == 0) {
-					return redirect_header(ALBUM_URL . 'index.php?album_id=' . $clean_album_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, _MD_ALBUM_MESSAGE_THANKS);
+				if($clean_op == 'addmycomment') {
+					if($albumConfig['message_needs_approval'] == 0) {
+						return redirect_header(ALBUM_URL . 'index.php?op=getByTags&tag=' . $clean_tag_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, _MD_ALBUM_MESSAGE_THANKS);
+					} else {
+						return redirect_header(ALBUM_URL . 'index.php?op=getByTags&tag=' . $clean_tag_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 5, _MD_ALBUM_MESSAGE_THANKS_APPROVAL);
+					}
 				} else {
-					return redirect_header(ALBUM_URL . 'index.php?album_id=' . $clean_album_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 5, _MD_ALBUM_MESSAGE_THANKS_APPROVAL);
+					if($albumConfig['message_needs_approval'] == 0) {
+						return redirect_header(ALBUM_URL . 'index.php?album_id=' . $clean_album_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, _MD_ALBUM_MESSAGE_THANKS);
+					} else {
+						return redirect_header(ALBUM_URL . 'index.php?album_id=' . $clean_album_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 5, _MD_ALBUM_MESSAGE_THANKS_APPROVAL);
+					}
 				}
 			} else {
 				return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
