@@ -63,7 +63,11 @@
 		<{/if}>
 		<{if $icms_isuser}>
 			<div class="img_comment_form">
-				<form id="img_comment_form" action="<{$album_url}>submit.php?op=addcomment&img_id=<{$album_images.id}>&album_id=<{$album_images.a_id}>" method="post">
+				<{if $smarty.get.op == getByTags}>
+					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addmycomment&img_id=<{$album_images.id}>&album_id=<{$album_images.a_id}>" method="post">
+				<{else}>
+					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addcomment&img_id=<{$album_images.id}>&album_id=<{$album_images.a_id}>" method="post">
+				<{/if}>
 					<input type="hidden" name="name" value="<{$icms_userid}>" />
 					<input type="hidden" name="item" value="<{$album_images.id}>" />
 					
