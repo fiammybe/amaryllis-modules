@@ -19,6 +19,7 @@
 
 define("_MOD_ALBUM_ALBUM_APPROVE", "Waiting albums for approval");
 define("_MOD_ALBUM_IMAGES_APPROVE", "Waiting images for approval");
+define("_MOD_ALBUM_MESSAGE_APPROVE", "Waiting Image Comments for approval");
 
 function b_waiting_album() {
 	$module_handler = icms::handler('icms_module')->getByDirname("album");
@@ -48,6 +49,18 @@ function b_waiting_album() {
 		$block['adminlink'] = ICMS_URL."/modules/album/admin/images.php";
 		list($block['pendingnum']) = $result;
 		$block['lang_linkname'] = _MOD_ALBUM_IMAGES_APPROVE;
+		$ret[] = $block;
+	}
+	
+	// image approval
+	$block = array();
+	$approveM = new icms_db_criteria_Compo();
+	$approveM->add(new icms_db_criteria_Item("message_approve", 0));
+	$result = $album_images_handler->getCount($approveM);
+	if ($result > 0) {
+		$block['adminlink'] = ICMS_URL."/modules/album/admin/message.php";
+		list($block['pendingnum']) = $result;
+		$block['lang_linkname'] = _MOD_ALBUM_MESSAGE_APPROVE;
 		$ret[] = $block;
 	}
 	

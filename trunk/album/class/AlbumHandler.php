@@ -54,7 +54,6 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		}
 		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		$albums = & $this->getObjects($criteria, TRUE);
-		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		foreach(array_keys($albums) as $i) {
 			$ret[$albums[$i]->getVar('album_id')] = $albums[$i]->getVar('album_title');
 		}
@@ -405,7 +404,11 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		$album_id = $obj->id();
 		// delete global notifications
 		$notification_handler->unsubscribeByItem($module_id, $category, $album_id);
+		//delete images
+		$images_handler = icms_getModuleHandler("images", "album");
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item("a_id", $obj->id()));
+		$images_handler->deleteAll($criteria);
 		return TRUE;
 	}
-
 }

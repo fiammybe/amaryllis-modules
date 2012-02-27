@@ -29,6 +29,10 @@ $adminmenu[$i]['title'] = _MI_ALBUM_MENU_IMAGES;
 $adminmenu[$i]['link'] = 'admin/images.php';
 
 $i++;
+$adminmenu[$i]['title'] = _MI_ALBUM_MENU_MESSAGE;
+$adminmenu[$i]['link'] = 'admin/message.php';
+
+$i++;
 $adminmenu[$i]['title'] = _MI_ALBUM_MENU_INDEXPAGE;
 $adminmenu[$i]['link'] = 'admin/indexpage.php?op=mod&indexkey=1';
 

@@ -33,3 +33,8 @@ define("_MD_ALBUM_UPLOAD", "Upload");
 define("_MD_ALBUM_TAGS", "Tags");
 define("_MD_ALBUM_TAG_ADD", "Submit new tag");
 define('_MD_ALBUM_ADMIN_PAGE', ':: Admin page ::');
+/**
+ * added in 1.1
+ */
+define("_MD_ALBUM_MESSAGE_THANKS", "Thank you for your comment.");
+define("_MD_ALBUM_MESSAGE_THANKS_APPROVAL", "Thank you for submitting new comment. Your comment is awaiting approval.");

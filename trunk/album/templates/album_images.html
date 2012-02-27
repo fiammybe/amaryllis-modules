@@ -1,0 +1,106 @@
+<a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" rel="lightbox" id="imglink-<{$album_images.id}>" 
+	 <{$album_image_margins}> >
+	<{resized_image file=$album_images.img width=$album_images.thumbnail_width height=$album_images.thumbnail_height fit="inside"}>
+</a>
+
+<div style="display: none">
+	<div class="img_content" id="image-<{$album_images.id}>">
+		<title><{$album_images.title}></title>
+		<{resized_image file=$album_images.img width=$album_images.inner_width height=$album_images.inner_height fit="inside"}>
+		<div class="img_info" width="$album_images.inner_width" >
+			<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$album_images.publisher}>&nbsp;|&nbsp;
+			<{if $album_images.updated_on}>
+				<{$smarty.const._MD_ALBUM_UPDATED_ON}>&nbsp;:&nbsp;<{$album_images.updated_on}>&nbsp;|&nbsp;
+			<{else}>
+				<{$smarty.const._MD_ALBUM_PUBLISHED_ON}>&nbsp;:&nbsp;<{$album_images.published_on}>&nbsp;|&nbsp;
+			<{/if}>
+		</div>
+		
+		<{if $sprockets_module && $album_images.tags}>
+			(&nbsp;<{$smarty.const._MD_ALBUM_TAGS}>&nbsp;:&nbsp;
+				<div class="album_tags">
+					<{foreach item=tag from=$album_images.tags name=tags}>
+						<span class="article_tag" original-title="<{$tag.title}>">
+							<{if $tag.icon}>
+								<img width=16px height=16px src="<{$tag.icon}>" title="<{$tag.title}>" alt="<{$tag.title}>" />
+							<{/if}>
+							<a href="<{$tag.link}>" title="<{$tag.title}>">
+								<{$tag.title}>
+							</a>
+							<{if !$smarty.foreach.tags.last}>&nbsp;|&nbsp;<{/if}>
+						</span>
+						<{if $tag.dsc}>
+							<span class="popup_tag"><{$tag.dsc}></span>
+						<{/if}>
+					<{/foreach}>
+				</div>
+			&nbsp;)
+		<{/if}>
+		
+		<div class="img_desc" style="width: <{$album_images.inner_width}>px" >
+			<{$album_images.dsc}>
+		</div>
+		
+		<{if $album_images.messages}>
+			<div class="img_comments">
+				<{foreach item=message from=$album_images.messages}>
+					<div class="img_comment">
+						<div class="img_avatar">
+							<img src="<{$message.avatar}>" width="32px" height="32px" alt="avatar" />
+						</div>
+						<div class="comment_info">
+							<div class="message_ulink">
+								<{$message.ulink}>&nbsp;<span class="message_date">(<{$message.date}>)</span>
+							</div>
+						</div>
+						<div class="album_clear_left"></div>
+						<div class="message_body">
+							<p><{$message.body}></p>
+						</div>
+					</div>
+				<{/foreach}>
+			</div>
+		<{/if}>
+		<{if $icms_isuser}>
+			<div class="img_comment_form">
+				<form id="img_comment_form" action="<{$album_url}>submit.php?op=addcomment&img_id=<{$album_images.id}>&album_id=<{$album_images.a_id}>" method="post">
+					<input type="hidden" name="name" value="<{$icms_userid}>" />
+					<input type="hidden" name="item" value="<{$album_images.id}>" />
+					
+					<textarea name="img_comment" class="comment" cols="40" rows="4"></textarea>
+					<input type="submit" value="Submit Comment" />
+				</form>
+				<{if $smarty.get.imglink}>
+					<script type="text/javascript">
+						$(document).ready(function(){
+							// use colorbox for screenshots
+							$('a#imglink-<{$smarty.get.imglink}>').each(function(){
+								var $link = $(this);
+								var maxH = $link.attr("maxheight");
+								var maxW = $link.attr("maxwidth");
+								var innerH = $link.attr("innerheight");
+								var innerW = $link.attr("innerwidth");
+								$link.colorbox({
+									open: true,
+									transition:'fade',
+									speed:500,
+									opacity: 0.9,
+									photo: true,
+									scalePhotos: true,
+									slideshow: true,
+									arrowKey: true,
+									slideshowAuto: false,
+									inline: true,
+									maxWidth: maxW,
+									maxHeight: maxH,
+									innerWidth: innerW,
+									innerHeight: innerH,
+								});
+							});
+						});
+					</script>
+				<{/if}>
+			</div>
+		<{/if}>
+	</div>
+</div>

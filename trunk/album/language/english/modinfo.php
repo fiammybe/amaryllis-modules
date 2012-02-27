@@ -114,3 +114,12 @@ define("_MI_ALBUM_ALBUM_EDITING", "Edit your Album");
 define("_MI_ALBUM_ALBUM_CREATINGNEW", "Create a new Album");
 define("_MI_ALBUM_IMAGES_EDIT", "Edit your Image");
 define("_MI_ALBUM_IMAGES_UPLOADNEW", "Upload a new Image");
+
+/**
+ * added in 1.1
+ */
+// added messages to menu
+define("_MI_ALBUM_MENU_MESSAGE", "Image Comments");
+//added to config
+define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL", "New comments for images needs approval?");
+define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL_DSC", "If you need approval before publishing new comments on images, select yes");

@@ -44,7 +44,7 @@ if(!defined("ALBUM_UPLOAD_URL")) define("ALBUM_UPLOAD_URL", ICMS_URL . '/uploads
 
 
 // this needs to be the latest db version
-define('ALBUM_DB_VERSION', 1);
+define('ALBUM_DB_VERSION', 2);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,13 +89,13 @@ function album_upload_paths() {
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
 	$path = ICMS_ROOT_PATH . '/uploads/album';
-		icms_core_Filesystem::mkdir($path . '/albumimages');
+		if(!is_dir($path . '/albumimages')) icms_core_Filesystem::mkdir($path . '/albumimages');
 		$categoryimages = array();
 		$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/album/images/folders/', '', array('gif', 'jpg', 'png'));
 		foreach($categoryimages as $image) {
 			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/albumimages/' . $image);
 		}
-		icms_core_Filesystem::mkdir($path . '/indeximages');
+		if(!is_dir($path . '/indeximages')) icms_core_Filesystem::mkdir($path . '/indeximages');
 		$image = 'album_indeximage.png';
 		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
 		return TRUE;
@@ -105,10 +105,10 @@ function album_indexpage() {
 	$album_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'album' );
 	$indexpageObj = $album_indexpage_handler -> create(TRUE);
 	echo '<code>';
-	$indexpageObj -> setVar( 'index_header', 'My Photo Albums' );
-	$indexpageObj -> setVar( 'index_heading', 'Here you can see my photo Albums' );
-	$indexpageObj -> setVar( 'index_footer', '&copy; 2011 | Album module footer');
-	$indexpageObj -> setVar( 'index_image', 'album_indeximage.png');
+	$indexpageObj->setVar( 'index_header', 'My Photo Albums' );
+	$indexpageObj->setVar( 'index_heading', 'Here you can see my photo Albums' );
+	$indexpageObj->setVar( 'index_footer', '&copy; 2012 | Album module footer');
+	$indexpageObj->setVar( 'index_image', 'album_indeximage.png');
 	$indexpageObj->setVar('dohtml', 1);
 	$indexpageObj->setVar('dobr', 1);
 	$indexpageObj->setVar('doimage', 1);
