@@ -70,6 +70,7 @@ if(in_array($clean_op, $valid_op)) {
 				$icmsTpl->assign('album_image_margins', $album_image_margins);
 				$icmsTpl->assign('byTags', TRUE);
 				$icmsTpl->assign('tag_id', $clean_tag_id);
+				$icmsTpl->assign("sprockets_module", TRUE);
 				/**
 				 * pagination control
 				 */
@@ -78,11 +79,14 @@ if(in_array($clean_op, $valid_op)) {
 				$imagesnav = new icms_view_PageNav($images_count, $albumConfig['show_images'], $clean_img_start, 'img_nav', $extra_arg);
 				$icmsTpl->assign('imgnav', $imagesnav->renderNav());
 				/**
-				 * check if Sprockets Module can be used and if it's available
+				 * breadcrumb
 				 */
-				$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-				if($albumConfig['use_sprockets'] == 1 && $sprocketsModule) {
-					$icmsTpl->assign("sprockets_module", TRUE);
+				$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
+				$tagObj = $sprockets_tag_handler->get($clean_tag_id);
+				if ($albumConfig['show_breadcrumbs']){
+					$icmsTpl->assign('album_cat_path', $tagObj->getVar("title", "e"));
+				} else{
+					$icmsTpl->assign('album_cat_path',FALSE);
 				}
 			}
 			break;
