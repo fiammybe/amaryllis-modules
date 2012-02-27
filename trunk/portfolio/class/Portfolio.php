@@ -51,7 +51,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		$this->setControl("portfolio_cid", array("name" => "select", "itemHandler" => "category", "method" => "getCategoryList", "module" => "portfolio"));
 		$this->setControl("portfolio_summary", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("portfolio_description", "dhtmltextarea");
-		$this->setControl("portfolio_img", "imageupload");
+		$this->setControl("portfolio_img", "image");
 		$this->setControl("portfolio_active", "yesno");
 		$albumModule = icms_getModuleInfo("album");
 		if($albumModule && $portfolioConfig['use_album'] == 1) {
