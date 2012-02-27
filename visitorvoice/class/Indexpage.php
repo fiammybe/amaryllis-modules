@@ -36,7 +36,7 @@ class VisitorvoiceIndexpage extends icms_ipf_Object {
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		$this->initCommonVar("docxode", FALSE, FALSE, FALSE, 1);
 
-		$this->setControl('index_img_upload', 'imageupload');
+		$this->setControl('index_img_upload', 'image');
 		$this->setControl('index_heading','dhtmltextarea');
 		$this->setControl('index_footer', 'textarea');
 		$this->setControl('index_image', array( 'name' => 'select', 'itemHandler' => 'indexpage', 'method' => 'getImageList', 'module' => 'visitorvoice'));
