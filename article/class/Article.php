@@ -463,13 +463,6 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		}
 	}
 	
-	public function getPublishersAvatar() {
-		$publishers = $this->getVar("article_publisher", "s");
-		foreach ($publishers as $publisher) {
-			
-		}
-	}
-	
 	function userCanEditAndDelete() {
 		global $article_isAdmin;
 		if (!is_object(icms::$user)) return FALSE;
