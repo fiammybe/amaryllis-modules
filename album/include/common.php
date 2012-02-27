@@ -52,4 +52,8 @@ $album_isAdmin = icms_userIsAdmin( ALBUM_DIRNAME );
 
 $albumConfig = icms_getModuleConfig( ALBUM_DIRNAME );
 
+if($albumConfig['use_sprockets'] == 1) {
+	icms_loadLanguageFile('sprockets', 'common');
+}
+
 $icmsPersistableRegistry = icms_ipf_registry_Handler::getInstance();

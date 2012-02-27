@@ -33,7 +33,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->quickInitVar('img_updated_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_description', XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar('img_url', XOBJ_DTYPE_IMAGE);
-		$this->quickInitVar("img_tags", XOBJ_DTYPE_ARRAY,FALSE, FALSE, FALSE, 0);
+		$this->quickInitVar("img_tags", XOBJ_DTYPE_ARRAY,FALSE, FALSE, FALSE, '');
 		$this->quickInitVar('img_active', XOBJ_DTYPE_INT,TRUE, FALSE, FALSE, 1);
 		$this->quickInitVar('img_approve', XOBJ_DTYPE_INT, TRUE, FALSE, FALSE,1);
 		$this->initCommonVar( 'weight', XOBJ_DTYPE_INT );
@@ -47,7 +47,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->setControl('img_active', 'yesno');
 		$this->setControl('img_approve', 'yesno');
 		$this->setControl('img_publisher', 'user');
-		$this->setControl('a_id', array('itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
+		$this->setControl('a_id', array('name' => 'select', 'itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
 		$this->setControl('img_description', 'dhtmltextarea' );
 		
 		$this->setControl( 'img_url', 'image');
@@ -104,7 +104,7 @@ class AlbumImages extends icms_ipf_Object {
 		return $control->render();
 	}
 	
-	function userCanEditAndDelete() {
+	public function userCanEditAndDelete() {
 		global $album_isAdmin;
 		if (!is_object(icms::$user)) return FALSE;
 		if ($album_isAdmin) return TRUE;
@@ -133,12 +133,12 @@ class AlbumImages extends icms_ipf_Object {
 		return $image_tag;
 	}
 
-	function img_publisher() {
+	public function img_publisher() {
 		return icms_member_user_Handler::getUserLink($this->getVar('img_publisher', 'e'));
 	}
 	
 	// get publisher for frontend
-	function getPublisher($link = FALSE) {
+	public function getPublisher($link = FALSE) {
 		
 			$publisher_uid = $this->getVar('img_publisher', 'e');
 			$userinfo = array();
@@ -161,11 +161,10 @@ class AlbumImages extends icms_ipf_Object {
 	}
 	
 	public function getImagesTags($itemlink = FALSE) {
-		global $albumConfig;
-		$tags = $this->getVar('img_tags', 's');
-		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-		if(icms_get_module_status("sprockets") && ($tags != "") && ($albumConfig['use_sprockets'] == 1)) {
-			$sprockets_tag_handler = icms_getModuleHandler ( 'tag', $sprocketsModule->getVar("dirname"), 'sprockets' );
+		$tags = $this->getVar("img_tags", "s");
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if(icms_get_module_status("sprockets") && $tags != "") {
+			$sprockets_tag_handler = icms_getModuleHandler ( "tag", $sprocketsModule->getVar("dirname"), "sprockets");
 			$ret = array();
 			if($itemlink == FALSE) {
 				foreach ($tags as $tag) {
@@ -182,23 +181,16 @@ class AlbumImages extends icms_ipf_Object {
 					$dsc = icms_core_DataFilter::undoHtmlSpecialChars($dsc);
 					$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodelow");
 					if($icon != "") {
-						$image = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $icon;
-						$ret[$tag] = '<span class="album_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag)
-									 . '" title="' . $title . '"><img width=16px height=16px src="'
-									. $image . '" title="' . $title . '" alt="' . $title . '" />&nbsp;&nbsp;' . $title . '</a></span>';
-						if($dsc != "") {
-							$ret[$tag] .= '<span class="popup_tag">' . $dsc . '</span>';
-						}
-					} else {
-						$ret[$tag] = '<span class="album_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag) 
-									. '" title="' . $title . '">' . $title . '</a></span>';
-						if($dsc != "") {
-							$ret[$tag] .= '<span class="popup_tag">' . $dsc . '</span>';
-						}
+						$ret[$tag]['icon'] = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
+					}
+					$ret[$tag]['title'] = $title;
+					$ret[$tag]['link'] = $this->getTaglink($tag);
+					if($dsc != "") {
+						$ret[$tag]['dsc'] = $dsc;
 					}
 				}
 			}
-			return implode(" | ", $ret);
+			return $ret;
 		} else {
 			return FALSE;
 		}
@@ -243,6 +235,25 @@ class AlbumImages extends icms_ipf_Object {
 		return $maxWidth;
 	}
 	
+	public function getImageComments() {
+		$album_message_handler = icms_getModuleHandler("message", basename(dirname(dirname(__FILE__))), "album");
+		$messages = $album_message_handler->getMessages($this->getVar("img_id", "e"));
+		if($messages) {
+			foreach (array_keys($messages) as $message) {
+				$messageObj = $album_message_handler->get($message);
+				$date = $messageObj->getPublishedDate();
+				$body = $messageObj->getMessageBody();
+				$ulink = $messageObj->getPublisher();
+				$avatar = $messageObj->getPublisherAvatar();
+				$ret[$message]['date'] = $date;
+				$ret[$message]['body'] = $body;
+				$ret[$message]['ulink'] = $ulink;
+				$ret[$message]['avatar'] = $avatar;
+			}
+			return $ret;
+		}
+	}
+	
 	public function toArray() {
 		global $albumConfig;
 		$ret = parent::toArray();
@@ -261,7 +272,7 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['updated_on'] = $this->getUpdatedDate();
 		$ret['publisher'] = $this->getPublisher(TRUE);
 		$ret['tags'] = $this->getImagesTags(TRUE);
+		$ret['messages'] = $this->getImageComments();
 		return $ret;
 	}
-	
 }

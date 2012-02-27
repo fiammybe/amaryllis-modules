@@ -41,11 +41,11 @@ $modversion = array(
 					'image'						=> "images/album_icon.png", /* for backward compatibility */
 
 					/**  Development information */
-					'status_version'			=> "1.0",
-					'status'					=> "final",
+					'status_version'			=> "1.1",
+					'status'					=> "RC",
 					'date'						=> "01:46 05.02.2012",
 					'author_word'				=> "",
-					'warning'					=> _CO_ICMS_WARNING_FINAL,
+					'warning'					=> _CO_ICMS_WARNING_RC,
 
 					/** Contributors */
 					'developer_website_url' 	=> "http://code.google.com/p/amaryllis-modules/",
@@ -85,7 +85,8 @@ $i++;
 $modversion['object_items'][$i] = 'images';
 $i++;
 $modversion['object_items'][$i] = 'indexpage';
-
+$i++;
+$modversion['object_items'][$i] = 'message';
 
 $modversion['tables'] = icms_getTablesArray( $modversion['dirname'], $modversion['object_items'] );
 
@@ -123,6 +124,11 @@ $modversion['templates'][$i] = array(
 $i++;
 $modversion['templates'][$i] = array(
 										'file'			=> 'album_album.html',
+										'description'	=> _MI_ALBUM_ALBUM_TPL
+								);
+$i++;
+$modversion['templates'][$i] = array(
+										'file'			=> 'album_images.html',
 										'description'	=> _MI_ALBUM_ALBUM_TPL
 								);
 $i++;
@@ -431,7 +437,15 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'int',
 								'default' 		=> 10
 							);
-
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'message_needs_approval',
+								'title' 		=> '_MI_ALBUM_MESSAGE_NEEDS_APPROVAL',
+								'description' 	=> '_MI_ALBUM_MESSAGE_NEEDS_APPROVAL_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=>  1
+							);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////

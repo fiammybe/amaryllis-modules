@@ -1,77 +1,42 @@
 <{includeq file='db:album_header.html'}>
 
-	<{if $byTags}>	
-		
-		<!-- display index header -->
-		<{$album_index.header}>
-		<!-- display index heading -->
-		<{$album_index.heading}>
-		
-		<!-- start image loop -->
-		<{if $album_image_rows}>
-			<{if $imgnav}> <!-- page navigation -->
-				<div class="images_pagenav"><{$imgnav}></div>
-			<{/if}>
-			<!-- image rows -->
-			<div class="album_images">
-				<{foreach item=album_row from=$album_image_rows}>
-					<div class="album_images_row" <{$album_row_margins}> >
-						<{foreach item=album_images from=$album_row}>
-							
-								<a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" rel="lightbox" 
-									 <{$album_image_margins}> >
-									<{resized_image file=$album_images.img width=$album_images.thumbnail_width height=$album_images.thumbnail_height fit="inside"}>
-								</a>
-								
-								
-								<div style="display: none">
-									<div class="img_content" id="image-<{$album_images.id}>">
-										<title><{$album_images.title}></title>
-										<{resized_image file=$album_images.img width=$album_images.inner_width height=$album_images.inner_height fit="inside"}>
-										<div class="img_info" width="$album_images.inner_width" >
-											<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$album_images.publisher}>&nbsp;|&nbsp;
-											<{if $album_images.updated_on}>
-												<{$smarty.const._MD_ALBUM_UPDATED_ON}>&nbsp;:&nbsp;<{$album_images.updated_on}>&nbsp;|&nbsp;
-											<{else}>
-												<{$smarty.const._MD_ALBUM_PUBLISHED_ON}>&nbsp;:&nbsp;<{$album_images.published_on}>&nbsp;|&nbsp;
-											<{/if}>
-										</div>
-										
-										<{if $sprockets_module && $album_images.tags}>
-											(&nbsp;<{$smarty.const._MD_ALBUM_TAGS}>&nbsp;:&nbsp;<{$album_images.tags}>&nbsp;)
-										<{/if}>
-										
-										<div class="img_desc" style="width: <{$album_images.inner_width}>px" >
-											<{$album_images.dsc}>
-										</div>
-									</div>
-								</div>
-								
-							
-						<{/foreach}>
-					</div>
-				<{/foreach}>
-			</div>
-			<{if $imgnav}> <!-- page navigation -->
-				<div class="images_pagenav"><{$imgnav}></div>
-			<{/if}>
+<{if $byTags}>
+	<!-- display index header -->
+	<{$album_index.header}>
+	<!-- display index heading -->
+	<{$album_index.heading}>
+	<!-- start image loop -->
+	<{if $album_image_rows}>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
 		<{/if}>
-		
+		<!-- image rows -->
+		<div class="album_images">
+			<{foreach item=album_row from=$album_image_rows}>
+				<div class="album_images_row" <{$album_row_margins}> >
+					<{foreach item=album_images from=$album_row}>
+						<{includeq file='db:album_images.html'}>
+					<{/foreach}>
+				</div>
+			<{/foreach}>
+		</div>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
 	<{/if}>
+<{/if}>
 
 <{if $album_columns}> <!-- album index view -->
 	<!-- display index header -->
 	<{$album_index.header}>
 	<!-- display index heading -->
 	<{$album_index.heading}>
-
 	<div>
 		<{foreach item=album_column from=$album_columns}>
 			<div class="album_row table_row">
 				<{if $album_pagenav }><!-- pagination control -->
 					<{$album_pagenav}>
 				<{/if}>
-			
 				<!-- album rule -->
 				<{foreach item=album from=$album_column}>
 					<{includeq file='db:album_album.html'}>
@@ -83,7 +48,6 @@
 				<img src="<{$album_images_url}>add_cat.png" title="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />
 			</a>
 		<{/if}>
-		
 		<{if $album_upl_disclaimer}>
 			<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
 				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
@@ -98,7 +62,6 @@
 	<div class="album_album_title"><{$single_album.title}></div>
 	<!-- album description -->
 	<div class="album_album_desc"> <{$single_album.dsc}> </div>
-
 	<!-- start image loop -->
 	<{if $album_image_rows}>
 		<{if $imgnav}> <!-- page navigation -->
@@ -109,37 +72,7 @@
 			<{foreach item=album_row from=$album_image_rows}>
 				<div class="album_images_row" <{$album_row_margins}> >
 					<{foreach item=album_images from=$album_row}>
-						
-							<a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" rel="lightbox" 
-								 <{$album_image_margins}> >
-								<{resized_image file=$album_images.img width=$album_images.thumbnail_width height=$album_images.thumbnail_height fit="inside"}>
-							</a>
-							
-							
-							<div style="display: none">
-								<div class="img_content" id="image-<{$album_images.id}>">
-									<title><{$album_images.title}></title>
-									<{resized_image file=$album_images.img width=$album_images.inner_width height=$album_images.inner_height fit="inside"}>
-									<div class="img_info" width="$album_images.inner_width" >
-										<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$album_images.publisher}>&nbsp;|&nbsp;
-										<{if $album_images.updated_on}>
-											<{$smarty.const._MD_ALBUM_UPDATED_ON}>&nbsp;:&nbsp;<{$album_images.updated_on}>&nbsp;|&nbsp;
-										<{else}>
-											<{$smarty.const._MD_ALBUM_PUBLISHED_ON}>&nbsp;:&nbsp;<{$album_images.published_on}>&nbsp;|&nbsp;
-										<{/if}>
-									</div>
-									
-									<{if $sprockets_module && $album_images.tags}>
-										(&nbsp;<{$smarty.const._MD_ALBUM_TAGS}>&nbsp;:&nbsp;<{$album_images.tags}>&nbsp;)
-									<{/if}>
-									
-									<div class="img_desc" style="width: <{$album_images.inner_width}>px" >
-										<{$album_images.dsc}>
-									</div>
-								</div>
-							</div>
-							
-						
+						<{includeq file='db:album_images.html'}>
 					<{/foreach}>
 				</div>
 			<{/foreach}>
@@ -148,9 +81,7 @@
 			<div class="images_pagenav"><{$imgnav}></div>
 		<{/if}>
 	<{/if}>
-	
 	<{if $subalbum_columns}> <!-- subalbums -->
-	
 		<!-- pagination control -->
 		<{if $album_pagenav }><{$album_pagenav}><{/if}>
 		<{foreach item=subalbum_column from=$subalbum_columns}>
@@ -160,10 +91,8 @@
 				<{/foreach}>
 			</div>
 		<{/foreach}>
-		
 		<!-- pagination control -->
-		<{if $album_pagenav }><{$album_pagenav}><{/if}>
-		
+		<{if $album_pagenav }><{$album_pagenav}><{/if}>	
 		<{if $user_submit}>
 			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
 				<img src="<{$album_images_url}>add_cat.png" title="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />

@@ -27,9 +27,8 @@ include_once ICMS_ROOT_PATH . '/header.php';
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
-$album_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'album' );
-$indexpageObj = $album_indexpage_handler->get($clean_index_key);
+$album_indexpage_handler = icms_getModuleHandler( 'indexpage', ALBUM_DIRNAME, 'album' );
+$indexpageObj = $album_indexpage_handler->get(1);
 $index = $indexpageObj->toArray();
 $icmsTpl->assign('album_index', $index);
 

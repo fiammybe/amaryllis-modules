@@ -71,3 +71,12 @@ define("_CO_ALBUM_IMAGES_IMG_ACTIVE", "Active?");
 define("_CO_ALBUM_IMAGES_IMG_ACTIVE_DSC", "Set 'YES' to set image online");
 define("_CO_ALBUM_IMAGES_IMG_APPROVE", "Approved?");
 define("_CO_ALBUM_IMAGES_IMG_PUBLISHER", "Uploader");
+
+/**
+ * added in 1.1
+ */
+define("_CO_ALBUM_MESSAGE_MESSAGE_UID", "User");
+define("_CO_ALBUM_MESSAGE_MESSAGE_ITEM", "Image");
+define("_CO_ALBUM_MESSAGE_MESSAGE_BODY", "Comment");
+define("_CO_ALBUM_MESSAGE_MESSAGE_DATE", "Date");
+define("_CO_ALBUM_MESSAGE_MESSAGE_APPROVE", "Approved?");

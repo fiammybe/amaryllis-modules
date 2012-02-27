@@ -2,7 +2,7 @@
 /**
  * 'Album' is a light weight gallery module
  *
- * File: /admin/admin_header.php
+ * File: /admin/album.php
  *
  * List, add, edit and delete album objects
  *

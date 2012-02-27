@@ -31,6 +31,22 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes,	$albumConfig['image_file_size'], $albumConfig['image_upload_width'], $albumConfig['image_upload_height']);
 	}
+	
+	// retrieve a list of Images
+	public function getList($img_active = null, $img_approve = null) {
+		$criteria = new icms_db_criteria_Compo();
+		if (isset($img_active)) {
+			$criteria->add(new icms_db_criteria_Item('img_active', TRUE));
+		}
+		if (isset($img_approve)) {
+			$criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
+		}
+		$images = & $this->getObjects($criteria, TRUE);
+		foreach(array_keys($images) as $i) {
+			$ret[$images[$i]->getVar('img_id')] = $images[$i]->getVar('img_title');
+		}
+		return $ret;
+	}
 
 	public function getImages($active = NULL, $approve = NULL, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC', $a_id = NULL, $tag_id = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
@@ -102,6 +118,12 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		return array(0 => 'Offline', 1 => 'Online');
 	}
 	
+	public function getAlbumList() {
+		$album_album_handler = icms_getModuleHandler("album", "album");
+		$albums = $album_album_handler->getList();
+		return $albums;
+	}
+	
 	public function getImagesTags() {
 		global $albumConfig;
 		$sprocketsModule = icms_getModuleInfo("sprockets");
@@ -128,5 +150,12 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
 		return count(array_intersect($module->config['uploader_groups'], $user_groups)) > 0;
 	}
-
+	
+	protected function afterDelete(& $obj) {
+		$message_handler = icms_getModuleHandler("message", "album");
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item("message_item", $obj->id()));
+		$message_handler->deleteAll($criteria);
+		return TRUE;
+	}
 }

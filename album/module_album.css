@@ -110,5 +110,28 @@
 	}
 	
 	.img_desc{
-		margin: 1em auto;
+		margin: 1em 0;
+	}
+	
+	.img_comment {
+		display: block;
+		margin: .5em auto;
+		background-color: #ECF7FD;
+	}
+	
+	.img_avatar {
+		float: left;
+		margin-right: 1em;
+	}
+	
+	.message_date {
+		font-size: .8em;
+	}
+	
+	.album_tags {
+		display: inline;
+	}
+	
+	.comment {
+		display: block;
 	}

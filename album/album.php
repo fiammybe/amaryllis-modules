@@ -59,7 +59,10 @@ include_once ICMS_ROOT_PATH . '/header.php';
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+$album_indexpage_handler = icms_getModuleHandler( 'indexpage', ALBUM_DIRNAME, 'album' );
+$indexpageObj = $album_indexpage_handler->get(1);
+$index = $indexpageObj->toArray();
+$icmsTpl->assign('album_index', $index);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
@@ -72,7 +75,6 @@ $valid_op = array ('mod', 'addalbum', 'del');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
-
 
 $album_album_handler = icms_getModuleHandler("album", basename(dirname(__FILE__)), "album");
 
