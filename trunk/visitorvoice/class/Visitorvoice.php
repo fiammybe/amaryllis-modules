@@ -46,7 +46,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$this->initCommonVar("doimage", FALSE, 1);
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		
-		$this->setControl("visitorvoice_image", "imageupload");
+		$this->setControl("visitorvoice_image", "image");
 		$this->setControl("visitorvoice_approve", "yesno");
 		if($visitorvoiceConfig['allow_imageupload'] == 0) {
 			$this->hideFieldFromForm("visitorvoice_image");
