@@ -41,9 +41,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$visibility = $album_message_handler -> changeApprove( $clean_message_id );
 			$ret = 'message.php';
 			if ($visibility == 0) {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_OFFLINE );
+				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _CO_ALBUM_MESSAGE_MESSAGE_DENIED );
 			} else {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_ONLINE );
+				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _CO_ALBUM_MESSAGE_MESSAGE_APPROVED );
 			}
 			break;
 		
