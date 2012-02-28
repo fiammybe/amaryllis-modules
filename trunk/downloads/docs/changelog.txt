@@ -1,6 +1,6 @@
 = *Downloads* Changelog =
 
-== Version 1.1 => Release Date: 26.02.2012 ==
+== Version 1.1 => Release Date: XX.03.2012 ==
 
 * Fixed error with sprockets
 * Fixed trouble with opera
