@@ -121,6 +121,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$critTray->add(new icms_db_criteria_Item("download_tags", '%:"' . $tag_id . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
+		$criteria->add(new icms_db_criteria_Item('download_active', TRUE));
+		$criteria->add(new icms_db_criteria_Item('download_approve', TRUE));
 		$this->setGrantedObjectsCriteria($criteria, "download_grpperm");
 		$downloads = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
@@ -134,9 +136,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		global $downloadsConfig;
 		$criteria = new icms_db_criteria_Compo();
 		if ($start) $criteria->setStart($start);
-		if ($limit) $criteria->setLimit((int)$limit);
-		if ($order) $criteria->setSort($order);
-		if ($sort) $criteria->setOrder($sort);
+		if ($limit) $criteria->setLimit($limit);
 		$criteria->add(new icms_db_criteria_Item('download_active', TRUE));
 		$criteria->add(new icms_db_criteria_Item('download_inblocks', TRUE));
 		$criteria->add(new icms_db_criteria_Item('download_approve', TRUE));
@@ -156,8 +156,10 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item("download_img", "0", "!="));
 		}
 		$this->setGrantedObjectsCriteria($criteria, "download_grpperm");
+		if ($order) $criteria->setSort($order);
+		if ($sort) $criteria->setOrder($sort);
 		$downloads = $this->getObjects($criteria, TRUE, FALSE);
-		$ret=array();
+		$ret = array();
 		foreach ($downloads as $download){
 			$ret[$download['download_id']] = $download;
 		}
