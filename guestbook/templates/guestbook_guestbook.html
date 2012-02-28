@@ -31,25 +31,25 @@ SetSpeechBubble();
 		</span>
 	</div>
 	<div class="speech_bubble">
-	<div class="guestbook_entries">
-		<{foreach item=entry from=$entries}>
-			<{includeq file="db:guestbook_singleentry.html"}>
-			<{if $entry.reply && $guestbook_is_admin}>
-					<div style="padding: 10px 0 25px 15px;">
-						<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_GUESTBOOK_REPLY}></a>
+		<div class="guestbook_entries">
+			<{foreach item=entry from=$entries}>
+				<{includeq file="db:guestbook_singleentry.html"}>
+				<{if $entry.reply && $guestbook_is_admin}>
+						<div style="padding: 10px 0 25px 15px;">
+							<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_GUESTBOOK_REPLY}></a>
+						</div>
+				<{/if}>
+				
+				<{if $entry.hassub}>
+					<div class="guestbook_replies">
+						<{foreach item=entry from=$entry.sub}>
+							<{includeq file="db:guestbook_singleentry.html"}>
+						<{/foreach}>
 					</div>
-			<{/if}>
+				<{/if}>
 			
-			<{if $entry.hassub}>
-				<div class="guestbook_replies">
-					<{foreach item=entry from=$entry.sub}>
-						<{includeq file="db:guestbook_singleentry.html"}>
-					<{/foreach}>
-				</div>
-			<{/if}>
-		
-		<{/foreach}>
-	</div>
+			<{/foreach}>
+		</div>
 	</div>
 <{/if}>
 <{if !$smarty.get.op == addreply}>

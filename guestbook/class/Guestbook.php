@@ -46,11 +46,12 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$this->initCommonVar("doimage", FALSE, 1);
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		
-		$this->setControl("guestbook_image", "image");
 		$this->setControl("guestbook_approve", "yesno");
 		if($guestbookConfig['allow_imageupload'] == 0) {
 			$this->hideFieldFromForm("guestbook_image");
 			$this->hideFieldFromSingleView("guestbook_image");
+		} else {
+			$this->setControl("guestbook_image", "imageupload");
 		}
 		$this->hideFieldFromForm(array("guestbook_approve", "guestbook_pid", "guestbook_ip", "guestbook_uid", "guestbook_published_date"));
 		if($guestbookConfig['needs_approval'] == 0) {
@@ -87,6 +88,12 @@ class GuestbookGuestbook extends icms_ipf_Object {
 			$avatar_image = "<img src='" . ICMS_UPLOAD_URL . "/" . $review_avatar . "' alt='avatar' />";
 			return $avatar_image;
 		}
+	}
+	
+	public function getMessageTeaser() {
+		$ret = $this->getVar("guestbook_entry", "s");
+		$ret = icms_core_DataFilter::icms_substr(icms_cleanTags($ret, array()), 0, 120);
+		return $ret;
 	}
 	
 	public function getMessage() {
@@ -126,9 +133,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	
 	public function getPublishedDate() {
 		global $guestbookConfig;
-		$date = '';
 		$date = $this->getVar('guestbook_published_date', 'e');
-		
 		return date($guestbookConfig['guestbook_dateformat'], $date);
 	}
 	
@@ -151,13 +156,17 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		return $link;
 	}
 	
-	public function getItemLink() {
+	public function getItemLink($urlonly = FALSE) {
 		$id = $this->getVar("guestbook_id", "e");
 		$title = $this->getVar("guestbook_title", "e");
-		$link = '<a href="' . GUESTBOOK_URL . '#entry_' . $id . '" title="' . $title . '">' . $title . '</a>';
+		if($urlonly) {
+			$link = GUESTBOOK_URL . '#entry_' . $id;
+		} else {
+			$link = '<a href="' . GUESTBOOK_URL . '#entry_' . $id . '" title="' . $title . '">' . $title . '</a>';
+		}
 		return $link;
 	}
-	
+
 	public function toArray() {
 		global $guestbookConfig;
 		$ret = parent::toArray();
@@ -171,6 +180,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$ret['ip'] = $this->getVar("guestbook_ip");
 		$ret['title'] = $this->getVar("guestbook_title");
 		$ret['message'] = $this->getMessage();
+		$ret['teaser'] = $this->getMessageTeaser();
 		$ret['avatar'] = $this->getGuestbookAvatar();
 		$ret['parent'] = $this->getVar("guestbook_pid", "e");
 		if($guestbookConfig['use_moderation'] == 1){
@@ -178,9 +188,8 @@ class GuestbookGuestbook extends icms_ipf_Object {
 			$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
 		}
 		$ret['reply'] = $this->getReplyLink();
-		$ret['itemLink'] = $this->getItemLink();
-		
+		$ret['itemLink'] = $this->getItemLink(FALSE);
+		$ret['itemURL'] = $this->getItemLink(TRUE);
 		return $ret;
 	}
-	
 }

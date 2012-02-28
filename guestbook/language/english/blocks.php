@@ -13,3 +13,5 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 define("_MB_GUESTBOOK_GUESTBOOK_RECENT_LIMIT", "Show entries:");
+define("_MB_GUESTBOOK_VIEWLIST", "Display list only?");
+define("_MB_GUESTBOOK_READ_MORE", "Read more...");
