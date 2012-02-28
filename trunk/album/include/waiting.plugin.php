@@ -25,6 +25,7 @@ function b_waiting_album() {
 	$module_handler = icms::handler('icms_module')->getByDirname("album");
 	$album_album_handler = icms_getModuleHandler("album", "album");
 	$album_images_handler = icms_getModuleHandler("images", "album");
+	$album_message_handler = icms_getModuleHandler("message", "album");
 	
 	$ret = array();
 	
@@ -56,7 +57,7 @@ function b_waiting_album() {
 	$block = array();
 	$approveM = new icms_db_criteria_Compo();
 	$approveM->add(new icms_db_criteria_Item("message_approve", 0));
-	$result = $album_images_handler->getCount($approveM);
+	$result = $album_message_handler->getCount($approveM);
 	if ($result > 0) {
 		$block['adminlink'] = ICMS_URL."/modules/album/admin/message.php";
 		list($block['pendingnum']) = $result;
