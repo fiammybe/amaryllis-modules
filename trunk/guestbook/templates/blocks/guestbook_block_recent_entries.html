@@ -1,5 +1,47 @@
-<ul>
-	<{foreach item=guestbook_entry from=$block.guestbook_entries}>
-		<li><{$guestbook_entry.itemLink}> (<{$guestbook_entry.published_on}>)</li>
-	<{/foreach}>
-</ul>
+<{if $block.asList == 1}>
+	<ul>
+		<{foreach item=entry from=$block.guestbook_entries}>
+			<li><{$entry.itemLink}>&nbsp;(<{$entry.published_on}>)</li>
+		<{/foreach}>
+	</ul>
+<{else}>
+	<script type="text/javascript">
+	//<![CDATA[
+	SetSpeechBubble();
+	//]]>
+	</script>
+	<script src="<{$icms_url}>/modules/guestbook/scripts/jquery.curvycorners.packed.js" type="text/javascript"></script>
+	<script src="<{$icms_url}>/modules/guestbook/scripts/guestbook.js" type="text/javascript"></script>
+	<link href="<{$icms_url}>/modules/guestbook/module_guestbook.css" rel="stylesheet" type="text/css" />
+	<div class="speech_bubble">
+		<div class="guestbook_entries">
+			<{foreach item=entry from=$block.guestbook_entries}>
+				<div class="bubble">
+					<div id="entry_<{$entry.id}>" class="guestbook_entry">
+						<!-- title -->
+						<div class="block-title"><{$entry.title}></div>
+						
+						<div class="guestbook_row">
+							<div class="guestbook_message">
+								<span class="guestbook_message">
+									<{$entry.teaser}>...
+									<a href="<{$entry.itemURL}>">
+										<{$smarty.const._MB_GUESTBOOK_READ_MORE}>
+									</a>
+								</span>
+							</div> <!-- E N D .GUESTBOOK_message -->
+						</div> <!-- E N D .GUESTBOOK_row -->
+					</div> <!-- E N D .GUESTBOOK_entry -->
+				</div>
+				<p>
+					<{if $show_avatar}>
+						<span class="guestbook_avatar">
+							<{$entry.avatar}>
+						</span>
+					<{/if}>
+					<strong><{$entry.name}> |<{if $entry.homepage}> <a href="<{$entry.homepage}>?&campaign=impresscms_guestbook" title="<{$entry.homepage}>"><{$entry.homepage}></a> |<{/if}> <{$entry.published_on}></strong>
+				</p>
+			<{/foreach}>
+		</div>
+	</div>
+<{/if}>

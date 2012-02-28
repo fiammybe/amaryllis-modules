@@ -150,7 +150,7 @@ $modversion['blocks'][$i]['name']			= _MI_GUESTBOOK_BLOCK_RECENT_ENTRIES;
 $modversion['blocks'][$i]['description']	= _MI_GUESTBOOK_BLOCK_RECENT_ENTRIES_DSC;
 $modversion['blocks'][$i]['show_func']		= 'b_guestbook_recent_entries_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_guestbook_recent_entries_edit';
-$modversion['blocks'][$i]['options']		= '10';
+$modversion['blocks'][$i]['options']		= '10|1';
 $modversion['blocks'][$i]['template']		= 'guestbook_block_recent_entries.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE ;
 

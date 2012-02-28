@@ -39,7 +39,7 @@
 		$(".guestbook_form").dialog({
 			modal: true,
 			width: 700,
-			height: 500,
+			height: 400,
 			autoOpen: false,
 			resizable: true,
 			draggable: true
