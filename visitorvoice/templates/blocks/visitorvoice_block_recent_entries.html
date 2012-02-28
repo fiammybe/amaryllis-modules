@@ -1,5 +1,47 @@
-<ul>
-	<{foreach item=visitorvoice_entry from=$block.visitorvoice_entries}>
-		<li><{$visitorvoice_entry.itemLink}> (<{$visitorvoice_entry.published_on}>)</li>
-	<{/foreach}>
-</ul>
+<{if $block.asList == 1}>
+	<ul>
+		<{foreach item=entry from=$block.visitorvoice_entries}>
+			<li><{$entry.itemLink}>&nbsp;(<{$entry.published_on}>)</li>
+		<{/foreach}>
+	</ul>
+<{else}>
+	<script type="text/javascript">
+	//<![CDATA[
+	SetSpeechBubble();
+	//]]>
+	</script>
+	<script src="<{$icms_url}>/modules/visitorvoice/scripts/jquery.curvycorners.packed.js" type="text/javascript"></script>
+	<script src="<{$icms_url}>/modules/visitorvoice/scripts/visitorvoice.js" type="text/javascript"></script>
+	<link href="<{$icms_url}>/modules/visitorvoice/module_visitorvoice.css" rel="stylesheet" type="text/css" />
+	<div class="speech_bubble">
+		<div class="visitorvoice_entries">
+			<{foreach item=entry from=$block.visitorvoice_entries}>
+				<div class="bubble">
+					<div id="entry_<{$entry.id}>" class="visitorvoice_entry">
+						<!-- title -->
+						<div class="block-title"><{$entry.title}></div>
+						
+						<div class="visitorvoice_row">
+							<div class="visitorvoice_message">
+								<span class="visitorvoice_message">
+									<{$entry.teaser}>...
+									<a href="<{$entry.itemURL}>">
+										<{$smarty.const._MB_VISITORVOICE_READ_MORE}>
+									</a>
+								</span>
+							</div> <!-- E N D .VISITORVOICE_message -->
+						</div> <!-- E N D .VISITORVOICE_row -->
+					</div> <!-- E N D .VISITORVOICE_entry -->
+				</div>
+				<p>
+					<{if $show_avatar}>
+						<span class="visitorvoice_avatar">
+							<{$entry.avatar}>
+						</span>
+					<{/if}>
+					<strong><{$entry.name}> |<{if $entry.homepage}> <a href="<{$entry.homepage}>?&campaign=impresscms_visitorvoice" title="<{$entry.homepage}>"><{$entry.homepage}></a> |<{/if}> <{$entry.published_on}></strong>
+				</p>
+			<{/foreach}>
+		</div>
+	</div>
+<{/if}>
