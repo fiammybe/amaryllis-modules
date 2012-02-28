@@ -30,6 +30,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		parent::__construct($db, "album", "album_id", "album_title", "album_description", "album");
 		$this->addPermission('album_grpperm', _CO_ALBUM_ALBUM_ALBUM_GRPPERM, _CO_ALBUM_ALBUM_ALBUM_GRPPERM_DSC);
+		$this->addPermission('album_uplperm', _CO_ALBUM_ALBUM_ALBUM_UPLPERM, _CO_ALBUM_ALBUM_ALBUM_UPLPERM_DSC);
 		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/albumimages/';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
@@ -285,12 +286,10 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	 * frontend permission control
 	 */
 	public function userCanSubmit() {
-		global $album_isAdmin;
-		if (!is_object(icms::$user)) return FALSE;
+		global $album_isAdmin, $albumConfig;
 		if ($album_isAdmin) return TRUE;
-		$user_groups = icms::$user->getGroups();
-		$module = icms::handler("icms_module")->getByDirname(basename(dirname(dirname(__FILE__))), TRUE);
-		return count(array_intersect($module->config['uploader_groups'], $user_groups)) > 0;
+		$user_groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		return count(array_intersect($albumConfig['uploader_groups'], $user_groups)) > 0;
 	}
 	
 	// get breadcrumb

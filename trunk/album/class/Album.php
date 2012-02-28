@@ -190,6 +190,20 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		}
 	}
 	
+	function submitAccessGranted() {
+		$gperm_handler = icms::handler('icms_member_groupperm');
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+		$submitperm = $gperm_handler->checkRight('album_uplperm', $this->getVar('album_id', 'e'), $groups, $module->getVar("mid"));
+		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('album_uid', 'e')) {
+			return TRUE;
+		}
+		if ($submitperm && ($this->getVar('album_active', 'e') == TRUE) && ($this->getVar('album_approve', 'e') == TRUE)) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	
 	function accessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
@@ -267,7 +281,6 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$ret['title'] = $this->getVar('album_title');
 		$ret['img'] = $this->getAlbumImageTag();
 		$ret['dsc'] = $this->getVar('album_description');
-		
 		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
@@ -275,10 +288,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['accessgranted'] = $this->accessGranted();
-		
-		
-		$ret['user_upload'] = $this->getEditAndDelete();
-		
+		$ret['user_upload'] = $this->submitAccessGranted();
 		$ret['album_is_new'] = $this->displayNewIcon();
 		$ret['album_is_updated'] = $this->displayUpdatedIcon();
 		$ret['album_popular'] = $this->displayPopularIcon();

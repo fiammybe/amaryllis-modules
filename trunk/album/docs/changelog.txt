@@ -11,6 +11,8 @@
 ** /blocks.php
 ** /modinfo.php
 ** /common.php
+** /admin.php
+** /main.php
 
 == First Release: Version 1.0 => Release Date: 04.02.2012 ==
 
