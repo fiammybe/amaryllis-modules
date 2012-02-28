@@ -41,11 +41,11 @@ $modversion = array(
 					'image'						=> "images/downloads_icon.png", /* for backward compatibility */
 
 					/**  Development information */
-					'status_version'			=> "1.0",
-					'status'					=> "final",
+					'status_version'			=> "1.1",
+					'status'					=> "rc",
 					'date'						=> "Unreleased",
 					'author_word'				=> "",
-					'warning'					=> _CO_ICMS_WARNING_FINAL,
+					'warning'					=> _CO_ICMS_WARNING_RC,
 
 					/** Contributors */
 					'developer_website_url' 	=> "http://code.google.com/p/amaryllis-modules/",
@@ -60,7 +60,7 @@ $modversion['people']['other'][] = "Templates by: <a href='http://community.impr
 
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>";
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=462' target='_blank'>David</a>";
-
+$modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1295' target='_blank'>Lotus</a>";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// ADMINISTRATIVE INFORMATION ////////////////////////////////////////////
