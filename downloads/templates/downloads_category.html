@@ -15,7 +15,7 @@
 				<{$categories.editItemLink}><{$categories.deleteItemLink}>
 			<{/if}>
 			<{if $categories.user_upload}>
-				<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$downloads_url}>download.php?op=mod" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
+				<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$downloads_url}>download.php?op=mod&category_id=<{$categories.id}>" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>">
 					<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_file.png" title="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" alt="<{$smarty.const._MD_DOWNLOADS_UPLOAD}>" />
 				</a>
 			<{/if}>

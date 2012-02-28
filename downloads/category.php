@@ -55,8 +55,8 @@ function editcategory($categoryObj = 0) {
 		} else {
 			$categoryObj->setVar('category_approve', TRUE );
 		}
-		$categoryObj->setVar('category_submitter', icms::$user->getVar("uid"));
-		$categoryObj->setVar('category_publisher', icms::$user->getVar("uid"));
+		$categoryObj->setVar('category_submitter', $log_uid);
+		$categoryObj->setVar('category_publisher', $log_uid);
 		
 		$logObj = $downloads_log_handler->create();
 		$logObj->setVar('log_item_id', $categoryObj->getVar("category_id") );
@@ -113,7 +113,7 @@ if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 /**
  * Only proceed if the supplied operation is a valid operation
  */
-if(in_array($clean_op, $valid_op, TRUE)) {
+if(in_array($clean_op, $valid_op, TRUE) && $downloads_category_handler->userCanSubmit()) {
 	switch ($clean_op) {
 		case 'mod':
 			$categoryObj = $downloads_category_handler->get($clean_category_id);
@@ -150,5 +150,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$icmsTpl->assign('downloads_cat_path', $downloads_category_handler->getBreadcrumbForPid($categoryObj->getVar('category_id', 'e'), 1) . ' > ' . _DELETE);
 			break;
 	}
+} else {
+	redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
 }
 include_once 'footer.php';
