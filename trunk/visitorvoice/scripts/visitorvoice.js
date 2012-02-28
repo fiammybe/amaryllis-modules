@@ -39,7 +39,7 @@
 		$(".visitorvoice_form").dialog({
 			modal: true,
 			width: 700,
-			height: 800,
+			height: 400,
 			autoOpen: false,
 			resizable: true,
 			draggable: true

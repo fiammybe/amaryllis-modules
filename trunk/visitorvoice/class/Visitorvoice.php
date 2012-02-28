@@ -46,11 +46,12 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$this->initCommonVar("doimage", FALSE, 1);
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		
-		$this->setControl("visitorvoice_image", "image");
 		$this->setControl("visitorvoice_approve", "yesno");
 		if($visitorvoiceConfig['allow_imageupload'] == 0) {
 			$this->hideFieldFromForm("visitorvoice_image");
 			$this->hideFieldFromSingleView("visitorvoice_image");
+		} else {
+			$this->setControl("visitorvoice_image", "imageupload");
 		}
 		$this->hideFieldFromForm(array("visitorvoice_approve", "visitorvoice_pid", "visitorvoice_ip", "visitorvoice_uid", "visitorvoice_published_date"));
 		if($visitorvoiceConfig['needs_approval'] == 0) {
@@ -58,13 +59,6 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		}
 	}
 
-	public function getVar($key, $format = "s") {
-		if ($format == "s" && in_array($key, array())) {
-			return call_user_func(array ($this,	$key));
-		}
-		return parent::getVar($key, $format);
-	}
-	
 	public function visitorvoice_approve() {
 		$active = $this->getVar('visitorvoice_approve', 'e');
 		if ($active == FALSE) {
@@ -78,7 +72,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 	
 	public function getVisitorvoiceAvatar() {
 		$review_uid = $this->getVar("visitorvoice_uid", "e");
-		if(intval($review_uid > 0)) {
+		if((int)($review_uid > 0)) {
 			$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
 			$avatar_image = "<img src='" . $avatar . "' alt='avatar' />";
 			return $avatar_image;
@@ -96,7 +90,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 	
 	public function getMessageTeaser() {
 		$ret = $this->getVar("visitorvoice_entry", "s");
-		$ret = icms_core_DataFilter::icms_substr(icms_cleanTags($ret, array()), 0, 140);
+		$ret = icms_core_DataFilter::icms_substr(icms_cleanTags($ret, array()), 0, 120);
 		return $ret;
 	}
 	
@@ -157,10 +151,14 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		return $link;
 	}
 	
-	public function getItemLink() {
+	public function getItemLink($urlonly = FALSE) {
 		$id = $this->getVar("visitorvoice_id", "e");
 		$title = $this->getVar("visitorvoice_title", "e");
-		$link = '<a href="' . VISITORVOICE_URL . '#entry_' . $id . '" title="' . $title . '">' . $title . '</a>';
+		if($urlonly) {
+			$link = VISITORVOICE_URL . '#entry_' . $id;
+		} else {
+			$link = '<a href="' . VISITORVOICE_URL . '#entry_' . $id . '" title="' . $title . '">' . $title . '</a>';
+		}
 		return $link;
 	}
 	
@@ -185,9 +183,8 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 			$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
 		}
 		$ret['reply'] = $this->getReplyLink();
-		$ret['itemLink'] = $this->getItemLink();
-		
+		$ret['itemLink'] = $this->getItemLink(FALSE);
+		$ret['itemURL'] = $this->getItemLink(TRUE);
 		return $ret;
 	}
-	
 }
