@@ -19,7 +19,11 @@
 
 function editalbum($albumObj) {
 	global $album_album_handler, $icmsTpl, $albumConfig;
-	
+	if(is_object(icms::$user)) {
+		$album_uid = icms::$user->getVar("uid");
+	} else {
+		$album_uid = 0;
+	}
 	if (!$albumObj->isNew()){
 		$albumObj->hideFieldFromForm(array('album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve', 'album_published_date', 'album_updated_date' ) );
 		$albumObj->setVar( 'album_updated_date', (time() - 100) );
@@ -40,7 +44,7 @@ function editalbum($albumObj) {
 		} else {
 			$albumObj->setVar('album_approve', TRUE );
 		}
-		$albumObj->setVar('album_uid', icms::$user->getVar("uid"));
+		$albumObj->setVar('album_uid', $album_uid);
 		
 		
 		$sform = $albumObj->getSecureForm(_MD_ALBUM_ALBUM_CREATE, 'addalbum');
@@ -76,9 +80,9 @@ $valid_op = array ('mod', 'addalbum', 'del');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-$album_album_handler = icms_getModuleHandler("album", basename(dirname(__FILE__)), "album");
+$album_album_handler = icms_getModuleHandler("album", ALBUM_DIRNAME, "album");
 
-if (in_array($clean_op, $valid_op, TRUE)) {
+if (in_array($clean_op, $valid_op, TRUE) && $album_album_handler->userCanSubmit()) {
 	switch ($clean_op) {
 		case('mod'):
 			$albumObj = $album_album_handler->get($clean_album_id);
@@ -110,13 +114,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 	}
 } else {
-	redirect_header(ALBUM_URL, 3, _NOPERM);
+	redirect_header(ALBUM_URL, 3, _NO_PERM);
 }
-
-if( $albumConfig['show_breadcrumbs'] == TRUE ) {
-	$icmsTpl->assign('album_show_breadcrumb', TRUE);
-} else {
-	$icmsTpl->assign('album_show_breadcrumb', FALSE);
-}
-
 include_once "footer.php";

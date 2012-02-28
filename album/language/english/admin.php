@@ -28,7 +28,7 @@ define("_AM_ALBUM_REQUIREMENTS_INFO", "We've reviewed your system, unfortunately
 define("_AM_ALBUM_REQUIREMENTS_ICMS_BUILD", "'Album' requires at least ImpressCMS 1.3 final.");
 define("_AM_ALBUM_REQUIREMENTS_SUPPORT", "Should you have any question or concerns, please visit our forums at <a href='http://community.impresscms.org/modules/newbb/viewforum.php?forum=9'>ImpressCMS Community</a>.");
 
-// 
+// constants used in ACP
 define("_AM_ALBUM_ALBUM_ADD", "Add album");
 define("_AM_ALBUM_ALBUM_CREATE", "New album");
 define("_AM_ALBUM_ALBUM_EDIT", "Edit album");
@@ -38,26 +38,25 @@ define("_AM_ALBUM_ALBUM_MODIFIED", "Album modified");
 define("_AM_ALBUM_ALBUM_WEIGHTS_UPDATED", "Weights updated");
 define("_AM_ALBUM_APPROVE_TRUE", "Album approved");
 define("_AM_ALBUM_APPROVE_FALSE", "Album denied");
-
 define("_AM_ALBUM_INDEXPAGE_EDIT", "Edit the Frontend-Indexpage");
 define("_AM_ALBUM_INDEXPAGE_MODIFIED", "Indexpage modified");
 define("_AM_ALBUM_IMAGE_ADD", "Add Image");
-
 define("_AM_ALBUM_IMAGES_WEIGHTS_UPDATED", "Add Image");
 define("_AM_ALBUM_IMAGES_ADDED", "Image Added");
 define("_AM_ALBUM_IMAGES_CREATED", "Image successfully submitted");
-
 define("_AM_ALBUM_PREVIEW", "Preview");
 define("_AM_ALBUM_ALBUM_VIEW", "View");
 define("_AM_ALBUM_IMAGES_EDIT", "Edit");
 define("_AM_ALBUM_IMAGES_MODIFIED", "Album modified");
-
 define("_AM_ALBUM_ALBUM_NOIMAGEEXIST", "Preview");
 define("_AM_ALBUM_FUPLOAD_ALBUMIMAGE", "Albumimage");
 define("_AM_ALBUM_FUPLOAD_INDEXIMAGE", "Indeximage");
 define("_AM_ALBUM_FUPLOAD", "Select Image");
 define("_AM_ALBUM_MODIMGUPLOAD", "Upload new module Images");
-
 define("_AM_ALBUM_ALBUM_INBLOCK_TRUE", "Album will be displayed in blocks");
 define("_AM_ALBUM_ALBUM_INBLOCK_FALSE", "Album will be hidden in blocks");
-
+/**
+ * added in 1.1
+ */
+define("_AM_ALBUM_PREMISSION_ALBUM_VIEW", "Album View Permissions");
+define("_AM_ALBUM_PREMISSION_IMAGES_SUBMIT", "Images Submit Permissions");

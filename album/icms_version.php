@@ -163,8 +163,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_album_album_recent_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_album_album_recent_edit';
 $modversion['blocks'][$i]['options']		= '10';
 $modversion['blocks'][$i]['template']		= 'album_block_recent_albums.html';
-$modversion['blocks'][$i]['can_clone']		= TRUE ;
-
+$modversion['blocks'][$i]['can_clone']		= TRUE;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// SEARCH //////////////////////////////////////////////////////
