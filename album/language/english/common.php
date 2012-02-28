@@ -80,3 +80,7 @@ define("_CO_ALBUM_MESSAGE_MESSAGE_ITEM", "Image");
 define("_CO_ALBUM_MESSAGE_MESSAGE_BODY", "Comment");
 define("_CO_ALBUM_MESSAGE_MESSAGE_DATE", "Date");
 define("_CO_ALBUM_MESSAGE_MESSAGE_APPROVE", "Approved?");
+define("_CO_ALBUM_ALBUM_ALBUM_UPLPERM", "Images submit permissions");
+define("_CO_ALBUM_ALBUM_ALBUM_UPLPERM_DSC", "Select the groups to be allowed to submit images");
+define("_CO_ALBUM_MESSAGE_MESSAGE_APPROVED", "Comment approved");
+define("_CO_ALBUM_MESSAGE_MESSAGE_DENIED", "Comment denied");

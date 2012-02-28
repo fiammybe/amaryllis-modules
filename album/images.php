@@ -17,11 +17,15 @@
  * 
  */
 
-function editimages($imagesObj) {
+function editimages($imagesObj, $clean_album_id) {
 	global $album_images_handler, $icmsTpl, $albumConfig;
-	
+	if(is_object(icms::$user)) {
+		$album_uid = icms::$user->getVar("uid");
+	} else {
+		$album_uid = 0;
+	}
 	if (!$imagesObj->isNew()){
-		$imagesObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'img_publisher', 'img_active', 'img_approve', 'img_published_date', 'img_updated_date' ) );
+		$imagesObj->hideFieldFromForm(array('a_id', 'meta_description', 'meta_keywords', 'img_publisher', 'img_active', 'img_approve', 'img_published_date', 'img_updated_date' ) );
 		$imagesObj->setVar( 'img_updated_date', (time() - 100) );
 		if($albumConfig['image_needs_approval'] == 1) {
 			$imagesObj->setVar('img_approve', FALSE );
@@ -32,15 +36,15 @@ function editimages($imagesObj) {
 		$sform->assign($icmsTpl, 'album_images_form');
 		$icmsTpl->assign('album_cat_path', $imagesObj->getVar('img_title') . ' > ' . _EDIT);
 	} else {
-		$imagesObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'img_updated','img_active', 'img_publisher', 'img_approve', 'img_published_date', 'img_updated_date' ) );
+		$imagesObj->hideFieldFromForm(array('a_id', 'meta_description', 'meta_keywords', 'img_updated','img_active', 'img_publisher', 'img_approve', 'img_published_date', 'img_updated_date' ) );
 		$imagesObj->setVar('images_published_date', (time() - 100) );
 		if($albumConfig['image_needs_approval'] == 1) {
 			$imagesObj->setVar('img_approve', FALSE );
 		} else {
 			$imagesObj->setVar('img_approve', TRUE );
 		}
-		$imagesObj->setVar('img_publisher', icms::$user->getVar("uid"));
-		
+		$imagesObj->setVar('img_publisher', $album_uid);
+		$imagesObj->setVar('a_id', $clean_album_id);
 		$sform = $imagesObj->getSecureForm(_MD_ALBUM_IMAGES_CREATE, 'addimages');
 		$sform->assign($icmsTpl, 'album_images_form');
 		$icmsTpl->assign('album_cat_path', _SUBMIT);
@@ -70,6 +74,7 @@ $icmsTpl->assign('album_index', $index);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $clean_images_id = isset($_GET['images_id']) ? filter_input(INPUT_GET, 'images_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_album_id = isset($_GET['a_id']) ? filter_input(INPUT_GET, 'a_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
 
 $valid_op = array ('mod', 'addimages', 'del');
@@ -77,39 +82,43 @@ $valid_op = array ('mod', 'addimages', 'del');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-
-$album_images_handler = icms_getModuleHandler("images", basename(dirname(__FILE__)), "album");
-
-if (in_array($clean_op, $valid_op, TRUE)) {
-	switch ($clean_op) {
-		case('mod'):
-			$imagesObj = $album_images_handler->get($clean_images_id);
-			if ($clean_images_id > 0 && $imagesObj->isNew()) {
-				redirect_header(ALBUM_URL, 3, _NO_PERM);
-			}
-			editimages($imagesObj);
-			break;
-		
-		case('addimages'):
-			if (!icms::$security->check()) {
-				redirect_header('index.php', 3, _MD_ALBUM_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
-			}
-			$controller = new icms_ipf_Controller($album_images_handler);
-			$controller->storeFromDefaultForm(_MD_ALBUM_IMAGES_CREATED, _MD_ALBUM_IMAGES_MODIFIED);
-			break;
-		case('del'):
-			$imagesObj = $album_images_handler->get($clean_images_id);
-			if (!$imagesObj->userCanEditAndDelete()) {
-				redirect_header($imagesObj->getItemLink(TRUE), 3, _NO_PERM);
-			}
-			if (isset($_POST['confirm'])) {
+$album_images_handler = icms_getModuleHandler("images", ALBUM_DIRNAME, "album");
+$album_album_handler = icms_getModuleHandler("album", ALBUM_DIRNAME, "album");
+$albumObj = $album_album_handler->get($clean_album_id);
+if(is_object($albumObj) && !$albumObj->isNew() && $albumObj->submitAccessGranted() ) {
+	if (in_array($clean_op, $valid_op, TRUE)) {
+		switch ($clean_op) {
+			case('mod'):
+				$imagesObj = $album_images_handler->get($clean_images_id);
+				if ($clean_images_id > 0 && $imagesObj->isNew()) {
+					redirect_header(ALBUM_URL, 3, _NO_PERM);
+				}
+				editimages($imagesObj, $clean_album_id);
+				break;
+			
+			case('addimages'):
 				if (!icms::$security->check()) {
 					redirect_header('index.php', 3, _MD_ALBUM_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 				}
-			}
-			$controller = new icms_ipf_Controller($album_images_handler);
-			$controller->handleObjectDeletionFromUserSide();
-			break;
+				$controller = new icms_ipf_Controller($album_images_handler);
+				$controller->storeFromDefaultForm(_MD_ALBUM_IMAGES_CREATED, _MD_ALBUM_IMAGES_MODIFIED);
+				break;
+			case('del'):
+				$imagesObj = $album_images_handler->get($clean_images_id);
+				if (!$imagesObj->userCanEditAndDelete()) {
+					redirect_header($imagesObj->getItemLink(TRUE), 3, _NO_PERM);
+				}
+				if (isset($_POST['confirm'])) {
+					if (!icms::$security->check()) {
+						redirect_header('index.php', 3, _MD_ALBUM_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
+					}
+				}
+				$controller = new icms_ipf_Controller($album_images_handler);
+				$controller->handleObjectDeletionFromUserSide();
+				break;
+		}
+	} else {
+		redirect_header(ALBUM_URL, 3, _NO_PERM);
 	}
 } else {
 	redirect_header(ALBUM_URL, 3, _NO_PERM);
