@@ -17,8 +17,9 @@
  *
  */
 
- 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
+
+include_once ICMS_ROOT_PATH . '/modules/album/include/common.php';
 
 class AlbumImages extends icms_ipf_Object {
 
