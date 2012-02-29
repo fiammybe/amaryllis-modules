@@ -25,6 +25,9 @@ function editalbum($albumObj) {
 		$album_uid = 0;
 	}
 	if (!$albumObj->isNew()){
+		if (!$albumObj->userCanEditAndDelete()) {
+			redirect_header($albumObj->getItemLink(TRUE), 3, _NOPERM);
+		}
 		$albumObj->hideFieldFromForm(array('album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve', 'album_published_date', 'album_updated_date' ) );
 		$albumObj->setVar( 'album_updated_date', (time() - 100) );
 		$albumObj->setVar('album_updated', TRUE );
@@ -37,6 +40,9 @@ function editalbum($albumObj) {
 		$sform->assign($icmsTpl, 'album_album_form');
 		$icmsTpl->assign('album_cat_path', $albumObj->getVar('album_title') . ' > ' . _EDIT);
 	} else {
+		if (!$album_album_handler->userCanSubmit()) {
+			redirect_header($categoryObj->getItemLink(TRUE), 3, _NOPERM);
+		}
 		$albumObj->hideFieldFromForm(array('album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve', 'album_published_date', 'album_updated_date') );
 		$albumObj->setVar('album_published_date', (time() - 100) );
 		if($albumConfig['album_needs_approval'] == 1) {
@@ -60,15 +66,6 @@ $xoopsOption['template_main'] = 'album_forms.html';
 include_once ICMS_ROOT_PATH . '/header.php';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-$album_indexpage_handler = icms_getModuleHandler( 'indexpage', ALBUM_DIRNAME, 'album' );
-$indexpageObj = $album_indexpage_handler->get(1);
-$index = $indexpageObj->toArray();
-$icmsTpl->assign('album_index', $index);
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -82,7 +79,7 @@ if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 $album_album_handler = icms_getModuleHandler("album", ALBUM_DIRNAME, "album");
 
-if (in_array($clean_op, $valid_op, TRUE) && $album_album_handler->userCanSubmit()) {
+if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case('mod'):
 			$albumObj = $album_album_handler->get($clean_album_id);
