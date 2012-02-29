@@ -1,12 +1,12 @@
 <a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" rel="lightbox" id="imglink-<{$album_images.id}>" 
 	 <{$album_image_margins}> >
-	<{resized_image file=$album_images.img width=$album_images.thumbnail_width height=$album_images.thumbnail_height fit="inside"}>
+	<{resized_image file=$album_images.img width=$thumbnail_width height=$thumbnail_height fit="inside"}>
 </a>
 
 <div style="display: none">
 	<div class="img_content" id="image-<{$album_images.id}>">
 		<title><{$album_images.title}></title>
-		<{resized_image file=$album_images.img width=$album_images.inner_width height=$album_images.inner_height fit="inside"}>
+		<{resized_image file=$album_images.img width=$image_display_width height=$image_display_height fit="inside"}>
 		<div class="img_info">
 			<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$album_images.publisher}>&nbsp;|&nbsp;
 			<{if $album_images.updated_on}>
