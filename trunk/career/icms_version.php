@@ -31,7 +31,7 @@ $modversion = array(
 					'credits'					=> "",
 					'help'						=> "",
 					'license'					=> "GNU General Public License (GPL)",
-					'official'					=> 0,
+					'official'					=> 1,
 					'dirname'					=> basename( dirname( __FILE__ ) ),
 					'modname'					=> "career",
 
@@ -42,10 +42,10 @@ $modversion = array(
 
 					/**  Development information */
 					'status_version'			=> "1.0",
-					'status'					=> "beta",
-					'date'						=> "Unreleased",
+					'status'					=> "Final",
+					'date'						=> "28.02.2012",
 					'author_word'				=> "",
-					'warning'					=> _CO_ICMS_WARNING_BETA,
+					'warning'					=> _CO_ICMS_WARNING_FINAL,
 
 					/** Contributors */
 					'developer_website_url' 	=> "http://code.google.com/p/amaryllis-modules/",
