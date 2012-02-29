@@ -94,11 +94,7 @@
 				<a class="<{if $downloads_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$downloads_url}>category.php?op=mod&category_pid=<{$downloads_single_cat.id}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
 					<img style="vertical-align: middle;" src="<{$downloads_images_url}>add_cat.png" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" alt="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>" />
 				</a>
-				<{if $downloads_upl_disclaimer}>
-					<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
-						<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
-					</div>
-				<{/if}>
+				
 			<{/if}>
 
 		<div class="downloads_cat_desc"> <{$downloads_single_cat.dsc}> </div>
