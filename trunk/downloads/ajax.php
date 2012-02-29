@@ -33,6 +33,22 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if ($downloadObj->isNew()) return FALSE;
 			$downloadObj->setVar('download_broken', TRUE);
 			$downloadObj->store(TRUE);
+			
+			if (!is_object(icms::$user)) {
+				$log_uid = 0;
+			} else {
+				$log_uid = icms::$user->getVar("uid");
+			}
+			$downloads_log_handler = icms_getModuleHandler('log', basename(dirname(__FILE__)),'downloads');
+			$logObj = $downloads_log_handler->create();
+			$logObj->setVar('log_item_id', $download_id );
+			$logObj->setVar('log_date', (time()-200) );
+			$logObj->setVar('log_uid', $log_uid);
+			$logObj->setVar('log_item', 0 );
+			$logObj->setVar('log_case', 7 );
+			$logObj->setVar('log_ip', getenv('REMOTE_ADDR'));
+			$logObj->store(TRUE);
+			
 			return redirect_header(icms_getPreviousPage(), 3, _MD_DOWNLOADS_BROKEN_REPORTED);
 			break;
 	

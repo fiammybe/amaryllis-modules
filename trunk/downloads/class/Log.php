@@ -33,13 +33,13 @@ class DownloadsLog extends icms_ipf_Object {
 		$this->quickInitVar('log_item_id', XOBJ_DTYPE_INT);
 		$this->quickInitVar('log_date', XOBJ_DTYPE_LTIME);
 		$this->quickInitVar('log_item', XOBJ_DTYPE_INT); // file = 0; category = 1
-		$this->quickInitVar('log_case', XOBJ_DTYPE_INT); // download = 0; upload/create = 1; delete = 2; updated= 3; download from mirror = 4, vote up = 5, vote down = 6,
+		$this->quickInitVar('log_case', XOBJ_DTYPE_INT); // download = 0; upload/create = 1; delete = 2; updated= 3; download from mirror = 4, vote up = 5, vote down = 6, report broken = 7
 		
 	}
 	
 	public function getLogIP() {
 		$ip = "";
-		$ip = $this->getValueFor("log_ip", "e");
+		$ip = $this->getVar("log_ip", "e");
 		$ip = icms_core_DataFilter::checkVar($ip, "ip", "ipv4");
 		return $ip;
 	}
@@ -112,6 +112,10 @@ class DownloadsLog extends icms_ipf_Object {
 			
 			case '6':
 				return 'vote down';
+				break;
+			
+			case '7':
+				return 'report broken';
 				break;
 		}
 	}

@@ -32,6 +32,11 @@ class DownloadsLogHandler extends icms_ipf_Handler {
 		
 	}
 	
+	protected function beforeInsert(&$obj){
+		$ip = $obj->getVar("log_ip", "s");
+		$ip = icms_core_DataFilter::checkVar($ip, "ip", "ipv4");
+		return TRUE;
+	}
 	
 	protected function beforeSafe(&$obj) {
 		$item_id = $obj->getVar("log_item_id");

@@ -17,7 +17,7 @@
  *
  */
 
-function editcategory($categoryObj = 0) {
+function editcategory($categoryObj = 0, $clean_category_pid = 0) {
 	global $downloads_category_handler, $icmsTpl, $downloadsConfig;
 	
 	$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(__FILE__)), "downloads");
@@ -48,7 +48,10 @@ function editcategory($categoryObj = 0) {
 		$sform->assign($icmsTpl, 'downloads_category_form');
 		$icmsTpl->assign('downloads_cat_path', $categoryObj->getVar('category_title') . ' : ' . _MD_DOWNLOADS_CATEGORY_EDIT);
 	} else {
-		$categoryObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'category_updated', 'category_publisher', 'category_submitter', 'category_approve', 'category_published_date', 'category_updated_date' ) );
+		if (!$downloads_category_handler->userCanSubmit()) {
+			redirect_header($categoryObj->getItemLink(TRUE), 3, _NOPERM);
+		}
+		$categoryObj->hideFieldFromForm(array('category_pid', 'meta_description', 'meta_keywords', 'category_updated', 'category_publisher', 'category_submitter', 'category_approve', 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar('category_published_date', (time() - 100) );
 		if($downloadsConfig['category_needs_approve'] == 1) {
 			$categoryObj->setVar('category_approve', FALSE );
@@ -57,7 +60,7 @@ function editcategory($categoryObj = 0) {
 		}
 		$categoryObj->setVar('category_submitter', $log_uid);
 		$categoryObj->setVar('category_publisher', $log_uid);
-		
+		$categoryObj->setVar('category_pid', $clean_category_pid);
 		$logObj = $downloads_log_handler->create();
 		$logObj->setVar('log_item_id', $categoryObj->getVar("category_id") );
 		$logObj->setVar('log_date', (time()-200) );
@@ -98,7 +101,7 @@ $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start', FILTER_S
 $clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_category_id = ($clean_category_id == 0 && isset($_POST['category_id'])) ? filter_input(INPUT_POST, 'category_id', FILTER_SANITIZE_NUMBER_INT) : $clean_category_id;
 $clean_category_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : FALSE;
-$clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'category_pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_category_uid ? FALSE : 0);
+$clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'category_pid', FILTER_SANITIZE_NUMBER_INT) : 0;
 
 $downloads_category_handler = icms_getModuleHandler( 'category', icms::$module -> getVar( 'dirname' ), 'downloads' );
 
@@ -113,14 +116,14 @@ if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 /**
  * Only proceed if the supplied operation is a valid operation
  */
-if(in_array($clean_op, $valid_op, TRUE) && $downloads_category_handler->userCanSubmit()) {
+if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'mod':
 			$categoryObj = $downloads_category_handler->get($clean_category_id);
 			if ($clean_category_id > 0 && $categoryObj->isNew()) {
 				redirect_header(DOWNLOADS_URL, 3, _NOPERM);
 			}
-			editcategory($categoryObj);
+			editcategory($categoryObj, $clean_category_pid);
 			
 			break;
 			
