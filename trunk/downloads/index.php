@@ -147,7 +147,7 @@ if(in_array($clean_op, $valid_op)) {
 				}
 				$download_pagenav = new icms_view_PageNav($files_count, $downloadsConfig['show_downloads'], $clean_files_start, 'file_nav', $extra_arg);
 				$icmsTpl->assign('download_pagenav', $download_pagenav->renderNav());
-				break;
+				
 			/**
 			 * if there's no valid category, retrieve a list of all primary categories
 			 */
