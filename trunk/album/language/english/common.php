@@ -71,7 +71,6 @@ define("_CO_ALBUM_IMAGES_IMG_ACTIVE", "Active?");
 define("_CO_ALBUM_IMAGES_IMG_ACTIVE_DSC", "Set 'YES' to set image online");
 define("_CO_ALBUM_IMAGES_IMG_APPROVE", "Approved?");
 define("_CO_ALBUM_IMAGES_IMG_PUBLISHER", "Uploader");
-
 /**
  * added in 1.1
  */
