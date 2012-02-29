@@ -266,7 +266,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_PORTFOLIO_THUMBNAIL_WIDTH_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> 110
+								'default' 		=> 280
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -275,7 +275,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_PORTFOLIO_THUMBNAIL_HEIGHT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> 150
+								'default' 		=> 160
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -284,7 +284,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_PORTFOLIO_DISPLAY_WIDTH_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> 280
+								'default' 		=> 600
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -293,7 +293,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_PORTFOLIO_DISPLAY_HEIGHT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> 160
+								'default' 		=> 550
 							);
 $i++;
 $modversion['config'][$i] = array(
