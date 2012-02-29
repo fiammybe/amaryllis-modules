@@ -59,7 +59,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->initCommonVar('docxode', FALSE, 1);
 		$this->quickInitVar('album_notification_sent', XOBJ_DTYPE_INT);
 		// set controls
-		$this->setControl( 'album_img_upload', 'image');
+		$this->setControl( 'album_img_upload', 'imageupload');
 		
 		$this->setControl('album_pid', array('name' => 'select', 'itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
 		$this->setControl('album_description', 'dhtmltextarea');
