@@ -22,7 +22,8 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 // general used constants
 define("_MD_PORTFOLIO_CONTACT_LINK", "View Messages ::");
 define("_MD_PORTFOLIO_ADMIN_PAGE", ":: Admin :: ");
-
+define("_MD_PORTFOLIO_CONTACT_PERM", "Permission denied");
+define("_MD_PORTFOLIO_CONTACT_PERMISSON", "Sorry, you don't have permissions to use this form. Please login or register to contact me.");
 //constants used on module home
 define("_MD_PORTFOLIO_MY_SKILLS", "My Skills");
 define("_MD_PORTFOLIO_VIEW_ALL", "View all my works");
