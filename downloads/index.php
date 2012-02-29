@@ -182,12 +182,12 @@ if(in_array($clean_op, $valid_op)) {
 			/**
 			 * check, if user can submit
 			 */
-				if($downloads_category_handler->userCanSubmit()) {
-					$icmsTpl->assign('user_submit', TRUE);
-					$icmsTpl->assign('user_submit_link', DOWNLOADS_URL . 'category.php?op=mod&amp;category_id=' . $clean_category_id);
-				} else {
-					$icmsTpl->assign('user_submit', FALSE);
-				}
+			if($downloads_category_handler->userCanSubmit()) {
+				$icmsTpl->assign('user_submit', TRUE);
+				$icmsTpl->assign('user_submit_link', DOWNLOADS_URL . 'category.php?op=mod&amp;category_id=' . $clean_category_id);
+			} else {
+				$icmsTpl->assign('user_submit', FALSE);
+			}
 			break;
 	}
 	include_once 'footer.php';

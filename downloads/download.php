@@ -18,7 +18,7 @@
  */
  
 function editdownload($downloadObj) {
-	global $downloads_download_handler, $icmsTpl, $downloadsConfig;
+	global $downloads_download_handler, $downloads_category_handler, $icmsTpl, $downloadsConfig;
 	
 	$downloads_log_handler = icms_getModuleHandler("log", basename(dirname(__FILE__)), "downloads");
 	if (!is_object(icms::$user)) {
@@ -28,6 +28,9 @@ function editdownload($downloadObj) {
 	}
 	
 	if (!$downloadObj->isNew()){
+		if (!$downloadObj->userCanEditAndDelete()) {
+			redirect_header($downloadObj->getItemLink(TRUE), 3, _NOPERM);
+		}
 		$downloadObj->hideFieldFromForm(array('download_updated', 'download_broken','download_mirror_approve', 'meta_description', 'meta_keywords', 'download_updated', 'download_publisher', 'download_submitter', 'download_approve', 'download_published_date', 'download_updated_date' ) );
 		$downloadObj->setVar( 'download_updated_date', (time() - 100) );
 		$downloadObj->setVar('download_updated', TRUE );
@@ -45,6 +48,9 @@ function editdownload($downloadObj) {
 		$sform->assign($icmsTpl, 'downloads_download_form');
 		$icmsTpl->assign('downloads_cat_path', $downloadObj->getVar('download_title') . ' > ' . _MD_DOWNLOADS_DOWNLOAD_EDIT);
 	} else {
+		if (!$downloads_category_handler->userCanSubmit()) {
+			redirect_header($downloadObj->getItemLink(TRUE), 3, _NOPERM);
+		}
 		$downloadObj->hideFieldFromForm(array('download_updated', 'download_broken','download_mirror_approve', 'meta_description', 'meta_keywords', 'download_updated', 'download_publisher', 'download_submitter', 'download_approve', 'download_published_date', 'download_updated_date' ) );
 		$downloadObj->setVar('download_published_date', (time() - 100) );
 		if($downloadsConfig['downloads_needs_approve'] == 1) {
@@ -57,8 +63,8 @@ function editdownload($downloadObj) {
 		} else {
 			$downloadObj->setVar('download_mirror_approve', TRUE );
 		}
-		$downloadObj->setVar('download_submitter', icms::$user->getVar("uid"));
-		$downloadObj->setVar('download_publisher', icms::$user->getVar("uid"));
+		$downloadObj->setVar('download_submitter', $log_uid);
+		$downloadObj->setVar('download_publisher', $log_uid);
 		
 		$logObj = $downloads_log_handler->create();
 		$logObj->setVar('log_item_id', $downloadObj->id() );
@@ -107,46 +113,41 @@ if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 $downloads_download_handler = icms_getModuleHandler("download", DOWNLOADS_DIRNAME, "downloads");
 $downloads_category_handler = icms_getModuleHandler("category", DOWNLOADS_DIRNAME, "downloads");
-$categoryObj = $downloads_category_handler->get($clean_category_id);
-if(is_object($categoryObj) && !$categoryObj->isNew() && $categoryObj->submitAccessGranted()) {
-	if (in_array($clean_op, $valid_op, TRUE)) {
-		switch ($clean_op) {
-			case('mod'):
-				$downloadObj = $downloads_download_handler->get($clean_download_id);
-				if ($clean_download_id > 0 && $downloadObj->isNew()) {
-					redirect_header(DOWNLOADS_URL, 3, _NO_PERM);
-				}
-				editdownload($downloadObj);
-				break;
-			
-			case('adddownload'):
+
+if (in_array($clean_op, $valid_op, TRUE)) {
+	switch ($clean_op) {
+		case('mod'):
+			$downloadObj = $downloads_download_handler->get($clean_download_id);
+			if ($clean_download_id > 0 && $downloadObj->isNew()) {
+				redirect_header(DOWNLOADS_URL, 3, _NO_PERM);
+			}
+			editdownload($downloadObj);
+			break;
+		
+		case('adddownload'):
+			if (!icms::$security->check()) {
+				redirect_header('index.php', 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
+			}
+			$downloadObj = $downloads_download_handler->get($clean_download_id);
+			$downloadObj->sendDownloadNotification('file_submitted');
+			$controller = new icms_ipf_Controller($downloads_download_handler);
+			$controller->storeFromDefaultForm(_MD_DOWNLOADS_DOWNLOAD_CREATED, _MD_DOWNLOADS_DOWNLOAD_MODIFIED);
+			break;
+		case('del'):
+			$downloadObj = $downloads_download_handler->get($clean_download_id);
+			if (!$downloadObj->userCanEditAndDelete()) {
+				redirect_header($downloadObj->getItemLink(TRUE), 3, _NO_PERM);
+			}
+			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {
 					redirect_header('index.php', 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 				}
-				$downloadObj = $downloads_download_handler->get($clean_download_id);
-				$downloadObj->sendDownloadNotification('file_submitted');
-				$controller = new icms_ipf_Controller($downloads_download_handler);
-				$controller->storeFromDefaultForm(_MD_DOWNLOADS_DOWNLOAD_CREATED, _MD_DOWNLOADS_DOWNLOAD_MODIFIED);
-				break;
-			case('del'):
-				$downloadObj = $downloads_download_handler->get($clean_download_id);
-				if (!$downloadObj->userCanEditAndDelete()) {
-					redirect_header($downloadObj->getItemLink(TRUE), 3, _NO_PERM);
-				}
-				if (isset($_POST['confirm'])) {
-					if (!icms::$security->check()) {
-						redirect_header('index.php', 3, _MD_DOWNLOADS_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
-					}
-				}
-				$controller = new icms_ipf_Controller($downloads_download_handler);
-				$controller->handleObjectDeletionFromUserSide();
-				break;
-		}
-	} else {
-		redirect_header(DOWNLOADS_URL, 3, _NOPERM);
+			}
+			$controller = new icms_ipf_Controller($downloads_download_handler);
+			$controller->handleObjectDeletionFromUserSide();
+			break;
 	}
 } else {
 	redirect_header(DOWNLOADS_URL, 3, _NOPERM);
 }
-
 include_once "footer.php";

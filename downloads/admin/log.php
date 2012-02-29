@@ -47,7 +47,8 @@ if (in_array($clean_op, $valid_op, TRUE)){
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item_id', FALSE, FALSE, 'getLogItemId' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_item', FALSE, FALSE, 'getLogItem' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'log_case',FALSE, FALSE, 'getLogCase' ) );
-			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', FALSE, 'getLogDate' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_date', 'center', 50, 'getLogDate' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'log_ip', 'center', 50, 'getLogIP' ) );
 			$objectTable->setDefaultOrder("DESC");
 			$objectTable->setDefaultSort("log_date");
 			$icmsAdminTpl->assign( 'downloads_log_table', $objectTable->fetch() );

@@ -134,9 +134,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$show = $downloads_download_handler -> changeBroken( $clean_download_id );
 			$ret = 'download.php';
 			if ($show == 0) {
-				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_OFFLINE );
+				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_ONLINE);
 			} else {
-				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_ONLINE );
+				redirect_header( DOWNLOADS_ADMIN_URL . $ret, 2, _AM_DOWNLOADS_OFFLINE);
 			}
 			break;
 		
