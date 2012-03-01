@@ -163,24 +163,28 @@ class AlbumImages extends icms_ipf_Object {
 			if($itemlink == FALSE) {
 				foreach ($tags as $tag) {
 					$tagObject = $sprockets_tag_handler->get($tag);
-					$ret[$tag] = $tagObject->getVar("title");
+					if(is_object($tagObject) && !$tagObject->isNew()) {
+						$ret[$tag] = $tagObject->getVar("title");
+					}
 				}
 			} else {
 				foreach ($tags as $tag) {
 					$tagObject = $sprockets_tag_handler->get($tag);
-					$icon = $tagObject->getVar("icon", "e");
-					$title = $tagObject->getVar("title");
-					$dsc = $tagObject->getVar("description", "s");
-					$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodehigh");
-					$dsc = icms_core_DataFilter::undoHtmlSpecialChars($dsc);
-					$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodelow");
-					if($icon != "") {
-						$ret[$tag]['icon'] = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
-					}
-					$ret[$tag]['title'] = $title;
-					$ret[$tag]['link'] = $this->getTaglink($tag);
-					if($dsc != "") {
-						$ret[$tag]['dsc'] = $dsc;
+					if(is_object($tagObject) && !$tagObject->isNew()) {
+						$icon = $tagObject->getVar("icon", "e");
+						$title = $tagObject->getVar("title");
+						$dsc = $tagObject->getVar("description", "s");
+						$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodehigh");
+						$dsc = icms_core_DataFilter::undoHtmlSpecialChars($dsc);
+						$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodelow");
+						if($icon != "") {
+							$ret[$tag]['icon'] = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
+						}
+						$ret[$tag]['title'] = $title;
+						$ret[$tag]['link'] = $this->getTaglink($tag);
+						if($dsc != "") {
+							$ret[$tag]['dsc'] = $dsc;
+						}
 					}
 				}
 			}
