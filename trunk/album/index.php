@@ -189,7 +189,7 @@ if(in_array($clean_op, $valid_op)) {
 			 * retrieve album index view
 			 */
 			} elseif ($clean_album_id == 0) {
-				$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], FALSE, $clean_album_id, FALSE, 'weight', 'ASC');
+				$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], FALSE, $clean_album_id, 0, 'weight', 'ASC');
 				$album_columns = array_chunk($albums, $albumConfig['show_album_columns']);
 				$icmsTpl->assign('album_columns', $album_columns);
 			/**
