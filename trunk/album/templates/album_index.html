@@ -60,17 +60,20 @@
 	<!-- display index heading -->
 	<{$album_index.heading}>
 	<div>
+		<{if $album_pagenav }><!-- pagination control -->
+			<{$album_pagenav}>
+		<{/if}>
 		<{foreach item=album_column from=$album_columns}>
 			<div class="album_row table_row">
-				<{if $album_pagenav }><!-- pagination control -->
-					<{$album_pagenav}>
-				<{/if}>
 				<!-- album rule -->
 				<{foreach item=album from=$album_column}>
 					<{includeq file='db:album_album.html'}>
 				<{/foreach}>
 			</div>
 		<{/foreach}>
+		<{if $album_pagenav }><!-- pagination control -->
+			<{$album_pagenav}>
+		<{/if}>
 		<{if $user_submit}>
 			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
 				<img src="<{$album_images_url}>add_cat.png" title="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />
