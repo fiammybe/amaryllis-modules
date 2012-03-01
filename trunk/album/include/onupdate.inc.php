@@ -89,15 +89,15 @@ function album_upload_paths() {
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
 	$path = ICMS_ROOT_PATH . '/uploads/album';
-		if(!is_dir($path . '/albumimages')) icms_core_Filesystem::mkdir($path . '/albumimages');
+		if(!is_dir($path . '/album')) icms_core_Filesystem::mkdir($path . '/album');
 		$categoryimages = array();
 		$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/album/images/folders/', '', array('gif', 'jpg', 'png'));
 		foreach($categoryimages as $image) {
-			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/albumimages/' . $image);
+			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/album/' . $image);
 		}
-		if(!is_dir($path . '/indeximages')) icms_core_Filesystem::mkdir($path . '/indeximages');
+		if(!is_dir($path . '/indexpage')) icms_core_Filesystem::mkdir($path . '/indexpage');
 		$image = 'album_indeximage.png';
-		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indexpage/' . $image);
 		return TRUE;
 }
 
@@ -138,8 +138,8 @@ function icms_module_update_album($module) {
     // check if upload directories exist and make them if not
 	album_upload_paths();
 	
-	$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
-	$icmsDatabaseUpdater -> moduleUpgrade($module); 
+	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
+	$icmsDatabaseUpdater -> moduleUpgrade($module);
     return TRUE;
 }
 
