@@ -59,7 +59,7 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 	}
 	
 	// some related functions for storing
-	protected function beforeSave(&$obj) {
+	protected function beforeInsert(&$obj) {
 		
 		if ($obj->getVar('index_img_upload') != '') {
 			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
