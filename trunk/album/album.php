@@ -17,7 +17,7 @@
  * 
  */
 
-function editalbum($albumObj) {
+function editalbum($albumObj = 0, $clean_album_pid = 0) {
 	global $album_album_handler, $icmsTpl, $albumConfig;
 	if(is_object(icms::$user)) {
 		$album_uid = icms::$user->getVar("uid");
@@ -28,7 +28,7 @@ function editalbum($albumObj) {
 		if (!$albumObj->userCanEditAndDelete()) {
 			redirect_header($albumObj->getItemLink(TRUE), 3, _NOPERM);
 		}
-		$albumObj->hideFieldFromForm(array('album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve', 'album_published_date', 'album_updated_date' ) );
+		$albumObj->hideFieldFromForm(array('album_pid', 'album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve'));
 		$albumObj->setVar( 'album_updated_date', (time() - 100) );
 		$albumObj->setVar('album_updated', TRUE );
 		if($albumConfig['album_needs_approval'] == 1) {
@@ -38,12 +38,12 @@ function editalbum($albumObj) {
 		}
 		$sform = $albumObj->getSecureForm(_MD_ALBUM_ALBUM_EDIT, 'addalbum');
 		$sform->assign($icmsTpl, 'album_album_form');
-		$icmsTpl->assign('album_cat_path', $albumObj->getVar('album_title') . ' > ' . _EDIT);
+		$icmsTpl->assign('album_cat_path', $albumObj->getVar('album_title') . ' > ' . _MD_ALBUM_ALBUM_EDIT);
 	} else {
 		if (!$album_album_handler->userCanSubmit()) {
 			redirect_header($categoryObj->getItemLink(TRUE), 3, _NOPERM);
 		}
-		$albumObj->hideFieldFromForm(array('album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve', 'album_published_date', 'album_updated_date') );
+		$albumObj->hideFieldFromForm(array('album_pid', 'album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve'));
 		$albumObj->setVar('album_published_date', (time() - 100) );
 		if($albumConfig['album_needs_approval'] == 1) {
 			$albumObj->setVar('album_approve', FALSE );
@@ -51,11 +51,10 @@ function editalbum($albumObj) {
 			$albumObj->setVar('album_approve', TRUE );
 		}
 		$albumObj->setVar('album_uid', $album_uid);
-		
-		
+		$albumObj->setVar('album_pid', $clean_album_pid);
 		$sform = $albumObj->getSecureForm(_MD_ALBUM_ALBUM_CREATE, 'addalbum');
 		$sform->assign($icmsTpl, 'album_album_form');
-		$icmsTpl->assign('album_cat_path', _SUBMIT);
+		$icmsTpl->assign('album_cat_path', _MD_ALBUM_ALBUM_CREATE);
 	}
 }
 
@@ -70,6 +69,7 @@ include_once ICMS_ROOT_PATH . '/header.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_album_pid = isset($_GET['album_pid']) ? filter_input(INPUT_GET, 'album_pid', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
 
 $valid_op = array ('mod', 'addalbum', 'del');
@@ -84,11 +84,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case('mod'):
 			$albumObj = $album_album_handler->get($clean_album_id);
 			if ($clean_album_id > 0 && $albumObj->isNew()) {
-				redirect_header(ALBUM_URL, 3, _NO_PERM);
+				redirect_header(ALBUM_URL, 3, _NOPERM);
 			}
-			editalbum($albumObj);
+			editalbum($albumObj, $clean_album_pid);
 			break;
-		
 		case('addalbum'):
 			if (!icms::$security->check()) {
 				redirect_header('index.php', 3, _MD_ALBUM_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
@@ -111,6 +110,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 	}
 } else {
-	redirect_header(ALBUM_URL, 3, _NO_PERM);
+	redirect_header(ALBUM_URL, 3, _NOPERM);
 }
 include_once "footer.php";
