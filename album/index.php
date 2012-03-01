@@ -225,8 +225,8 @@ if(in_array($clean_op, $valid_op)) {
 			////////////////////////////////////////////// PAGINATION ////////////////////////////////////////////////////
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
-			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$album_count = $album_album_handler->getAlbumsCount(TRUE, TRUE, TRUE, $groups, 'album_grpperm', FALSE, $clean_album_id, FALSE);
+			$album_count = $album_album_handler->getAlbumsCount(TRUE, TRUE, TRUE, $clean_album_id, FALSE);
+			$icmsTpl->assign('album_count', $album_count);
 			$images_count = $album_images_handler->getImagesCount (TRUE, TRUE, $clean_album_id);
 			if (!empty($clean_album_id)) {
 				$extra_arg = 'album_id=' . $clean_album_id;
