@@ -73,7 +73,7 @@
 				<{if $smarty.get.op == getByTags}>
 					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addmycomment&img_id=<{$album_images.id}>&tag=<{$tag_id}>" method="post">
 				<{elseif $smarty.get.op == getByPublisher}>
-					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addcommentByPublisher&img_id=<{$album_images.id}>&tag=<{$tag_id}>" method="post">
+					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addcommentByPublisher&img_id=<{$album_images.id}>&uid=<{$album_images.img_publisher}>" method="post">
 				<{else}>
 					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addcomment&img_id=<{$album_images.id}>&album_id=<{$album_images.a_id}>" method="post">
 				<{/if}>
