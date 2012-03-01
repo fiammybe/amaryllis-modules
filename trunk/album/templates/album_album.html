@@ -11,13 +11,13 @@
 	<span style="float: left; font-size: 1.1em; font-weight: bold;">
 		<{$album.itemLink}>&nbsp;&nbsp;
 		<{if $album.album_is_new}>
-			<{$album.album_is_new}>
+			<img style="vertical-align: middle;" src="<{$album.album_is_new}>" />
 		<{/if}>
 		<{if $album.album_is_updated}>
-			<{$album.album_is_updated}>
+			<img style="vertical-align: middle;" src="<{$album.album_is_updated}>" />
 		<{/if}>
 		<{if $album.album_popular}>
-			<{$album.popular}>
+			<img style="vertical-align: middle;" src="<{$album.album_popular}>" />
 		<{/if}>
 		<{if $album.userCanEditAndDelete}>
 			<{$album.editItemLink}><{$album.deleteItemLink}>

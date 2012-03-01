@@ -136,7 +136,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	}
 	
 	public function displayPopularIcon() {
-		$popular = album_display_popular($this->getVar("counter"));
+		$popular = album_display_popular($this->getVar("counter", "e"));
 		return $popular;
 	}
 	

@@ -29,7 +29,7 @@ function album_display_new($time, $timestamp) {
 	$new = ( $timestamp - ( 86400 * (int)( $albumConfig['albums_daysnew'] ) ) );
 	if ( $albumConfig['albums_daysnew'] != 0) {
 		if ( $new < $time ) {
-			$new_img = '<img src="' . ALBUM_IMAGES_URL . 'new.png" title="new" alt="new" />';
+			$new_img = ALBUM_IMAGES_URL . 'new.png';
 			
 		} else {
 			$new_img = FALSE;
@@ -45,7 +45,7 @@ function album_display_updated($time, $timestamp) {
 	$updated = ( $timestamp - ( 86400 * (int)( $albumConfig['albums_daysupdated'] ) ) );
 	if ( $albumConfig['albums_daysupdated'] != 0) {
 		if ( $updated < $time ) {
-			$updated_img = '<img src="' . ALBUM_IMAGES_URL . 'updated.png" title="updated" alt="updated" />';
+			$updated_img = ALBUM_IMAGES_URL . 'updated.png';
 			
 		} else {
 			$updated_img = FALSE;
@@ -58,16 +58,16 @@ function album_display_updated($time, $timestamp) {
 
 function album_display_popular($counter) {
 	global $albumConfig;
-	$popular = $albumConfig['albums_popular'];
+	$popular = (int)$albumConfig['albums_popular'];
 	if ( $popular != 0) {
-		if ( $popular < $counter ) {
-			$popular = '<img src="' . ALBUM_IMAGES_URL . 'popular.png" title="popular" alt="popular" />';
+		if ( $popular < (int)$counter ) {
+			$popular_img = ALBUM_IMAGES_URL . 'popular.png';
 			
 		} else {
-			$popular = FALSE;
+			$popular_img = FALSE;
 		}
 	} else {
-		$popular = FALSE;
+		$popular_img = FALSE;
 	}
-	return $popular;
+	return $popular_img;
 }
