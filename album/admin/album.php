@@ -161,7 +161,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_published_date', 'center', 100, TRUE ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_uid', 'center', FALSE, 'getPublisher' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', TRUE, 'getWeightControl' ) );
-			
+			$objectTable->setDefaultOrder("DESC");
+			$objectTable->setDefaultSort("album_published_date");
 			$objectTable->addFilter( 'album_active', 'album_active_filter' );
 			$objectTable->addFilter( 'album_approve', 'album_approve_filter' );
 			$objectTable->addFilter( 'album_inblocks', 'album_inblocks_filter' );

@@ -136,12 +136,14 @@ if($count == 0) {
 				
 				$objectTable = new icms_ipf_view_Table($album_images_handler, $criteria);
 				$objectTable->addColumn( new icms_ipf_view_Column( 'img_active', 'center', TRUE, 'img_active' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_title' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'a_id', FALSE, FALSE, 'image_aid' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'img_approve', 'center', TRUE, 'img_approve' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'img_title' ) );
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_publisher', 'center', 75, 'img_publisher' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', TRUE, 'getWeightControl' ) );
-				$objectTable->addColumn( new icms_ipf_view_Column( 'img_published_date', 'center', TRUE ) );
-				
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_published_date', 'center', TRUE, 'getPublishedDate' ) );
+				$objectTable->setDefaultOrder("DESC");
+				$objectTable->setDefaultSort("img_published_date");
 				$objectTable->addFilter( 'img_active', 'img_active_filter' );
 				$objectTable->addFilter( 'img_approve', 'img_approve_filter' );
 				$objectTable->addFilter( 'a_id', 'getAlbumList' );

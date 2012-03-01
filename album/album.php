@@ -54,7 +54,7 @@ function editalbum($albumObj = 0, $clean_album_pid = 0) {
 		$albumObj->setVar('album_pid', $clean_album_pid);
 		$sform = $albumObj->getSecureForm(_MD_ALBUM_ALBUM_CREATE, 'addalbum');
 		$sform->assign($icmsTpl, 'album_album_form');
-		$icmsTpl->assign('album_cat_path', _MD_ALBUM_ALBUM_CREATE);
+		$icmsTpl->assign('album_cat_path', $album_album_handler->getBreadcrumbForPid($clean_album_pid, 1) . ' > ' . _MD_ALBUM_ALBUM_CREATE);
 	}
 }
 
@@ -98,7 +98,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case('del'):
 			$albumObj = $album_album_handler->get($clean_album_id);
 			if (!$albumObj->userCanEditAndDelete()) {
-				redirect_header($categoryObj->getItemLink(TRUE), 3, _NOPERM);
+				redirect_header($albumObj->getItemLink(TRUE), 3, _NOPERM);
 			}
 			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {

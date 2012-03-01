@@ -39,6 +39,7 @@ $icmsTpl->assign('album_index', $index);
 /** Use a naming convention that indicates the source of the content of the variable */
 $clean_album_start = isset($_GET['album_nav']) ? (int)($_GET['album_nav']) : 0;
 $clean_img_start = isset($_GET['img_nav']) ? (int)($_GET['img_nav']) : 0;
+$clean_short_url = isset($_GET['album']) ? filter_input(INPUT_GET, 'album') : FALSE;
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
 
 $clean_img_id = isset($_GET['img_id']) ? filter_input(INPUT_GET, 'img_id', FILTER_SANITIZE_NUMBER_INT) : 0;
@@ -46,7 +47,6 @@ $clean_a_id = isset($_GET['a_id']) ? filter_input(INPUT_GET, 'a_id', FILTER_SANI
 
 $album_album_handler = icms_getModuleHandler('album', basename(dirname(__FILE__)), 'album');
 $album_images_handler = icms_getModuleHandler('images', basename(dirname(__FILE__)), 'album');
-
 
 $valid_op = array ('getByTags', 'getByPublisher', '');
 
@@ -183,8 +183,7 @@ if(in_array($clean_op, $valid_op)) {
 				if ($albumConfig['com_rule'] && $images_count > 0) {
 					$icmsTpl->assign('album_album_comment', TRUE);
 					include_once ICMS_ROOT_PATH . '/include/comment_view.php';
-				}
-				
+				}	
 			/**
 			 * retrieve album index view
 			 */
@@ -198,12 +197,9 @@ if(in_array($clean_op, $valid_op)) {
 			} else {
 				redirect_header(ALBUM_URL, 3, _NO_PERM);
 			}
-			
 			/**
 			 * check, if upload disclaimer is necessary and retrieve the link
 			 */
-			
-			
 			if($albumConfig['album_show_upl_disclaimer'] == 1) {
 				$icmsTpl->assign('album_upl_disclaimer', TRUE );
 				$icmsTpl->assign('up_disclaimer', $albumConfig['album_upl_disclaimer']);
@@ -213,7 +209,6 @@ if(in_array($clean_op, $valid_op)) {
 			/**
 			 * check, if user can submit
 			 */
-			
 			if($album_album_handler->userCanSubmit()) {
 				$icmsTpl->assign('user_submit', TRUE);
 				$icmsTpl->assign('user_submit_link', ALBUM_URL . 'album.php?op=mod&amp;album_id=' . $clean_album_id);
@@ -228,16 +223,24 @@ if(in_array($clean_op, $valid_op)) {
 			$album_count = $album_album_handler->getAlbumsCount(TRUE, TRUE, TRUE, $clean_album_id, FALSE);
 			$icmsTpl->assign('album_count', $album_count);
 			$images_count = $album_images_handler->getImagesCount (TRUE, TRUE, $clean_album_id);
-			if (!empty($clean_album_id)) {
+			if (!empty($clean_album_id) && !empty($clean_img_start)) {
+				$extra_arg = 'album_id=' . $clean_album_id . '&img_nav=' . $clean_img_start;
+			} elseif (!empty($clean_album_id) && empty($clean_img_start)) {
 				$extra_arg = 'album_id=' . $clean_album_id;
 			} else {
 				$extra_arg = FALSE;
 			}
+			if (!empty($clean_album_id) && !empty($clean_album_start)) {
+				$extra_arg2 = 'album_id=' . $clean_album_id . '&album_nav=' . $clean_album_start;
+			} elseif (!empty($clean_album_id) && empty($clean_album_start)) {
+				$extra_arg2 = 'album_id=' . $clean_album_id;
+			} else {
+				$extra_arg2 = FALSE;
+			}
 			$pagenav = new icms_view_PageNav($album_count, $albumConfig['show_albums'], $clean_album_start, 'album_nav', $extra_arg);
-			$imagesnav = new icms_view_PageNav($images_count, $albumConfig['show_images'], $clean_img_start, 'img_nav', $extra_arg);
+			$imagesnav = new icms_view_PageNav($images_count, $albumConfig['show_images'], $clean_img_start, 'img_nav', $extra_arg2);
 			$icmsTpl->assign('album_pagenav', $pagenav->renderNav());
 			$icmsTpl->assign('imgnav', $imagesnav->renderNav());
-			
 			break;
 	}
 	include_once 'footer.php';
