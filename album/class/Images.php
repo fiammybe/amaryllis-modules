@@ -105,13 +105,6 @@ class AlbumImages extends icms_ipf_Object {
 		return $control->render();
 	}
 	
-	public function userCanEditAndDelete() {
-		global $album_isAdmin;
-		if (!is_object(icms::$user)) return FALSE;
-		if ($album_isAdmin) return TRUE;
-		return $this->getVar('image_publisher', 'e') == icms::$user->getVar("uid");
-	}
-	
 	public function getImageTag($indexview = TRUE) {
 		$img = $image_tag = '';
 		$directory_name = basename(dirname( dirname( __FILE__ ) ));
@@ -213,7 +206,6 @@ class AlbumImages extends icms_ipf_Object {
 	
 	public function getUpdatedDate() {
 		global $albumConfig;
-		$date = '';
 		$date = $this->getVar('img_updated_date', 'e');
 		if($date != 0){
 			return date($albumConfig['album_dateformat'], $date);
@@ -254,6 +246,13 @@ class AlbumImages extends icms_ipf_Object {
 			return $ret;
 		}
 	}
+
+	function userCanEditAndDelete() {
+		global $album_isAdmin;
+		if (!is_object(icms::$user)) return FALSE;
+		if ($album_isAdmin) return TRUE;
+		return $this->getVar('img_publisher', 'e') == icms::$user->getVar("uid");
+	}
 	
 	public function toArray() {
 		global $albumConfig;
@@ -274,6 +273,9 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['publisher'] = $this->getPublisher(TRUE);
 		$ret['tags'] = $this->getImagesTags(TRUE);
 		$ret['messages'] = $this->getImageComments();
+		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
+		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
+		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		return $ret;
 	}
 }

@@ -59,9 +59,8 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->initCommonVar('docxode', FALSE, 1);
 		$this->quickInitVar('album_notification_sent', XOBJ_DTYPE_INT);
 		// set controls
-		$this->setControl( 'album_img_upload', 'imageupload');
-		
 		$this->setControl('album_pid', array('name' => 'select', 'itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
+		$this->setControl( 'album_img_upload', 'imageupload');
 		$this->setControl('album_description', 'dhtmltextarea');
 		$this->setControl('album_active', 'yesno');
 		$this->setControl('album_inblocks', 'yesno');
@@ -69,7 +68,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->setControl('album_approve', 'yesno');
 		$this->setControl('album_updated', 'yesno');
 		$this->setControl('album_uid', 'user');
-		$this->setControl('album_img', array( 'name' => 'select', 'itemHandler' => 'album', 'method' => 'getImageList', 'module' => 'album'));
+		$this->setControl('album_img', array('name' => 'select', 'itemHandler' => 'album', 'method' => 'getImageList', 'module' => 'album'));
 		// hide static fields from forms/single views
 		$this->hideFieldFromForm( array('album_updated_date','album_published_date','album_notification_sent', 'album_comments', 'weight', 'counter'));
 		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_comments', 'weight', 'counter'));
@@ -261,15 +260,6 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	function getPreviewItemLink() {
 		$ret = '<a href="' . ALBUM_URL . 'index.php?album_id=' . $this->getVar('album_id', 'e') . '" title="' . _AM_ALBUM_PREVIEW . '" target="_blank">' . $this->getVar('album_title') . '</a>';
 		return $ret;
-	}
-	
-	function getEditAndDelete() {
-		$album_images_handler = icms_getModuleHandler('images', basename(dirname(dirname(__FILE__))), 'album');
-		if($album_images_handler->userCanSubmit()) {
-			return ALBUM_URL . 'images.php?op=mod&amp;album_id=' . $this->id();
-		} else {
-			return FALSE;
-		}
 	}
 	
 	function toArray() {
