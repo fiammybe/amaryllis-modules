@@ -1,7 +1,8 @@
 = *Album* Changelog =
 
 == Version 1.1 => Release Date: XX.03.2012 ==
-
+* changed upload path for albumimages and indexpage
+* added possibility to filter by publisher
 * Fixed error with memory leak
 * Added comments for images
 * Added template for single images
