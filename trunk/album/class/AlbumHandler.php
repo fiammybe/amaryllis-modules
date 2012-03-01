@@ -19,8 +19,6 @@
  
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-icms_loadLanguageFile('album', 'common');
-
 class AlbumAlbumHandler extends icms_ipf_Handler {
 	
 	public $_moduleName;
