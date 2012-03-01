@@ -19,6 +19,8 @@
  
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
+icms_loadLanguageFile("album", "common");
+
 class AlbumAlbumHandler extends icms_ipf_Handler {
 	
 	public $_moduleName;
@@ -360,7 +362,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	}
 	
 	// some related functions for storing
-	protected function beforeSave(&$obj) {
+	protected function beforeInsert(&$obj) {
 		if ($obj->updating_counter)
 		return TRUE;
 		if ($obj->getVar('album_pid','e') == $obj->getVar('album_id','e')){

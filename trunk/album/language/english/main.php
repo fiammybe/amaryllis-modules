@@ -41,3 +41,6 @@ define("_MD_ALBUM_SUBMIT", "Submit");
 define("_MD_ALBUM_GET_BY_PUBLISHER", "Get more Images by");
 define("_MD_ALBUM_BY_PUBLISHER", "All images by");
 define("_MD_ALBUM_BY_TAGS", "All images by Tag");
+define("_MD_ALBUM_ALBUM_CREATED", "New album has been created. Thank you for your submission");
+define("_MD_ALBUM_ALBUM_MODIFIED", "Album has been modified");
+define("_MD_ALBUM_ALBUM_EDIT", "Edit your Album");
