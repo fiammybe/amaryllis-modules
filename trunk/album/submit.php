@@ -22,13 +22,14 @@ include_once 'header.php';
 
 include_once ICMS_ROOT_PATH . '/header.php';
 
-$valid_op = array ('addcomment', 'addmycomment');
+$valid_op = array ('addcomment', 'addmycomment', 'addcommentByPublisher');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
+		case 'addcommentByPublisher':
 		case 'addmycomment':
 		case 'addcomment':
 			$clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0;
@@ -56,6 +57,12 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 						return redirect_header(ALBUM_URL . 'index.php?op=getByTags&tag=' . $clean_tag_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, _MD_ALBUM_MESSAGE_THANKS);
 					} else {
 						return redirect_header(ALBUM_URL . 'index.php?op=getByTags&tag=' . $clean_tag_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 5, _MD_ALBUM_MESSAGE_THANKS_APPROVAL);
+					}
+				} elseif ($clean_op == 'addcommentByPublisher') {
+					if($albumConfig['message_needs_approval'] == 0) {
+						return redirect_header(ALBUM_URL . 'index.php?op=addcommentByPublishers&uid=' . $clean_uid . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, _MD_ALBUM_MESSAGE_THANKS);
+					} else {
+						return redirect_header(ALBUM_URL . 'index.php?op=addcommentByPublishers&uid=' . $clean_uid . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 5, _MD_ALBUM_MESSAGE_THANKS_APPROVAL);
 					}
 				} else {
 					if($albumConfig['message_needs_approval'] == 0) {

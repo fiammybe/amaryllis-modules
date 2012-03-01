@@ -271,6 +271,7 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['published_on'] = $this->getPublishedDate();
 		$ret['updated_on'] = $this->getUpdatedDate();
 		$ret['publisher'] = $this->getPublisher(TRUE);
+		$ret['uname'] = $this->getPublisher(FALSE);
 		$ret['tags'] = $this->getImagesTags(TRUE);
 		$ret['messages'] = $this->getImageComments();
 		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
