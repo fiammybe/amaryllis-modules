@@ -245,7 +245,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$album_img = $image_tag = '';
 		$album_img = $this->getVar('album_img', 'e');
 		if (!empty($album_img)) {
-			$image_tag = ALBUM_UPLOAD_URL . 'albumimages/' . $album_img;
+			$image_tag = ALBUM_UPLOAD_URL . 'album/' . $album_img;
 		}
 		return $image_tag;
 	}

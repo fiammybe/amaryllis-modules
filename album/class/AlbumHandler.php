@@ -29,7 +29,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		parent::__construct($db, "album", "album_id", "album_title", "album_description", "album");
 		$this->addPermission('album_grpperm', _CO_ALBUM_ALBUM_ALBUM_GRPPERM, _CO_ALBUM_ALBUM_ALBUM_GRPPERM_DSC);
 		$this->addPermission('album_uplperm', _CO_ALBUM_ALBUM_ALBUM_UPLPERM, _CO_ALBUM_ALBUM_ALBUM_UPLPERM_DSC);
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/albumimages/';
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/album';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
 	}
