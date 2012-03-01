@@ -19,8 +19,6 @@
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
-icms_loadLanguageFile('album', 'common');
-
 class AlbumAlbum extends icms_ipf_seo_Object {
 
 	public $updating_counter = FALSE;
