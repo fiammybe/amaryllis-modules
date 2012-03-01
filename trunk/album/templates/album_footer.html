@@ -3,8 +3,10 @@
 	<div class="album_adminlinks"><{$album_adminpage}></div>
 <{/if}>
 
-<!-- display indexfooter -->		
-<{$album_index.footer}>
+<!-- display indexfooter -->
+<{if $album_index.footer}>
+	<{$album_index.footer}>
+<{/if}>
 
 <!-- comment loop -->
 <{if $album_album_comment}>
