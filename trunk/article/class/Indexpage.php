@@ -58,7 +58,7 @@ class ArticleIndexpage extends icms_ipf_Object {
 		$indeximage = $image_tag = '';
 		$indeximage = $this->getVar('index_image', 'e');
 		if (!empty($indeximage)) {
-			$image_tag = ARTICLE_UPLOAD_URL . 'indeximages/' . $indeximage;
+			$image_tag = ARTICLE_UPLOAD_URL . 'indexpage/' . $indeximage;
 			return '<div class="article_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
 	}

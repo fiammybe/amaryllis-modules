@@ -99,7 +99,7 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$category_img = $image_tag = '';
 		$category_img = $this->getVar('category_image', 'e');
 		if (!empty($category_img)) {
-			$image_tag = ARTICLE_UPLOAD_URL . 'categoryimages/' . $category_img;
+			$image_tag = ARTICLE_UPLOAD_URL . 'category/' . $category_img;
 		}
 		return $image_tag;
 	}
@@ -175,19 +175,11 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-		$agroups = $gperm_handler->getGroupIds('module_admin', $module->getVar("mid"));
-		$allowed_groups = array_intersect_key($groups, $agroups);
 		$viewperm = $gperm_handler->checkRight('category_grpperm', $this->getVar('category_id', 'e'), $groups, $module->getVar("mid"));
 		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('category_publisher', 'e')) {
 			return TRUE;
 		}
-		if ($viewperm && ($this->getVar('category_active', 'e') == TRUE)) {
-			return TRUE;
-		}
-		if ($viewperm && ($this->getVar('category_approve', 'e') == TRUE)) {
-			return TRUE;
-		}
-		if ($viewperm && (count($allowed_groups) > 0)) {
+		if ($viewperm && ($this->getVar('category_active', 'e') == TRUE && ($this->getVar('category_approve', 'e') == TRUE))) {
 			return TRUE;
 		}
 		return FALSE;

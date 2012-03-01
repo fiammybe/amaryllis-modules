@@ -32,7 +32,7 @@ class ArticleIndexpageHandler extends icms_ipf_Handler {
 	 */
 	public function __construct(&$db) {
 		parent::__construct($db, "indexpage", "index_id", "index_header", "index_heading", "article");
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/indeximages/';
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/indexpage';
 		
 		$this->enableUpload(array("image/gif", "image/jpeg", "image/pjpeg", "image/png"), 512000, 800, 600);
 	}
@@ -48,7 +48,7 @@ class ArticleIndexpageHandler extends icms_ipf_Handler {
 	
 	static public function getImageList() {
 		$indeximages = array();
-		$indeximages = icms_core_Filesystem::getFileList(ARTICLE_UPLOAD_ROOT . 'indeximages/', '', array('gif', 'jpg', 'png'));
+		$indeximages = icms_core_Filesystem::getFileList(ARTICLE_UPLOAD_ROOT . 'indexpage/', '', array('gif', 'jpg', 'png'));
 		$ret = array();
 		$ret[0] = '-----------------------';
 		foreach(array_keys($indeximages) as $i ) {

@@ -32,15 +32,15 @@ function article_upload_paths() {
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
 	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
-		icms_core_Filesystem::mkdir($path . '/categoryimages');
+		if(!is_dir($path . '/category')) icms_core_Filesystem::mkdir($path . '/category');
 		$categoryimages = array();
 		$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/' . $moddir .'/images/folders/', '', array('gif', 'jpg', 'png'));
 		foreach($categoryimages as $image) {
-			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/categoryimages/' . $image);
+			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/category/' . $image);
 		}
-		icms_core_Filesystem::mkdir($path . '/indeximages');
+		icms_core_Filesystem::mkdir($path . '/indexpage');
 		$image2 = 'article_indeximage.png';
-		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2, $path . '/indeximages/' . $image2);
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2, $path . '/indexpage/' . $image2);
 }
 
 function copySitemapPlugin() {
@@ -77,6 +77,9 @@ function article_indexpage() {
 
 
 function icms_module_update_article($module) {
+	// check if upload directories exist and make them if not
+	article_upload_paths();
+	
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 	$icmsDatabaseUpdater -> moduleUpgrade($module);
     return TRUE;
