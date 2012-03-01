@@ -26,6 +26,33 @@
 	<{/if}>
 <{/if}>
 
+<{if $byPublisher}>
+	<!-- display index header -->
+	<{$album_index.header}>
+	<!-- display index heading -->
+	<{$album_index.heading}>
+	<!-- start image loop -->
+	<h2><{$smarty.const._MD_ALBUM_BY_PUBLISHER}>&nbsp;<{$pname}></h2>
+	<{if $album_image_rows}>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+		<!-- image rows -->
+		<div class="album_images">
+			<{foreach item=album_row from=$album_image_rows}>
+				<div class="album_images_row" <{$album_row_margins}> >
+					<{foreach item=album_images from=$album_row}>
+						<{includeq file='db:album_images.html'}>
+					<{/foreach}>
+				</div>
+			<{/foreach}>
+		</div>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+	<{/if}>
+<{/if}>
+
 <{if $album_columns}> <!-- album index view -->
 	<!-- display index header -->
 	<{$album_index.header}>

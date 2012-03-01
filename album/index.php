@@ -41,9 +41,6 @@ $clean_album_start = isset($_GET['album_nav']) ? (int)($_GET['album_nav']) : 0;
 $clean_img_start = isset($_GET['img_nav']) ? (int)($_GET['img_nav']) : 0;
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
 
-$clean_album_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : FALSE;
-$clean_album_pid = isset($_GET['pid']) ? filter_input(INPUT_GET, 'pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_album_uid ? FALSE : 0);
-
 $clean_img_id = isset($_GET['img_id']) ? filter_input(INPUT_GET, 'img_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_a_id = isset($_GET['a_id']) ? filter_input(INPUT_GET, 'a_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
@@ -51,7 +48,7 @@ $album_album_handler = icms_getModuleHandler('album', basename(dirname(__FILE__)
 $album_images_handler = icms_getModuleHandler('images', basename(dirname(__FILE__)), 'album');
 
 
-$valid_op = array ('getByTags', '');
+$valid_op = array ('getByTags', 'getByPublisher', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
@@ -61,7 +58,7 @@ if(in_array($clean_op, $valid_op)) {
 			$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 			if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
 				$clean_tag_id = isset($_GET['tag']) ? filter_input(INPUT_GET, 'tag', FILTER_SANITIZE_NUMBER_INT) : 0;
-				$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, icms::$module->config['show_images'], 'weight', 'ASC', FALSE, $clean_tag_id);
+				$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, $albumConfig['show_images'], 'weight', 'ASC', FALSE, $clean_tag_id);
 				$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
 				$icmsTpl->assign('album_image_rows', $album_image_rows);
 				$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
@@ -74,8 +71,8 @@ if(in_array($clean_op, $valid_op)) {
 				/**
 				 * pagination control
 				 */
-				$images_count = count($images);
-				$extra_arg = 'tag=' . $clean_tag_id;
+				$images_count = $album_images_handler->getImagesCount(TRUE, TRUE, FALSE, $clean_tag_id, FALSE);
+				$extra_arg = 'op=getByTags&tag=' . $clean_tag_id;
 				$imagesnav = new icms_view_PageNav($images_count, $albumConfig['show_images'], $clean_img_start, 'img_nav', $extra_arg);
 				$icmsTpl->assign('imgnav', $imagesnav->renderNav());
 				/**
@@ -90,7 +87,42 @@ if(in_array($clean_op, $valid_op)) {
 				}
 			}
 			break;
-		
+		case 'getByPublisher':
+			$clean_album_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : FALSE;
+			$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, $albumConfig['show_images'], 'weight', 'ASC', FALSE, FALSE, $clean_album_uid);
+			$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
+			$icmsTpl->assign('album_image_rows', $album_image_rows);
+			$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
+			$album_image_margins = 'align="center" style="display:inline-block; margin: 0px ' . $albumConfig['thumbnail_margin_right'] . 'px 0px ' . $albumConfig['thumbnail_margin_left'] . 'px;"';
+			$icmsTpl->assign('album_row_margins', $album_row_margins);
+			$icmsTpl->assign('album_image_margins', $album_image_margins);
+			$icmsTpl->assign('byPublisher', TRUE);
+			
+			$userObj = icms::handler('icms_member')->getUser($clean_album_uid);
+			$pname = $userObj->getVar("uname");
+			$icmsTpl->assign('pname', $pname);
+			/**
+			 * check, if sprockets can be used
+			 */
+			if($albumConfig['use_sprockets'] == 1) {
+				$icmsTpl->assign("sprockets_module", TRUE);
+			}
+			/**
+			 * pagination control
+			 */
+			$images_count = $album_images_handler->getImagesCount(TRUE, TRUE, FALSE, FALSE, $clean_album_uid);
+			$extra_arg = 'op=getByPublisher&uid=' . $clean_album_uid;
+			$imagesnav = new icms_view_PageNav($images_count, $albumConfig['show_images'], $clean_img_start, 'img_nav', $extra_arg);
+			$icmsTpl->assign('imgnav', $imagesnav->renderNav());
+			/**
+			 * breadcrumb
+			 */
+			if ($albumConfig['show_breadcrumbs']){
+				$icmsTpl->assign('album_cat_path', _MD_ALBUM_BY_PUBLISHER . '&nbsp;' . $pname);
+			} else{
+				$icmsTpl->assign('album_cat_path',FALSE);
+			}
+			break;
 		default:
 			if ($clean_album_id != 0) {
 				$albumObj = $album_album_handler->get($clean_album_id);
@@ -105,7 +137,7 @@ if(in_array($clean_op, $valid_op)) {
 				$album = $albumObj->toArray();
 				$icmsTpl->assign('single_album', $album);
 				
-					$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], $clean_album_uid, FALSE, $album['id'], 'weight', 'ASC');
+					$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], FALSE, FALSE, $album['id'], 'weight', 'ASC');
 					$subalbum_columns = array_chunk($albums, $albumConfig['show_album_columns']);
 					$icmsTpl->assign('subalbum_columns', $subalbum_columns);
 				
@@ -157,7 +189,7 @@ if(in_array($clean_op, $valid_op)) {
 			 * retrieve album index view
 			 */
 			} elseif ($clean_album_id == 0) {
-				$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], $clean_album_uid, $clean_album_id, $clean_album_pid, 'weight', 'ASC');
+				$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], FALSE, $clean_album_id, FALSE, 'weight', 'ASC');
 				$album_columns = array_chunk($albums, $albumConfig['show_album_columns']);
 				$icmsTpl->assign('album_columns', $album_columns);
 			/**
@@ -194,7 +226,7 @@ if(in_array($clean_op, $valid_op)) {
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
 			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$album_count = $album_album_handler->getAlbumsCount(TRUE, TRUE, TRUE, $groups, 'album_grpperm', $clean_album_uid, $clean_album_id, $clean_album_pid);
+			$album_count = $album_album_handler->getAlbumsCount(TRUE, TRUE, TRUE, $groups, 'album_grpperm', FALSE, $clean_album_id, FALSE);
 			$images_count = $album_images_handler->getImagesCount (TRUE, TRUE, $clean_album_id);
 			if (!empty($clean_album_id)) {
 				$extra_arg = 'album_id=' . $clean_album_id;

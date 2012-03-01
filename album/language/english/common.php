@@ -53,7 +53,7 @@ define("_CO_ALBUM_ALBUM_ALBUM_UPLPERM_DSC", "Select the groups to be allowed to 
 define("_CO_ALBUM_ALBUM_ALBUM_COMMENTS", "Comments");
 define("_CO_ALBUM_ALBUM_ALBUM_COMMENTS_DSC", "");
 define("_CO_ALBUM_ALBUM_ALBUM_NOTIFICATION_SENT", "Notification sent?");
-define("_CO_ALBUM_ALBUM_ALBUM_NOTIFICATION_SENT_", "");
+define("_CO_ALBUM_ALBUM_ALBUM_NOTIFICATION_SENT_DSC", "");
 
 // language constants for editing indexpage
 define("_CO_ALBUM_INDEXPAGE_INDEX_HEADER", "Title");
