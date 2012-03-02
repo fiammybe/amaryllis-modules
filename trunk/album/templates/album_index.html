@@ -92,14 +92,14 @@
 	<!-- album title -->
 	<div class="album_album_title"><{$single_album.title}></div>
 	<{if $single_album.album_is_new}>
-		<{$single_album.album_is_new}>
-	<{/if}>
-	<{if $single_album.album_is_updated}>
-		<{$single_album.album_is_updated}>
-	<{/if}>
-	<{if $single_album.album_popular}>
-		<{$single_album.popular}>
-	<{/if}>
+			<img style="vertical-align: middle;" src="<{$single_album.album_is_new}>" />
+		<{/if}>
+		<{if $single_album.album_is_updated}>
+			<img style="vertical-align: middle;" src="<{$single_album.album_is_updated}>" />
+		<{/if}>
+		<{if $single_album.album_popular}>
+			<img style="vertical-align: middle;" src="<{$single_album.album_popular}>" />
+		<{/if}>
 	<{if $single_album.userCanEditAndDelete}>
 		<{$single_album.editItemLink}><{$single_album.deleteItemLink}>
 	<{/if}>
