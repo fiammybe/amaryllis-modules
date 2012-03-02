@@ -68,7 +68,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->setControl('album_uid', 'user');
 		$this->setControl('album_img', array('name' => 'select', 'itemHandler' => 'album', 'method' => 'getImageList', 'module' => 'album'));
 		// hide static fields from forms/single views
-		$this->hideFieldFromForm( array('album_updated_date','album_published_date','album_notification_sent', 'album_comments', 'weight', 'counter'));
+		$this->hideFieldFromForm( array('album_updated_date','album_published_date','album_notification_sent', 'album_comments', 'counter'));
 		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_comments', 'weight', 'counter'));
 
 		$this->initiateSEO();
