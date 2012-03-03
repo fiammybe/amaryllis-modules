@@ -260,7 +260,6 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	public function getArticleTags() {
 		global $articleConfig;
 		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-		
 		if(icms_get_module_status("sprockets")) {
 			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
 			$criteria = new icms_db_criteria_Compo();
@@ -291,16 +290,11 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$seo = str_replace(" ", "-", $article->getVar('short_url'));
 		return $seo;
 	}
-	
-	public function getCountCriteria ($active = null, $approve = null, $groups = array(), $perm = 'article_grpperm', $article_publisher = FALSE, $article_id = FALSE, $article_cid = FALSE, $tag_id = FALSE) {
+
+	public function getCountCriteria ($active = FALSE, $approve = FALSE, $groups = array(), $perm = 'article_grpperm', $article_publisher = FALSE, $article_id = FALSE, $article_cid = FALSE, $tag_id = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
-		if (isset($active)) {
-			$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
-		}
-		if (isset($approve)) {
-			$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
-		}
-		if (is_null($article_cid)) $article_cid = 0;
+		if ($active) $criteria->add(new icms_db_criteria_Item('article_active', TRUE));
+		if($approve) $criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
 		if ($article_cid != FALSE)	{
 			$critTray = new icms_db_criteria_Compo();
 			$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));

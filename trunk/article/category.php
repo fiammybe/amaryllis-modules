@@ -21,6 +21,9 @@ function editcategory($categoryObj = 0) {
 	global $article_category_handler, $icmsTpl, $articleConfig;
 	
 	if (!$categoryObj->isNew()){
+		if(!$categoryObj->userCanEditAndDelete()) {
+			redirect_header(icms_getPreviousPage(), 3, _NOPERM);
+		}
 		$categoryObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'category_updated', 'category_publisher', 'category_submitter', 'category_active', 'category_inblocks', 'category_approve', 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar('category_updated_date', (time() - 200) );
 		$categoryObj->setVar('category_updater', icms::$user->getVar("uid"));
@@ -28,6 +31,9 @@ function editcategory($categoryObj = 0) {
 		$sform->assign($icmsTpl, 'article_category_form');
 		$icmsTpl->assign('article_cat_path', $categoryObj->getVar('category_title') . ' : ' . _MD_ARTICLE_CATEGORY_EDIT);
 	} else {
+		if(!$article_category_handler->userCanSubmit()) {
+			redirect_header(icms_getPreviousPage(), 3, _NOPERM);
+		}
 		$categoryObj->hideFieldFromForm(array('meta_description', 'meta_keywords', 'category_updated', 'category_publisher', 'category_submitter', 'category_active', 'category_inblocks', 'category_approve', 'category_published_date', 'category_updated_date' ) );
 		$categoryObj->setVar('category_published_date', (time() - 100) );
 		if($articleConfig['category_needs_approval'] == 1) {

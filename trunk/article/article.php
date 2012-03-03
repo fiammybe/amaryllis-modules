@@ -17,10 +17,13 @@
  *
  */
 
-function editarticle($articleObj) {
-	global $article_article_handler, $icmsTpl, $articleConfig;
+function editarticle($articleObj, $clean_category_id) {
+	global $article_article_handler, $article_category_handler, $icmsTpl, $articleConfig;
 	
 	if (!$articleObj->isNew()){
+		if(!$articleObj->userCanEditAndDelete()){
+			redirect_header(icms_getPreviousPage(), 3, _NOPERM);
+		}
 		$articleObj->hideFieldFromForm(array('article_updated', 'article_broken_file','article_approve', 'meta_description', 'meta_keywords', 'article_additionals', 'article_updated', 'article_submitter', 'article_inblocks', 'article_active', 'article_published_date', 'article_updated_date' ) );
 		$articleObj->setVar( 'article_updated_date', (time() - 100) );
 		$articleObj->setVar('article_updated', TRUE );
@@ -29,6 +32,10 @@ function editarticle($articleObj) {
 		$sform->assign($icmsTpl, 'article_article_form');
 		$icmsTpl->assign('article_cat_path', $articleObj->getVar('article_title') . ' > ' . _MD_ARTICLE_ARTICLE_EDIT);
 	} else {
+		$categoryObj = $article_category_handler->get($clean_category_id);
+		if(!$categoryObj->submitAccessGranted()) {
+			redirect_header(icms_getPreviousPage, 3, _NOPERM);
+		}
 		$articleObj->hideFieldFromForm(array('article_updated', 'article_broken_file','article_approve', 'meta_description', 'meta_keywords', 'article_additionals', 'article_updated', 'article_submitter', 'article_inblocks', 'article_active', 'article_published_date', 'article_updated_date' ) );
 		$articleObj->setVar('article_published_date', (time() - 100) );
 		if($articleConfig['article_needs_approval'] == 1) {
@@ -75,8 +82,8 @@ $valid_op = array ('mod', 'addarticle', 'del');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-
 $article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
+$article_category_handler = icms_getModuleHandler("category", ARTICLE_DIRNAME, "article");
 
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
@@ -85,7 +92,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if ($clean_article_id > 0 && $articleObj->isNew()) {
 				redirect_header(ARTICLE_URL, 3, _NO_PERM);
 			}
-			editarticle($articleObj);
+			editarticle($articleObj, $clean_category_id);
 			break;
 		
 		case('addarticle'):
@@ -117,6 +124,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 	}
 } else {
-	redirect_header(ARTICLE_URL, 3, _NO_PERM);
+	redirect_header(ARTICLE_URL, 3, _NOPERM);
 }
 include_once "footer.php";

@@ -69,7 +69,7 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 			$crit->add(new icms_db_criteria_Item('category_id', $category_id),'OR');
 			$criteria->add($crit);
 		}
-		if ($category_pid !== FALSE)	$criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
+		if ($category_pid !== FALSE) $criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
 		return $criteria;
 	}
 	
@@ -193,15 +193,10 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getCategoriesCount ($active = NULL, $approve = NULL, $groups = array(), $perm = 'category_grpperm', $category_publisher = FALSE, $category_id = NULL, $category_pid = NULL) {
+	public function getCategoriesCount ($active = FALSE, $approve = FALSE, $groups = array(), $perm = 'category_grpperm', $category_publisher = FALSE, $category_id = FALSE, $category_pid = NULL) {
 		$criteria = new icms_db_criteria_Compo();
-		if (isset($active)) {
-			$criteria->add(new icms_db_criteria_Item('category_active', TRUE));
-		}
-		if (isset($approve)) {
-			$criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
-		}
-		if (is_null($category_id)) $category_id = 0;
+		if ($active) $criteria->add(new icms_db_criteria_Item('category_active', TRUE));
+		if ($approve) $criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
 		if($category_id) $criteria->add(new icms_db_criteria_Item('category_id', $category_id));
 		if (is_null($category_pid)) $category_pid == 0;
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
@@ -265,7 +260,7 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		return TRUE;
 	}
 	// some related functions for storing
-	protected function beforeSave(&$obj) {
+	protected function beforeInsert(&$obj) {
 		if ($obj->updating_counter)
 		return TRUE;
 		if ($obj->getVar('category_pid','e') == $obj->getVar('category_id','e')){
@@ -274,7 +269,6 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		if (!$obj->getVar('category_image_upl') == "") {
 			$obj->setVar('category_image', $obj->getVar('category_image_upl') );
 		}
-		$obj->setVar( 'category_published_date', (time() - 300) );
 		return TRUE;
 	}
 	
@@ -287,6 +281,13 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		$category_id = $obj->id();
 		// delete global notifications
 		$notification_handler->unsubscribeByItem($module_id, $category, $category_id);
+		//delete all Articles inside Category
+		$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
+		$criteria = new icms_db_criteria_Compo();
+		$critTray = new icms_db_criteria_Compo();
+		$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $obj->id() . '";%', "LIKE"));
+		$criteria->add($critTray);
+		$article_article_handler->deleteAll($criteria);
 		return TRUE;
 	}
 
