@@ -21,7 +21,7 @@ include_once 'admin_header.php';
 icms_cp_header();
 
 icms::$module->displayAdminMenu(4, _MI_ARTICLE_MENU_PERMISSIONS);
-$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : 'viewcategory';
+$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : '';
 switch ($op) {
 	case 'viewarticle':
 		$title_of_form = _AM_ARTICLE_PREMISSION_ARTICLE_VIEW;
@@ -44,8 +44,11 @@ switch ($op) {
 		$anonymous = TRUE;
 		break;
 		
-	case 'addarticle':
-		
+	case '':
+		$title_of_form = "";
+		$perm_name = "";
+		$restriction = "";
+		$anonymous = FALSE;
 		break;
 
 }
@@ -53,6 +56,7 @@ switch ($op) {
 $opform = new icms_form_Simple('', 'opform', 'permissions.php', "get");
 $op_select = new icms_form_elements_Select("", 'op', $op);
 $op_select->setExtra('onchange="document.forms.opform.submit()"');
+$op_select->addOption('', '-------------------');
 $op_select->addOption('viewarticle', _AM_ARTICLE_PREMISSION_ARTICLE_VIEW);
 $op_select->addOption('viewcategory', _AM_ARTICLE_PREMISSION_CATEGORY_VIEW);
 $op_select->addOption('submitarticle', _AM_ARTICLE_PREMISSION_CATEGORY_SUBMIT);
@@ -72,6 +76,7 @@ if($op == 'viewarticle') {
 			$articles[$i]->getVar('article_title'));
 		}
 	}
+	$form->display();
 } elseif ($op == 'viewcategory') {
 	$article_category_handler = icms_getmodulehandler("category", ARTICLE_DIRNAME, "article");
 	$categories = $article_category_handler->getObjects(FALSE, TRUE);
@@ -81,7 +86,8 @@ if($op == 'viewarticle') {
 			$categories[$i]->getVar('category_title'));
 		}
 	}
-} else {
+	$form->display();
+} elseif ($op == 'submitarticle') {
 	$article_category_handler = icms_getmodulehandler("category", ARTICLE_DIRNAME, "article");
 	$categories = $article_category_handler->getObjects(FALSE, TRUE);
 	foreach (array_keys($categories) as $i) {
@@ -90,6 +96,7 @@ if($op == 'viewarticle') {
 			$categories[$i]->getVar('category_title'));
 		}
 	}
+	$form->display();
 }
-$form->display();
+
 icms_cp_footer();

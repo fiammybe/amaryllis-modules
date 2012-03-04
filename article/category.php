@@ -95,7 +95,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'mod':
 			$categoryObj = $article_category_handler->get($clean_category_id);
 			if ($clean_category_id > 0 && $categoryObj->isNew()) {
-				redirect_header(ARTICLE_URL, 3, _NO_PERM);
+				redirect_header(ARTICLE_URL, 3, _NOPERM);
 			}
 			editcategory($categoryObj);
 			
@@ -116,7 +116,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'del':
 			$categoryObj = $article_category_handler->get($clean_category_id);
 			if (!$categoryObj->userCanEditAndDelete()) {
-				redirect_header($categoryObj->getItemLink(TRUE), 3, _NO_PERM);
+				redirect_header($categoryObj->getItemLink(TRUE), 3, _NOPERM);
 			}
 			$icmsTpl->assign('article_cat_path', _MD_ARTICLE_CATEGORY_DELETE);
 			
