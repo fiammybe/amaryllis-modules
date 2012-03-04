@@ -227,9 +227,9 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 	public function getDownloadTags($itemlink = FALSE) {
 		global $downloadsConfig;
 		$tags = $this->getVar('download_tags', 's');
-		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-		if(icms_get_module_status("sprockets") && ($tags != "") && ($downloadsConfig['use_sprockets'] == 1)) {
-			$sprockets_tag_handler = icms_getModuleHandler ( 'tag', $sprocketsModule->getVar("dirname"), 'sprockets' );
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if(icms_get_module_status("sprockets") && $tags != "") {
+			$sprockets_tag_handler = icms_getModuleHandler ( "tag", $sprocketsModule->getVar("dirname"), "sprockets");
 			$ret = array();
 			if($itemlink == FALSE) {
 				foreach ($tags as $tag) {
@@ -246,23 +246,16 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 					$dsc = icms_core_DataFilter::undoHtmlSpecialChars($dsc);
 					$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodelow");
 					if($icon != "") {
-						$image = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
-						$ret[$tag] = '<span class="download_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag)
-									 . '" title="' . $title . '"><img width=16px height=16px src="'
-									. $image . '" title="' . $title . '" alt="' . $title . '" />&nbsp;&nbsp;' . $title . '</a></span>';
-						if($dsc != "") {
-							$ret[$tag] .= '<span class="popup_tag">' . $dsc . '</span>';
-						}
-					} else {
-						$ret[$tag] = '<span class="download_tag" original-title="' . $title . '"><a href="' . $this->getTaglink($tag) 
-									. '" title="' . $title . '">' . $title . '</a></span>';
-						if($dsc != "") {
-							$ret[$tag] .= '<span class="popup_tag">' . $dsc . '</span>';
-						}
+						$ret[$tag]['icon'] = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
+					}
+					$ret[$tag]['title'] = $title;
+					$ret[$tag]['link'] = $this->getTaglink($tag);
+					if($dsc != "") {
+						$ret[$tag]['dsc'] = $dsc;
 					}
 				}
 			}
-			return implode(" | ", $ret);
+			return $ret;
 		} else {
 			return FALSE;
 		}
