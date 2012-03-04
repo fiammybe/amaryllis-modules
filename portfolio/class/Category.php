@@ -80,7 +80,7 @@ class PortfolioCategory extends icms_ipf_Object {
 		$logo = $image_tag = '';
 		$logo = $this->getVar("category_logo", "e");
 		if (!empty($logo)) {
-			$image_tag = PORTFOLIO_UPLOAD_URL . 'categoryimages/' . $logo;
+			$image_tag = PORTFOLIO_UPLOAD_URL . 'category/' . $logo;
 			return $image_tag;
 		}
 	}

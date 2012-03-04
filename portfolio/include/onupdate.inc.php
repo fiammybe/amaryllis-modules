@@ -37,9 +37,9 @@ function portfolio_upload_paths() {
 		foreach($categoryimages as $image) {
 			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/categoryimages/' . $image);
 		}
-		icms_core_Filesystem::mkdir($path . '/indeximages');
+		icms_core_Filesystem::mkdir($path . '/indexpage');
 		$image2 = 'portfolio_indeximage.png';
-		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2, $path . '/indeximages/' . $image2);
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2, $path . '/indexpage/' . $image2);
 }
 
 function copySitemapPlugin() {
