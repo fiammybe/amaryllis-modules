@@ -39,7 +39,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		global $downloadsConfig;
 		parent::__construct($db, "download", "download_id", "download_title", "download_description", "downloads");
 		$this->addPermission('download_grpperm', _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM, _CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_GRPPERM_DSC);
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/download/';
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/download';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($allowedMimeTypes = TRUE, $downloadsConfig['image_file_size'], $downloadsConfig['image_upload_width'], $downloadsConfig['image_upload_height']);
 		
@@ -300,9 +300,8 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 		if (!$this->_download_limitations) {
 			$limitations_array = explode(",", $downloadsConfig['downloads_limitations']);
 			foreach (array_keys($limitations_array) as $i) {
-				$limitations[$limitations_array[$i]] = $limitations_array[$i];
+				$this->_download_limitations[$limitations_array[$i]] = $limitations_array[$i];
 			}
-			return $limitations;
 		}
 		return $this->_download_limitations;
 	}
@@ -313,23 +312,21 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 			$license_array = explode(",", $downloadsConfig['downloads_license']);
 			$license = array();
 			foreach (array_keys($license_array) as $i) {
-				$license[$license_array[$i]] = $license_array[$i];
+				$this->_download_license[$license_array[$i]] = $license_array[$i];
 			}
-			return $license;
 		}
 		return $this->_download_license;
 	}
 	
 	public function getDownloadPlatform() {
 		global $downloadsConfig;
-		if (!$this->_download_license) {
+		if (!$this->_download_platform) {
 			$platform_array = explode(",", $downloadsConfig['downloads_platform']);
 			foreach (array_keys($platform_array) as $i) {
-				$platform[$platform_array[$i]] = $platform_array[$i];
+				$this->_download_platform[$platform_array[$i]] = $platform_array[$i];
 			}
-			return $platform;
 		}
-		return $this->_download_license;
+		return $this->_download_platform;
 	}
 	
 	public function getLink($download_id = NULL) {

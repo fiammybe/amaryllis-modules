@@ -327,36 +327,6 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		return $control->render();
 	}
 
-	function download_limitations() {
-		$ret = $this->getVar('download_limitations', 'e');
-		$limitations = $this->handler->getDownloadLimitations();
-		return $limitations;
-	}
-	
-	function download_platform() {
-		$ret = $this->getVar('download_platform', 'e');
-		$platform = $this->handler->getDownloadPlatform();
-		return $platform;
-	}
-	
-	function download_version_status() {
-		$ret = $this->getVar('download_version_status', 'e');
-		$version_status = $this->handler->getDownloadVersionStatus();
-		return $version_status;
-	}
-	
-	function download_license() {
-		$ret = array($this->getVar('download_license', 's'));
-		$license = $this->handler->getDownloadLicense();
-		return $license;
-	}
-	
-	function download_related() {
-		$ret = array($this->getVar('download_related', 's'));
-		$related = $this->handler->getRelated();
-		return $related;
-	}
-	
 	public function getDownloadPublishedDate() {
 		global $downloadsConfig;
 		$date = $this->getVar('download_published_date', 'e');
