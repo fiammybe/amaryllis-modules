@@ -27,58 +27,20 @@ define('DOWNLOADS_DB_VERSION', 1);
 ////////////////////////////////////// SOME NEEDED FUNCTIONS ////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// AUTHORIZING MOST NEEDED FILETYPES IN SYSTEM
-function downloads_authorise_mimetypes() {
-	$dirname = icms::$module -> getVar( 'dirname' );
-	$extension_list = array(
-		"png",
-		"gif",
-		"jpg",
-		"zip",
-		"jpeg",
-		"pdf",
-		"bmp"
-		
-	);
-	$system_mimetype_handler = icms_getModuleHandler('mimetype', 'system');
-	foreach ($extension_list as $extension) {
-		$allowed_modules = array();
-		$mimetypeObj = '';
-
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add( new icms_db_criteria_Item('extension', $extension));
-		$mimetypeObj = array_shift($system_mimetype_handler->getObjects($criteria));
-
-		if ($mimetypeObj) {
-			$allowed_modules = $mimetypeObj->getVar('dirname');
-			if (empty($allowed_modules)) {
-				$mimetypeObj->setVar('dirname', $dirname);
-				$mimetypeObj->store();
-			} else {
-				if (!in_array($dirname, $allowed_modules)) {
-					$allowed_modules[] = $dirname;
-					$mimetypeObj->setVar('dirname', $allowed_modules);
-					$mimetypeObj->store();
-				}
-			}
-		}
-	}
-}
-
 function downloads_upload_paths() {
 	
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
 	$path = ICMS_ROOT_PATH . '/uploads/downloads';
-		icms_core_Filesystem::mkdir($path . '/categoryimages');
+		if(!is_dir($path . '/category')) icms_core_Filesystem::mkdir($path . '/category');
 		$categoryimages = array();
 		$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/downloads/images/folders/', '', array('gif', 'jpg', 'png'));
 		foreach($categoryimages as $image) {
-			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/categoryimages/' . $image);
+			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/category/' . $image);
 		}
-		icms_core_Filesystem::mkdir($path . '/indeximages');
+		if(!is_dir($path . '/indexpage')) icms_core_Filesystem::mkdir($path . '/indexpage');
 		$image = 'downloads_indeximage.png';
-		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indexpage/' . $image);
 		return TRUE;
 }
 
@@ -88,7 +50,7 @@ function downloads_indexpage() {
 	echo '<code>';
 	$indexpageObj->setVar('index_header', 'Shared Files');
 	$indexpageObj->setVar('index_heading', 'Here you can search our shared files.');
-	$indexpageObj->setVar('index_footer', '&copy; 2011 | Downloads module footer');
+	$indexpageObj->setVar('index_footer', '&copy; 2012 | Downloads module footer');
 	$indexpageObj->setVar('index_image', 'downloads_indeximage.png');
 	$indexpageObj->setVar('dohtml', 1);
 	$indexpageObj->setVar('doimage', 1);
@@ -115,6 +77,9 @@ function copySitemapPlugin() {
 
 
 function icms_module_update_downloads($module) {
+	// check if upload directories exist and make them if not
+	downloads_upload_paths();
+	
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 	$icmsDatabaseUpdater -> moduleUpgrade($module);
     return TRUE;
@@ -123,9 +88,6 @@ function icms_module_update_downloads($module) {
 function icms_module_install_downloads($module) {
 	// check if upload directories exist and make them if not
 	downloads_upload_paths();
-	
-	// authorise some audio mimetypes for convenience
-	downloads_authorise_mimetypes();
 	
 	//prepare indexpage
 	downloads_indexpage();
