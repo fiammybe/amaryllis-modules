@@ -33,7 +33,7 @@ class CareerIndexpageHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		parent::__construct($db, "indexpage", "index_id", "index_header", "index_heading", "career");
 
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/indeximages/';
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/indexpage';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
 		
@@ -50,7 +50,7 @@ class CareerIndexpageHandler extends icms_ipf_Handler {
 	
 	static public function getImageList() {
 		$indeximages = array();
-		$indeximages = icms_core_Filesystem::getFileList(CAREER_UPLOAD_ROOT . 'indeximages/', '', array('gif', 'jpg', 'png'));
+		$indeximages = icms_core_Filesystem::getFileList(CAREER_UPLOAD_ROOT . 'indexpage/', '', array('gif', 'jpg', 'png'));
 		$ret = array();
 		$ret[0] = '-----------------------';
 		foreach(array_keys($indeximages) as $i ) {
@@ -63,11 +63,6 @@ class CareerIndexpageHandler extends icms_ipf_Handler {
 		$footer = $obj->getVar("index_footer", "s");
 		$footer = icms_core_DataFilter::checkVar($footer, "html", "input");
 		$obj->setVar("index_footer", $footer);
-		return TRUE;
-	}
-	
-	// some related functions for storing
-	protected function beforeSave(&$obj) {
 		if ($obj->getVar('index_img_upload') != '') {
 			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
 		}
