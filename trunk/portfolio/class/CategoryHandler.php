@@ -28,7 +28,7 @@ class PortfolioCategoryHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		global $portfolioConfig;
 		parent::__construct($db, "category", "category_id", "category_title", "category_summary", "portfolio");
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/categoryimages/';
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/category';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, $portfolioConfig['logo_file_size'], $portfolioConfig['logo_upload_width'], $portfolioConfig['logo_upload_height']);
 		
@@ -72,7 +72,7 @@ class PortfolioCategoryHandler extends icms_ipf_Handler {
 	
 	static public function getImageList() {
 		$logos = array();
-		$logos = icms_core_Filesystem::getFileList(PORTFOLIO_UPLOAD_ROOT . 'categoryimages/', '', array('gif', 'jpg', 'png'));
+		$logos = icms_core_Filesystem::getFileList(PORTFOLIO_UPLOAD_ROOT . 'category/', '', array('gif', 'jpg', 'png'));
 		$ret = array();
 		$ret[0] = '-----------------------';
 		foreach(array_keys($logos) as $i ) {
