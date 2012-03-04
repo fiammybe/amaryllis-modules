@@ -46,8 +46,8 @@ class GuestbookIndexpage extends icms_ipf_Object {
 	public function getIndexImg() {
 		$indeximage = $image_tag = '';
 		$indeximage = $this->getVar('index_image', 'e');
-		if (!empty($indeximage)) {
-			$image_tag = GUESTBOOK_UPLOAD_URL . 'indeximages/' . $indeximage;
+		if (!$indeximage == 0 && !$indeximage == "") {
+			$image_tag = GUESTBOOK_UPLOAD_URL . 'indexpage/' . $indeximage;
 			return '<div class="guestbook_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
 	}
