@@ -28,7 +28,7 @@ class CareerDepartmentHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		global $careerConfig;
 		parent::__construct($db, "department", "department_id", "department_title", "department_summary", "career");
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/department/';
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/department';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, $careerConfig['logo_file_size'], $careerConfig['logo_upload_width'], $careerConfig['logo_upload_height']);
 		
