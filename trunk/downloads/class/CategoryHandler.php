@@ -34,7 +34,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		$this->addPermission('category_grpperm', _CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM, _CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM_DSC);
 		$this->addPermission('category_uplperm', _CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM, _CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM_DSC);
 		
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/categoryimages/';
+		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/category';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
 	}
@@ -173,7 +173,7 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 	
 	static public function getImageList() {
 		$categoryimages = array();
-		$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/uploads/' . icms::$module -> getVar( 'dirname' ) . '/categoryimages/', '', array('gif', 'jpg', 'png'));
+		$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/uploads/' . icms::$module -> getVar( 'dirname' ) . '/category/', '', array('gif', 'jpg', 'png'));
 		$ret = array();
 		$ret[0] = '-----------------------';
 		foreach(array_keys($categoryimages) as $i ) {
@@ -191,10 +191,9 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		if (isset($approve)) {
 			$criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
 		}
-		if (is_null($category_id)) $category_id = 0;
 		if($category_id) $criteria->add(new icms_db_criteria_Item('category_id', $category_id));
 		if (is_null($category_pid)) $category_pid == 0;
-		if($category_pid) $criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
+		$criteria->add(new icms_db_criteria_Item('category_pid', $category_pid));
 		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
 		return $this->getCount($criteria);
 	}

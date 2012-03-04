@@ -93,7 +93,7 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$category_img = $image_tag = '';
 		$category_img = $this->getVar('category_img', 'e');
 		if (!empty($category_img)) {
-			$image_tag = DOWNLOADS_UPLOAD_URL . 'categoryimages/' . $category_img;
+			$image_tag = DOWNLOADS_UPLOAD_URL . 'category/' . $category_img;
 		}
 		return $image_tag;
 	}

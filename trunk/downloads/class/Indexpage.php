@@ -45,8 +45,8 @@ class DownloadsIndexpage extends icms_ipf_seo_Object {
 	public function getIndexImg() {
 		$indeximage = $image_tag = '';
 		$indeximage = $this->getVar('index_image', 'e');
-		if (!empty($indeximage)) {
-			$image_tag = DOWNLOADS_UPLOAD_URL . 'indeximages/' . $indeximage;
+		if (!$indeximage == 0 && !$indeximage == "") {
+			$image_tag = DOWNLOADS_UPLOAD_URL . 'indexpage/' . $indeximage;
 			return '<div class="downloads_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
 	}
