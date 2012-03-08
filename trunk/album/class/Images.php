@@ -258,6 +258,20 @@ class AlbumImages extends icms_ipf_Object {
 		return $this->getVar('img_publisher', 'e') == icms::$user->getVar("uid");
 	}
 	
+	public function getMyEditItemLink() {
+		if($this->userCanEditAndDelete()) {
+			return '<a href="' . ALBUM_URL . 'images.php?op=mod&img_id=' . $this->id() . '&album_id=' . $this->getVar("a_id", "e") . '" title="' . _EDIT . '">'
+					. '<img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" /></a>';
+		}
+	}
+	
+	public function getMyDeleteItemLink() {
+		if($this->userCanEditAndDelete()) {
+			return '<a href="' . ALBUM_URL . 'images.php?op=del&img_id=' . $this->id() . '&album_id=' . $this->getVar("a_id", "e") . '" title="' . _DELETE . '">'
+					. '<img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" /></a>';
+		}
+	}
+	
 	public function toArray() {
 		global $albumConfig;
 		$ret = parent::toArray();
@@ -278,8 +292,8 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['uname'] = $this->getPublisher(FALSE);
 		$ret['tags'] = $this->getImagesTags(TRUE);
 		$ret['messages'] = $this->getImageComments();
-		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
-		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
+		$ret['editItemLink'] = $this->getMyEditItemLink();
+		$ret['deleteItemLink'] = $this->getMyDeleteItemLink();
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		return $ret;
 	}

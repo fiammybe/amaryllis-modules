@@ -61,8 +61,8 @@ include_once ICMS_ROOT_PATH . '/header.php';
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_images_id = isset($_GET['images_id']) ? filter_input(INPUT_GET, 'images_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_album_id = isset($_GET['a_id']) ? filter_input(INPUT_GET, 'a_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_images_id = isset($_GET['img_id']) ? filter_input(INPUT_GET, 'img_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
 
 $valid_op = array ('mod', 'addimages', 'del');
@@ -79,22 +79,19 @@ if(is_object($albumObj) && !$albumObj->isNew() && $albumObj->submitAccessGranted
 			case('mod'):
 				$imagesObj = $album_images_handler->get($clean_images_id);
 				if ($clean_images_id > 0 && $imagesObj->isNew()) {
-					redirect_header(ALBUM_URL, 3, _NO_PERM);
+					redirect_header(ALBUM_URL, 3, _NOPERM);
 				}
 				editimages($imagesObj, $clean_album_id);
 				break;
 			
 			case('addimages'):
-				if (!icms::$security->check()) {
-					redirect_header('index.php', 3, _MD_ALBUM_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
-				}
 				$controller = new icms_ipf_Controller($album_images_handler);
 				$controller->storeFromDefaultForm(_MD_ALBUM_IMAGES_CREATED, _MD_ALBUM_IMAGES_MODIFIED);
 				break;
 			case('del'):
 				$imagesObj = $album_images_handler->get($clean_images_id);
 				if (!$imagesObj->userCanEditAndDelete()) {
-					redirect_header($imagesObj->getItemLink(TRUE), 3, _NO_PERM);
+					redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 				}
 				if (isset($_POST['confirm'])) {
 					if (!icms::$security->check()) {
@@ -106,10 +103,10 @@ if(is_object($albumObj) && !$albumObj->isNew() && $albumObj->submitAccessGranted
 				break;
 		}
 	} else {
-		redirect_header(ALBUM_URL, 3, _NO_PERM);
+		redirect_header(ALBUM_URL, 3, _NOPERM);
 	}
 } else {
-	redirect_header(ALBUM_URL, 3, _NO_PERM);
+	redirect_header(ALBUM_URL, 3, _NOPERM);
 }
 
 if( $albumConfig['show_breadcrumbs'] == TRUE ) {
