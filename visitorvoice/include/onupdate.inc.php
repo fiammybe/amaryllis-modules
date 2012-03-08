@@ -28,7 +28,7 @@ function visitorvoice_upload_paths() {
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
 	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
-	icms_core_Filesystem::mkdir($path . '/indexpage');
+	if(!is_dir($path . '/indexpage')) icms_core_Filesystem::mkdir($path . '/indexpage');
 	$image = 'visitorvoice_indeximage.png';
 	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indexpage/' . $image);
 	return TRUE;
@@ -43,10 +43,6 @@ function visitorvoice_indexpage() {
 	$indexpageObj->setVar('index_heading', 'Welcome to our Visitorvoice!');
 	$indexpageObj->setVar('index_footer', '&copy; 2012 | Visitorvoice module footer');
 	$indexpageObj->setVar('index_image', 'visitorvoice_indeximage.png');
-	$indexpageObj->setVar('dohtml', 1);
-	$indexpageObj->setVar('doimage', 1);
-	$indexpageObj->setVar('dosmiley', 1);
-	$indexpageObj->setVar('doxcode', 1);
 	$visitorvoice_indexpage_handler -> insert( $indexpageObj, TRUE );
 	echo '&nbsp;&nbsp;-- <b>Visitorvoice Indexpage </b> successfully imported!<br />';
 	echo '</code>';
