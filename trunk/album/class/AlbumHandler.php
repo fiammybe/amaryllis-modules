@@ -362,6 +362,9 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		if (!$obj->getVar('album_img_upload') == "") {
 			$obj->setVar('album_img', $obj->getVar('album_img_upload') );
 		}
+		$dsc = $obj->getVar("album_description", "s");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
+		$obj->setVar("album_description", $dsc);
 		return TRUE;
 	}
 	
