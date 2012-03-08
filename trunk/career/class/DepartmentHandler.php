@@ -28,21 +28,10 @@ class CareerDepartmentHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		global $careerConfig;
 		parent::__construct($db, "department", "department_id", "department_title", "department_summary", "career");
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/department';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, $careerConfig['logo_file_size'], $careerConfig['logo_upload_width'], $careerConfig['logo_upload_height']);
-		
 	}
-	
-	public function getImagePath() {
-		$dir = $this->_uploadPath;
-		if (!file_exists($dir)) {
-			$moddir = basename(dirname(dirname(__FILE__)));
-			icms_core_Filesystem::mkdir($dir, "0777", '' );
-		}
-		return $dir . "/";
-	}
-	
+
 	public function getDepartmentList($active = FALSE, $shownull = FALSE) {
 		$crit = new icms_db_criteria_Compo();
 		if($active) $crit->add(new icms_db_criteria_Item("department_active", TRUE));
