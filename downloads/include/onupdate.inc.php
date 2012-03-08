@@ -52,10 +52,6 @@ function downloads_indexpage() {
 	$indexpageObj->setVar('index_heading', 'Here you can search our shared files.');
 	$indexpageObj->setVar('index_footer', '&copy; 2012 | Downloads module footer');
 	$indexpageObj->setVar('index_image', 'downloads_indeximage.png');
-	$indexpageObj->setVar('dohtml', 1);
-	$indexpageObj->setVar('doimage', 1);
-	$indexpageObj->setVar('dosmiley', 1);
-	$indexpageObj->setVar('doxcode', 1);
 	$downloads_indexpage_handler -> insert( $indexpageObj, TRUE );
 	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
 	echo '</code>';
