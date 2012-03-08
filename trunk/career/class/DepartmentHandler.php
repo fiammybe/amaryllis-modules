@@ -109,7 +109,7 @@ class CareerDepartmentHandler extends icms_ipf_Handler {
 	}
 	
 	// some related functions for storing
-	protected function beforeSave(&$obj) {
+	protected function beforeInsert(&$obj) {
 		//check, if a new logo is uploaded. If so, set new logo
 		$logo_upl = $obj->getVar("department_logo_upl", "e");
 		if ($logo_upl != '') {
