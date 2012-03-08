@@ -53,24 +53,17 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					$messageObj->setVar("message_approve", 1);
 				}
 				$album_message_handler->insert($messageObj, TRUE);
-				if($clean_op == 'addmycomment') {
-					if($albumConfig['message_needs_approval'] == 0) {
-						return redirect_header(ALBUM_URL . 'index.php?op=getByTags&tag=' . $clean_tag_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, _MD_ALBUM_MESSAGE_THANKS);
-					} else {
-						return redirect_header(ALBUM_URL . 'index.php?op=getByTags&tag=' . $clean_tag_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 5, _MD_ALBUM_MESSAGE_THANKS_APPROVAL);
-					}
-				} elseif ($clean_op == 'addcommentByPublisher') {
-					if($albumConfig['message_needs_approval'] == 0) {
-						return redirect_header(ALBUM_URL . 'index.php?op=getByPublisher&uid=' . $clean_uid . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, _MD_ALBUM_MESSAGE_THANKS);
-					} else {
-						return redirect_header(ALBUM_URL . 'index.php?op=getByPublisher&uid=' . $clean_uid . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 5, _MD_ALBUM_MESSAGE_THANKS_APPROVAL);
-					}
+				if($albumConfig['message_needs_approval'] == 0) {
+					$retm = _MD_ALBUM_MESSAGE_THANKS;
 				} else {
-					if($albumConfig['message_needs_approval'] == 0) {
-						return redirect_header(ALBUM_URL . 'index.php?album_id=' . $clean_album_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, _MD_ALBUM_MESSAGE_THANKS);
-					} else {
-						return redirect_header(ALBUM_URL . 'index.php?album_id=' . $clean_album_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 5, _MD_ALBUM_MESSAGE_THANKS_APPROVAL);
-					}
+					$retm = _MD_ALBUM_MESSAGE_THANKS_APPROVAL;
+				}
+				if($clean_op == 'addmycomment') {
+					return redirect_header(ALBUM_URL . 'index.php?op=getByTags&tag=' . $clean_tag_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, $retm);
+				} elseif ($clean_op == 'addcommentByPublisher') {
+					return redirect_header(ALBUM_URL . 'index.php?op=getByPublisher&uid=' . $clean_uid . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, $retm);
+				} else {
+					return redirect_header(ALBUM_URL . 'index.php?album_id=' . $clean_album_id . '&img_nav=' . $clean_img_start . '&imglink=' . $clean_img_id, 3, $retm);
 				}
 			} else {
 				return redirect_header(icms_getPreviousPage(), 3, _NOPERM);
