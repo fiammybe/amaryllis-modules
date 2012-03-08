@@ -115,7 +115,7 @@ if($count == 0) {
 						$album_images_handler -> insert($imagesObj);
 					}
 				}
-				$ret = 'index.php';
+				$ret = 'images.php';
 				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_WEIGHT_UPDATED);
 				break;
 				

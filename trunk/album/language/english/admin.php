@@ -60,3 +60,4 @@ define("_AM_ALBUM_ALBUM_INBLOCK_FALSE", "Album will be hidden in blocks");
  */
 define("_AM_ALBUM_PREMISSION_ALBUM_VIEW", "Album View Permissions");
 define("_AM_ALBUM_PREMISSION_IMAGES_SUBMIT", "Images Submit Permissions");
+define("_AM_ALBUM_WEIGHT_UPDATED", "Weights updated");

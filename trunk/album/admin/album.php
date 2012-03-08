@@ -132,8 +132,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					$album_album_handler -> insert($albumObj);
 				}
 			}
-			$ret = 'index.php';
-			redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_ALBUM_WEIGHTS_UPDATED);
+			$ret = 'album.php';
+			redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_WEIGHT_UPDATED);
 			break;
 			
 		default:
