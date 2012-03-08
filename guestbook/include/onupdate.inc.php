@@ -28,10 +28,10 @@ function guestbook_upload_paths() {
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
 	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
-		icms_core_Filesystem::mkdir($path . '/indexpage');
-		$image = 'guestbook_indeximage.png';
-		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indexpage/' . $image);
-		return TRUE;
+	if(!is_dir($path . '/indexpage')) icms_core_Filesystem::mkdir($path . '/indexpage');
+	$image = 'guestbook_indeximage.png';
+	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indexpage/' . $image);
+	return TRUE;
 }
 
 function guestbook_indexpage() {
@@ -42,10 +42,6 @@ function guestbook_indexpage() {
 	$indexpageObj->setVar('index_heading', 'Welcome to our Guestbook!');
 	$indexpageObj->setVar('index_footer', '&copy; 2012 | Guestbook module footer');
 	$indexpageObj->setVar('index_image', 'guestbook_indeximage.png');
-	$indexpageObj->setVar('dohtml', 1);
-	$indexpageObj->setVar('doimage', 1);
-	$indexpageObj->setVar('dosmiley', 1);
-	$indexpageObj->setVar('doxcode', 1);
 	$guestbook_indexpage_handler -> insert( $indexpageObj, TRUE );
 	echo '&nbsp;&nbsp;-- <b>Guestbook Indexpage </b> successfully imported!<br />';
 	echo '</code>';
