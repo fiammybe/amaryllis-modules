@@ -32,10 +32,10 @@ function career_upload_paths() {
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
 	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
-		icms_core_Filesystem::mkdir($path . '/indeximages');
-		$image = 'career_indeximage.png';
-		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indeximages/' . $image);
-		return TRUE;
+	if(!is_dir($path . '/indexpage')) icms_core_Filesystem::mkdir($path . '/indexpage');
+	$image = 'career_indeximage.png';
+	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indexpage/' . $image);
+	return TRUE;
 }
 
 function career_indexpage() {
@@ -46,11 +46,6 @@ function career_indexpage() {
 	$indexpageObj->setVar('index_heading', 'Here you can search our job offerings.');
 	$indexpageObj->setVar('index_footer', '&copy; 2012 | Career module footer');
 	$indexpageObj->setVar('index_image', 'career_indeximage.png');
-	$indexpageObj->setVar('dohtml', 1);
-	$indexpageObj->setVar('dobr', 1);
-	$indexpageObj->setVar('doimage', 1);
-	$indexpageObj->setVar('dosmiley', 1);
-	$indexpageObj->setVar('doxcode', 1);
 	$career_indexpage_handler -> insert( $indexpageObj, TRUE );
 	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
 	echo '</code>';
