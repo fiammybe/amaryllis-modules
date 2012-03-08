@@ -28,21 +28,10 @@ class PortfolioCategoryHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		global $portfolioConfig;
 		parent::__construct($db, "category", "category_id", "category_title", "category_summary", "portfolio");
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/category';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, $portfolioConfig['logo_file_size'], $portfolioConfig['logo_upload_width'], $portfolioConfig['logo_upload_height']);
-		
 	}
-	
-	public function getImagePath() {
-		$dir = $this->_uploadPath;
-		if (!file_exists($dir)) {
-			$moddir = basename(dirname(dirname(__FILE__)));
-			icms_core_Filesystem::mkdir($dir, "0777", '' );
-		}
-		return $dir . "/";
-	}
-	
+
 	public function getCategoryList($active = FALSE, $shownull = FALSE) {
 		$crit = new icms_db_criteria_Compo();
 		if($active) $crit->add(new icms_db_criteria_Item("category_active", TRUE));
