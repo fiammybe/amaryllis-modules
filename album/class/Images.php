@@ -40,10 +40,10 @@ class AlbumImages extends icms_ipf_Object {
 		$this->initCommonVar( 'weight', XOBJ_DTYPE_INT );
 		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->initCommonVar('dohtml', FALSE, 1);
-		$this->initCommonVar('dobr', TRUE, 1);
-		$this->initCommonVar('doimage', TRUE, 1);
-		$this->initCommonVar('dosmiley', TRUE, 1);
-		$this->initCommonVar('docxode', TRUE, 1);
+		$this->initCommonVar('dobr', FALSE, 1);
+		$this->initCommonVar('doimage', FALSE, 1);
+		$this->initCommonVar('dosmiley', FALSE, 1);
+		$this->initCommonVar('docxode', FALSE, 1);
 		
 		$this->setControl('img_active', 'yesno');
 		$this->setControl('img_approve', 'yesno');
@@ -64,8 +64,8 @@ class AlbumImages extends icms_ipf_Object {
 			$this->hideFieldFromSingleView("img_tags");
 		}
 		
-		$this->hideFieldFromForm( array('img_publisher', 'img_published_date', 'img_updated_date', 'weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode'));
-		$this->hideFieldFromSingleView(array('weight', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode'));
+		$this->hideFieldFromForm( array('img_publisher', 'img_published_date', 'img_updated_date'));
+		$this->hideFieldFromSingleView(array('dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode'));
 
 	}
 

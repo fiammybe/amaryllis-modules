@@ -109,7 +109,7 @@
 		</a>
 	<{/if}>
 	<{if $single_album.user_upload}>
-		<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$album_url}>images.php?op=mod&a_id=<{$single_album.id}>" title="<{$smarty.const._MD_ALBUM_UPLOAD}>">
+		<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$album_url}>images.php?op=mod&album_id=<{$single_album.id}>" title="<{$smarty.const._MD_ALBUM_UPLOAD}>">
 			<img style="vertical-align: middle;" src="<{$album_images_url}>add_file.png" title="<{$smarty.const._MD_ALBUM_UPLOAD}>" alt="<{$smarty.const._MD_ALBUM_UPLOAD}>" />
 		</a>
 	<{/if}>
