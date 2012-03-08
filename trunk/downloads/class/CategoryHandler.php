@@ -33,21 +33,10 @@ class DownloadsCategoryHandler extends icms_ipf_Handler {
 		parent::__construct($db, 'category', 'category_id', 'category_title', 'category_description', 'downloads');
 		$this->addPermission('category_grpperm', _CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM, _CO_DOWNLOADS_CATEGORY_CATEGORY_GRPPERM_DSC);
 		$this->addPermission('category_uplperm', _CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM, _CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM_DSC);
-		
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/category';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
 	}
-	
-	public function getImagePath() {
-		$dir = $this->_uploadPath;
-		if (!file_exists($dir)) {
-			$moddir = basename(dirname(dirname(__FILE__)));
-			icms_core_Filesystem::mkdir($dir, "0777", '' );
-		}
-		return $dir . "/";
-	}
-	
+
 	// some criterias used by other requests
 	public function getCategoryCriteria($start = 0, $limit = 0, $category_publisher = FALSE, $category_id = FALSE,  $category_pid = FALSE, $order = 'category_published_date', $sort = 'DESC') {
 		$criteria = new icms_db_criteria_Compo();
