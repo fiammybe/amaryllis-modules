@@ -32,22 +32,11 @@ class DownloadsIndexpageHandler extends icms_ipf_Handler {
 	 */
 	public function __construct(&$db) {
 		parent::__construct($db, "indexpage", "index_key", "index_header", "index_heading", "downloads");
-
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/indexpage';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
 		
 	}
-	
-	public function getImagePath() {
-		$dir = $this->_uploadPath;
-		if (!file_exists($dir)) {
-			$moddir = basename(dirname(dirname(__FILE__)));
-			icms_core_Filesystem::mkdir($dir, "0777", '' );
-		}
-		return $dir . "/";
-	}
-	
+
 	static public function getImageList() {
 		$indeximages = array();
 		$indeximages = icms_core_Filesystem::getFileList(DOWNLOADS_UPLOAD_ROOT . 'indexpage/', '', array('gif', 'jpg', 'png'));
