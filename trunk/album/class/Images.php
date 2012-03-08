@@ -154,6 +154,12 @@ class AlbumImages extends icms_ipf_Object {
 		}
 	}
 	
+	public function getImageDescription() {
+		$dsc = $this->getVar("img_description");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "output");
+		return $dsc;
+	}
+	
 	public function getImagesTags($itemlink = FALSE) {
 		$tags = $this->getVar("img_tags", "s");
 		$sprocketsModule = icms_getModuleInfo("sprockets");
@@ -281,7 +287,7 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['inner_height'] = $albumConfig['image_display_height'];
 		$ret['max_width'] = $this->getMaxWidth();
 		$ret['max_height'] = $this->getMaxHeight();
-		$ret['dsc'] = $this->getVar("img_description");
+		$ret['dsc'] = $this->getImageDescription();
 		$ret['title'] = $this->getVar("img_title");
 		$ret['img'] = $this->getImageTag(TRUE);
 		$ret['img_url'] = $this->getImageTag(FALSE);

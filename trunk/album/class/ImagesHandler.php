@@ -151,6 +151,13 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		}
 	}
 	
+	protected function beforeInsert(&$obj) {
+		$dsc = $obj->getVar("img_description", "s");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
+		$obj->setVar("img_description", $dsc);
+		return TRUE;
+	}
+	
 	protected function afterDelete(& $obj) {
 		$message_handler = icms_getModuleHandler("message", "album");
 		$criteria = new icms_db_criteria_Compo();
