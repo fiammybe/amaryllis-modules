@@ -18,13 +18,16 @@
  */
 
 function editimages($imagesObj, $clean_album_id) {
-	global $album_images_handler, $icmsTpl, $albumConfig;
+	global $album_images_handler, $album_album_handler, $icmsTpl, $albumConfig;
 	if(is_object(icms::$user)) {
 		$album_uid = icms::$user->getVar("uid");
 	} else {
 		$album_uid = 0;
 	}
 	if (!$imagesObj->isNew()){
+		if(!$imagesObj->userCanEditAndDelete()) {
+			redirect_header(icms_getPreviousPage(), 3, _NOPERM);
+		}
 		$imagesObj->hideFieldFromForm(array('a_id', 'meta_description', 'meta_keywords', 'img_publisher', 'img_active', 'img_approve', 'img_published_date', 'img_updated_date' ) );
 		$imagesObj->setVar( 'img_updated_date', (time() - 100) );
 		if($albumConfig['image_needs_approval'] == 1) {

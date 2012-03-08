@@ -187,6 +187,12 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		}
 	}
 	
+	function getAlbumDescription() {
+		$dsc = $this->getVar("album_description", "s");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "output");
+		return $dsc;
+	}
+	
 	function submitAccessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
@@ -268,7 +274,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$ret['id'] = $this->getVar('album_id');
 		$ret['title'] = $this->getVar('album_title');
 		$ret['img'] = $this->getAlbumImageTag();
-		$ret['dsc'] = $this->getVar('album_description');
+		$ret['dsc'] = $this->getAlbumDescription();
 		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
