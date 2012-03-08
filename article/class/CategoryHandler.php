@@ -33,18 +33,8 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		parent::__construct($db, 'category', 'category_id', 'category_title', 'category_description', 'article');
 		$this->addPermission('category_grpperm', _CO_ARTICLE_CATEGORY_CATEGORY_GRPPERM);
 		$this->addPermission('submit_article', _CO_ARTICLE_CATEGORY_CATEGORY_UPLPERM);
-		
-		$this->_uploadPath = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/category';
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
-	}
-	
-	public function getImagePath() {
-		$dir = $this->_uploadPath;
-		if (!file_exists($dir)) {
-			icms_core_Filesystem::mkdir($dir, '0777', '');
-		}
-		return $dir . "/";
 	}
 	
 	// retrieve a list of categories
