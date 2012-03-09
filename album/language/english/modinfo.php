@@ -124,3 +124,8 @@ define("_MI_ALBUM_MENU_PERMISSIONS", "Permissions");
 //added to config
 define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL", "New comments for images needs approval?");
 define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL_DSC", "If you need approval before publishing new comments on images, select yes");
+//added to blocks
+define("_MI_ALBUM_BLOCK_RECENT_IMAGES", "Recent Images");
+define("_MI_ALBUM_BLOCK_RECENT_IMAGES_DSC", "Display recent images of an album, a user or all recent images");
+define("_MI_ALBUM_BLOCK_SINGLE_IMAGE", "Single Image");
+define("_MI_ALBUM_BLOCK_SINGLE_IMAGE_DSC", "Display a single image in a block");

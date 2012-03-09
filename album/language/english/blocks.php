@@ -24,3 +24,11 @@ define("_MB_ALBUM_ALBUM_RECENT_LIMIT", "Number of new albums to show");
 
 if(!defined("_AM_ALBUM_ALBUM_EDIT")) define("_AM_ALBUM_ALBUM_EDIT", "Edit");
 define("_AM_ALBUM_ALBUM_DELETE", "Delete");
+
+//recent images block, added in 1.1
+define("_MB_ALBUM_SELECT_ALBUM", "Select an album to display  only images of the selected album");
+define("_MB_ALBUM_SELECT_PUBLISHER", "Select a user to display only images of the selected user");
+define("_MB_ALBUM_SORT", "Sort by:");
+define("_MB_ALBUM_ORDER", "Order by:");
+define("_MB_ALBUM_DISPLAY_SIZE", "Display width of the thumbs");
+define("_MB_ALBUM_IMAGE_RANDOM", "Random Image");
