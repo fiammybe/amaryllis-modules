@@ -83,17 +83,18 @@ define("_CO_ALBUM_IMAGES_IMG_PUBLISHER", "Uploader");
 /**
  * added in 1.1
  */
+//constants for class/Message.php
 define("_CO_ALBUM_MESSAGE_MESSAGE_UID", "User");
 define("_CO_ALBUM_MESSAGE_MESSAGE_ITEM", "Image");
 define("_CO_ALBUM_MESSAGE_MESSAGE_BODY", "Comment");
 define("_CO_ALBUM_MESSAGE_MESSAGE_DATE", "Date");
 define("_CO_ALBUM_MESSAGE_MESSAGE_APPROVE", "Approved?");
-
+// constants for admin/message.php
 define("_CO_ALBUM_MESSAGE_MESSAGE_APPROVED", "Comment approved");
 define("_CO_ALBUM_MESSAGE_MESSAGE_DENIED", "Comment denied");
-
+// constants added in class/Images.php
 define("_CO_ALBUM_IMAGES_IMG_URLLINK", "URL");
 define("_CO_ALBUM_IMAGES_IMG_URLLINK_DSC", "Enter a full url (included http://)");
-
-define("_CO_ALBUM_IMAGES_IMG_TAGS", "Tags");
-define("_CO_ALBUM_IMAGES_IMG_TAGS_DSC", "Select the tags for this album");
+// constants added in class/Album.php
+define("_CO_ALBUM_ALBUM_ALBUM_TAGS", "Tags");
+define("_CO_ALBUM_ALBUM_ALBUM_TAGS_DSC", "Select the tags for this album");

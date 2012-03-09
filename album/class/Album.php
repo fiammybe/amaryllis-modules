@@ -28,6 +28,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	 * @param AlbumAlbum $handler Object handler
 	 */
 	public function __construct(&$handler) {
+		global $albumConfig;
 		parent::__construct($handler);
 
 		$this->quickInitVar('album_id', XOBJ_DTYPE_INT, TRUE);
