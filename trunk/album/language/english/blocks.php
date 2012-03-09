@@ -27,7 +27,7 @@ define("_AM_ALBUM_ALBUM_DELETE", "Delete");
 
 //recent images block, added in 1.1
 define("_MB_ALBUM_SELECT_ALBUM", "Select an album to display  only images of the selected album");
-define("_MB_ALBUM_SELECT_PUBLISHER", "Select a user to display only images of the selected user");
+define("_MB_ALBUM_SELECT_PUBLISHER", "Select a user to display only images of the selected user. Anonymous to get from all users");
 define("_MB_ALBUM_SORT", "Sort by:");
 define("_MB_ALBUM_ORDER", "Order by:");
 define("_MB_ALBUM_DISPLAY_SIZE", "Display width of the thumbs");
