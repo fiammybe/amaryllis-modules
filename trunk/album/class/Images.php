@@ -39,6 +39,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->quickInitVar('img_approve', XOBJ_DTYPE_INT, TRUE, FALSE, FALSE,1);
 		$this->initCommonVar( 'weight', XOBJ_DTYPE_INT );
 		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
+		$this->quickInitVar('img_urllink', XOBJ_DTYPE_URLLINK);
 		$this->initCommonVar('dohtml', FALSE, 1);
 		$this->initCommonVar('dobr', FALSE, 1);
 		$this->initCommonVar('doimage', FALSE, 1);
@@ -55,7 +56,10 @@ class AlbumImages extends icms_ipf_Object {
 		$url = ICMS_URL . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$path = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$this->setImageDir($url, $path);
-		
+		if($albumConfig['need_image_links'] == 0) {
+			$this->hideFieldFromForm("img_urllink");
+			$this->hideFieldFromSingleView("img_urllink");
+		}
 		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 		if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
 			$this->setControl("img_tags", array("name" => "select_multi", "itemHandler" => "images", "method" => "getImagesTags", "module" => "album"));
@@ -223,6 +227,15 @@ class AlbumImages extends icms_ipf_Object {
 			return FALSE;
 		}
 	}
+	
+	public function getImagesURL() {
+		if($this->getVar("img_urllink") != 0) {
+			$demo = 'img_urllink';
+			$linkObj = $this-> getUrlLinkObj($demo);
+			$url = $linkObj->render();
+			return $url;
+		}
+	}
 
 	public function getMaxHeight() {
 		global $albumConfig;
@@ -239,9 +252,10 @@ class AlbumImages extends icms_ipf_Object {
 	}
 	
 	public function getImageComments() {
+		global $albumConfig;
 		$album_message_handler = icms_getModuleHandler("message", basename(dirname(dirname(__FILE__))), "album");
 		$messages = $album_message_handler->getMessages($this->getVar("img_id", "e"));
-		if($messages) {
+		if($messages && $albumConfig['use_messages'] == 1) {
 			foreach (array_keys($messages) as $message) {
 				$messageObj = $album_message_handler->get($message);
 				$date = $messageObj->getPublishedDate();
@@ -296,6 +310,7 @@ class AlbumImages extends icms_ipf_Object {
 		$ret['updated_on'] = $this->getUpdatedDate();
 		$ret['publisher'] = $this->getPublisher(TRUE);
 		$ret['uname'] = $this->getPublisher(FALSE);
+		$ret['urllink'] = $this->getImagesURL();
 		$ret['tags'] = $this->getImagesTags(TRUE);
 		$ret['messages'] = $this->getImageComments();
 		$ret['editItemLink'] = $this->getMyEditItemLink();

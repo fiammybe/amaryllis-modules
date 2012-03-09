@@ -460,6 +460,15 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'use_messages',
+								'title' 		=> '_MI_ALBUM_USE_MESSAGES',
+								'description' 	=> '_MI_ALBUM_USE_MESSAGES_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=>  1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'message_needs_approval',
 								'title' 		=> '_MI_ALBUM_MESSAGE_NEEDS_APPROVAL',
 								'description' 	=> '_MI_ALBUM_MESSAGE_NEEDS_APPROVAL_DSC',
@@ -467,6 +476,16 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'int',
 								'default' 		=>  1
 							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'need_image_links',
+								'title' 		=> '_MI_ALBUM_NEED_IMAGE_LINKS',
+								'description' 	=> '_MI_ALBUM_NEED_IMAGE_LINKS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=>  0
+							);
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////
