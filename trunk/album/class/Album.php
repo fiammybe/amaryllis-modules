@@ -34,6 +34,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->quickInitVar('album_title', XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->initCommonVar('short_url');
 		$this->quickInitVar('album_pid', XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar('album_tags', XOBJ_DTYPE_ARRAY, FALSE, FALSE, FALSE, "");
 		
 		$this->quickInitVar('album_img', XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar('album_img_upload', XOBJ_DTYPE_IMAGE);
@@ -67,6 +68,15 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->setControl('album_updated', 'yesno');
 		$this->setControl('album_uid', 'user');
 		$this->setControl('album_img', array('name' => 'select', 'itemHandler' => 'album', 'method' => 'getImageList', 'module' => 'album'));
+		
+		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
+		if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
+			$this->setControl("album_tags", array("name" => "select_multi", "itemHandler" => "album", "method" => "getAlbumTags", "module" => "album"));
+		} else {
+			$this->hideFieldFromForm("album_tags");
+			$this->hideFieldFromSingleView("album_tags");
+		}
+		
 		// hide static fields from forms/single views
 		$this->hideFieldFromForm( array('album_updated_date','album_published_date','album_notification_sent', 'album_comments', 'counter'));
 		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_comments', 'weight', 'counter'));
@@ -97,6 +107,51 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 			$ret = $album_pidArray[$ret];
 		}
 		return $ret;
+	}
+	
+	public function getAlbumTags($itemlink = FALSE) {
+		$tags = $this->getVar("album_tags", "s");
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if(icms_get_module_status("sprockets") && $tags != "") {
+			$sprockets_tag_handler = icms_getModuleHandler ( "tag", $sprocketsModule->getVar("dirname"), "sprockets");
+			$ret = array();
+			if($itemlink == FALSE) {
+				foreach ($tags as $tag) {
+					$tagObject = $sprockets_tag_handler->get($tag);
+					if(is_object($tagObject) && !$tagObject->isNew()) {
+						$ret[$tag] = $tagObject->getVar("title");
+					}
+				}
+			} else {
+				foreach ($tags as $tag) {
+					$tagObject = $sprockets_tag_handler->get($tag);
+					if(is_object($tagObject) && !$tagObject->isNew()) {
+						$icon = $tagObject->getVar("icon", "e");
+						$title = $tagObject->getVar("title");
+						$dsc = $tagObject->getVar("description", "s");
+						$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodehigh");
+						$dsc = icms_core_DataFilter::undoHtmlSpecialChars($dsc);
+						$dsc = icms_core_DataFilter::checkVar($dsc, "str", "encodelow");
+						if($icon != "") {
+							$ret[$tag]['icon'] = ICMS_URL . '/uploads/' . $sprocketsModule->getVar("dirname") . '/' . $tagObject->getVar("icon", "e");
+						}
+						$ret[$tag]['title'] = $title;
+						$ret[$tag]['link'] = $this->getTaglink($tag);
+						if($dsc != "") {
+							$ret[$tag]['dsc'] = $dsc;
+						}
+					}
+				}
+			}
+			return $ret;
+		} else {
+			return FALSE;
+		}
+	}
+	
+	public function getTagLink($tag) {
+		$link = ALBUM_URL . "index.php?op=getByTags&tag=" . $tag;
+		return $link;
 	}
 	
 	/**
@@ -279,6 +334,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['posterid'] = $this->getVar('album_uid', 'e');
+		$ret['tags'] = $this->getAlbumTags();
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['accessgranted'] = $this->accessGranted();

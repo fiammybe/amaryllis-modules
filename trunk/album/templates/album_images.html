@@ -30,7 +30,7 @@
 			(&nbsp;<{$smarty.const._MD_ALBUM_TAGS}>&nbsp;:&nbsp;
 				<div class="album_tags">
 					<{foreach item=tag from=$album_images.tags name=tags}>
-						<span class="article_tag" original-title="<{$tag.title}>">
+						<span class="image_tag" original-title="<{$tag.title}>">
 							<{if $tag.icon}>
 								<img width=16px height=16px src="<{$tag.icon}>" title="<{$tag.title}>" alt="<{$tag.title}>" />
 							<{/if}>

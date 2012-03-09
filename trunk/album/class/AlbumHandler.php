@@ -141,9 +141,22 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getUserList() {
-		$member_handler = icms::handler('icms_member');
-		
+	public function getAlbumTags() {
+		global $albumConfig;
+		$sprocketsModule = icms_getModuleInfo("sprockets");
+		if(icms_get_module_status("sprockets") && $albumConfig['use_sprockets'] == 1) {
+			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item("label_type", 0));
+			$criteria->add(new icms_db_criteria_Item("navigation_element", 0));
+			
+			$tags = $sprockets_tag_handler->getObjects(FALSE, TRUE, FALSE);
+			$ret[] = '------------';
+			foreach(array_keys($tags) as $i) {
+				$ret[$tags[$i]['tag_id']] = $tags[$i]['title'];
+			}
+			return $ret;
+		}
 	}
 	
 	//set album online/offline
