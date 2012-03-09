@@ -48,6 +48,10 @@ $i = 0;
 	$i++;
 	$headermenu[$i]['title'] = _CO_ICMS_UPDATE_MODULE;
 	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $moddir;
+	
+	$i++;
+	$headermenu[$i]['title'] = _MI_GUESTBOOK_MENU_IMPORT;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/import.php';
 
 	$i++;
 	$headermenu[$i]['title'] = _MODABOUT_ABOUT;

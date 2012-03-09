@@ -61,7 +61,4 @@ define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT_BANNED", "usual email with checking b
 define("_MI_GUESTBOOK_MENU_GUESTBOOK", "Guestbook");
 define("_MI_GUESTBOOK_MENU_INDEXPAGE", "Edit Indexpage");
 define("_MI_GUESTBOOK_MENU_TEMPLATES", "Templates");
-
-
-
-
+define("_MI_GUESTBOOK_MENU_IMPORT", "Import");
