@@ -52,14 +52,6 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	// some criterias used by other requests
-	public function getAlbumsCriteria($start = 0, $limit = 0, $album_uid = FALSE, $album_id = FALSE,  $album_pid = FALSE, $order = 'album_published_date', $sort = 'DESC') {
-		$criteria = new icms_db_criteria_Compo();
-		
-		
-		return $criteria;
-	}
-	
 	// get a album List for pid
 	public function getAlbumListForPid($groups = array(), $perm = 'album_grpperm', $status = null, $approve = null, $album_id = null, $showNull = TRUE) {
 	
@@ -147,6 +139,11 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 			$ret[$album['album_id']] = $album;
 		}
 		return $ret;
+	}
+	
+	public function getUserList() {
+		$member_handler = icms::handler('icms_member');
+		
 	}
 	
 	//set album online/offline

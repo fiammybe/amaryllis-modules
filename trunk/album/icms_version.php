@@ -165,6 +165,28 @@ $modversion['blocks'][$i]['options']		= '10';
 $modversion['blocks'][$i]['template']		= 'album_block_recent_albums.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
 
+// Recent images block
+$i++;
+$modversion['blocks'][$i]['file']			= 'album_recent_images.php';
+$modversion['blocks'][$i]['name']			= _MI_ALBUM_BLOCK_RECENT_IMAGES;
+$modversion['blocks'][$i]['description']	= _MI_ALBUM_BLOCK_RECENT_IMAGES_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_album_recent_images_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_album_recent_images_edit';
+$modversion['blocks'][$i]['options']		= '10|0|0|weight|ASC|260';	//Limit|Album|Publisher|sort|order|width|
+$modversion['blocks'][$i]['template']		= 'album_block_recent_images.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE;
+/**
+// single image block
+$i++;
+$modversion['blocks'][$i]['file']			= 'album_single_image.php';
+$modversion['blocks'][$i]['name']			= _MI_ALBUM_BLOCK_SINGLE_IMAGE;
+$modversion['blocks'][$i]['description']	= _MI_ALBUM_BLOCK_SINGLE_IMAGE_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_album_single_image_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_album_single_image_edit';
+$modversion['blocks'][$i]['options']		= '260';
+$modversion['blocks'][$i]['template']		= 'album_block_single_image.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE;
+**/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// SEARCH //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -48,14 +48,14 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 
-	public function getImages($active = NULL, $approve = NULL, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC', $a_id = NULL, $tag_id = FALSE, $publisher = FALSE) {
+	public function getImages($active = FALSE, $approve = FALSE, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC', $a_id = FALSE, $tag_id = FALSE, $publisher = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if($start) $criteria->setStart($start);
 		if($limit) $criteria->setLimit($limit);
 		$criteria->setOrder($sort);
 		$criteria->setSort($order);
-		if(isset($active)) $criteria->add(new icms_db_criteria_Item('img_active', TRUE));
-		if(isset($approve)) $criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
+		if($active) $criteria->add(new icms_db_criteria_Item('img_active', TRUE));
+		if($approve) $criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
 		if($tag_id) {
 			$critTray = new icms_db_criteria_Compo();
 			$critTray->add(new icms_db_criteria_Item("img_tags", '%:"' . $tag_id . '";%', "LIKE"));
@@ -64,7 +64,6 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		if($publisher) {
 			$criteria->add(new icms_db_criteria_Item("img_publisher", $publisher));
 		}
-		if(is_null($a_id)) $a_id = 0;
 		if($a_id)$criteria->add(new icms_db_criteria_Item('a_id', $a_id));
 		$images = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
