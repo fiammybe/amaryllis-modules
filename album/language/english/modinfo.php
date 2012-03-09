@@ -124,6 +124,10 @@ define("_MI_ALBUM_MENU_PERMISSIONS", "Permissions");
 //added to config
 define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL", "New comments for images needs approval?");
 define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL_DSC", "If you need approval before publishing new comments on images, select yes");
+define("_MI_ALBUM_USE_MESSAGES", "Use a comment system for single images?");
+define("_MI_ALBUM_USE_MESSAGES_DSC", "Allow, disallow comments for single images.");
+define("_MI_ALBUM_NEED_IMAGE_LINKS", "Do you need a field for adding an url to single images?");
+define("_MI_ALBUM_NEED_IMAGE_LINKS_DSC", "Set yes, to get a new field to add a url-link to a product site to single images");
 //added to blocks
 define("_MI_ALBUM_BLOCK_RECENT_IMAGES", "Recent Images");
 define("_MI_ALBUM_BLOCK_RECENT_IMAGES_DSC", "Display recent images of an album, a user or all recent images");

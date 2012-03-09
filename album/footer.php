@@ -30,7 +30,7 @@ $icmsTpl->assign('album_url', ALBUM_URL);
 $icmsTpl->assign('album_module_home', '<a href="' . ALBUM_URL . '" title="' . icms::$module->getVar("name") . '">' . icms::$module->getVar("name") . '</a>');
 $icmsTpl->assign('album_images_url', ALBUM_IMAGES_URL);
 $icmsTpl->assign('dirname', icms::$module -> getVar( 'dirname' ) );
-
+$icmsTpl->assign('use_image_comments', $albumConfig['use_messages']);
 /**
  * force js-files to header
  */

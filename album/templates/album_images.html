@@ -21,6 +21,9 @@
 			<{if $album_images.userCanEditAndDelete}>
 				&nbsp;|&nbsp;<{$album_images.editItemLink}><{$album_images.deleteItemLink}>
 			<{/if}>
+			<{if $album_images.urllink}>
+				<br /><{$album_images.urllink}>
+			<{/if}>
 		</div>
 		
 		<{if $sprockets_module && $album_images.tags}>
@@ -68,7 +71,7 @@
 				<{/foreach}>
 			</div>
 		<{/if}>
-		<{if $icms_isuser}>
+		<{if $icms_isuser && $use_image_comments}>
 			<div class="img_comment_form">
 				<{if $smarty.get.op == getByTags}>
 					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addmycomment&img_id=<{$album_images.id}>&tag=<{$tag_id}>" method="post">
