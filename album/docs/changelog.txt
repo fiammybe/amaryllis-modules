@@ -7,6 +7,9 @@
 * Added comments for images
 * Added template for single images
 * removed hardcoded styles from tags and moved to template
+* added urllink field to single images
+* added new block for recent images
+* added tags to albums, too
 * Updated Manual
 * Updated Language constants for
 ** /blocks.php

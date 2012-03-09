@@ -58,6 +58,9 @@ if(in_array($clean_op, $valid_op)) {
 			$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 			if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
 				$clean_tag_id = isset($_GET['tag']) ? filter_input(INPUT_GET, 'tag', FILTER_SANITIZE_NUMBER_INT) : 0;
+				/**
+				 * get images
+				 */
 				$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, $albumConfig['show_images'], 'weight', 'ASC', FALSE, $clean_tag_id);
 				$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
 				$icmsTpl->assign('album_image_rows', $album_image_rows);
@@ -68,6 +71,13 @@ if(in_array($clean_op, $valid_op)) {
 				$icmsTpl->assign('byTags', TRUE);
 				$icmsTpl->assign('tag_id', $clean_tag_id);
 				$icmsTpl->assign("sprockets_module", TRUE);
+				/**
+				 * get albums
+				 */
+				$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], FALSE, FALSE,  FALSE, 'album_published_date', 'DESC', $clean_tag_id);
+				$icmsTpl->assign("albums", $albums);
+				$album_columns = array_chunk($albums, $albumConfig['show_album_columns']);
+				$icmsTpl->assign('album_columns', $album_columns);
 				/**
 				 * pagination control
 				 */
@@ -195,7 +205,7 @@ if(in_array($clean_op, $valid_op)) {
 			 * if permissions denied for a single album, redirect to index view
 			 */
 			} else {
-				redirect_header(ALBUM_URL, 3, _NO_PERM);
+				redirect_header(ALBUM_URL, 3, _NOPERM);
 			}
 			/**
 			 * check, if upload disclaimer is necessary and retrieve the link

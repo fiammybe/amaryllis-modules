@@ -94,3 +94,6 @@ define("_CO_ALBUM_MESSAGE_MESSAGE_DENIED", "Comment denied");
 
 define("_CO_ALBUM_IMAGES_IMG_URLLINK", "URL");
 define("_CO_ALBUM_IMAGES_IMG_URLLINK_DSC", "Enter a full url (included http://)");
+
+define("_CO_ALBUM_IMAGES_IMG_TAGS", "Tags");
+define("_CO_ALBUM_IMAGES_IMG_TAGS_DSC", "Select the tags for this album");
