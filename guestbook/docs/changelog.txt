@@ -1,3 +1,5 @@
-<b><u>=> Unreleased: Version 1.0 Beta</u></b>
+= *Guestbook* Changelog =
 
-- First public release of the module.
+== Unreleased: Version 1.0 RC1 => Release-Date: xx.xx.2012 ==
+
+* First public release of the module.
