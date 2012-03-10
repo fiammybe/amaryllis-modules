@@ -77,6 +77,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		$criteria->add(new icms_db_criteria_Item('album_pid', $album_id));
 		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
 		$albums = & $this->getObjects($criteria, TRUE);
+		asort($albums);
 		$ret = array();
 		if ($showNull) {
 			$ret[0] = '-----------------------';
