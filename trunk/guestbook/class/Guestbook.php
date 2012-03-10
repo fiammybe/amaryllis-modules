@@ -78,15 +78,18 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	}
 	
 	public function getGuestbookAvatar() {
-		$review_uid = $this->getVar("guestbook_uid", "e");
-		if((int)$review_uid > 0) {
-			$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
-			$avatar_image = $avatar;
-			return $avatar_image;
-		} else {
-			$review_avatar = "blank_gravatar.png";
-			$avatar_image = GUESTBOOK_IMAGES_URL . "/" . $review_avatar;
-			return $avatar_image;
+		global $guestbookConfig;
+		if($guestbookConfig['show_avatar'] == 1) {
+			$review_uid = $this->getVar("guestbook_uid", "e");
+			if((int)$review_uid > 0) {
+				$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
+				$avatar_image = $avatar;
+				return $avatar_image;
+			} else {
+				$review_avatar = "blank_gravatar.png";
+				$avatar_image = GUESTBOOK_IMAGES_URL . "/" . $review_avatar;
+				return $avatar_image;
+			}
 		}
 	}
 	
