@@ -71,15 +71,18 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 	}
 	
 	public function getVisitorvoiceAvatar() {
-		$review_uid = $this->getVar("visitorvoice_uid", "e");
-		if((int)($review_uid > 0)) {
-			$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
-			$avatar_image = $avatar;
-			return $avatar_image;
-		} else {
-			$review_avatar = "blank_gravatar.png";
-			$avatar_image = VISITORVOICE_IMAGES_URL . "/" . $review_avatar;
-			return $avatar_image;
+		global $visitorvoiceConfig;
+		if($visitorvoiceConfig['show_avatar'] == 1) {
+			$review_uid = $this->getVar("visitorvoice_uid", "e");
+			if((int)($review_uid > 0)) {
+				$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
+				$avatar_image = $avatar;
+				return $avatar_image;
+			} else {
+				$review_avatar = "blank_gravatar.png";
+				$avatar_image = VISITORVOICE_IMAGES_URL . "/" . $review_avatar;
+				return $avatar_image;
+			}
 		}
 	}
 	
