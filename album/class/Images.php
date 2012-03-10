@@ -130,6 +130,17 @@ class AlbumImages extends icms_ipf_Object {
 		}
 		return $image_tag;
 	}
+	
+	public function getImagePath() {
+		$img = $image_tag = '';
+		$img = $this->getVar('img_url', 'e');
+		if (!$img == "") {
+			$image_tag = ICMS_URL . '/uploads/album/images/' . $img;
+		} else {
+			$image_tag = FALSE;
+		}
+		return $image_tag;
+	}
 
 	public function img_publisher() {
 		return icms_member_user_Handler::getUserLink($this->getVar('img_publisher', 'e'));
@@ -295,16 +306,17 @@ class AlbumImages extends icms_ipf_Object {
 	public function toArray() {
 		global $albumConfig;
 		$ret = parent::toArray();
-		$ret['thumbnail_width'] = $albumConfig['thumbnail_width'];
-		$ret['thumbnail_height'] = $albumConfig['thumbnail_height'];
-		$ret['inner_width'] = $albumConfig['image_display_width'];
-		$ret['inner_height'] = $albumConfig['image_display_height'];
+		$ret['thumbnail_width'] = (int)$albumConfig['thumbnail_width'];
+		$ret['thumbnail_height'] = (int)$albumConfig['thumbnail_height'];
+		$ret['inner_width'] = (int)$albumConfig['image_display_width'];
+		$ret['inner_height'] = (int)$albumConfig['image_display_height'];
 		$ret['max_width'] = $this->getMaxWidth();
 		$ret['max_height'] = $this->getMaxHeight();
 		$ret['dsc'] = $this->getImageDescription();
 		$ret['title'] = $this->getVar("img_title");
 		$ret['img'] = $this->getImageTag(TRUE);
 		$ret['img_url'] = $this->getImageTag(FALSE);
+		$ret['img_path'] = $this->getImagePath();
 		$ret['id'] = $this->getVar("img_id");
 		$ret['published_on'] = $this->getPublishedDate();
 		$ret['updated_on'] = $this->getUpdatedDate();
