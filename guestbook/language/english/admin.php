@@ -33,3 +33,5 @@ define("_AM_GUESTBOOK_GUESTBOOK_MODIFIED", "The guestbook was successfully modif
 define("_AM_GUESTBOOK_GUESTBOOK_CREATED", "The guestbook has been successfully created.");
 define("_AM_GUESTBOOK_GUESTBOOK_VIEW", "Guestbook info");
 define("_AM_GUESTBOOK_GUESTBOOK_VIEW_DSC", "Here is the info about this guestbook.");
+define("_AM_GUESTBOOK_APPROVE_FALSE", "Denied");
+define("_AM_GUESTBOOK_APPROVE_TRUE", "Approved");
