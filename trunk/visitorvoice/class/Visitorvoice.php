@@ -74,11 +74,11 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$review_uid = $this->getVar("visitorvoice_uid", "e");
 		if((int)($review_uid > 0)) {
 			$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
-			$avatar_image = "<img src='" . $avatar . "' alt='avatar' />";
+			$avatar_image = $avatar;
 			return $avatar_image;
 		} else {
-			$review_avatar = "blank.gif";
-			$avatar_image = "<img src='" . ICMS_UPLOAD_URL . "/" . $review_avatar . "' alt='avatar' />";
+			$review_avatar = "blank_gravatar.png";
+			$avatar_image = VISITORVOICE_IMAGES_URL . "/" . $review_avatar;
 			return $avatar_image;
 		}
 	}

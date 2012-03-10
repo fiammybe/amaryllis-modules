@@ -33,5 +33,5 @@ define("_AM_VISITORVOICE_VISITORVOICE_MODIFIED", "The VisitorVoice was successfu
 define("_AM_VISITORVOICE_VISITORVOICE_CREATED", "The VisitorVoice has been successfully created.");
 define("_AM_VISITORVOICE_VISITORVOICE_VIEW", "VisitorVoice info");
 define("_AM_VISITORVOICE_VISITORVOICE_VIEW_DSC", "Here is the info about this VisitorVoice.");
-define("_AM_VISITORVOICE_APPROVE_FALSE", "Offline");
-define("_AM_VISITORVOICE_APPROVE_TRUE", "Online");
+define("_AM_VISITORVOICE_APPROVE_FALSE", "Approved");
+define("_AM_VISITORVOICE_APPROVE_TRUE", "Denied");
