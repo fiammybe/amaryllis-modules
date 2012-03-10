@@ -39,7 +39,7 @@ define("_MI_GUESTBOOK_ALLOW_IMAGEUPLOAD", "Do you like to allow image upload?");
 define("_MI_GUESTBOOK_ALLOW_IMAGEUPLOAD_DSC", "");
 define("_MI_GUESTBOOK_IMAGE_UPLOAD_WIDTH", "Max Image Upload Width");
 define("_MI_GUESTBOOK_IMAGE_UPLOAD_WIDTH_DSC", "");
-define("_MI_GUESTBOOK_IMAGE_UPLOAD_HEIGHT", "Max Image Upload Heigfht");
+define("_MI_GUESTBOOK_IMAGE_UPLOAD_HEIGHT", "Max Image Upload Height");
 define("_MI_GUESTBOOK_IMAGE_UPLOAD_HEIGHT_DSC", "");
 define("_MI_GUESTBOOK_IMAGE_FILE_SIZE", "Maximum allowed upload size");
 define("_MI_GUESTBOOK_IMAGE_FILE_SIZE_DSC", "");
