@@ -80,15 +80,8 @@ $clean_guestbook_id = isset($_GET['guestbook_id']) ? filter_input(INPUT_GET, 'gu
 $entries = $guestbook_guestbook_handler -> getEntries(TRUE ,$clean_guestbook_id, $clean_start, $guestbookConfig["show_entries"], 'guestbook_published_date', 'DESC');
 $icmsTpl->assign("entries", $entries);
 if($guestbookConfig['use_moderation'] == 1) {
-	
-		$icmsTpl->assign("reply_link", TRUE);
-	
+	$icmsTpl->assign("reply_link", TRUE);
 }
-
-if($guestbookConfig["show_avatar"] == 1) {
-	$icmsTpl->assign("show_avatar", TRUE);
-}
-
 if($guestbookConfig["guest_entry"] == 1) {
 	$icmsTpl->assign("link_class", TRUE);
 	$icmsTpl->assign("submit_link", GUESTBOOK_URL . "submit.php?op=addentry");
