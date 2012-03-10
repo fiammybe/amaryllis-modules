@@ -60,3 +60,4 @@ define("_MI_VISITORVOICE_DISPLAY_MAIL_IMGPROT_BANNED", "usual email with checkin
 define("_MI_VISITORVOICE_MENU_VISITORVOICE", "VisitorVoice");
 define("_MI_VISITORVOICE_MENU_INDEXPAGE", "Edit Indexpage");
 define("_MI_VISITORVOICE_MENU_TEMPLATES", "Templates");
+define("_MI_VISITORVOIVE_MENU_IMPORT", "Import");
