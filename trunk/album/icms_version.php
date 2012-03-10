@@ -172,7 +172,7 @@ $modversion['blocks'][$i]['name']			= _MI_ALBUM_BLOCK_RECENT_IMAGES;
 $modversion['blocks'][$i]['description']	= _MI_ALBUM_BLOCK_RECENT_IMAGES_DSC;
 $modversion['blocks'][$i]['show_func']		= 'b_album_recent_images_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_album_recent_images_edit';
-$modversion['blocks'][$i]['options']		= '10|0|0|weight|ASC|260';	//Limit|Album|Publisher|sort|order|width|
+$modversion['blocks'][$i]['options']		= '10|0|0|weight|ASC|260|150|1|1';	//Limit|Album|Publisher|sort|order|width|height|horizontal|autoscroll
 $modversion['blocks'][$i]['template']		= 'album_block_recent_images.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
 /**

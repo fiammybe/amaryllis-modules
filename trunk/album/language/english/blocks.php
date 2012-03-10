@@ -32,3 +32,6 @@ define("_MB_ALBUM_SORT", "Sort by:");
 define("_MB_ALBUM_ORDER", "Order by:");
 define("_MB_ALBUM_DISPLAY_SIZE", "Display width of the thumbs");
 define("_MB_ALBUM_IMAGE_RANDOM", "Random Image");
+define("_MB_ALBUM_DISPLAY_HEIGHT", "Display height");
+define("_MB_ALBUM_HORIZONTAL", "Horizontal? (if not, it's vertical)");
+define("_MB_ALBUM_AUTOSCROLL", "Enable autoscroll?");
