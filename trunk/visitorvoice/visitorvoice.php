@@ -73,10 +73,7 @@ $clean_visitorvoice_id = isset($_GET['visitorvoice_id']) ? filter_input(INPUT_GE
 $entries = $visitorvoice_visitorvoice_handler -> getEntries(TRUE ,$clean_visitorvoice_id, $clean_start, $visitorvoiceConfig["show_entries"], 'visitorvoice_published_date', 'DESC');
 $icmsTpl->assign("entries", $entries);
 if($visitorvoiceConfig['use_moderation'] == 1) {
-		$icmsTpl->assign("reply_link", TRUE);
-}
-if($visitorvoiceConfig["show_avatar"] == 1) {
-	$icmsTpl->assign("show_avatar", TRUE);
+	$icmsTpl->assign("reply_link", TRUE);
 }
 if($visitorvoiceConfig["guest_entry"] == 1) {
 	$icmsTpl->assign("link_class", TRUE);
