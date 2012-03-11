@@ -58,6 +58,10 @@ $i = 0;
 	$headermenu[$i]['link'] = '../../system/admin.php?fct=tplsets&op=listtpl&tplset=' . $icmsConfig['template_set'] . '&moddir=' . $moddir;
 
 	$i++;
+	$headermenu[$i]['title'] = _MI_ALBUM_MENU_MANUAL;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/manual.php';
+
+	$i++;
 	$headermenu[$i]['title'] = _CO_ICMS_UPDATE_MODULE;
 	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $moddir;
 
