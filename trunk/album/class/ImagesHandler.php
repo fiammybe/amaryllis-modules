@@ -26,7 +26,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
-		parent::__construct($db, 'images', 'img_id', 'a_id', 'img_title', 'album');
+		parent::__construct($db, 'images', 'img_id', 'img_title', 'a_id', 'album');
 		global $albumConfig;
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes,	$albumConfig['image_file_size'], $albumConfig['image_upload_width'], $albumConfig['image_upload_height']);
