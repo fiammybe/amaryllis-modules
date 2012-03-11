@@ -53,7 +53,8 @@ $modversion = array(
 					'developer_email' 			=> "qm-b@hotmail.de");
 
 $modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>";
-
+$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=365]Thomas[/url]";
+$modversion['people']['translators'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// ADMINISTRATIVE INFORMATION ////////////////////////////////////////////

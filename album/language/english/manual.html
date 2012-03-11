@@ -16,8 +16,8 @@
         	#album_footer {border: 1px dotted; margin: 2em auto; padding: 0 1em 2em; --moz-border-radius: 1.5em; -webkit-border-radius: 1.5em; border-radius: 1.5em;}
         	#album_footer h2 {padding: .5em 0 0;}
         	#album_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
-        	#album_footer p a, #album_footer p a:visited {color: #336699}
-        	#album_footer p a:hover {color: #336699; text-decoration: underline;}
+        	#album_manual a, #album_manual a:visited {color: #336699}
+        	#album_manual a:hover {color: #336699; text-decoration: underline;}
         </style>
     </head>
     <body>
@@ -38,6 +38,11 @@
 	        	<li>Use Sprockets
 	        		<ul>
 	      				<li>This needs to be enabled, if you have Sprockets installed and you like to use it with Album module, be sure to have enabled Sprockets here.</li>
+	        		</ul>
+	        	</li>
+	        	<li>uploader groups
+	        		<ul>
+	        			<li>Set the group permissions for submitting Albums. For more informations about permissions in Album go to <a href="#permissions">Permissions</a> below.</li>
 	        		</ul>
 	        	</li>
 	        	<li>Album needs approval/Images needs approval
@@ -166,7 +171,7 @@
         		</li>
         	</ul>
         	<p>You have created your Album and filled up with some images? Go to module frontend and have a look.</p>
-        	<h2>Permissions</h2>
+        	<h2 id="permissions">Permissions</h2>
         	<p>Let's go back to ACP and have a look at the permission system of Album Module. Got to Album Admin -> Tab "Permissions".</p>
         	<p>Here you can set several Permissions: View Permissions for single Albums will set the view permissions per user group to each album. Just select -> submit -> done.</p>
         	<p>The same for Images and Image submit permissions. Image submit permissions will allow each group, to upload images into a single album. On front end you can see a submit icon behind each album, where you have permissions to submit. Just click the icon, if you're using the Disclaimer -> accept. Now you can enter all informations. Album id will be set by the module related on the Album, where you're submitting.</p>
