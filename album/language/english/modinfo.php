@@ -121,6 +121,7 @@ define("_MI_ALBUM_IMAGES_UPLOADNEW", "Upload a new Image");
 // added messages to menu
 define("_MI_ALBUM_MENU_MESSAGE", "Image Comments");
 define("_MI_ALBUM_MENU_PERMISSIONS", "Permissions");
+define("_MI_ALBUM_MENU_MANUAL", "Manual");
 //added to config
 define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL", "New comments for images needs approval?");
 define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL_DSC", "If you need approval before publishing new comments on images, select yes");
