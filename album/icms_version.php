@@ -29,7 +29,7 @@ $modversion = array(
 					'description'				=> _MI_ALBUM_DSC,
 					'author'					=> "QM-B &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>",
 					'credits'					=> "Thanks to McDonald for the nice index layer and also thanks to Madfish and the developers of ALBUM-Module for the code snippets, where I could see how to develope a Module using IPF!",
-					'help'						=> "",
+					'help'						=> "admin/manual.php",
 					'license'					=> "GNU General Public License (GPL)",
 					'official'					=> 1,
 					'dirname'					=> basename( dirname( __FILE__ ) ),
@@ -73,7 +73,6 @@ $modversion['adminmenu'] 	= 'admin/menu.php';
 
 $modversion['support_site_url'] = 'http://community.impresscms.org/modules/newbb/viewforum.php?forum=9';
 $modversion['support_site_name']= 'ImpressCMS Community Forum';
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// DATABASE /////////////////////////////////////////////////////
@@ -173,7 +172,7 @@ $modversion['blocks'][$i]['name']			= _MI_ALBUM_BLOCK_RECENT_IMAGES;
 $modversion['blocks'][$i]['description']	= _MI_ALBUM_BLOCK_RECENT_IMAGES_DSC;
 $modversion['blocks'][$i]['show_func']		= 'b_album_recent_images_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_album_recent_images_edit';
-$modversion['blocks'][$i]['options']		= '10|0|0|weight|ASC|260|150|1|1';	//Limit|Album|Publisher|sort|order|width|height|horizontal|autoscroll
+$modversion['blocks'][$i]['options']		= '10|0|0|weight|ASC|500|335|1|1|1';	//Limit|Album|Publisher|sort|order|width|height|horizontal|autoscroll|Description
 $modversion['blocks'][$i]['template']		= 'album_block_recent_images.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
 /**
