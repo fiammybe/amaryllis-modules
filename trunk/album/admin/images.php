@@ -155,6 +155,6 @@ if($count == 0) {
 		  		$icmsAdminTpl->display( 'db:album_admin.html' );
 				break;
 		}
-		icms_cp_footer();
+		include_once 'admin_footer.php';
 	}
 }

@@ -1,6 +1,7 @@
 <!-- Slider Kit scripts -->
 <script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/jquery.sliderkit.1.9.2.pack.js"></script>
 <script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/jquery.ae.image.resize.js"></script>
+<script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/sliderkit.imagefx.1.0.pack.js"></script>
 <!-- Slider Kit styles -->
 <link rel="stylesheet" type="text/css" href="<{$icms_url}>/modules/album/scripts/sliderkit-core.css" media="screen, projection" />
 <link rel="stylesheet" type="text/css" href="<{$icms_url}>/modules/album/scripts/sliderkit-demos.css" media="screen, projection" />
@@ -9,7 +10,7 @@
       $( ".resizeme" ).aeImageResize({ height: <{$block.display_height}>, width: <{$block.display_width}> });
     });
 </script>
-<{if $block.horizontal}>
+<{if $block.horizontal == 1}>
 	<!-- Slider Kit launch -->
 	<script type="text/javascript">
 		$(window).load(function(){ //$(window).load() must be used instead of $(document).ready() because of Webkit compatibility
@@ -31,7 +32,7 @@
 		});
 	</script>
 	
-	<div class="sliderkit photoslider-mini">
+	<div class="sliderkit photoslider-mini" style="width:<{$block.display_width}>px;height:<{$block.display_height}>px;">
 		<div class="sliderkit-panels">
 			<div class="sliderkit-btn sliderkit-go-btn sliderkit-go-prev"><a href="#" title="<{$smarty.const._PREV}>"><span><{$smarty.const._PREV}></span></a></div>
 			<div class="sliderkit-btn sliderkit-go-btn sliderkit-go-next"><a href="#" title="<{$smarty.const._NEXT}>"><span><{$smarty.const._NEXT}></span></a></div>
@@ -45,29 +46,87 @@
 			<{/foreach}>
 		</div>
 	</div>
-<{else}>
+<{elseif $block.horizontal == 2}>
+	<!-- Slider Kit launch -->
+	<script type="text/javascript">
+		$(window).load(function(){ //$(window).load() must be used instead of $(document).ready() because of Webkit compatibility
+			// Photo gallery > With captions
+			$(".photosgallery-captions").sliderkit({
+				mousewheel:false,
+				keyboard:true,
+				shownavitems:3,
+				<{if $block.autoscroll}>
+					auto:true,
+				<{else}>
+					auto:false,
+				<{/if}>
+				delaycaptions:true
+			});
+		});
+	</script>
+	<script>
+	    $(function() {
+	      $( ".resize_thumb" ).aeImageResize({ height: 50, width: 75 });
+	    });
+	</script>
+	<script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/sliderkit.delaycaptions.1.1.pack.js"></script>
+	<!-- Start photosgallery-captions -->
+	<div class="sliderkit photosgallery-captions">
+		<div class="sliderkit-nav" style="width:<{$block.display_width}>px;">
+			<div class="sliderkit-nav-clip">
+				<ul>
+					<{foreach item=image from=$block.album_images}>
+						<li>
+							<a href="#img-<{$image.id}>" rel="nofollow" title="<{$image.title}>">
+								<img class="resize_thumb" src="<{$image.img_path}>" alt="<{$image.title}>" />
+							</a>
+						</li>
+					<{/foreach}>
+				</ul>
+			</div>
+			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a rel="nofollow" href="#" title="Previous line"><span>Previous line</span></a></div>
+			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a rel="nofollow" href="#" title="Next line"><span>Next line</span></a></div>
+			<div class="sliderkit-btn sliderkit-go-btn sliderkit-go-prev"><a rel="nofollow" href="#" title="Previous photo"><span>Previous photo</span></a></div>
+			<div class="sliderkit-btn sliderkit-go-btn sliderkit-go-next"><a rel="nofollow" href="#" title="Next photo"><span>Next photo</span></a></div>
+		</div>
+		<div class="sliderkit-panels">
+			<{foreach item=image from=$block.album_images}>
+				<div class="sliderkit-panel" style="width:<{$block.display_width}>px;height:<{$block.display_height}>px;" id="img-<{$image.id}>">
+					<img class="resizeme" src="<{$image.img_path}>" alt="<{$image.title}>" />
+					<div class="sliderkit-panel-textbox">
+						<div class="sliderkit-panel-text">
+							<h4><{$image.title}></h4>
+							<p><{$image.dsc}></p>
+						</div>
+						<div class="sliderkit-panel-overlay"></div>
+					</div>
+				</div>
+			<{/foreach}>
+		</div>
+	</div>
+<{elseif $block.horizontal == 3}>
 	<!-- Slider Kit launch -->
 	<script type="text/javascript">
 		$(window).load(function(){ //$(window).load() must be used instead of $(document).ready() because of Webkit compatibility
 			// Photo slider
 			$("#photoslider-vertical").sliderkit({
-					<{if $block.autoscroll}>
-						auto:true,
-					<{else}>
-						auto:false,
-					<{/if}>
-					width:<{$block.display_width}>,
-					height:<{$block.display_height}>,
-					circular:true,
-					shownavitems:1,
-					navfx:"none",
-					panelfx:"sliding",
-					panelfxspeed:3000,
-					
-					mousewheel:true,
-					verticalnav:true,
-					verticalslide:true
-				});
+				<{if $block.autoscroll}>
+					auto:true,
+				<{else}>
+					auto:false,
+				<{/if}>
+				width:<{$block.display_width}>,
+				height:<{$block.display_height}>,
+				circular:true,
+				shownavitems:1,
+				navfx:"none",
+				panelfx:"sliding",
+				panelfxspeed:3000,
+				
+				mousewheel:true,
+				verticalnav:true,
+				verticalslide:true
+			});
 		});
 	</script>
 	
@@ -93,4 +152,153 @@
 			<{/foreach}>
 		</div>
 	</div>
+<{elseif $block.horizontal == 4}>
+	<!-- Slider Kit launch -->
+	<script type="text/javascript">
+		$(window).load(function(){ //$(window).load() must be used instead of $(document).ready() because of Webkit compatibility
+			// Photo gallery > Vertical
+			$(".photosgallery-vertical").sliderkit({
+				circular:true,
+				mousewheel:true,
+				shownavitems:4,
+				verticalnav:true,
+				navclipcenter:true,
+				<{if $block.autoscroll}>
+					auto:true
+				<{else}>
+					auto:false
+				<{/if}>
+			});
+		});
+	</script>
+	<script>
+	    $(function() {
+	      $( ".resize_thumb" ).aeImageResize({ height: 50, width: 75 });
+	    });
+	</script>
+	<script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/sliderkit.delaycaptions.1.1.pack.js"></script>
+	<div class="sliderkit photosgallery-vertical">
+		<div class="sliderkit-nav">						
+			<div class="sliderkit-nav-clip">
+				<ul>
+					<{foreach item=image from=$block.album_images}>
+						<li>
+							<a href="#img-<{$image.id}>" rel="nofollow" title="<{$image.title}>">
+								<img class="resize_thumb" src="<{$image.img_path}>" alt="<{$image.title}>" />
+							</a>
+						</li>
+					<{/foreach}>
+				</ul>
+			</div>
+			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a rel="nofollow" href="#" title="Previous line"><span>Previous</span></a></div>
+			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a rel="nofollow" href="#" title="Next line"><span>Next</span></a></div>
+		</div>
+		<div class="sliderkit-panels">
+			<{foreach item=image from=$block.album_images}>
+				<div class="sliderkit-panel" style="width:<{$block.display_width}>px;height:<{$block.display_height}>px;" id="img-<{$image.id}>">
+					<img class="resizeme" src="<{$image.img_path}>" alt="<{$image.title}>" />
+					<div class="sliderkit-panel-textbox">
+						<div class="sliderkit-panel-text">
+							<h4><{$image.title}></h4>
+							<p><{$image.dsc}></p>
+						</div>
+						<div class="sliderkit-panel-overlay"></div>
+					</div>
+				</div>
+			<{/foreach}>
+		</div>
+	</div>
+<{elseif $block.horizontal == 5}>
+	<{if $block.img_dsc}>
+		<!-- Slider Kit launch -->
+		<script type="text/javascript">
+			$(window).load(function(){ //$(window).load() must be used instead of $(document).ready() because of Webkit compatibility
+				// Carousel > Demo #2
+				$("#carousel-demo5").sliderkit({
+					shownavitems:3,
+					circular:false,
+					fastchange:false,
+					scrolleasing:"easeOutExpo", //"easeOutBounce, easeOutBack"
+					scrollspeed:500,
+					<{if $block.autoscroll}>
+						auto: true,
+						autospeed:4000
+					<{else}>
+						auto:false
+					<{/if}>
+				});
+			});
+		</script>
+		<script>
+		    $(function() {
+		      $( ".resize_thumb" ).aeImageResize({ height: 130, width: 87 });
+		    });
+		</script>
+		<div id="carousel-demo5" class="sliderkit">
+			<div class="sliderkit-nav">
+				<div class="sliderkit-nav-clip">
+					<ul>
+						<{foreach item=image from=$block.album_images}>
+							<li style="overflow-y: auto;">
+								<a href="#" rel="nofollow" title="<{$image.title}>">
+									<img class="resize_thumb" src="<{$image.img_path}>" alt="<{$image.title}>" />
+								</a>
+								<h3><{$image.title}></h3>
+								<p><{$image.dsc}></p>
+							</li>
+						<{/foreach}>
+					</ul>
+				</div>
+				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a href="#" title="Scroll to the left"><span>Previous</span></a></div>
+				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a href="#" title="Scroll to the right"><span>Next</span></a></div>
+			</div>
+		</div>
+	<{else}>
+		<!-- Slider Kit launch -->
+		<script type="text/javascript">
+			$(window).load(function(){ //$(window).load() must be used instead of $(document).ready() because of Webkit compatibility
+				// Carousel > Demo #2
+				$(".carousel-demo2").sliderkit({
+					<{if $block.autoscroll}>
+						auto:true,
+						shownavitems:3,
+						scroll:1,
+						mousewheel:true,
+						circular:true,
+						start:2
+					<{else}>
+						auto:false,
+						circular:true,
+						shownavitems:5,
+						scroll:1,
+						navcontinuous: true,
+						scrollspeed: 700,
+						scrolleasing: "linear"
+					<{/if}>
+				});
+			});
+		</script>
+		<script>
+		    $(function() {
+		      $( ".resize_thumb" ).aeImageResize({ height: 50, width: 75 });
+		    });
+		</script>
+		<div class="sliderkit carousel-demo2">
+			<div class="sliderkit-nav">
+				<div class="sliderkit-nav-clip">
+					<ul>
+						<{foreach item=image from=$block.album_images}>
+							<li>
+								<a href="#" rel="nofollow" title="<{$image.title}>">
+									<img class="resize_thumb" src="<{$image.img_path}>" alt="<{$image.title}>" />
+								</a>
+							</li>
+						<{/foreach}>
+					</ul>
+				</div>
+				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a href="#" title="Scroll to the left"><span>Previous</span></a></div>
+				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a href="#" title="Scroll to the right"><span>Next</span></a></div>
+			</div>
+		</div>
+	<{/if}>
 <{/if}>

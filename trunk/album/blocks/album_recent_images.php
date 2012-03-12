@@ -31,6 +31,7 @@ function b_album_recent_images_show($options) {
 	$block['display_height'] = $options[6];
 	$block['horizontal'] = $options[7];
 	$block['autoscroll'] = $options[8];
+	$block['img_dsc'] = $options[9];
 	return $block;
 }
 
@@ -50,8 +51,12 @@ function b_album_recent_images_edit($options) {
 	$selorder->addOptionArray($order);
 	$display_size = new icms_form_elements_Text('', 'options[5]', 60, 255, $options[5]);
 	$display_height = new icms_form_elements_Text('', 'options[6]', 60, 255, $options[6]);
-	$horizontal = new icms_form_elements_Radioyn('', 'options[7]', $options[7]);
+	$display_block = array('1' => _MB_ALBUM_DISPLAY_SINGLE_HORIZONTAL, "2" => _MB_ALBUM_DISPLAY_GALLERY_HORIZONTAL, "3" => _MB_ALBUM_DISPLAY_SINGLE_VERTICAL,
+							'4' => _MB_ALBUM_DISPLAY_GALLERY_VERTICAL, '5' => _MB_ALBUM_DISPLAY_CAROUSEL);
+	$horizontal = new icms_form_elements_Select('', 'options[7]', $options[7]);
+	$horizontal->addOptionArray($display_block);
 	$autoscroll = new icms_form_elements_Radioyn('', 'options[8]', $options[8]);
+	$display_dsc = new icms_form_elements_Radioyn('', 'options[9]', $options[9]);
 	
 	$form = '<table>';
 	$form .= '<tr>';
@@ -90,6 +95,10 @@ function b_album_recent_images_edit($options) {
 	$form .= '<tr>';
 	$form .= '<td>' . _MB_ALBUM_AUTOSCROLL . '</td>';
 	$form .= '<td>' . $autoscroll->render() . '</td>';
+	$form .= '</tr>';
+	$form .= '<tr>';
+	$form .= '<td>' . _MB_ALBUM_DISPLAY_DSC . '</td>';
+	$form .= '<td>' . $display_dsc->render() . '</td>';
 	$form .= '</tr>';
 	$form .= '</table>';
 	return $form;

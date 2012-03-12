@@ -76,5 +76,5 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$icmsAdminTpl->display('db:album_admin.html');
 			break;
 	}
-	icms_cp_footer();
+	include_once 'admin_footer.php';
 }
