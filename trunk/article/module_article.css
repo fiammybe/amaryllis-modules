@@ -397,3 +397,8 @@
 		background: #F8F8F8 url("images/goto.png") no-repeat center left;
 		text-decoration: none;
 	}
+	
+	.download {
+		width: auto;
+		padding: 0 20px 0 50px;
+	}
