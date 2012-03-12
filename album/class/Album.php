@@ -34,7 +34,6 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		$this->quickInitVar('album_id', XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar('album_title', XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->initCommonVar('short_url');
-		$this->initCommonVar('weight');
 		$this->quickInitVar('album_pid', XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar('album_tags', XOBJ_DTYPE_ARRAY, FALSE, FALSE, FALSE, "");
 		
@@ -52,7 +51,7 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 		
 		$this->quickInitVar('album_uid', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar('album_comments', XOBJ_DTYPE_INT, FALSE);
-		
+		$this->initCommonVar('weight');
 		$this->initCommonVar('counter');
 		$this->initCommonVar('dohtml', FALSE, 1);
 		$this->initCommonVar('doimage', FALSE, 1);

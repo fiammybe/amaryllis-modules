@@ -71,8 +71,8 @@
 	</script>
 	<script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/sliderkit.delaycaptions.1.1.pack.js"></script>
 	<!-- Start photosgallery-captions -->
-	<div class="sliderkit photosgallery-captions">
-		<div class="sliderkit-nav" style="width:<{$block.display_width}>px;">
+	<div class="sliderkit photosgallery-captions" style="width:<{$block.display_width}>px;">
+		<div class="sliderkit-nav">
 			<div class="sliderkit-nav-clip">
 				<ul>
 					<{foreach item=image from=$block.album_images}>
@@ -91,14 +91,16 @@
 		</div>
 		<div class="sliderkit-panels">
 			<{foreach item=image from=$block.album_images}>
-				<div class="sliderkit-panel" style="width:<{$block.display_width}>px;height:<{$block.display_height}>px;" id="img-<{$image.id}>">
+				<div class="sliderkit-panel" style="width:<{$block.display_width}>px;height:<{$block.display_height}>px; margin: 0 auto;" id="img-<{$image.id}>">
 					<img class="resizeme" src="<{$image.img_path}>" alt="<{$image.title}>" />
 					<div class="sliderkit-panel-textbox">
 						<div class="sliderkit-panel-text">
 							<h4><{$image.title}></h4>
-							<p><{$image.dsc}></p>
+							<{if $block.img_dsc}>
+								<p><{$image.dsc}></p>
+							<{/if}>
 						</div>
-						<div class="sliderkit-panel-overlay"></div>
+						<div class="sliderkit-panel-overlay" style="width:<{$block.display_width}>px;"></div>
 					</div>
 				</div>
 			<{/foreach}>
@@ -193,16 +195,18 @@
 			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a rel="nofollow" href="#" title="Previous line"><span>Previous</span></a></div>
 			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a rel="nofollow" href="#" title="Next line"><span>Next</span></a></div>
 		</div>
-		<div class="sliderkit-panels">
+		<div class="sliderkit-panels" style="padding-left: 95px;">
 			<{foreach item=image from=$block.album_images}>
 				<div class="sliderkit-panel" style="width:<{$block.display_width}>px;height:<{$block.display_height}>px;" id="img-<{$image.id}>">
 					<img class="resizeme" src="<{$image.img_path}>" alt="<{$image.title}>" />
 					<div class="sliderkit-panel-textbox">
 						<div class="sliderkit-panel-text">
 							<h4><{$image.title}></h4>
-							<p><{$image.dsc}></p>
+							<{if $block.img_dsc}>
+								<p><{$image.dsc}></p>
+							<{/if}>
 						</div>
-						<div class="sliderkit-panel-overlay"></div>
+						<div class="sliderkit-panel-overlay" style="width:<{$block.display_width}>px;"></div>
 					</div>
 				</div>
 			<{/foreach}>
