@@ -171,7 +171,14 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	}
 	
 	/**
-	 * 
+	 * include rating feature
+	 
+	if (file_exists(ICMS_ROOT_PATH . '/include/rating.rate.php')) {
+		include_once(ICMS_ROOT_PATH . '/include/rating.rate.php');
+	}
+	*/
+	/**
+	 * aasign breadcrumb
 	 */
 	if ($articleConfig['show_breadcrumbs'] == TRUE) {
 		$article_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'article');
