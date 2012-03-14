@@ -53,7 +53,7 @@ function store_xfguestbook_msg($row) {
 
 function guestbook_import_xfguestbook_msg() {
 	
-	$table = new icms_db_legacy_updater_Table('smartsection_items');
+	$table = new icms_db_legacy_updater_Table('xfguestbook_msg');
 	if ($table->exists()) {
 		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('xfguestbook_msg');
 		$result = icms::$xoopsDB->query($sql);

@@ -43,6 +43,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$this->quickInitVar("guestbook_approve", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("guestbook_published_date", XOBJ_DTYPE_LTIME);
 		$this->initCommonVar("dohtml", FALSE, 1);
+		$this->initCommonVar("doxcode", FALSE, 1);
 		$this->initCommonVar("doimage", FALSE, 1);
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		
