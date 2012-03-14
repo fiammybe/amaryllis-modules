@@ -50,7 +50,17 @@
 		});
 		
 	});
-
+	
+	$(document).ready(function(){
+		$('a.entry_img').colorbox({
+			transition:'fade',
+			speed:500,
+			opacity: 0.9,
+			slideshow: true,
+			slideshowAuto: false
+		});
+	});
+	
 	//guestbook permission denied
 	$(document).ready(function(){
 		$("#dialog-confirm-perm").dialog({

@@ -27,11 +27,14 @@ SetSpeechBubble();
 <{if $entries}>
 	<div class="guestbook_submit">
 		<span class="guestbook_link">
-			<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" href="<{$submit_link}>"><{$smarty.const._MD_GUESTBOOK_ADD_ENTRY}></a>
+			<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" id="add1" href="<{$submit_link}>"><{$smarty.const._MD_GUESTBOOK_ADD_ENTRY}></a>
 		</span>
 	</div>
 	<div class="speech_bubble">
 		<div class="guestbook_entries">
+			<{if $pagenav}>
+				<{$pagenav}>
+			<{/if}>
 			<{foreach item=entry from=$entries}>
 				<{includeq file="db:guestbook_singleentry.html"}>
 				<{if $entry.reply && $guestbook_is_admin}>
@@ -49,13 +52,16 @@ SetSpeechBubble();
 				<{/if}>
 			
 			<{/foreach}>
+			<{if $pagenav}>
+				<{$pagenav}>
+			<{/if}>
 		</div>
 	</div>
 <{/if}>
 <{if !$smarty.get.op == addreply}>
 	<div class="guestbook_submit">
 		<span class="guestbook_link">
-			<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" href="<{$submit_link}>"><{$smarty.const._MD_GUESTBOOK_ADD_ENTRY}></a>
+			<a id="add2" class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" href="<{$submit_link}>"><{$smarty.const._MD_GUESTBOOK_ADD_ENTRY}></a>
 		</span>
 	</div>
 <{/if}>
