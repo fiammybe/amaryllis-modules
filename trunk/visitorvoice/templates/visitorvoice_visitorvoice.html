@@ -32,6 +32,9 @@ SetSpeechBubble();
 	</div>
 	<div class="speech_bubble">
 		<div class="visitorvoice_entries">
+			<{if $pagenav}>
+				<{$pagenav}>
+			<{/if}>
 			<{foreach item=entry from=$entries}>
 				<{includeq file="db:visitorvoice_singleentry.html"}>
 				<{if $entry.reply && $visitorvoice_is_admin}>
@@ -49,6 +52,9 @@ SetSpeechBubble();
 				<{/if}>
 			
 			<{/foreach}>
+			<{if $pagenav}>
+				<{$pagenav}>
+			<{/if}>
 		</div>
 	</div>
 <{/if}>
