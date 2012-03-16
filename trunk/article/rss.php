@@ -33,7 +33,7 @@ $article_feed->charset = _CHARSET;
 $article_feed->category = $icmsModule->name();
 
 $article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
-$postsArray = $article_article_handler->getArticles(0, 10, FALSE, $clean_post_uid);
+$postsArray = $article_article_handler->getArticles(0, 10, FALSE, $clean_post_uid, FALSE, FALSE, "article_published_date", "DESC");
 
 foreach($postsArray as $postArray) {
 	
