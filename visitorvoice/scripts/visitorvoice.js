@@ -58,6 +58,17 @@
 			draggable: true,
 		});
 	});
+	
+	
+	$(document).ready(function(){
+		$('a.entry_img').colorbox({
+			transition:'fade',
+			speed:500,
+			opacity: 0.9,
+			slideshow: true,
+			slideshowAuto: false
+		});
+	});
 
 	//visitorvoice permission denied
 	$(document).ready(function(){
