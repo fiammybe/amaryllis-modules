@@ -59,8 +59,8 @@ class CareerIndexpage extends icms_ipf_Object {
 		$indeximage = $this->getVar('index_image', 'e');
 		if (!$indeximage == 0 && !$indeximage == "") {
 			$image_tag = CAREER_UPLOAD_URL . 'indexpage/' . $indeximage;
+			return '<div class="career_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
-		return '<div class="career_indeximage"><img src="' . $image_tag . '" /></div>';
 	}
 	
 	public function getIndexHeader() {
