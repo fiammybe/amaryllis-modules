@@ -33,7 +33,7 @@ $downloads_feed->charset = _CHARSET;
 $downloads_feed->category = $icmsModule->name();
 
 $downloads_download_handler = icms_getModuleHandler("download", basename(dirname(__FILE__)), "downloads");
-$postsArray = $downloads_download_handler->getDownloads(0, 10, FALSE, $clean_post_uid);
+$postsArray = $downloads_download_handler->getDownloads(0, 10, FALSE, $clean_post_uid, FALSE, FALSE, 'download_published_date', 'DESC');
 
 foreach($postsArray as $postArray) {
 	
