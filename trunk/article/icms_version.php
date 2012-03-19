@@ -605,7 +605,15 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
 							);
-
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'article_rss_limit',
+								'title' 		=> '_MI_ARTICLE_RSSLIMIT',
+								'description' 	=> '_MI_ARTICLE_RSSLIMIT_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> 10
+							);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////

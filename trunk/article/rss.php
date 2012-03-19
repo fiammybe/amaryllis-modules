@@ -32,8 +32,8 @@ $article_feed->language = _LANGCODE;
 $article_feed->charset = _CHARSET;
 $article_feed->category = $icmsModule->name();
 
-$article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
-$postsArray = $article_article_handler->getArticles(0, 10, FALSE, $clean_post_uid, FALSE, FALSE, "article_published_date", "DESC");
+$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
+$postsArray = $article_article_handler->getArticles(0, $articleConfig['article_rss_limit'], FALSE, $clean_post_uid, FALSE, FALSE, "article_published_date", "DESC");
 
 foreach($postsArray as $postArray) {
 	
@@ -45,7 +45,6 @@ foreach($postsArray as $postArray) {
 	  'pubdate' => $postArray['article_published_date'],
 	  'guid' => str_replace('&', '&amp;', $postArray['itemURL']),
 	  'category' => $postArray['cats'],
-	  
 	);
 }
 $article_feed->render();
