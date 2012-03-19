@@ -188,3 +188,9 @@ define("_MI_ARTICLE_ARTICLE_EDIT", "Edit your Article");
 define("_MI_ARTICLE_ARTICLE_CREATINGNEW", "Upload a new Article");
 define("_MI_ARTICLE_CATEGORY_EDIT", "Edit your Category");
 define("_MI_ARTICLE_CATEGORY_CREATINGNEW", "Create a new Category");
+/**
+ * added in 1.1
+ */
+//preferences
+define("_MI_ARTICLE_RSSLIMIT", "RSS Limit");
+define("_MI_ARTICLE_RSSLIMIT_DSC", "Limit of Articles for RSS");
