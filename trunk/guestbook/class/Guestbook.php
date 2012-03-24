@@ -114,6 +114,21 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		return $image_tag;
 	}
 	
+	public function getGuestbookEmail() {
+		global $guestbookConfig;
+		$email = $this->getVar("guestbook_email", "s");
+		if($downloadsConfig['display_guestbook_email'] == 1 && $email != "") {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
+		} elseif($downloadsConfig['display_guestbook_email'] == 2) {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
+		} elseif($downloadsConfig['display_guestbook_email'] == 3) {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 1);
+		} elseif($downloadsConfig['display_guestbook_email'] == 4) {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
+		}
+		return $email;
+	}
+	
 	// get publisher for frontend
 	function getPublisher($link = FALSE) {
 			$publisher_uid = $this->getVar('guestbook_uid', 'e');
@@ -180,7 +195,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$ret['img'] = $this->getImageTag();
 		$ret['name'] = $this->getVar("guestbook_name");
 		$ret['homepage'] = $this->getVar("guestbook_url");
-		$ret['email'] = $this->getVar("guestbook_email");
+		$ret['email'] = $this->getGuestbookEmail();
 		$ret['ip'] = $this->getVar("guestbook_ip");
 		$ret['title'] = $this->getVar("guestbook_title");
 		$ret['message'] = $this->getMessage();
