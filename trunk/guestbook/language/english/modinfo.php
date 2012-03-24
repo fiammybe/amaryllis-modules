@@ -57,6 +57,10 @@ define("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT", "Text spam protected without check
 define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT", "usual email without checking banned list");
 define("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT_BANNED", "Text spam protected with checking banned list");
 define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT_BANNED", "usual email with checking banned list");
+define("_MI_GUESTBOOK_USE_RSS", "Use RSS feeds?");
+define("_MI_GUESTBOOK_USE_RSS_DSC", "Enable/disable RSS feeds for guestbook");
+define("_MI_GUESTBOOK_RSSLIMIT", "RSS Limit");
+define("_MI_GUESTBOOK_RSSLIMIT_DSC", "Set limit of Entries for RSS feeds");
 // ACP menu
 define("_MI_GUESTBOOK_MENU_GUESTBOOK", "Guestbook");
 define("_MI_GUESTBOOK_MENU_INDEXPAGE", "Edit Indexpage");
