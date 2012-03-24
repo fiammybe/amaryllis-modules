@@ -40,7 +40,7 @@ if($visitorvoiceConfig['use_rss'] == 1) {
 		$visitorvoice_feed->feeds[] = array (
 		  'title' => $postArray['title'],
 		  'link' => str_replace('&', '&amp;', $postArray['itemURL']),
-		  'author' => $postArray['publisher'],
+		  'author' => $postArray['published_by'],
 		  'description' => icms_core_DataFilter::htmlSpecialChars(str_replace('&', '&amp;', $postArray['teaser']), ENT_QUOTES, _CHARSET),
 		  'pubdate' => $postArray['visitorvoice_published_date'],
 		  'guid' => str_replace('&', '&amp;', $postArray['itemURL']),
