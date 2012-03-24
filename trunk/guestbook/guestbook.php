@@ -103,7 +103,18 @@ $criteria = new icms_db_criteria_Item("guestbook_approve", TRUE);
 $count = $guestbook_guestbook_handler->getCount($criteria);
 $pagenav = new icms_view_PageNav($count, $guestbookConfig['show_entries'], $clean_start, 'start', FALSE);
 $icmsTpl->assign('pagenav', $pagenav->renderNav());
-
+/**
+ * breadcrumb
+ */
+if($guestbookConfig['show_breadcrumbs']) {
+	$icmsTpl->assign("guestbook_show_breadcrumb", TRUE);
+}
+/**
+ * rss feeds
+ */
+if($guestbookConfig['use_rss']) {
+	$icmsTpl->assign("guestbook_show_rss", TRUE);
+}
 $icmsTpl->assign("guestbook_module_home", '<a href="' . ICMS_URL . '/modules/' . icms::$module->getVar("dirname") . '/">' . icms::$module->getVar("name") . '</a>');
 $icmsTpl->assign("guestbook_adminpage", '<a href="' . GUESTBOOK_ADMIN_URL . 'guestbook.php">' . _MD_GUESTBOOK_ADMIN_PAGE . '</a>');
 $icmsTpl->assign("guestbook_is_admin", icms_userIsAdmin(GUESTBOOK_DIRNAME));

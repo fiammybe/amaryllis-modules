@@ -18,6 +18,11 @@
 
 	.guestbook_headertable {
 		margin-bottom: 2em;
+		float: left;
+	}
+	
+	.guestbook_rss {
+		float: right;
 	}
 
 	.guestbook_clear_both {
