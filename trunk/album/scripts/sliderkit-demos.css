@@ -97,13 +97,12 @@
 .photosgallery-captions .sliderkit-nav .sliderkit-go-next a:focus{background-position:-60px center;}
 
 /* Panel */
-.photosgallery-captions .sliderkit-panel{top:0;left:0;}
 
 /* Panel > Textbox */
-.photosgallery-captions .sliderkit-panel .sliderkit-panel-textbox{bottom:0;left:0;height:70px; }
-.photosgallery-captions .sliderkit-panel .sliderkit-panel-text{height:50px;padding:10px 15px;font-size:0.9em;color:#fff;}
+.photosgallery-captions .sliderkit-panel .sliderkit-panel-textbox{bottom:0;padding-left:95px;left:0;height:85px;}
+.photosgallery-captions .sliderkit-panel .sliderkit-panel-text{height:65px;padding:10px 15px 10px 115px;font-size:0.9em;color:#fff;}
 .photosgallery-captions .sliderkit-panel .sliderkit-panel-text h4{height:auto;margin:0 0 7px;line-height:1.1em;font-size:1.1em;font-weight:bold;border:none;}
-.photosgallery-captions .sliderkit-panel .sliderkit-panel-overlay{height:auto;background:#000;opacity:0.6;width: 85%;}
+.photosgallery-captions .sliderkit-panel .sliderkit-panel-overlay{bottom:0;padding-left:42px;height:85px;background:#000;opacity:0.6;}
 
 /*---------------------------------
  *  Photos gallery > Vertical
@@ -141,7 +140,7 @@
 /* Panel > Textbox */
 .photosgallery-vertical .sliderkit-panel .sliderkit-panel-textbox{bottom:0;padding-left:95px;left:0;height:85px;}
 .photosgallery-vertical .sliderkit-panel .sliderkit-panel-text{height:65px;padding:10px 15px 10px 115px;font-size:0.9em;color:#fff;}
-.photosgallery-vertical .sliderkit-panel .sliderkit-panel-text h4{height:auto;margin:0 0 7px;line-height:1.1em;font-size:1.1em;font-weight:bold;border:none;}
+.photosgallery-vertical .sliderkit-panel .sliderkit-panel-text h4{width:100%; display: inline-block; height:auto;margin:0 0 7px;line-height:1.1em;font-size:1.1em;font-weight:bold;border:none;}
 .photosgallery-vertical .sliderkit-panel .sliderkit-panel-overlay{bottom:0;padding-left:42px;height:85px;background:#000;opacity:0.6;}
 
 /*---------------------------------
@@ -167,7 +166,6 @@
  *  Photos gallery > #5 = 'navpanelautoswitch' option
  *---------------------------------*/
 .photosgallery-5 .sliderkit-count-lines{left:220px;top:auto;right:auto;bottom:75px;}
-
 
 /*
  *  CAROUSEL

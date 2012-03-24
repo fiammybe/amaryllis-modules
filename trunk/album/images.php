@@ -40,7 +40,7 @@ function editimages($imagesObj, $clean_album_id) {
 		$icmsTpl->assign('album_cat_path', $imagesObj->getVar('img_title') . ' > ' . _EDIT);
 	} else {
 		$imagesObj->hideFieldFromForm(array('a_id', 'meta_description', 'meta_keywords', 'img_updated','img_active', 'img_publisher', 'img_approve', 'img_published_date', 'img_updated_date' ) );
-		$imagesObj->setVar('images_published_date', (time() - 100) );
+		$imagesObj->setVar('img_published_date', (time() - 100) );
 		if($albumConfig['image_needs_approval'] == 1) {
 			$imagesObj->setVar('img_approve', FALSE );
 		} else {

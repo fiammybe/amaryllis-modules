@@ -10,6 +10,8 @@
       $( ".resizeme" ).aeImageResize({ height: <{$block.display_height}>, width: <{$block.display_width}> });
     });
 </script>
+
+<{* single horizontal image *}>
 <{if $block.horizontal == 1}>
 	<!-- Slider Kit launch -->
 	<script type="text/javascript">
@@ -46,6 +48,8 @@
 			<{/foreach}>
 		</div>
 	</div>
+
+<{* horizontal Gallery block *}>
 <{elseif $block.horizontal == 2}>
 	<!-- Slider Kit launch -->
 	<script type="text/javascript">
@@ -86,12 +90,12 @@
 			</div>
 			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a rel="nofollow" href="#" title="Previous line"><span>Previous line</span></a></div>
 			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a rel="nofollow" href="#" title="Next line"><span>Next line</span></a></div>
-			<div class="sliderkit-btn sliderkit-go-btn sliderkit-go-prev"><a rel="nofollow" href="#" title="Previous photo"><span>Previous photo</span></a></div>
-			<div class="sliderkit-btn sliderkit-go-btn sliderkit-go-next"><a rel="nofollow" href="#" title="Next photo"><span>Next photo</span></a></div>
+			<div class="sliderkit-btn sliderkit-go-btn sliderkit-go-prev"><a rel="nofollow" href="#" title="Previous photo"><span><{$smarty.const._PREV}></span></a></div>
+			<div class="sliderkit-btn sliderkit-go-btn sliderkit-go-next"><a rel="nofollow" href="#" title="Next photo"><span><{$smarty.const._NEXT}></span></a></div>
 		</div>
 		<div class="sliderkit-panels">
 			<{foreach item=image from=$block.album_images}>
-				<div class="sliderkit-panel" style="width:<{$block.display_width}>px;height:<{$block.display_height}>px; margin: 0 auto;" id="img-<{$image.id}>">
+				<div class="sliderkit-panel" style="width:auto; margin: 0 auto;" id="img-<{$image.id}>">
 					<img class="resizeme" src="<{$image.img_path}>" alt="<{$image.title}>" />
 					<div class="sliderkit-panel-textbox">
 						<div class="sliderkit-panel-text">
@@ -106,6 +110,8 @@
 			<{/foreach}>
 		</div>
 	</div>
+
+<{* single vertical image *}>
 <{elseif $block.horizontal == 3}>
 	<!-- Slider Kit launch -->
 	<script type="text/javascript">
@@ -154,6 +160,8 @@
 			<{/foreach}>
 		</div>
 	</div>
+
+<{* vertical gallery block *}>
 <{elseif $block.horizontal == 4}>
 	<!-- Slider Kit launch -->
 	<script type="text/javascript">
@@ -192,8 +200,8 @@
 					<{/foreach}>
 				</ul>
 			</div>
-			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a rel="nofollow" href="#" title="Previous line"><span>Previous</span></a></div>
-			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a rel="nofollow" href="#" title="Next line"><span>Next</span></a></div>
+			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a rel="nofollow" href="#" title="<{$smarty.const._PREV}>"><span><{$smarty.const._PREV}></span></a></div>
+			<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a rel="nofollow" href="#" title="<{$smarty.const._NEXT}>"><span><{$smarty.const._NEXT}></span></a></div>
 		</div>
 		<div class="sliderkit-panels" style="padding-left: 95px;">
 			<{foreach item=image from=$block.album_images}>
@@ -212,7 +220,11 @@
 			<{/foreach}>
 		</div>
 	</div>
+	
+<{* carousel block *}>
 <{elseif $block.horizontal == 5}>
+
+	<{* carousel block with image description *}>
 	<{if $block.img_dsc}>
 		<!-- Slider Kit launch -->
 		<script type="text/javascript">
@@ -253,10 +265,12 @@
 						<{/foreach}>
 					</ul>
 				</div>
-				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a href="#" title="Scroll to the left"><span>Previous</span></a></div>
-				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a href="#" title="Scroll to the right"><span>Next</span></a></div>
+				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a href="#" title="Scroll to the left"><span><{$smarty.const._PREV}></span></a></div>
+				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a href="#" title="Scroll to the right"><span><{$smarty.const._NEXT}></span></a></div>
 			</div>
 		</div>
+	
+	<{* carousel block without description *}>
 	<{else}>
 		<!-- Slider Kit launch -->
 		<script type="text/javascript">
@@ -300,8 +314,8 @@
 						<{/foreach}>
 					</ul>
 				</div>
-				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a href="#" title="Scroll to the left"><span>Previous</span></a></div>
-				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a href="#" title="Scroll to the right"><span>Next</span></a></div>
+				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a href="#" title="Scroll to the left"><span><{$smarty.const._PREV}></span></a></div>
+				<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a href="#" title="Scroll to the right"><span><{$smarty.const._NEXT}></span></a></div>
 			</div>
 		</div>
 	<{/if}>
