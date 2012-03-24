@@ -82,7 +82,8 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		global $guestbookConfig;
 		if($guestbookConfig['show_avatar'] == 1) {
 			$review_uid = $this->getVar("guestbook_uid", "e");
-			if((int)$review_uid > 0) {
+			$user = icms::handler("icms_member")->getUser($review_uid);
+			if((int)($review_uid > 0) && is_object($user)) {
 				$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
 				$avatar_image = $avatar;
 				return $avatar_image;
@@ -117,13 +118,13 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	public function getGuestbookEmail() {
 		global $guestbookConfig;
 		$email = $this->getVar("guestbook_email", "s");
-		if($guestbookConfig['display_guestbook_email'] == 1 && $email != "") {
+		if($guestbookConfig['display_email'] == 1 && $email != "") {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
-		} elseif($guestbookConfig['display_guestbook_email'] == 2) {
+		} elseif($guestbookConfig['display_email'] == 2 && $email != "") {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
-		} elseif($guestbookConfig['display_guestbook_email'] == 3) {
+		} elseif($guestbookConfig['display_email'] == 3 && $email != "") {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 1);
-		} elseif($guestbookConfig['display_guestbook_email'] == 4) {
+		} elseif($guestbookConfig['display_email'] == 4 && $email != "") {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
 		}
 		return $email;
