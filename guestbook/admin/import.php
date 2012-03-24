@@ -19,9 +19,9 @@
 ini_set('max_execution_time', 0);
 
 ini_set('memory_limit', '256M');
- 
+
 /**
- * import smartsection articles
+ * import xfguestbook entries
  */
 function store_xfguestbook_msg($row) {
 	global $guestbook_guestbook_handler;
@@ -45,7 +45,7 @@ function store_xfguestbook_msg($row) {
 	$obj->setVar("guestbook_pid", 0);
 	$obj->setVar("guestbook_ip", $row['poster_ip']);
 	$obj->setVar("guestbook_approve", 1);
-	$obj->setVar("guestbook_published_date", $row['post_time']);
+	$obj->setVar("guestbook_published_date", (int)$row['post_time']);
 	
 	$guestbook_guestbook_handler->insert($obj, TRUE);
 	unset($row);
@@ -69,7 +69,7 @@ function guestbook_import_xfguestbook_msg() {
 
 include_once 'admin_header.php';
 
-$valid_op = array ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11', '12', '13', '');
+$valid_op = array ('1', '2', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');

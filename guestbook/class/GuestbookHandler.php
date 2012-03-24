@@ -80,7 +80,7 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 	}
 	
 	protected function beforeInsert(& $obj) {
-		global $downloadsConfig;
+		global $guestbookConfig;
 		// filter and store entry
 		$message = $obj->getVar("guestbook_entry", "s");
 		$smessage = strip_tags($message,'<b><i><a><br>');
@@ -88,15 +88,7 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 		$obj->setVar("guestbook", $smessage);
 		// filter and store e-mail
 		$email = $obj->getVar("guestbook_email", "s");
-		if($downloadsConfig['display_guestbook_email'] == 1 && $email != "") {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
-		} elseif($downloadsConfig['display_guestbook_email'] == 2) {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
-		} elseif($downloadsConfig['display_guestbook_email'] == 3) {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 1);
-		} elseif($downloadsConfig['display_guestbook_email'] == 4) {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
-		}
+		$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
 		$obj->setVar("guestbook_email", $email);
 		// validate and store ip
 		$ip = $obj->getVar("guestbook_ip");
