@@ -74,7 +74,8 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		global $visitorvoiceConfig;
 		if($visitorvoiceConfig['show_avatar'] == 1) {
 			$review_uid = $this->getVar("visitorvoice_uid", "e");
-			if((int)($review_uid > 0)) {
+			$user = icms::handler("icms_member")->getUser($review_uid);
+			if((int)($review_uid > 0) && is_object($user)) {
 				$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
 				$avatar_image = $avatar;
 				return $avatar_image;
@@ -104,6 +105,21 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 			$image_tag = VISITORVOICE_UPLOAD_URL . 'visitorvoice/' . $visitorvoice_img;
 		}
 		return $image_tag;
+	}
+	
+	public function getVisitorvoiceEmail() {
+		global $visitorvoiceConfig;
+		$email = $this->getVar("visitorvoice_email", "s");
+		if($visitorvoiceConfig['display_email'] == 1 && $email != "") {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
+		} elseif($visitorvoiceConfig['display_email'] == 2 && $email != "") {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
+		} elseif($visitorvoiceConfig['display_email'] == 3 && $email != "") {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 1);
+		} elseif($visitorvoiceConfig['display_email'] == 4 && $email != "") {
+			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
+		}
+		return $email;
 	}
 	
 	// get publisher for frontend
@@ -174,7 +190,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$ret['img'] = $this->getImageTag();
 		$ret['name'] = $this->getVar("visitorvoice_name");
 		$ret['homepage'] = $this->getVar("visitorvoice_url");
-		$ret['email'] = $this->getVar("visitorvoice_email");
+		$ret['email'] = $this->getVisitorvoiceEmail();
 		$ret['ip'] = $this->getVar("visitorvoice_ip");
 		$ret['title'] = $this->getVar("visitorvoice_title");
 		$ret['message'] = $this->getMessage();
