@@ -64,25 +64,29 @@ function visitorvoice_import_xfguestbook_msg() {
 		mysql_free_result($result);
 		echo '</code>';
 	}
+	
+	echo '<code> messages from xfguestbook_msg succesfully imported.<br />';
+	echo '<b>xfguestbook_msg table successfully dropped.</b></code><br />';
+	$table->dropTable ();
 	unset($table);
 }
 
 include_once 'admin_header.php';
 
-$valid_op = array ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11', '12', '13', '');
+$valid_op = array ('1', '2', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 if(in_array($clean_op, $valid_op, TRUE)) {
-	$visitorvoice_visitorvoice_handler = icms_getModuleHandler("visitorvoice", VISITORVOIVE_DIRNAME, "visitorvoice");
+	$visitorvoice_visitorvoice_handler = icms_getModuleHandler("visitorvoice", VISITORVOICE_DIRNAME, "visitorvoice");
 	switch ($clean_op) {
 		case '1':
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0);
 			visitorvoice_import_xfguestbook_msg();
 			
-			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
+			echo '<br /><br /><a class="formButton" href="' . VISITORVOICE_ADMIN_URL . 'import.php">Go Back</a>';
 			break;
 		
 		default:
@@ -101,7 +105,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	            $button->setExtra("onclick='document.forms.form.op.value=\"1\"'");
 	            $form->addElement($button);
 	        } else {
-	            $label = new icms_form_elements_Label("Import data from xfvisitorvoice_msg", "xfguestbook_msg table not found on this site.");
+	            $label = new icms_form_elements_Label("Import data from xfguestbook_msg", "xfguestbook_msg table not found on this site.");
 	            $form->addElement($label);
 	        }
 			$form->addElement(new icms_form_elements_Hidden('op', 0));
