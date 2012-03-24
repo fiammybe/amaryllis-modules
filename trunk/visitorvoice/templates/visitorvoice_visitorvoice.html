@@ -18,6 +18,17 @@ SetSpeechBubble();
 	</div>
 <{/if}>
 
+<{if $visitorvoice_show_rss}> <!-- display rss fedd link -->
+	<div class="visitorvoice_rss">
+		<a href="<{$visitorvoice_url}>rss.php" title="RSS-Feeds">
+			<img src="<{$visitorvoice_images_url}>rss.png" alt="RSS-Feeds" />
+		</a>
+	</div>
+	<div class="visitorvoice_clear_both">&nbsp;</div>
+<{else}>
+	<div class="visitorvoice_clear_left">&nbsp;</div>
+<{/if}>
+
 <{$visitorvoice_index.image}>
 
 <{$visitorvoice_index.header}>

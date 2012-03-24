@@ -96,7 +96,18 @@ $criteria = new icms_db_criteria_Item("visitorvoice_approve", TRUE);
 $count = $visitorvoice_visitorvoice_handler->getCount($criteria);
 $pagenav = new icms_view_PageNav($count, $visitorvoiceConfig['show_entries'], $clean_start, 'start', FALSE);
 $icmsTpl->assign('pagenav', $pagenav->renderNav());
-
+/**
+ * breadcrumb
+ */
+if($visitorvoiceConfig['show_breadcrumbs']) {
+	$icmsTpl->assign("visitorvoice_show_breadcrumb", TRUE);
+}
+/**
+ * rss feeds
+ */
+if($visitorvoiceConfig['use_rss']) {
+	$icmsTpl->assign("visitorvoice_show_rss", TRUE);
+}
 $icmsTpl->assign("visitorvoice_module_home", '<a href="' . ICMS_URL . '/modules/' . icms::$module->getVar("dirname") . '/">' . icms::$module->getVar("name") . '</a>');
 $icmsTpl->assign("visitorvoice_adminpage", '<a href="' . VISITORVOICE_ADMIN_URL . 'visitorvoice.php">' . _MD_VISITORVOICE_ADMIN_PAGE . '</a>');
 $icmsTpl->assign("visitorvoice_is_admin", icms_userIsAdmin(VISITORVOICE_DIRNAME));
