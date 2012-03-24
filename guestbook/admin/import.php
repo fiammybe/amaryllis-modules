@@ -64,6 +64,9 @@ function guestbook_import_xfguestbook_msg() {
 		mysql_free_result($result);
 		echo '</code>';
 	}
+	echo '<code><b>Messages from xfguestbook_msg succesfully imported.</b><br />';
+	echo '<b>xfguestbook_msg table successfully dropped.</b></code><br />';
+	$table->dropTable ();
 	unset($table);
 }
 
@@ -82,7 +85,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms::$module->displayAdminMenu(0);
 			guestbook_import_xfguestbook_msg();
 			
-			echo '<br /><br /><a class="formButton" href="javascript:history.go(-1)">Go Back</a>';
+			echo '<br /><br /><a class="formButton" href="' . GUESTBOOK_ADMIN_URL . 'import.php">Go Back</a>';
 			break;
 		
 		default:
