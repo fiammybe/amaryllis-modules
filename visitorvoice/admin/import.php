@@ -21,7 +21,7 @@ ini_set('max_execution_time', 0);
 ini_set('memory_limit', '256M');
  
 /**
- * import smartsection articles
+ * import xfguestbook entries
  */
 function store_xfguestbook_msg($row) {
 	global $visitorvoice_visitorvoice_handler;
@@ -45,7 +45,7 @@ function store_xfguestbook_msg($row) {
 	$obj->setVar("visitorvoice_pid", 0);
 	$obj->setVar("visitorvoice_ip", $row['poster_ip']);
 	$obj->setVar("visitorvoice_approve", 1);
-	$obj->setVar("visitorvoice_published_date", $row['post_time']);
+	$obj->setVar("visitorvoice_published_date", (int)$row['post_time']);
 	
 	$visitorvoice_visitorvoice_handler->insert($obj, TRUE);
 	unset($row);
@@ -53,9 +53,9 @@ function store_xfguestbook_msg($row) {
 
 function visitorvoice_import_xfguestbook_msg() {
 	
-	$table = new icms_db_legacy_updater_Table('smartsection_items');
+	$table = new icms_db_legacy_updater_Table('xfguestbook_msg');
 	if ($table->exists()) {
-		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('xfvisitorvoice_msg');
+		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('xfguestbook_msg');
 		$result = icms::$xoopsDB->query($sql);
 		echo '<code>';
 		while ($row = icms::$xoopsDB->fetchArray($result)) {

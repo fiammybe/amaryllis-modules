@@ -88,15 +88,7 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 		$obj->setVar("visitorvoice", $smessage);
 		// filter and store e-mail
 		$email = $obj->getVar("visitorvoice_email", "s");
-		if($visitorvoiceConfig['display_visitorvoice_email'] == 1 && $email != "") {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
-		} elseif($visitorvoiceConfig['display_visitorvoice_email'] == 2) {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
-		} elseif($visitorvoiceConfig['display_visitorvoice_email'] == 3) {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 1);
-		} elseif($visitorvoiceConfig['display_visitorvoice_email'] == 4) {
-			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
-		}
+		$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
 		$obj->setVar("visitorvoice_email", $email);
 		// validate and store ip
 		$ip = $obj->getVar("visitorvoice_ip");
