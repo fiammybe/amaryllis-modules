@@ -27,13 +27,13 @@ function editimages($images_id = 0) {
 		$img_uid = 0;
 	}
 	if (!$imagesObj->isNew()){
-		$imagesObj->setVar( 'img_updated_date', (time() - 300) );
+		$imagesObj->setVar( 'img_updated_date', (time() - 100) );
 		album_adminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT);
 		$sform = $imagesObj->getForm(_AM_ALBUM_IMAGES_EDIT, "addimages");
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$imagesObj->setVar('img_publisher', $img_uid);
-		$imagesObj->setVar( 'img_published_date', (time() - 300) );
+		$imagesObj->setVar( 'img_published_date', (time() - 100) );
 		album_adminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_UPLOADNEW);
 		$sform = $imagesObj->getForm(_MI_ALBUM_IMAGES_UPLOADNEW, "addimages");
 		$sform->assign($icmsAdminTpl);
