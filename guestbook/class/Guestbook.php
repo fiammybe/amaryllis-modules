@@ -117,13 +117,13 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	public function getGuestbookEmail() {
 		global $guestbookConfig;
 		$email = $this->getVar("guestbook_email", "s");
-		if($downloadsConfig['display_guestbook_email'] == 1 && $email != "") {
+		if($guestbookConfig['display_guestbook_email'] == 1 && $email != "") {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
-		} elseif($downloadsConfig['display_guestbook_email'] == 2) {
+		} elseif($guestbookConfig['display_guestbook_email'] == 2) {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
-		} elseif($downloadsConfig['display_guestbook_email'] == 3) {
+		} elseif($guestbookConfig['display_guestbook_email'] == 3) {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 1);
-		} elseif($downloadsConfig['display_guestbook_email'] == 4) {
+		} elseif($guestbookConfig['display_guestbook_email'] == 4) {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
 		}
 		return $email;
