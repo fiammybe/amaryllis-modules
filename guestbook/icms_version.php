@@ -299,3 +299,21 @@ $modversion['config'][$i] = array(
 								'options'		=> array("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT" => 1, "_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT" => 2, "_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT_BANNED" => 3, "_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT_BANNED" => 4),
 								'default' 		=> 1
 							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'use_rss',
+								'title' 		=> '_MI_GUESTBOOK_USE_RSS',
+								'description' 	=> '_MI_GUESTBOOK_USE_RSS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'guestbook_rss_limit',
+								'title' 		=> '_MI_GUESTBOOK_RSSLIMIT',
+								'description' 	=> '_MI_GUESTBOOK_RSSLIMIT_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> 10
+							);
