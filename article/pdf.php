@@ -26,7 +26,7 @@ if ($clean_article_id == 0) {
 	redirect_header(icms_getPreviousPage(), 3, _MD_ARTICLE_NO_ARTICLE);
 }
 
-$article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
+$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
 $articleObj = $article_article_handler->get($clean_article_id);
 
 if (!$articleObj || !is_object($articleObj) || $articleObj->isNew()) {
@@ -34,7 +34,7 @@ if (!$articleObj || !is_object($articleObj) || $articleObj->isNew()) {
 }
 
 if (!$articleObj->accessGranted()) {
-	redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
+	redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 }
 
 $article = $articleObj->toArray();
