@@ -4,87 +4,513 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Downloads Manual</title>
+        <style>
+        	#downloads_manual {margin: 2em;}
+        	#downloads_manual h1, h2, h3 {font-family: Georgia, "Times New Roman", Times, serif; padding-bottom: 1em; padding-top: 1em; line-height: 1.7em; font-weight: bold;}
+        	#downloads_manual h1 {text-align: center; font-size: 1.5em; font-variant: small caps; color: #336699;}
+        	#downloads_manual h2 {font-size: 1.250em; color: #6699CC;}
+        	#downloads_manual h3 {font-size: 1.1em; color: #6699FF;}
+        	#downloads_manual p {font-size: 1em; margin: 0; padding: 5px;}
+        	#downloads_manual ul li {list-style-type: square; margin-left: 20px; line-height: 1.5em; font-weight: bolder; }
+        	#downloads_manual ul li ul li {list-style-type: disc; margin-left: 30px; font-weight: normal; }
+        	#downloads_footer {border: 1px dotted; margin: 2em auto; padding: 0 1em 2em; --moz-border-radius: 1.5em; -webkit-border-radius: 1.5em; border-radius: 1.5em;}
+        	#downloads_footer h2 {padding: .5em 0 0;}
+        	#downloads_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
+        	#downloads_manual a, #downloads_manual a:visited {color: #336699}
+        	#downloads_manual a:hover {color: #336699; text-decoration: underline;}
+        	#downloads_backtop { float: right; padding: 5px; width: 100px; height: 25px;background-color: #000; border: 1px solid black; border-radius: 10px; -webkit-border-radius: 10px; -o-border-radius: 10px;}
+        	#downloads_backtop a, #downloads_backtop a:visited { margin: auto 15px;vertical-align:middle; font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; color: #FFF; text-align: center; }
+        	.downloads_clear_right {clear: right; height: 1px;}
+        </style>
     </head>
     <body>
-        <h1>Downloads Manual</h1>
-        	<p>Downloads is a small, light-weight file download handling module.</p>
-        <h2>Keyfeatures</h2>
-			<ul>
-				<li>You can upload files</li>
-				<li>You can categorize your files</li>
-				<li>Describe your file: key features, requirements, history, license, some screenshots and a lot more!</li>
-				<li>Bind "Downloads" to use with other modules (Currently: Album to include image sets and Catalogue to sell your files.</li>
-			</ul>
-        <h2>First Start</h2>
-			<p>There are several things you should do <b>before</b> you try to upload a new file. Please, follow the instructions.</p>
+    	<div id="downloads_manual">
+	        <h1 id="manual_top">Downloads Manual</h1>
+	        	<p>Downloads is a small, light-weight file download handling module.</p>
+				<ul >
+					<li><a href="#downloads_keyfeatures">Keyfeatures</a></li>
+					<li><a href="#downloads_firststart">First Start</a>
+						<ul>
+							<li><a href="#downloads_mimetypes">Allow Mimetypes</a></li>
+							<li><a href="#downloads_preferences">Module Preferences</a></li>
+							<li><a href="#downloads_indexpage">Adjust index page</a></li>
+							<li><a href="#create_categories">Create a category</a></li>
+							<li><a href="#upload_files">Upload Files</a></li>
+							<li><a href="#downloads_reviews">Reviews and Log</a></li>
+						</ul>
+					</li>
+					<li><a href="#downloads_blocks">"Downloads" Blocks</a></li>
+					<li><a href="#downloads_templates">"Downloads" Templates</a></li>
+					<li><a href="#downloads_footer">Conclusion</a></li>
+				</ul>	
 			
-			<h3>Allow the necessary File types</h3>
-			
-				<p>At first we need to allow the Mime types, which can be uploaded. Go to System > Media > Mime Types</p>
-				<p>Choose the Mime types you want to allow for File upload. If you like to use file upload from frontend beware of the group permissions per file.</p>
-				<p>Remember the image upload, too. Actually the mime type permissions are used by the image upload, too. So please allow also jpeg, jpg, png and whatever you like to use.</p>
-				<p>Done! Now you can upload all file types.</p>
-		
-			<h3>Check out the module preferences</h3>
-				<p>There might be some preferences, you'd like to change before using the module first time. Go to Modules > Downloads > Preferences</p>
-				<p>Choose the preferences like preferred. Think, most preferences should be explained enough. So I'll list just a few here, which can be important to explain:</p>
+	        <h2 id="downloads_keyfeatures">Keyfeatures</h2>
 				<ul>
-					<li>The group selection Field is just for adding categories in frontend. The file upload can be set inside the categories. You can decide for each category, which groups have view permissions and which will have upload permission. Beware, not to allow file upload, if the group have no view permission.</li>
-					<li>The Date format will be used for displaying the date throughout the module frontend. You need help to get the preferred date format? Look here for a detailed instruction.</li>
-					<li>Show Categories and Show Files will be used for page navigation in frontend. You can select, how many categories/files will be displayed at one page, before using a page navigation.</li>
-					<li>The next few settings will be used, to configure the image upload for screenshots. The screenshots will be displayed in frontend to make a visual description of your file. Here you can select now the scales of your thumbnail, the maximum allowed image size and the maximum allowed file size. Also select, in which units the file size of the uploaded file should be displayed.</li>
-					<li>Now you'll be asked again for thumbnail scales. These are for the file image. This image is a bit different to the other screenshot images. It's displayed on index file view.</li>
-					<li>The next two steps (file limitations and file version status) will give a select field in file upload. You can change the values if you need other limitations or version types. Just separate the single items with a comma.</li>
-					<li>Now will follow four more important steps. Select, if you like to use an upload/download disclaimer. You will find an example disclaimer for each type, but beware: I can't guarantee, that they are strong enough. It's just an example and you should change the disclaimer to your needed laws.</li>
-					<li>The next more important steps to explain would be "use Album Module" and "use Catalogue Module". In first Line both means: You NEED TO HAVE INSTALLED THE SELECTED MODULE TO GET SURE IT'S WORKING! If you have selected "use Album Module" you can select an Album in file upload to display more than the 4 screenshots on file single view. Album has it's own way of thumbnail width and height. So please, beware it's compatible with your chosen scales for image uploads (If you like to use an Album and the 4 screenshots). If you have selected "use Catalogue Module" there will be some more changes: you will see the catalogue price and the base currency from catalogue module. Mirrors will be disabled and you'll get an Link to catalogue module instead of a download link. This means, direct download will not work! You just will see an button "Got to buy". All other (payment, shopping cart) is part of catalogue module. All these just if you have selected an item. If no item is selected, you get the standard download procedure.</li>
-					<li>Use mirror system means: Mirrors will be enabled and you'll see a new field in file upload for mirror link. In Module ACP you'll also get a yes/no field to approve a new mirror. This is dependent on the following option field: mirror needs approval. If you have selected yes, you will need to approve new mirrors before they can be used in frontend. These fields (the same for the next two option fields "category needs approval" and "files needs approval") means, that each new mirror, file, category which is created in FRONTEND needs approval. Downloads will set the to not approved as long as it's not approved by a webmaster. If you have selected "No", no approvals will be needed and created categories, files, mirrors will directly be displayed in frontend.</li>
-					<li>Next part: The review system in "Downloads". There's an review system implemented to get reviews of the file. The Reviews can be displayed in an Tab in single file view or be private to the webmasters. If you like to make reviews public, they will be displayed without approvals (yet). You can also select, if you like to display the requesters email in frontend, you can select this. The E-Mail can currently displayed in different modes: default mode is "qm-b at hotmail dot de" and not checking against banned list. 2nd mode would be usual display, which can be converted in frontend to an spam protected image by core. To be more protected from spammers you can choose mode 3 and 4: 3rd mode will display like 1st one, but checked against banned list. 4th mode will display usual mode again but check against banned list.</li>
-					<li>The following options are for some small buttons to display an item as new, updated or popular. If you set them to "0", the function will be turned off.  For these options are additional blocks available. Most popular block will show popular files, further a block for updated and a block for new files.</li>
+					<li>You can upload files to make them public your website or to share them with user groups.</li>
+					<li>You can categorize your files</li>
+					<li>Describe your file: key features, requirements, history, license, some screenshots and a lot more!</li>
+					<li>Bind "Downloads" to use with other modules. Currently:
+						<ul>
+							<li>"Album" Module to include image sets</li>
+							<li>"Catalogue" Module to sell your files</li>
+							<li>"Sprockets" Module for tag support</li>
+						</ul>
+					</li>
 				</ul>
-				<p>Done! Next step.</p>
-			<h3>Create a category</h3>
-				<p>The next important will be creating a category. Otherwise you can not see the file upload page. Go to Tab 'Manage categories' > Add Category. Just Fill out the fields. You can select an image for the category or upload a new one. You also can upload a set of new category images to /uploads/downloads/categoryimages/. The module will read the image files inside the folder and show them inside the select box. Done.</p>
-			<h3>Upload Files</h3>
-				<p>Finally you can start uploading files. Go to Tab 'Manage Files' > 'Add File' and fill out the fields. Done! Now you should see your first category and file inside the frontend.</p>
-			<h3>Reviews and Log</h3>
-				<p>The review system is just to add reviews in frontend. You can edit them, if necessary in module ACP, but you will not be allowed to add new one. Please, use frontend to add reviews. Also the reviews doesn't have a real permission controll. You may disable adding for guests, so they will get a popup-message to register or login for submitting a review.</p>
-				<p>For Log System it's a bit more strange: You cannot add Log items and you'll be not allowed to change fields. It's just for logging and statistics. If you have an spammer problem you can get the IP to bann the sammer from your site.</p>
-		<h2>Blocks</h2>
-			<p>Currently you have 5 blocks for 'Downloads' module:</p>
-			<ul>
-				<li>Recent files
+	        <h2 id="downloads_firststart">First Start</h2>
+				<p>There are several things you should do <b>before</b> you try to upload a new file. Please, follow the instructions.</p>
+				
+				<h3 id="downloads_mimetypes">Allow the necessary File types</h3>
+					<p>The Mime Types will be handled by the system, not by the module itself. Therefore we need to allow the needed mime types for the "Downloads"-Module and the groups, before we can upload files.</p>
 					<ul>
-						<li>The "Recent Files" block will display the recently uploaded files and sort them by published date, DESC.</li>
+						<li>Go to <b>System => Media => Mime Types</b>.
+							 Here you will find the System Mime Type Handler.</li>
+						<li>Choose the Mime Types you want to allow for file upload. If you like to use file upload from front end beware of
+							 the group permissions per file. You need to select the Downloads Module to be allowed and the Groups, which you want to allow, too.</li>
+						<li>Remember the image upload, too. Actually the mime type permissions are used by the image upload, too. So please allow also jpeg, jpg, png and whatever you like to use.</li>
+						<li>Done! Now you can upload all file types you have allowed.</li>
 					</ul>
-				</li>
-				<li>Recent updated files
+				
+			<div id="downloads_backtop"><a href="#manual_top">Back to top</a></div>
+			<div class="downloads_clear_right">&nbsp;</div>
+				
+				<h3 id="downloads_preferences">Check out the module preferences</h3>
+					<p>There might be some preferences, you'd like to change before using the module first time. Go to Modules > Downloads > Preferences</p>
+					<p>Choose the preferences like preferred. Think, most preferences should be explained enough. So I'll list just a few here, which can be important to explain:</p>
 					<ul>
-						<li>This block will display recently updated files and sort them by updated date, DESC.</li>
+						<li>Group Permissions
+							<ul>
+								<li>
+									The group permissions are only to set permissions for creating new categories in front end. All selected groups will have permissions to submit new categories.
+								</li>
+							</ul>
+						</li>
+						<li>Date Format
+							<ul>
+								<li>
+									The Date format will be used for displaying the date throughout the module frontend. You need help to get the preferred date format? Look <a href="http://php.net/manual/en/function.date.php">here</a> for a detailed instruction.
+								</li>
+							</ul>
+						</li>
+						<li>Show Breadcrumb
+							<ul>
+								<li>
+									Select "Yes" to display the breadcrumb in front end, "No" to disable the breadcrumb.
+								</li>
+							</ul>
+						</li>
+						<li>Show categories
+							<ul>
+								<li>
+									Set the limit for categories to be listed on index view.
+								</li>
+							</ul>
+						</li>
+						<li>Select category columns
+							<ul>
+								<li>
+									Select, how many columns you like to see on index view. The categories, limited by "Show categories", will be splitted into columns. 2 Columns are recommended for most themes, three might be possible, too. To use 4 columns it might be necessary to adjust css styles for your Theme.
+								</li>
+							</ul>
+						</li>
+						<li>Show Files
+							<ul>
+								<li>
+									Set the limit of files to be listed on index view.
+								</li>
+							</ul>
+						</li>
+						<li>Screenshot Thumbnail width/Screenshot Thumbnail height
+							<ul>
+								<li>
+									Set the dimensions of your image thumbnails for additional screenshots in px.
+								</li>
+							</ul>
+						</li>
+						<li>image upload width/image upload height
+							<ul>
+								<li>
+									Set maximum upload dimensions in px
+								</li>
+							</ul>
+						</li>
+						<li>image file size/max file size
+							<ul>
+								<li>
+									Set the maximum file size for uploads. Currently only the maximum file size is used for both.
+								</li>
+							</ul>
+						</li>
+						<li>How to display the file size?
+							<ul>
+								<li>
+									Select the unit to display file size on single view. (bytes, kb(kilobytes), mb(megabytes) or gb(gigabytes) )
+								</li>
+							</ul>
+						</li>
+						<li>File image Thumbnail width/File image Thumbnail height
+							<ul>
+								<li>
+									Set the display dimensions of file images in px
+								</li>
+							</ul>
+						</li>
+						<li>File limitations
+							<ul>
+								<li>
+									The limitations are used in a drop-down select-field to Select the limitation for the current file. If you need different or additional limitations replace them or add more.
+								</li>
+							</ul>
+						</li>
+						<li>Show disclaimer, before an user can upload new files?
+							<ul>
+								<li>
+									Select "Yes", if you like to show a disclaimer before the form for new file-uploads will be rendered.
+								</li>
+							</ul>
+						</li>
+						<li>Disclaimer for file upload
+							<ul>
+								<li>
+									Please, DO NOT USE the predefined Disclaimer! Try to get a new one, which is more secured for your country. This one is ONLY AN EXAMPLE!!
+								</li>
+							</ul>
+						</li>
+						<li>Show disclaimer, before an user can download new files?
+							<ul>
+								<li>
+									Select "Yes", if you like to show a disclaimer, before an user can download the file.
+								</li>
+							</ul>
+						</li>
+						<li>Disclaimer for file download
+							<ul>
+								<li>
+									Please, DO NOT USE the predefined Disclaimer! Try to get a new one, which is more secured for your country. This one is ONLY AN EXAMPLE!!
+								</li>
+							</ul>
+						</li>
+						<li>file platform requirements
+							<ul>
+								<li>
+									Requirements, which can be selected in a multi-select field while uploading a new file.
+								</li>
+							</ul>
+						</li>
+						<li>file license
+							<ul>
+								<li>
+									Licenses, which can be selected in a multi-select-field while uploading a new file.
+								</li>
+							</ul>
+						</li>
+						<li>Use RSS-Feeds?
+							<ul>
+								<li>
+									Select "Yes" to get a button with a RSS link.
+								</li>
+							</ul>
+						</li>
+						<li>Do you need version controll?
+							<ul>
+								<li>
+									This option will show/hide several fields like file version, file history, version status (final, RC, beta etc)
+								</li>
+							</ul>
+						</li>
+						<li>Do you need related Files?
+							<ul>
+								<li>
+									Select "Yes", if you need related files. You will get a list of files while you are uploading new files. There you can select related files.
+								</li>
+							</ul>
+						</li>
+						<li>Do you need File requirements?
+							<ul>
+								<li>
+									Display/Hide the field for file requirements. Select "No" to hide the field from form.
+								</li>
+							</ul>
+						</li>
+						<li>Do you need file keyfeatures?
+							<ul>
+								<li>
+									Display/Hide the field for file keyfeatures. Select "No" to hide the field from form.
+								</li>
+							</ul>
+						</li>
+						<li>Do you need a link to a Demo-Site
+							<ul>
+								<li>
+									This option will display a field for a link to a demo website for each file.
+								</li>
+							</ul>
+						</li>
+						<li>Use 'Catalogue' Module?
+							<ul>
+								<li>
+									You can use the Catalogue Module to link a single file to a single catalogue item, instead of a download link. If a file is linked to an item you do will get a link to the item and the price of the file from catalogue Module.
+								</li>
+							</ul>
+						</li>
+						<li>Use 'Sprockets' Module?
+							<ul>
+								<li>
+									This will use the tag support of sprockets module. BEWARE: The module shows only items, which are marked as tag only, not as category or both!
+								</li>
+							</ul>
+						</li>
+						<li>Use 'Album' Module?
+							<ul>
+								<li>
+									Select "Yes" to get a list of Albums. The selected Album and all contained images will be displayed on single file view to get more screenshots for a file.
+								</li>
+							</ul>
+						</li>
+						<li>Use mirror system?
+							<ul>
+								<li>
+									Select yes, to get a new field for a mirror url to download your file from a mirror.
+								</li>
+							</ul>
+						</li>
+						<li>Do you need approvals for new mirrors?
+							<ul>
+								<li>
+									Select "Yes", if you need approvals for new mirrors. If someone added a mirror while uploading a file from front end, 
+									the mirror will be set as denied and you will see it as an awaiting approval in system waiting block. 
+								</li>
+							</ul>
+						</li>
+						<li>Do you need approvals for new files?
+							<ul>
+								<li>
+									Select "Yes", if you like to approve new files before they are public. All new files will be marked as denied, 
+									if they are submitted from front end and you will see them as awaiting approvals in system waiting block.
+								</li>
+							</ul>
+						</li>
+						<li>Do you need approvals for new categories?
+							<ul>
+								<li>
+									Select "Yes", if you like to approve new categories before they are public. All new categories will be marked as denied, 
+									if they are submitted from front end and you will see them as awaiting approvals in system waiting block.
+								</li>
+							</ul>
+						</li>
+						<li>Do you like to allow guests to vote?
+							<ul>
+								<li>
+									If you like to allow guests to vote your file, select "Yes". Otherwise they will only get a popup to register/login or cancel the rating.
+								</li>
+							</ul>
+						</li>
+						<li>show reviews?
+							<ul>
+								<li>
+									Select "Yes" to make reviews public in front end. They will be displayed in a new tab in single file view.
+								</li>
+							</ul>
+						</li>
+						<li>do you like to allow guests to submit reviews?
+							<ul>
+								<li>
+									Select "Yes", if you like to allow guests to submit file reviews. Otherwise they will only get a link to register/login or cancel.
+								</li>
+							</ul>
+						</li>
+						<li>show reviews email?
+							<ul>
+								<li>
+									Select "Yes" to display E-Mail of review-submitters. (Not recommanded)
+								</li>
+							</ul>
+						</li>
+						<li>How to display the email-address in front end?
+							<ul>
+								<li>
+									Select the display method of submitters email. Spam protected: email [at] example dot com, usual: email@example.com. If you like to use spam protection against banned list.
+								</li>
+							</ul>
+						</li>
+						<li>show user avatar in reviews?
+							<ul>
+								<li>
+									Select "Yes" to display the user avatar in reviews.
+								</li>
+							</ul>
+						</li>
+						<li>How many reviews should be shown in one page?
+							<ul>
+								<li>
+									Set limit of reviews before rendering page navigation
+								</li>
+							</ul>
+						</li>
+						<li>Order reviews date
+							<ul>
+								<li>
+									Order reviews by published date DESC/ASC
+								</li>
+							</ul>
+						</li>
+						<li>How many downloads of one file before it's popular
+							<ul>
+								<li>
+									Select the amount of downloads before a file is popular and will be displayed in "Most popular" Block. Select "0" to turn off.
+								</li>
+							</ul>
+						</li>
+						<li>How many days to provide one file as new
+							<ul>
+								<li>
+									Enter the days, a file will be marked as new after submitting. Enter "0" to turn off.
+								</li>
+							</ul>
+						</li>
+						<li>How many days to provide one file as updated after editing
+							<ul>
+								<li>
+									Enter the days, a file will be marked as updated after updating. Enter "0" to turn off.
+								</li>
+							</ul>
+						</li>
+						<li>All other preferences are only effected for system comment rules and notifications.</li>
 					</ul>
-				</li>
-				<li>Most popular files
-					<ul>
-						<li>This block content will be dependent from your preferences. Only files, which where called more about the selected number will be shown inside the block.</li>
-					</ul>
-				</li>
-				<li>Category Menu block
-					<ul>
-						<li>Here you can see the category like a menu. You also can select one special category to display all subcategories of this one.</li>
-					</ul>
-				</li>
-				<li>Gallery Block
-					<ul>
-						<li>The Gallery Block will display recent uploaded files. The Block requires a file image. If the Block doesn't has a file image, the file won't be displayed.</li>
-					</ul>
-				</li>
-			</ul>
-			<p>You can clone all blocks, if needed.</p>
- 
-		<div class="downloas_footer">
-		<h2>Conclusion</h2>
-			<p>Thank you for using 'Downloads' module. If you have some trouble while using downloads module, please visit <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>. You have some suggestions, what you'd like to change or add to the module? No problem! We can talk about. Please, use also <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a> for this!</p>  
-			<p>You might also like to follow the recent changes in downloads module? Please, have a look at <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/downloads/trunk/" title="'Downloads' SVN on Assembla" rel="external">'Downloads' SVN on Assembla</a> or make a checkout of my <a href="http://code.google.com/p/amaryllis-modules/" title="Downloads" rel="external">module svn on google code</a>.</p>
+					<p>Done! Next step.</p>
+			
+			<div id="downloads_backtop"><a href="#manual_top">Back to top</a></div>
+			<div class="downloads_clear_right">&nbsp;</div>
+			
+				<h3 id="downloads_indexpage">Adjust index page</h3>
+	        		<p>Now Let's have a look at the index Page. For this find the tab "Edit Indexpage" in Module Menu. Select the Index image, which you'd like to display on index or upload a new one using the image upload field. The Index image will be displayed on all module sites.</p>
+			        <p>The Index header is just a header on module home, like the heading. It can be used for some more Text on module home to explain/invite guests to register and upload or whatever you like to.</p>
+			        <p>The index footer is like the index image displayed on all sites of the module.</p>
+				<h3 id="create_categories">Create a category</h3>
+					<p>The next most important step would be creating a category. Otherwise you can not see the file upload page. Go to Tab 'Manage categories' > Add Category. Just Fill out the fields. You can select an image for the category or upload a new one. You also can upload a set of new category images to /uploads/downloads/categoryimages/. The module will read the image files inside the folder and show them inside the select box. Done.</p>
+				<h3 id="upload_files">Upload Files</h3>
+					<p>Finally you can start uploading files. Go to Tab 'Manage Files' > 'Add File' and fill out the fields. Done! Now you should see your first category and file inside the frontend.</p>
+				<h3 id="downloads_reviews">Reviews and Log</h3>
+					<p>The review system is just to add reviews in frontend. You can edit them, if necessary in module ACP, but you will not be allowed to add new one. Please, use frontend to add reviews. Also the reviews doesn't have a real permission controll. You may disable adding for guests, so they will get a popup-message to register or login for submitting a review.</p>
+					<p>For Log System it's a bit more strange: You cannot add Log items and you'll be not allowed to change fields. It's just for logging and statistics. If you have an spammer problem you can get the IP to bann the sammer from your site.</p>
+			
+			<div id="downloads_backtop"><a href="#manual_top">Back to top</a></div>
+			<div class="downloads_clear_right">&nbsp;</div>
+			
+			<h2 id="downloads_blocks">Blocks</h2>
+				<p>Currently you have 5 blocks for 'Downloads' module:</p>
+				<ul>
+					<li>Recent files
+						<ul>
+							<li>The "Recent Files" block will display the recently uploaded files and sort them by published date, DESC.</li>
+						</ul>
+					</li>
+					<li>Recent updated files
+						<ul>
+							<li>This block will display recently updated files and sort them by updated date, DESC.</li>
+						</ul>
+					</li>
+					<li>Most popular files
+						<ul>
+							<li>This block content will be dependent from your preferences. Only files, which where called more about the selected number will be shown inside the block.</li>
+						</ul>
+					</li>
+					<li>Category Menu block
+						<ul>
+							<li>Here you can see the category like a menu. You also can select one special category to display all subcategories of this one.</li>
+						</ul>
+					</li>
+					<li>Gallery Block
+						<ul>
+							<li>The Gallery Block will display recent uploaded files. The Block requires a file image. If the Block doesn't has a file image, the file won't be displayed.</li>
+						</ul>
+					</li>
+				</ul>
+				<p>You can clone all blocks, if needed.</p>
+			
+			<div id="downloads_backtop"><a href="#manual_top">Back to top</a></div>
+			<div class="downloads_clear_right">&nbsp;</div>
+			
+			<h2 id="downloads_templates">"Downloads" Templates</h2>
+				<p>The Main Templates:</p>
+				<ul>
+					<li>downloads_admin.html
+						<ul>
+							<li>Contains all Template for ACP. Rendering the tables and forms and the manual.</li>
+						</ul>
+					</li>
+					<li>downloads_category.html
+						<ul>
+							<li>Template for a single category/subcategory within a loop on category index view.</li>
+						</ul>
+					</li>
+					<li>downloads_download.html
+						<ul>
+							<li>Contains a single download within a loop on index view.</li>
+						</ul>
+					</li>
+					<li>downloads_footer.html
+						<ul>
+							<li>Footer included in all frontend Files. Contains Admin-link Comment rules and notification container</li>
+						</ul>
+					</li>
+					<li>downloads_forms.html
+						<ul>
+							<li>Contains the forms for adding/deleting new categories/downloads on front end</li>
+						</ul>
+					</li>
+					<li>downloads_header.html
+						<ul>
+							<li>Header file included in all front end templates. Contains breadcrumb, RSS-Link and Index-Image.</li>
+						</ul>
+					</li>
+					<li>downloads_index.html
+						<ul>
+							<li>The Main template, which lists all loops.</li>
+						</ul>
+					</li>
+					<li>downloads_requirements.html
+						<ul>
+							<li>Only used, if module requirements check failed.</li>
+						</ul>
+					</li>
+					<li>downloads_singledownload.html
+						<ul>
+							<li>Displays a single file on single file view.</li>
+						</ul>
+					</li>
+					<li>downloads_singlereview.html
+						<ul>
+							<li>Displays a single review in review loop on single file view.</li>
+						</ul>
+					</li>
+				</ul>
+			
+			<div id="downloads_backtop"><a href="#manual_top">Back to top</a></div>
+			<div class="downloads_clear_right">&nbsp;</div>
+			
+			<h2 id="downloads_import">Import from Wf-Downloads</h2>
+				<p>The module contains an import script for Wf-Downloads. A few things, before you start importing:</p>
+				<ul>
+					<li>If you're updating an older site and you also like to use article and import from news(old)/smartsection, make sure, you first use the import of article before importing wfd data.</li>
+					<li>Make sure, it's a clean "Downloads" installation. It might be difficult if you have created categories/downloads first.</li>
+					<li>You will loose your old voting and metainformation data</li>
+				</ul>
+				<p>Ok, let's start. It's easy enough.</p>
+				<ul>
+					<li>At first: you will need to uninstall Wf-Downloads before importing. Make a backup of ALL WF Downloads tables first.</li>
+					<li>After successfully updated system you can install "Downloads". Don't forget now to import your sql file.</li>
+					<li>Importer will find the tables itself and present you the buttons. Start with first button and click them step by step.</li>
+					<li>Don't worry, if the waiting time is a bit longer. For an import of about 4000 Entries in another module I needed to wait nearly 2 minutes!</li>
+					<li>Check, if all categories/files are present and there are no mistakkes.</li>
+				</ul>
+			<div id="downloads_backtop"><a href="#manual_top">Back to top</a></div>
+			<div class="downloads_clear_right">&nbsp;</div>
+			<div id="downloads_footer">
+				<h2>Conclusion</h2>
+				<p>Thank you for using 'Downloads' module. If you have some trouble while using downloads module, please visit <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>. You have some suggestions, what you'd like to change or add to the module? No problem! We can talk about. Please, use also <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a> for this!</p>  
+				<p>You might also like to follow the recent changes in downloads module? Please, have a look at <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/downloads/trunk/" title="'Downloads' SVN on Assembla" rel="external">'Downloads' SVN on Assembla</a> or make a checkout of my <a href="http://code.google.com/p/amaryllis-modules/" title="Downloads" rel="external">module svn on google code</a>.</p>
+			</div>
 		</div>
     </body>
 </html>
-

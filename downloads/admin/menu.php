@@ -64,6 +64,10 @@ $i = 0;
 	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $moddir;
 	
 	$i++;
+	$headermenu[$i]['title'] = _MI_DOWNLOADS_MENU_IMPORT;
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/import.php';
+	
+	$i++;
 	$headermenu[$i]['title'] = _MI_DOWNLOADS_MENU_MANUAL;
 	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/manual.php';
 

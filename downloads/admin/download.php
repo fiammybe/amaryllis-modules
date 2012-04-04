@@ -2,7 +2,7 @@
 /**
  * 'Downloads' is a light weight download handling module for ImpressCMS
  *
- * File: /admin/about.php
+ * File: /admin/download.php
  * 
  * About page of the module
  * 
