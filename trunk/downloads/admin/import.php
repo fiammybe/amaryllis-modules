@@ -127,7 +127,7 @@ function store_wfdownloads_downloads($row) {
 		$obj->setVar('download_approve', 1);
 	}
 	$obj->setVar('download_inblocks', 1);
-	$obj->setVar('download_active', $row['offline']);
+	$obj->setVar('download_active', 1);
 	$obj->setVar('download_updated', 0);
 	$obj->setVar('download_broken', 0);
 	
