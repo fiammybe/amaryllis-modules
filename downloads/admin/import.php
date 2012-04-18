@@ -6,7 +6,7 @@
  * 
  * Import Script for WFD
  * 
- * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Downloads
@@ -27,7 +27,7 @@ function store_wfdownloads_cat($row) {
 	global $downloads_category_handler;
 	
 	$obj = $downloads_category_handler->create(TRUE);
-	$obj->setVar("category_id", $row['cid']);
+	$obj->setVar("category_id", $row['']);
 	$obj->setVar("category_title", $row['title']);
 	$obj->setVar("category_pid", $row['pid']);
 	$obj->setVar("category_img", $row['imgurl']);
@@ -46,6 +46,12 @@ function store_wfdownloads_cat($row) {
 	$obj->setVar("category_notification_sent", 1);
 
 	$downloads_category_handler->insert($obj, TRUE);
+	
+	$permission_handler = icms::handler("icms_member_groupperm");
+	$permission_handler->addRight('category_grpperm', $row['cid'], "1", icms::$module->getVar("mid"));
+	$permission_handler->addRight('category_grpperm', $row['cid'], "2", icms::$module->getVar("mid"));
+	$permission_handler->addRight('category_grpperm', $row['cid'], "3", icms::$module->getVar("mid"));
+	$permission_handler->addRight('category_uplperm', $row['cid'], "1", icms::$module->getVar("mid"));
 	unset($row);
 }
 
@@ -146,6 +152,12 @@ function store_wfdownloads_downloads($row) {
 	$obj->setVar('docxode', 1);
 
 	$downloads_download_handler->insert($obj, TRUE);
+	
+	$permission_handler = icms::handler("icms_member_groupperm");
+	$permission_handler->addRight('download_grpperm', $row['lid'], "1", icms::$module->getVar("mid"));
+	$permission_handler->addRight('download_grpperm', $row['lid'], "2", icms::$module->getVar("mid"));
+	$permission_handler->addRight('download_grpperm', $row['lid'], "3", icms::$module->getVar("mid"));
+	
 	unset($row);
 }
 

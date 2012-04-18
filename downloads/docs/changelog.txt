@@ -9,6 +9,7 @@
 * Updated Language constants for
 ** /blocks.php
 ** /modinfo.php
+* added import for wfd
 
 == First Release: Version 1.0 => Release Date: 04.02.2012 ==
 
