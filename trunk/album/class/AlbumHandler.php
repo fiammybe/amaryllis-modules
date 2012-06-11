@@ -53,26 +53,11 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 	}
 	
 	// get a album List for pid
-	public function getAlbumListForPid($groups = array(), $perm = 'album_grpperm', $status = null, $approve = null, $album_id = null, $showNull = TRUE) {
+	public function getAlbumListForPid($perm = 'album_grpperm', $status = FALSE, $approve = FALSE, $album_id = NULL, $showNull = TRUE) {
 	
 		$criteria = new icms_db_criteria_Compo();
-		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
-			foreach($groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
-			}
-			$criteria->add($criteriaTray);
-			if ($perm == 'album_grpperm' || $perm == 'album_admin') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
-			}
-		}
-		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('album_active', TRUE));
-		}
-		if (isset($approve)) {
-			$criteria->add(new icms_db_criteria_Item('album_approve', TRUE));
-		}
+		if($status) $criteria->add(new icms_db_criteria_Item('album_active', TRUE));
+		if($approve) $criteria->add(new icms_db_criteria_Item('album_approve', TRUE));
 		if (is_null($album_id)) $album_id = 0;
 		$criteria->add(new icms_db_criteria_Item('album_pid', $album_id));
 		$this->setGrantedObjectsCriteria($criteria, "album_grpperm");
@@ -83,12 +68,11 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		}
 		foreach(array_keys($albums) as $i) {
 			$ret[$i] = $albums[$i]->getVar('album_title');
-			$subalbums = $this->getAlbumListForPid($groups, $perm, $status, $albums[$i]->getVar('album_id'), $showNull);
+			$subalbums = $this->getAlbumListForPid($perm, $status, $approve, $albums[$i]->getVar('album_id'), $showNull);
 			foreach(array_keys($subalbums) as $j) {
 				$ret[$j] = '-' . $subalbums[$j];
 			}
 		}
-		asort($ret);
 		return $ret;
 	}
 	
