@@ -56,6 +56,4 @@ class ArticleIndexpageHandler extends icms_ipf_Handler {
 		
 		return TRUE;
 	}
-
-
 }
