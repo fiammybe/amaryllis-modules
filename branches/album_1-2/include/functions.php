@@ -17,12 +17,9 @@
  * 
  */
 
-//generates the Album admin menu in ACP
-function album_adminmenu( $currentoption = 0, $header = '', $menu = '', $extra = '', $scount = 5 ) {
-	icms::$module -> displayAdminMenu( $currentoption, icms::$module -> getVar( 'name' ) . ' | ' . $header );
-	echo '<h3 style="color: #2F5376;">' . $header . '</h3>';
-}
-
+/**
+ * display icon for new albums
+ */
 function album_display_new($time, $timestamp) {
 	global $albumConfig;
 	
@@ -39,7 +36,9 @@ function album_display_new($time, $timestamp) {
 	}
 	return $new_img;
 }
-
+/**
+ * display icon for updated albums
+ */
 function album_display_updated($time, $timestamp) {
 	global $albumConfig;
 	$updated = ( $timestamp - ( 86400 * (int)( $albumConfig['albums_daysupdated'] ) ) );
@@ -55,7 +54,9 @@ function album_display_updated($time, $timestamp) {
 	}
 	return $updated_img;
 }
-
+/**
+ * display icon for popular albums
+ */
 function album_display_popular($counter) {
 	global $albumConfig;
 	$popular = (int)$albumConfig['albums_popular'];

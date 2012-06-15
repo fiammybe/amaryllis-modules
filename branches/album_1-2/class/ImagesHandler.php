@@ -150,6 +150,16 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		}
 	}
 	
+	public function getImagesFromBatch() {
+		$images = array();
+		$images = icms_core_Filesystem::getFileList(ALBUM_UPLOAD_ROOT . 'batch/', '', array('gif', 'jpg', 'png'));
+		$ret = array();
+		foreach(array_keys($images) as $i ) {
+			$ret[$i] = $images[$i];
+		}
+		return $ret;
+	}
+	
 	protected function beforeInsert(&$obj) {
 		$dsc = $obj->getVar("img_description", "s");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");

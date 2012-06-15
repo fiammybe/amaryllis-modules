@@ -46,7 +46,7 @@ if ( in_array( $clean_op, $valid_op, TRUE ) ) {
   switch ($clean_op) {
   	case "mod":
 		icms_cp_header();
-		album_adminmenu( 3, _MI_ALBUM_MENU_INDEXPAGE );
+		icms::$module->displayAdminmenu( 4, _MI_ALBUM_MENU_INDEXPAGE );
 		editform($indexkey=1, FALSE);
 		break;
   	case "addindexpage":

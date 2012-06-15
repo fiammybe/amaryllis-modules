@@ -118,10 +118,15 @@ define("_MI_ALBUM_IMAGES_UPLOADNEW", "Upload a new Image");
 /**
  * added in 1.1
  */
-// added messages to menu
+// added messages, permissions and manual to menu
 define("_MI_ALBUM_MENU_MESSAGE", "Image Comments");
 define("_MI_ALBUM_MENU_PERMISSIONS", "Permissions");
 define("_MI_ALBUM_MENU_MANUAL", "Manual");
+/**
+ * added in 1.2
+ */
+// added batchupload to menu
+define("_MI_ALBUM_MENU_BATCHUPLOAD", "Batchupload");
 //added to config
 define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL", "New comments for images needs approval?");
 define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL_DSC", "If you need approval before publishing new comments on images, select yes");

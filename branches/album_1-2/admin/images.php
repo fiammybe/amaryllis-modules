@@ -28,13 +28,13 @@ function editimages($images_id = 0) {
 	}
 	if (!$imagesObj->isNew()){
 		$imagesObj->setVar( 'img_updated_date', (time() - 100) );
-		album_adminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT);
+		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT);
 		$sform = $imagesObj->getForm(_AM_ALBUM_IMAGES_EDIT, "addimages");
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$imagesObj->setVar('img_publisher', $img_uid);
 		$imagesObj->setVar( 'img_published_date', (time() - 100) );
-		album_adminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_UPLOADNEW);
+		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_UPLOADNEW);
 		$sform = $imagesObj->getForm(_MI_ALBUM_IMAGES_UPLOADNEW, "addimages");
 		$sform->assign($icmsAdminTpl);
 
@@ -44,7 +44,7 @@ function editimages($images_id = 0) {
 
 include_once "admin_header.php";
 
-$album_album_handler = icms_getModuleHandler("album", basename(dirname(dirname(__FILE__))), "album");
+$album_album_handler = icms_getModuleHandler("album", ALBUM_DIRNAME, "album");
 $count = $album_album_handler->getCount(FALSE, TRUE, FALSE);
 if($count == 0) {
 	redirect_header(ALBUM_ADMIN_URL . 'album.php', 3, _AM_NO_ALBUM_FOUND);
@@ -121,7 +121,7 @@ if($count == 0) {
 				
 			default:
 				icms_cp_header();
-				$icmsModule->displayAdminMenu(1, _MI_ALBUM_MENU_IMAGES);
+				icms::$module->displayAdminMenu(1, _MI_ALBUM_MENU_IMAGES);
 				$criteria = '';
 				// if no op is set, but there is a (valid) album_id, display a single album
 				if ($clean_img_id) {

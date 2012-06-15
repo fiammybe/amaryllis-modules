@@ -62,7 +62,7 @@ class AlbumImages extends icms_ipf_Object {
 		}
 		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 		if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
-			$this->setControl("img_tags", array("name" => "select_multi", "itemHandler" => "images", "method" => "getImagesTags", "module" => "album"));
+			$this->setControl("img_tags", array("name" => "selectmulti", "itemHandler" => "images", "method" => "getImagesTags", "module" => "album"));
 		} else {
 			$this->hideFieldFromForm("img_tags");
 			$this->hideFieldFromSingleView("img_tags");

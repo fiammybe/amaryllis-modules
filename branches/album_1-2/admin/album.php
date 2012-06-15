@@ -29,13 +29,13 @@ function editalbum($album_id = 0) {
 	}
 	if (!$albumObj->isNew()){
 		$albumObj->setVar( 'album_updated_date', (time() - 100) );
-		album_adminmenu( 0, _MI_ALBUM_MENU_ALBUM . ' > ' . _MI_ALBUM_ALBUM_EDITING);
+		icms::$module->displayAdminmenu( 0, _MI_ALBUM_MENU_ALBUM . ' > ' . _MI_ALBUM_ALBUM_EDITING);
 		$sform = $albumObj->getForm(_AM_ALBUM_ALBUM_EDIT, 'addalbum');
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$albumObj->setVar("album_uid", $album_uid);
 		$albumObj->setVar( 'album_published_date', (time() - 100) );
-		album_adminmenu( 0, _MI_ALBUM_MENU_ALBUM . " > " . _MI_ALBUM_ALBUM_CREATINGNEW);
+		icms::$module->displayAdminmenu( 0, _MI_ALBUM_MENU_ALBUM . " > " . _MI_ALBUM_ALBUM_CREATINGNEW);
 		$sform = $albumObj->getForm(_AM_ALBUM_CREATE, 'addalbum');
 		$sform->assign($icmsAdminTpl);
 
@@ -52,7 +52,7 @@ $valid_op = array ('mod', 'changedField', 'addalbum', 'del', 'view', 'visible', 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
+$album_album_handler = icms_getModuleHandler('album', ALBUM_DIRNAME, 'album');
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
 
 if (in_array($clean_op, $valid_op, TRUE)) {
@@ -138,7 +138,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 		default:
 			icms_cp_header();
-			album_adminmenu( 0, _MI_ALBUM_MENU_ALBUM );
+			icms::$module->displayAdminmenu( 0, _MI_ALBUM_MENU_ALBUM );
 			$criteria = '';
 			if ($clean_album_id) {
 				$albumObj = $album_album_handler->get($clean_album_id);

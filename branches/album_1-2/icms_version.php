@@ -25,7 +25,7 @@
 
 $modversion = array(
 					'name'						=> _MI_ALBUM_NAME,
-					'version'					=> 1.0,
+					'version'					=> 1.2,
 					'description'				=> _MI_ALBUM_DSC,
 					'author'					=> "QM-B &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>",
 					'credits'					=> "Thanks to McDonald for the nice index layer and also thanks to Madfish and the developers of ALBUM-Module for the code snippets, where I could see how to develope a Module using IPF!",
@@ -41,11 +41,11 @@ $modversion = array(
 					'image'						=> "images/album_icon.png", /* for backward compatibility */
 
 					/**  Development information */
-					'status_version'			=> "1.1",
-					'status'					=> "RC",
-					'date'						=> "01:46 05.02.2012",
+					'status_version'			=> "1.2",
+					'status'					=> "Beta",
+					'date'						=> "2012-06-15 10:47:16",
 					'author_word'				=> "",
-					'warning'					=> _CO_ICMS_WARNING_RC,
+					'warning'					=> _CO_ICMS_WARNING_BETA,
 
 					/** Contributors */
 					'developer_website_url' 	=> "http://code.google.com/p/amaryllis-modules/",
