@@ -81,6 +81,9 @@ class AlbumImages extends icms_ipf_Object {
 		return $album->getVar ( 'album_title' );
 	}
 	
+	/**
+	 * prepare some control fields for ACP Image overview
+	 */
 	public function img_active() {
 		$img_active = $this->getVar('img_active', 'e');
 		if ($img_active == FALSE) {
@@ -103,9 +106,26 @@ class AlbumImages extends icms_ipf_Object {
 		}
 	}
 
+	public function getTitleControl() {
+		$control = new icms_form_elements_Text( '', 'img_title[]', 15, 255,$this->getVar('img_title', 'e'));
+		return $control->render();
+	}
+	
+	public function getDscControl() {
+		$control = new icms_form_elements_Textarea( '', 'img_description[]', $this->getVar('img_description', 'e'), 3, 40);
+		return $control->render();
+	}
+
 	public function getWeightControl() {
 		$control = new icms_form_elements_Text( '', 'weight[]', 5, 7,$this -> getVar( 'weight', 'e' ) );
 		$control->setExtra( 'style="text-align:center;"' );
+		return $control->render();
+	}
+	
+	public function getAlbumControl() {
+		global $album_album_handler;
+		$control = new icms_form_elements_Select("", 'a_id[]', $this->getVar("a_id", "e"));
+		$control->addOptionArray($album_album_handler->getAlbumListForPid());
 		return $control->render();
 	}
 	
