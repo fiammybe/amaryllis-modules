@@ -129,6 +129,11 @@ class AlbumImages extends icms_ipf_Object {
 		return $control->render();
 	}
 	
+	public function getImgPreview() {
+		$img = '<img src="' . $this->getImagePath() . '" . width=64 height=64 />';
+		return $img;
+	}
+	
 	public function getImageTag($indexview = TRUE) {
 		$img = $image_tag = '';
 		$directory_name = basename(dirname( dirname( __FILE__ ) ));
