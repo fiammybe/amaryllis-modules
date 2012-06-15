@@ -20,7 +20,7 @@
 include_once 'admin_header.php';
 icms_cp_header();
 
-icms::$module->displayAdminMenu(4, _MI_ALBUM_MENU_PERMISSIONS);
+icms::$module->displayAdminMenu(5, _MI_ALBUM_MENU_PERMISSIONS);
 $op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : '';
 switch ($op) {
 	case 'viewalbum':

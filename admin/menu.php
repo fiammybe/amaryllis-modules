@@ -33,6 +33,10 @@ $adminmenu[$i]['title'] = _MI_ALBUM_MENU_MESSAGE;
 $adminmenu[$i]['link'] = 'admin/message.php';
 
 $i++;
+$adminmenu[$i]['title'] = _MI_ALBUM_MENU_BATCHUPLOAD;
+$adminmenu[$i]['link'] = 'admin/batchupload.php';
+
+$i++;
 $adminmenu[$i]['title'] = _MI_ALBUM_MENU_INDEXPAGE;
 $adminmenu[$i]['link'] = 'admin/indexpage.php?op=mod&indexkey=1';
 
