@@ -89,5 +89,4 @@ class ArticleIndexpage extends icms_ipf_Object {
 		$ret['footer'] = $this->getIndexFooter();
 		return $ret;
 	}
-	
 }

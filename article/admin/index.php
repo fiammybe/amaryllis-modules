@@ -19,18 +19,8 @@
 
 include_once "admin_header.php";
 
-$clean_op = $clean_article_id = $clean_category_id = $valid_op = $article_article_handler = $article_category_handler= '';
-
-$valid_op = array ('mod', 'changedField', 'addarticle', 'del', 'view', 'visible', 'changeShow','changeApprove', 'changeWeight', '');
-
-if (isset($_GET['op'])) $clean_op = htmlentities($_GET['op']);
-if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
-
 $article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
 $article_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
-
-$clean_article_id = isset($_GET['article_id']) ? (int)$_GET['article_id'] : 0 ;
-$clean_category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0 ;
 
 icms_cp_header();
 icms::$module->displayAdminMenu(0, _MI_ARTICLE_MENU_INDEX);
@@ -111,7 +101,5 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 450px;">
 			</div>
 		</fieldset>
 		<br />';
-
-
 
 icms_cp_footer();
