@@ -131,6 +131,10 @@ if($count == 0) {
 						$imagesObj->setVar('img_description', $_POST['img_description'][$key]);
 						$changed = TRUE;
 					}
+					if($imagesObj->getVar('a_id', 'e') != $_POST['a_id'][$key]) {
+						$imagesObj->setVar('a_id', $_POST['a_id'][$key]);
+						$changed = TRUE;
+					}
 					if($imagesObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 						$imagesObj->setVar('weight', (int)($_POST['weight'][$key]));
 						$changed = TRUE;
@@ -159,6 +163,7 @@ if($count == 0) {
 				
 				$objectTable = new icms_ipf_view_Table($album_images_handler, $criteria);
 				$objectTable->addColumn( new icms_ipf_view_Column( 'img_active', 'center', TRUE, 'img_active' ) );
+				$objectTable->addColumn(new icms_ipf_view_Column('img_url', 'center', 70, 'getImgPreview'));
 				$objectTable->addColumn( new icms_ipf_view_Column( 'img_title', FALSE, FALSE, 'getTitleControl' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'a_id', FALSE, FALSE, 'getAlbumControl' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'img_description', FALSE, FALSE, 'getDscControl' ) );
