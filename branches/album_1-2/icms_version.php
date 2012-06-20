@@ -53,6 +53,8 @@ $modversion = array(
 					'developer_email' 			=> "qm-b@hotmail.de");
 
 $modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>";
+$modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
+$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=412]Claudia[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=365]Thomas[/url]";
 $modversion['people']['translators'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 
@@ -70,7 +72,8 @@ $modversion['adminmenu'] 	= 'admin/menu.php';
 /////////////////////////////////////////////// SUPPORT //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+$modversion['submit_bug'] = 'http://code.google.com/p/amaryllis-modules/issues/entry?template=Defect%20report%20from%20user';
+$modversion['submit_feature'] = 'http://code.google.com/p/amaryllis-modules/issues/entry?template=Defect%20report%20from%20user';
 $modversion['support_site_url'] = 'http://community.impresscms.org/modules/newbb/viewforum.php?forum=9';
 $modversion['support_site_name']= 'ImpressCMS Community Forum';
 
@@ -202,17 +205,15 @@ $modversion['search'] ['func'] = 'album_search';
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 // Comments
 $modversion['hasComments'] = 1;
 $modversion['comments']['pageName'] = 'index.php';
 $modversion['comments']['itemName'] = 'album_id';
 
 // Comment callback functions
-$modversion['comments']['callbackFile'] = 'include/comment_functions.php';
+$modversion['comments']['callbackFile'] = 'include/comment.inc.php';
 $modversion['comments']['callback']['approve'] = 'album_com_approve';
 $modversion['comments']['callback']['update'] = 'album_com_update';
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// CONFIGURATION ///////////////////////////////////////////////////

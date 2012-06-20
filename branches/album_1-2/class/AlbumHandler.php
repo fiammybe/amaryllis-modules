@@ -308,9 +308,8 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 
 		if (isset($albumObj->vars['counter']) && !is_object(icms::$user) || (!$album_isAdmin && $albumObj->getVar('album_uid', 'e') != icms::$user->uid ()) ) {
 			$new_counter = $albumObj->getVar('counter') + 1;
-			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
-				. ' WHERE ' . $this->keyName . '=' . $albumObj->id();
-			$this->query($sql, NULL, TRUE);
+			$albumObj->setVar("counter", $new_counter);
+			$this->insert($albumObj, TRUE);
 		}
 		return TRUE;
 	}
