@@ -1,0 +1,19 @@
+<h1>Changelog Icmspoll</h1>
+
+<h2>Icmspoll 2.0</h2>
+
+<p>Converted from the original xoopspoll Version 1.31. The module has been ported to make use of IPF and keep 
+up compatibility of the poll module with ImpressCMS 2.0.</p>
+<p><b>Changed:</b></p>
+<ul>
+	<li>Updated module to make use of IPF</li>
+</ul>
+<p><b>Added:</b></p>
+<ul>
+	<li>Added permission control for poll view permissions and poll vote permissions</li>
+	<li>Polls are listed in system search now</li>
+	<li>new block to list all polls</li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
