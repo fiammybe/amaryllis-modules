@@ -1,0 +1,68 @@
+<!-- admin index view -->
+<{if $icmspoll_index_title}>
+	<h1><{$icmspoll_index_title}></h1>
+<{/if}>
+<{if $icmspoll_index_info}>
+	<p><{$icmspoll_index_info}></p>
+<{/if}>
+<{if $icmspoll_index_table}>
+	<{$icmspoll_index_table}>
+<{/if}>
+<{if $addindex}>
+	<{includeq file='db:system_common_form.html' form=$addindex}>
+<{/if}>
+
+<!-- admin icmspoll page -->
+<{if $icmspoll_polls_title}>
+	<h1><{$icmspoll_polls_title}></h1>
+<{/if}>
+<{if $icmspoll_polls_info}>
+	<p><{$icmspoll_polls_info}></p>
+<{/if}>
+<{if $icmspoll_polls_table}>
+	<{$icmspoll_polls_table}>
+<{/if}>
+<{if $addpoll}>
+	<{includeq file='db:system_common_form.html' form=$addpoll}>
+<{/if}>
+
+<!-- admin options page -->
+<{if $icmspoll_options_title}>
+	<h1><{$icmspoll_options_title}></h1>
+<{/if}>
+<{if $icmspoll_options_info}>
+	<p><{$icmspoll_options_info}></p>
+<{/if}>
+<{if $icmspoll_options_table}>
+	<{$icmspoll_options_table}>
+<{/if}>
+<{if $addoptions}>
+	<{includeq file='db:system_common_form.html' form=$addoptions}>
+<{/if}>
+<!-- admin log page -->
+<{if $icmspoll_log_title}>
+	<h1><{$icmspoll_log_title}></h1>
+<{/if}>
+<{if $icmspoll_log_info}>
+	<p><{$icmspoll_log_info}></p>
+<{/if}>
+<{if $icmspoll_log_table}>
+	<{$icmspoll_log_table}>
+<{/if}>
+<!-- admin index page -->
+<{if $icmspoll_indexpage_title}>
+	<h1><{$icmspoll_indexpage_title}></h1>
+<{/if}>
+<{if $icmspoll_indexpage_info}>
+	<p><{$icmspoll_indexpage_info}></p>
+<{/if}>
+<{if $icmspoll_indexpage_table}>
+	<{$icmspoll_indexpage_table}>
+<{/if}>
+<{if $addindexpage}>
+	<{includeq file='db:system_common_form.html' form=$addindexpage}>
+<{/if}>
+<!-- icmspoll manual -->
+<{if $manual_path}>
+	<{includeq file=$manual_path}>
+<{/if}>
