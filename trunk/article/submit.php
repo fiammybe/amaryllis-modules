@@ -85,10 +85,10 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				return redirect_header (ARTICLE_URL . 'singlearticle.php?article_id=' . $article_id, 3, _THANKS_SUBMISSION);
 				}
 			} else {
-				return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
+				return redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 			}
 			break;
 	}
 } else {
-	return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
+	return redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 }

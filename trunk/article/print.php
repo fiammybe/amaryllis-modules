@@ -39,7 +39,7 @@ if (!$articleObj || !is_object($articleObj) || $articleObj->isNew()) {
 }
 
 if (!$articleObj->accessGranted()){
-	redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
+	redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 }
 
 $categories = $articleObj->getArticleCid(FALSE);

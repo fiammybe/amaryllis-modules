@@ -108,7 +108,7 @@ define("_CO_ARTICLE_EDIT", "edit");
 if(!defined("_CO_SUBMIT")) define("_CO_SUBMIT", "submit");
 define("_CO_ARTICLE_DELETE", "delete");
 define("_CO_ARTICLE_VIEW", "view");
-if(!defined("_NO_PERM")) define("_NO_PERM", "No permissions");
+if(!defined("_NOPERM")) define("_NOPERM", "No permissions");
 
 // indexpage
 define("_CO_ARTICLE_INDEXPAGE_INDEX_HEADER", "Header");
