@@ -90,7 +90,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case('mod'):
 			$articleObj = $article_article_handler->get($clean_article_id);
 			if ($clean_article_id > 0 && $articleObj->isNew()) {
-				redirect_header(ARTICLE_URL, 3, _NO_PERM);
+				redirect_header(ARTICLE_URL, 3, _NOPERM);
 			}
 			editarticle($articleObj, $clean_category_id);
 			break;
@@ -111,7 +111,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case('del'):
 			$articleObj = $article_article_handler->get($clean_article_id);
 			if (!$articleObj->userCanEditAndDelete()) {
-				redirect_header($articleObj->getItemLink(TRUE), 3, _NO_PERM);
+				redirect_header($articleObj->getItemLink(TRUE), 3, _NOPERM);
 			}
 			$icmsTpl->assign('article_cat_path', _MD_ARTICLE_ARTICLE_DELETE);
 			if (isset($_POST['confirm'])) {

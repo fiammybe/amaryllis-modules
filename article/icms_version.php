@@ -72,7 +72,7 @@ $modversion['people']['testers'][] = "[url=http://community.impresscms.org/useri
 $modversion['people']['translators'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 
 /** Manual */
-$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Article' target='_blank'>English</a>";
+$modversion['manual']['wiki'][] = "<a href='" . ICMS_URL  . "/modules/article/admin/manual.php' target='_self'>Module Manual</a>";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// SUPPORT //////////////////////////////////////////////////////

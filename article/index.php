@@ -256,7 +256,7 @@ if(in_array($clean_op, $valid_op)) {
 			 * if not valid single category or no permissions -> redirect to module home
 			 */
 			} else {
-				redirect_header(ARTICLE_URL, 3, _NO_PERM);
+				redirect_header(ARTICLE_URL, 3, _NOPERM);
 			}
 			
 			/**

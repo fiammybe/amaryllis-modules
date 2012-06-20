@@ -193,7 +193,7 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	$icms_metagen = new icms_ipf_Metagen($articleObj->getVar("article_title"), $articleObj->getVar("meta_keywords", "n"), $articleObj->getVar("meta_description", "n"));
 	$icms_metagen->createMetaTags();
 } else {
-	redirect_header (ARTICLE_URL, 3, _NO_PERM);
+	redirect_header (ARTICLE_URL, 3, _NOPERM);
 }
 if(isset($gplus) OR isset($fb) OR isset($tw)) {
 	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/jquery.socialshareprivacy.js', array('type' => 'text/javascript'));
