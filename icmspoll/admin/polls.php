@@ -29,15 +29,15 @@ function editpoll($poll_id = 0) {
 	$user_id = icms::$user->getVar("uid", "e");
 	
 	if(!$pollObj->isNew()) {
-		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . ' > ' . _MI_ICMSPOLL_POLLS_EDITING);
-		$sform = $pollObj->getForm(_MI_ICMSPOLL_POLLS_EDITING, 'addpoll');
+		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . ' > ' . _MI_ICMSPOLL_MENU_POLLS_EDITING);
+		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_EDITING, 'addpoll');
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$pollObj->setVar("user_id", $user_id);
 		$pollObj->setVar( "start_time", (time() + 600) );
 		$pollObj->setVar("end_time", (time() + (7 * 24 * 60 * 60)));
-		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . " > " . _MI_ICMSPOLL_POLLS_CREATINGNEW);
-		$sform = $pollObj->getForm(_MI_ICMSPOLL_POLLS_CREATINGNEW, 'addpoll');
+		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . " > " . _MI_ICMSPOLL_MENU_POLLS_CREATINGNEW);
+		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_CREATINGNEW, 'addpoll');
 		$sform->assign($icmsAdminTpl);
 	}
 }
@@ -73,7 +73,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			break;
 		case 'view':
 			icms_cp_header();
-			icms::$module->displayAdminMenu(1, _MI_ICMSPOLL_MENU_POLLS . ">" . _MI_ICMSPOLL_POLLS_DISPLAYSINGLE);
+			icms::$module->displayAdminMenu(1, _MI_ICMSPOLL_MENU_POLLS);
 			$pollObj = $icmspoll_poll_handler->get($clean_poll_id);
 			$pollObj->displaySingleObject();
 			break;
@@ -100,13 +100,15 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable = new icms_ipf_view_Table($icmspoll_poll_handler, NULL);
 			$objectTable->addColumn(new icms_ipf_view_Column("expired", "center", FALSE, "displayExpired"));
 			$objectTable->addColumn(new icms_ipf_view_Column("question", FALSE, FALSE, "getPreviewLink"));
-			$objectTable->addColumn(new icms_ipf_view_Column("user_id", FALSE, FALSE, "getPollCreator"));
+			$objectTable->addColumn(new icms_ipf_view_Column("user_id", FALSE, FALSE, "getUser"));
 			$objectTable->addColumn(new icms_ipf_view_Column("start_time", FALSE, FALSE, "getStartDate"));
 			$objectTable->addColumn(new icms_ipf_view_Column("end_time", FALSE, FALSE, "getEndDate"));
 			$objectTable->addColumn(new icms_ipf_view_Column("created_on", FALSE, FALSE, "getCreatedDate"));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", FALSE, FALSE, "getWeightControl"));
 			$objectTable->setDefaultOrder("DESC");
 			$objectTable->setDefaultSort("created_on");
+			
+			$objectTable->addFilter("expired", "filterExpired");
 			
 			$objectTable->addIntroButton( 'addpoll', 'polls.php?op=mod', _AM_ICMSPOLL_POLLS_ADD );
 			$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );

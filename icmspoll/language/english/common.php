@@ -16,9 +16,8 @@
  * @package		icmspoll
  *
  */
- 
-defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
+defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 /**
  * constants for poll objects
  */
@@ -36,11 +35,9 @@ define("_CO_ICMSPOLL_POLLS_MULTIPLE", "Allow multiple selection?");
 define("_CO_ICMSPOLL_POLLS_MAIL_STATUS", "Notify the poll author when expired?");
 define("_CO_ICMSPOLL_POLLS_EXPIRED", "Expired?");
 define("_CO_ICMSPOLL_POLLS_CREATED_ON", "Created on");
-
 define("_CO_ICMSPOLL_POLLS_ACTIVE", "Active Polls");
 define("_CO_ICMSPOLL_POLLS_EXPIRED", "Expired Polls");
 define("_CO_ICMSPOLL_ICMSPOLL_ENDTIME_ERROR", "End time must be set to future");
-
 /**
  * constants for options objects
  */
@@ -66,7 +63,6 @@ define("_CO_ICMSPOLL_OPTIONS_COLORS_PINK", "Pink");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_PURPLE", "Purple");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_RED", "Red");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_YELLOW", "Yellow");
-
 /**
  * constants for log objects
  */
@@ -77,8 +73,16 @@ define("_CO_ICMSPOLL_LOG_OPTION_ID_DSC", "");
 define("_CO_ICMSPOLL_LOG_IP", "IP");
 define("_CO_ICMSPOLL_LOG_USER_ID", "User");
 define("_CO_ICMSPOLL_LOG_TIME", "Tracking Time");
-
 /**
  * constants for indexpage objects
  */
-define("", "");
+define("_CO_ICMSPOLL_INDEXPAGE_INDEX_IMAGE", "Select an Image");
+define("_CO_ICMSPOLL_INDEXPAGE_INDEX_IMAGE_DSC", "Select an image from list or upload a new one.");
+define("_CO_ICMSPOLL_INDEXPAGE_INDEX_IMG_UPLOAD", "Image Upload");
+define("_CO_ICMSPOLL_INDEXPAGE_INDEX_IMG_UPLOAD_DSC", "");
+define("_CO_ICMSPOLL_INDEXPAGE_INDEX_HEADER", "Index Header");
+define("_CO_ICMSPOLL_INDEXPAGE_INDEX_HEADER_DSC", "");
+define("_CO_ICMSPOLL_INDEXPAGE_INDEX_HEADING", "Index Heading");
+define("_CO_ICMSPOLL_INDEXPAGE_INDEX_HEADING_DSC", "");
+define("_CO_ICMSPOLL_INDEXPAGE_INDEX_FOOTER", "Index footer");
+define("_CO_ICMSPOLL_INDEXPAGE_INDEX_FOOTER_DSC", "");

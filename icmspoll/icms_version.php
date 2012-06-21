@@ -76,7 +76,8 @@ $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/u
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=412]Claudia[/url]";
 
 /** Manual */
-$modversion['manual'][] = "<a href='" . ICMS_URL  . "/modules/icmspoll/admin/manual.php' target='_self'>Module Manual</a>";
+$moddir = basename(dirname(__FILE__));
+$modversion['manual'][] = "<a href='" . ICMS_URL  . "/modules/" . $moddir . "/admin/manual.php' target='_self'>Module Manual</a>";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// SUPPORT //////////////////////////////////////////////////////
@@ -225,8 +226,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ICMSPOLL_CONFIG_LIMITBYIP_DSC',
 								'formtype'		=> 'yesno',
 								'valuetype'		=> 'int',
-								'default'   	=> '1',
-								'options'   	=> array()
+								'default'   	=> '1'
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -235,12 +235,49 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ICMSPOLL_CONFIG_LIMITBYUID_DSC',
 								'formtype'   	=> 'yesno',
 								'valuetype'   	=> 'int',
-								'default'   	=> '0',
-								'options'   	=> array()
+								'default'   	=> '0'
 							);
 $i++;
-
-
+$modversion['config'][$i] = array(
+								'name' 			=> 'show_breadcrumbs',
+								'title' 		=> '_MI_ICMSPOLL_CONFIG_SHOW_BREADCRUMBS',
+								'description' 	=> '_MI_ICMSPOLL_CONFIG_SHOW_BREADCRUMBS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=>  1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'show_polls',
+								'title'			=> '_MI_ICMSPOLL_CONFIG_SHOW_POLLS',
+								'description' 	=> '_MI_ICMSPOLL_CONFIG_SHOW_POLLS_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype'		=> 'int',
+								'default' 		=> 15
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'polls_default_order',
+								'title'			=> '_MI_ICMSPOLL_CONFIG_DEFAULT_ORDER',
+								'description'	=> '_MI_ICMSPOLL_CONFIG_DEFAULT_ORDER_DSC',
+								'formtype'		=> 'select',
+								'valuetype'		=> 'text',
+								'default'		=> 0,
+								'options'		=> array( _MI_ICMSPOLL_CONFIG_DEFAULT_ORDER_WEIGHT => "weight", 
+													_MI_ICMSPOLL_CONFIG_DEFAULT_ORDER_CREATIONDATE => "created_on",
+													_MI_ICMSPOLL_CONFIG_DEFAULT_ORDER_STARTDATE => "start_time",
+													_MI_ICMSPOLL_CONFIG_DEFAULT_ORDER_ENDDATE => "end_time" )
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'polls_default_sort',
+								'title'			=> '_MI_ICMSPOLL_CONFIG_DEFAULT_SORT',
+								'description'	=> '_MI_ICMSPOLL_CONFIG_DEFAULT_SORT_DSC',
+								'formtype'		=> 'select',
+								'valuetype'		=> 'text',
+								'default'		=> 0,
+								'options'		=> array( _MI_ICMSPOLL_CONFIG_DEFAULT_SORT_ASC => "ASC", _MI_ICMSPOLL_CONFIG_DEFAULT_SORT_DESC => "DESC")
+							);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////

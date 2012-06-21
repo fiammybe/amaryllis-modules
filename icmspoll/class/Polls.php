@@ -54,6 +54,10 @@ class IcmspollPolls extends icms_ipf_Object {
 
 	}
 
+	function getUser() {
+		return icms_member_user_Handler::getUserLink($this->getVar('user_id', 'e'));
+	}
+
 	public function getCreatedDate() {
 		global $icmspollConfig;
 		$date = $this->getVar('created_on', 'e');
@@ -70,6 +74,24 @@ class IcmspollPolls extends icms_ipf_Object {
 		global $icmspollConfig;
 		$date = $this->getVar('end_time', 'e');
 		return date($icmspollConfig['icmspoll_dateformat'], $date);
+	}
+
+	public function getQuestion() {
+		$question = $this->getVar("question", "s");
+		$question = icms_core_DataFilter($question, "text", "output");
+		return $question;
+	}
+	
+	public function getDescription() {
+		$description = $this->getVar("description", "s");
+		$description = icms_core_DataFilter($description, "text", "output");
+		return $description;
+	}
+	
+	public function getWeightControl() {
+		$control = new icms_form_elements_Text('', 'weight[]', 5, 7,$this->getVar('weight', 'e'));
+		$control->setExtra( 'style="text-align:center;"' );
+		return $control->render();
 	}
 
 	public function hasVoted() {
@@ -197,11 +219,31 @@ class IcmspollPolls extends icms_ipf_Object {
     }
 	
 	/**
+	 * returns URL or link to a poll
+	 */
+	function getItemLink($onlyUrl = FALSE) {
+		$url = ICMSPOLL_URL . 'index.php?poll_id=' . $this->id() . '&amp;';
+		if ($onlyUrl) return $url;
+		$question = $this->getQuestion();
+		return '<a href="' . $url . '" title="' . $question . ' ">' . $question . '</a>';
+	}
+	/**
 	 * send polls toArray
 	 */
 	function toArray() {
 		$ret = parent::toArray();
 		$ret['id'] = $this->id();
-		$ret['question'];
+		$ret['question'] = $this->getQuestion();
+		$ret['dsc'] = $this->getDescription();
+		$ret['user'] = $this->getUser();
+		
+		$ret['comments'] = $this->getVar("poll_comments", "e");
+		$ret['viewAccessGranted'] = $this->viewAccessGranted();
+		$ret['voteAccessGranted'] = $this->voteAccessGranted();
+		
+		$ret['itemLink'] = $this->getItemLink(FALSE);
+		$ret['itemURL'] = $this->getItemLink(TRUE);
+		
+		return $ret;
 	}
 }
