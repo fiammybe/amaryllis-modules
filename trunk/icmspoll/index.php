@@ -36,19 +36,22 @@ $icmsTpl->assign('icmspoll_index', $index);
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$valid_op = array ('');
+$valid_op = array('getPollsByCreator', 'getExpiredPolls', '');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
 $clean_poll_id = isset($_GET['poll_id']) ? filter_input(INPUT_GET, "poll_id", FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, "uid", FILTER_SANITIZE_NUMBER_INT) : FALSE; 
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start", FILTER_SANITIZE_NUMBER_INT) : 0;
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
 	$options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
-	$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-	
 	switch ($clean_op) {
-		case 'value':
+		case 'getPollsByCreator':
+			
+			break;
+			
+		case 'getExpiredPolls':
 			
 			break;
 		
@@ -69,6 +72,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$icmsTpl->assign("poll", $poll);
 				$options = $options_handler->getAllByPollId($clean_poll_id, "weight", "ASC");
 				$icmsTpl->assign("options", $options);
+				$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
+				$icmsTpl->assign("user_id", $user_id);
 			/**
 			 * if not a single poll is requested, display poll list
 			 */

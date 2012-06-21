@@ -31,8 +31,12 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		parent::__construct($db, 'polls', 'poll_id', 'question', 'description', 'icmspoll');
 		$this->addPermission("polls_view", _CO_ICMSPOLL_POLLS_VIEWPERM, _CO_ICMSPOLL_POLLS_VIEWPERM_DSC);
-		$this->addPermission("polls_vote", _CO_ICMSPOLL_POLLS_VOTEPERM, _CO_ICMSPOLL_POLLS_VOTEPERM_DSC);
-		
+		$this->addPermission("polls_vote", _CO_ICMSPOLL_POLLS_VOTEPERM, _CO_ICMSPOLL_POLLS_VOTEPERM_DSC);	
+	}
+	
+	public function getDelimeters() {
+		$delimeters = array(1 => _CO_ICMSPOLL_POLLS_DELIMETER_BRTAG, 2 => _CO_ICMSPOLL_POLLS_DELIMETER_SPACE);
+		return $delimeters;
 	}
 	
 	public function getPolls($start = 0, $limit = 0, $order = "end_time", $sort = "DESC", $uid = FALSE, $expired = FALSE, $inBlocks = FALSE) {

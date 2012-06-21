@@ -1,0 +1,23 @@
+<{if $poll}>
+	<div class="icmspoll_singlepoll">
+		<div class="singlepoll_question">
+			<{$poll.question}>
+		</div>
+		<div class="singlepoll_description">
+			<{$poll.description}>
+		</div>
+		<div class="singlepoll_form">
+			<form class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php?op=submit&amp;poll_id=<{$poll.id}>" method="post">
+				<fieldset>
+					<{foreach item=option from=$options}>
+						<input class="icmspoll_option_<{$option.color}>" type="<{$poll.inputtype}>" name="poll_option" value="<{$option.id}>" />
+						<{$option.text}>
+						<{$poll.delimeter}>
+					<{/foreach}>
+				</fieldset>
+				<input type="hidden" name="user_id" value="<{$user_id}>" />
+				<input type="submit" class="icmspoll_formButton" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" />
+			</form>
+		</div>
+	</div>
+<{/if}>

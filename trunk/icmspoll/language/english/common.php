@@ -23,6 +23,8 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
  */
 define("_CO_ICMSPOLL_POLLS_QUESTION", "Poll Question");
 define("_CO_ICMSPOLL_POLLS_DESCRIPTION", "Poll Description");
+define("_CO_ICMSPOLL_POLLS_DELIMETER", "Select the delimeter to be used");
+define("_CO_ICMSPOLL_POLLS_DELIMETER_DSC", "");
 define("_CO_ICMSPOLL_POLLS_USER_ID", "Author of the Poll");
 define("_CO_ICMSPOLL_POLLS_START_TIME", "Sart of Poll");
 define("_CO_ICMSPOLL_POLLS_END_TIME", "End of Poll");
@@ -35,6 +37,10 @@ define("_CO_ICMSPOLL_POLLS_MULTIPLE", "Allow multiple selection?");
 define("_CO_ICMSPOLL_POLLS_MAIL_STATUS", "Notify the poll author when expired?");
 define("_CO_ICMSPOLL_POLLS_EXPIRED", "Expired?");
 define("_CO_ICMSPOLL_POLLS_CREATED_ON", "Created on");
+
+define("_CO_ICMSPOLL_POLLS_DELIMETER_BRTAG", "BR-Tag (\<br\>)");
+define("_CO_ICMSPOLL_POLLS_DELIMETER_SPACE", "Space (\&nbsp;)");
+
 define("_CO_ICMSPOLL_POLLS_ACTIVE", "Active Polls");
 define("_CO_ICMSPOLL_POLLS_EXPIRED", "Expired Polls");
 define("_CO_ICMSPOLL_ICMSPOLL_ENDTIME_ERROR", "End time must be set to future");
