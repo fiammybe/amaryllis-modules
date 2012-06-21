@@ -84,15 +84,27 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 		$criteria->add(new icms_db_criteria_Item("option_id", $option_id));
 		return $this->deleteAll($criteria);
 	}
+	
+	function getTotalAnonymousVoters($poll_id) {
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item("poll_id", $poll_id));
+		$criteria->add(new icms_db_criteria_Item("user_id", "0"));
+		$count = $this->getCount($criteria);
+		return $count;
+	}
+	
+	function getTotalRegistredVoters($poll_id) {
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item("poll_id", $poll_id));
+		$criteria->add(new icms_db_criteria_Item("user_id", "0", "!="));
+		$count = $this->getCount($criteria);
+		return $count;
+	}
 
 	// public static
 	function getTotalVotersByPollId($poll_id) {
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item("option_id", $option_id));
-		$sql = "SELECT DISTINCT user_id FROM ".icms::$xoopsDB->prefix("icmspoll_log")." WHERE poll_id=".(int)($poll_id)." AND user_id > 0";
-		$users = icms::$xoopsDB->getRowsNum(icms::$xoopsDB->query($sql));
-		$sql = "SELECT DISTINCT ip FROM ".icms::$xoopsDB->prefix("icmspoll_log")." WHERE poll_id=".(int)($poll_id)." AND user_id=0";
-		$anons = icms::$xoopsDB->getRowsNum(icms::$xoopsDB->query($sql));
+		$users = $this->getTotalRegistredVoters($poll_id);
+		$anons = $this->getTotalAnonymousVoters($poll_id);
 		return $users+$anons;
 	}
 
@@ -110,6 +122,15 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 		$criteria->add(new icms_db_criteria_Item("option_id", $option_id));
 		$votes = $this->getObjects($criteria, TRUE);
 		return $votes;
+	}
+	
+	/**
+	 * filter for ACP
+	 */
+	public function filterPolls() {
+		$icmspoll_polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+		$polls = $icmspoll_polls_handler->getList();
+		return $polls;
 	}
 	
 	public function beforeInsert(&$obj) {

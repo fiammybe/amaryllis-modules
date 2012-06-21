@@ -29,12 +29,12 @@ function editoption($option_id = 0) {
 	$user_id = icms::$user->getVar("uid", "e");
 	
 	if(!$optionObj->isNew()) {
-		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . ' > ' . _MI_ICMSPOLL_POLLS_EDITING);
-		$sform = $optionObj->getForm(_MI_ICMSPOLL_POLLS_EDITING, 'addoption');
+		icms::$module->displayAdminmenu( 2, _MI_ICMSPOLL_MENU_OPTIONS . ' > ' . _MI_ICMSPOLL_MENU_OPTIONS_EDITING);
+		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_EDITING, 'addoption');
 		$sform->assign($icmsAdminTpl);
 	} else {
-		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . " > " . _MI_ICMSPOLL_POLLS_CREATINGNEW);
-		$sform = $optionObj->getForm(_MI_ICMSPOLL_POLLS_CREATINGNEW, 'addoption');
+		icms::$module->displayAdminmenu( 2, _MI_ICMSPOLL_MENU_OPTIONS . " > " . _MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW);
+		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW, 'addoption');
 		$sform->assign($icmsAdminTpl);
 	}
 }
@@ -84,14 +84,30 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 					$changed = TRUE;
 				}
 				if ($changed) {
-					$icmspoll_options_handler -> insert($optionObj);
+					$icmspoll_options_handler->insert($optionObj);
 				}
 			}
 			$ret = 'options.php';
 			redirect_header( ICMSPOLL_ADMIN_URL . $ret, 2, _AM_ICMSPOLL_WEIGHT_UPDATED);
 			break;
 		default:
+			icms_cp_header();
+			icms::$module->displayAdminmenu(2, _MI_ICMSPOLL_MENU_OPTIONS);
+			
+			$objectTable = new icms_ipf_view_Table($icmspoll_options_handler, NULL);
+			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollName"));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionText"));
+			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
+			
+			$objectTable->addFilter("poll_id", "filterPolls");
+			
+			$objectTable->addIntroButton('addoption', 'options.php?op=mod', _AM_ICMSPOLL_OPTIONS_ADD);
+			$objectTable->addActionButton('changeWeight', FALSE, _SUBMIT);
+			
+			$icmsAdminTpl->assign('icmspoll_options_table', $objectTable->fetch());
+			$icmsAdminTpl->display('db:icmspoll_admin.html');
 			
 			break;
 	}
+	include_once 'admin_footer.php';
 }

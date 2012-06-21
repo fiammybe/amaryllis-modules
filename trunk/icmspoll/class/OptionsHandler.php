@@ -79,10 +79,28 @@ class IcmspollOptionsHandler extends icms_ipf_Handler {
 	
 	public function updateCount(& $obj) {
 		$icmspoll_log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-		$votes = $icmspoll_log_handler->getTotalVotesByOptionId($obj->id() );
+		$votes = $icmspoll_log_handler->getTotalVotesByOptionId($obj->id());
 		$obj->setVar("option_count", $votes);
 		$this->insert($obj, TRUE);
 		return TRUE;
 	}
 	
+	/**
+	 * filter for ACP
+	 */
+	public function filterPolls() {
+		$icmspoll_polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+		$polls = $icmspoll_polls_handler->getList();
+		return $polls;
+	}
+	
+	/**
+	 * related for storing
+	 */
+	protected function beforeInsert(&$obj) {
+		$option_text = $obj->getVar("option_text", "s");
+		$option_text = icms_core_DataFilter::checkVar($option_text, "html", "input");
+		$obj->setVar($option_text);
+		return TRUE;
+	}
 }

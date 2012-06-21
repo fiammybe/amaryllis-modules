@@ -38,4 +38,26 @@ class IcmspollLog extends icms_ipf_Object {
 		$comment_mode = $icmspollConfig['com_rule'];
 		return $comment_mode;
 	}
+	
+	public function getTime() {
+		global $icmspollConfig;
+		$date = $this->getVar('time', 'e');
+		return date($icmspollConfig['icmspoll_dateformat'], $date);
+	}
+	
+	function getUser() {
+		return icms_member_user_Handler::getUserLink($this->getVar('user_id', 'e'));
+	}
+	
+	public function getPollName() {
+		$icmspoll_polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+		$pollObj = $icmspoll_polls_handler->get($this->getVar("poll_id", "e"));
+		return $pollObj->getQuestion();
+	}
+	
+	public function getOptionText() {
+		$icmspoll_options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
+		$optionsObj = $icmspoll_options_handler->get($this->getVar("option_id", "e"));
+		return $optionsObj->getOptionText();
+	}
 }

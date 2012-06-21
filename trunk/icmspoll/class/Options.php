@@ -38,5 +38,23 @@ class IcmspollOptions extends icms_ipf_Object {
 		
 		$this->hideFieldFromForm("option_count");
 	}
+	
+	public function getPollName() {
+		$icmspoll_polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+		$pollObj = $icmspoll_polls_handler->get($this->getVar("poll_id", "e"));
+		return $pollObj->getQuestion();
+	}
+	
+	public function getWeightControl() {
+		$control = new icms_form_elements_Text('', 'weight[]', 5, 7,$this->getVar('weight', 'e'));
+		$control->setExtra( 'style="text-align:center;"' );
+		return $control->render();
+	}
+	
+	public function getOptionText() {
+		$optionText = $this->getVar("option_text", "s");
+		$optionText = icms_core_DataFilter($optionText, "text", "output");
+		return $optionText;
+	}
 
 }

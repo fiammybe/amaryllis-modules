@@ -2,9 +2,10 @@
 /**
  * 'Icmspoll' is a poll module for ImpressCMS and iforum
  *
- * File: /footer.php
+ * File: /extras/modules/sitemap/icmspoll.php
  * 
- * Footer file included in all files in frontend
+ * Sitemap plugin for icmspoll module. Requires Sitemap 1.40 or above. If does not copy automatically on install, please
+ * copy file to /root/modules/sitemap/plugins/
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -16,8 +17,8 @@
  * @package		icmspoll
  *
  */
-defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-
-
-include_once ICMS_ROOT_PATH . 'footer.php';
+function b_sitemap_icmspoll() {
+	$block = sitemap_get_categoires_map( icms::$xoopsDB->prefix('icmspoll_polls' ), 'poll_id', '', 'question', 'index.php?poll_id=', 'poll_id');
+	return $block;
+}
