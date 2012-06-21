@@ -32,6 +32,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("poll_id", XOBJ_DTYPE_INT, NULL, FALSE);
 		$this->quickInitVar("question", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("description", XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar("delimeter", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("user_id", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("start_time", XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar("end_time", XOBJ_DTYPE_LTIME, TRUE);
@@ -45,6 +46,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("expired", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("poll_comments", XOBJ_DTYPE_INT, FALSE);
 		
+		$this->setControl("delimeter", array("name" => "select", "itemHandler" => "polls", "method" => "getDelimeters", "module" => "icmspoll"));
 		$this->setControl("display", "yesno");
 		$this->setControl("mail_status", "yesno");
 		$this->setControl("multiple", "yesno");
@@ -86,6 +88,10 @@ class IcmspollPolls extends icms_ipf_Object {
 		$description = $this->getVar("description", "s");
 		$description = icms_core_DataFilter($description, "text", "output");
 		return $description;
+	}
+	
+	public function getDelimeter() {
+		return ($this->getVar("delimeter", "e") == 1) ? "<br />" : "&nbsp;";
 	}
 	
 	public function getWeightControl() {
@@ -222,10 +228,18 @@ class IcmspollPolls extends icms_ipf_Object {
 	 * returns URL or link to a poll
 	 */
 	function getItemLink($onlyUrl = FALSE) {
-		$url = ICMSPOLL_URL . 'index.php?poll_id=' . $this->id() . '&amp;';
+		$url = ICMSPOLL_URL . 'index.php?poll_id=' . $this->id();
 		if ($onlyUrl) return $url;
 		$question = $this->getQuestion();
 		return '<a href="' . $url . '" title="' . $question . ' ">' . $question . '</a>';
+	}
+	
+	public function isMultiple() {
+		return ($this->getVar("multiple", "e") == 1) ? TRUE : FALSE;
+	}
+	
+	public function inBlocks() {
+		return ($this->getVar("display", "e") == 1) ? TRUE : FALSE;
 	}
 	/**
 	 * send polls toArray
@@ -236,10 +250,14 @@ class IcmspollPolls extends icms_ipf_Object {
 		$ret['question'] = $this->getQuestion();
 		$ret['dsc'] = $this->getDescription();
 		$ret['user'] = $this->getUser();
+		$ret['delimeter'] = $this->getDelimeter();
 		
 		$ret['comments'] = $this->getVar("poll_comments", "e");
+		$ret['isMultiple'] = $this->isMultiple();
+		
 		$ret['viewAccessGranted'] = $this->viewAccessGranted();
 		$ret['voteAccessGranted'] = $this->voteAccessGranted();
+		$ret['hasExpired'] = $this->hasExpired();
 		
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);

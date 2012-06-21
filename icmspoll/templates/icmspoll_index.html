@@ -5,11 +5,11 @@
 	<{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>
-	
-	<{foreach item=poll from=$polllist}>
-		<{includeq file="db:icmspoll_polls.html"}>
-	<{/foreach}>
-	
+	<div class="polls_container">
+		<{foreach item=poll from=$polllist}>
+			<{includeq file="db:icmspoll_polls.html"}>
+		<{/foreach}>
+	</div>
 	<{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>

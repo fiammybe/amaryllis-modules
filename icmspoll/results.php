@@ -1,0 +1,42 @@
+<?php
+/**
+ * 'Icmspoll' is a poll module for ImpressCMS and iforum
+ *
+ * File: /results.php
+ * 
+ * main index file
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Icmspoll
+ * @since		2.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		icmspoll
+ *
+ */
+
+include_once 'header.php';
+
+$xoopsOption['template_main'] = 'icmspoll_index.html';
+
+include_once ICMS_ROOT_PATH . '/header.php';
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$icmspoll_indexpage_handler = icms_getModuleHandler( 'indexpage', ICMSPOLL_DIRNAME, 'icmspoll' );
+$indexpageObj = $icmspoll_indexpage_handler->get(1);
+$index = $indexpageObj->toArray();
+$icmsTpl->assign('icmspoll_index', $index);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+include_once 'footer.php';

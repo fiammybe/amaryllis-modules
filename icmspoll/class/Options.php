@@ -53,8 +53,16 @@ class IcmspollOptions extends icms_ipf_Object {
 	
 	public function getOptionText() {
 		$optionText = $this->getVar("option_text", "s");
-		$optionText = icms_core_DataFilter($optionText, "text", "output");
+		$optionText = icms_core_DataFilter($optionText, "html", "output");
 		return $optionText;
 	}
 
+	public function toArray() {
+		$ret = parent::toArray();
+		$ret['id'] = $this->getVar("id", "e");
+		$ret['poll_id'] = $this->getVar("poll_id", "e");
+		$ret['text'] = $this->getOptionText();
+		$ret['color'] = $this->getVar("option_color", "e");
+		return $ret;
+	}
 }
