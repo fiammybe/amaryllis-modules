@@ -60,7 +60,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		} else {
 			$criteria->add(new icms_db_criteria_Item('expired', FALSE));
 		}
-		if ($album_uid) $criteria->add(new icms_db_criteria_Item('user_id', $user_id));
+		if ($user_id) $criteria->add(new icms_db_criteria_Item('user_id', $user_id));
 		$this->setGrantedObjectsCriteria($criteria, "polls_view");
 		return $this->getCount($criteria);
 	}

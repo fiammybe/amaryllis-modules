@@ -1,6 +1,21 @@
 <{includeq file="db:icmspoll_header.html"}>
 
-
+<!-- display poll list -->
+<{if $polllist}>
+	<{if $icmspoll_pagenav }><!-- pagination control -->
+		<{$icmspoll_pagenav}>
+	<{/if}>
+	
+	<{foreach item=poll from=$polllist}>
+		<{includeq file="db:icmspoll_polls.html"}>
+	<{/foreach}>
+	
+	<{if $icmspoll_pagenav }><!-- pagination control -->
+		<{$icmspoll_pagenav}>
+	<{/if}>
+<{elseif $poll}>
+	<{includeq file="db:icmspoll_singlepoll.html"}>
+<{/if}>
 
 
 <{includeq file="db:icmspoll_footer.html"}>

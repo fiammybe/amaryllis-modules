@@ -40,6 +40,7 @@ $valid_op = array ('');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
 $clean_poll_id = isset($_GET['poll_id']) ? filter_input(INPUT_GET, "poll_id", FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start", FILTER_SANITIZE_NUMBER_INT) : 0;
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
@@ -52,15 +53,37 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			break;
 		
 		default:
+			/**
+			 * check, if a single poll is requested and retrieve Object, if so
+			 */
 			if($clean_poll_id != 0) {
 				$pollObj = $polls_handler->get($clean_poll_id);
 			} else {
 				$pollObj = FALSE;
 			}
+			/**
+			 * check, if it's a valid Object and if view permissions are granted
+			 */
 			if(is_object($pollObj) && !$pollObj->isNew() && $pollObj->viewAccessGranted()) {
-				
+				$poll = $pollObj->toArray();
+				$icmsTpl->assign("poll", $poll);
+				$options = $options_handler->getAllByPollId($clean_poll_id, "weight", "ASC");
+				$icmsTpl->assign("options", $options);
+			/**
+			 * if not a single poll is requested, display poll list
+			 */
 			} elseif ($clean_poll_id == 0) {
-				
+				$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], FALSE, FALSE, FALSE);
+				$icmsTpl->assign('polllist', $polls);
+				/**
+				 * pagination control
+				 */
+				$polls_count = $polls_handler->getPollsCount(FALSE, FALSE);
+				$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
+				$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
+			/**
+			 * if not a valid poll Object or permission denied -> redirect to index
+			 */
 			} else {
 				redirect_header(ICMSPOLL_URL, 4, _NOPERM);
 			}
