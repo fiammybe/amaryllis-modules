@@ -1,0 +1,16 @@
+<link href="<{$icms_url}>/modules/<{$dirname}>/module_icmspoll.css" rel="stylesheet" type="text/css" />
+
+<{if $icmspoll_show_breadcrumb}>
+	<!-- module breadcrumb -->
+	<div class="icmspoll_headertable">
+		<{if $icmspoll_module_home}><span class="icmspoll_modulename"><{$icmspoll_module_home}></span><{/if}>
+		<{if $poll}>
+			<span class="icmspoll_breadcrumb">
+				<{if $icmspoll_module_home}>&nbsp;:&nbsp;<{/if}><{$poll.question}>
+			</span>
+		<{/if}>
+	</div>
+<{/if}>
+<{if $icmspoll_index.image}>
+	<{$icmspoll_index.image}>
+<{/if}>
