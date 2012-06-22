@@ -24,6 +24,8 @@ define("_MI_ICMSPOLL_MD_DSC", "'Icmspoll' is a poll module for ImpressCMS and if
 /**
  * module preferences
  */
+define("_MI_ICMSPOLL_AUTHORIZED_CREATOR", "Select groups to be allowed adding new polls");
+define("_MI_ICMSPOLL_AUTHORIZED_CREATOR_DSC", "");
 define("_MI_ICMSPOLL_CONFIG_DATE_FORMAT", "Date Format");
 define("_MI_ICMSPOLL_CONFIG_DATE_FORMAT_DSC", "");
 define("_MI_ICMSPOLL_CONFIG_LIMITBYIP", "Restricted by IP");

@@ -211,6 +211,15 @@ $modversion['blocks'][$i]['can_clone']		= TRUE;
 $i=0;
 $i++;
 $modversion['config'][$i] = array(
+								'name'			=> 'uploader_groups',
+								'title'			=> '_MI_ICMSPOLL_AUTHORIZED_CREATOR',
+								'description'	=> '_MI_ICMSPOLL_AUTHORIZED_CREATOR_DSC',
+								'formtype'		=> 'group_multi',
+								'valuetype'		=> 'array',
+								'default'		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'icmspoll_dateformat',
 								'title' 		=> '_MI_ICMSPOLL_CONFIG_DATE_FORMAT',
 								'description' 	=> '_MI_ICMSPOLL_CONFIG_DATE_FORMAT_DSC',

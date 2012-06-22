@@ -1,0 +1,31 @@
+/**
+ * 'Icmspoll' is a poll module for ImpressCMS and iforum
+ *
+ * File: /module_icmspoll.css
+ * 
+ * module css file
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Icmspoll
+ * @since		2.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		icmspoll
+ *
+ */
+
+.icmspoll_option_aqua {background: transparent url(/images/colorbars/aqua.gif) repeat-x}
+.icmspoll_option_blank {background: transparent url(/images/colorbars/blank.gif) repeat-x}
+.icmspoll_option_blue {background: transparent url(/images/colorbars/blue.gif) repeat-x}
+.icmspoll_option_brown {background: transparent url(/images/colorbars/brown.gif) repeat-x}
+.icmspoll_option_darkgreen {background: transparent url(/images/colorbars/darkgreen.gif) repeat-x}
+.icmspoll_option_gold {background: transparent url(/images/colorbars/gold.gif) repeat-x}
+.icmspoll_option_green {background: transparent url(/images/colorbars/green.gif) repeat-x}
+.icmspoll_option_grey {background: transparent url(/images/colorbars/grey.gif) repeat-x}
+.icmspoll_option_orange {background: transparent url(/images/colorbars/orange.gif) repeat-x}
+.icmspoll_option_pink {background: transparent url(/images/colorbars/pink.gif) repeat-x}
+.icmspoll_option_purple {background: transparent url(/images/colorbars/purple.gif) repeat-x}
+.icmspoll_option_red {background: transparent url(/images/colorbars/red.gif) repeat-x}
+.icmspoll_option_yellow {background: transparent url(/images/colorbars/yellow.gif) repeat-x}
