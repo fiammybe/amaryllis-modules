@@ -48,10 +48,25 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	$options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
 	switch ($clean_op) {
 		case 'getPollsByCreator':
-			
+			$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, FALSE, FALSE);
+			$icmsTpl->assign("polls_by_creator", $polls);
+			/**
+			 * pagination control
+			 */
+			$polls_count = $polls_handler->getPollsCount(FALSE, $clean_uid);
+			$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
+			$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
 			break;
 			
 		case 'getExpiredPolls':
+			$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, TRUE, FALSE);
+			$icmsTpl->assign("polls_expired", $polls);
+			/**
+			 * pagination control
+			 */
+			$polls_count = $polls_handler->getPollsCount(TRUE, $clean_uid);
+			$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
+			$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
 			
 			break;
 		

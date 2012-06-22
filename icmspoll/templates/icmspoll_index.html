@@ -15,6 +15,30 @@
 	<{/if}>
 <{elseif $poll}>
 	<{includeq file="db:icmspoll_singlepoll.html"}>
+<{elseif $polls_expired}>
+	<{if $icmspoll_pagenav }><!-- pagination control -->
+		<{$icmspoll_pagenav}>
+	<{/if}>
+	<div class="polls_container">
+		<{foreach item=poll from=$polls_expired}>
+			<{includeq file="db:icmspoll_polls.html"}>
+		<{/foreach}>
+	</div>
+	<{if $icmspoll_pagenav }><!-- pagination control -->
+		<{$icmspoll_pagenav}>
+	<{/if}>
+<{elseif $polls_by_creator}>
+	<{if $icmspoll_pagenav }><!-- pagination control -->
+		<{$icmspoll_pagenav}>
+	<{/if}>
+	<div class="polls_container">
+		<{foreach item=poll from=$polls_by_creator}>
+			<{includeq file="db:icmspoll_polls.html"}>
+		<{/foreach}>
+	</div>
+	<{if $icmspoll_pagenav }><!-- pagination control -->
+		<{$icmspoll_pagenav}>
+	<{/if}>
 <{/if}>
 
 
