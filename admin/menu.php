@@ -73,5 +73,4 @@ $i = 0;
 	$headermenu[$i]['title'] = _MODABOUT_ABOUT;
 	$headermenu[$i]['link'] = ICMS_URL . '/modules/' . $moddir . '/admin/about.php';
 	
-	
 unset($module_handler);
