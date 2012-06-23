@@ -101,6 +101,17 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		return array(0 => _CO_ICMSPOLL_POLLS_ACTIVE, 1 => _CO_ICMSPOLL_POLLS_EXPIRED);
 	 }
 	 
+	public function filterUsers($showNull = FALSE) {
+		$sql = "SELECT DISTINCT (user_id) FROM " . icms::$xoopsDB->prefix("icmspoll_polls");
+		if ($result = icms::$xoopsDB->query($sql)) {
+			if($showNull) $bids[0] = '--------------';
+			while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+				$bids[$myrow['user_id']] = icms_member_user_Object::getUnameFromId((int)$myrow['user_id']);
+			}
+			return $bids;
+		}
+	}
+	 
 	 /**
 	  * update comments for poll results
 	  */
@@ -109,6 +120,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		if ($pollObj && !$pollObj->isNew()) {
 			$pollObj->setVar('poll_comments', $total_num);
 			$this->insert($pollObj, TRUE);
+			return TRUE;
 		}
 	}
 	
@@ -145,7 +157,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		$start_time = empty($start_time) ? time() : $start_time;
 		$end_time = $obj->getVar("end_time", "e");
 		if ( $end_time <= $start_time ) {
-			$this->setErrors(_CO_ICMSPOLL_ICMSPOLL_ENDTIME_ERROR);
+			$obj->setErrors(_CO_ICMSPOLL_POLLS_ENDTIME_ERROR);
 			return FALSE;
 		} else {
 			$obj->setVar("start_time", $start_time);

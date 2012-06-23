@@ -36,6 +36,7 @@ function editpoll($poll_id = 0) {
 		$pollObj->setVar("user_id", $user_id);
 		$pollObj->setVar( "start_time", (time() + 1200) );
 		$pollObj->setVar("end_time", (time() + (7 * 24 * 60 * 60)));
+		$pollObj->setVar("created_on", time());
 		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . " > " . _MI_ICMSPOLL_MENU_POLLS_CREATINGNEW);
 		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_CREATINGNEW, 'addpoll');
 		$sform->assign($icmsAdminTpl);
@@ -110,6 +111,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->setDefaultSort("created_on");
 			
 			$objectTable->addFilter("expired", "filterExpired");
+			$objectTable->addFilter("user_id", "filterUsers");
 			
 			$objectTable->addIntroButton( 'addpoll', 'polls.php?op=mod', _AM_ICMSPOLL_POLLS_ADD );
 			$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
