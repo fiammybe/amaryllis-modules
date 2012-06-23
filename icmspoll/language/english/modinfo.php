@@ -72,10 +72,13 @@ define("_MI_ICMSPOLL_BLOCK_SINGLE_RESULT_DSC", "Display single result");
 /**
  * module ACP menu
  */
+define("_MI_ICMSPOLL_MENU_INDEX", "Index");
 define("_MI_ICMSPOLL_MENU_POLLS", "Polls");
 define("_MI_ICMSPOLL_MENU_OPTIONS", "Poll options");
 define("_MI_ICMSPOLL_MENU_LOG", "Poll Log");
 define("_MI_ICMSPOLL_MENU_INDEXPAGE", "Indexpage");
+define("_MI_ICMSPOLL_MENU_TEMPLATES", "Templates");
+define("_MI_ICMSPOLL_MENU_MANUAL", "Manual");
 // submenu
 define("_MI_ICMSPOLL_MENU_POLLS_EDITING", "Edit Poll");
 define("_MI_ICMSPOLL_MENU_POLLS_CREATINGNEW", "Create a new Poll");

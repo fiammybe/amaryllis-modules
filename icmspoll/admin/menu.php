@@ -26,15 +26,19 @@ $adminmenu[$i]['link'] = 'admin/index.php';
 
 $i++;
 $adminmenu[$i]['title'] = _MI_ICMSPOLL_MENU_POLLS;
-$adminmenu[$i]['link'] = 'admin/icmspoll.php';
+$adminmenu[$i]['link'] = 'admin/polls.php';
 
 $i++;
-$adminmenu[$i]['title'] = _MI_ICMSPOLL_MENU_POLLOPTIONS;
-$adminmenu[$i]['link'] = 'admin/icmspolloption.php';
+$adminmenu[$i]['title'] = _MI_ICMSPOLL_MENU_OPTIONS;
+$adminmenu[$i]['link'] = 'admin/options.php';
 
 $i++;
-$adminmenu[$i]['title'] = _MI_ICMSPOLL_MENU_POLLLOG;
-$adminmenu[$i]['link'] = 'admin/icmspolllog.php';
+$adminmenu[$i]['title'] = _MI_ICMSPOLL_MENU_LOG;
+$adminmenu[$i]['link'] = 'admin/log.php';
+
+$i++;
+$adminmenu[$i]['title'] = _MI_ICMSPOLL_MENU_INDEXPAGE;
+$adminmenu[$i]['link'] = 'admin/indexpage.php?op=mod&index_key=1';
 
 global $icmsConfig;
 $icmspollModule = icms_getModuleInfo( basename( dirname( dirname( __FILE__) ) ) );

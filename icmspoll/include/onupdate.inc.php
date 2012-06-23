@@ -32,6 +32,7 @@ function icmspoll_upload_paths() {
 	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
 	if(!is_dir($path . "indexpage")) icms_core_Filesystem::mkdir($path . '/indexpage');
 	$image2 = 'icmspoll_indeximage.png';
+	if(is_dir(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2))
 	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2, $path . '/indexpage/' . $image2);
 }
 

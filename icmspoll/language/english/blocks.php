@@ -1,9 +1,20 @@
 <?php
-// $Id: blocks.php,v 1.8 2004/12/26 19:12:13 onokazu Exp $
-// Blocks
+/**
+ * 'Icmspoll' is a poll module for ImpressCMS and iforum
+ *
+ * File: /language/english/blocks.php
+ * 
+ * english blocks language file
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Icmspoll
+ * @since		2.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		icmspoll
+ *
+ */
 
-define("_PL_WILLEXPIRE","The poll will close at");
-define("_PL_HASEXPIRED","The poll closed at");
-define("_PL_COMMENTS","Comments");
-define("_PL_COMMENT","Comment");
-
+defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");

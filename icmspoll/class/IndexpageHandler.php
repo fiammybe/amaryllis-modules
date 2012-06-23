@@ -41,7 +41,7 @@ class IcmspollIndexpageHandler extends icms_ipf_Handler {
 
 	static public function getImageList() {
 		$indeximages = array();
-		$indeximages = icms_core_Filesystem::getFileList(ICMSPOLL_UPLOAD_ROOT . 'indeximages/', '', array('gif', 'jpg', 'png'));
+		$indeximages = icms_core_Filesystem::getFileList(ICMSPOLL_UPLOAD_ROOT . 'indexpage/', '', array('gif', 'jpg', 'png'));
 		$ret = array();
 		$ret[0] = '-----------------------';
 		foreach(array_keys($indeximages) as $i ) {
