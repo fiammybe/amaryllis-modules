@@ -47,11 +47,12 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("poll_comments", XOBJ_DTYPE_INT, FALSE);
 		
 		$this->setControl("delimeter", array("name" => "select", "itemHandler" => "polls", "method" => "getDelimeters", "module" => "icmspoll"));
+		$this->setControl("user_id", "user");
 		$this->setControl("display", "yesno");
 		$this->setControl("mail_status", "yesno");
 		$this->setControl("multiple", "yesno");
 		
-		$this->hideFieldFromForm(array("expired", "created_on", "poll_comments"));
+		$this->hideFieldFromForm(array("expired", "created_on", "poll_comments", "user_id"));
 		$this->hideFieldFromSingleView(array("expired"));
 
 	}
@@ -112,7 +113,7 @@ class IcmspollPolls extends icms_ipf_Object {
 	public function hasExpired() {
 		if($this->getVar("expired", "e") == 1) return TRUE;
 		if ( $this->getVar("end_time") > time() ) return FALSE;
-		$this->handler->setExpired();
+		$this->handler->setExpired($this->id());
 		return TRUE;
 	}
 	

@@ -18,3 +18,13 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+
+define("_MB_ICMSPOLL_BLOCK_LIMIT", "Limit");
+define("_MB_ICMSPOLL_BLOCK_SELUSER", "Display by user");
+define("_MB_ICMSPOLL_BLOCK_EXPIRED_ONLY", "Display expired only");
+define("_MB_ICMSPOLL_BLOCK_SORT", "Sort by");
+define("_MB_ICMSPOLL_BLOCK_ORDER", "Order by");
+define("_MB_ICMSPOLL_BLOCK_SELPOLL", "Select poll to be displayed");
+
+define("_MB_ICMSPOLL_POLLS_ALREADYVOTED", "Already voted");
+define("_MB_ICMSPOLL_POLLS_SUBMIT", "Submit");
