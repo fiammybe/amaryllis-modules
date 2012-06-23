@@ -24,7 +24,7 @@ $path = dirname(dirname(__FILE__));
 $dirname = icms::$module->getVar('dirname');
 
 icms_cp_header();
-icms::$module->displayAdminMenu( 0, _MI_ARTICLE_MENU_MANUAL);
+icms::$module->displayAdminMenu( 0, _MI_ICMSPOLL_MENU_MANUAL);
 $file = isset($_GET['file']) ? filter_input(INPUT_GET, "file", FILTER_SANITIZE_SPECIAL_CHARS) : "manual.html";
 $lang = "language/" . $icmsConfig['language'];
 $manual = ICMSPOLL_ROOT_PATH . "$lang/$file";

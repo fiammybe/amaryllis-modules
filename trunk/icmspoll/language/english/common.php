@@ -38,11 +38,14 @@ define("_CO_ICMSPOLL_POLLS_MAIL_STATUS", "Notify the poll author when expired?")
 define("_CO_ICMSPOLL_POLLS_EXPIRED", "Expired?");
 define("_CO_ICMSPOLL_POLLS_CREATED_ON", "Created on");
 
-define("_CO_ICMSPOLL_POLLS_DELIMETER_BRTAG", "BR-Tag (\<br\>)");
-define("_CO_ICMSPOLL_POLLS_DELIMETER_SPACE", "Space (\&nbsp;)");
+define("_CO_ICMSPOLL_POLLS_VIEWPERM", "View permissions");
+define("_CO_ICMSPOLL_POLLS_VIEWPERM_DSC", "Select groups, which can view the poll");
+define("_CO_ICMSPOLL_POLLS_VOTEPERM", "Vote permissions");
+define("_CO_ICMSPOLL_POLLS_VOTEPERM_DSC", "Select groups, which can vote the poll");
+define("_CO_ICMSPOLL_POLLS_DELIMETER_BRTAG", "BR-Tag (&lt;br /&gt;)");
+define("_CO_ICMSPOLL_POLLS_DELIMETER_SPACE", "Space (&amp;nbsp;)");
 
 define("_CO_ICMSPOLL_POLLS_ACTIVE", "Active Polls");
-define("_CO_ICMSPOLL_POLLS_EXPIRED", "Expired Polls");
 define("_CO_ICMSPOLL_ICMSPOLL_ENDTIME_ERROR", "End time must be set to future");
 /**
  * constants for options objects

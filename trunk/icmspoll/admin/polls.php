@@ -34,12 +34,13 @@ function editpoll($poll_id = 0) {
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$pollObj->setVar("user_id", $user_id);
-		$pollObj->setVar( "start_time", (time() + 600) );
+		$pollObj->setVar( "start_time", (time() + 1200) );
 		$pollObj->setVar("end_time", (time() + (7 * 24 * 60 * 60)));
 		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . " > " . _MI_ICMSPOLL_MENU_POLLS_CREATINGNEW);
 		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_CREATINGNEW, 'addpoll');
 		$sform->assign($icmsAdminTpl);
 	}
+	$icmsAdminTpl->display('db:icmspoll_admin.html');
 }
 
 include_once 'admin_header.php';
@@ -97,7 +98,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms_cp_header();
 			icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS );
 			
-			$objectTable = new icms_ipf_view_Table($icmspoll_poll_handler, NULL);
+			$objectTable = new icms_ipf_view_Table($icmspoll_poll_handler, FALSE);
 			$objectTable->addColumn(new icms_ipf_view_Column("expired", "center", FALSE, "displayExpired"));
 			$objectTable->addColumn(new icms_ipf_view_Column("question", FALSE, FALSE, "getPreviewLink"));
 			$objectTable->addColumn(new icms_ipf_view_Column("user_id", FALSE, FALSE, "getUser"));
