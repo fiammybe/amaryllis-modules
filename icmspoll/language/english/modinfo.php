@@ -85,3 +85,9 @@ define("_MI_ICMSPOLL_MENU_POLLS_CREATINGNEW", "Create a new Poll");
 define("_MI_ICMSPOLL_MENU_OPTIONS_EDITING", "Edit Option");
 define("_MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW", "Create a new option");
 define("_MI_ICMSPOLL_MENU_INDEXPAGE_EDIT", "Edit Indexpage");
+/**
+ * Mainmenu
+ */
+define("_MI_ICMSPOLL_MENUMAIN_ADDPOLL", "Add Poll");
+define("_MI_ICMSPOLL_MENUMAIN_ADDOPTION", "Add Option");
+define("_MI_ICMSPOLL_MENUMAIN_VIEWRESULTS", "View Results");

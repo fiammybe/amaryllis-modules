@@ -1,4 +1,4 @@
-<{if $poll}>
+<{if $poll && !$poll.hasExpired && $poll.hasStarted}>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
 			<{$poll.question}>
@@ -20,4 +20,27 @@
 			</form>
 		</div>
 	</div>
+<{elseif $poll && $poll.hasExpired == TRUE}>
+	<div class="icmspoll_singlepoll">
+		<div class="singlepoll_question">
+			<{$poll.question}>
+		</div>
+		<div class="singlepoll_description">
+			<{$poll.description}>
+		</div>
+		<div class="singlepoll_form">
+			<{foreach item=option from=$options}>
+				<div class="poll_option_set">
+					<div class="result_option_<{$option.color}>">
+					
+					</div>
+					<div class="poll_option_txt">
+						<{$option.text}>
+					</div>
+					<{$poll.delimeter}>
+				</div>
+			<{/foreach}>
+		</div>
+	</div>
+
 <{/if}>

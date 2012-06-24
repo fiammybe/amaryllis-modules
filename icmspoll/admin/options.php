@@ -30,13 +30,14 @@ function editoption($option_id = 0) {
 	
 	if(!$optionObj->isNew()) {
 		icms::$module->displayAdminmenu( 2, _MI_ICMSPOLL_MENU_OPTIONS . ' > ' . _MI_ICMSPOLL_MENU_OPTIONS_EDITING);
-		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_EDITING, 'addoption');
+		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_EDITING, 'addoptions');
 		$sform->assign($icmsAdminTpl);
 	} else {
 		icms::$module->displayAdminmenu( 2, _MI_ICMSPOLL_MENU_OPTIONS . " > " . _MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW);
-		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW, 'addoption');
+		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW, 'addoptions');
 		$sform->assign($icmsAdminTpl);
 	}
+	$icmsAdminTpl->display('db:icmspoll_admin.html');
 }
 
 include_once 'admin_header.php';
@@ -50,7 +51,7 @@ unset($icmspoll_poll_handler, $count);
 /**
  * Create a whitelist of valid values
  */
-$valid_op = array("mod", "changeField", "addoption", "del", "changeWeight", "");
+$valid_op = array("mod", "changeField", "addoptions", "del", "changeFields", "");
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
@@ -66,7 +67,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms_cp_header();
 			editoption($clean_option_id);
 			break;
-		case 'addoption':
+		case 'addoptions':
 			$controller = new icms_ipf_Controller($icmspoll_options_handler);
 			$controller->storeFromDefaultForm(_AM_ICMSPOLL_OPTIONS_OPTION_CREATED, _AM_ICMSPOLL_OPTIONS_OPTION_MODIFIED);
 			break;
@@ -74,35 +75,45 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$controller =  new icms_ipf_Controller($icmspoll_options_handler);
 			$controller->handleObjectDeletion();
 			break;
-		case 'changeWeight':
-			foreach ($_POST['IcmspollOptions_objects'] as $key => $value) {
-				$changed = FALSE;
-				$optionObj = $icmspoll_option_handler->get($value);
-
-				if ($optionObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
-					$optionObj->setVar('weight', (int)($_POST['weight'][$key]));
-					$changed = TRUE;
+		case 'changeFields':
+				foreach ($_POST['IcmspollOptions_objects'] as $key => $value) {
+					$changed = FALSE;
+					$optionsObj = $icmspoll_options_handler->get($value);
+					if($optionsObj->getVar('option_text', 'e') != $_POST['option_text'][$key]) {
+						$optionsObj->setVar('option_text', $_POST['option_text'][$key]);
+						$changed = TRUE;
+					}
+					if($optionsObj->getVar('option_color', 'e') != $_POST['option_color'][$key]) {
+						$optionsObj->setVar('option_color', $_POST['option_color'][$key]);
+						$changed = TRUE;
+					}
+					if($optionsObj->getVar('poll_id', 'e') != $_POST['poll_id'][$key]) {
+						$optionsObj->setVar('poll_id', $_POST['poll_id'][$key]);
+						$changed = TRUE;
+					}
+					if($optionsObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
+						$optionsObj->setVar('weight', (int)($_POST['weight'][$key]));
+						$changed = TRUE;
+					}
+					if($changed) $icmspoll_options_handler->insert($optionsObj);
 				}
-				if ($changed) {
-					$icmspoll_options_handler->insert($optionObj);
-				}
-			}
-			$ret = 'options.php';
-			redirect_header( ICMSPOLL_ADMIN_URL . $ret, 2, _AM_ICMSPOLL_WEIGHT_UPDATED);
-			break;
+				$ret = 'options.php';
+				redirect_header( ICMSPOLL_ADMIN_URL . $ret, 4, _AM_ICMSPOLL_OPTIONS_FIELDS_UPDATED);
+				break;
 		default:
 			icms_cp_header();
 			icms::$module->displayAdminmenu(2, _MI_ICMSPOLL_MENU_OPTIONS);
 			
 			$objectTable = new icms_ipf_view_Table($icmspoll_options_handler, NULL);
-			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollName"));
-			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionText"));
+			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollIdControl"));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionTextControl"));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_color", FALSE, FALSE, "getOptionColorControl"));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
 			
 			$objectTable->addFilter("poll_id", "filterPolls");
 			
-			$objectTable->addIntroButton('addoption', 'options.php?op=mod', _AM_ICMSPOLL_OPTIONS_ADD);
-			$objectTable->addActionButton('changeWeight', FALSE, _SUBMIT);
+			$objectTable->addIntroButton('addoptions', 'options.php?op=mod', _AM_ICMSPOLL_OPTIONS_ADD);
+			$objectTable->addActionButton('changeFields', FALSE, _SUBMIT);
 			
 			$icmsAdminTpl->assign('icmspoll_options_table', $objectTable->fetch());
 			$icmsAdminTpl->display('db:icmspoll_admin.html');

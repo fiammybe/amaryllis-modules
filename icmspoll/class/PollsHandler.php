@@ -21,7 +21,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 icms_loadLanguageFile("icmspoll", "common");
 
-if(!defined(ICMSPOLL_DIRNAME)) define(ICMSPOLL_DIRNAME, basename(dirname(dirname(__FILE__))));
+if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 /**
  * Classes responsible for managing icmspoll poll objects
@@ -49,7 +49,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		
 		if($inBlocks) $criteria->add(new icms_db_criteria_Item("display", TRUE));
 		$this->setGrantedObjectsCriteria($criteria, "polls_view");
-		$polls = $this->getObjects($criteria, TRUE);
+		$polls = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($polls as $poll) {
 			$ret[$poll["poll_id"]] = $poll;
@@ -60,13 +60,14 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	public function getPollsCount ($expired = FALSE, $user_id = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if($expired) {
-			$criteria->add(new icms_db_criteria_Item('expired', TRUE));
+			$criteria->add(new icms_db_criteria_Item('expired', 1));
 		} else {
-			$criteria->add(new icms_db_criteria_Item('expired', FALSE));
+			$criteria->add(new icms_db_criteria_Item('expired', 0));
 		}
 		if ($user_id) $criteria->add(new icms_db_criteria_Item('user_id', $user_id));
 		$this->setGrantedObjectsCriteria($criteria, "polls_view");
-		return $this->getCount($criteria);
+		$count = $this->getCount($criteria);
+		return $count;
 	}
 	
 	/**
@@ -92,6 +93,16 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		$this->insert($pollObj, TRUE);
 		unset($icmspoll_log_handler, $votes, $voters);
 		return TRUE;
+	}
+	
+	/**
+	 * frontend permission control
+	 */
+	public function userCanSubmit() {
+		global $icmspoll_isAdmin, $icmspollConfig;
+		if ($icmspoll_isAdmin) return TRUE;
+		$user_groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		return count(array_intersect($icmspollConfig['uploader_groups'], $user_groups)) > 0;
 	}
 	
 	/**
@@ -163,6 +174,13 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 			$obj->setVar("start_time", $start_time);
 			$obj->setVar("end_time", $end_time);
 		}
+		$question = $obj->getVar("question", "s");
+		$question = icms_core_DataFilter::checkVar($question, "html", "input");
+		$obj->setVar("question", $question);
+		
+		$dsc = $obj->getVar("description", "s");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
+		$obj->setVar("description", $dsc);
 		return TRUE;
 	}
 	

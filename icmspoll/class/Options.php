@@ -45,6 +45,26 @@ class IcmspollOptions extends icms_ipf_Object {
 		return $pollObj->getQuestion();
 	}
 	
+	public function getPollIdControl() {
+		$icmspoll_polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+		$options = $icmspoll_polls_handler->getList();
+		$control = new icms_form_elements_Select('', 'poll_id[]', $this->getVar('poll_id', 'e'));
+		$control->addOptionArray($options);
+		return $control->render();
+	}
+	
+	public function getOptionTextControl() {
+		$control = new icms_form_elements_Text('', 'option_text[]', 50, 255,$this->getVar('option_text', 'e'));
+		return $control->render();
+	}
+	
+	public function getOptionColorControl() {
+		$options = $this->handler->getOptionColors();
+		$control = new icms_form_elements_Select('', 'option_color[]', $this->getVar('option_color', 'e'));
+		$control->addOptionArray($options);
+		return $control->render();
+	}
+	
 	public function getWeightControl() {
 		$control = new icms_form_elements_Text('', 'weight[]', 5, 7,$this->getVar('weight', 'e'));
 		$control->setExtra( 'style="text-align:center;"' );
@@ -53,13 +73,13 @@ class IcmspollOptions extends icms_ipf_Object {
 	
 	public function getOptionText() {
 		$optionText = $this->getVar("option_text", "s");
-		$optionText = icms_core_DataFilter($optionText, "html", "output");
+		$optionText = icms_core_DataFilter::checkVar($optionText, "html", "output");
 		return $optionText;
 	}
 
 	public function toArray() {
 		$ret = parent::toArray();
-		$ret['id'] = $this->getVar("id", "e");
+		$ret['id'] = $this->getVar("option_id", "e");
 		$ret['poll_id'] = $this->getVar("poll_id", "e");
 		$ret['text'] = $this->getOptionText();
 		$ret['color'] = $this->getVar("option_color", "e");
