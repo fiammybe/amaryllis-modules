@@ -57,24 +57,34 @@ class IcmspollIndexpage extends icms_ipf_Object {
 			$image_tag = ICMSPOLL_UPLOAD_URL . 'indexpage/' . $indeximage;
 			return '<div class="icmspoll_indeximage"><img src="' . $image_tag . '" /></div>';
 		}
+		return FALSE;
 	}
 	
 	public function getIndexHeader() {
 		$indexheader = '';
 		$indexheader = $this->getVar('index_header', 'e');
-		return '<div class="icmspoll_indexheader">' . $indexheader . '</div>';
+		if($indexheader != "") {
+			return '<div class="icmspoll_indexheader">' . $indexheader . '</div>';
+		}
+		return FALSE;
 	}
 
 	public function getIndexHeading() {
 		$indexheading = '';
 		$indexheading = icms_core_DataFilter::checkVar($this->getVar('index_heading', 's'), 'str', 'encodelow');
-		return '<div class="icmspoll_indexheading">' . $indexheading . '</div>';
+		if($indexheading != "") {
+			return '<div class="icmspoll_indexheading">' . $indexheading . '</div>';
+		}
+		return FALSE;
 	}
 	
 	public function getIndexFooter() {
 		$indexfooter = '';
 		$indexfooter = icms_core_DataFilter::checkVar($this->getVar('index_footer', 's'), 'str', 'encodelow');
-		return '<div class="icmspoll_indexfooter">' . $indexfooter . '</div>';
+		if($indexfooter != "") {
+			return '<div class="icmspoll_indexfooter">' . $indexfooter . '</div>';
+		}
+		return FALSE;
 	}
 
 	function toArray() {

@@ -169,6 +169,7 @@ class IcmspollPolls extends icms_ipf_Object {
 					$logObj->setVar("option_id", $vote);
 					$logObj->setVar("ip", $ip);
 					$logObj->setVar("user_id", $user_id);
+					$logObj->setVar("time", time());
 					if(!$icmspoll_log_handler->insert($logObj, TRUE)) {
 					} else {
 						$icmspoll_option_handler->updateCount($optionObj);
@@ -183,6 +184,7 @@ class IcmspollPolls extends icms_ipf_Object {
 				$logObj->setVar("option_id", $options);
 				$logObj->setVar("ip", $ip);
 				$logObj->setVar("user_id", $user_id);
+				$logObj->setVar("time", time());
 				$icmspoll_log_handler->insert($logObj, TRUE);
 				$icmspoll_option_handler->updateCount($optionObj);
 			}

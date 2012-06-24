@@ -85,8 +85,8 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	 */
 	public function updateCount($poll_id) {
 		$icmspoll_log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-		$votes = $icmspoll_log_handler->getTotalVotesByPollId($this->getVar("poll_id"));
-		$voters = $icmspoll_log_handler->getTotalVotersByPollId($this->getVar("poll_id"));
+		$votes = $icmspoll_log_handler->getTotalVotesByPollId($poll_id);
+		$voters = $icmspoll_log_handler->getTotalVotersByPollId($poll_id);
 		$pollObj = $this->get($poll_id);
 		$pollObj->setVar("votes", $votes);
 		$pollObj->setVar("voters", $voters);
