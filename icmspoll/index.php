@@ -43,9 +43,10 @@ $clean_poll_id = isset($_GET['poll_id']) ? filter_input(INPUT_GET, "poll_id", FI
 $clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, "uid", FILTER_SANITIZE_NUMBER_INT) : FALSE; 
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start", FILTER_SANITIZE_NUMBER_INT) : 0;
 
+$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+$options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
+
 if(in_array($clean_op, $valid_op, TRUE)) {
-	$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
-	$options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
 	switch ($clean_op) {
 		case 'getPollsByCreator':
 			$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, FALSE, FALSE);
@@ -109,6 +110,5 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			}
 			break;
 	}
+	include_once 'footer.php';
 }
-
-include_once 'footer.php';

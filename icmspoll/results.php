@@ -36,7 +36,59 @@ $icmsTpl->assign('icmspoll_index', $index);
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+if(!$icmspoll_isAdmin) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
 
+$valid_op = array("");
+$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, "op", FILTER_SANITIZE_SPECIAL_CHARS) : "";
 
+$clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start", FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, "uid", FILTER_SANITIZE_NUMBER_INT) : FALSE;
+$clean_poll_id = isset($_GET['poll_id']) ? filter_input(INPUT_GET, "poll_id", FILTER_SANITIZE_NUMBER_INT) : 0;
+
+if(in_array($clean_op, $valid_op, TRUE)) {
+
+	$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+	$options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
+	$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
+
+	switch ($clean_op) {
+		case 'value':
+			
+			break;
+		
+		default:
+			/**
+			 * check, if a single poll is requested and retrieve Object, if so
+			 */
+			if($clean_poll_id != 0) {
+				$pollObj = $polls_handler->get($clean_poll_id);
+			} else {
+				$pollObj = FALSE;
+			}
+			if(is_object($pollObj) && !$pollObj->isNew() && $pollObj->viewAccessGranted()) {
+				
+			} elseif ($clean_poll_id == 0) {
+				$objectTable = new icms_ipf_view_Table($polls_handler, FALSE, array(), TRUE);
+				$objectTable->addColumn(new icms_ipf_view_Column("expired", "center", FALSE, "displayExpired"));
+				$objectTable->addColumn(new icms_ipf_view_Column("question", FALSE, FALSE, "getResultLink"));
+				$objectTable->addColumn(new icms_ipf_view_Column("user_id", FALSE, FALSE, "getUser"));
+				$objectTable->addColumn(new icms_ipf_view_Column("start_time", FALSE, FALSE, "getStartDate"));
+				$objectTable->addColumn(new icms_ipf_view_Column("end_time", FALSE, FALSE, "getEndDate"));
+				$objectTable->addColumn(new icms_ipf_view_Column("created_on", FALSE, FALSE, "getCreatedDate"));
+				$objectTable->setDefaultOrder("DESC");
+				$objectTable->setDefaultSort("created_on");
+				
+				$objectTable->addFilter("expired", "filterExpired");
+				$objectTable->addFilter("user_id", "filterUsers");
+				
+				$icmsTpl->assign( 'icmspoll_polls_table', $objectTable->fetch() );
+				
+				
+			} else {
+				redirect_header(ICMSPOLL_URL . "results.php", 3, _NOPERM);
+			}
+			break;
+	}
+}
 
 include_once 'footer.php';
