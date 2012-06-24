@@ -16,7 +16,7 @@
 					<{/foreach}>
 				</fieldset>
 				<input type="hidden" name="user_id" value="<{$user_id}>" />
-				<{if $icmspoll_singlepoll.allreadyVoted}>
+				<{if $icmspoll_singlepoll.hasVoted}>
 					<input type="label" class="icmspoll_formButton" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 				<{else}>
 					<input type="submit" class="icmspoll_formButton" value="<{$smarty.const._MB_ICMSPOLL_POLLS_SUBMIT}>" />

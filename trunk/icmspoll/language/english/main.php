@@ -21,3 +21,6 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 define("_MD_ICMSPOLL_ADMIN_PAGE", " :: Admin page :: ");
 define("_MD_ICMSPOLL_POLLS_SUBMIT", "Vote!");
+define("_MB_ICMSPOLL_POLLS_ALREADYVOTED", "Thanks, you've already voted!");
+define("_MD_ICMSPOLL_POLLS_THANKS_VOTING", "Thank you for voting!");
+define("_MD_ICMSPOLL_POLLS_NOTVOTED", "An error occured while storing your vote. Maybe you don't have permissions to vote this poll.");
