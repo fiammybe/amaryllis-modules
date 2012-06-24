@@ -34,4 +34,4 @@ $icmsTpl->assign('icmspoll_images_url', ICMSPOLL_IMAGES_URL);
 $icmsTpl->assign('dirname', icms::$module->getVar('dirname'));
 
 
-include_once ICMS_ROOT_PATH . 'footer.php';
+include_once ICMS_ROOT_PATH . '/footer.php';

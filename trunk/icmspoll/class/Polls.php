@@ -81,13 +81,13 @@ class IcmspollPolls extends icms_ipf_Object {
 
 	public function getQuestion() {
 		$question = $this->getVar("question", "s");
-		$question = icms_core_DataFilter($question, "text", "output");
+		$question = icms_core_DataFilter::checkVar($question, "html", "output");
 		return $question;
 	}
 	
 	public function getDescription() {
 		$description = $this->getVar("description", "s");
-		$description = icms_core_DataFilter($description, "text", "output");
+		$description = icms_core_DataFilter::checkVar($description, "text", "output");
 		return $description;
 	}
 	
@@ -110,9 +110,17 @@ class IcmspollPolls extends icms_ipf_Object {
 		return TRUE;
 	}
 	
+	public function hasStarted() {
+		$end_time = $this->getVar("end_time", "e");
+		$start_time = $this->getVar("start_time", "e");
+		$time = time();
+		if($start_time <= $time) return TRUE;
+		return FALSE;
+	}
+	
 	public function hasExpired() {
 		if($this->getVar("expired", "e") == 1) return TRUE;
-		if ( $this->getVar("end_time") > time() ) return FALSE;
+		if ( $this->getVar("end_time") < time() ) return FALSE;
 		$this->handler->setExpired($this->id());
 		return TRUE;
 	}
@@ -140,8 +148,8 @@ class IcmspollPolls extends icms_ipf_Object {
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$module = icms::handler('icms_module')->getByDirname(ICMSPOLL_DIRNAME);
 		$voteperm = $gperm_handler->checkRight('polls_vote', $this->getVar('poll_id', 'e'), $groups, $module->getVar("mid"));
-		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('user_id', 'e')) return TRUE;
-		if ($voteperm && !$this->hasVoted() && !$this->hasExpired()) return TRUE;
+		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('user_id', 'e') && $this->hasStarted()) return TRUE;
+		if ($voteperm && !$this->hasVoted() && !$this->hasExpired() && $this->hasStarted()) return TRUE;
 		return FALSE;
 	}
 
@@ -235,6 +243,12 @@ class IcmspollPolls extends icms_ipf_Object {
 		return '<a href="' . $url . '" title="' . $question . ' ">' . $question . '</a>';
 	}
 	
+	function getPreviewLink() {
+		$url = ICMSPOLL_URL . 'index.php?poll_id=' . $this->id();
+		$question = $this->getQuestion();
+		return '<a href="' . $url . '" title="' . $question . '" target="_blank" >' . $question . '</a>';
+	}
+	
 	public function isMultiple() {
 		return ($this->getVar("multiple", "e") == 1) ? TRUE : FALSE;
 	}
@@ -259,6 +273,8 @@ class IcmspollPolls extends icms_ipf_Object {
 		$ret['viewAccessGranted'] = $this->viewAccessGranted();
 		$ret['voteAccessGranted'] = $this->voteAccessGranted();
 		$ret['hasExpired'] = $this->hasExpired();
+		$ret['hasVoted'] = $this->hasVoted();
+		$ret['hasStarted'] = $this->hasStarted();
 		
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);

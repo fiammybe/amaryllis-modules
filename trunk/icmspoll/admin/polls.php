@@ -118,7 +118,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			$icmsAdminTpl->assign( 'icmspoll_polls_table', $objectTable->fetch() );
 			$icmsAdminTpl->display( 'db:icmspoll_admin.html' );
-			
 			break;
 	}
 	include_once 'admin_footer.php';
