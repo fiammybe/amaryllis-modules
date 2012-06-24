@@ -79,6 +79,26 @@ $modversion['people']['testers'][] = "[url=http://community.impresscms.org/useri
 $moddir = basename(dirname(__FILE__));
 $modversion['manual'][] = "<a href='" . ICMS_URL  . "/modules/" . $moddir . "/admin/manual.php' target='_self'>Module Manual</a>";
 
+/**
+ * 
+ */
+if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'icmspoll') {
+	$polls_handler = icms_getModuleHandler('polls', basename(dirname(__FILE__)), 'icmspoll');
+	if ($polls_handler->userCanSubmit()) {
+		$i = 0;
+		$i++;
+		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_ADDPOLL;
+		$modversion['sub'][$i]['url'] = 'polls.php?op=mod';
+		$i++;
+		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_ADDOPTION;
+		$modversion['sub'][$i]['url'] = 'optins.php?op=mod';
+		if(icms_userIsAdmin( basename(dirname(__FILE__)))) {
+			$i++;
+			$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_VIEWRESULTS;
+			$modversion['sub'][$i]['url'] = 'results.php';
+		}
+	}
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// SUPPORT //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,7 +291,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ICMSPOLL_CONFIG_DEFAULT_ORDER_DSC',
 								'formtype'		=> 'select',
 								'valuetype'		=> 'text',
-								'default'		=> 0,
+								'default'		=> 1,
 								'options'		=> array( _MI_ICMSPOLL_CONFIG_DEFAULT_ORDER_WEIGHT => "weight", 
 													_MI_ICMSPOLL_CONFIG_DEFAULT_ORDER_CREATIONDATE => "created_on",
 													_MI_ICMSPOLL_CONFIG_DEFAULT_ORDER_STARTDATE => "start_time",
@@ -284,7 +304,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ICMSPOLL_CONFIG_DEFAULT_SORT_DSC',
 								'formtype'		=> 'select',
 								'valuetype'		=> 'text',
-								'default'		=> 0,
+								'default'		=> 1,
 								'options'		=> array( _MI_ICMSPOLL_CONFIG_DEFAULT_SORT_ASC => "ASC", _MI_ICMSPOLL_CONFIG_DEFAULT_SORT_DESC => "DESC")
 							);
 

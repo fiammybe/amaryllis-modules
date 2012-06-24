@@ -51,8 +51,9 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->setControl("display", "yesno");
 		$this->setControl("mail_status", "yesno");
 		$this->setControl("multiple", "yesno");
+		$this->setControl("expired", "yesno");
 		
-		$this->hideFieldFromForm(array("expired", "created_on", "poll_comments", "user_id"));
+		$this->hideFieldFromForm(array("expired", "created_on", "poll_comments", "user_id", "votes", "voters"));
 		$this->hideFieldFromSingleView(array("expired"));
 
 	}
@@ -249,8 +250,18 @@ class IcmspollPolls extends icms_ipf_Object {
 		return '<a href="' . $url . '" title="' . $question . '" target="_blank" >' . $question . '</a>';
 	}
 	
+	function getResultLink() {
+		$url = ICMSPOLL_URL . 'results.php?poll_id=' . $this->id();
+		$question = $this->getQuestion();
+		return '<a href="' . $url . '" title="' . $question . '" target="_blank" >' . $question . '</a>';
+	}
+	
 	public function isMultiple() {
 		return ($this->getVar("multiple", "e") == 1) ? TRUE : FALSE;
+	}
+	
+	public function getInputType() {
+		return $this->isMultiple() ? "checkbox" : "radio";
 	}
 	
 	public function inBlocks() {
@@ -269,6 +280,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		
 		$ret['comments'] = $this->getVar("poll_comments", "e");
 		$ret['isMultiple'] = $this->isMultiple();
+		$ret['inputtype'] = $this->getInputType();
 		
 		$ret['viewAccessGranted'] = $this->viewAccessGranted();
 		$ret['voteAccessGranted'] = $this->voteAccessGranted();
@@ -278,7 +290,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
-		
+		$ret['resultLink'] = $this->getResultLink();
 		return $ret;
 	}
 }

@@ -55,12 +55,18 @@ class IcmspollOptionsHandler extends icms_ipf_Handler {
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
 		$criteria->add(new icms_db_criteria_Item("poll_id", $poll_id));
-		$options = $this->getObjects($criteria, TRUE);
+		$options = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($options as $option) {
 			$ret[$option['option_id']] = $option;
 		}
 		return $ret;
+	}
+	
+	public function getOptionsCountByPollId($poll_id) {
+		$crit = new icms_db_criteria_Compo();
+		$crit->add(new icms_db_criteria_Element("poll_id", $poll_id));
+		return $this->getCount($crit);
 	}
 
 	// public static
@@ -100,7 +106,7 @@ class IcmspollOptionsHandler extends icms_ipf_Handler {
 	protected function beforeInsert(&$obj) {
 		$option_text = $obj->getVar("option_text", "s");
 		$option_text = icms_core_DataFilter::checkVar($option_text, "html", "input");
-		$obj->setVar($option_text);
+		$obj->setVar("option_text", $option_text);
 		return TRUE;
 	}
 }

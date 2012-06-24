@@ -124,6 +124,13 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 		return $votes;
 	}
 	
+	function getVotesPerCentByOptionId($poll_id, $option_id) {
+		$totalVotes = $this->getTotalVotesByPollId($poll_id);
+		$totalOptVotes = $this->getTotalVotesByOptionId($option_id);
+		$optVote = ($totalVotes/100) * $totalOptVotes;
+		return $optVote;
+	}
+	
 	/**
 	 * filter for ACP
 	 */

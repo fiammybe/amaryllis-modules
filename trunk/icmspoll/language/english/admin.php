@@ -28,6 +28,7 @@ define("_AM_ICMSPOLL_POLLS_ADD", "Add Poll");
 define("_AM_ICMSPOLL_OPTIONS_NOPOLLS", "Sorry, no polls found yet. Please create poll first.");
 define("_AM_ICMSPOLL_OPTIONS_OPTION_CREATED", "New Option successfully created");
 define("_AM_ICMSPOLL_OPTIONS_OPTION_MODIFIED", "Option successfully modified");
+define("_AM_ICMSPOLL_OPTIONS_FIELDS_UPDATED", "Fields successfully updated");
 define("_AM_ICMSPOLL_OPTIONS_ADD", "Add Option");
 // admin/indexpage.php
 define("_AM_ICMSPOLL_INDEXPAGE_MODIFIED", "Indexpage successfully modified");
