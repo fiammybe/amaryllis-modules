@@ -66,6 +66,23 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$pollObj = FALSE;
 			}
 			if(is_object($pollObj) && !$pollObj->isNew() && $pollObj->viewAccessGranted()) {
+				$poll = $pollObj->toArray();
+				$totalVotes = $log_handler->getTotalVotesByPollId($clean_poll_id);
+				$totalVoters = $log_handler->getTotalVoters($clean_poll_id);
+				$totalAnons = $log_handler->getTotalAnonymousVoters($clean_poll_id);
+				$totalUserVotes = $log_handler->getTotalRegistredVoters($clean_poll_id);
+				$icmsTpl->assign("poll", $poll);
+				$icmsTpl->assign("total_votes", $totalVotes);
+				$icmsTpl->assign("total_voters", $totalVoters);
+				$icmsTpl->assign("total_anonymous", $totalAnons);
+				$icmsTpl->assign("total_registred", $totalUserVotes);
+				
+				$options = $options_handler->getAllByPollId($clean_poll_id, "weight", "ASC");
+				$icmsTpl->assign("options", $options);
+				$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
+				$icmsTpl->assign("user_id", $user_id);
+				
+				
 				
 			} elseif ($clean_poll_id == 0) {
 				$objectTable = new icms_ipf_view_Table($polls_handler, FALSE, array(), TRUE);
@@ -82,13 +99,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$objectTable->addFilter("user_id", "filterUsers");
 				
 				$icmsTpl->assign( 'icmspoll_polls_table', $objectTable->fetch() );
-				
-				
 			} else {
 				redirect_header(ICMSPOLL_URL . "results.php", 3, _NOPERM);
 			}
 			break;
 	}
+	include_once 'footer.php';
 }
-
-include_once 'footer.php';
