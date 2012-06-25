@@ -10,9 +10,11 @@
 			<form class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php?op=vote&poll_id=<{$poll.id}>" method="post">
 				<fieldset>
 					<{foreach item=option from=$options}>
-						<input class="icmspoll_option_<{$option.color}>" type="<{$poll.inputtype}>" name="poll_option" value="<{$option.id}>" />
-						<{$option.text}>
-						<{$poll.delimeter}>
+						<div class="icmspoll_option_<{$option.color}>">
+							<input class="icmspoll_option_<{$option.color}>" type="<{$poll.inputtype}>" name="poll_option" value="<{$option.id}>" />
+							<{$option.text}>
+							<{$poll.delimeter}>
+						</div>
 					<{/foreach}>
 				</fieldset>
 				<{if $poll.hasVoted}>
