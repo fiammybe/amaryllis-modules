@@ -16,16 +16,16 @@
  *
  */
 
-.icmspoll_option_aqua {background: transparent url(/images/colorbars/aqua.gif) repeat-x}
-.icmspoll_option_blank {background: transparent url(/images/colorbars/blank.gif) repeat-x}
-.icmspoll_option_blue {background: transparent url(/images/colorbars/blue.gif) repeat-x}
-.icmspoll_option_brown {background: transparent url(/images/colorbars/brown.gif) repeat-x}
-.icmspoll_option_darkgreen {background: transparent url(/images/colorbars/darkgreen.gif) repeat-x}
-.icmspoll_option_gold {background: transparent url(/images/colorbars/gold.gif) repeat-x}
-.icmspoll_option_green {background: transparent url(/images/colorbars/green.gif) repeat-x}
-.icmspoll_option_grey {background: transparent url(/images/colorbars/grey.gif) repeat-x}
-.icmspoll_option_orange {background: transparent url(/images/colorbars/orange.gif) repeat-x}
-.icmspoll_option_pink {background: transparent url(/images/colorbars/pink.gif) repeat-x}
-.icmspoll_option_purple {background: transparent url(/images/colorbars/purple.gif) repeat-x}
-.icmspoll_option_red {background: transparent url(/images/colorbars/red.gif) repeat-x}
-.icmspoll_option_yellow {background: transparent url(/images/colorbars/yellow.gif) repeat-x}
+.icmspoll_option_aqua {background: url(images/colorbars/aqua.png) repeat-x; height: 20px; margin: .250em}
+.icmspoll_option_blank {background: url(images/colorbars/blank.gif) repeat-x; height: 15px}
+.icmspoll_option_blue {background: url(images/colorbars/blue.gif) repeat-x; height: 15px}
+.icmspoll_option_brown {background: url(images/colorbars/brown.gif) repeat-x; height: 15px}
+.icmspoll_option_darkgreen {background: url(images/colorbars/darkgreen.gif) repeat-x; height: 15px}
+.icmspoll_option_gold {background: url(images/colorbars/gold.png) repeat-x; height: 20px; margin: .250em; }
+.icmspoll_option_green {background: url(images/colorbars/green.gif) repeat-x; height: 15px}
+.icmspoll_option_grey {background: url(images/colorbars/grey.gif) repeat-x; height: 15px}
+.icmspoll_option_orange {background: url(images/colorbars/orange.gif) repeat-x; height: 15px}
+.icmspoll_option_pink {background: url(images/colorbars/pink.gif) repeat-x; height: 15px}
+.icmspoll_option_purple {background: url(images/colorbars/purple.png) repeat-x; height: 20px; margin: .250em; }
+.icmspoll_option_red {background: url(images/colorbars/red.gif) repeat-x; height: 15px}
+.icmspoll_option_yellow {background: url(images/colorbars/yellow.gif) repeat-x; height: 15px}

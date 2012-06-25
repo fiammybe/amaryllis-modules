@@ -1,6 +1,22 @@
 <{includeq file="db:icmspoll_header.html"}>
-
-
-
-
+<div style="margin: 2em auto;">
+	<!-- icmspoll polls -->
+	<{if $icmspoll_polls_table}>
+		<{$icmspoll_polls_table}>
+	<{/if}>
+	<{if $icmspoll_polls_form}>
+		<{includeq file='db:system_common_form.html' form=$icmspoll_polls_form}>
+	<{/if}>
+	<!-- icmspoll options -->
+	<{if $icmspoll_options_table}>
+		<{$icmspoll_options_table}>
+	<{/if}>
+	<{if $icmspoll_options_form}>
+		<{includeq file='db:system_common_form.html' form=$icmspoll_options_form}>
+	<{/if}>
+	<!-- icmspoll delete -->
+	<{if $icmspersistable_delete_confirm}>
+		<{$icmspersistable_delete_confirm}>
+	<{/if}>
+</div>
 <{includeq file="db:icmspoll_footer.html"}>

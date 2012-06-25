@@ -31,7 +31,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		parent::__construct($handler);
 		$this->quickInitVar("poll_id", XOBJ_DTYPE_INT, NULL, FALSE);
 		$this->quickInitVar("question", XOBJ_DTYPE_TXTBOX, TRUE);
-		$this->quickInitVar("description", XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar("description", XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->quickInitVar("delimeter", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("user_id", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("start_time", XOBJ_DTYPE_LTIME, FALSE);
@@ -46,6 +46,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("expired", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("poll_comments", XOBJ_DTYPE_INT, FALSE);
 		
+		$this->setControl("description", array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl("delimeter", array("name" => "select", "itemHandler" => "polls", "method" => "getDelimeters", "module" => "icmspoll"));
 		$this->setControl("user_id", "user");
 		$this->setControl("display", "yesno");
@@ -193,35 +194,6 @@ class IcmspollPolls extends icms_ipf_Object {
 		return TRUE;
 	}
 
-	public function getPollForm() {
-		if(!$this->viewAccessGranted()) return FALSE;
-		$icmspoll_options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
-		$options = $icmspoll_options_handler->getAllByPollId($this->id());
-		$user_id = is_object(icms::$user) ? icms::$user->getVar("uid", "e") : 0;
-		
-		$form = new icms_form_Theme(_MD_ICMSPOLL_POLL_FORM, "submit", "submitpoll.php?op=submit&poll_id=" . $this->id(), "post", TRUE);
-		if($this->getVar("multiple", "e") == 1) {
-			$optionsEle = new icms_form_elements_Checkbox("", "poll_options", NULL, "<br />");
-		} else {
-			$optionsEle = new icms_form_elements_Radio("", "poll_options", NULL, "<br />");
-		}
-		foreach ($options as $option) {
-			$optionsEle->addOption($option->id(), $option->getOptionText());
-		}
-		$form->addElement($optionsEle, TRUE);
-		$form->addElement(new icms_form_elements_Hidden("poll_ip", xoops_getenv("REMOTE_ADDR")));
-		$form->addElement(new icms_form_elements_Hidden("user_id", $user_id));
-		if($this->voteAccessGranted()) {
-			$form->addElement(new icms_form_elements_Button("", "submit", _MD_ICMSPOLL_VOTE, "button"));
-		} else {
-			if($this->hasVoted()) $voteDenied = _MD_ICMSPOLL_ALREADY_VOTED;
-			if(!$this->voteAccessGranted()) $voteDenied = _MD_ICMSPOLL_VOTE_DENIED;
-			$form->addElement(new icms_form_elements_Label("", $voteDenied, "button"));
-		}
-		return $form->render();
-		
-	}
-	
 	/**
 	 * get the ammount of comments for a poll
 	 */
@@ -263,12 +235,20 @@ class IcmspollPolls extends icms_ipf_Object {
 	}
 	
 	public function getInputType() {
-		return $this->isMultiple() ? "checkbox" : "radio";
+		return ($this->getVar("multiple", "e") == 1) ? "checkbox" : "radio";
 	}
 	
 	public function inBlocks() {
 		return ($this->getVar("display", "e") == 1) ? TRUE : FALSE;
 	}
+	
+	function userCanEditAndDelete() {
+		global $icmspoll_isAdmin;
+		if(!is_object(icms::$user)) return FALSE;
+		if($icmspoll_isAdmin) return TRUE;
+		return $this->getVar('user_id', 'e') == icms::$user->getVar("uid", "e");
+	}
+	
 	/**
 	 * send polls toArray
 	 */

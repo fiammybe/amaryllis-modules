@@ -66,8 +66,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			editpoll($clean_poll_id);
 			break;
 		case 'addpoll':
+			$redirect_page = ICMSPOLL_ADMIN_URL . "options.php?op=mod&poll_id=" . $_POST['poll_id'];
 			$controller = new icms_ipf_Controller($icmspoll_poll_handler);
-			$controller->storeFromDefaultForm(_AM_ICMSPOLL_POLLS_CREATED, _AM_ICMSPOLL_POLLS_MODIFIED);
+			$controller->storeFromDefaultForm(_AM_ICMSPOLL_POLLS_CREATED, _AM_ICMSPOLL_POLLS_MODIFIED, $redirect_page);
 			break;
 		case 'del':
 			$controller = new icms_ipf_Controller($icmspoll_poll_handler);
