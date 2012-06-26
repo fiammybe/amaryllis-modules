@@ -36,14 +36,14 @@ $icmsTpl->assign('icmspoll_index', $index);
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$valid_op = array('getPollsByCreator', 'getExpiredPolls', 'selectPollsByCreator', '');
+$valid_op = array('getPollsByCreator', 'getExpiredPolls', 'selectPollsByCreator', 'selectExpiredPolls', '');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
 $opform = new icms_form_Simple('', 'selectform', 'index.php', "get");
 $op_select = new icms_form_elements_Select("", 'op', $clean_op);
 $op_select->setExtra('onchange="document.forms.selectform.submit()"');
 $op_select->addOption('', '-------------');
-$op_select->addOption('getExpiredPolls', _MD_ICMSPOLL_SELECTBOX_EXPIRED_POLLS);
+$op_select->addOption('selectExpiredPolls', _MD_ICMSPOLL_SELECTBOX_EXPIRED_POLLS);
 $op_select->addOption('selectPollsByCreator', _MD_ICMSPOLL_SELECTBOX_POLLS_BY_CREATOR);
 $opform->addElement($op_select);
 $icmsTpl->assign('icmspoll_selectbox', $opform->display());
@@ -58,6 +58,14 @@ $options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll"
 if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'getPollsByCreator':
+			
+			$selectform = new icms_form_Simple('', 'selectuserform', 'index.php', "get");
+			$uid_select = new icms_form_elements_Select("", 'uid', $clean_uid);
+			$uid_select->setExtra('onchange="document.forms.selectuserform.submit()"');
+			$uid_select->addOptionArray($polls_handler->filterUsers(TRUE));
+			$selectform->addElement($uid_select);
+			$icmsTpl->assign('icmspoll_selectbox_2', $selectform->display());
+		
 			$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, FALSE, FALSE);
 			$icmsTpl->assign("polls_by_creator", $polls);
 			/**
@@ -67,8 +75,16 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
 			$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
 			break;
-			
+		case 'selectExpiredPolls':
 		case 'getExpiredPolls':
+			if($clean_op == "selectExpiredPolls") {	
+				$selectform = new icms_form_Simple('', 'selectuserform', 'index.php', "get");
+				$uid_select = new icms_form_elements_Select("", 'uid', $clean_uid);
+				$uid_select->setExtra('onchange="document.forms.selectuserform.submit()"');
+				$uid_select->addOptionArray($polls_handler->filterUsers(TRUE));
+				$selectform->addElement($uid_select);
+				$icmsTpl->assign('icmspoll_selectbox_2', $selectform->display());
+			}
 			$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, TRUE, FALSE);
 			$icmsTpl->assign("polls_expired", $polls);
 			/**

@@ -22,6 +22,12 @@
 <{elseif $poll}>
 	<{includeq file="db:icmspoll_singlepoll.html"}>
 <{elseif $polls_expired}>
+	<{if $icmspoll_selectbox}>
+		<{$icmspoll_selectbox}>
+		<{if $icmspoll_selectbox_2}>
+			<{$icmspoll_selectbox_2}>
+		<{/if}>
+	<{/if}>
 	<{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>
@@ -34,6 +40,12 @@
 		<{$icmspoll_pagenav}>
 	<{/if}>
 <{elseif $polls_by_creator}>
+	<{if $icmspoll_selectbox}>
+		<{$icmspoll_selectbox}>
+		<{if $icmspoll_selectbox_2}>
+			<{$icmspoll_selectbox_2}>
+		<{/if}>
+	<{/if}>
 	<{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>
