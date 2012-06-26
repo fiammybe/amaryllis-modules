@@ -130,7 +130,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			$objectTable->addFilter("poll_id", "filterPolls");
 			
-			$objectTable->addIntroButton('addoptions', 'options.php?op=mod', _AM_ICMSPOLL_OPTIONS_ADD);
+			$objectTable->addIntroButton('addoptions', 'options.php?op=mod', _MD_ICMSPOLL_OPTIONS_ADD);
 			$objectTable->addActionButton('changeFields', FALSE, _SUBMIT);
 			
 			$icmsTpl->assign('icmspoll_options_table', $objectTable->fetch());

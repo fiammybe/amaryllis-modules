@@ -2,6 +2,12 @@
 
 <!-- display poll list -->
 <{if $polllist}>
+	<{if $icmspoll_selectbox}>
+		<{$icmspoll_selectbox}>
+		<{if $icmspoll_selectbox_2}>
+			<{$icmspoll_selectbox_2}>
+		<{/if}>
+	<{/if}>
 	<{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>

@@ -76,6 +76,14 @@ class IcmspollOptions extends icms_ipf_Object {
 		$optionText = icms_core_DataFilter::checkVar($optionText, "html", "output");
 		return $optionText;
 	}
+	
+	public function getOptionResult() {
+		$log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "icmspoll");
+		$poll_id = $this->getVar("poll_id", "e");
+		$option_id = $this->getVar("option_id", "e");
+		$option_result = $log_handler->getVotesPerCentByOptionId($poll_id, $option_id);
+		return $option_result;
+	}
 
 	public function toArray() {
 		$ret = parent::toArray();
@@ -83,6 +91,7 @@ class IcmspollOptions extends icms_ipf_Object {
 		$ret['poll_id'] = $this->getVar("poll_id", "e");
 		$ret['text'] = $this->getOptionText();
 		$ret['color'] = $this->getVar("option_color", "e");
+		$ret['result'] = $this->getOptionResult();
 		return $ret;
 	}
 }
