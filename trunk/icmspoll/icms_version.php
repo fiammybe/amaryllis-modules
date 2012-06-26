@@ -89,9 +89,6 @@ if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'icmspoll') 
 		$i++;
 		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_ADDPOLL;
 		$modversion['sub'][$i]['url'] = 'polls.php?op=mod';
-		$i++;
-		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_ADDOPTION;
-		$modversion['sub'][$i]['url'] = 'optins.php?op=mod';
 		if(icms_userIsAdmin( basename(dirname(__FILE__)))) {
 			$i++;
 			$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_VIEWRESULTS;
