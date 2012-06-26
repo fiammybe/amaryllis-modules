@@ -36,7 +36,6 @@ $icmsTpl->assign('icmspoll_index', $index);
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-if(!$icmspoll_isAdmin) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
 
 $valid_op = array("");
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, "op", FILTER_SANITIZE_SPECIAL_CHARS) : "";
@@ -52,8 +51,15 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
 
 	switch ($clean_op) {
-		case 'value':
-			
+		case 'getResultsByUid':
+			$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, TRUE, FALSE);
+			$icmsTpl->assign('polls_by_user', $polls);
+			/**
+			 * pagination control
+			 */
+			$polls_count = $polls_handler->getPollsCount(TRUE, FALSE);
+			$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
+			$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
 			break;
 		
 		default:
@@ -85,20 +91,14 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				
 				
 			} elseif ($clean_poll_id == 0) {
-				$objectTable = new icms_ipf_view_Table($polls_handler, FALSE, array(), TRUE);
-				$objectTable->addColumn(new icms_ipf_view_Column("expired", "center", FALSE, "displayExpired"));
-				$objectTable->addColumn(new icms_ipf_view_Column("question", FALSE, FALSE, "getResultLink"));
-				$objectTable->addColumn(new icms_ipf_view_Column("user_id", FALSE, FALSE, "getUser"));
-				$objectTable->addColumn(new icms_ipf_view_Column("start_time", FALSE, FALSE, "getStartDate"));
-				$objectTable->addColumn(new icms_ipf_view_Column("end_time", FALSE, FALSE, "getEndDate"));
-				$objectTable->addColumn(new icms_ipf_view_Column("created_on", FALSE, FALSE, "getCreatedDate"));
-				$objectTable->setDefaultOrder("DESC");
-				$objectTable->setDefaultSort("created_on");
-				
-				$objectTable->addFilter("expired", "filterExpired");
-				$objectTable->addFilter("user_id", "filterUsers");
-				
-				$icmsTpl->assign( 'icmspoll_polls_table', $objectTable->fetch() );
+				$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], FALSE, TRUE, FALSE);
+				$icmsTpl->assign('polllist', $polls);
+				/**
+				 * pagination control
+				 */
+				$polls_count = $polls_handler->getPollsCount(TRUE, FALSE);
+				$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
+				$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
 			} else {
 				redirect_header(ICMSPOLL_URL . "results.php", 3, _NOPERM);
 			}
