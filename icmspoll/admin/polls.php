@@ -38,7 +38,7 @@ function editpoll($poll_id = 0) {
 		$pollObj->setVar("end_time", (time() + (7 * 24 * 60 * 60)));
 		$pollObj->setVar("created_on", time());
 		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . " > " . _MI_ICMSPOLL_MENU_POLLS_CREATINGNEW);
-		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_CREATINGNEW, 'addpoll');
+		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_CREATINGNEW, 'addpoll', ICMSPOLL_ADMIN_URL . "polls.php?op=addpoll&amp;poll_id=". $pollObj->getVar("poll_id", "e"));
 		$sform->assign($icmsAdminTpl);
 	}
 	$icmsAdminTpl->display('db:icmspoll_admin.html');
@@ -66,7 +66,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			editpoll($clean_poll_id);
 			break;
 		case 'addpoll':
-			$redirect_page = ICMSPOLL_ADMIN_URL . "options.php?op=mod&poll_id=" . $_POST['poll_id'];
+			$redirect_page = ICMSPOLL_ADMIN_URL . "options.php?op=mod&poll_id=" . $clean_poll_id;
 			$controller = new icms_ipf_Controller($icmspoll_poll_handler);
 			$controller->storeFromDefaultForm(_AM_ICMSPOLL_POLLS_CREATED, _AM_ICMSPOLL_POLLS_MODIFIED, $redirect_page);
 			break;

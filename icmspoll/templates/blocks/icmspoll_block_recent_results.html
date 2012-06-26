@@ -1,0 +1,5 @@
+<ul>
+	<{foreach item=poll from=$block.icmspoll_results}>
+		<li><{$poll.itemLink}> (<{$poll.start_time}> - <{$poll.end_time}>)</li>
+	<{/foreach}>
+</ul>
