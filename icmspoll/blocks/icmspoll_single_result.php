@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: icmspoll_single_result.php 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
  * @package		icmspoll
  *
  */
@@ -31,6 +31,7 @@ function b_icmspoll_single_result_show($options) {
 	$block["icmspoll_singleresult"] = $pollObj->toArray();
 	$block["options"] = $options_handler->getAllByPollId($options[0], "weight", "ASC");
 	$block["icmspoll_url"] = ICMSPOLL_URL;
+	$block["icmspoll_isAdmin"] = $icmspoll_isAdmin;
 	$xoTheme->addStylesheet('/modules/' . ICMSPOLL_DIRNAME . '/module_icmspoll.css');
 	return $block;
 }

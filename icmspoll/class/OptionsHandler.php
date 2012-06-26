@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: OptionsHandler.php 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
  * @package		icmspoll
  *
  */
