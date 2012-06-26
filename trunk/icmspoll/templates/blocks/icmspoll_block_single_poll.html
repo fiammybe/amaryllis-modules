@@ -10,8 +10,10 @@
 			<form class="icmspoll_pollform" action="<{$block.icmspoll_url}>submitpoll.php?op=vote&amp;poll_id=<{$block.icmspoll_singlepoll.id}>" method="post">
 				<fieldset>
 					<{foreach item=option from=$block.options}>
-						<input class="icmspoll_option_<{$option.color}>" type="<{$block.icmspoll_singlepoll.inputtype}>" name="poll_option" value="<{$option.id}>" />
-						<{$option.text}>
+						<div class="icmspoll_option_<{$option.color}>">
+							<input class="icmspoll_option_<{$option.color}>" type="<{$block.icmspoll_singlepoll.inputtype}>" name="poll_option" value="<{$option.id}>" />
+							<{$option.text}>
+						</div>
 						<{$block.icmspoll_singlepoll.delimeter}>
 					<{/foreach}>
 				</fieldset>
@@ -22,6 +24,28 @@
 					<input type="submit" class="icmspoll_formButton" value="<{$smarty.const._MB_ICMSPOLL_POLLS_SUBMIT}>" />
 				<{/if}>
 			</form>
+		</div>
+	</div>
+<{elseif $block.icmspoll_singlepoll && $block.icmspoll_singlepoll.hasExpired == TRUE}>
+	<div class="icmspoll_singlepoll">
+		<div class="singlepoll_question">
+			<{$block.icmspoll_singlepoll.question}>
+		</div>
+		<div class="singlepoll_description">
+			<{$block.icmspoll_singlepoll.description}>
+		</div>
+		<div class="singlepoll_form">
+			<{foreach item=option from=$options}>
+				<div class="poll_option_set">
+					<div class="result_option_<{$option.color}>">
+					
+					</div>
+					<div class="poll_option_txt">
+						<{$option.text}>
+					</div>
+					<{$block.icmspoll_singlepoll.delimeter}>
+				</div>
+			<{/foreach}>
 		</div>
 	</div>
 <{/if}>

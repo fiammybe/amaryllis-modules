@@ -22,7 +22,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
  * display single poll block
  */
 function b_icmspoll_single_poll_show($options) {
-	global $icmspollConfig;
+	global $icmspollConfig, $xoTheme;
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
@@ -31,6 +31,7 @@ function b_icmspoll_single_poll_show($options) {
 	$block["icmspoll_singlepoll"] = $pollObj->toArray();
 	$block["options"] = $options_handler->getAllByPollId($options[0], "weight", "ASC");
 	$block["icmspoll_url"] = ICMSPOLL_URL;
+	$xoTheme->addStylesheet('/modules/' . ICMSPOLL_DIRNAME . '/module_icmspoll.css');
 	return $block;
 }
 
