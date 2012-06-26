@@ -127,7 +127,7 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 	function getVotesPerCentByOptionId($poll_id, $option_id) {
 		$totalVotes = $this->getTotalVotesByPollId($poll_id);
 		$totalOptVotes = $this->getTotalVotesByOptionId($option_id);
-		$optVote = ($totalVotes/100) * $totalOptVotes;
+		$optVote = ((int)$totalVotes/100) * (int)$totalOptVotes;
 		return $optVote;
 	}
 	
