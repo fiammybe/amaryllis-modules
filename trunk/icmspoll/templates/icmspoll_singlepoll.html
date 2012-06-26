@@ -19,8 +19,9 @@
 				</fieldset>
 				<{if $poll.hasVoted}>
 					<input type="label" readonly size="50" class="icmspoll_formButton" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
-				<{else}>
+				<{elseif !$poll.hasVoted && $poll.voteAccessGranted}>
 					<input type="submit" class="icmspoll_formButton" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" />
+				<{else}>
 				<{/if}>
 			</form>
 		</div>

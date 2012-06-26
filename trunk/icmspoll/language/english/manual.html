@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Icmspoll Manual</title>
+        <style>
+        	#icmspoll_manual {margin: 2em;}
+        	#icmspoll_manual h1, h2, h3 {font-family: Georgia, "Times New Roman", Times, serif; padding-bottom: 1em; padding-top: 1em; line-height: 1.7em; font-weight: bold;}
+        	#icmspoll_manual h1 {text-align: center; font-size: 1.5em; font-variant: small caps; color: #336699;}
+        	#icmspoll_manual h2 {font-size: 1.250em; color: #6699CC;}
+        	#icmspoll_manual h3 {font-size: 1.1em; color: #6699FF;}
+        	#icmspoll_manual p {font-size: .9em; margin: 0; padding: 5px;}
+        	#icmspoll_manual ul li {list-style-type: square; margin-left: 20px; line-height: 1.5em; font-weight: bolder; }
+        	#icmspoll_manual ul li ul li {list-style-type: disc; margin-left: 30px; font-weight: normal; }
+        	#icmspoll_footer {border: 1px dotted; margin: 2em auto; padding: 0 1em 2em; --moz-border-radius: 1.5em; -webkit-border-radius: 1.5em; border-radius: 1.5em;}
+        	#icmspoll_footer h2 {padding: .5em 0 0;}
+        	#icmspoll_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
+        	#icmspoll_manual a, #icmspoll_manual a:visited {color: #336699}
+        	#icmspoll_manual a:hover {color: #336699; text-decoration: underline;}
+        </style>
+    </head>
+    <body>
+    	<div id="icmspoll_manual">
+	        <h1>Icmspoll Manual</h1>
+	        	<p>Icmspoll is a poll module for ImpressCMS, which can easily be used with iforum, the forum module of ImpressCMS, too. It's designed to provide user polls and/or visitor polls.</p>
+	        <h2>Keyfeatures</h2>
+				<ul>
+					<li>You can create polls with multiple options</li>
+					<li>Your options can be selected by using radio buttons or checkboxes, whatever is needed for your poll</li>
+					<li>Different output of results for module admins and simple users/guests</li>
+					<li>Use core permission system to select, which groups can view the poll</li>
+					<li>Use core permission system to select, which groups can vote the poll</li>
+				</ul>
+	        <h2>First Start</h2>
+				<p>There are several things you should do <b>before</b> you try to create a new poll. Please, follow the instructions.</p>
+				
+				<h3>Check out the module preferences</h3>
+					<p>There might be some preferences, you'd like to change before using the module first time. Go to Modules > Icmspoll > Preferences</p>
+					<ul>
+						<li>Group Permissions
+							<ul>
+								<li>
+									The group permissions are only to set permissions for creating new polls in front end. All selected groups will have permissions to submit new polls.
+								</li>
+							</ul>
+						</li>
+						<li>Date Format
+							<ul>
+								<li>
+									The Date format will be used for displaying the date throughout the module frontend. You need help to get the preferred date format? Look <a href="http://php.net/manual/en/function.date.php">here</a> for a detailed instruction.
+								</li>
+							</ul>
+						</li>
+						<li>Show Breadcrumb
+							<ul>
+								<li>
+									Select "Yes" to display the breadcrumb in front end, "No" to disable the breadcrumb.
+								</li>
+							</ul>
+						</li>
+						<li>Show polls
+							<ul>
+								<li>
+									Set the limit for polls to be listed on index view.
+								</li>
+							</ul>
+						</li>
+					</ul>
+				<h3>Create a poll</h3>
+					<p>The next important will be creating a poll. Otherwise you can not see the page to submit polls. Go to Tab 'Polls' > Add poll. 
+						Just Fill out the fields. </p>
+					<ul>
+						<li>Question
+							<ul>
+								<li>The question is used like a title and provides also the link to the poll on index view.</li>
+							</ul>
+						</li>
+						<li>Description
+							<ul>
+								<li>The Description can be used, to describe the question more detailled and will be displayed on index view as on single poll view.</li>
+							</ul>
+						</li>
+						<li>Select the delimeter to be used
+							<ul>
+								<li>The module provides currently two delimeters: the &lt;br /&gt;-Tag and a Space. The delimeters are used for options fields inside the form.</li>
+							</ul>
+						</li>
+						<li>Start of poll
+							<ul>
+								<li>This will be the start time, when the poll is visible. Remember the time you need to add options to the poll!</li>
+							</ul>
+						</li>
+						<li>End of poll
+							<ul>
+								<li>The of the poll.</li>
+							</ul>
+						</li>
+						<li>Display in Block
+							<ul>
+								<li>Set to yes, if the poll should be visible in "recent polls block"</li>
+							</ul>
+						</li>
+						<li>Weight
+							<ul>
+								<li>Enter weight to order polls by weight.</li>
+							</ul>
+						</li>
+						<li>Allow multiple selection
+							<ul>
+								<li>Set to Yes, if you want to have checkboxes instead of radio buttons in poll form</li>
+							</ul>
+						</li>
+						<li>Notify the poll author when expired?
+							<ul>
+								<li>This will send a notification to the creator of the poll, if poll has expired.</li>
+							</ul>
+						</li>
+						<li>View permissions
+							<ul>
+								<li>Set the groups to be allowed to see the poll</li>
+							</ul>
+						</li>
+						<li>Vote permissions
+							<ul>
+								<li>Set the groups to be allowed to vote the poll</li>
+							</ul>
+						</li>
+					</ul>
+					<p>Done! After submitting you should directly be redirected to the options page and be able to add options to your poll.</p>
+				<h3>Create Options</h3>
+					<p>The options form is very short. Just enter the text for the option, select a color as background and enter a weight. Before submitting the option, be sure, the correct poll is selected.</p>
+				<h2>Blocks</h2>
+				<p>Currently you have 4 blocks for 'Icmspoll' module:</p>
+				<ul>
+					<li>Recent Polls
+						<ul>
+							<li>The "Recent Polls" block will display the recently submitted polls. Select sort/order/expired polls/or publisher of the polls to get a more detailed result.</li>
+						</ul>
+					</li>
+					<li>Single poll
+						<ul>
+							<li>This block will display a single poll, which can be voted anywhere.</li>
+						</ul>
+					</li>
+					<li>Recent results
+						<ul>
+							<li>This block will display recent expired polls with a link to the poll</li>
+						</ul>
+					</li>
+					<li>single result
+						<ul>
+							<li>This block will display a single result, different data for guests/users and module admins.</li>
+						</ul>
+					</li>
+				</ul>
+				<p>You can clone all blocks, if needed.</p>
+	 
+			<div id="icmspoll_footer">
+			<h2>Conclusion</h2>
+				<p>Thank you for using 'Icmspoll' module. If you have some trouble while using icmspoll module, please visit <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>. You have some suggestions, what you'd like to change or add to the module? No problem! We can talk about. Please, use also <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a> for this!</p>  
+				<p>You might also like to follow the recent changes in icmspoll module? Please, have a look at <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/icmspoll/trunk/" title="'Icmspoll' SVN on Assembla" rel="external">'Icmspoll' SVN on Assembla</a> or make a checkout of my <a href="http://code.google.com/p/amaryllis-modules/" title="Icmspoll" rel="external">module svn on google code</a>.</p>
+			</div>
+		</div>
+    </body>
+</html>
