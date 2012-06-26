@@ -186,7 +186,7 @@ $modversion['blocks'][$i]['name']			= _MI_ICMSPOLL_BLOCK_RECENT_POLLS;
 $modversion['blocks'][$i]['description']	= _MI_ICMSPOLL_BLOCK_RECENT_POLLS_DSC;
 $modversion['blocks'][$i]['show_func']		= 'b_icmspoll_recent_polls_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_icmspoll_recent_polls_edit';
-$modversion['blocks'][$i]['options']		= '10|0|0|0|ASC|weight'; // Limit|uid|expired|random|sort|order|
+$modversion['blocks'][$i]['options']		= '10|0|0|weight|ASC'; // Limit|uid|expired|sort|order|
 $modversion['blocks'][$i]['template']		= 'icmspoll_block_recent_polls.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
 
@@ -207,7 +207,7 @@ $modversion['blocks'][$i]['name']			= _MI_ICMSPOLL_BLOCK_RECENT_RESULTS;
 $modversion['blocks'][$i]['description']	= _MI_ICMSPOLL_BLOCK_RECENT_RESULTS_DSC;
 $modversion['blocks'][$i]['show_func']		= 'b_icmspoll_recent_results_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_icmspoll_recent_results_edit';
-$modversion['blocks'][$i]['options']		= '10|0|0|0|ASC|weight'; // Limit|uid|expired|random|sort|order|
+$modversion['blocks'][$i]['options']		= '10|0|ASC|weight'; // Limit|uid|sort|order|
 $modversion['blocks'][$i]['template']		= 'icmspoll_block_recent_results.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
 // Single result block
