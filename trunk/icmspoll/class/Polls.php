@@ -166,7 +166,7 @@ class IcmspollPolls extends icms_ipf_Object {
 				$optionObj = $icmspoll_option_handler->get($option);
 				if ( $this->id() == $optionObj->getVar("poll_id") ) {
 					$logObj = $icmspoll_log_handler->create(TRUE);
-					$logObj->setVar("poll_id", $this->getVar("poll_id"));
+					$logObj->setVar("poll_id", $this->getVar("poll_id", "e"));
 					$logObj->setVar("option_id", $vote);
 					$logObj->setVar("ip", $ip);
 					$logObj->setVar("user_id", $user_id);
@@ -179,7 +179,7 @@ class IcmspollPolls extends icms_ipf_Object {
 			}
 		} else {
 			$optionObj = $icmspoll_option_handler->get($options);
-			if ( $this->id() == $optionObj->getVar("poll_id") ) {
+			if ( $this->id() == $optionObj->getVar("poll_id", "e") ) {
 				$logObj = $icmspoll_log_handler->create(TRUE);
 				$logObj->setVar("poll_id", $this->id());
 				$logObj->setVar("option_id", $options);
@@ -194,20 +194,6 @@ class IcmspollPolls extends icms_ipf_Object {
 		return TRUE;
 	}
 
-	/**
-	 * get the ammount of comments for a poll
-	 */
-	public function getComments($poll_id) {
-		$icmspollModule = icms_getModuleInfo(ICMSPOLL_DIRNAME);
-		$comment_handler = icms::handler('icms_data_comment');
-        $criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item("com_modid", $icmspollModule->getVar("mid")));
-		$criteria->add(new icms_db_criteria_Item("com_itemid", $poll_id));
-		$count = $comment_handler->getCount($criteria);
-		unset($comment_handler, $icmspollModule);
-		return $count;
-    }
-	
 	/**
 	 * returns URL or link to a poll
 	 */

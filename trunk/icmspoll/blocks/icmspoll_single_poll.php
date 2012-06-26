@@ -25,7 +25,7 @@ function b_icmspoll_single_poll_show($options) {
 	global $icmspollConfig;
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspolls");
+	$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
 	$options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
 	$pollObj = $polls_handler->get($options[0]);
 	$block["icmspoll_singlepoll"] = $pollObj->toArray();
