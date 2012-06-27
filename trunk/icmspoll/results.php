@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: results.php 13 2012-06-27 13:25:58Z qm-b $
+ * @version		$Id: results.php 14 2012-06-27 14:05:07Z qm-b $
  * @package		icmspoll
  *
  */
@@ -37,7 +37,7 @@ $icmsTpl->assign('icmspoll_index', $index);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-$valid_op = array("");
+$valid_op = array("getPollsByCreator", "");
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, "op", FILTER_SANITIZE_SPECIAL_CHARS) : "";
 
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start", FILTER_SANITIZE_NUMBER_INT) : 0;
@@ -51,7 +51,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
 
 	switch ($clean_op) {
-		case 'getResultsByUid':
+		case 'getPollsByCreator':
 			$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, TRUE, FALSE);
 			$icmsTpl->assign('results_by_creator', $polls);
 			/**
@@ -60,6 +60,18 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$polls_count = $polls_handler->getPollsCount(TRUE, FALSE);
 			$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
 			$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
+			
+			/**
+			 * breadcrumb
+			 */
+			$resultLink = '<a href="' . ICMSPOLL_URL . 'results.php?op=getPollsByCreator&uid=' . $clean_uid . '" title="' . _MD_ICMSPOLL_POLL_RESULTS . '">' . _MD_ICMSPOLL_POLL_RESULTS . '</a>';
+			$icmsTpl->assign("icmspoll_cat_path", $resultLink);
+			/**
+			 * get User name for heading
+			 */
+			$uname = icms_member_user_Object::getUnameFromId($clean_uid);
+			$icmsTpl->assign("username", $uname);
+				
 			break;
 		
 		default:

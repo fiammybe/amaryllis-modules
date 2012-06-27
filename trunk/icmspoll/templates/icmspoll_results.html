@@ -1,7 +1,14 @@
 <{includeq file="db:icmspoll_header.html"}>
 
 <{if $resultlist}>
-	<{if $icmspoll_pagenav }><!-- pagination control -->
+	<{if $icmspoll_index.header}>
+        <{$icmspoll_index.header}>
+    <{/if}>
+    <{if $icmspoll_index.heading}>
+        <{$icmspoll_index.heading}>
+    <{/if}>
+    
+    <{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>
 	<div class="polls_container">
@@ -13,8 +20,49 @@
 		<{$icmspoll_pagenav}>
 	<{/if}>
 <{elseif $poll}>
-	<{includeq file="db:icmspoll_singlepoll.html"}>
+	<div class="icmspoll_singlepoll">
+		<div class="singlepoll_question">
+			<{$poll.question}>
+		</div>
+		<div class="singlepoll_description">
+			<{$poll.description}>
+		</div>
+		<div class="icmspoll_morelink">
+            <{$poll.more_results_by_user}>
+        </div>
+		<div class="singlepoll_form">
+		    <div class="poll_option_set">
+    			<{foreach item=option from=$options name=options}>
+    				<div class="result_option">
+    				   <div class="icmspoll_option_<{$option.color}>" style="width:<{$option.result}>%" >
+    				       <{$option.result}>%
+    				   </div>
+                    </div>
+    				<div class="poll_option_txt">
+    					<{$option.text}>
+    				</div>
+    				<{$poll.delimeter}>
+    			<{/foreach}>
+    			
+    			<{if $icmspoll_is_admin}>
+    				<div class="icmspoll_more_results">
+    					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES}> &nbsp;:&nbsp; <b><{$total_voters}></b> <br />
+    					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_REGISTERED}> &nbsp;:&nbsp; <b><{$total_registred}></b> <br />
+    					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_ANONS}> &nbsp;:&nbsp; <b><{$total_anonymous}></b> <br />
+    				</div>
+    			<{/if}>
+			</div>
+		</div>
+	</div>
 <{elseif $results_by_creator}>
+	<{if $icmspoll_index.header}>
+        <{$icmspoll_index.header}>
+    <{/if}>
+    <{if $icmspoll_index.heading}>
+        <{$icmspoll_index.heading}>
+    <{/if}>
+    
+	<h1><{$smarty.const._MD_ICMSPOLL_RESULTS_MORE_BY_UNAME}> &nbsp; <{$username}></h1>
 	<{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>

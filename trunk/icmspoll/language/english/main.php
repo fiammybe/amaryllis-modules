@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: main.php 11 2012-06-27 12:30:05Z qm-b $
+ * @version		$Id: main.php 14 2012-06-27 14:05:07Z qm-b $
  * @package		icmspoll
  *
  */
@@ -43,4 +43,7 @@ define("_MD_ICMSPOLL_SELECTBOX_EXPIRED_POLLS", "Show expired polls");
 define("_MD_ICMSPOLL_SELECTBOX_POLLS_BY_CREATOR", "Show polls by user");
 define("_MD_ICMSPOLL_POLL_RESULTS", "Results");
 define("_MD_ICMSPOLL_NO_POLLS", "Sorry, currently there are no active Polls");
-//define("", "");
+define("_MD_ICMSPOLL_RESULTS_TOTALVOTES", "Total votes");
+define("_MD_ICMSPOLL_RESULTS_TOTALVOTES_REGISTERED", "Total votes by registred users");
+define("_MD_ICMSPOLL_RESULTS_TOTALVOTES_ANONS", "Total anonymous votes");
+define("_MD_ICMSPOLL_RESULTS_MORE_BY_UNAME", "All results by");

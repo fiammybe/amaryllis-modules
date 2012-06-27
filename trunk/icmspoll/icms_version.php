@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: icms_version.php 13 2012-06-27 13:25:58Z qm-b $
+ * @version		$Id: icms_version.php 14 2012-06-27 14:05:07Z qm-b $
  * @package		icmspoll
  *
  */
@@ -84,14 +84,14 @@ $modversion['manual'][] = "<a href='" . ICMS_URL  . "/modules/" . $moddir . "/ad
  */
 if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'icmspoll') {
 	$polls_handler = icms_getModuleHandler('polls', basename(dirname(__FILE__)), 'icmspoll');
+	$i = 0;
+	$i++;
+	$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_VIEWRESULTS;
+	$modversion['sub'][$i]['url'] = 'results.php';
 	if ($polls_handler->userCanSubmit()) {
-		$i = 0;
 		$i++;
 		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_ADDPOLL;
 		$modversion['sub'][$i]['url'] = 'polls.php?op=mod';
-		$i++;
-		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_VIEWRESULTS;
-		$modversion['sub'][$i]['url'] = 'results.php';
 	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
