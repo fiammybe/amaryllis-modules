@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: Polls.php 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
+ * @version		$Id: Polls.php 12 2012-06-27 13:14:40Z qm-b $
  * @package		icmspoll
  *
  */
@@ -110,6 +110,7 @@ class IcmspollPolls extends icms_ipf_Object {
         $pm_handler = icms::handler("icms_data_privmessage");
         $pmObj = $pm_handler->create(TRUE);
         $pmObj->setVar("subject", $subject);
+        $pmObj->setVar("from_userid", 1);
         $pmObj->setVar("to_userid", $this->getVar("user_id", "e"));
         $pmObj->setVar("msg_time", time());
         $pmObj->setVar("msg_text", $message);
@@ -228,7 +229,19 @@ class IcmspollPolls extends icms_ipf_Object {
 	function getResultLink() {
 		$url = ICMSPOLL_URL . 'results.php?poll_id=' . $this->id();
 		$question = $this->getQuestion();
-		return '<a href="' . $url . '" title="' . $question . '" target="_blank" >' . $question . '</a>';
+		return '<a href="' . $url . '" title="' . $question . '">' . $question . '</a>';
+	}
+	
+	function getMorePollsByCreator() {
+		$url = ICMSPOLL_URL . 'index.php?op=getPollsByCreator&uid=' . $this->getVar("user_id", "e");
+		$uname = icms_member_user_Object::getUnameFromId($this->getVar("user_id", "e"));
+		return '<a href="' . $url . '" title="' . _CO_ICMSPOLL_POLLS_GET_MORE_BY_USER . $uname . '">' . _CO_ICMSPOLL_POLLS_GET_MORE_BY_USER . $uname . '</a>';
+	}
+	
+	function getMoreResultsByCreator() {
+		$url = ICMSPOLL_URL . 'results.php?op=getPollsByCreator&uid=' . $this->getVar("user_id", "e");
+		$uname = icms_member_user_Object::getUnameFromId($this->getVar("user_id", "e"));
+		return '<a href="' . $url . '" title="' . _CO_ICMSPOLL_POLLS_GET_MORE_RESULTS_BY_USER . $uname . '" >' . _CO_ICMSPOLL_POLLS_GET_MORE_RESULTS_BY_USER . $uname . '</a>';
 	}
 	
 	public function isMultiple() {
@@ -274,6 +287,8 @@ class IcmspollPolls extends icms_ipf_Object {
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['resultLink'] = $this->getResultLink();
+		$ret['more_polls_by_user'] = $this->getMorePollsByCreator();
+		$ret['more_results_by_user'] = $this->getMoreResultsByCreator();
 		return $ret;
 	}
 }

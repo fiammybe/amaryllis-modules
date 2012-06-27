@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: icms_version.php 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
+ * @version		$Id: icms_version.php 13 2012-06-27 13:25:58Z qm-b $
  * @package		icmspoll
  *
  */
@@ -89,11 +89,9 @@ if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'icmspoll') 
 		$i++;
 		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_ADDPOLL;
 		$modversion['sub'][$i]['url'] = 'polls.php?op=mod';
-		if(icms_userIsAdmin( basename(dirname(__FILE__)))) {
-			$i++;
-			$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_VIEWRESULTS;
-			$modversion['sub'][$i]['url'] = 'results.php';
-		}
+		$i++;
+		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_VIEWRESULTS;
+		$modversion['sub'][$i]['url'] = 'results.php';
 	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -311,7 +309,7 @@ $modversion['config'][$i] = array(
 
 // Comments
 $modversion['hasComments'] = 1;
-$modversion['comments']['pageName'] = 'pollresults.php';
+$modversion['comments']['pageName'] = 'results.php';
 $modversion['comments']['itemName'] = 'poll_id';
 
 // Comment callback functions

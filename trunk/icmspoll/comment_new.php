@@ -12,10 +12,23 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: comment_new.php 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
+ * @version		$Id: comment_new.php 13 2012-06-27 13:25:58Z qm-b $
  * @package		icmspoll
  *
  */
 
 include '../../mainfile.php';
-include ICMS_ROOT_PATH.'/include/comment_new.php';
+$com_itemid = isset($_GET['com_itemid']) ? (int)($_GET['com_itemid']) : 0;
+if ($com_itemid > 0) {
+	$polls_handler = icms_getModuleHandler('polls', basename(dirname(__FILE__)),'icmspoll');
+	$pollObj = $polls_handler->get($com_itemid);
+	if ($pollObj && !$pollObj->isNew()) {
+		$bodytext = $pollObj->getVar('description', 's');
+		$bodytext = icms_core_DataFilter::checkVar($bodytext, "html", "output");
+		if ($bodytext != '') {
+			$com_replytext .= $bodytext;
+		}
+		$com_replytitle = $pollObj->getVar('question');
+		include_once ICMS_ROOT_PATH .'/include/comment_new.php';
+	}
+}

@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: common.php 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
+ * @version		$Id: common.php 12 2012-06-27 13:14:40Z qm-b $
  * @package		icmspoll
  *
  */
@@ -47,7 +47,8 @@ define("_CO_ICMSPOLL_POLLS_DELIMETER_SPACE", "Space (&amp;nbsp;)");
 
 define("_CO_ICMSPOLL_POLLS_MESSAGE_SUBJECT", "Your poll has expired");
 define("_CO_ICMSPOLL_POLLS_MESSAGE_BDY", "Your poll %s has expired, you can see the results now.");
-
+define("_CO_ICMSPOLL_POLLS_GET_MORE_BY_USER", "Get more Polls by ");
+define("_CO_ICMSPOLL_POLLS_GET_MORE_RESULTS_BY_USER", "Get more results by ");
 define("_CO_ICMSPOLL_POLLS_ACTIVE", "Active Polls");
 define("_CO_ICMSPOLL_POLLS_ENDTIME_ERROR", "End time must be set to future");
 /**

@@ -12,14 +12,14 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: results.php 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
+ * @version		$Id: results.php 13 2012-06-27 13:25:58Z qm-b $
  * @package		icmspoll
  *
  */
 
 include_once 'header.php';
 
-$xoopsOption['template_main'] = 'icmspoll_index.html';
+$xoopsOption['template_main'] = 'icmspoll_results.html';
 
 include_once ICMS_ROOT_PATH . '/header.php';
 
@@ -53,7 +53,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'getResultsByUid':
 			$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, TRUE, FALSE);
-			$icmsTpl->assign('polls_by_user', $polls);
+			$icmsTpl->assign('results_by_creator', $polls);
 			/**
 			 * pagination control
 			 */
@@ -74,7 +74,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if(is_object($pollObj) && !$pollObj->isNew() && $pollObj->viewAccessGranted()) {
 				$poll = $pollObj->toArray();
 				$totalVotes = $log_handler->getTotalVotesByPollId($clean_poll_id);
-				$totalVoters = $log_handler->getTotalVoters($clean_poll_id);
+				$totalVoters = $log_handler->getTotalVotersByPollId($clean_poll_id);
 				$totalAnons = $log_handler->getTotalAnonymousVoters($clean_poll_id);
 				$totalUserVotes = $log_handler->getTotalRegistredVoters($clean_poll_id);
 				$icmsTpl->assign("poll", $poll);
@@ -87,18 +87,29 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$icmsTpl->assign("options", $options);
 				$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
 				$icmsTpl->assign("user_id", $user_id);
+				$resultLink = '<a href="' . ICMSPOLL_URL . 'results.php" title="' . _MD_ICMSPOLL_POLL_RESULTS . '">' . _MD_ICMSPOLL_POLL_RESULTS . '</a>';
+				$icmsTpl->assign("icmspoll_cat_path", $resultLink);
 				
-				
+				/**
+				 * include the comment rules
+				 */
+				if ($icmspollConfig['com_rule']) {
+					$icmsTpl->assign('icmspoll_result_comment', TRUE);
+					include_once ICMS_ROOT_PATH . '/include/comment_view.php';
+				}
 				
 			} elseif ($clean_poll_id == 0) {
 				$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], FALSE, TRUE, FALSE);
-				$icmsTpl->assign('polllist', $polls);
+				$icmsTpl->assign('resultlist', $polls);
 				/**
 				 * pagination control
 				 */
 				$polls_count = $polls_handler->getPollsCount(TRUE, FALSE);
 				$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
 				$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
+				
+				$resultLink = '<a href="' . ICMSPOLL_URL . 'results.php" title="' . _MD_ICMSPOLL_POLL_RESULTS . '">' . _MD_ICMSPOLL_POLL_RESULTS . '</a>';
+				$icmsTpl->assign("icmspoll_cat_path", $resultLink);
 			} else {
 				redirect_header(ICMSPOLL_URL . "results.php", 3, _NOPERM);
 			}

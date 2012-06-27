@@ -6,6 +6,9 @@
 		<div class="singlepoll_description">
 			<{$poll.description}>
 		</div>
+		<div class="icmspoll_morelink">
+		    <{$poll.more_polls_by_user}>
+		</div>
 		<div class="singlepoll_form">
 			<form class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php?op=vote&poll_id=<{$poll.id}>" method="post">
 				    <div class="option_set">
@@ -34,20 +37,23 @@
 		<div class="singlepoll_description">
 			<{$poll.description}>
 		</div>
+		<div class="icmspoll_morelink">
+            <{$poll.more_results_by_user}>
+        </div>
 		<div class="singlepoll_form">
 		    <div class="poll_option_set">
-			<{foreach item=option from=$options name=options}>
-				<div class="result_option">
-				   <div class="result_option_<{$option.color}>" style="width:<{$option.result}>" >
-				       <{$option.result}>%
-				   </div>
-                </div>
-				<div class="poll_option_txt">
-					<{$option.text}>
-				</div>
-				<{$poll.delimeter}>
-				</div>
-			<{/foreach}>
+    			<{foreach item=option from=$options name=options}>
+    				<div class="result_option">
+    				   <div class="icmspoll_option_<{$option.color}>" style="width:<{$option.result}>%" >
+    				       <{$option.result}>%
+    				   </div>
+                    </div>
+    				<div class="poll_option_txt">
+    					<{$option.text}>
+    				</div>
+    				<{$poll.delimeter}>
+    			<{/foreach}>
+			</div>
 		</div>
 	</div>
 <{/if}>

@@ -2,12 +2,13 @@
 
 <!-- display poll list -->
 <{if $polllist}>
-	<{if $icmspoll_selectbox}>
-		<{$icmspoll_selectbox}>
-		<{if $icmspoll_selectbox_2}>
-			<{$icmspoll_selectbox_2}>
-		<{/if}>
-	<{/if}>
+    <{if $icmspoll_index.header}>
+        <{$icmspoll_index.header}>
+    <{/if}>
+    <{if $icmspoll_index.heading}>
+        <{$icmspoll_index.heading}>
+    <{/if}>
+	
 	<{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>
@@ -19,33 +20,11 @@
 	<{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>
+	
 <{elseif $poll}>
 	<{includeq file="db:icmspoll_singlepoll.html"}>
-<{elseif $polls_expired}>
-	<{if $icmspoll_selectbox}>
-		<{$icmspoll_selectbox}>
-		<{if $icmspoll_selectbox_2}>
-			<{$icmspoll_selectbox_2}>
-		<{/if}>
-	<{/if}>
-	<{if $icmspoll_pagenav }><!-- pagination control -->
-		<{$icmspoll_pagenav}>
-	<{/if}>
-	<div class="polls_container">
-		<{foreach item=poll from=$polls_expired}>
-			<{includeq file="db:icmspoll_polls.html"}>
-		<{/foreach}>
-	</div>
-	<{if $icmspoll_pagenav }><!-- pagination control -->
-		<{$icmspoll_pagenav}>
-	<{/if}>
+	
 <{elseif $polls_by_creator}>
-	<{if $icmspoll_selectbox}>
-		<{$icmspoll_selectbox}>
-		<{if $icmspoll_selectbox_2}>
-			<{$icmspoll_selectbox_2}>
-		<{/if}>
-	<{/if}>
 	<{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>
@@ -57,6 +36,17 @@
 	<{if $icmspoll_pagenav }><!-- pagination control -->
 		<{$icmspoll_pagenav}>
 	<{/if}>
+	
+<{elseif $nopolls}>
+    <{if $icmspoll_index.header}>
+        <{$icmspoll_index.header}>
+    <{/if}>
+    <{if $icmspoll_index.heading}>
+        <{$icmspoll_index.heading}>
+    <{/if}>
+    <div class="icmspoll_no_polls">
+        <p><{$smarty.const._MD_ICMSPOLL_NO_POLLS}></p>
+    </div>
 <{/if}>
 
 <{includeq file="db:icmspoll_footer.html"}>
