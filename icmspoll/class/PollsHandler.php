@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: PollsHandler.php 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
+ * @version		$Id: PollsHandler.php 11 2012-06-27 12:30:05Z qm-b $
  * @package		icmspoll
  *
  */
@@ -46,7 +46,11 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
 		if($uid) $criteria->add(new icms_db_criteria_Item("user_id", $uid));
-		
+		if($expired) {
+		    $criteria->add(new icms_db_criteria_Item("expired", 1));
+		} else {
+			$criteria->add(new icms_db_criteria_Item("expired", 0));
+		}
 		if($inBlocks) $criteria->add(new icms_db_criteria_Item("display", TRUE));
 		$this->setGrantedObjectsCriteria($criteria, "polls_view");
 		$polls = $this->getObjects($criteria, TRUE, FALSE);

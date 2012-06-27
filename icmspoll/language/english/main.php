@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: main.php 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
+ * @version		$Id: main.php 11 2012-06-27 12:30:05Z qm-b $
  * @package		icmspoll
  *
  */
@@ -41,6 +41,6 @@ define("_MD_ICMSPOLL_OPTIONS_FIELDS_UPDATED", "Fields successfully updated");
 define("_MD_ICMSPOLL_OPTIONS_ADD", "Add Option");
 define("_MD_ICMSPOLL_SELECTBOX_EXPIRED_POLLS", "Show expired polls");
 define("_MD_ICMSPOLL_SELECTBOX_POLLS_BY_CREATOR", "Show polls by user");
-//define("", "");
-//define("", "");
+define("_MD_ICMSPOLL_POLL_RESULTS", "Results");
+define("_MD_ICMSPOLL_NO_POLLS", "Sorry, currently there are no active Polls");
 //define("", "");

@@ -11,11 +11,19 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: module_icmspoll.css 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
+ * @version		$Id: module_icmspoll.css 11 2012-06-27 12:30:05Z qm-b $
  * @package		icmspoll
  *
  */
 
+.icmspoll_clear_both { clear: both; height: 1px;}
+.icmspoll_clear_left { clear: left; height: 1px;}
+.icmspoll_clear_right { clear: right; height: 1px;}
+.icmspoll_indeximage { text-align: center;}    
+.icmspoll_indexheader { text-align: center; font-size: 2em; margin: 2em auto;}    
+.icmspoll_indexheading, .icmspoll_indexfooter { margin: 1em auto;}
+.icmspoll_no_polls { font-size: 1.2em; margin: 1.5em 0; color: red;}
+.icmspoll_adminlinks { text-align: center;}
 .icmspoll_option_aqua {background-color: #43cdf4; height: 20px; margin: .250em}
 .icmspoll_option_blank {background-color: #FFFFFF; height: 20px; margin: .250em}
 .icmspoll_option_blue {background-color: #1017d8; height: 20px; margin: .250em}
@@ -31,4 +39,4 @@
 .icmspoll_option_yellow {background-color: #f2ed1b; height: 20px; margin: .250em}
 .icmspoll_option_transparent {background-color: transparent; height: 20px; margin: .250em}
 .option_set {width: 20em;}
-.result_option {width: 20em;}
+.result_option {width: 20em; border: 1px solid black}

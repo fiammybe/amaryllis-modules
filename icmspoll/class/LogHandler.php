@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: LogHandler.php 608 2012-06-26 19:35:55Z St.Flohrer@gmail.com $
+ * @version		$Id: LogHandler.php 11 2012-06-27 12:30:05Z qm-b $
  * @package		icmspoll
  *
  */
@@ -112,7 +112,7 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 	function getTotalVotesByPollId($poll_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item("poll_id", $poll_id));
-		$votes = $this->getObjects($criteria, TRUE);
+		$votes = $this->getCount($criteria);
 		return $votes;
 	}
 
@@ -120,14 +120,14 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 	function getTotalVotesByOptionId($option_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item("option_id", $option_id));
-		$votes = $this->getObjects($criteria, TRUE);
+		$votes = $this->getCount($criteria);
 		return $votes;
 	}
 	
 	function getVotesPerCentByOptionId($poll_id, $option_id) {
 		$totalVotes = $this->getTotalVotesByPollId($poll_id);
 		$totalOptVotes = $this->getTotalVotesByOptionId($option_id);
-		$optVote = ((int)$totalVotes/100) * (int)$totalOptVotes;
+		$optVote = @round((($totalOptVotes / $totalVotes) * 100),2);
 		return $optVote;
 	}
 	

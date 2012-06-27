@@ -4,14 +4,9 @@
 	<!-- module breadcrumb -->
 	<div class="icmspoll_headertable">
 		<{if $icmspoll_module_home}><span class="icmspoll_modulename"><{$icmspoll_module_home}></span><{/if}>
-		<{if $poll}>
+		<{if $poll || $icmspoll_cat_path}>
 			<span class="icmspoll_breadcrumb">
-				<{if $icmspoll_module_home}>&nbsp;:&nbsp;<{/if}><{$poll.question}>
-			</span>
-		<{/if}>
-		<{if $icmspoll_cat_path}>
-			<span class="icmspoll_breadcrumb">
-				<{if $icmspoll_module_home}>&nbsp;:&nbsp;<{/if}><{$icmspoll_cat_path}>
+				<{if $icmspoll_cat_path}>&nbsp;:&nbsp;<{$icmspoll_cat_path}><{/if}><{if $poll}>&nbsp;:&nbsp;<{$poll.question}><{/if}>
 			</span>
 		<{/if}>
 	</div>
