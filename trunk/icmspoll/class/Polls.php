@@ -102,6 +102,20 @@ class IcmspollPolls extends icms_ipf_Object {
 		$control->setExtra( 'style="text-align:center;"' );
 		return $control->render();
 	}
+    
+    public function sendMessageExpired() {
+        $subject = _CO_ICMSPOLL_POLLS_MESSAGE_SUBJECT;
+        $itemLink = $this->getItemLink();
+        $message = sprintf(_CO_ICMSPOLL_POLLS_MESSAGE_BDY, $itemLink);
+        $pm_handler = icms::handler("icms_data_privmessage");
+        $pmObj = $pm_handler->create(TRUE);
+        $pmObj->setVar("subject", $subject);
+        $pmObj->setVar("to_userid", $this->getVar("user_id", "e"));
+        $pmObj->setVar("msg_time", time());
+        $pmObj->setVar("msg_text", $message);
+        $pm_handler->insert($pmObj, TRUE);
+        return TRUE;
+    }
 
 	public function hasVoted() {
 		$icmspoll_log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
@@ -122,13 +136,14 @@ class IcmspollPolls extends icms_ipf_Object {
 	
 	public function hasExpired() {
 		if($this->getVar("expired", "e") == 1) return TRUE;
-		if ( $this->getVar("end_time") < time() ) return FALSE;
+		if ( $this->getVar("end_time", "e") > time() ) return FALSE;
 		$this->handler->setExpired($this->id());
+        $this->sendMessageExpired();
 		return TRUE;
 	}
 	
 	public function displayExpired() {
-		if($this->hasExpired()) {
+		if($this->hasExpired() == TRUE) {
 			return '<img src="' . ICMSPOLL_IMAGES_URL . 'hidden.png" alt="Expired" />';
 		} else {
 			return '<img src="' . ICMSPOLL_IMAGES_URL . 'visible.png" alt="Active" />';
@@ -141,7 +156,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$module = icms::handler('icms_module')->getByDirname(ICMSPOLL_DIRNAME);
 		$viewperm = $gperm_handler->checkRight('polls_view', $this->getVar('poll_id', 'e'), $groups, $module->getVar("mid"));
 		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('user_id', 'e')) return TRUE;
-		if ($viewperm) return TRUE;
+		if ($viewperm && $this->hasStarted()) return TRUE;
 		return FALSE;
 	}
 	
@@ -150,7 +165,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$module = icms::handler('icms_module')->getByDirname(ICMSPOLL_DIRNAME);
 		$voteperm = $gperm_handler->checkRight('polls_vote', $this->getVar('poll_id', 'e'), $groups, $module->getVar("mid"));
-		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('user_id', 'e') && $this->hasStarted()) return TRUE;
+		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('user_id', 'e') && $this->hasStarted() && !$this->hasExpired()) return TRUE;
 		if ($voteperm && !$this->hasVoted() && !$this->hasExpired() && $this->hasStarted()) return TRUE;
 		return FALSE;
 	}

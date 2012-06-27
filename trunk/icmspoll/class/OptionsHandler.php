@@ -44,6 +44,7 @@ class IcmspollOptionsHandler extends icms_ipf_Handler {
 			$this->_optionColors['purple'] = _CO_ICMSPOLL_OPTIONS_COLORS_PURPLE;
 			$this->_optionColors['red'] = _CO_ICMSPOLL_OPTIONS_COLORS_RED;
 			$this->_optionColors['yellow'] = _CO_ICMSPOLL_OPTIONS_COLORS_YELLOW;
+			$this->_optionColors['transparent'] = _CO_ICMSPOLL_OPTIONS_COLORS_TRANSPARENT;
 			asort($this->_optionColors);
 		}
 		return $this->_optionColors;

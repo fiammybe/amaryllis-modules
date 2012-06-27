@@ -45,6 +45,9 @@ define("_CO_ICMSPOLL_POLLS_VOTEPERM_DSC", "Select groups, which can vote the pol
 define("_CO_ICMSPOLL_POLLS_DELIMETER_BRTAG", "BR-Tag (&lt;br /&gt;)");
 define("_CO_ICMSPOLL_POLLS_DELIMETER_SPACE", "Space (&amp;nbsp;)");
 
+define("_CO_ICMSPOLL_POLLS_MESSAGE_SUBJECT", "Your poll has expired");
+define("_CO_ICMSPOLL_POLLS_MESSAGE_BDY", "Your poll %s has expired, you can see the results now.");
+
 define("_CO_ICMSPOLL_POLLS_ACTIVE", "Active Polls");
 define("_CO_ICMSPOLL_POLLS_ENDTIME_ERROR", "End time must be set to future");
 /**
