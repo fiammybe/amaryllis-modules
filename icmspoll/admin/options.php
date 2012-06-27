@@ -68,8 +68,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			editoption($clean_option_id);
 			break;
 		case 'addoptions':
+            $redirect = ICMSPOLL_ADMIN_URL . "options.php?op=mod&poll_id=" . $_POST['poll_id'];
 			$controller = new icms_ipf_Controller($icmspoll_options_handler);
-			$controller->storeFromDefaultForm(_AM_ICMSPOLL_OPTIONS_OPTION_CREATED, _AM_ICMSPOLL_OPTIONS_OPTION_MODIFIED);
+			$controller->storeFromDefaultForm(_AM_ICMSPOLL_OPTIONS_OPTION_CREATED, _AM_ICMSPOLL_OPTIONS_OPTION_MODIFIED, $redirect);
 			break;
 		case 'del':
 			$controller =  new icms_ipf_Controller($icmspoll_options_handler);

@@ -16,16 +16,19 @@
  *
  */
 
-.icmspoll_option_aqua {background: url(images/colorbars/aqua.png) repeat-x; height: 20px; margin: .250em}
-.icmspoll_option_blank {background: url(images/colorbars/blank.gif) repeat-x; height: 15px}
-.icmspoll_option_blue {background: url(images/colorbars/blue.gif) repeat-x; height: 15px}
-.icmspoll_option_brown {background: url(images/colorbars/brown.gif) repeat-x; height: 15px}
-.icmspoll_option_darkgreen {background: url(images/colorbars/darkgreen.gif) repeat-x; height: 15px}
-.icmspoll_option_gold {background: url(images/colorbars/gold.png) repeat-x; height: 20px; margin: .250em; }
-.icmspoll_option_green {background: url(images/colorbars/green.gif) repeat-x; height: 15px}
-.icmspoll_option_grey {background: url(images/colorbars/grey.gif) repeat-x; height: 15px}
-.icmspoll_option_orange {background: url(images/colorbars/orange.gif) repeat-x; height: 15px}
-.icmspoll_option_pink {background: url(images/colorbars/pink.gif) repeat-x; height: 15px}
-.icmspoll_option_purple {background: url(images/colorbars/purple.png) repeat-x; height: 20px; margin: .250em; }
-.icmspoll_option_red {background: url(images/colorbars/red.gif) repeat-x; height: 15px}
-.icmspoll_option_yellow {background: url(images/colorbars/yellow.gif) repeat-x; height: 15px}
+.icmspoll_option_aqua {background-color: #43cdf4; height: 20px; margin: .250em}
+.icmspoll_option_blank {background-color: #FFFFFF; height: 20px; margin: .250em}
+.icmspoll_option_blue {background-color: #1017d8; height: 20px; margin: .250em}
+.icmspoll_option_brown {background-color: #924229; height: 20px; margin: .250em}
+.icmspoll_option_darkgreen {background-color: #15451e; height: 20px; margin: .250em}
+.icmspoll_option_gold {background-color: #ffd700; height: 20px; margin: .250em; }
+.icmspoll_option_green {background-color: #35ad4c; height: 20px; margin: .250em}
+.icmspoll_option_grey {background-color: #bbbbbd; height: 20px; margin: .250em}
+.icmspoll_option_orange {background-color: #ee5424; height: 20px; margin: .250em}
+.icmspoll_option_pink {background-color: #fc0abc; height: 20px; margin: .250em}
+.icmspoll_option_purple {background-color: #6010e4; height: 20px; margin: .250em; }
+.icmspoll_option_red {background-color: #d50a02; height: 20px; margin: .250em}
+.icmspoll_option_yellow {background-color: #f2ed1b; height: 20px; margin: .250em}
+.icmspoll_option_transparent {background-color: transparent; height: 20px; margin: .250em}
+.option_set {width: 20em;}
+.result_option {width: 20em;}

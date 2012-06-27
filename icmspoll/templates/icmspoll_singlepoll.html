@@ -1,4 +1,4 @@
-<{if $poll && !$poll.hasExpired && $poll.hasStarted}>
+<{if $poll && (!$poll.hasExpired == TRUE)}>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
 			<{$poll.question}>
@@ -8,15 +8,15 @@
 		</div>
 		<div class="singlepoll_form">
 			<form class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php?op=vote&poll_id=<{$poll.id}>" method="post">
-				<fieldset>
-					<{foreach item=option from=$options}>
-						<div class="icmspoll_option_<{$option.color}>">
-							<input class="icmspoll_option_<{$option.color}>" type="<{$poll.inputtype}>" name="poll_option" value="<{$option.id}>" />
-							<{$option.text}>
-							<{$poll.delimeter}>
-						</div>
-					<{/foreach}>
-				</fieldset>
+				    <div class="option_set">
+    					<{foreach item=option from=$options name=options}>
+    						<div class="icmspoll_option_<{$option.color}>">
+    							<input class="icmspoll_option_<{$option.inputtype}>" type="<{$poll.inputtype}>" name="poll_option" value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
+    							<{$option.text}>
+    							<{$poll.delimeter}>
+    						</div>
+    					<{/foreach}>
+    				</div>
 				<{if $poll.hasVoted}>
 					<input type="label" readonly size="50" class="icmspoll_formButton" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 				<{elseif !$poll.hasVoted && $poll.voteAccessGranted}>
@@ -35,18 +35,19 @@
 			<{$poll.description}>
 		</div>
 		<div class="singlepoll_form">
-			<{foreach item=option from=$options}>
-				<div class="poll_option_set">
-					<div class="result_option_<{$option.color}>">
-					
-					</div>
-					<div class="poll_option_txt">
-						<{$option.text}>
-					</div>
-					<{$poll.delimeter}>
+		    <div class="poll_option_set">
+			<{foreach item=option from=$options name=options}>
+				<div class="result_option">
+				   <div class="result_option_<{$option.color}>" style="width:<{$option.result}>" >
+				       <{$option.result}>%
+				   </div>
+                </div>
+				<div class="poll_option_txt">
+					<{$option.text}>
+				</div>
+				<{$poll.delimeter}>
 				</div>
 			<{/foreach}>
 		</div>
 	</div>
-
 <{/if}>

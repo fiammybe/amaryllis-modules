@@ -33,11 +33,11 @@ function editpoll($poll_id = 0) {
 		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_EDITING, 'addpoll');
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$pollObj->setVar("user_id", $user_id);
-		$pollObj->setVar( "start_time", (time() + 1200) );
-		$pollObj->setVar("end_time", (time() + (7 * 24 * 60 * 60)));
-		$pollObj->setVar("created_on", time());
 		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . " > " . _MI_ICMSPOLL_MENU_POLLS_CREATINGNEW);
+        $pollObj->setVar("user_id", $user_id);
+        $pollObj->setVar( "start_time", (time() + 1200) );
+        $pollObj->setVar("end_time", (time() + (7 * 24 * 60 * 60)));
+        $pollObj->setVar("created_on", time());
 		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_CREATINGNEW, 'addpoll', ICMSPOLL_ADMIN_URL . "polls.php?op=addpoll&amp;poll_id=". $pollObj->getVar("poll_id", "e"));
 		$sform->assign($icmsAdminTpl);
 	}
