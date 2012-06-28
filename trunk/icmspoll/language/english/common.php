@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: common.php 19 2012-06-28 04:26:15Z qm-b $
+ * @version		$Id$
  * @package		icmspoll
  *
  */

@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: comment_new.php 13 2012-06-27 13:25:58Z qm-b $
+ * @version		$Id$
  * @package		icmspoll
  *
  */
