@@ -4,7 +4,7 @@
 			<{$poll.question}>
 		</div>
 		<div class="singlepoll_description">
-			<{$poll.description}>
+			<{$poll.dsc}>
 		</div>
 		<div class="icmspoll_morelink">
 		    <{$poll.more_polls_by_user}>
@@ -21,7 +21,7 @@
     					<{/foreach}>
     				</div>
 				<{if $poll.hasVoted}>
-					<input type="label" readonly size="50" class="icmspoll_formButton" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+					<input type="label" readonly size="50" class="icmspoll_formButton" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 				<{elseif !$poll.hasVoted && $poll.voteAccessGranted}>
 					<input type="submit" class="icmspoll_formButton" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" />
 				<{else}>

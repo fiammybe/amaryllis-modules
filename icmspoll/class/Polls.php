@@ -46,6 +46,11 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("expired", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("started", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("poll_comments", XOBJ_DTYPE_INT, FALSE);
+		$this->initCommonVar("dohtml", FALSE, 1);
+		$this->initCommonVar("dobr", FALSE);
+		$this->initCommonVar("doimage", FALSE, 1);
+		$this->initCommonVar("dosmiley", FALSE, 1);
+		$this->initCommonVar("docxode", FALSE, 1);
 		
 		$this->setControl("description", array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl("delimeter", array("name" => "select", "itemHandler" => "polls", "method" => "getDelimeters", "module" => "icmspoll"));
@@ -91,7 +96,7 @@ class IcmspollPolls extends icms_ipf_Object {
 	
 	public function getDescription() {
 		$description = $this->getVar("description", "s");
-		$description = icms_core_DataFilter::checkVar($description, "text", "output");
+		$description = icms_core_DataFilter::checkVar($description, "html", "output");
 		return $description;
 	}
 	
@@ -134,7 +139,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$end_time = $this->getVar("end_time", "e");
 		$start_time = $this->getVar("start_time", "e");
 		$time = time();
-		if($start_time >= $time) return FALSE;
+		if($start_time > $time) return FALSE;
 		$this->handler->setStarted($this->id());
 		return TRUE;
 	}
@@ -151,7 +156,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		if($this->getVar("expired", "e") == 1) return TRUE;
 		if ( $this->getVar("end_time", "e") > time() ) return FALSE;
 		$this->handler->setExpired($this->id());
-        $this->sendMessageExpired();
+        if($this->getVar("mail_status", "e") == 1)$this->sendMessageExpired();
 		return TRUE;
 	}
 	
