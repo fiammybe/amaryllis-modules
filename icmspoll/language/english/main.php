@@ -55,4 +55,4 @@ define("_MD_ICMSPOLL_START_ON", "Started on");
 define("_MD_ICMSPOLL_END_ON", "Ended on");
 define("_MD_ICMSPOLL_CREATED_ON", "Created on");
 define("_MD_ICMSPOLL_PRINT_NO_POLL", "No Poll selected to print. Please select poll first.");
-
+define("_MD_ICMSPOLL_SUBMIT_POLL", "Submit Poll");

@@ -102,6 +102,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			$objectTable = new icms_ipf_view_Table($icmspoll_poll_handler, FALSE);
 			$objectTable->addColumn(new icms_ipf_view_Column("expired", "center", FALSE, "displayExpired"));
+			$objectTable->addColumn(new icms_ipf_view_Column("started", "center", FALSE, "displayStarted"));
 			$objectTable->addColumn(new icms_ipf_view_Column("question", FALSE, FALSE, "getPreviewLink"));
 			$objectTable->addColumn(new icms_ipf_view_Column("user_id", FALSE, FALSE, "getUser"));
 			$objectTable->addColumn(new icms_ipf_view_Column("start_time", FALSE, FALSE, "getStartDate"));
@@ -112,6 +113,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->setDefaultSort("created_on");
 			
 			$objectTable->addFilter("expired", "filterExpired");
+			$objectTable->addFilter("started", "filterStarted");
 			$objectTable->addFilter("user_id", "filterUsers");
 			
 			$objectTable->addIntroButton( 'addpoll', 'polls.php?op=mod', _AM_ICMSPOLL_POLLS_ADD );

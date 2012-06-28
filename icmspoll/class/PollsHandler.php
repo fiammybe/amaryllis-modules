@@ -128,7 +128,11 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	 * some filters for ACP Table
 	 */
 	 public function filterExpired() {
-		return array(0 => _CO_ICMSPOLL_POLLS_ACTIVE, 1 => _CO_ICMSPOLL_POLLS_EXPIRED);
+		return array(0 => _CO_ICMSPOLL_POLLS_FILTER_ACTIVE, 1 => _CO_ICMSPOLL_POLLS_FILTER_EXPIRED);
+	 }
+	 
+	 public function filterStarted() {
+		return array(0 => _CO_ICMSPOLL_POLLS_INACTIVE, 1 => _CO_ICMSPOLL_POLLS_FILTER_STARTED);
 	 }
 	 
 	public function filterUsers($showNull = FALSE) {

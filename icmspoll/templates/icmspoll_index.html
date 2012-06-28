@@ -1,5 +1,11 @@
 <{includeq file="db:icmspoll_header.html"}>
 
+<{if $user_can_submit}>
+	<a href="<{$icmspoll_url}>polls.php?op=mod" title="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>">
+		<img src="<{$icmspoll_images_url}>add_poll.png" alt="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>" title="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>" />
+	</a>
+<{/if}>
+
 <!-- display poll list -->
 <{if $polllist}>
     <{if $icmspoll_index.header}>

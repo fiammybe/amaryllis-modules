@@ -29,6 +29,9 @@ if($icmspollConfig['show_breadcrumbs'] == 1) {
 if($icmspollConfig['use_rss'] == 1) {
 	$icmsTpl->assign("icmspoll_show_rss", TRUE);
 }
+if($polls_handler->userCanSubmit()) {
+	$icmsTpl->assign("user_can_submit", TRUE);
+}
 /**
  * assign additional variables
  */

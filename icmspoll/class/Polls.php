@@ -139,6 +139,14 @@ class IcmspollPolls extends icms_ipf_Object {
 		return TRUE;
 	}
 	
+	public function displayStarted() {
+		if($this->hasStarted()) {
+			return '<img src="' . ICMSPOLL_IMAGES_URL . 'approved.png" alt="Started" />';
+		} else {
+			return '<img src="' . ICMSPOLL_IMAGES_URL . 'denied.png" alt="Inactive" />';
+		}
+	}
+	
 	public function hasExpired() {
 		if($this->getVar("expired", "e") == 1) return TRUE;
 		if ( $this->getVar("end_time", "e") > time() ) return FALSE;
@@ -287,6 +295,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		
 		$ret['viewAccessGranted'] = $this->viewAccessGranted();
 		$ret['voteAccessGranted'] = $this->voteAccessGranted();
+		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['hasExpired'] = $this->hasExpired();
 		$ret['hasVoted'] = $this->hasVoted();
 		$ret['hasStarted'] = $this->hasStarted();
