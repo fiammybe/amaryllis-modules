@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: index.php 12 2012-06-27 13:14:40Z qm-b $
+ * @version		$Id$
  * @package		icmspoll
  *
  */
