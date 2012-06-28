@@ -26,8 +26,8 @@ $modversion = array(
 						"description"				=> _MI_ICMSPOLL_MD_DSC,
 						"author"					=> "QM-B",
 						"author_realname"			=> "Steffen Flohrer",
-						"credits"					=> "",
-						"help"						=> "",
+						"credits"					=> "<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Amaryllis Modules</a>",
+						"help"						=> "admin/manual.php",
 						"license"					=> "GNU General Public License (GPL)",
 						"official"					=> 1,
 						"dirname"					=> basename(dirname(__FILE__)),
@@ -41,7 +41,7 @@ $modversion = array(
 					/**  Development information */
 						"status_version"			=> "2.0",
 						"status"					=> "Beta",
-						"date"						=> "",
+						"date"						=> "XX.07.2012",
 						"author_word"				=> "",
 						"warning"					=> _CO_ICMS_WARNING_BETA,
 					
@@ -74,6 +74,7 @@ $modversion = array(
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=412]Claudia[/url]";
+$modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=10' target='_blank'>Sato-San</a>";
 
 /** Manual */
 $moddir = basename(dirname(__FILE__));
