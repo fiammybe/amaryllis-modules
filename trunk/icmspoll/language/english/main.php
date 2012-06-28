@@ -47,3 +47,12 @@ define("_MD_ICMSPOLL_RESULTS_TOTALVOTES", "Total votes");
 define("_MD_ICMSPOLL_RESULTS_TOTALVOTES_REGISTERED", "Total votes by registred users");
 define("_MD_ICMSPOLL_RESULTS_TOTALVOTES_ANONS", "Total anonymous votes");
 define("_MD_ICMSPOLL_RESULTS_MORE_BY_UNAME", "All results by");
+define("_MD_ICMSPOLL_RESULTS_BY_OPTION_ANON", "Total anonymous votes of this option");
+define("_MD_ICMSPOLL_RESULTS_BY_OPTION_USERS", "Total user votes of this option");
+define("_MD_ICMSPOLL_RESULTS_BY_OPTION_TOTAL", "Total votes of this option");
+define("_MD_ICMSPOLL_PUBLISHER", "Created by");
+define("_MD_ICMSPOLL_START_ON", "Started on");
+define("_MD_ICMSPOLL_END_ON", "Ended on");
+define("_MD_ICMSPOLL_CREATED_ON", "Created on");
+define("_MD_ICMSPOLL_PRINT_NO_POLL", "No Poll selected to print. Please select poll first.");
+

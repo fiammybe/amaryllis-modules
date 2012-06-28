@@ -25,7 +25,7 @@
 			<{$poll.question}>
 		</div>
 		<div class="singlepoll_description">
-			<{$poll.description}>
+			<{$poll.dsc}>
 		</div>
 		<div class="icmspoll_morelink">
             <{$poll.more_results_by_user}>
@@ -49,6 +49,16 @@
     					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES}> &nbsp;:&nbsp; <b><{$total_voters}></b> <br />
     					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_REGISTERED}> &nbsp;:&nbsp; <b><{$total_registred}></b> <br />
     					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_ANONS}> &nbsp;:&nbsp; <b><{$total_anonymous}></b> <br />
+    					<{foreach item=option from=$options name=options}>
+		    				<div class="result_option_txt">
+		    					<{$option.text}>
+		    				</div>
+		    				<div class="result_option">
+		    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_ANON}> &nbsp;:&nbsp; <{$option.anon_votes}> <br />
+		    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_USERS}> &nbsp;:&nbsp; <{$option.user_votes}> <br />
+		    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_TOTAL}> &nbsp;:&nbsp; <{$option.total_votes}> <br />
+		                    </div>
+		    			<{/foreach}>
     				</div>
     			<{/if}>
 			</div>

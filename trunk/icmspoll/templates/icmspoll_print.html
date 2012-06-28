@@ -1,0 +1,84 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=<{$icms_charset}>" />
+		<meta http-equiv="content-language" content="<{$icms_langcode}>" />
+		<meta name="robots" content="<{$icms_meta_robots}>" />
+		<meta name="keywords" content="<{$icms_meta_keywords}>" />
+		<meta name="description" content="<{$icms_meta_description}>" />
+		<meta name="rating" content="<{$icms_meta_rating}>" />
+		<meta name="author" content="<{$icms_meta_author}>" />
+		<meta name="copyright" content="<{$icms_meta_copyright}>" />
+		<meta name="generator" content="ImpressCMS" />
+		<title><{$printtitle}></title>
+		<link rel="stylesheet" type="text/css" media="all" href="<{$icms_url}>/modules/icmspoll/module_icmspoll_print.css" />
+	</head>
+
+	<body>
+		<div id="pagelayer">
+		    <div style="text-align: center;"><img src="<{$printlogourl}>" border="0" alt="<{$poll.question}>" /></div>
+		    <div style="text-align: right; margin-top: 10px; border: 1px solid; padding: 2px;"><{$printheader}></div>
+		
+		    <div id="title"><{$poll.question}></div>
+			
+			<div id="description">
+				<{$poll.dsc}>
+			</div>
+			
+			<div class="poll_info">
+				<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$poll.user}>
+				<{$smarty.const._MD_ICMSPOLL_START_ON}>&nbsp;:&nbsp;<{$poll.start_time}>
+				<{$smarty.const._MD_ICMSPOLL_END_ON}>&nbsp;:&nbsp;<{$poll.end_time}>
+				<{$smarty.const._MD_ICMSPOLL_CREATED_ON}>&nbsp;:&nbsp;<{$poll.created_on}>
+			</div>
+			
+			<div id="poll_options">
+				<div class="poll_option_set">
+    			<{foreach item=option from=$options name=options}>
+    				<div class="result_option">
+    				   <div class="icmspoll_option_<{$option.color}>" style="width:<{$option.result}>%" >
+    				       <{$option.result}>%
+    				   </div>
+                    </div>
+    				<div class="poll_option_txt">
+    					<{$option.text}>
+    				</div>
+    				<{$poll.delimeter}>
+    			<{/foreach}>
+			</div>
+		    
+		    <div id="result_infos">
+		    	<{if $icmspoll_is_admin}>
+    				<div class="icmspoll_more_results">
+    					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES}> &nbsp;:&nbsp; <b><{$total_voters}></b> <br />
+    					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_REGISTERED}> &nbsp;:&nbsp; <b><{$total_registred}></b> <br />
+    					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_ANONS}> &nbsp;:&nbsp; <b><{$total_anonymous}></b> <br />
+    					<{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION}> <br />
+    					<{foreach item=option from=$options name=options}>
+    						<div class="option_result_set">
+    							<div class="poll_option_txt">
+			    					<{$option.text}>
+			    				</div>
+			    				<div class="result_option">
+			    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_ANON}> &nbsp;:&nbsp; <{$option.anon_votes}> <br />
+			    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_USERS}> &nbsp;:&nbsp; <{$option.user_votes}> <br />
+			    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_TOTAL}> &nbsp;:&nbsp; <{$option.total_votes}> <br />
+			                    </div>
+    						</div>
+		    			<{/foreach}>
+    				</div>
+    			<{/if}>
+		    </div>
+			
+			 
+			<{if $printfooter}>
+		      <div id="poll_footer"><{$printfooter}></div>
+			<{/if}>
+		</div>
+		  
+		<script for=window event=onload language="javascript">
+			if (window.print)
+		    window.print();
+		</script>
+		  
+	</body>
+</html>
