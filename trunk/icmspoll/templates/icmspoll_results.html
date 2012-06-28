@@ -64,6 +64,22 @@
 			</div>
 		</div>
 	</div>
+	<span class="icmspoll_button_bar">
+		<a href="mailto:?subject=<{$smarty.const._MD_ICMSPOLL_MAILTO_SBJ}>&body=<{$smarty.const._MD_ICMSPOLL_MAILTO_BDY}>" title="<{$smarty.const._MD_ICMSPOLL_MAILTO}>">
+			<img style="vertical-align: middle;" src="<{$icmspoll_images_url}>mail.png" alt="<{$smarty.const._MD_ICMSPOLL_MAILTO}>" title="<{$smarty.const._MD_ICMSPOLL_MAILTO}>" />
+		</a>
+		<a href="<{$icmspoll_url}>print.php?poll_id=<{$poll.id}>" title="<{$smarty.const._MD_ICMSPOLL_PRINT}>" target="_blank">
+			<img style="vertical-align: middle;" src="<{$icmspoll_images_url}>print.png" alt="<{$smarty.const._MD_ICMSPOLL_PRINT}>" title="<{$smarty.const._MD_ICMSPOLL_PRINT}>" />
+		</a>
+		<a href="<{$icmspoll_url}>pdf.php?poll_id=<{$poll.id}>" title="<{$smarty.const._MD_ICMSPOLL_PDF}>" target="_blank">
+			<img style="vertical-align: middle;" src="<{$icmspoll_images_url}>pdf.png" alt="<{$smarty.const._MD_ICMSPOLL_PDF}>" title="<{$smarty.const._MD_ICMSPOLL_PDF}>" />
+		</a>
+		<{if $poll.userCanEditAndDelete}>
+			<{$poll.editItemLink}>
+			<{$poll.deleteItemLink}>
+		<{/if}>
+		
+	</span>
 <{elseif $results_by_creator}>
 	<{if $icmspoll_index.header}>
         <{$icmspoll_index.header}>
