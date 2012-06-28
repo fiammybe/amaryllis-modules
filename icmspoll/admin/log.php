@@ -41,7 +41,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms_cp_header();
 			icms::$module->displayAdminmenu(3, _MI_ICMSPOLL_MENU_LOG);
 			
-			$objectTable = new icms_ipf_view_Table($icmspoll_log_handler, NULL);
+			$objectTable = new icms_ipf_view_Table($icmspoll_log_handler, NULL, array());
 			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollName"));
 			$objectTable->addColumn(new icms_ipf_view_Column("option_id", FALSE, FALSE, "getOptionText"));
 			$objectTable->addColumn(new icms_ipf_view_Column("user_id", "center", FALSE, "getUser"));
