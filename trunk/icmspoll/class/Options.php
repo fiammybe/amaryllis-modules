@@ -18,7 +18,6 @@
  */
  
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class IcmspollOptions extends icms_ipf_Object {
 
@@ -79,31 +78,11 @@ class IcmspollOptions extends icms_ipf_Object {
 	}
 	
 	public function getOptionResult() {
-		$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
+		$log_handler = icms_getModuleHandler("log", basename(dirname(dirname(__FILE__))), "icmspoll");
 		$poll_id = $this->getVar("poll_id", "e");
 		$option_id = $this->getVar("option_id", "e");
 		$option_result = $log_handler->getVotesPerCentByOptionId($poll_id, $option_id);
 		return $option_result;
-	}
-	
-	public function getOptionAnonVotes() {
-		$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-		$option_id = $this->id();
-		$option_anons = $log_handler->getAnonVotesByOptionId($option_id);
-		return $option_anons;
-	}
-	
-	public function getOptionUserVotes() {
-		$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-		$option_id = $this->id();
-		$option_users = $log_handler->getUserVotesByOptionId($option_id);
-		return $option_users;
-	}
-	
-	public function getTotalOptionVotes() {
-		$anons = $this->getOptionAnonVotes();
-		$users = $this->getOptionUserVotes();
-		return $anons+$users;
 	}
 
 	public function toArray() {
@@ -113,9 +92,6 @@ class IcmspollOptions extends icms_ipf_Object {
 		$ret['text'] = $this->getOptionText();
 		$ret['color'] = $this->getVar("option_color", "e");
 		$ret['result'] = $this->getOptionResult();
-		$ret['anon_votes'] = $this->getOptionAnonVotes();
-		$ret['user_votes'] = $this->getOptionUserVotes();
-		$ret['total_votes'] = $this->getTotalOptionVotes();
 		return $ret;
 	}
 }

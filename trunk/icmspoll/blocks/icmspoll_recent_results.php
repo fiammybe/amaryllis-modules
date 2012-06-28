@@ -21,7 +21,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 /**
  * display recent polls block
  */
-function b_icmspoll_recent_results_show($options) {
+function b_icmspoll_recent_resultss_show($options) {
 	global $icmspollConfig;
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
@@ -31,7 +31,7 @@ function b_icmspoll_recent_results_show($options) {
 }
 
 
-function b_icmspoll_recent_results_edit($options) {
+function b_icmspoll_recent_resultss_show($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");

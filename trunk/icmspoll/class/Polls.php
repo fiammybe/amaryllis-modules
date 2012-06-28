@@ -44,13 +44,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("mail_status", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("created_on", XOBJ_DTYPE_LTIME, TRUE, FALSE);
 		$this->quickInitVar("expired", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
-		$this->quickInitVar("started", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("poll_comments", XOBJ_DTYPE_INT, FALSE);
-		$this->initCommonVar("dohtml", FALSE, 1);
-		$this->initCommonVar("dobr", FALSE);
-		$this->initCommonVar("doimage", FALSE, 1);
-		$this->initCommonVar("dosmiley", FALSE, 1);
-		$this->initCommonVar("docxode", FALSE, 1);
 		
 		$this->setControl("description", array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl("delimeter", array("name" => "select", "itemHandler" => "polls", "method" => "getDelimeters", "module" => "icmspoll"));
@@ -59,10 +53,9 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->setControl("mail_status", "yesno");
 		$this->setControl("multiple", "yesno");
 		$this->setControl("expired", "yesno");
-		$this->setControl("started", "yesno");
 		
-		$this->hideFieldFromForm(array("started", "expired", "created_on", "poll_comments", "user_id", "votes", "voters"));
-		$this->hideFieldFromSingleView(array("started", "expired"));
+		$this->hideFieldFromForm(array("expired", "created_on", "poll_comments", "user_id", "votes", "voters"));
+		$this->hideFieldFromSingleView(array("expired"));
 
 	}
 
@@ -96,7 +89,7 @@ class IcmspollPolls extends icms_ipf_Object {
 	
 	public function getDescription() {
 		$description = $this->getVar("description", "s");
-		$description = icms_core_DataFilter::checkVar($description, "html", "output");
+		$description = icms_core_DataFilter::checkVar($description, "text", "output");
 		return $description;
 	}
 	
@@ -135,28 +128,18 @@ class IcmspollPolls extends icms_ipf_Object {
 	}
 	
 	public function hasStarted() {
-		if($this->getVar("started", "e") == 1) return TRUE;
 		$end_time = $this->getVar("end_time", "e");
 		$start_time = $this->getVar("start_time", "e");
 		$time = time();
-		if($start_time > $time) return FALSE;
-		$this->handler->setStarted($this->id());
-		return TRUE;
-	}
-	
-	public function displayStarted() {
-		if($this->hasStarted()) {
-			return '<img src="' . ICMSPOLL_IMAGES_URL . 'approved.png" alt="Started" />';
-		} else {
-			return '<img src="' . ICMSPOLL_IMAGES_URL . 'denied.png" alt="Inactive" />';
-		}
+		if($start_time <= $time) return TRUE;
+		return FALSE;
 	}
 	
 	public function hasExpired() {
 		if($this->getVar("expired", "e") == 1) return TRUE;
 		if ( $this->getVar("end_time", "e") > time() ) return FALSE;
 		$this->handler->setExpired($this->id());
-        if($this->getVar("mail_status", "e") == 1)$this->sendMessageExpired();
+        $this->sendMessageExpired();
 		return TRUE;
 	}
 	
@@ -183,6 +166,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$module = icms::handler('icms_module')->getByDirname(ICMSPOLL_DIRNAME);
 		$voteperm = $gperm_handler->checkRight('polls_vote', $this->getVar('poll_id', 'e'), $groups, $module->getVar("mid"));
+		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('user_id', 'e') && $this->hasStarted() && !$this->hasExpired()) return TRUE;
 		if ($voteperm && !$this->hasVoted() && !$this->hasExpired() && $this->hasStarted()) return TRUE;
 		return FALSE;
 	}
@@ -290,17 +274,12 @@ class IcmspollPolls extends icms_ipf_Object {
 		$ret['user'] = $this->getUser();
 		$ret['delimeter'] = $this->getDelimeter();
 		
-		$ret['start_time'] = $this->getStartDate();
-		$ret['end_time'] = $this->getEndDate();
-		$ret['created_on'] = $this->getCreatedDate();
-		
 		$ret['comments'] = $this->getVar("poll_comments", "e");
 		$ret['isMultiple'] = $this->isMultiple();
 		$ret['inputtype'] = $this->getInputType();
 		
 		$ret['viewAccessGranted'] = $this->viewAccessGranted();
 		$ret['voteAccessGranted'] = $this->voteAccessGranted();
-		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['hasExpired'] = $this->hasExpired();
 		$ret['hasVoted'] = $this->hasVoted();
 		$ret['hasStarted'] = $this->hasStarted();

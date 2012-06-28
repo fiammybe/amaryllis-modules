@@ -31,7 +31,7 @@ function b_icmspoll_single_result_show($options) {
 	$block["icmspoll_singleresult"] = $pollObj->toArray();
 	$block["options"] = $options_handler->getAllByPollId($options[0], "weight", "ASC");
 	$block["icmspoll_url"] = ICMSPOLL_URL;
-	$block["icmspoll_isAdmin"] = icms_userIsAdmin( ICMSPOLL_DIRNAME );
+	$block["icmspoll_isAdmin"] = $icmspoll_isAdmin;
 	$xoTheme->addStylesheet('/modules/' . ICMSPOLL_DIRNAME . '/module_icmspoll.css');
 	return $block;
 }
@@ -45,7 +45,7 @@ function b_icmspoll_single_result_edit($options) {
 	$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
 	
 	$polls = $polls_handler->getList();
-	$selpoll = new icms_form_elements_Select('', 'options[0]', $options[0]);
+	$selpoll = new icms_form_elements_Select('', 'options[1]', $options[1]);
 	$selpoll->addOptionArray($polls);
 	
 	$form = '<table><tr>';

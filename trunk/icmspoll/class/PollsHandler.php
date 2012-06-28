@@ -39,7 +39,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		return $delimeters;
 	}
 	
-	public function getPolls($start = 0, $limit = 0, $order = "end_time", $sort = "DESC", $uid = FALSE, $expired = FALSE, $inBlocks = FALSE, $started = TRUE) {
+	public function getPolls($start = 0, $limit = 0, $order = "end_time", $sort = "DESC", $uid = FALSE, $expired = FALSE, $inBlocks = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if ($start) $criteria->setStart($start);
 		if ($limit) $criteria->setLimit((int)$limit);
@@ -52,7 +52,6 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item("expired", 0));
 		}
 		if($inBlocks) $criteria->add(new icms_db_criteria_Item("display", TRUE));
-		if($started) $criteria->add(new icms_db_criteria_Item("started", 1));
 		$this->setGrantedObjectsCriteria($criteria, "polls_view");
 		$polls = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
@@ -62,7 +61,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getPollsCount ($expired = FALSE, $user_id = FALSE, $started = TRUE) {
+	public function getPollsCount ($expired = FALSE, $user_id = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if($expired) {
 			$criteria->add(new icms_db_criteria_Item('expired', 1));
@@ -70,33 +69,19 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('expired', 0));
 		}
 		if ($user_id) $criteria->add(new icms_db_criteria_Item('user_id', $user_id));
-		if ($started) $criteria->add(new icms_db_criteria_Item('started', 1));
 		$this->setGrantedObjectsCriteria($criteria, "polls_view");
 		$count = $this->getCount($criteria);
 		return $count;
 	}
 	
 	/**
-	 * set poll as started
-	 */
-	public function setStarted($poll_id) {
-		$pollObj = $this->get($poll_id);
-		if(is_object($pollObj) && !$pollObj->isNew()) {
-			$pollObj->setVar("started", "1");
-			$this->insert($pollObj, TRUE);
-			return TRUE;
-		}
-	}
-	/**
 	 * set a poll as expired
 	 */
 	public function setExpired($poll_id) {
 		$pollObj = $this->get($poll_id);
-		if(is_object($pollObj) && !$pollObj->isNew()) {
-			$pollObj->setVar("expired", "1");
-			$this->insert($pollObj, TRUE);
-			return TRUE;
-		}
+		$pollObj->setVar("expired", "1");
+		$this->insert($pollObj, TRUE);
+		return TRUE;
 	}
 	
 	/**
@@ -128,11 +113,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	 * some filters for ACP Table
 	 */
 	 public function filterExpired() {
-		return array(0 => _CO_ICMSPOLL_POLLS_FILTER_ACTIVE, 1 => _CO_ICMSPOLL_POLLS_FILTER_EXPIRED);
-	 }
-	 
-	 public function filterStarted() {
-		return array(0 => _CO_ICMSPOLL_POLLS_INACTIVE, 1 => _CO_ICMSPOLL_POLLS_FILTER_STARTED);
+		return array(0 => _CO_ICMSPOLL_POLLS_ACTIVE, 1 => _CO_ICMSPOLL_POLLS_EXPIRED);
 	 }
 	 
 	public function filterUsers($showNull = FALSE) {

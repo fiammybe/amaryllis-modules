@@ -24,15 +24,6 @@ if($icmspollConfig['show_breadcrumbs'] == 1) {
 	$icmsTpl->assign('icmspoll_show_breadcrumb', TRUE);
 }
 /**
- * check, if rss feeds are enabled. if so, display link
- */
-if($icmspollConfig['use_rss'] == 1) {
-	$icmsTpl->assign("icmspoll_show_rss", TRUE);
-}
-if($polls_handler->userCanSubmit()) {
-	$icmsTpl->assign("user_can_submit", TRUE);
-}
-/**
  * assign additional variables
  */
 $icmsTpl->assign('icmspoll_adminpage', '<a href="' . ICMSPOLL_ADMIN_URL . 'index.php" title="admin-link" class="icmspoll_admin_link" >' . _MD_ICMSPOLL_ADMIN_PAGE . '</a>' );
