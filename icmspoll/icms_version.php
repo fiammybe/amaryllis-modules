@@ -26,8 +26,8 @@ $modversion = array(
 						"description"				=> _MI_ICMSPOLL_MD_DSC,
 						"author"					=> "QM-B",
 						"author_realname"			=> "Steffen Flohrer",
-						"credits"					=> "<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Amaryllis Modules</a>",
-						"help"						=> "admin/manual.php",
+						"credits"					=> "",
+						"help"						=> "",
 						"license"					=> "GNU General Public License (GPL)",
 						"official"					=> 1,
 						"dirname"					=> basename(dirname(__FILE__)),
@@ -41,7 +41,7 @@ $modversion = array(
 					/**  Development information */
 						"status_version"			=> "2.0",
 						"status"					=> "Beta",
-						"date"						=> "XX.07.2012",
+						"date"						=> "",
 						"author_word"				=> "",
 						"warning"					=> _CO_ICMS_WARNING_BETA,
 					
@@ -74,7 +74,6 @@ $modversion = array(
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=412]Claudia[/url]";
-$modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=10' target='_blank'>Sato-San</a>";
 
 /** Manual */
 $moddir = basename(dirname(__FILE__));
@@ -154,11 +153,6 @@ $i++;
 $modversion['templates'][$i] = array(
 										'file'			=> 'icmspoll_results.html',
 										'description'	=> _MI_ICMSPOLL_TPL_RESULTS
-								);
-$i++;
-$modversion['templates'][$i] = array(
-										'file'			=> 'icmspoll_print.html',
-										'description'	=> _MI_ICMSPOLL_TPL_PRINT
 								);
 $i++;
 $modversion['templates'][$i] = array(
@@ -308,44 +302,6 @@ $modversion['config'][$i] = array(
 								'default'		=> 1,
 								'options'		=> array( _MI_ICMSPOLL_CONFIG_DEFAULT_SORT_ASC => "ASC", _MI_ICMSPOLL_CONFIG_DEFAULT_SORT_DESC => "DESC")
 							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'icmspoll_print_footer',
-								'title' 		=> '_MI_ICMSPOLL_CONFIG_PRINT_FOOTER',
-								'description' 	=> '_MI_ICMSPOLL_CONFIG_PRINT_FOOTER_DSC',
-								'formtype' 		=> 'textarea',
-								'valuetype' 	=> 'txt',
-								'default' 		=> ''
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'icmspoll_print_logo',
-								'title' 		=> '_MI_ICMSPOLL_CONFIG_PRINT_LOGO',
-								'description' 	=> '_MI_ICMSPOLL_CONFIG_PRINT_LOGO_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'txt',
-								'default' 		=> ''
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'use_rss',
-								'title' 		=> '_MI_ICMSPOLL_CONFIG_USE_RSS',
-								'description' 	=> '_MI_ICMSPOLL_CONFIG_USE_RSS_DSC',
-								'formtype' 		=> 'yesno',
-								'valuetype' 	=> 'int',
-								'default' 		=> 1
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'rss_limit',
-								'title' 		=> '_MI_ICMSPOLL_CONFIG_RSS_LIMIT',
-								'description' 	=> '_MI_ICMSPOLL_CONFIG_RSS_LIMIT_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> 10
-							);
-
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////

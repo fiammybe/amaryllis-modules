@@ -36,7 +36,6 @@ define("_CO_ICMSPOLL_POLLS_WEIGHT", "");
 define("_CO_ICMSPOLL_POLLS_MULTIPLE", "Allow multiple selection?");
 define("_CO_ICMSPOLL_POLLS_MAIL_STATUS", "Notify the poll author when expired?");
 define("_CO_ICMSPOLL_POLLS_EXPIRED", "Expired?");
-define("_CO_ICMSPOLL_POLLS_STARTED", "Started?");
 define("_CO_ICMSPOLL_POLLS_CREATED_ON", "Created on");
 
 define("_CO_ICMSPOLL_POLLS_VIEWPERM", "View permissions");
@@ -50,11 +49,8 @@ define("_CO_ICMSPOLL_POLLS_MESSAGE_SUBJECT", "Your poll has expired");
 define("_CO_ICMSPOLL_POLLS_MESSAGE_BDY", "Your poll %s has expired, you can see the results now.");
 define("_CO_ICMSPOLL_POLLS_GET_MORE_BY_USER", "Get more Polls by ");
 define("_CO_ICMSPOLL_POLLS_GET_MORE_RESULTS_BY_USER", "Get more results by ");
-define("_CO_ICMSPOLL_POLLS_FILTER_ACTIVE", "Active Polls");
-define("_CO_ICMSPOLL_POLLS_FILTER_EXPIRED", "Expired Polls");
+define("_CO_ICMSPOLL_POLLS_ACTIVE", "Active Polls");
 define("_CO_ICMSPOLL_POLLS_ENDTIME_ERROR", "End time must be set to future");
-define("_CO_ICMSPOLL_POLLS_FILTER_INACTIVE", "Inactive");
-define("_CO_ICMSPOLL_POLLS_FILTER_STARTED", "Started");
 /**
  * constants for options objects
  */

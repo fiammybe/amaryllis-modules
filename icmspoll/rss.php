@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: index.php 619 2012-06-28 08:34:35Z st.flohrer $
+ * @version		$Id$
  * @package		icmspoll
  *
  */

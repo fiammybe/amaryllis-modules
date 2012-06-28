@@ -46,14 +46,6 @@ define("_MI_ICMSPOLL_CONFIG_DEFAULT_SORT", "Default Sort");
 define("_MI_ICMSPOLL_CONFIG_DEFAULT_SORT_DSC", "Sort polls on index as default by:");
 define("_MI_ICMSPOLL_CONFIG_DEFAULT_SORT_ASC", "ASC");
 define("_MI_ICMSPOLL_CONFIG_DEFAULT_SORT_DESC", "DESC");
-define("_MI_ICMSPOLL_CONFIG_PRINT_FOOTER", "Print Footer");
-define("_MI_ICMSPOLL_CONFIG_PRINT_FOOTER_DSC", "This footer will be used in print layouts");
-define("_MI_ICMSPOLL_CONFIG_PRINT_LOGO", "Print Logo");
-define("_MI_ICMSPOLL_CONFIG_PRINT_LOGO_DSC", "Enter the path to logo to be printed. E.g.: /themes/example/images/logo.gif");
-define("_MI_ICMSPOLL_CONFIG_USE_RSS", "Use RSS-Feeds?");
-define("_MI_ICMSPOLL_CONFIG_USE_RSS_DSC", "Set to 'YES' to provide a rss link.");
-define("_MI_ICMSPOLL_CONFIG_RSS_LIMIT", "RSS Limit");
-define("_MI_ICMSPOLL_CONFIG_RSS_LIMIT_DSC", "Limit of Polls for RSS");
 /**
  * module Templates
  */
@@ -63,7 +55,6 @@ define("_MI_ICMSPOLL_TPL_FOOTER", "Footer File Included in Frontend");
 define("_MI_ICMSPOLL_TPL_POLLS", "Poll loop in index view");
 define("_MI_ICMSPOLL_TPL_SINGLEPOLL", "Display a single poll");
 define("_MI_ICMSPOLL_TPL_RESULTS", "Display Poll result");
-define("_MI_ICMSPOLL_TPL_PRINT", "Print template");
 define("_MI_ICMSPOLL_TPL_FORMS", "Forms for create/delete polls in frontend");
 define("_MI_ICMSPOLL_TPL_ADMIN_FORM", "ACP Template");
 define("_MI_ICMSPOLL_TPL_REQUIREMENTS", "Requirements check");
