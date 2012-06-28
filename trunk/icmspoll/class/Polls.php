@@ -166,7 +166,6 @@ class IcmspollPolls extends icms_ipf_Object {
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$module = icms::handler('icms_module')->getByDirname(ICMSPOLL_DIRNAME);
 		$voteperm = $gperm_handler->checkRight('polls_vote', $this->getVar('poll_id', 'e'), $groups, $module->getVar("mid"));
-		if (is_object(icms::$user) && icms::$user->getVar("uid") == $this->getVar('user_id', 'e') && $this->hasStarted() && !$this->hasExpired()) return TRUE;
 		if ($voteperm && !$this->hasVoted() && !$this->hasExpired() && $this->hasStarted()) return TRUE;
 		return FALSE;
 	}
