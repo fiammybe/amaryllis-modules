@@ -44,6 +44,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("mail_status", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("created_on", XOBJ_DTYPE_LTIME, TRUE, FALSE);
 		$this->quickInitVar("expired", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
+		$this->quickInitVar("started", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("poll_comments", XOBJ_DTYPE_INT, FALSE);
 		
 		$this->setControl("description", array('name' => 'textarea', 'form_editor' => 'htmlarea'));
@@ -53,9 +54,10 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->setControl("mail_status", "yesno");
 		$this->setControl("multiple", "yesno");
 		$this->setControl("expired", "yesno");
+		$this->setControl("started", "yesno");
 		
-		$this->hideFieldFromForm(array("expired", "created_on", "poll_comments", "user_id", "votes", "voters"));
-		$this->hideFieldFromSingleView(array("expired"));
+		$this->hideFieldFromForm(array("started", "expired", "created_on", "poll_comments", "user_id", "votes", "voters"));
+		$this->hideFieldFromSingleView(array("started", "expired"));
 
 	}
 
@@ -128,11 +130,13 @@ class IcmspollPolls extends icms_ipf_Object {
 	}
 	
 	public function hasStarted() {
+		if($this->getVar("started", "e") == 1) return TRUE;
 		$end_time = $this->getVar("end_time", "e");
 		$start_time = $this->getVar("start_time", "e");
 		$time = time();
-		if($start_time <= $time) return TRUE;
-		return FALSE;
+		if($start_time >= $time) return FALSE;
+		$this->handler->setStarted($this->id());
+		return TRUE;
 	}
 	
 	public function hasExpired() {
