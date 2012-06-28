@@ -12,7 +12,7 @@
  * 				Icmspoll
  * @since		2.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: common.php 12 2012-06-27 13:14:40Z qm-b $
+ * @version		$Id: common.php 19 2012-06-28 04:26:15Z qm-b $
  * @package		icmspoll
  *
  */
@@ -76,6 +76,7 @@ define("_CO_ICMSPOLL_OPTIONS_COLORS_PINK", "Pink");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_PURPLE", "Purple");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_RED", "Red");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_YELLOW", "Yellow");
+define("_CO_ICMSPOLL_OPTIONS_COLORS_TRANSPARENT", "Transparent");
 /**
  * constants for log objects
  */
