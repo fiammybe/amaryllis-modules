@@ -156,6 +156,11 @@ $modversion['templates'][$i] = array(
 								);
 $i++;
 $modversion['templates'][$i] = array(
+										'file'			=> 'icmspoll_print.html',
+										'description'	=> _MI_ICMSPOLL_TPL_PRINT
+								);
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'icmspoll_forms.html',
 										'description'	=> _MI_ICMSPOLL_TPL_FORMS
 								);
@@ -302,6 +307,44 @@ $modversion['config'][$i] = array(
 								'default'		=> 1,
 								'options'		=> array( _MI_ICMSPOLL_CONFIG_DEFAULT_SORT_ASC => "ASC", _MI_ICMSPOLL_CONFIG_DEFAULT_SORT_DESC => "DESC")
 							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'icmspoll_print_footer',
+								'title' 		=> '_MI_ICMSPOLL_CONFIG_PRINT_FOOTER',
+								'description' 	=> '_MI_ICMSPOLL_CONFIG_PRINT_FOOTER_DSC',
+								'formtype' 		=> 'textarea',
+								'valuetype' 	=> 'txt',
+								'default' 		=> ''
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'icmspoll_print_logo',
+								'title' 		=> '_MI_ICMSPOLL_CONFIG_PRINT_LOGO',
+								'description' 	=> '_MI_ICMSPOLL_CONFIG_PRINT_LOGO_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'txt',
+								'default' 		=> ''
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'use_rss',
+								'title' 		=> '_MI_ICMSPOLL_CONFIG_USE_RSS',
+								'description' 	=> '_MI_ICMSPOLL_CONFIG_USE_RSS_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'rss_limit',
+								'title' 		=> '_MI_ICMSPOLL_CONFIG_RSS_LIMIT',
+								'description' 	=> '_MI_ICMSPOLL_CONFIG_RSS_LIMIT_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> 10
+							);
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////

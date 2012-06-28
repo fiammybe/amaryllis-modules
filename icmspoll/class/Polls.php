@@ -277,6 +277,10 @@ class IcmspollPolls extends icms_ipf_Object {
 		$ret['user'] = $this->getUser();
 		$ret['delimeter'] = $this->getDelimeter();
 		
+		$ret['start_time'] = $this->getStartDate();
+		$ret['end_time'] = $this->getEndDate();
+		$ret['created_on'] = $this->getCreatedDate();
+		
 		$ret['comments'] = $this->getVar("poll_comments", "e");
 		$ret['isMultiple'] = $this->isMultiple();
 		$ret['inputtype'] = $this->getInputType();
