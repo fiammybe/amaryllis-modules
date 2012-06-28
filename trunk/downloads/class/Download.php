@@ -105,7 +105,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->quickInitVar("download_static_section_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		// set controls
-		$this->setControl('download_cid', array('name' => 'select_multi', 'itemHandler' => 'category', 'method' => 'getCategoryListForPid', 'module' => 'downloads'));
+		$this->setControl('download_cid', array('name' => 'selectmulti', 'itemHandler' => 'category', 'method' => 'getCategoryListForPid', 'module' => 'downloads'));
 		$this->setControl('download_description', 'dhtmltextarea');
 		$this->setControl('download_teaser', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl('download_file', 'file');
@@ -115,8 +115,8 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		$this->setControl('download_screen_3','image');
 		$this->setControl('download_screen_4','image');
 		$this->setControl('download_limitations',array('name' => 'select', 'itemHandler' => 'download', 'method' => 'getDownloadLimitations', 'module' => 'downloads'));
-		$this->setControl('download_license',array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadLicense', 'module' => 'downloads'));
-		$this->setControl('download_platform',array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getDownloadPlatform', 'module' => 'downloads'));
+		$this->setControl('download_license',array('name' => 'selectmulti', 'itemHandler' => 'download', 'method' => 'getDownloadLicense', 'module' => 'downloads'));
+		$this->setControl('download_platform',array('name' => 'selectmulti', 'itemHandler' => 'download', 'method' => 'getDownloadPlatform', 'module' => 'downloads'));
 		$this->setControl('download_publisher','user');
 		$this->setControl('download_active', 'yesno');
 		$this->setControl('download_inblocks', 'yesno');
@@ -146,7 +146,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		
 		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 		if($downloadsConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
-			$this->setControl("download_tags", array("name" => "select_multi", "itemHandler" => "download", "method" => "getDownloadTags", "module" => "downloads"));
+			$this->setControl("download_tags", array("name" => "selectmulti", "itemHandler" => "download", "method" => "getDownloadTags", "module" => "downloads"));
 		} else {
 			$this->hideFieldFromForm("download_tags");
 			$this->hideFieldFromSingleView("download_tags");
@@ -169,7 +169,7 @@ class DownloadsDownload extends icms_ipf_seo_Object {
 		}
 		
 		if($downloadsConfig['need_related_files'] == 1) {
-			$this->setControl('download_related', array('name' => 'select_multi', 'itemHandler' => 'download', 'method' => 'getRelated', 'module' => 'downloads'));
+			$this->setControl('download_related', array('name' => 'selectmulti', 'itemHandler' => 'download', 'method' => 'getRelated', 'module' => 'downloads'));
 		} else {
 			$this->hideFieldFromForm("download_related");
 			$this->hideFieldFromSingleView("download_related");

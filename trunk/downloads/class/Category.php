@@ -60,8 +60,8 @@ class DownloadsCategory extends icms_ipf_seo_Object {
 		$this->setControl('category_active', 'yesno');
 		$this->setControl('category_inblocks', 'yesno');
 		$this->setControl('category_approve', 'yesno');
-		$this->setControl('category_grpperm', array('name' => 'select_multi', 'itemHandler' => 'category', 'method' => 'getGroups', 'module' => 'downloads'));
-		$this->setControl('category_uplperm', array('name' => 'select_multi', 'itemHandler' => 'category', 'method' => 'getUplGroups', 'module' => 'downloads'));
+		$this->setControl('category_grpperm', array('name' => 'selectmulti', 'itemHandler' => 'category', 'method' => 'getGroups', 'module' => 'downloads'));
+		$this->setControl('category_uplperm', array('name' => 'selectmulti', 'itemHandler' => 'category', 'method' => 'getUplGroups', 'module' => 'downloads'));
 		$this->setControl('category_publisher', 'user');
 		// hide static fields from form
 		$this->hideFieldFromForm(array('category_submitter', 'category_notification_sent', 'category_sub','counter', 'dohtml', 'dobr', 'doimage', 'dosmiley', 'docxode'));
