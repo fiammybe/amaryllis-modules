@@ -113,7 +113,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			$this->hideFieldFromForm("article_tags");
 			$this->hideFieldFromSingleView("article_tags");
 		} elseif ($articleConfig['use_sprockets'] == 1) {
-			$this->setControl("article_tags", array("name" => "select_multi", "itemHandler" => "article", "method" => "getArticleTags", "module" => "article"));
+			$this->setControl("article_tags", array("name" => "selectmulti", "itemHandler" => "article", "method" => "getArticleTags", "module" => "article"));
 		}
 		
 		/**
@@ -134,7 +134,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 			$this->hideFieldFromForm("article_related");
 			$this->hideFieldFromSingleView("article_related");
 		} else {
-			$this->setControl("article_related", array("name" => "select_multi", "itemHandler" => "article", "method" => "getRelated", "module" => "article"));
+			$this->setControl("article_related", array("name" => "selectmulti", "itemHandler" => "article", "method" => "getRelated", "module" => "article"));
 		}
 		
 		if($articleConfig['need_demo_link'] == 0) {

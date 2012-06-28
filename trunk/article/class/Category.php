@@ -62,7 +62,7 @@ class ArticleCategory extends icms_ipf_seo_Object {
 		$this->setControl("category_image", array("name" => "select", "itemHandler" => "category", "method" => "getImageList", "module" => "article"));
 		$this->setControl("category_image_upl", "imageupload");
 		$this->setControl("category_publisher", "user");
-		$this->setControl("category_grpperm", array("name" => "select_multi", "itemHandler" => "category", "method" => "getGroups", "module" => "article"));
+		$this->setControl("category_grpperm", array("name" => "selectmulti", "itemHandler" => "category", "method" => "getGroups", "module" => "article"));
 		$this->setControl("category_active", "yesno");
 		$this->setControl("category_approve", "yesno");
 		$this->setControl("category_inblocks", "yesno");
