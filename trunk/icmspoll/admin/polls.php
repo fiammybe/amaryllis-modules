@@ -118,7 +118,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			$objectTable->addIntroButton( 'addpoll', 'polls.php?op=mod', _AM_ICMSPOLL_POLLS_ADD );
 			$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
-			
 			$icmsAdminTpl->assign( 'icmspoll_polls_table', $objectTable->fetch() );
 			$icmsAdminTpl->display( 'db:icmspoll_admin.html' );
 			break;

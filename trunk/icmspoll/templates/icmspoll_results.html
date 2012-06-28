@@ -71,9 +71,6 @@
 		<a href="<{$icmspoll_url}>print.php?poll_id=<{$poll.id}>" title="<{$smarty.const._MD_ICMSPOLL_PRINT}>" target="_blank">
 			<img style="vertical-align: middle;" src="<{$icmspoll_images_url}>print.png" alt="<{$smarty.const._MD_ICMSPOLL_PRINT}>" title="<{$smarty.const._MD_ICMSPOLL_PRINT}>" />
 		</a>
-		<a href="<{$icmspoll_url}>pdf.php?poll_id=<{$poll.id}>" title="<{$smarty.const._MD_ICMSPOLL_PDF}>" target="_blank">
-			<img style="vertical-align: middle;" src="<{$icmspoll_images_url}>pdf.png" alt="<{$smarty.const._MD_ICMSPOLL_PDF}>" title="<{$smarty.const._MD_ICMSPOLL_PDF}>" />
-		</a>
 		<{if $poll.userCanEditAndDelete}>
 			<{$poll.editItemLink}>
 			<{$poll.deleteItemLink}>
