@@ -100,3 +100,12 @@ define("_MI_ICMSPOLL_MENU_INDEXPAGE_EDIT", "Edit Indexpage");
 define("_MI_ICMSPOLL_MENUMAIN_ADDPOLL", "Add Poll");
 define("_MI_ICMSPOLL_MENUMAIN_ADDOPTION", "Add Option");
 define("_MI_ICMSPOLL_MENUMAIN_VIEWRESULTS", "View Results");
+/**
+ * Notifications
+ */
+define("_MI_ICMSPOLL_GLOBAL_NOTIFY", "All Polls");
+define("_MI_ICMSPOLL_GLOBAL_NOTIFY_DSC", "Notifications related to all polls in the module");
+define("_MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY", "New Album published");
+define("_MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY_CAP", "Notify me when a new Poll is published");
+define("_MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY_DSC", "Receive notification when any new poll is published.");
+define("_MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY_SBJ", "[{X_SITENAME}] {X_MODULE} auto-notify : New Poll published");

@@ -48,6 +48,7 @@ function copySitemapPlugin() {
 	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
 	if(is_dir($plugin_folder) && !is_file($plugin_folder . $file)) {
 		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
+		echo '<code>&nbsp;&nbsp;-- <b> Sitemap plugin </b> successfully copied!<br /></code>';
 	}
 }
 

@@ -28,7 +28,7 @@ global $icmspollConfig;
 
 $total_polls = $polls_handler->getCount(FALSE);
 $ative_polls = $polls_handler->getPollsCount(FALSE, FALSE, TRUE);
-$expired_polls = $polls_handler->getPollsCount(TRUE, FALSE, TRUE);
+$expired_polls = $polls_handler->getPollsCount(TRUE, FALSE, FALSE);
 
 $sitemapModule = icms_get_module_status("sitemap");
 if($sitemapModule) {
