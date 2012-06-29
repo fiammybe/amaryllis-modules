@@ -39,7 +39,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		return $delimeters;
 	}
 	
-	public function getPolls($start = 0, $limit = 0, $order = "end_time", $sort = "DESC", $uid = FALSE, $expired = FALSE, $inBlocks = FALSE) {
+	public function getPolls($start = 0, $limit = 0, $order = "end_time", $sort = "DESC", $uid = FALSE, $expired = FALSE, $inBlocks = FALSE, $started = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if ($start) $criteria->setStart($start);
 		if ($limit) $criteria->setLimit((int)$limit);
@@ -52,6 +52,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item("expired", 0));
 		}
 		if($inBlocks) $criteria->add(new icms_db_criteria_Item("display", TRUE));
+		if($started) $criteria->add(new icms_db_criteria_Item("started", 1));
 		$this->setGrantedObjectsCriteria($criteria, "polls_view");
 		$polls = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
@@ -61,7 +62,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getPollsCount ($expired = FALSE, $user_id = FALSE) {
+	public function getPollsCount ($expired = FALSE, $user_id = FALSE, $started = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if($expired) {
 			$criteria->add(new icms_db_criteria_Item('expired', 1));

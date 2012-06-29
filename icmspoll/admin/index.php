@@ -26,5 +26,7 @@ icms_cp_header();
 icms::$module->displayAdminMenu(0, _MI_ICMSPOLL_MENU_INDEX);
 global $icmspollConfig;
 
+$active_polls = $polls_handler->getPollsCount(FALSE, FALSE, TRUE);
+$expired_polls = $polls_handler->getPollsCount(TRUE, FALSE, FALSE);
 
 include_once 'admin_footer.php';
