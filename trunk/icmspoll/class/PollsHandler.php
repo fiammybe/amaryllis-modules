@@ -70,6 +70,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item('expired', 0));
 		}
 		if ($user_id) $criteria->add(new icms_db_criteria_Item('user_id', $user_id));
+		if($started) $criteria->add(new icms_db_criteria_Item("started", 1));
 		$this->setGrantedObjectsCriteria($criteria, "polls_view");
 		$count = $this->getCount($criteria);
 		return $count;
