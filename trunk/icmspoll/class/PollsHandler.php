@@ -64,9 +64,9 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	
 	public function getPollsCount ($expired = FALSE, $user_id = FALSE, $started = TRUE) {
 		$criteria = new icms_db_criteria_Compo();
-		if($expired) {
+		if($expired && !$started) {
 			$criteria->add(new icms_db_criteria_Item('expired', 1));
-		} else {
+		} elseif ($started) {
 			$criteria->add(new icms_db_criteria_Item('expired', 0));
 		}
 		if ($user_id) $criteria->add(new icms_db_criteria_Item('user_id', $user_id));
@@ -83,6 +83,11 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		$pollObj = $this->get($poll_id);
 		if(is_object($pollObj) && !$pollObj->isNew()) {
 			$pollObj->setVar("started", "1");
+			$this->insert($pollObj, TRUE);
+			if (!$pollObj->getVar("notification_sent", "e") == 1 ) {
+				$pollObj->sendNotifPollPublished();
+				$pollObj->setVar('notification_sent', 1);
+			}
 			$this->insert($pollObj, TRUE);
 			return TRUE;
 		}
@@ -187,16 +192,21 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	/**
 	 * related for storing/deleting objects
 	 */
-	protected function beforeInsert(&$obj) {
+	protected function beforeSave(&$obj) {
+		$time = time();
 		$start_time = $obj->getVar("start_time", "e");
-		$start_time = empty($start_time) ? time() : $start_time;
+		$start_time = empty($start_time) ? $time : $start_time;
 		$end_time = $obj->getVar("end_time", "e");
+		$expired = $obj->getVar("expired", "e");
 		if ( $end_time <= $start_time ) {
 			$obj->setErrors(_CO_ICMSPOLL_POLLS_ENDTIME_ERROR);
 			return FALSE;
 		} else {
 			$obj->setVar("start_time", $start_time);
 			$obj->setVar("end_time", $end_time);
+		}
+		if(($end_time > $time) && ($expired == 1)) {
+			$obj->setVar("expired", 0);
 		}
 		$question = $obj->getVar("question", "s");
 		$question = icms_core_DataFilter::checkVar($question, "html", "input");
@@ -209,6 +219,17 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	}
 	
 	protected function afterDelete(&$obj) {
+		// unsubscribe notifications
+		$notification_handler = icms::handler( 'icms_data_notification' );
+		$module_handler = icms::handler('icms_module');
+		$module = $module_handler->getByDirname(ICMSPOLL_DIRNAME);
+		$module_id = $module->getVar('mid');
+		$category = 'global';
+		$poll_id = $obj->id();
+		// delete global notifications
+		$notification_handler->unsubscribeByItem($module_id, $category, $poll_id);
+		unset($notification_handler, $module_handler, $module);
+		// delete all options and log entries for this poll
 		$icmspoll_option_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
 		$icmspoll_log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
 		$criteria = new icms_db_criteria_Compo();

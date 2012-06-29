@@ -68,7 +68,7 @@ $modversion = array(
 						"hasMain"					=> 1,
 					
 					/** Notification information */
-						"hasNotification"			=> 0
+						"hasNotification"			=> 1
 				);
 
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
@@ -360,3 +360,26 @@ $modversion['comments']['itemName'] = 'poll_id';
 $modversion['comments']['callbackFile'] = 'include/comments.inc.php';
 $modversion['comments']['callback']['approve'] = 'icmspoll_com_approve';
 $modversion['comments']['callback']['update'] = 'icmspoll_com_update';
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$modversion['notification']['lookup_file'] = 'include/notification.inc.php';
+$modversion['notification']['lookup_func'] = 'icmspoll_notify_iteminfo';
+
+$modversion['notification']['category'][] = array (
+													'name'				=> 'global',
+													'title'				=> _MI_ICMSPOLL_GLOBAL_NOTIFY,
+													'description'		=> _MI_ICMSPOLL_GLOBAL_NOTIFY_DSC,
+													'subscribe_from'	=> array('index.php')
+												);
+$modversion['notification']['event'][] = array(
+													'name'				=> 'poll_published',
+													'category'			=> 'global',
+													'title'				=> _MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY,
+													'caption'			=> _MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY_CAP,
+													'description'		=> _MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY_DSC,
+													'mail_template'		=> 'global_poll_published',
+													'mail_subject'		=> _MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY_SBJ
+												);

@@ -18,6 +18,7 @@
  */
  
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class IcmspollPolls extends icms_ipf_Object {
 	
@@ -46,6 +47,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("expired", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("started", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("poll_comments", XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar("notification_sent", XOBJ_DTYPE_INT, FALSE);
 		$this->initCommonVar("dohtml", FALSE, 1);
 		$this->initCommonVar("dobr", FALSE);
 		$this->initCommonVar("doimage", FALSE, 1);
@@ -311,5 +313,12 @@ class IcmspollPolls extends icms_ipf_Object {
 		$ret['more_polls_by_user'] = $this->getMorePollsByCreator();
 		$ret['more_results_by_user'] = $this->getMoreResultsByCreator();
 		return $ret;
+	}
+
+	function sendNotifPollPublished() {
+		$module = icms::handler('icms_module')->getByDirname(ICMSPOLL_DIRNAME);
+		$tags ['POLL_TITLE'] = $this->getQuestion();
+		$tags ['POLL_URL'] = $this->getItemLink(TRUE);
+		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'poll_published', $tags, array(), $module->getVar('mid'));
 	}
 }
