@@ -33,7 +33,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$clean_uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;
 			$pollObj = $polls_handler->get($clean_poll_id);
 			if(is_object($pollObj) && !$pollObj->isNew() && $pollObj->viewAccessGranted() && $pollObj->voteAccessGranted()) {
-				$vote = $pollObj->vote($_POST['poll_option'], xoops_getenv('REMOTE_ADDR'), $clean_uid);
+				$vote = $pollObj->vote($_POST['poll_option'], $_SERVER['REMOTE_ADDR'], $clean_uid, $_SESSION["icms_fprint"]);
 				if($vote) redirect_header(icms_getPreviousPage(), 4, _MD_ICMSPOLL_POLLS_THANKS_VOTING);
 				redirect_header(icms_getPreviousPage(), 4, _MD_ICMSPOLL_POLLS_NOTVOTED);
 			} else {

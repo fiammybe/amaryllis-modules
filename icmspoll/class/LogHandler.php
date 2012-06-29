@@ -27,28 +27,37 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 		parent::__construct($db, "log", "log_id", "poll_id", "option_id", "icmspoll");
 	}
 	
-	function hasVoted($poll_id, $ip, $user_id = NULL) {
+	function hasVoted($poll_id, $ip, $user_id = NULL, $sess_id) {
 		global $icmspollConfig;
-		$module_handler = icms::handler('icms_module')->getByDirname('icmspoll'); 
 		$limit_by_ip = $icmspollConfig['limit_by_ip'];
 		$limit_by_uid = $icmspollConfig['limit_by_uid'];
-		$criteria = new icms_db_criteria_Compo();
-		if ($limit_by_uid != 1 && $limit_by_ip != 1){
+		$limit_by_sess = $icmspollConfig['limit_by_session'];
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("poll_id", $poll_id));
+		if ($limit_by_uid != 1 && $limit_by_ip != 1 && $limit_by_sess != 1){
 			return FALSE;
 		} else {
-			if($limit_by_uid == 1 && $limit_by_ip == 1){
+			if($limit_by_uid == 1 && $limit_by_ip == 1 && $limit_by_sess == 1){
 				// If limit by both user and ip
 				if($user_id == 0){
 					$criteria->add(new icms_db_criteria_Item("ip", $ip));
+					$criteria->add(new icms_db_criteria_Item("session_id", $sess_id));
 				} else {
 					$criteria->add(new icms_db_criteria_Item("user_id", (int)$user_id));
 				}
-			} else if ($limit_by_uid == 1 && $limit_by_ip != 1){
+			} elseif ($limit_by_uid == 1 && $limit_by_ip != 1){
+				if($limit_by_sess == 1) {
+					$criteria->add(new icms_db_criteria_Item("session_id", $sess_id));
+				}
 				// If limit by user then only check for user		 
 				 $criteria->add(new icms_db_criteria_Item("user_id", (int)$user_id));
-			} else {
+			} elseif ($limit_by_uid != 1 && $limit_by_ip == 1) {
+				if($limit_by_sess == 1) {
+					$criteria->add(new icms_db_criteria_Item("session_id", $sess_id));
+				}
 				// Only remaining option is only limit by ip, then only check for ip
 				 $criteria->add(new icms_db_criteria_Item("ip", $ip));
+			} elseif ($limit_by_ip == 0 && $limit_by_uid == 0 && $limit_by_sess == 1) {
+				$criteria->add(new icms_db_criteria_Item("session_id", $sess_id));
 			}
 			$count = $this->getCount($criteria);
 			if ( $count > 0 ) return TRUE;
@@ -171,7 +180,7 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 		return $polls;
 	}
 	
-	public function beforeInsert(&$obj) {
+	public function beforeSave(&$obj) {
 		$ip = $obj->getVar("ip", "s");
 		$ip = icms_core_DataFilter::checkVar($ip, "ip", "ipv4");
 		$obj->setVar("ip", $ip);

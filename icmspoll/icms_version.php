@@ -269,6 +269,15 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name'      	=> "limit_by_session",
+								'title'     	=> '_MI_ICMSPOLL_CONFIG_LIMITBYSESSION',
+								'description'	=> '_MI_ICMSPOLL_CONFIG_LIMITBYSESSION_DSC',
+								'formtype'   	=> 'yesno',
+								'valuetype'   	=> 'int',
+								'default'   	=> '0'
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'show_breadcrumbs',
 								'title' 		=> '_MI_ICMSPOLL_CONFIG_SHOW_BREADCRUMBS',
 								'description' 	=> '_MI_ICMSPOLL_CONFIG_SHOW_BREADCRUMBS_DSC',

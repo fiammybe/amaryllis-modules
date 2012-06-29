@@ -23,12 +23,18 @@
  * @param int $poll_id Pollid to be edited
 */
 function editpoll($poll_id = 0) {
-	global $polls_handler, $icmsAdminTpl;
+	global $polls_handler, $icmsAdminTpl, $clean_op;
 	
 	$pollObj = $polls_handler->get($poll_id);
 	$user_id = icms::$user->getVar("uid", "e");
 	
 	if(!$pollObj->isNew()) {
+		if($clean_op == "reset") {
+			$pollObj->setVar( "start_time", (time() + 1200) );
+        	$pollObj->setVar("end_time", (time() + (7 * 24 * 60 * 60)));
+			$pollObj->setVar("started", 0);
+			$pollObj->setVar("expired", 0);
+		}
 		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . ' > ' . _MI_ICMSPOLL_MENU_POLLS_EDITING);
 		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_EDITING, 'addpoll');
 		$sform->assign($icmsAdminTpl);

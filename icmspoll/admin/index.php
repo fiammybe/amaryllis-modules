@@ -100,5 +100,6 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 			</div>
 		</fieldset>
 		<br />';
-
+var_dump($_SESSION);
+echo $_SESSION["icms_fprint"];
 include_once 'admin_footer.php';
