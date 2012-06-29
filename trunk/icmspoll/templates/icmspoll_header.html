@@ -11,6 +11,19 @@
 		<{/if}>
 	</div>
 <{/if}>
+
+<{if $icmspoll_show_rss}> <!-- display rss feed link -->
+	<div class="icmspoll_rss">
+		<a href="<{$icmspoll_url}>rss.php" title="RSS-Feeds">
+			<img src="<{$icmspoll_images_url}>rss.png" alt="RSS-Feeds" />
+		</a>
+	</div>
+	<div class="icmspoll_clear_both">&nbsp;</div>
+<{else}>
+	<div class="icmspoll_clear_left">&nbsp;</div>
+<{/if}>
+
+<!-- display indeximage -->
 <{if $icmspoll_index.image}>
 	<{$icmspoll_index.image}>
 <{/if}>

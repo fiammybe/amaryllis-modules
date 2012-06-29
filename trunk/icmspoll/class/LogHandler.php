@@ -116,12 +116,43 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 		return $votes;
 	}
 
-	// public static
+	/**
+	 * returns the amount of votes by optionid
+	 * 
+	 * @param $option_id
+	 */
 	function getTotalVotesByOptionId($option_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item("option_id", $option_id));
 		$votes = $this->getCount($criteria);
 		return $votes;
+	}
+	/**
+	 * returns the amount of anon votes by optionid
+	 * 
+	 * @param $option_id
+	 * @param $user_id = 0
+	 */
+	public function getAnonVotesByOptionId($option_id) {
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item("option_id", $option_id));
+		$criteria->add(new icms_db_criteria_Item("user_id", "0"));
+		$count = $this->getCount($criteria);
+		return $count;
+	}
+	
+	/**
+	 * returns the amount of user votes by optionid
+	 * 
+	 * @param $option_id
+	 * @param $user_id all != NULL
+	 */
+	public function getUserVotesByOptionId($option_id) {
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item("option_id", $option_id));
+		$criteria->add(new icms_db_criteria_Item("user_id", "0", "!="));
+		$count = $this->getCount($criteria);
+		return $count;
 	}
 	
 	function getVotesPerCentByOptionId($poll_id, $option_id) {
