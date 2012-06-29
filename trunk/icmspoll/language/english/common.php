@@ -81,6 +81,8 @@ define("_CO_ICMSPOLL_OPTIONS_COLORS_PURPLE", "Purple");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_RED", "Red");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_YELLOW", "Yellow");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_TRANSPARENT", "Transparent");
+
+define("_CO_ICMSPOLL_OPTIONS_SUBMIT_NEXT", "Add more options");
 /**
  * constants for log objects
  */

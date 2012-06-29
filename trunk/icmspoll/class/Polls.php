@@ -244,6 +244,11 @@ class IcmspollPolls extends icms_ipf_Object {
 		return '<a href="' . $url . '" title="' . $question . '" target="_blank" >' . $question . '</a>';
 	}
 	
+	public function getResetItemLink() {
+		$ret = '<a href="' . ICMSPOLL_ADMIN_URL . 'polls.php?op=reset&amp;poll_id=' . $this->id() . '" title="' . _CO_ICMSPOLL_RESET . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/reload.png" /></a>';
+		return $ret;
+	}
+	
 	function getResultLink() {
 		$url = ICMSPOLL_URL . 'results.php?poll_id=' . $this->id();
 		$question = $this->getQuestion();
