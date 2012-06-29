@@ -49,12 +49,12 @@ $options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll"
 if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'getPollsByCreator':
-			$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, FALSE, FALSE, TRUE);
+			$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, FALSE, FALSE);
 			$icmsTpl->assign("polls_by_creator", $polls);
 			/**
 			 * pagination control
 			 */
-			$polls_count = $polls_handler->getPollsCount(FALSE, $clean_uid, TRUE);
+			$polls_count = $polls_handler->getPollsCount(FALSE, $clean_uid);
 			$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
 			$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
 			break;
@@ -82,7 +82,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			 * if not a single poll is requested, display poll list
 			 */
 			} elseif ($clean_poll_id == 0) {
-				$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, FALSE, FALSE, TRUE);
+				$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, FALSE, FALSE);
 				if($polls) {
 					$icmsTpl->assign('polllist', $polls);
 				} else {
@@ -91,7 +91,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				/**
 				 * pagination control
 				 */
-				$polls_count = $polls_handler->getPollsCount(FALSE, $clean_uid, TRUE);
+				$polls_count = $polls_handler->getPollsCount(FALSE, FALSE);
 				$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
 				$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
 			/**

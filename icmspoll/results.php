@@ -97,8 +97,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				
 				$options = $options_handler->getAllByPollId($clean_poll_id, "weight", "ASC");
 				$icmsTpl->assign("options", $options);
+				
 				$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
 				$icmsTpl->assign("user_id", $user_id);
+				
 				$resultLink = '<a href="' . ICMSPOLL_URL . 'results.php" title="' . _MD_ICMSPOLL_POLL_RESULTS . '">' . _MD_ICMSPOLL_POLL_RESULTS . '</a>';
 				$icmsTpl->assign("icmspoll_cat_path", $resultLink);
 				
