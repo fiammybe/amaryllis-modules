@@ -22,6 +22,8 @@ if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dir
 
 class IcmspollPolls extends icms_ipf_Object {
 	
+	public $updating_expired = FALSE;
+	
 	/**
 	 * constructor
 	 * 
@@ -48,6 +50,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("started", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("poll_comments", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("notification_sent", XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar("message_sent", XOBJ_DTYPE_INT, FALSE);
 		$this->initCommonVar("dohtml", FALSE, 1);
 		$this->initCommonVar("dobr", FALSE);
 		$this->initCommonVar("doimage", FALSE, 1);
@@ -63,7 +66,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->setControl("expired", "yesno");
 		$this->setControl("started", "yesno");
 		
-		$this->hideFieldFromForm(array("started", "expired", "created_on", "poll_comments", "user_id", "votes", "voters"));
+		$this->hideFieldFromForm(array("message_sent", "notification_sent", "started", "expired", "created_on", "poll_comments", "user_id", "votes", "voters"));
 		$this->hideFieldFromSingleView(array("started", "expired"));
 
 	}
@@ -112,25 +115,10 @@ class IcmspollPolls extends icms_ipf_Object {
 		return $control->render();
 	}
     
-    public function sendMessageExpired() {
-        $subject = _CO_ICMSPOLL_POLLS_MESSAGE_SUBJECT;
-        $itemLink = $this->getItemLink();
-        $message = sprintf(_CO_ICMSPOLL_POLLS_MESSAGE_BDY, $itemLink);
-        $pm_handler = icms::handler("icms_data_privmessage");
-        $pmObj = $pm_handler->create(TRUE);
-        $pmObj->setVar("subject", $subject);
-        $pmObj->setVar("from_userid", 1);
-        $pmObj->setVar("to_userid", $this->getVar("user_id", "e"));
-        $pmObj->setVar("msg_time", time());
-        $pmObj->setVar("msg_text", $message);
-        $pm_handler->insert($pmObj, TRUE);
-        return TRUE;
-    }
-
 	public function hasVoted() {
 		$icmspoll_log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
 		$user_id = is_object(icms::$user) ? icms::$user->getVar("uid", "e") : 0;
-		$voted = $icmspoll_log_handler->hasVoted($this->id(), xoops_getenv('REMOTE_ADDR'), $user_id);
+		$voted = $icmspoll_log_handler->hasVoted($this->id(), $_SERVER['REMOTE_ADDR'], $user_id, $_SESSION['icms_fprint']);
 		unset($icmspoll_log_handler);
 		if(!$voted) return FALSE;
 		return TRUE;
@@ -155,15 +143,18 @@ class IcmspollPolls extends icms_ipf_Object {
 	}
 	
 	public function hasExpired() {
-		if($this->getVar("expired", "e") == 1) return TRUE;
-		if ( $this->getVar("end_time", "e") > time() ) return FALSE;
-		$this->handler->setExpired($this->id());
-        if($this->getVar("mail_status", "e") == 1)$this->sendMessageExpired();
-		return TRUE;
+		if($this->getVar("expired", "e") == 1) {
+			return TRUE;
+		} elseif ( $this->getVar("end_time", "e") > time() ) {
+			return FALSE;
+		} else {
+			$this->handler->setExpired($this->id());
+			return TRUE;
+		}
 	}
 	
 	public function displayExpired() {
-		if($this->hasExpired() == TRUE) {
+		if($this->hasExpired()) {
 			return '<img src="' . ICMSPOLL_IMAGES_URL . 'hidden.png" alt="Expired" />';
 		} else {
 			return '<img src="' . ICMSPOLL_IMAGES_URL . 'visible.png" alt="Active" />';
@@ -189,7 +180,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		return FALSE;
 	}
 
-	public function vote($options, $ip, $user_id = NULL) {
+	public function vote($options, $ip, $user_id = NULL, $sess_id) {
 		if(!$this->voteAccessGranted()) return FALSE;
 		if(empty($options)) return FALSE;
 		if(is_null($user_id)) $user_id = 0;
@@ -203,6 +194,7 @@ class IcmspollPolls extends icms_ipf_Object {
 					$logObj->setVar("poll_id", $this->getVar("poll_id", "e"));
 					$logObj->setVar("option_id", $vote);
 					$logObj->setVar("ip", $ip);
+					$logObj->setVar("session_id", $sess_id);
 					$logObj->setVar("user_id", $user_id);
 					$logObj->setVar("time", time());
 					if(!$icmspoll_log_handler->insert($logObj, TRUE)) {
@@ -218,6 +210,7 @@ class IcmspollPolls extends icms_ipf_Object {
 				$logObj->setVar("poll_id", $this->id());
 				$logObj->setVar("option_id", $options);
 				$logObj->setVar("ip", $ip);
+				$logObj->setVar("session_id", $sess_id);
 				$logObj->setVar("user_id", $user_id);
 				$logObj->setVar("time", time());
 				$icmspoll_log_handler->insert($logObj, TRUE);

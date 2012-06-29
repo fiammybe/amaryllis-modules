@@ -30,6 +30,8 @@ define("_MI_ICMSPOLL_CONFIG_DATE_FORMAT", "Date Format");
 define("_MI_ICMSPOLL_CONFIG_DATE_FORMAT_DSC", "");
 define("_MI_ICMSPOLL_CONFIG_LIMITBYIP", "Restricted by IP");
 define("_MI_ICMSPOLL_CONFIG_LIMITBYIP_DSC", "");
+define("_MI_ICMSPOLL_CONFIG_LIMITBYSESSION", "Restricted by Session");
+define("_MI_ICMSPOLL_CONFIG_LIMITBYSESSION_DSC", "");
 define("_MI_ICMSPOLL_CONFIG_LIMITBYUID", "Restricted by user");
 define("_MI_ICMSPOLL_CONFIG_LIMITBYUID_DSC", "");
 define("_MI_ICMSPOLL_CONFIG_SHOW_BREADCRUMBS", "Display breadcrumb?");

@@ -102,13 +102,35 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 			return TRUE;
 		}
 	}
+	
+	public function sendMessageExpired() {
+        $subject = _CO_ICMSPOLL_POLLS_MESSAGE_SUBJECT;
+        $itemLink = $this->getItemLink();
+        $message = sprintf(_CO_ICMSPOLL_POLLS_MESSAGE_BDY, $itemLink);
+        $pm_handler = icms::handler("icms_data_privmessage");
+        $pmObj = $pm_handler->create(TRUE);
+        $pmObj->setVar("subject", $subject);
+        $pmObj->setVar("from_userid", 1);
+        $pmObj->setVar("to_userid", $this->getVar("user_id", "e"));
+        $pmObj->setVar("msg_time", time());
+        $pmObj->setVar("msg_text", $message);
+        $pm_handler->insert($pmObj, TRUE);
+		unset($itemLink, $message, $pm_handler, $pmObj);
+        return TRUE;
+    }
+	
 	/**
 	 * set a poll as expired
 	 */
 	public function setExpired($poll_id) {
 		$pollObj = $this->get($poll_id);
 		if(is_object($pollObj) && !$pollObj->isNew()) {
+			$pollObj->updating_expired = TRUE;
 			$pollObj->setVar("expired", "1");
+			if($pollObj->getVar("mail_status", "e") == 1 && !$pollObj->getVar("message_sent", "e") == 1) {
+        		$pollObj->sendMessageExpired();
+			}
+			$pollObj->setVar("message_sent", 1);
 			$this->insert($pollObj, TRUE);
 			return TRUE;
 		}
@@ -203,20 +225,22 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	 * related for storing/deleting objects
 	 */
 	protected function beforeSave(&$obj) {
+		if ($obj->updating_expired) return TRUE;
 		$time = time();
 		$start_time = $obj->getVar("start_time", "e");
 		$start_time = empty($start_time) ? $time : $start_time;
 		$end_time = $obj->getVar("end_time", "e");
 		$expired = $obj->getVar("expired", "e");
+		$started = $obj->getVar("started", "e");
 		if ( $end_time <= $start_time ) {
 			$obj->setErrors(_CO_ICMSPOLL_POLLS_ENDTIME_ERROR);
 			return FALSE;
-		} else {
-			$obj->setVar("start_time", $start_time);
-			$obj->setVar("end_time", $end_time);
 		}
 		if(($end_time > $time) && ($expired == 1)) {
 			$obj->setVar("expired", 0);
+		}
+		if(($start_time > $time) && ($started == 1)) {
+			$obj->setVar("started", 0);
 		}
 		$question = $obj->getVar("question", "s");
 		$question = icms_core_DataFilter::checkVar($question, "html", "input");

@@ -82,7 +82,7 @@ define("_CO_ICMSPOLL_OPTIONS_COLORS_RED", "Red");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_YELLOW", "Yellow");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_TRANSPARENT", "Transparent");
 
-define("_CO_ICMSPOLL_OPTIONS_SUBMIT_NEXT", "Add more options");
+define("_CO_ICMSPOLL_RESET", "Reset Poll BEWARE: This cannot be undone! Once clicked and your poll will be reseted. All log entries will be deleted!");
 /**
  * constants for log objects
  */

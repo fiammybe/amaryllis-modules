@@ -28,6 +28,7 @@ class IcmspollLog extends icms_ipf_Object {
 		$this->quickInitVar("poll_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("option_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("ip", XOBJ_DTYPE_OTHER, TRUE);
+		$this->quickInitVar("session_id", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("user_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("time", XOBJ_DTYPE_INT, TRUE);
 	}

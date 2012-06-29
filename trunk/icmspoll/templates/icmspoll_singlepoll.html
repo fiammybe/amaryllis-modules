@@ -1,4 +1,4 @@
-<{if $poll && (!$poll.hasExpired == TRUE)}>
+<{if $poll && !$poll.hasExpired}>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
 			<{$poll.question}>
