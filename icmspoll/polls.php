@@ -115,6 +115,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			$objectTable = new icms_ipf_view_Table($polls_handler, FALSE, array('edit', 'delete'), TRUE);
 			$objectTable->addColumn(new icms_ipf_view_Column("expired", "center", FALSE, "displayExpired"));
+			$objectTable->addColumn(new icms_ipf_view_Column("started", "center", FALSE, "displayStarted"));
 			$objectTable->addColumn(new icms_ipf_view_Column("question", FALSE, FALSE, "getPreviewLink"));
 			$objectTable->addColumn(new icms_ipf_view_Column("user_id", FALSE, FALSE, "getUser"));
 			$objectTable->addColumn(new icms_ipf_view_Column("start_time", FALSE, FALSE, "getStartDate"));

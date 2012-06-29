@@ -2,12 +2,18 @@
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
 			<{$poll.question}>
+			<{if $poll.userCanEditAndDelete}>
+				(<{$poll.editItemLink}>
+				<{$poll.deleteItemLink}>)
+			<{/if}>
 		</div>
 		<div class="singlepoll_description">
 			<{$poll.dsc}>
 		</div>
+		
 		<div class="icmspoll_morelink">
-		    <{$poll.more_polls_by_user}>
+			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$poll.user}>
+		    <span class="more_polls_by">(<{$poll.more_polls_by_user}>)</span>
 		</div>
 		<div class="singlepoll_form">
 			<form class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php?op=vote&poll_id=<{$poll.id}>" method="post">
@@ -16,9 +22,16 @@
     						<div class="icmspoll_option_<{$option.color}>">
     							<input class="icmspoll_option_<{$option.inputtype}>" type="<{$poll.inputtype}>" name="poll_option" value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
     							<{$option.text}>
-    							<{$poll.delimeter}>
-    						</div>
+	    						<{if $option.userCanEditAndDelete}>
+									<span class="options_buttonbar">
+										(<{$option.editItemLink}>
+										<{$option.deleteItemLink}>)
+									</span>
+								<{/if}>
+								<{$poll.delimeter}>
+							</div>
     					<{/foreach}>
+    					
     				</div>
 				<{if $poll.hasVoted}>
 					<input type="label" readonly size="50" class="icmspoll_formButton" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />

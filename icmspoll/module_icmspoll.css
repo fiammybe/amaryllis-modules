@@ -42,3 +42,6 @@
 .icmspoll_option_transparent {background-color: transparent; height: 20px; margin: .250em}
 .option_set {width: 20em;}
 .result_option {width: 20em; border: 1px solid black}
+.singlepoll_question {font:Georgia,Arial,sans-serif; font-size: 1.5em; margin: 1em 0em;}
+.more_polls_by {font-size: smaller}
+.icmspoll_morelink {margin: 1em 0em;}

@@ -100,7 +100,8 @@ define("_MI_ICMSPOLL_MENU_INDEXPAGE_EDIT", "Edit Indexpage");
  * Mainmenu
  */
 define("_MI_ICMSPOLL_MENUMAIN_ADDPOLL", "Add Poll");
-define("_MI_ICMSPOLL_MENUMAIN_ADDOPTION", "Add Option");
+define("_MI_ICMSPOLL_MENUMAIN_VIEW_POLLS_TABLE", "View Polls Table");
+define("_MI_ICMSPOLL_MENUMAIN_VIEW_OPTIONS_TABLE", "View options Table");
 define("_MI_ICMSPOLL_MENUMAIN_VIEWRESULTS", "View Results");
 /**
  * Notifications
