@@ -1,4 +1,4 @@
-<{if $poll && !$poll.hasExpired}>
+<{if $poll && !$poll.hasExpired && !$poll.hasVoted}>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
 			<{$poll.question}>
@@ -34,25 +34,36 @@
     					
     				</div>
 				<{if $poll.hasVoted}>
-					<input type="label" readonly size="50" class="icmspoll_formButton" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+					<div class="box">
+						<input type="label" readonly size="50" class="btn icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+					</div>
 				<{elseif !$poll.hasVoted && $poll.voteAccessGranted}>
-					<input type="submit" class="icmspoll_formButton" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" />
+					<div class="box">
+						<input type="submit" class="btn article" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" /><span class="helper"></span>
+					</div>
 				<{else}>
 				<{/if}>
 			</form>
 		</div>
 	</div>
-<{elseif $poll && $poll.hasExpired == TRUE}>
+<{elseif $poll && $poll.hasExpired || $poll.hasVoted}>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
 			<{$poll.question}>
+			<{if $poll.userCanEditAndDelete}>
+				(<{$poll.editItemLink}>
+				<{$poll.deleteItemLink}>)
+			<{/if}>
 		</div>
 		<div class="singlepoll_description">
 			<{$poll.dsc}>
 		</div>
+		
 		<div class="icmspoll_morelink">
-            <{$poll.more_results_by_user}>
-        </div>
+			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$poll.user}>
+		    <span class="more_polls_by">(<{$poll.more_polls_by_user}>)</span>
+		</div>
+		
 		<div class="singlepoll_form">
 		    <div class="poll_option_set">
     			<{foreach item=option from=$options name=options}>
@@ -67,6 +78,11 @@
     				<{$poll.delimeter}>
     			<{/foreach}>
 			</div>
+			<{if $poll.hasVoted && !$poll.hasExpired}>
+				<div class="box">
+					<input type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+				</div>
+			<{/if}>
 		</div>
 	</div>
 <{/if}>

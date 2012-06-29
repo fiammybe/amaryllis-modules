@@ -44,4 +44,14 @@
 .result_option {width: 20em; border: 1px solid black}
 .singlepoll_question {font:Georgia,Arial,sans-serif; font-size: 1.5em; margin: 1em 0em;}
 .more_polls_by {font-size: smaller}
-.icmspoll_morelink {margin: 1em 0em;}
+.icmspoll_morelink, .icmspoll_singlepoll, .poll_loop {margin: 1em 0em;}
+
+.read_more {position: absolute; bottom: 15px; display: block;}
+.btn {display: inline-block; width: 50px; height: 44px; line-height: 44px; padding: 0 0 0 20px; background: white url("images/vote.png") no-repeat center left;	color: #999;
+		font-weight: bold;font-size: 15px;text-shadow: 0 1px 0 #fff;position: relative;	border: 1px solid #DFDFDF;margin: 1em 0 .250em 0;
+		-moz-border-radius: 8px;-webkit-border-radius: 8px;	border-radius: 8px;}
+.btn:hover {border-color:#cacaca;background: #F8F8F8 url("images/vote.png") no-repeat center left;text-decoration: none;}
+.icmspoll {width: 10em; padding: 0 20px 0 45px;}
+.icmspoll_voted {width: 15em; padding: 0 20px 0 45px;}
+.voted {background: white url("images/voted.png") no-repeat center left;}
+.voted:hover {background: #F8F8F8 url("images/voted.png") no-repeat center left;text-decoration: none;}
