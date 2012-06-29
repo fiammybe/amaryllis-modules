@@ -19,17 +19,16 @@
 
 function editoption($optionObj = 0, $poll_id = 0) {
 	global $polls_handler, $options_handler, $icmsTpl;
-	$user_id = is_object(icms::$user) ? icms::$user->getVar("uid", "e") : 0;
 	$pollObj = $polls_handler->get($poll_id);
 	if(!$optionObj->isNew()) {
 		if(!$pollObj->userCanEditAndDelete()) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
-		$sform = $optionObj->getForm(_MD_ICMSPOLL_OPTION_EDIT, 'addoption', "options.php?op=addoption&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='options.php'");
+		$sform = $optionObj->getForm(_MD_ICMSPOLL_OPTION_EDIT, 'addoption', "options.php?op=addoption&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='index.php'");
 		$sform->assign($icmsTpl, 'icmspoll_options_form');
-		$icmsTpl->assign('icmspoll_cat_path', _MD_ICMSPOLL_OPTION_EDIT . $optionObj->getOptionText());
+		$icmsTpl->assign('icmspoll_cat_path', _MD_ICMSPOLL_OPTION_EDIT .  "&raquo;" . $optionObj->getOptionText() . "&laquo;");
 	} else {
 		if(!$polls_handler->userCanSubmit()) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
 		$optionObj->setVar("poll_id", $poll_id);
-		$sform = $optionObj->getForm(_MD_ICMSPOLL_OPTION_CREATE, 'addoption', "options.php?op=addoption&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='options.php'");
+		$sform = $optionObj->getForm(_MD_ICMSPOLL_OPTION_CREATE, 'addoption', "options.php?op=addoption&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='index.php'");
 		$sform->assign($icmsTpl, 'icmspoll_options_form');
 		$icmsTpl->assign('icmspoll_cat_path', _MD_ICMSPOLL_OPTION_CREATE);
 	}
@@ -74,16 +73,21 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			editoption($optionObj, $clean_poll_id);
 			break;
 		case 'addoption':
-			$redirect_page = ICMSPOLL_URL . "options.php?op=mod&poll_id=" . $clean_poll_id;
+			$optionObj = $options_handler->get($clean_option_id);
+			if(is_object($optionObj) && !$optionObj->isNew()) {
+				$redirect_page = ICMSPOLL_ADMIN_URL . "options.php";
+			} else {
+				$redirect_page = ICMSPOLL_ADMIN_URL . "options.php?op=mod&poll_id=" . $clean_poll_id;
+			}
 			$controller = new icms_ipf_Controller($options_handler);
-			$controller->storeFromDefaultForm(_MD_ICMSPOLL_OPTION_CREATED, _MD_ICMSPOLL_OPTION_MODIFIED, $redirect_page);
+			$controller->storeFromDefaultForm(_AM_ICMSPOLL_OPTIONS_OPTION_CREATED, _AM_ICMSPOLL_OPTIONS_OPTION_MODIFIED, $redirect_page);
 			break;
 		case 'del':
-			$pollObj = $polls_handler->get($clean_poll_id);
-			if (!$pollObj->userCanEditAndDelete()) {
-				redirect_header($pollObj->getItemLink(TRUE), 3, _NOPERM);
+			$optionObj = $options_handler->get($clean_option_id);
+			if (!$optionObj->userCanEditAndDelete()) {
+				redirect_header($optionObj->getItemLink(TRUE), 3, _NOPERM);
 			}
-			$icmsTpl->assign('icmspoll_cat_path', _MD_ICMSPOLL_OPTIONS_DELETE . " " . $pollObj->getQuestion());
+			$icmsTpl->assign('icmspoll_cat_path', _MD_ICMSPOLL_OPTIONS_DELETE . " " . $optionObj->getOptionText());
 			
 			if (isset($_POST['confirm'])) {
 				if (!icms::$security->check()) {
@@ -92,33 +96,34 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			}
 			$controller = new icms_ipf_Controller($options_handler);
 			$controller->handleObjectDeletionFromUserSide();
-			$icmsTpl->assign('icmspoll_cat_path', $pollObj->getQuestion() . " > " . _DELETE);
+			$icmsTpl->assign('icmspoll_cat_path', $optionObj->getOptionText() . " > " . _DELETE);
 			break;
 		case 'changeFields':
-				foreach ($_POST['IcmspollOptions_objects'] as $key => $value) {
-					$changed = FALSE;
-					$optionsObj = $options_handler->get($value);
-					if($optionsObj->getVar('option_text', 'e') != $_POST['option_text'][$key]) {
-						$optionsObj->setVar('option_text', $_POST['option_text'][$key]);
-						$changed = TRUE;
-					}
-					if($optionsObj->getVar('option_color', 'e') != $_POST['option_color'][$key]) {
-						$optionsObj->setVar('option_color', $_POST['option_color'][$key]);
-						$changed = TRUE;
-					}
-					if($optionsObj->getVar('poll_id', 'e') != $_POST['poll_id'][$key]) {
-						$optionsObj->setVar('poll_id', $_POST['poll_id'][$key]);
-						$changed = TRUE;
-					}
-					if($optionsObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
-						$optionsObj->setVar('weight', (int)($_POST['weight'][$key]));
-						$changed = TRUE;
-					}
-					if($changed) $options_handler->insert($optionsObj);
+			if(!$icmspoll_isAdmin) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
+			foreach ($_POST['IcmspollOptions_objects'] as $key => $value) {
+				$changed = FALSE;
+				$optionsObj = $options_handler->get($value);
+				if($optionsObj->getVar('option_text', 'e') != $_POST['option_text'][$key]) {
+					$optionsObj->setVar('option_text', $_POST['option_text'][$key]);
+					$changed = TRUE;
 				}
-				$ret = 'options.php';
-				redirect_header( ICMSPOLL_URL . $ret, 4, _MD_ICMSPOLL_OPTIONS_FIELDS_UPDATED);
-				break;
+				if($optionsObj->getVar('option_color', 'e') != $_POST['option_color'][$key]) {
+					$optionsObj->setVar('option_color', $_POST['option_color'][$key]);
+					$changed = TRUE;
+				}
+				if($optionsObj->getVar('poll_id', 'e') != $_POST['poll_id'][$key]) {
+					$optionsObj->setVar('poll_id', $_POST['poll_id'][$key]);
+					$changed = TRUE;
+				}
+				if($optionsObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
+					$optionsObj->setVar('weight', (int)($_POST['weight'][$key]));
+					$changed = TRUE;
+				}
+				if($changed) $options_handler->insert($optionsObj);
+			}
+			$ret = 'options.php';
+			redirect_header( ICMSPOLL_URL . $ret, 4, _MD_ICMSPOLL_OPTIONS_FIELDS_UPDATED);
+			break;
 		default:
 			if(!$icmspoll_isAdmin) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
 			

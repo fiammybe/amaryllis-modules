@@ -84,6 +84,7 @@ $modversion['manual'][] = "<a href='" . ICMS_URL  . "/modules/" . $moddir . "/ad
  * 
  */
 if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'icmspoll') {
+	global $icmspoll_isAdmin;
 	$polls_handler = icms_getModuleHandler('polls', basename(dirname(__FILE__)), 'icmspoll');
 	$i = 0;
 	$i++;
@@ -93,6 +94,14 @@ if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'icmspoll') 
 		$i++;
 		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_ADDPOLL;
 		$modversion['sub'][$i]['url'] = 'polls.php?op=mod';
+	}
+	if($icmspoll_isAdmin) {
+		$i++;
+		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_VIEW_POLLS_TABLE;
+		$modversion['sub'][$i]['url'] = 'polls.php';
+		$i++;
+		$modversion['sub'][$i]['name'] = _MI_ICMSPOLL_MENUMAIN_VIEW_OPTIONS_TABLE;
+		$modversion['sub'][$i]['url'] = 'options.php';
 	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

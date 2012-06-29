@@ -106,6 +106,15 @@ class IcmspollOptions extends icms_ipf_Object {
 		return $anons+$users;
 	}
 	
+	function userCanEditAndDelete() {
+		global $icmspoll_isAdmin;
+		if (!is_object(icms::$user)) return FALSE;
+		if ($icmspoll_isAdmin) return TRUE;
+		$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+		$pollObj = $polls_handler->get($this->getVar("poll_id", "e"));
+		return $pollObj->userCanEditAndDelete();
+	}
+	
 	public function toArray() {
 		$ret = parent::toArray();
 		$ret['id'] = $this->getVar("option_id", "e");
@@ -116,6 +125,7 @@ class IcmspollOptions extends icms_ipf_Object {
 		$ret['anon_votes'] = $this->getOptionAnonVotes();
 		$ret['user_votes'] = $this->getOptionUserVotes();
 		$ret['total_votes'] = $this->getTotalOptionVotes();
+		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		return $ret;
 	}
 }
