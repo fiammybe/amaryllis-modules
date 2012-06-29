@@ -23,9 +23,9 @@
  * @param int $poll_id Pollid to be edited
 */
 function editpoll($poll_id = 0) {
-	global $icmspoll_poll_handler, $icmsAdminTpl;
+	global $polls_handler, $icmsAdminTpl;
 	
-	$pollObj = $icmspoll_poll_handler->get($poll_id);
+	$pollObj = $polls_handler->get($poll_id);
 	$user_id = icms::$user->getVar("uid", "e");
 	
 	if(!$pollObj->isNew()) {
@@ -38,7 +38,7 @@ function editpoll($poll_id = 0) {
         $pollObj->setVar( "start_time", (time() + 1200) );
         $pollObj->setVar("end_time", (time() + (7 * 24 * 60 * 60)));
         $pollObj->setVar("created_on", time());
-		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_CREATINGNEW, 'addpoll', ICMSPOLL_ADMIN_URL . "polls.php?op=addpoll&amp;poll_id=". $pollObj->getVar("poll_id", "e"));
+		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_CREATINGNEW, 'addpoll');
 		$sform->assign($icmsAdminTpl);
 	}
 	$icmsAdminTpl->display('db:icmspoll_admin.html');
@@ -49,48 +49,70 @@ include_once 'admin_header.php';
 /**
  * Create a whitelist of valid values
  */
-$valid_op = array("mod", "changeField", "addpoll", "del", "view", "changeWeight", "");
+$valid_op = array("mod", "changeField", "reset", "addpoll", "del", "view", "changeWeight", "");
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 $clean_poll_id = isset($_GET['poll_id']) ? filter_input(INPUT_GET, 'poll_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
+if (isset($_POST['poll_id'])) $clean_poll_id = filter_input(INPUT_POST, 'poll_id', FILTER_SANITIZE_NUMBER_INT);
 
-$icmspoll_poll_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'mod':
 		case 'changeField':
+		case 'reset':
+			if($clean_op == "reset") {
+				$options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
+				$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
+				$options_handler->resetCountByPollId($clean_poll_id);
+				$polls_handler->resetCountByPollId($clean_poll_id);
+				$log_handler->deleteByPollId($clean_poll_id);
+				unset($options_handler, $log_handler);
+			}
 			icms_cp_header();
 			editpoll($clean_poll_id);
 			break;
 		case 'addpoll':
-			$redirect_page = ICMSPOLL_ADMIN_URL . "options.php?op=mod&poll_id=" . $clean_poll_id;
-			$controller = new icms_ipf_Controller($icmspoll_poll_handler);
+			$sql = "SHOW TABLE STATUS WHERE name='" . icms::$xoopsDB->prefix('icmspoll_polls') . "'";
+			$result = icms::$xoopsDB->queryF($sql);
+			$row = icms::$xoopsDB->fetchBoth($result);
+			$poll_id = $row['Auto_increment'];
+			if(!empty($clean_poll_id)) {
+				$poll_id = $clean_poll_id;
+			}
+			$pollObj = $polls_handler->get($poll_id);
+			if(is_object($pollObj) && !$pollObj->isNew()) {
+				$redirect_page = ICMSPOLL_ADMIN_URL . "polls.php";
+			} else {
+				$redirect_page = ICMSPOLL_ADMIN_URL . "options.php?op=mod&poll_id=" . $poll_id;
+			}
+			$controller = new icms_ipf_Controller($polls_handler);
 			$controller->storeFromDefaultForm(_AM_ICMSPOLL_POLLS_CREATED, _AM_ICMSPOLL_POLLS_MODIFIED, $redirect_page);
 			break;
 		case 'del':
-			$controller = new icms_ipf_Controller($icmspoll_poll_handler);
+			$controller = new icms_ipf_Controller($polls_handler);
 			$controller->handleObjectDeletion();
 			break;
 		case 'view':
 			icms_cp_header();
 			icms::$module->displayAdminMenu(1, _MI_ICMSPOLL_MENU_POLLS);
-			$pollObj = $icmspoll_poll_handler->get($clean_poll_id);
+			$pollObj = $polls_handler->get($clean_poll_id);
 			$pollObj->displaySingleObject();
 			break;
 		case 'changeWeight':
 			foreach ($_POST['IcmspollPolls_objects'] as $key => $value) {
 				$changed = FALSE;
-				$pollObj = $icmspoll_poll_handler->get($value);
+				$pollObj = $polls_handler->get($value);
 
 				if ($pollObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 					$pollObj->setVar('weight', (int)($_POST['weight'][$key]));
 					$changed = TRUE;
 				}
 				if ($changed) {
-					$icmspoll_poll_handler -> insert($pollObj);
+					$polls_handler -> insert($pollObj);
 				}
 			}
 			$ret = 'polls.php';
@@ -100,7 +122,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms_cp_header();
 			icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS );
 			
-			$objectTable = new icms_ipf_view_Table($icmspoll_poll_handler, FALSE);
+			$objectTable = new icms_ipf_view_Table($polls_handler, FALSE);
 			$objectTable->addColumn(new icms_ipf_view_Column("expired", "center", FALSE, "displayExpired"));
 			$objectTable->addColumn(new icms_ipf_view_Column("started", "center", FALSE, "displayStarted"));
 			$objectTable->addColumn(new icms_ipf_view_Column("question", FALSE, FALSE, "getPreviewLink"));
@@ -112,6 +134,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->setDefaultOrder("DESC");
 			$objectTable->setDefaultSort("created_on");
 			
+			$objectTable->addCustomAction( 'getResetItemLink' );
+			
 			$objectTable->addFilter("expired", "filterExpired");
 			$objectTable->addFilter("started", "filterStarted");
 			$objectTable->addFilter("user_id", "filterUsers");
@@ -119,8 +143,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addIntroButton( 'addpoll', 'polls.php?op=mod', _AM_ICMSPOLL_POLLS_ADD );
 			$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
 			$icmsAdminTpl->assign( 'icmspoll_polls_table', $objectTable->fetch() );
+			
 			$icmsAdminTpl->display( 'db:icmspoll_admin.html' );
 			break;
 	}
 	include_once 'admin_footer.php';
+} else {
+	redirect_header(icms_getPreviousPage(), 5, _NOPERM);
 }

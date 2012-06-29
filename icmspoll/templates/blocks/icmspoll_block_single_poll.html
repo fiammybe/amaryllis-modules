@@ -1,10 +1,10 @@
-<{if $block.icmspoll_singlepoll}>
+<{if $block.icmspoll_singlepoll && !$block.icmspoll_singlepoll.hasVoted}>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
-			<{$icmspoll_singlepoll.question}>
+			<{block.$icmspoll_singlepoll.question}>
 		</div>
 		<div class="singlepoll_description">
-			<{$block.icmspoll_singlepoll.description}>
+			<{$block.icmspoll_singlepoll.dsc}>
 		</div>
 		<div class="singlepoll_form">
 			<form class="icmspoll_pollform" action="<{$block.icmspoll_url}>submitpoll.php?op=vote&amp;poll_id=<{$block.icmspoll_singlepoll.id}>" method="post">
@@ -27,7 +27,7 @@
 			</form>
 		</div>
 	</div>
-<{elseif $block.icmspoll_singlepoll && $block.icmspoll_singlepoll.hasExpired == TRUE}>
+<{elseif $block.icmspoll_singlepoll.hasVoted || && $block.icmspoll_singlepoll.hasExpired == TRUE}>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
 			<{$block.icmspoll_singlepoll.question}>

@@ -105,7 +105,7 @@ class IcmspollOptions extends icms_ipf_Object {
 		$users = $this->getOptionUserVotes();
 		return $anons+$users;
 	}
-
+	
 	public function toArray() {
 		$ret = parent::toArray();
 		$ret['id'] = $this->getVar("option_id", "e");

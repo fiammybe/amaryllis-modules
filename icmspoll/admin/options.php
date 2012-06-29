@@ -22,7 +22,7 @@
  *
  * @param int $option_id Optionid to be edited
 */
-function editoption($option_id = 0) {
+function editoption($option_id = 0, $poll_id = 0) {
 	global $icmspoll_options_handler, $icmsAdminTpl;
 	
 	$optionObj = $icmspoll_options_handler->get($option_id);
@@ -30,11 +30,13 @@ function editoption($option_id = 0) {
 	
 	if(!$optionObj->isNew()) {
 		icms::$module->displayAdminmenu( 2, _MI_ICMSPOLL_MENU_OPTIONS . ' > ' . _MI_ICMSPOLL_MENU_OPTIONS_EDITING);
-		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_EDITING, 'addoptions');
+		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_EDITING, 'addoptions', "options.php?op=addoptions&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='options.php'");
 		$sform->assign($icmsAdminTpl);
 	} else {
 		icms::$module->displayAdminmenu( 2, _MI_ICMSPOLL_MENU_OPTIONS . " > " . _MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW);
-		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW, 'addoptions');
+		$optionObj->setVar("poll_id", $poll_id);
+		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW, 'addoptions', "options.php?op=addoptions&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='options.php'");
+		$sform->addCustomButton("last_submit", _CO_ICMSPOLL_OPTIONS_SUBMIT_NEXT);
 		$sform->assign($icmsAdminTpl);
 	}
 	$icmsAdminTpl->display('db:icmspoll_admin.html');
@@ -51,12 +53,13 @@ unset($icmspoll_poll_handler, $count);
 /**
  * Create a whitelist of valid values
  */
-$valid_op = array("mod", "changeField", "addoptions", "del", "changeFields", "");
+$valid_op = array("mod", "changeField", "addoptions", "addoption", "del", "changeFields", "");
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 $clean_option_id = isset($_GET['option_id']) ? filter_input(INPUT_GET, 'option_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
+$clean_poll_id = isset($_GET['poll_id']) ? filter_input(INPUT_GET, 'poll_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
 
 $icmspoll_options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
 
@@ -65,10 +68,16 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'mod':
 		case 'changeField':
 			icms_cp_header();
-			editoption($clean_option_id);
+			editoption($clean_option_id, $clean_poll_id);
 			break;
+		case 'addoption':
 		case 'addoptions':
-            $redirect = ICMSPOLL_ADMIN_URL . "options.php?op=mod&poll_id=" . $_POST['poll_id'];
+			$optionObj = $icmspoll_options_handler->get($clean_option_id);
+			if(is_object($optionObj) && !$optionObj->isNew() || $clean_op == 'addoption') {
+				$redirect_page = ICMSPOLL_ADMIN_URL . "options.php";
+			} else {
+				$redirect_page = ICMSPOLL_ADMIN_URL . "options.php?op=mod&poll_id=" . $clean_poll_id;
+			}
 			$controller = new icms_ipf_Controller($icmspoll_options_handler);
 			$controller->storeFromDefaultForm(_AM_ICMSPOLL_OPTIONS_OPTION_CREATED, _AM_ICMSPOLL_OPTIONS_OPTION_MODIFIED, $redirect);
 			break;

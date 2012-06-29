@@ -78,9 +78,12 @@ class IcmspollOptionsHandler extends icms_ipf_Handler {
 	}
 
 	function resetCountByPollId($poll_id) {
-		$pollOption = $this->get($poll_id);
-		$pollOption->setVar("option_count", 0);
-		$this->insert($pollOption, TRUE);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("poll_id", $poll_id));
+		$options = $this->getObjects($criteria, TRUE, FALSE);
+		foreach ($options as $option) {
+			$option->setVar("option_count", 0);
+			$this->insert($option, TRUE);
+		}
 		return TRUE;
 	}
 	

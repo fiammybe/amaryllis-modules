@@ -77,6 +77,16 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	}
 	
 	/**
+	 * reset poll
+	 */
+	function resetCountByPollId($poll_id) {
+		$pollObj = $this->get($poll_id);
+		$pollObj->setVar("votes", 0);
+		$pollObj->setVar("voters", 0);
+		$this->insert($pollObj, TRUE);
+		return TRUE;
+	}
+	/**
 	 * set poll as started
 	 */
 	public function setStarted($poll_id) {
