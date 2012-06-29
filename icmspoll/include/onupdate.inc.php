@@ -46,7 +46,7 @@ function copySitemapPlugin() {
 	$dir = ICMS_ROOT_PATH . '/modules/' . $moddir . '/extras/modules/sitemap/';
 	$file = 'icmspoll.php';
 	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
-	if(is_dir($plugin_folder) && !is_file($plugin_folder . $file)) {
+	if(is_dir($plugin_folder) && !is_dir($plugin_folder . $file)) {
 		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
 	}
 }
