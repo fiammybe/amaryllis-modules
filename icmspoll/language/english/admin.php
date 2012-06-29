@@ -19,6 +19,17 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
+// admin/index.php
+define("_AM_ICMSPOLL_INDEX", "Overview");
+define("_AM_ICMSPOLL_INDEX_TOTAL", "Total Polls");
+define("_AM_ICMSPOLL_INDEX_ACTIVE_POLLS", "Active Polls");
+define("_AM_ICMSPOLL_INDEX_EXPIRED_POLLS", "Expired Polls");
+define("_AM_ICMSPOLL_ADDITIONAL", "Additional informations");
+define("_AM_ICMSPOLL_SITEMAP_MODULE", "Sitemap Module");
+define("_AM_ICMSPOLL_SITEMAP_INSTALLED", "Sitemap Module installed");
+define("_AM_ICMSPOLL_SITEMAP_NOTINSTALLED", "Sitemap Module not installed");
+define("_AM_ICMSPOLL_SITEMAP_PLUGIN_FOUND", "and icmspoll plugin found");
+define("_AM_ICMSPOLL_SITEMAP_PLUGIN_NOTFOUND", "and icmspoll plugin not found. Please update module or copy manually from '/modules/icmspoll/extras/modules/sitemap/' to '/modules/sitemap/plugins'");
 // admin/polls.php
 define("_AM_ICMSPOLL_POLLS_CREATED", "New Poll successfully created");
 define("_AM_ICMSPOLL_POLLS_MODIFIED", "Poll successfully modified");
