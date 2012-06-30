@@ -6,7 +6,7 @@
 		<{if $icmspoll_module_home}><span class="icmspoll_modulename"><{$icmspoll_module_home}></span><{/if}>
 		<{if $poll || $icmspoll_cat_path}>
 			<span class="icmspoll_breadcrumb">
-				<{if $icmspoll_cat_path}>&nbsp;:&nbsp;<{$icmspoll_cat_path}><{/if}><{if $poll}>&nbsp;:&nbsp;<{$poll.question}><{/if}>
+				<{if $icmspoll_cat_path}>&nbsp;:&nbsp;<{$icmspoll_cat_path}><{/if}><{if $poll}>&nbsp;:&nbsp;&raquo;<{$poll.question}>&laquo;<{/if}>
 			</span>
 		<{/if}>
 	</div>

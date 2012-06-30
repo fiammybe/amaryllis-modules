@@ -19,7 +19,7 @@
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 /**
- * display single poll block
+ * display single result block
  */
 function b_icmspoll_single_result_show($options) {
 	global $icmspollConfig, $xoTheme;
@@ -37,7 +37,7 @@ function b_icmspoll_single_result_show($options) {
 }
 
 /**
- * edit recent polls block
+ * edit recent result block
  */
 function b_icmspoll_single_result_edit($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
