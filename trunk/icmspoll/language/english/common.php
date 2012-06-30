@@ -70,6 +70,8 @@ define("_CO_ICMSPOLL_OPTIONS_OPTION_COUNT_DSC", "");
 define("_CO_ICMSPOLL_OPTIONS_USER_ID", "Added by");
 define("_CO_ICMSPOLL_OPTIONS_OPTION_INIT", "Initial Value");
 define("_CO_ICMSPOLL_OPTIONS_OPTION_INIT_DSC", "You might like to set an initial value. This will be shown in all results for users, not in results for module admins.");
+
+define("_CO_ICMSPOLL_OPTIONS_VOTES", "Votes");
 // colors
 define("_CO_ICMSPOLL_OPTIONS_COLORS_AQUA", "Aqua");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_BLANK", "Blank");

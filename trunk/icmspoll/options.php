@@ -117,6 +117,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 					$optionsObj->setVar('poll_id', $_POST['poll_id'][$key]);
 					$changed = TRUE;
 				}
+				if($optionsObj->getVar('option_init', 'e') != $_POST['option_init'][$key]) {
+					$optionsObj->setVar('option_init', (int)($_POST['option_init'][$key]));
+					$changed = TRUE;
+				}
 				if($optionsObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 					$optionsObj->setVar('weight', (int)($_POST['weight'][$key]));
 					$changed = TRUE;

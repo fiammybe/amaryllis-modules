@@ -80,14 +80,22 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 		return $ret;
 	}
  
-	// public static
+	/**
+	 * delete log entries by poll_id
+	 * 
+	 * @param $poll_id
+	 */
 	function deleteByPollId($poll_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item("poll_id", $poll_id));
 		return $this->deleteAll($criteria);
 	}
 
-	// public static
+	/**
+	 * delete log entries by option_id
+	 * 
+	 * @param $option_id
+	 */
 	function deleteByOptionId($option_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item("option_id", $option_id));
@@ -110,14 +118,14 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 		return $count;
 	}
 
-	// public static
+	
 	function getTotalVotersByPollId($poll_id) {
 		$users = $this->getTotalRegistredVoters($poll_id);
 		$anons = $this->getTotalAnonymousVoters($poll_id);
 		return $users+$anons;
 	}
 
-	// public static
+	
 	function getTotalVotesByPollId($poll_id) {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item("poll_id", $poll_id));
@@ -164,6 +172,13 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 		return $count;
 	}
 	
+	/**
+	 * returns per cent of votes by option
+	 * 
+	 * @param $poll_id ->poll_id of the current option
+	 * @param $options_id ->  current option
+	 * 
+	 */
 	function getVotesPerCentByOptionId($poll_id, $option_id) {
 		$totalVotes = $this->getTotalVotesByPollId($poll_id);
 		$totalOptVotes = $this->getTotalVotesByOptionId($option_id);

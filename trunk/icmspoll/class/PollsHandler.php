@@ -140,14 +140,14 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	 * update amount of votes and voters
 	 */
 	public function updateCount($poll_id) {
-		$icmspoll_log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-		$votes = $icmspoll_log_handler->getTotalVotesByPollId($poll_id);
-		$voters = $icmspoll_log_handler->getTotalVotersByPollId($poll_id);
+		$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
+		$votes = $log_handler->getTotalVotesByPollId($poll_id);
+		$voters = $log_handler->getTotalVotersByPollId($poll_id);
 		$pollObj = $this->get($poll_id);
 		$pollObj->setVar("votes", $votes);
 		$pollObj->setVar("voters", $voters);
 		$this->insert($pollObj, TRUE);
-		unset($icmspoll_log_handler, $votes, $voters);
+		unset($log_handler, $votes, $voters);
 		return TRUE;
 	}
 	
@@ -264,13 +264,12 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		$notification_handler->unsubscribeByItem($module_id, $category, $poll_id);
 		unset($notification_handler, $module_handler, $module);
 		// delete all options and log entries for this poll
-		$icmspoll_option_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
-		$icmspoll_log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item("poll_id", $obj->id()));
-		$icmspoll_option_handler->deleteAll($criteria);
-		$icmspoll_log_handler->deleteAll($criteria);
-		unset($criteria, $icmspoll_log_handler, $icmspoll_option_handler);
+		$options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
+		$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("poll_id", $obj->id()));
+		$options_handler->deleteAll($criteria);
+		$log_handler->deleteAll($criteria);
+		unset($criteria, $log_handler, $options_handler);
 		return TRUE;
 	}
 }

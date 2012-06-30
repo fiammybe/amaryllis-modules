@@ -87,30 +87,34 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$controller->handleObjectDeletion();
 			break;
 		case 'changeFields':
-				foreach ($_POST['IcmspollOptions_objects'] as $key => $value) {
-					$changed = FALSE;
-					$optionsObj = $options_handler->get($value);
-					if($optionsObj->getVar('option_text', 'e') != $_POST['option_text'][$key]) {
-						$optionsObj->setVar('option_text', $_POST['option_text'][$key]);
-						$changed = TRUE;
-					}
-					if($optionsObj->getVar('option_color', 'e') != $_POST['option_color'][$key]) {
-						$optionsObj->setVar('option_color', $_POST['option_color'][$key]);
-						$changed = TRUE;
-					}
-					if($optionsObj->getVar('poll_id', 'e') != $_POST['poll_id'][$key]) {
-						$optionsObj->setVar('poll_id', $_POST['poll_id'][$key]);
-						$changed = TRUE;
-					}
-					if($optionsObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
-						$optionsObj->setVar('weight', (int)($_POST['weight'][$key]));
-						$changed = TRUE;
-					}
-					if($changed) $options_handler->insert($optionsObj);
+			foreach ($_POST['IcmspollOptions_objects'] as $key => $value) {
+				$changed = FALSE;
+				$optionsObj = $options_handler->get($value);
+				if($optionsObj->getVar('option_text', 'e') != $_POST['option_text'][$key]) {
+					$optionsObj->setVar('option_text', $_POST['option_text'][$key]);
+					$changed = TRUE;
 				}
-				$ret = 'options.php';
-				redirect_header( ICMSPOLL_ADMIN_URL . $ret, 4, _AM_ICMSPOLL_OPTIONS_FIELDS_UPDATED);
-				break;
+				if($optionsObj->getVar('option_color', 'e') != $_POST['option_color'][$key]) {
+					$optionsObj->setVar('option_color', $_POST['option_color'][$key]);
+					$changed = TRUE;
+				}
+				if($optionsObj->getVar('poll_id', 'e') != $_POST['poll_id'][$key]) {
+					$optionsObj->setVar('poll_id', $_POST['poll_id'][$key]);
+					$changed = TRUE;
+				}
+				if($optionsObj->getVar('option_init', 'e') != $_POST['option_init'][$key]) {
+					$optionsObj->setVar('option_init', (int)($_POST['option_init'][$key]));
+					$changed = TRUE;
+				}
+				if($optionsObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
+					$optionsObj->setVar('weight', (int)($_POST['weight'][$key]));
+					$changed = TRUE;
+				}
+				if($changed) $options_handler->insert($optionsObj);
+			}
+			$ret = 'options.php';
+			redirect_header( ICMSPOLL_ADMIN_URL . $ret, 4, _AM_ICMSPOLL_OPTIONS_FIELDS_UPDATED);
+			break;
 		default:
 			icms_cp_header();
 			icms::$module->displayAdminmenu(2, _MI_ICMSPOLL_MENU_OPTIONS);

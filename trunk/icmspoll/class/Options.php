@@ -40,7 +40,7 @@ class IcmspollOptions extends icms_ipf_Object {
 		$this->setControl("poll_id", array("name" => "select", "itemHandler" => "polls", "method" => "getList", "module" => "icmspoll"));
 		$this->setControl("option_color", array("name" => "select", "itemHandler" => "options", "method" => "getOptionColors", "module" => "icmspoll"));
 		
-		if($icmspollConfig['allow_init_values'] == 0) {
+		if($icmspollConfig['allow_init_value'] == 0) {
 			$this->hideFieldFromForm("option_init");
 		}
 		
@@ -91,10 +91,17 @@ class IcmspollOptions extends icms_ipf_Object {
 	}
 	
 	public function getOptionResult() {
-		$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-		$poll_id = $this->getVar("poll_id", "e");
-		$option_id = $this->getVar("option_id", "e");
-		$option_result = $log_handler->getVotesPerCentByOptionId($poll_id, $option_id);
+		global $icmspoll_isAdmin;
+		if($icmspoll_isAdmin) {
+			$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
+			$poll_id = $this->getVar("poll_id", "e");
+			$option_id = $this->getVar("option_id", "e");
+			$option_result = $log_handler->getVotesPerCentByOptionId($poll_id, $option_id) . "%";
+		} else {
+			$option_init = $this->getVar("option_init", "e");
+			$option_count = $this->getVar("option_count", "e");
+			$option_result = ($option_init + $option_count) . " " . _CO_ICMSPOLL_OPTIONS_VOTES; 
+		}
 		return $option_result;
 	}
 	

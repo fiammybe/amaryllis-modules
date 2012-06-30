@@ -18,7 +18,7 @@
  */
  
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
+if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dirname(__FILE__))));
 icms_loadLanguageFile("icmspoll", "common");
 
 class IcmspollOptionsHandler extends icms_ipf_Handler {
@@ -71,13 +71,6 @@ class IcmspollOptionsHandler extends icms_ipf_Handler {
 		return $this->getCount($crit);
 	}
 
-	// public static
-	function deleteByPollId($poll_id) {
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item("poll_id", $poll_id));
-		return $this->deleteAll($criteria);
-	}
-
 	function resetCountByPollId($poll_id) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("poll_id", $poll_id));
 		$options = $this->getObjects($criteria, TRUE, FALSE);
@@ -109,10 +102,17 @@ class IcmspollOptionsHandler extends icms_ipf_Handler {
 	/**
 	 * related for storing
 	 */
-	protected function beforeInsert(&$obj) {
+	protected function beforeSave(&$obj) {
 		$option_text = $obj->getVar("option_text", "s");
 		$option_text = icms_core_DataFilter::checkVar($option_text, "html", "input");
 		$obj->setVar("option_text", $option_text);
+		return TRUE;
+	}
+	
+	protected function afterDelete(&$obj) {
+		$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
+		$log_handler->deleteByOptionId($obj->id());
+		unset($log_handler);
 		return TRUE;
 	}
 }
