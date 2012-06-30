@@ -1,6 +1,10 @@
 <div class="poll_loop">
 	<div class="poll_question">
 		<{if $resultlist || $results_by_creator}><{$poll.resultLink}><{else}><{$poll.itemLink}><{/if}>
+		<{if $poll.userCanEditAndDelete}>
+			(<{$poll.editItemLink}>
+			<{$poll.deleteItemLink}>)
+		<{/if}>
 	</div>
 	<div class="poll_description">
 		<{$poll.dsc}>

@@ -35,8 +35,8 @@ function editpoll($poll_id = 0) {
 			$pollObj->setVar("started", 0);
 			$pollObj->setVar("expired", 0);
 		}
-		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . ' > ' . _MI_ICMSPOLL_MENU_POLLS_EDITING);
-		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_EDITING, 'addpoll');
+		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . ' > ' . _MI_ICMSPOLL_MENU_POLLS_EDITING . "&raquo;" . $pollObj->getQuestion() . "&laquo;");
+		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_EDITING . "&raquo;" . $pollObj->getQuestion() . "&laquo;", 'addpoll');
 		$sform->assign($icmsAdminTpl);
 	} else {
 		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . " > " . _MI_ICMSPOLL_MENU_POLLS_CREATINGNEW);
