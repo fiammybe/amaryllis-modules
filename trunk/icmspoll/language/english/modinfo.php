@@ -53,7 +53,7 @@ define("_MI_ICMSPOLL_CONFIG_ALLOW_INIT_VALUE_DSC", "Set 'YES' if you like to all
 define("_MI_ICMSPOLL_CONFIG_PRINT_FOOTER", "Print Footer");
 define("_MI_ICMSPOLL_CONFIG_PRINT_FOOTER_DSC", "This footer will be used in print layouts");
 define("_MI_ICMSPOLL_CONFIG_PRINT_LOGO", "Print Logo");
-define("_MI_ICMSPOLL_CONFIG_PRINT_LOGO_DSC", "Enter the path to logo to be printed. E.g.: /themes/example/images/logo.gif");
+define("_MI_ICMSPOLL_CONFIG_PRINT_LOGO_DSC", "Enter the path to logo to be printed. E.g.: themes/example/images/logo.gif");
 define("_MI_ICMSPOLL_CONFIG_USE_RSS", "Use RSS-Feeds?");
 define("_MI_ICMSPOLL_CONFIG_USE_RSS_DSC", "Set to 'YES' to provide a rss link.");
 define("_MI_ICMSPOLL_CONFIG_RSS_LIMIT", "RSS Limit");

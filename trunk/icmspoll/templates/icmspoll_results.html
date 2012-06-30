@@ -22,7 +22,7 @@
 <{elseif $poll}>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
-			<{$poll.question}>
+			&raquo;<{$poll.question}>&laquo;
 		</div>
 		<div class="singlepoll_description">
 			<{$poll.dsc}>
@@ -31,46 +31,64 @@
             <{$poll.more_results_by_user}>
         </div>
 		<div class="singlepoll_form">
-		    <div class="poll_option_set">
-    			<{foreach item=option from=$options name=options}>
-    				<div class="result_option">
-    				   <div class="icmspoll_option_<{$option.color}>" style="width:<{$option.endresult}>%" >
-    				       <{$option.endresult}>%
-    				   </div>
-                    </div>
-    				<div class="poll_option_txt">
-    					<{$option.text}>
-    				</div>
-    				<{$poll.delimeter}>
-    			<{/foreach}>
-    			
+		    <div class="poll_result">
+		    	<div class="icmspoll_result_options">
+	    			<{foreach item=option from=$options name=options}>
+	    				<div class="result_option">
+	    				   <div class="icmspoll_option_<{$option.color}> icmspoll_option_color" style="width:<{$option.endresult}>" >
+	    				       &nbsp;
+	    				   </div>
+	    				   <div class="option_result_value">
+	    				   		<{$option.endresult}>
+	    				   </div>
+	                    </div>
+	                    <div class="icmspoll_clear_both">&nbsp;</div>
+	    				<div class="poll_option_txt">
+	    					<{$option.text}>
+	    				</div>
+	    				<{$poll.delimeter}>
+	    			<{/foreach}>
+    			</div>
     			<{if $icmspoll_is_admin}>
     				<div class="icmspoll_more_results">
     					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES}> &nbsp;:&nbsp; <b><{$total_voters}></b> <br />
     					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_REGISTERED}> &nbsp;:&nbsp; <b><{$total_registred}></b> <br />
     					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_ANONS}> &nbsp;:&nbsp; <b><{$total_anonymous}></b> <br />
     					<{foreach item=option from=$options name=options}>
-		    				<div class="result_option_txt">
-		    					<{$option.text}>
-		    				</div>
-		    				<div class="result_option">
-		    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_ANON}> &nbsp;:&nbsp; <{$option.anon_votes}> <br />
-		    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_USERS}> &nbsp;:&nbsp; <{$option.user_votes}> <br />
-		    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_TOTAL}> &nbsp;:&nbsp; <{$option.total_votes}> <br />
-		                    </div>
+			    			<div class="result_option_set">
+			    				<div class="result_option_txt">
+			    					<{$option.text}>
+			    				</div>
+			    				<div class="result_option_info">
+			    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_ANON}> &nbsp;:&nbsp; <{$option.anon_votes}> <br />
+			    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_USERS}> &nbsp;:&nbsp; <{$option.user_votes}> <br />
+			    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_TOTAL}> &nbsp;:&nbsp; <{$option.total_votes}> <br />
+			                    </div>
+							</div>
 		    			<{/foreach}>
     				</div>
     			<{/if}>
+    			<div class="icmspoll_clear_left">&nbsp;</div>
 			</div>
 		</div>
 	</div>
 	<span class="icmspoll_button_bar">
-		<a href="mailto:?subject=<{$smarty.const._MD_ICMSPOLL_MAILTO_SBJ}>&body=<{$smarty.const._MD_ICMSPOLL_MAILTO_BDY}>" title="<{$smarty.const._MD_ICMSPOLL_MAILTO}>">
+		<a href="mailto:?subject=<{$smarty.const._MD_ICMSPOLL_MAILTO_SBJ}>&body=<{$smarty.const._MD_ICMSPOLL_MAILTO_BDY}><{$poll.itemURL}>" title="<{$smarty.const._MD_ICMSPOLL_MAILTO}>">
 			<img style="vertical-align: middle;" src="<{$icmspoll_images_url}>mail.png" alt="<{$smarty.const._MD_ICMSPOLL_MAILTO}>" title="<{$smarty.const._MD_ICMSPOLL_MAILTO}>" />
 		</a>
-		<a href="<{$icmspoll_url}>print.php?poll_id=<{$poll.id}>" title="<{$smarty.const._MD_ICMSPOLL_PRINT}>" target="_blank">
+		<a href="<{$icmspoll_url}>print.php?print=result&poll_id=<{$poll.id}>" title="<{$smarty.const._MD_ICMSPOLL_PRINT}>" target="_blank">
 			<img style="vertical-align: middle;" src="<{$icmspoll_images_url}>print.png" alt="<{$smarty.const._MD_ICMSPOLL_PRINT}>" title="<{$smarty.const._MD_ICMSPOLL_PRINT}>" />
 		</a>
+		<!--
+		<a href="<{$icmspoll_url}>print.php?print=pdf&poll_id=<{$poll.id}>" title="<{$smarty.const._MD_ICMSPOLL_PRINT_PDF}>" target="_blank">
+			<img style="vertical-align: middle;" src="<{$icmspoll_images_url}>pdf.png" alt="<{$smarty.const._MD_ICMSPOLL_PRINT_PDF}>" title="<{$smarty.const._MD_ICMSPOLL_PRINT_PDF}>" />
+		</a>
+		-->
+		<{if $icmspoll_is_admin}>
+			<a href="<{$icmspoll_url}>print.php?print=log&poll_id=<{$poll.id}>&limitsel=all" title="<{$smarty.const._MD_ICMSPOLL_PRINT_LOG}>" target="_blank">
+				<img style="vertical-align: middle;" src="<{$icmspoll_images_url}>log.png" alt="<{$smarty.const._MD_ICMSPOLL_PRINT_LOG}>" title="<{$smarty.const._MD_ICMSPOLL_PRINT_LOG}>" />
+			</a>
+		<{/if}>
 		<{if $poll.userCanEditAndDelete}>
 			<{$poll.editItemLink}>
 			<{$poll.deleteItemLink}>

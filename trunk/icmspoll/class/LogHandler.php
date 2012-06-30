@@ -66,17 +66,14 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 	}
 
 	public function getAllByPollId($poll_id, $order = "time", $sort = "ASC") {
-		$criteria = new icms_db_criteria_Compo();
-		if ($start) $criteria->setStart($start);
-		if ($limit) $criteria->setLimit((int)$limit);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("poll_id", $poll_id));
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
-		$criteria->add(new icms_db_criteria_Item("poll_id", $poll_id));
-		$pollLogs = $this->getObjects($criteria, TRUE);
+		$pollLogs = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($pollLogs as $pollLog) {
 			$ret[$pollLog['log_id']] = $pollLog;
-		}		
+		}
 		return $ret;
 	}
  
