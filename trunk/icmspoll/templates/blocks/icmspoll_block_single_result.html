@@ -9,7 +9,7 @@
 		</div>
 		
 		<div class="icmspoll_morelink">
-			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singleresult.user}>
+			<{$smarty.const._MB_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singleresult.user}>
 		    <span class="more_polls_by">(<{$block.icmspoll_singleresult.more_results_by_user}>)</span>
 		</div>
 		
@@ -28,17 +28,17 @@
 		</div>
 		<{if $block.icmspoll_isAdmin}>
 			<div class="icmspoll_more_results">
-				<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES}> &nbsp;:&nbsp; <b><{$total_voters}></b> <br />
-				<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_REGISTERED}> &nbsp;:&nbsp; <b><{$total_registred}></b> <br />
-				<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_ANONS}> &nbsp;:&nbsp; <b><{$total_anonymous}></b> <br />
-				<{foreach item=option from=$options name=options}>
+				<{$smarty.const._MB_ICMSPOLL_RESULTS_TOTALVOTES}> &nbsp;:&nbsp; <b><{$block.total_voters}></b> <br />
+				<{$smarty.const._MB_ICMSPOLL_RESULTS_TOTALVOTES_REGISTERED}> &nbsp;:&nbsp; <b><{$block.total_registred}></b> <br />
+				<{$smarty.const._MB_ICMSPOLL_RESULTS_TOTALVOTES_ANONS}> &nbsp;:&nbsp; <b><{$block.total_anonymous}></b> <br />
+				<{foreach item=option from=$block.options name=options}>
 	    			<div class="result_option_txt">
 	    				<{$option.text}>
 	    			</div>
 	    			<div class="result_option">
-	    			    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_ANON}> &nbsp;:&nbsp; <{$option.anon_votes}> <br />
-	    			    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_USERS}> &nbsp;:&nbsp; <{$option.user_votes}> <br />
-	    			    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_TOTAL}> &nbsp;:&nbsp; <{$option.total_votes}> <br />
+	    			    <{$smarty.const._MB_ICMSPOLL_RESULTS_BY_OPTION_ANON}> &nbsp;:&nbsp; <{$option.anon_votes}> <br />
+	    			    <{$smarty.const._MB_ICMSPOLL_RESULTS_BY_OPTION_USERS}> &nbsp;:&nbsp; <{$option.user_votes}> <br />
+	    			    <{$smarty.const._MB_ICMSPOLL_RESULTS_BY_OPTION_TOTAL}> &nbsp;:&nbsp; <{$option.total_votes}> <br />
 					</div>
     			<{/foreach}>
 			</div>
