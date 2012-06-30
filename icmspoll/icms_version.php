@@ -351,7 +351,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ICMSPOLL_CONFIG_PRINT_LOGO_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'txt',
-								'default' 		=> ''
+								'default' 		=> 'themes/iTheme/img/logo.png'
 							);
 $i++;
 $modversion['config'][$i] = array(

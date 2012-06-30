@@ -33,13 +33,6 @@ class IcmspollLog extends icms_ipf_Object {
 		$this->quickInitVar("time", XOBJ_DTYPE_INT, TRUE);
 	}
 
-	function commentMode() {
-		global $icmspollConfig;
-		$module_handler = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-		$comment_mode = $icmspollConfig['com_rule'];
-		return $comment_mode;
-	}
-	
 	public function getTime() {
 		global $icmspollConfig;
 		$date = $this->getVar('time', 'e');
@@ -60,5 +53,23 @@ class IcmspollLog extends icms_ipf_Object {
 		$icmspoll_options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
 		$optionsObj = $icmspoll_options_handler->get($this->getVar("option_id", "e"));
 		return $optionsObj->getOptionText();
+	}
+	
+	public function getLogIP() {
+		$ip = $this->getVar("ip", "s");
+		$ip = icms_core_DataFilter::checkVar($ip, "ip", "ipv4");
+		return $ip;
+	}
+	
+	public function toArray() {
+		$ret = parent::toArray();
+		$ret['id'] = $this->getVar("id");
+		$ret['poll'] = $this->getPollName();
+		$ret['option'] = $this->getOptionText();
+		$ret['ip'] = $this->getLogIP();
+		$ret['session'] = $this->getVar("session_id", "e");
+		$ret['user'] = $this->getUser();
+		$ret['time'] = $this->getTime();
+		return $ret;
 	}
 }

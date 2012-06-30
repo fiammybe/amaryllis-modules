@@ -26,23 +26,28 @@
 .icmspoll_indexheading, .icmspoll_indexfooter { margin: 1em auto;}
 .icmspoll_no_polls { font-size: 1.2em; margin: 1.5em 0; color: red;}
 .icmspoll_adminlinks { text-align: center;}
-.icmspoll_option_aqua {background-color: #43cdf4; height: 20px; margin: .250em}
-.icmspoll_option_aqua {background-color: #000000; height: 20px; margin: .250em; color:#FFFFFF}
-.icmspoll_option_blank {background-color: #FFFFFF; height: 20px; margin: .250em}
-.icmspoll_option_blue {background-color: #1017d8; height: 20px; margin: .250em; color:#FFFFFF}
-.icmspoll_option_brown {background-color: #924229; height: 20px; margin: .250em}
-.icmspoll_option_darkgreen {background-color: #15451e; height: 20px; margin: .250em; color:#FFFFFF}
-.icmspoll_option_gold {background-color: #ffd700; height: 20px; margin: .250em; }
-.icmspoll_option_green {background-color: #35ad4c; height: 20px; margin: .250em}
-.icmspoll_option_grey {background-color: #bbbbbd; height: 20px; margin: .250em}
-.icmspoll_option_orange {background-color: #ee5424; height: 20px; margin: .250em}
-.icmspoll_option_pink {background-color: #fc0abc; height: 20px; margin: .250em}
-.icmspoll_option_purple {background-color: #6010e4; height: 20px; margin: .250em; }
-.icmspoll_option_red {background-color: #d50a02; height: 20px; margin: .250em}
-.icmspoll_option_yellow {background-color: #f2ed1b; height: 20px; margin: .250em}
-.icmspoll_option_transparent {background-color: transparent; height: 20px; margin: .250em}
+.icmspoll_option_color { -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;height: 1.600em;margin: .250em; float: left;}
+.icmspoll_option_aqua {background-color: #43cdf4;}
+.icmspoll_option_black {background-color: #000000; color:#FFFFFF;}
+.icmspoll_option_blank {background-color: #FFFFFF;}
+.icmspoll_option_blue {background-color: #1017d8; color:#FFFFFF;}
+.icmspoll_option_brown {background-color: #924229;}
+.icmspoll_option_darkgreen {background-color: #15451e; color:#FFFFFF}
+.icmspoll_option_gold {background-color: #ffd700;}
+.icmspoll_option_green {background-color: #35ad4c;}
+.icmspoll_option_grey {background-color: #bbbbbd;}
+.icmspoll_option_orange {background-color: #ee5424;}
+.icmspoll_option_pink {background-color: #fc0abc;}
+.icmspoll_option_purple {background-color: #6010e4;}
+.icmspoll_option_red {background-color: #d50a02;}
+.icmspoll_option_yellow {background-color: #f2ed1b;}
+.icmspoll_option_transparent {background-color: transparent;}
 .option_set {width: 20em;}
-.result_option {width: 20em; border: 1px solid black}
+.result_option {width: 20em; border: 1px solid black;height: 2em; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;}
+.option_result_value {float: right;margin-top: 0.250em; font-weight:bold; color: red; padding-right: .5em;}
+.result_option_set {margin: 1em 0; border: 1px solid black; width: 25em; padding: 10px}
+.icmspoll_result_options {float: left;}
+.icmspoll_more_results{float: left; margin: 0em 5em;}
 .singlepoll_question {font:Georgia,Arial,sans-serif; font-size: 1.5em; margin: 1em 0em;}
 .more_polls_by {font-size: smaller}
 .icmspoll_morelink, .icmspoll_singlepoll, .poll_loop {margin: 1em 0em;}

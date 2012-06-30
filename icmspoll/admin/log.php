@@ -42,16 +42,21 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms::$module->displayAdminmenu(3, _MI_ICMSPOLL_MENU_LOG);
 			
 			$objectTable = new icms_ipf_view_Table($icmspoll_log_handler, NULL, array());
+			$objectTable->addColumn(new icms_ipf_view_Column("log_id", "center", 50));
 			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollName"));
 			$objectTable->addColumn(new icms_ipf_view_Column("option_id", FALSE, FALSE, "getOptionText"));
-			$objectTable->addColumn(new icms_ipf_view_Column("user_id", "center", FALSE, "getUser"));
+			$objectTable->addColumn(new icms_ipf_view_Column("user_id", "center", 100, "getUser"));
+			$objectTable->addColumn(new icms_ipf_view_Column("ip", "center", 100, "getLogIP"));
+			$objectTable->addColumn(new icms_ipf_view_Column("session_id", FALSE, 100));
 			$objectTable->addColumn(new icms_ipf_view_Column("time", "center", 50, "getTime"));
+			$objectTable->setDefaultOrder("ASC");
+			$objectTable->setDefaultSort("time");
 			
 			$objectTable->addFilter("poll_id", "filterPolls");
+			$objectTable->addPrinterFriendlyLink();
 			
 			$icmsAdminTpl->assign('icmspoll_log_table', $objectTable->fetch());
 			$icmsAdminTpl->display('db:icmspoll_admin.html');
-			
 			break;
 	}
 	include_once 'admin_footer.php';
