@@ -45,13 +45,13 @@
 .option_set {width: 20em;}
 .result_option {width: 20em; border: 1px solid black;height: 2em; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;}
 .option_result_value {float: right;margin-top: 0.250em; font-weight:bold; color: red; padding-right: .5em;}
-.result_option_set {margin: 1em 0; border: 1px solid black; width: 25em; padding: 10px}
+.result_option_set {margin: 1em 0; border: 1px solid black; width: 20em; padding: 10px}
 .icmspoll_result_options {float: left;}
-.icmspoll_more_results{float: left; margin: 0em 5em;}
+.icmspoll_more_results{float: left; margin: 0em 2em; width: 20em;}
 .singlepoll_question {font:Georgia,Arial,sans-serif; font-size: 1.5em; margin: 1em 0em;}
 .more_polls_by {font-size: smaller}
 .icmspoll_morelink, .icmspoll_singlepoll, .poll_loop {margin: 1em 0em;}
-.btn {display: inline-block; width: 50px; height: 44px; line-height: 44px; padding: 0 0 0 20px; background: white url("images/vote.png") no-repeat center left;	color: #999;
+.btn {display: inline-block; width: 50px; height: 44px; line-height: 44px; padding: 0 0 0 50px; background: white url("images/vote.png") no-repeat center left;	color: #999;
 		font-weight: bold;font-size: 15px;text-shadow: 0 1px 0 #fff;position: relative;	border: 1px solid #DFDFDF;margin: 1em 0 .250em 0;
 		-moz-border-radius: 8px;-webkit-border-radius: 8px;	border-radius: 8px;}
 .btn:hover {border-color:#cacaca;background: #F8F8F8 url("images/vote.png") no-repeat center left;text-decoration: none;}

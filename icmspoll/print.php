@@ -150,42 +150,7 @@ if(in_array($clean_print, $valid_print, TRUE)) {
 			}
 			
 			if($icmspoll_isAdmin) $content .= $objectTable->fetch();
-			$doc_keywords = "";
-			require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
-			icms_loadLanguageFile('core', 'pdf');
-			$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, TRUE);
-			// set document information
-			$pdf->SetCreator(PDF_CREATOR);
-			$pdf->SetAuthor(PDF_AUTHOR);
-			$pdf->SetTitle($dtitle);
-			$pdf->SetSubject($title);
-			$pdf->SetKeywords($doc_keywords);
-			$sitename = $icmsConfig['sitename'];
-			$siteslogan = $icmsConfig['slogan'];
-			$pdfheader = icms_core_DataFilter::undoHtmlSpecialChars($sitename.' - '.$siteslogan);
-			$pdf->SetHeaderData($icmspollConfig['icmspoll_print_logo'], PDF_HEADER_LOGO_WIDTH, $pdfheader, ICMS_URL);
-		
-			//set margins
-			$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-			//set auto page breaks
-			$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-			$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-			$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //set image scale factor
-		
-			$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-			$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-		
-			$pdf->setLanguageArray($l); //set language items
-			// set font
-			$TextFont = (@_PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')) ? _PDF_LOCAL_FONT : 'dejavusans';
-			$pdf -> SetFont($TextFont);
-		
-			//initialize document
-			$pdf->AliasNbPages();
-			$pdf->AddPage();
-			$pdf->writeHTML($content, TRUE, 0);
-			return $pdf->Output();
+			
 			break;
 	}
 } else {
