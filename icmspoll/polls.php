@@ -22,7 +22,7 @@ function editpoll($pollObj = 0) {
 	$user_id = is_object(icms::$user) ? icms::$user->getVar("uid", "e") : 0;
 	if(!$pollObj->isNew()) {
 		if(!$pollObj->userCanEditAndDelete()) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
-		$sform = $pollObj->getSecureForm(_MD_ICMSPOLL_POLL_EDIT, 'addpoll');
+		$sform = $pollObj->getSecureForm(_MD_ICMSPOLL_POLL_EDIT . "&raquo;" . $pollObj->getQuestion() . "&laquo;", 'addpoll');
 		$sform->assign($icmsTpl, 'icmspoll_polls_form');
 		$icmsTpl->assign('icmspoll_cat_path', _MD_ICMSPOLL_POLL_EDIT . "&raquo;" . $pollObj->getQuestion() . "&laquo;");
 	} else {
@@ -74,7 +74,19 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			editpoll($pollObj);
 			break;
 		case 'addpoll':
-			$redirect_page = ICMSPOLL_URL . "options.php?op=mod&poll_id=" . $clean_poll_id;
+			$sql = "SHOW TABLE STATUS WHERE name='" . icms::$xoopsDB->prefix('icmspoll_polls') . "'";
+			$result = icms::$xoopsDB->queryF($sql);
+			$row = icms::$xoopsDB->fetchBoth($result);
+			$poll_id = $row['Auto_increment'];
+			if(!empty($clean_poll_id)) {
+				$poll_id = $clean_poll_id;
+			}
+			$pollObj = $polls_handler->get($poll_id);
+			if(is_object($pollObj) && !$pollObj->isNew()) {
+				$redirect_page = ICMSPOLL_URL . "index.php";
+			} else {
+				$redirect_page = ICMSPOLL_URL . "options.php?op=mod&poll_id=" . $poll_id;
+			}
 			$controller = new icms_ipf_Controller($polls_handler);
 			$controller->storeFromDefaultForm(_MD_ICMSPOLL_POLL_CREATED, _MD_ICMSPOLL_POLL_MODIFIED, $redirect_page);
 			break;

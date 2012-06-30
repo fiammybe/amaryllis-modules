@@ -301,6 +301,8 @@ class IcmspollPolls extends icms_ipf_Object {
 		$ret['viewAccessGranted'] = $this->viewAccessGranted();
 		$ret['voteAccessGranted'] = $this->voteAccessGranted();
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
+		$ret['editItemLink'] = $this->getEditItemLink(FALSE, TRUE, TRUE);
+		$ret['deleteItemLink'] = $this->getDeleteItemLink(FALSE, TRUE, TRUE);
 		$ret['hasExpired'] = $this->hasExpired();
 		$ret['hasVoted'] = $this->hasVoted();
 		$ret['hasStarted'] = $this->hasStarted();
