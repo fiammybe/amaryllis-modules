@@ -23,14 +23,14 @@ function editoption($optionObj = 0, $poll_id = 0) {
 	$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
 	if(!$optionObj->isNew()) {
 		if(!$pollObj->userCanEditAndDelete()) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
-		$sform = $optionObj->getForm(_MD_ICMSPOLL_OPTION_EDIT, 'addoption', "options.php?op=addoption&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='index.php'");
+		$sform = $optionObj->getSecureForm(_MD_ICMSPOLL_OPTION_EDIT, 'addoption', "options.php?op=addoption&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='index.php'");
 		$sform->assign($icmsTpl, 'icmspoll_options_form');
 		$icmsTpl->assign('icmspoll_cat_path', _MD_ICMSPOLL_OPTION_EDIT .  "&raquo;" . $optionObj->getOptionText() . "&laquo;");
 	} else {
 		if(!$polls_handler->userCanSubmit()) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
 		$optionObj->setVar("poll_id", $poll_id);
 		$optionObj->setVar("user_id", $user_id);
-		$sform = $optionObj->getForm(_MD_ICMSPOLL_OPTION_CREATE, 'addoption', "options.php?op=addoption&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='index.php'");
+		$sform = $optionObj->getSecureForm(_MD_ICMSPOLL_OPTION_CREATE, 'addoption', "options.php?op=addoption&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='index.php'");
 		$sform->assign($icmsTpl, 'icmspoll_options_form');
 		$icmsTpl->assign('icmspoll_cat_path', _MD_ICMSPOLL_OPTION_CREATE);
 	}
@@ -77,12 +77,12 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'addoption':
 			$optionObj = $options_handler->get($clean_option_id);
 			if(is_object($optionObj) && !$optionObj->isNew()) {
-				$redirect_page = ICMSPOLL_ADMIN_URL . "options.php";
+				$redirect_page = ICMSPOLL_URL . "index.php";
 			} else {
-				$redirect_page = ICMSPOLL_ADMIN_URL . "options.php?op=mod&poll_id=" . $clean_poll_id;
+				$redirect_page = ICMSPOLL_URL . "options.php?op=mod&poll_id=" . $clean_poll_id;
 			}
 			$controller = new icms_ipf_Controller($options_handler);
-			$controller->storeFromDefaultForm(_AM_ICMSPOLL_OPTIONS_OPTION_CREATED, _AM_ICMSPOLL_OPTIONS_OPTION_MODIFIED, $redirect_page);
+			$controller->storeFromDefaultForm(_MD_ICMSPOLL_OPTIONS_OPTION_CREATED, _MD_ICMSPOLL_OPTIONS_OPTION_MODIFIED, $redirect_page);
 			break;
 		case 'del':
 			$optionObj = $options_handler->get($clean_option_id);
@@ -150,5 +150,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$icmsTpl->assign('icmspoll_options_table', $objectTable->fetch());
 			break;
 	}
+	$xoTheme->addStylesheet('/modules/' . ICMSPOLL_DIRNAME . '/module_icmspoll.css');
 	include_once 'footer.php';
 }

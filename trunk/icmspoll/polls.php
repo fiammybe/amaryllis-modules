@@ -146,5 +146,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$icmsTpl->assign( 'icmspoll_polls_table', $objectTable->fetch() );
 			break;
 	}
+	$xoTheme->addStylesheet('/modules/' . ICMSPOLL_DIRNAME . '/module_icmspoll.css');
 	include_once 'footer.php';
 }
