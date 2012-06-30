@@ -7,7 +7,7 @@
 			<{$block.icmspoll_singlepoll.dsc}>
 		</div>
 		<div class="icmspoll_morelink">
-			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
+			<{$smarty.const._MB_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
 		    <span class="more_polls_by">(<{$block.icmspoll_singlepoll.more_polls_by_user}>)</span>
 		</div>
 		<div class="singlepoll_form">
@@ -24,11 +24,11 @@
 				<input type="hidden" name="user_id" value="<{$user_id}>" />
 				<{if $poll.hasVoted}>
 					<div class="box">
-						<input type="label" readonly size="50" class="btn icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+						<input type="label" readonly size="50" class="btn icmspoll" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 					</div>
 				<{elseif !$block.icmspoll_singlepoll.hasVoted && $block.icmspoll_singlepoll.voteAccessGranted}>
 					<div class="box">
-						<input type="submit" class="btn icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" /><span class="helper"></span>
+						<input type="submit" class="btn icmspoll" value="<{$smarty.const._MB_ICMSPOLL_POLLS_SUBMIT}>" /><span class="helper"></span>
 					</div>
 				<{else}>
 				<{/if}>
@@ -44,7 +44,7 @@
 			<{$block.icmspoll_singlepoll.dsc}>
 		</div>
 		<div class="icmspoll_morelink">
-			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
+			<{$smarty.const._MB_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
 		    <span class="more_polls_by">(<{$block.icmspoll_singlepoll.more_polls_by_user}>)</span>
 		</div>
 		<div class="singlepoll_form">
@@ -62,7 +62,7 @@
 		</div>
 		<{if $block.icmspoll_singlepoll.hasVoted && !$block.icmspoll_singlepoll.hasExpired}>
 			<div class="box">
-				<input type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+				<input type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 			</div>
 		<{/if}>
 	</div>
