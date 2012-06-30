@@ -48,6 +48,8 @@ define("_MI_ICMSPOLL_CONFIG_DEFAULT_SORT", "Default Sort");
 define("_MI_ICMSPOLL_CONFIG_DEFAULT_SORT_DSC", "Sort polls on index as default by:");
 define("_MI_ICMSPOLL_CONFIG_DEFAULT_SORT_ASC", "ASC");
 define("_MI_ICMSPOLL_CONFIG_DEFAULT_SORT_DESC", "DESC");
+define("_MI_ICMSPOLL_CONFIG_ALLOW_INIT_VALUE", "Allow initial values?");
+define("_MI_ICMSPOLL_CONFIG_ALLOW_INIT_VALUE_DSC", "Set 'YES' if you like to allow initial values for options");
 define("_MI_ICMSPOLL_CONFIG_PRINT_FOOTER", "Print Footer");
 define("_MI_ICMSPOLL_CONFIG_PRINT_FOOTER_DSC", "This footer will be used in print layouts");
 define("_MI_ICMSPOLL_CONFIG_PRINT_LOGO", "Print Logo");
@@ -108,7 +110,7 @@ define("_MI_ICMSPOLL_MENUMAIN_VIEWRESULTS", "View Results");
  */
 define("_MI_ICMSPOLL_GLOBAL_NOTIFY", "All Polls");
 define("_MI_ICMSPOLL_GLOBAL_NOTIFY_DSC", "Notifications related to all polls in the module");
-define("_MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY", "New Album published");
+define("_MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY", "New Poll published");
 define("_MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY_CAP", "Notify me when a new Poll is published");
 define("_MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY_DSC", "Receive notification when any new poll is published.");
 define("_MI_ICMSPOLL_GLOBAL_POLL_PUBLISHED_NOTIFY_SBJ", "[{X_SITENAME}] {X_MODULE} auto-notify : New Poll published");

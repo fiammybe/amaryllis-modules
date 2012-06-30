@@ -35,6 +35,7 @@ function editoption($option_id = 0, $poll_id = 0) {
 	} else {
 		icms::$module->displayAdminmenu( 2, _MI_ICMSPOLL_MENU_OPTIONS . " > " . _MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW);
 		$optionObj->setVar("poll_id", $poll_id);
+		$optionObj->setVar("user_id", $user_id);
 		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW, 'addoptions', "options.php?op=addoptions&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='options.php'");
 		$sform->addCustomButton("last_submit", _CO_ICMSPOLL_OPTIONS_SUBMIT_NEXT);
 		$sform->assign($icmsAdminTpl);
@@ -118,6 +119,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollIdControl"));
 			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionTextControl"));
 			$objectTable->addColumn(new icms_ipf_view_Column("option_color", FALSE, FALSE, "getOptionColorControl"));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_init", FALSE, 75, "getOptionInitControl"));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
 			
 			$objectTable->addFilter("poll_id", "filterPolls");

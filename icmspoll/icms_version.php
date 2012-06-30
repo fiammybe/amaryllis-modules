@@ -328,6 +328,15 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'allow_init_value',
+								'title' 		=> '_MI_ICMSPOLL_CONFIG_ALLOW_INIT_VALUE',
+								'description' 	=> '_MI_ICMSPOLL_CONFIG_ALLOW_INIT_VALUE_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'icmspoll_print_footer',
 								'title' 		=> '_MI_ICMSPOLL_CONFIG_PRINT_FOOTER',
 								'description' 	=> '_MI_ICMSPOLL_CONFIG_PRINT_FOOTER_DSC',
