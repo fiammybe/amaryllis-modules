@@ -20,6 +20,7 @@
 function editoption($optionObj = 0, $poll_id = 0) {
 	global $polls_handler, $options_handler, $icmsTpl;
 	$pollObj = $polls_handler->get($poll_id);
+	$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
 	if(!$optionObj->isNew()) {
 		if(!$pollObj->userCanEditAndDelete()) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
 		$sform = $optionObj->getForm(_MD_ICMSPOLL_OPTION_EDIT, 'addoption', "options.php?op=addoption&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='index.php'");
@@ -28,6 +29,7 @@ function editoption($optionObj = 0, $poll_id = 0) {
 	} else {
 		if(!$polls_handler->userCanSubmit()) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
 		$optionObj->setVar("poll_id", $poll_id);
+		$optionObj->setVar("user_id", $user_id);
 		$sform = $optionObj->getForm(_MD_ICMSPOLL_OPTION_CREATE, 'addoption', "options.php?op=addoption&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='index.php'");
 		$sform->assign($icmsTpl, 'icmspoll_options_form');
 		$icmsTpl->assign('icmspoll_cat_path', _MD_ICMSPOLL_OPTION_CREATE);
@@ -131,6 +133,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollIdControl"));
 			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionTextControl"));
 			$objectTable->addColumn(new icms_ipf_view_Column("option_color", FALSE, FALSE, "getOptionColorControl"));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_init", FALSE, 75, "getOptionInitControl"));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
 			
 			$objectTable->addFilter("poll_id", "filterPolls");

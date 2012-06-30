@@ -26,18 +26,25 @@ class IcmspollOptions extends icms_ipf_Object {
 	 * constructor
 	 */
 	public function __construct(&$handler) {
+		global $icmspollConfig;
 		parent::__construct($handler);
 		$this->quickInitVar("option_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("poll_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("option_text", XOBJ_DTYPE_TXTBOX, TRUE, FALSE, FALSE);
 		$this->quickInitVar("option_count", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("option_color", XOBJ_DTYPE_OTHER, FALSE, FALSE, FALSE, "");
+		$this->quickInitVar("option_init", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
+		$this->quickInitVar("user_id", XOBJ_DTYPE_INT);
 		$this->initCommonVar("weight");
 		
 		$this->setControl("poll_id", array("name" => "select", "itemHandler" => "polls", "method" => "getList", "module" => "icmspoll"));
 		$this->setControl("option_color", array("name" => "select", "itemHandler" => "options", "method" => "getOptionColors", "module" => "icmspoll"));
 		
-		$this->hideFieldFromForm("option_count");
+		if($icmspollConfig['allow_init_values'] == 0) {
+			$this->hideFieldFromForm("option_init");
+		}
+		
+		$this->hideFieldFromForm(array("option_count", "user_id"));
 	}
 	
 	public function getPollName() {
@@ -63,6 +70,11 @@ class IcmspollOptions extends icms_ipf_Object {
 		$options = $this->handler->getOptionColors();
 		$control = new icms_form_elements_Select('', 'option_color[]', $this->getVar('option_color', 'e'));
 		$control->addOptionArray($options);
+		return $control->render();
+	}
+	
+	public function getOptionInitControl() {
+		$control = new icms_form_elements_Text('', 'option_init[]', 5, 7,$this->getVar('option_init', 'e'));
 		return $control->render();
 	}
 	
@@ -110,9 +122,7 @@ class IcmspollOptions extends icms_ipf_Object {
 		global $icmspoll_isAdmin;
 		if (!is_object(icms::$user)) return FALSE;
 		if ($icmspoll_isAdmin) return TRUE;
-		$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
-		$pollObj = $polls_handler->get($this->getVar("poll_id", "e"));
-		return $pollObj->userCanEditAndDelete();
+		return $this->getVar('user_id', 'e') == icms::$user->getVar("uid", "e");
 	}
 	
 	public function toArray() {

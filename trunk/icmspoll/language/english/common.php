@@ -55,6 +55,7 @@ define("_CO_ICMSPOLL_POLLS_FILTER_EXPIRED", "Expired Polls");
 define("_CO_ICMSPOLL_POLLS_ENDTIME_ERROR", "End time must be set to future");
 define("_CO_ICMSPOLL_POLLS_FILTER_INACTIVE", "Inactive");
 define("_CO_ICMSPOLL_POLLS_FILTER_STARTED", "Started");
+define("_CO_ICMSPOLL_RESET", "Reset Poll BEWARE: This cannot be undone! Once clicked and your poll will be reseted. All log entries will be deleted!");
 /**
  * constants for options objects
  */
@@ -64,8 +65,11 @@ define("_CO_ICMSPOLL_OPTIONS_OPTION_TEXT", "Option Text");
 define("_CO_ICMSPOLL_OPTIONS_OPTION_TEXT_DSC", "The text to be displayed for this option");
 define("_CO_ICMSPOLL_OPTIONS_OPTION_COLOR", "Option Color");
 define("_CO_ICMSPOLL_OPTIONS_OPTION_COLOR_DSC", "Select the color of the option");
-define("_CO_ICMSPOLL_OPTIONS_OPTION_COUNT", "");
+define("_CO_ICMSPOLL_OPTIONS_OPTION_COUNT", "Amount of votes");
 define("_CO_ICMSPOLL_OPTIONS_OPTION_COUNT_DSC", "");
+define("_CO_ICMSPOLL_OPTIONS_USER_ID", "Added by");
+define("_CO_ICMSPOLL_OPTIONS_OPTION_INIT", "Initial Value");
+define("_CO_ICMSPOLL_OPTIONS_OPTION_INIT_DSC", "You might like to set an initial value. This will be shown in all results for users, not in results for module admins.");
 // colors
 define("_CO_ICMSPOLL_OPTIONS_COLORS_AQUA", "Aqua");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_BLANK", "Blank");
@@ -81,8 +85,7 @@ define("_CO_ICMSPOLL_OPTIONS_COLORS_PURPLE", "Purple");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_RED", "Red");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_YELLOW", "Yellow");
 define("_CO_ICMSPOLL_OPTIONS_COLORS_TRANSPARENT", "Transparent");
-
-define("_CO_ICMSPOLL_RESET", "Reset Poll BEWARE: This cannot be undone! Once clicked and your poll will be reseted. All log entries will be deleted!");
+define("_CO_ICMSPOLL_OPTIONS_COLORS_BLACK", "Black");
 /**
  * constants for log objects
  */
