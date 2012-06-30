@@ -1,24 +1,24 @@
 Hallo {X_UNAME},
 
-The following poll has been published on {X_SITENAME} :
+der folgende Content wurde auf {X_SITENAME} veröffentlicht:
 
 "{POLL_TITLE}"
 
-You can read this item here:
+Sie können den Artikel unter folgenden Link lesen:
 
 {POLL_URL}
 
 -----------
 
-You are receiving this message because you selected to be notified when new items are published in the {MODULE_NAME} module of our site.
+Diese Nachricht wurde versand, weil die Benachrichtigungsfunktion in diesem Thema aktiviert wurde.
 
-if this is an error or you wish not to receive further  notifications, please update your subscriptions by visiting the link below:
+Wenn dies ein Fehler ist oder keine weiteren Nachrichten dieser Art mehr gesendet werden sollen, bitte diesem Link folgen:
 {X_UNSUBSCRIBE_URL}
 
-Please do not reply to this message.
+Bitte nicht auf diese Nachricht antworten.
 
 -----------
 
 {X_SITENAME} ({X_SITEURL})
-The Webmaster
+Der Webmaster
 {X_ADMINMAIL}
