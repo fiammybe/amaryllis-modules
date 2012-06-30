@@ -101,7 +101,7 @@ if(in_array($clean_print, $valid_print, TRUE)) {
 			$icmsTpl = new icms_view_Tpl();
 			$icmsTpl->assign('printtitle', $title);
 			$icmsTpl->assign('printlogourl', ICMS_URL . "/" . $icmspollConfig['icmspoll_print_logo']);
-			$icmsTpl->assign('printfooter', icms_core_DataFilter::undoHtmlSpecialChars($icmspollConfig['icmspoll_print_footer'], "str", "encodehigh"));
+			$icmsTpl->assign('printfooter', icms_core_DataFilter::undoHtmlSpecialChars($icmspollConfig['icmspoll_print_footer']));
 			$icmsTpl->assign("options", $options);
 			$icmsTpl->assign('poll', $poll);
 			$icmsTpl->assign("content", $content);
