@@ -129,5 +129,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			}
 			break;
 	}
+	$xoTheme->addStylesheet('/modules/' . ICMSPOLL_DIRNAME . '/module_icmspoll.css');
 	include_once 'footer.php';
 }
