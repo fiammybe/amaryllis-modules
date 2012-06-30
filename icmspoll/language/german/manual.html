@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Icmspoll Manual</title>
+        <style>
+        	#icmspoll_manual {margin: 2em;}
+        	#icmspoll_manual h1, h2, h3 {font-family: Georgia, "Times New Roman", Times, serif; padding-bottom: 1em; padding-top: 1em; line-height: 1.7em; font-weight: bold;}
+        	#icmspoll_manual h1 {text-align: center; font-size: 1.5em; font-variant: small caps; color: #336699;}
+        	#icmspoll_manual h2 {font-size: 1.250em; color: #6699CC;}
+        	#icmspoll_manual h3 {font-size: 1.1em; color: #6699FF;}
+        	#icmspoll_manual p {font-size: .9em; margin: 0; padding: 5px;}
+        	#icmspoll_manual ul li {list-style-type: square; margin-left: 20px; line-height: 1.5em; font-weight: bolder; }
+        	#icmspoll_manual ul li ul li {list-style-type: disc; margin-left: 30px; font-weight: normal; }
+        	#icmspoll_footer {border: 1px dotted; margin: 2em auto; padding: 0 1em 2em; --moz-border-radius: 1.5em; -webkit-border-radius: 1.5em; border-radius: 1.5em;}
+        	#icmspoll_footer h2 {padding: .5em 0 0;}
+        	#icmspoll_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
+        	#icmspoll_manual a, #icmspoll_manual a:visited {color: #336699}
+        	#icmspoll_manual a:hover {color: #336699; text-decoration: underline;}
+        </style>
+    </head>
+    <body>
+    	<div id="icmspoll_manual">
+	        <h1>Icmspoll Manual</h1>
+	        	<p>Icmspoll ist ein Umfrage-Modul für ImpressCMS, welches einfach mit iforum, dem Forum-Module von ImpressCMS, genutzt werden kann. Es wurde erstellt um einfach Umfragen für Besucher und Gäste bereit zu stellen.</p>
+	        <h2>Kern-Merkmale</h2>
+				<ul>
+					<li>Es können Umfragen mit beliebig vielen Optionen erstellt werden</li>
+					<li>Umfragen können sowohl für eine einfache als auch eine multiple Auswahl an Optionen erstellt werden</li>
+					<li>Unterschiedliche Ergebnisse mit Druck-Möglichkeit für Administratoren/Besucher</li>
+					<li>Benutzereinschränkungnen zum sehen einer Umfrage sowie zum Abstimmen einer Umfrage, seperat gehandhabt.</li>
+					<li>RSS-Feeds: Benachrichtigen Sie einfach ihre Stammgäste über neue Umfragen</li>
+				</ul>
+	        <h2>Erster Start</h2>
+				<p>Es gibt einige Kleinigkeiten, die Sie checken sollten, <b>bevor</b> Sie anfangen, neue Umfragen zu erstellen. Bitte, folgen Sie den Instruktionen.</p>
+				
+				<h3>Checken Sie die Modul-Einstellungen</h3>
+					<p>Evfentuell gibt es einige Einstellungen des Moduls, die Sie angleichen möchten, bevor Sie das Modul nutzen. Gehen Sie zu Module > Icmspoll > Einstellungen</p>
+					<ul>
+						<li>Erlaubte Gruppen zum erstellen von Umfragen
+							<ul>
+								<li>
+									Wähle die Gruppen, die eine Berechtigung zum erstellen von Umfragen haben sollen. Alle gewählten Gruppen werden berechtigt sein, neue Umfragen im Front end zu erstellen.
+								</li>
+							</ul>
+						</li>
+						<li>Datumsformat
+							<ul>
+								<li>
+									Das gewählte Datumsformat wird durch das gesamte Modul hinweg genutzt, um das Datum darzustellen. Sie benötigen Hilfe, das gesuchte Format zu finden? Schauen Sie bitte <a href="http://php.net/manual/de/function.date.php">hier</a> für detaillierte Instruktionen.
+								</li>
+							</ul>
+						</li>
+						<li>Eingeschränkt nach IP
+							<ul>
+								<li>
+									Schränke das Wählen nach IP Addresse ein. Jede IP kann nur einmal wählen.
+								</li>
+							</ul>
+						</li>
+						<li>Eingeschränkt nach Session Fingerprint
+							<ul>
+								<li>
+									Schränke das Wählen nach Session fingerprint ein. Der Session Fingerprint wird durch ICMS erstellt und in der DB abgespeichert.
+								</li>
+							</ul>
+						</li>
+						<li>Eingeschränkt nach Benutzer
+							<ul>
+								<li>
+									Schränke das Wählen nach User-ID ein. Das heißt, jeder Benutzer kann nur einmal wählen. Vorsicht, wenn Sie Gästen erlauben wollen, abzustimmen.
+								</li>
+							</ul>
+						</li>
+						<li>Zeige Breadcrumb
+							<ul>
+								<li>
+									Wählen Sie "JA" um die Breadcrumb im Front end zu zeigen, "Nein" um diese auszublenden.
+								</li>
+							</ul>
+						</li>
+						<li>Zeige Umfragen
+							<ul>
+								<li>
+									Setzen sie das Limit für Umfragen auf der Indexseite. Sind mehr Umfragen vorhanden, wird eine Seitennavigation erstellt. "0" stellt das Limit ab, was bedeutet, dass alle Umfragen gelistet werden.
+								</li>
+							</ul>
+						</li>
+						<li>Ordne Umfragen standardgemäß nach
+							<ul>
+								<li>
+									Wählen Sie, nach welchem Feld die Umfragen Standardgemäß im Index sortiert werden sollen.
+								</li>
+							</ul>
+						</li>
+						<li>Standartgemäße Sortierung
+							<ul>
+								<li>
+									Wählen Sie, ob die Umfragen im Index aufsteigend oder Absteigend sortiert werden sollen.
+								</li>
+							</ul>
+						</li>
+						<li>Erlaube Anfangswerte?
+							<ul>
+								<li>
+									Wählen Sie "JA" um Anfangswerte für Optionen zu erlauben. Damit kann ein Wert gesetzt werden, der in den vorläufigen Ergebnissen mit eingerechnet wird.
+								</li>
+							</ul>
+						</li>
+						<li>Print footer
+							<ul>
+								<li>
+									Schreiben Sie einen print footer für print layouts, wenn Sie einen benötigen
+								</li>
+							</ul>
+						</li>
+						<li>Print logo
+							<ul>
+								<li>
+									Sie können ein Logo festsetzen, welches zum Druck verwendet wird. Geben Sie einfach den Pfad von root zum Logo. z.B.: /themes/mytheme/images/logo.gif
+								</li>
+							</ul>
+						</li>
+						<li>Nutze RSS Feeds
+							<ul>
+								<li>
+									Wird diese Einstellung auf "JA" gesetzt, wird auf der Index-Seite ein RSS-Link bereit gestellt und RSS-Feeds werden erlaubt
+								</li>
+							</ul>
+						</li>
+						<li>Limit für RSS Feeds
+							<ul>
+								<li>
+									Setzen Sie das Limit für RSS-Feeds. "0" wird das RSS-Limit aufheben. Das bedeutet, alle Umfragen werden geholt. 
+								</li>
+							</ul>
+						</li>
+					</ul>
+				<h3>Erstelle eine Umfrage</h3>
+					<p>Der nächste Schritt wäre nun endlich das Erstellen einer Umfrage. Gehe zu dem Tab 'Umfragen' > Erstelle Umfrage. 
+						Einfach die Felder ausfüllen. </p>
+					<ul>
+						<li>Frage
+							<ul>
+								<li>Die Frage wird wie ein Titel genutzt und wird auch zum Bereitstellen eines Links zu der Umfrage verwendet.</li>
+							</ul>
+						</li>
+						<li>Beschreibung
+							<ul>
+								<li>Die Beschreibung kann genuzt werden, um die Frage detaillierter zu beschreiben und wird mitsamt der Frage und den Optionen dargestellt</li>
+							</ul>
+						</li>
+						<li>Wähle das Trennzeichen
+							<ul>
+								<li>Das Modul unterstützt derweil 2 Trennzeichen: Den &lt;br /&gt;-Tag (Zeilenumbruch) und ein Leerzeichen. Die Trennzeichen werden für die Optionen der Umfrage genutzt. Somit kann man jede Option in einer neuen Zeile oder alle in einer Darstellen.</li>
+							</ul>
+						</li>
+						<li>Startzeit
+							<ul>
+								<li>Setzen Sie die Startzeit, ab welcher die Umfrage sichtbar sein soll und genutzt werden kann. Vergessen Sie nicht, die Zeit einzuplanen, um Optionen zuzufügen!</li>
+							</ul>
+						</li>
+						<li>Endzeit
+							<ul>
+								<li>Das Ende der Umfrage. Ist dieser Zeitpunkt erreicht, wird die Umfrage aus der Indexübersicht genommen und taucht unter den Ergebnissen auf.</li>
+							</ul>
+						</li>
+						<li>Zeige in Block
+							<ul>
+								<li>Sie können wählen, ob die Umfrage in den Blöcken erscheinen soll oder nicht</li>
+							</ul>
+						</li>
+						<li>Gewichtung
+							<ul>
+								<li>Sie können eine Gewichtung angeben, müssen aber in dem Fall beachten, dass die Standart-Sortierung in den Einstellungen auch auf Gewichtung steht!</li>
+							</ul>
+						</li>
+						<li>Erlaube multiple Optionen
+							<ul>
+								<li>Steht dieser Wert auf ja, bekommen Sie das Umfrage-Formular mit Checkboxen, nicht mit Radio-Buttons</li>
+							</ul>
+						</li>
+						<li>Benachrichtigen wenn die Umfrage abgelaufen ist?
+							<ul>
+								<li>Sie können sich derweil via PM benachrichtigen lassen, wenn die Umfrage abgelaufen ist.</li>
+							</ul>
+						</li>
+						<li>Berechtigung zum Betrachten
+							<ul>
+								<li>Wählen Sie alle Gruppen aus, welche die Umfrage sehen dürfen. Für alle gewählten Gruppen wird die Umfrage dann in der Indexseite und/oder im Block zu sehen sein</li>
+							</ul>
+						</li>
+						<li>Wahlberechtigung
+							<ul>
+								<li>Wählen Sie alle Gruppen, die abstimmen dürfen. Beachten Sie, dass nur Gruppen abstimmen können, welche die Umfrage auch sehen!</li>
+							</ul>
+						</li>
+					</ul>
+					<p>Das war's! Nach dem Erstellen der Umfrage sollten Sie direkt bei den Optionen landen und können also Optionen zu ihrer Umfrage zufügen.</p>
+				<h3>Erstelle Optionen</h3>
+					<p>Das Formular zum erstellen von Optionen ist klein genug. Geben Sie einfach den Text der Option ein, wählen Sie eine Farbe als Hintergrund und bei Bedarf noch die Gewichtung sowie den Anfangswert, wenn gewünscht. In diesem Fall wird der gesetzte Wert als abgegebene Stimmen mitgerechnet</p>
+				<h2>Blöcke</h2>
+				<p>Aktuell kommt das Modul mit 4 Blöcken:</p>
+				<ul>
+					<li>Letzte Umfragen
+						<ul>
+							<li>Dieser Block stellt eine Liste der letzten Umfragen dar. Verschiedene Einstellungen wie Sortierung/order/abgelaufene Umfragen/oder Ersteller derselben geben Anpassungsmöglichkeiten, um den Block vielfältig einzusetzen.</li>
+						</ul>
+					</li>
+					<li>Einzelne Umfrage
+						<ul>
+							<li>Dieser Block stellt eine einzelne Umfrage dar, welcher überall gezeigt und abgestimmt werden kann</li>
+						</ul>
+					</li>
+					<li>Letzte Erdebnisse
+						<ul>
+							<li>Dieser Block stellt eine Liste mit abgelaufenen Umfragen Bereit mit Link zum Ergebnis</li>
+						</ul>
+					</li>
+					<li>Einzelnes Ergebnis
+						<ul>
+							<li>Dieser Block zeigt ein einzelnes Ergebnis einer Umfrage, mit unterschiedicher Ausgabe und Details für Gäste/Benutzer und Administratoren</li>
+						</ul>
+					</li>
+				</ul>
+				<p>Alle Blöcke können bei Bedarf geklont werden.</p>
+	 
+			<div id="icmspoll_footer">
+			<h2>Conclusion</h2>
+				<p>Vielen Dank,. dass sie das 'Icmspoll' Modul benutzen. Wenn Sie Schwierigkeiten bei der Nutzung des Modules haben, besuchen Sie bitte das <a href="http://www.impresscms.de/modules/forum/viewforum.php?forum=7" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>. Sie haben Verbesserungsvorschläge, würden gerne etwas ändern oder hinzufügen? Kein Thema! Wir lassen mit uns reden. Bitte, nutzen Sie hierfür ebenfalls das <a href="http://www.impresscms.de/modules/forum/viewforum.php?forum=7" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>!</p>  
+				<p>Sie möchten der aktuellen Entwicklung des Moduls folgen? Besuchen Sie das <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/icmspoll/trunk/" title="'Icmspoll' SVN on Assembla" rel="external">'Icmspoll' SVN bei Assembla (offizielles ImpressCMS-Addons Repository)</a> oder besuchen Sie <a href="http://code.google.com/p/amaryllis-modules/" title="Icmspoll" rel="external">mein Module SVN bei google code (meist um einiges aktuelle)</a>.</p>
+			</div>
+		</div>
+    </body>
+</html>

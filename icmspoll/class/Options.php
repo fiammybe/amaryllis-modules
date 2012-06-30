@@ -90,17 +90,24 @@ class IcmspollOptions extends icms_ipf_Object {
 		return $optionText;
 	}
 	
-	public function getOptionResult() {
+	public function getOptionResult($endresult = FALSE) {
 		global $icmspoll_isAdmin;
-		if($icmspoll_isAdmin) {
+		if($endresult) {
 			$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
 			$poll_id = $this->getVar("poll_id", "e");
 			$option_id = $this->getVar("option_id", "e");
 			$option_result = $log_handler->getVotesPerCentByOptionId($poll_id, $option_id) . "%";
 		} else {
-			$option_init = $this->getVar("option_init", "e");
-			$option_count = $this->getVar("option_count", "e");
-			$option_result = ($option_init + $option_count) . " " . _CO_ICMSPOLL_OPTIONS_VOTES; 
+			if($icmspoll_isAdmin) {
+				$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
+				$poll_id = $this->getVar("poll_id", "e");
+				$option_id = $this->getVar("option_id", "e");
+				$option_result = $log_handler->getVotesPerCentByOptionId($poll_id, $option_id) . "%";
+			} else {
+				$option_init = $this->getVar("option_init", "e");
+				$option_count = $this->getVar("option_count", "e");
+				$option_result = ($option_init + $option_count) . " " . _CO_ICMSPOLL_OPTIONS_VOTES; 
+			}
 		}
 		return $option_result;
 	}
@@ -139,6 +146,7 @@ class IcmspollOptions extends icms_ipf_Object {
 		$ret['text'] = $this->getOptionText();
 		$ret['color'] = $this->getVar("option_color", "e");
 		$ret['result'] = $this->getOptionResult();
+		$ret['endresult'] = $this->getOptionResult(TRUE);
 		$ret['anon_votes'] = $this->getOptionAnonVotes();
 		$ret['user_votes'] = $this->getOptionUserVotes();
 		$ret['total_votes'] = $this->getTotalOptionVotes();

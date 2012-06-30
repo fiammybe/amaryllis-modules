@@ -123,7 +123,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollIdControl"));
 			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionTextControl"));
 			$objectTable->addColumn(new icms_ipf_view_Column("option_color", FALSE, FALSE, "getOptionColorControl"));
-			$objectTable->addColumn(new icms_ipf_view_Column("option_init", FALSE, 75, "getOptionInitControl"));
+			if($icmpollConfig['allow_init_value'] == 1) {
+				$objectTable->addColumn(new icms_ipf_view_Column("option_init", FALSE, 75, "getOptionInitControl"));
+			}
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
 			
 			$objectTable->addFilter("poll_id", "filterPolls");
@@ -133,7 +135,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			$icmsAdminTpl->assign('icmspoll_options_table', $objectTable->fetch());
 			$icmsAdminTpl->display('db:icmspoll_admin.html');
-			
 			break;
 	}
 	include_once 'admin_footer.php';

@@ -31,7 +31,6 @@ define("_CO_ICMSPOLL_POLLS_END_TIME", "End of Poll");
 define("_CO_ICMSPOLL_POLLS_VOTES", "Total votes");
 define("_CO_ICMSPOLL_POLLS_VOTERS", "Total voters");
 define("_CO_ICMSPOLL_POLLS_DISPLAY", "Display in block?");
-define("_CO_ICMSPOLL_POLLS_ANONYMOUS", "Allow anonymous voting?");
 define("_CO_ICMSPOLL_POLLS_WEIGHT", "");
 define("_CO_ICMSPOLL_POLLS_MULTIPLE", "Allow multiple selection?");
 define("_CO_ICMSPOLL_POLLS_MAIL_STATUS", "Notify the poll author when expired?");
@@ -98,6 +97,7 @@ define("_CO_ICMSPOLL_LOG_OPTION_ID_DSC", "");
 define("_CO_ICMSPOLL_LOG_IP", "IP");
 define("_CO_ICMSPOLL_LOG_USER_ID", "User");
 define("_CO_ICMSPOLL_LOG_TIME", "Tracking Time");
+define("_CO_ICMSPOLL_LOG_SESSION_ID", "Session Fingerprint");
 /**
  * constants for indexpage objects
  */
