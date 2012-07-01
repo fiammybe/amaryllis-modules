@@ -153,7 +153,7 @@
     	-moz-border-radius: 5px;
     	-webkit-border-radius: 5px;
     	padding: 10px;
-	}+
+	}
 	
 	.article_content {
 		margin: 2em .5em;
@@ -363,7 +363,7 @@
 		background:transparent url(images/snext.png) no-repeat center left;
 	}
 	
-		/**
+	/**
 	 * 	read more button
 	 */
 	.read_more {
