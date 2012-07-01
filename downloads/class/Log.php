@@ -39,7 +39,7 @@ class DownloadsLog extends icms_ipf_Object {
 	
 	public function getLogIP() {
 		$ip = "";
-		$ip = $this->getVar("log_ip", "e");
+		$ip = $this->getVar("log_ip", "s");
 		$ip = icms_core_DataFilter::checkVar($ip, "ip", "ipv4");
 		return $ip;
 	}
