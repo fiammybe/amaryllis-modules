@@ -18,7 +18,7 @@
  */
  
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
+if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dirname(__FILE__))));
 icms_loadLanguageFile("icmspoll", "common");
 
 class 	IcmspollLogHandler extends icms_ipf_Handler {
