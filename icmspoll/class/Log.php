@@ -18,6 +18,7 @@
  */
  
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class IcmspollLog extends icms_ipf_Object {
 

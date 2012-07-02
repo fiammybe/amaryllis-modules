@@ -82,7 +82,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$redirect_page = ICMSPOLL_URL . "options.php?op=mod&poll_id=" . $clean_poll_id;
 			}
 			$controller = new icms_ipf_Controller($options_handler);
-			$controller->storeFromDefaultForm(_MD_ICMSPOLL_OPTIONS_OPTION_CREATED, _MD_ICMSPOLL_OPTIONS_OPTION_MODIFIED, $redirect_page);
+			$controller->storeFromDefaultForm(_MD_ICMSPOLL_OPTION_CREATED, _MD_ICMSPOLL_OPTION_MODIFIED, $redirect_page);
 			break;
 		case 'del':
 			$optionObj = $options_handler->get($clean_option_id);

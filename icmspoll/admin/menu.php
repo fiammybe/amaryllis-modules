@@ -17,8 +17,6 @@
  *
  */
 
-icms_loadLanguageFile("icmspoll", "modinfo");
-
 $i = 0;
 
 $adminmenu[$i]['title'] = _MI_ICMSPOLL_MENU_INDEX;
