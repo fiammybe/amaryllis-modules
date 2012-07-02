@@ -37,7 +37,6 @@ function editoption($option_id = 0, $poll_id = 0) {
 		$optionObj->setVar("poll_id", $poll_id);
 		$optionObj->setVar("user_id", $user_id);
 		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW, 'addoptions', "options.php?op=addoptions&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='options.php'");
-		$sform->addCustomButton("last_submit", _CO_ICMSPOLL_OPTIONS_SUBMIT_NEXT);
 		$sform->assign($icmsAdminTpl);
 	}
 	$icmsAdminTpl->display('db:icmspoll_admin.html');
