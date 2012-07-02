@@ -1,4 +1,4 @@
-<{if $block.icmspoll_singlepoll && !$block.icmspoll_singlepoll.hasVoted}>
+<{if $block.icmspoll_singlepoll && !$block.icmspoll_singlepoll.hasVoted && $block.icmspoll_singlepoll.hasStarted }>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
 			<{$block.icmspoll_singlepoll.question}>
