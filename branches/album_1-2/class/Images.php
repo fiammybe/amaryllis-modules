@@ -178,25 +178,7 @@ class AlbumImages extends icms_ipf_Object {
 	
 	// get publisher for frontend
 	public function getPublisher($link = FALSE) {
-		
-			$publisher_uid = $this->getVar('img_publisher', 'e');
-			$userinfo = array();
-			$userObj = icms::handler('icms_member')->getuser($publisher_uid);
-			if (is_object($userObj) && !$userObj->isNew()) {
-				$userinfo['uid'] = $publisher_uid;
-				$userinfo['uname'] = $userObj->getVar('uname');
-				$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
-			} else {
-				global $icmsConfig;
-				$userinfo['uid'] = 0;
-				$userinfo['uname'] = $icmsConfig['anonymous'];
-			}
-		
-		if ($link && $userinfo['uid']) {
-			return $userinfo['link'];
-		} else {
-			return $userinfo['uname'];
-		}
+		return icms_member_user_Handler::getUserLink($this->getVar('img_publisher', 'e'));
 	}
 	
 	public function getImageDescription() {
