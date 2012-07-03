@@ -65,3 +65,4 @@ define("_MD_ICMSPOLL_MAILTO_BDY", "Hallo,%20ich%20habe%20eine%20interessante%20U
 define("_MD_ICMSPOLL_PRINT", "Drucken");
 define("_MD_ICMSPOLL_PRINT_LOG", "Drucke mit Log");
 define("_MD_ICMSPOLL_PRINT_PDF", "Drucke PDF");
+define("_MD_ICMSPOLL_RESULTS_BY_OPTION", "Ergebnisse per Option");
