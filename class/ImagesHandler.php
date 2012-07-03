@@ -339,7 +339,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	
 	protected function beforeSave(&$obj) {
 		global $albumConfig;
-		if($albumConfig['img_use_copyright'] == 1) {
+		if($albumConfig['img_use_copyright'] == 1 && $obj->isNew()) {
 			$source = ICMS_UPLOAD_PATH . '/album/images/';
 			$img = $obj->getVar("img_url", "e");
 			$watermark = $obj->getVar("img_copyright", "e");
