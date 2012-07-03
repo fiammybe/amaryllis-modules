@@ -447,7 +447,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'text',
-								'default' 		=> "&copy; 2012 Album Module"
+								'default' 		=> "&copy; 2012 "
 							);
 $i++;
 $modversion['config'][$i] = array(
