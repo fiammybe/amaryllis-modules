@@ -28,8 +28,8 @@ class AlbumImages extends icms_ipf_Object {
 		parent::__construct($handler);
 
 		$this->quickInitVar('img_id', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('a_id', XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar('img_title', XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar('a_id', XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar('img_title', XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar('img_published_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_updated_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_description', XOBJ_DTYPE_TXTAREA, FALSE);
@@ -40,7 +40,9 @@ class AlbumImages extends icms_ipf_Object {
 		$this->initCommonVar('weight');
 		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar('img_urllink', XOBJ_DTYPE_URLLINK);
-		$this->quickInitVar('img_copyright', XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar('img_copyright', XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, $albumConfig['img_default_copyright']);
+		$this->quickInitVar('img_copy_pos', XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, "BL");
+		$this->quickInitVar('img_copy_color', XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, "black");
 		$this->initCommonVar('dohtml', FALSE, 1);
 		$this->initCommonVar('dobr', FALSE, 1);
 		$this->initCommonVar('doimage', FALSE, 1);
@@ -52,7 +54,8 @@ class AlbumImages extends icms_ipf_Object {
 		$this->setControl('img_publisher', 'user');
 		$this->setControl('a_id', array('name' => 'select', 'itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
 		$this->setControl('img_description', 'dhtmltextarea' );
-		
+		$this->setControl('img_copy_pos', array('name' => 'select', 'itemHandler' => 'images', 'method' => 'getWatermarkPositions', 'module' => 'album'));
+		$this->setControl('img_copy_color', array('name' => 'select', 'itemHandler' => 'images', 'method' => 'getWatermarkColors', 'module' => 'album'));
 		$this->setControl( 'img_url', 'image');
 		$url = ICMS_URL . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$path = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
@@ -67,8 +70,10 @@ class AlbumImages extends icms_ipf_Object {
 			$this->hideFieldFromForm("img_tags");
 			$this->hideFieldFromSingleView("img_tags");
 		}
-		
-		$this->hideFieldFromForm( array('img_copyright', 'img_publisher', 'img_published_date', 'img_updated_date'));
+		if($albumConfig['img_allow_uploader_copyright'] == 0) {
+			$this->hideFieldFromForm('img_copyright');
+		}
+		$this->hideFieldFromForm( array('img_publisher', 'img_published_date', 'img_updated_date'));
 		$this->hideFieldFromSingleView(array('dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode'));
 
 	}
@@ -130,7 +135,7 @@ class AlbumImages extends icms_ipf_Object {
 	}
 	
 	public function getImgPreview() {
-		$img = '<img src="' . $this->getImagePath() . '" . width=64 height=64 />';
+		$img = '<img src="' . $this->getImagePath() . '" . width=64% />';
 		return $img;
 	}
 	

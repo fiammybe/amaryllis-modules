@@ -49,7 +49,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		
 		default:
 			icms_cp_header();
-			icms::$module->displayAdminmenu( 2, _MI_ALBUM_MENU_ALBUM );
+			icms::$module->displayAdminmenu( 3, _MI_ALBUM_MENU_ALBUM );
 			$criteria = '';
 			if ($clean_message_id) {
 				$messageObj = $album_message_handler->get($clean_message_id);

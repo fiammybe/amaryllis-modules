@@ -433,6 +433,33 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'img_use_copyright',
+								'title' 		=> '_MI_ALBUM_CONF_IMG_USE_COPYR',
+								'description' 	=> '',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'img_default_copyright',
+								'title' 		=> '_MI_ALBUM_CONF_IMG_DEFAULT_COPYR',
+								'description' 	=> '',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'text',
+								'default' 		=> "&copy; 2012 Album Module"
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'img_allow_uploader_copyright',
+								'title' 		=> '_MI_ALBUM_CONF_IMG_ALLOW_UPLOADER_COPYR',
+								'description' 	=> '_MI_ALBUM_CONF_IMG_ALLOW_UPLOADER_COPYR_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'albums_popular',
 								'title' 		=> '_MI_ALBUM_POPULAR',
 								'description' 	=> '',

@@ -44,45 +44,13 @@ if(!defined("ALBUM_UPLOAD_URL")) define("ALBUM_UPLOAD_URL", ICMS_URL . '/uploads
 
 
 // this needs to be the latest db version
-define('ALBUM_DB_VERSION', 2);
+define('ALBUM_DB_VERSION',1);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// SOME NEEDED FUNCTIONS ////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// AUTHORIZING MOST NEEDED FILETYPES IN SYSTEM
-function album_authorise_mimetypes() {
-	$dirname = icms::$module -> getVar( 'dirname' );
-	$extension_list = array(
-		'png',
-		'gif',
-		'jpg',
-	);
-	$system_mimetype_handler = icms_getModuleHandler('mimetype', 'system');
-	foreach ($extension_list as $extension) {
-		$allowed_modules = array();
-		$mimetypeObj = '';
-
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add( new icms_db_criteria_Item('extension', $extension));
-		$mimetypeObj = array_shift($system_mimetype_handler->getObjects($criteria));
-
-		if ($mimetypeObj) {
-			$allowed_modules = $mimetypeObj->getVar('dirname');
-			if (empty($allowed_modules)) {
-				$mimetypeObj->setVar('dirname', $dirname);
-				$mimetypeObj->store();
-			} else {
-				if (!in_array($dirname, $allowed_modules)) {
-					$allowed_modules[] = $dirname;
-					$mimetypeObj->setVar('dirname', $allowed_modules);
-					$mimetypeObj->store();
-				}
-			}
-		}
-	}
-}
 
 function album_upload_paths() {
 	
@@ -139,6 +107,9 @@ function icms_module_update_album($module) {
     // check if upload directories exist and make them if not
 	album_upload_paths();
 	
+	// copy sitemap plugin, if sitemap is installed
+	copySitemapPlugin();
+	
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 	$icmsDatabaseUpdater -> moduleUpgrade($module);
     return TRUE;
@@ -147,9 +118,6 @@ function icms_module_update_album($module) {
 function icms_module_install_album($module) {
 	// check if upload directories exist and make them if not
 	album_upload_paths();
-	
-	// authorise some audio mimetypes for convenience
-	album_authorise_mimetypes();
 	
 	//prepare indexpage
 	album_indexpage();

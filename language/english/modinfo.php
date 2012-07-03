@@ -122,11 +122,6 @@ define("_MI_ALBUM_IMAGES_UPLOADNEW", "Upload a new Image");
 define("_MI_ALBUM_MENU_MESSAGE", "Image Comments");
 define("_MI_ALBUM_MENU_PERMISSIONS", "Permissions");
 define("_MI_ALBUM_MENU_MANUAL", "Manual");
-/**
- * added in 1.2
- */
-// added batchupload to menu
-define("_MI_ALBUM_MENU_BATCHUPLOAD", "Batchupload");
 //added to config
 define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL", "New comments for images needs approval?");
 define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL_DSC", "If you need approval before publishing new comments on images, select yes");
@@ -139,3 +134,16 @@ define("_MI_ALBUM_BLOCK_RECENT_IMAGES", "Recent Images");
 define("_MI_ALBUM_BLOCK_RECENT_IMAGES_DSC", "Display recent images of an album, a user or all recent images");
 define("_MI_ALBUM_BLOCK_SINGLE_IMAGE", "Single Image");
 define("_MI_ALBUM_BLOCK_SINGLE_IMAGE_DSC", "Display a single image in a block");
+/**
+ * added in 1.2
+ */
+// added batchupload and index to menu
+define("_MI_ALBUM_MENU_BATCHUPLOAD", "Batchupload");
+define("_MI_ALBUM_MENU_INDEX", "Index");
+//added to config
+define("_MI_ALBUM_CONF_IMG_USE_COPYR", "Use copyright text for images?");
+define("_MI_ALBUM_CONF_IMG_USE_COPYR_DSC", "Set to 'YES' if you like to use copyrights for your image");
+define("_MI_ALBUM_CONF_IMG_DEFAULT_COPYR", "Default copyright");
+define("_MI_ALBUM_CONF_IMG_DEFAULT_COPYR_DSC", "Set a default copyright for all Images");
+define("_MI_ALBUM_CONF_IMG_ALLOW_UPLOADER_COPYR", "Allow users to set theier own copyright on upload?");
+define("_MI_ALBUM_CONF_IMG_ALLOW_UPLOADER_COPYR_DSC", "Set to 'YES', if users can use an own copyright notice. Otherwise you definately need a default copyright");
