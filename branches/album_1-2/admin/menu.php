@@ -21,6 +21,10 @@ icms_loadLanguageFile("album", "modinfo");
 
 $i = 0;
 
+$adminmenu[$i]['title'] = _MI_ALBUM_MENU_INDEX;
+$adminmenu[$i]['link'] = 'admin/index.php';
+
+$i++;
 $adminmenu[$i]['title'] = _MI_ALBUM_MENU_ALBUM;
 $adminmenu[$i]['link'] = 'admin/album.php';
 

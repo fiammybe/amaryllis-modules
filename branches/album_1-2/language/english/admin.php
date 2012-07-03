@@ -71,5 +71,9 @@ define("_AM_ALBUM_BATCHUPLOAD_ADD", "Batchupload");
 define("_AM_ALBUM_BATCHUPLOAD_SEL_IMAGES", "Select images to add to the selected Album");
 define("_AM_ALBUM_BATCHUPLOAD_IMG_DSC", "Set an image description for all images of the selected set.");
 define("_AM_ALBUM_BATCHUPLOAD_NOALBUM", "No Album selected. Please select Album first.");
+define("_AM_ALBUM_BATCHUPLOAD_URL_CAP", "Caption");
+define("_AM_ALBUM_BATCHUPLOAD_URL_URL", "URL");
+define("_AM_ALBUM_BATCHUPLOAD_URL_DSC", "Description");
+define("_AM_ALBUM_BATCHUPLOAD_URL_TARGET", "Target");
 // admin/images.php
 define("_AM_ALBUM_IMAGES_FIELDS_UPDATED", "Fields successfully updated.");

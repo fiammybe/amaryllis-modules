@@ -28,13 +28,13 @@ function editimages($images_id = 0) {
 	}
 	if (!$imagesObj->isNew()){
 		$imagesObj->setVar( 'img_updated_date', (time() - 100) );
-		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT);
+		icms::$module->displayAdminmenu( 2, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT);
 		$sform = $imagesObj->getForm(_AM_ALBUM_IMAGES_EDIT, "addimages");
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$imagesObj->setVar('img_publisher', $img_uid);
 		$imagesObj->setVar( 'img_published_date', (time() - 100) );
-		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_UPLOADNEW);
+		icms::$module->displayAdminmenu( 2, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_UPLOADNEW);
 		$sform = $imagesObj->getForm(_MI_ALBUM_IMAGES_UPLOADNEW, "addimages");
 		$sform->assign($icmsAdminTpl);
 
@@ -148,7 +148,7 @@ if($count == 0) {
 				break;
 			default:
 				icms_cp_header();
-				icms::$module->displayAdminMenu(1, _MI_ALBUM_MENU_IMAGES);
+				icms::$module->displayAdminMenu(2, _MI_ALBUM_MENU_IMAGES);
 				$criteria = '';
 				// if no op is set, but there is a (valid) album_id, display a single album
 				if ($clean_img_id) {

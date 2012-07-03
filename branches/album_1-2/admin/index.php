@@ -17,5 +17,19 @@
  *
  */
 
-header("location: album.php");
-exit;
+include_once 'admin_header.php';
+
+icms_cp_header();
+icms::$module->displayAdminmenu(0, _MI_ALBUM_MENU_INDEX);
+
+
+if (extension_loaded('gd') && function_exists('gd_info')) {
+    echo "It looks like GD is installed";
+}
+$source = ALBUM_UPLOAD_ROOT . 'batch/CIMG2117.jpg';
+list($width, $height, $img_type) = getimagesize($source);
+echo "width: " . $width;
+echo "height: " . $height;
+echo "type: " . $img_type;
+
+include_once 'admin_footer.php';
