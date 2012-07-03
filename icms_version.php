@@ -23,50 +23,63 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+/**  General Information  */
 $modversion = array(
-					'name'						=> _MI_ALBUM_NAME,
-					'version'					=> 1.2,
-					'description'				=> _MI_ALBUM_DSC,
-					'author'					=> "QM-B &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>",
-					'credits'					=> "Thanks to McDonald for the nice index layer and also thanks to Madfish and the developers of ALBUM-Module for the code snippets, where I could see how to develope a Module using IPF!",
-					'help'						=> "admin/manual.php",
-					'license'					=> "GNU General Public License (GPL)",
-					'official'					=> 1,
-					'dirname'					=> basename( dirname( __FILE__ ) ),
-					'modname'					=> "album",
-
+						"name"						=> _MI_ALBUM_NAME,
+						"version"					=> 1.2,
+						"description"				=> _MI_ALBUM_DSC,
+						"author"					=> "QM-B",
+						"author_realname"			=> "Steffen Flohrer",
+						"credits"					=> "<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Amaryllis Modules</a>",
+						"help"						=> "admin/manual.php",
+						"license"					=> "GNU General Public License (GPL)",
+						"official"					=> 1,
+						"dirname"					=> basename(dirname(__FILE__)),
+						"modname"					=> "album",
+					
 					/**  Images information  */
-					'iconsmall'					=> "images/album_icon_small.png",
-					'iconbig'					=> "images/album_icon.png",
-					'image'						=> "images/album_icon.png", /* for backward compatibility */
-
+						'iconsmall'					=> "images/album_icon_small.png",
+						'iconbig'					=> "images/album_icon.png",
+						'image'						=> "images/album_icon.png", /* for backward compatibility */
+					
 					/**  Development information */
-					'status_version'			=> "1.2",
-					'status'					=> "Beta",
-					'date'						=> "2012-06-15 10:47:16",
-					'author_word'				=> "",
-					'warning'					=> _CO_ICMS_WARNING_BETA,
-
+						"status_version"			=> "1.2",
+						"status"					=> "Beta",
+						"date"						=> "01:46 05.02.2012",
+						"author_word"				=> "",
+						"warning"					=> _CO_ICMS_WARNING_BETA,
+					
 					/** Contributors */
-					'developer_website_url' 	=> "http://code.google.com/p/amaryllis-modules/",
-					'developer_website_name' 	=> "Amaryllis Modules",
-					'developer_email' 			=> "qm-b@hotmail.de");
-
+						"developer_website_url"		=> "http://code.google.com/p/amaryllis-modules/",
+						"developer_website_name"	=> "Amaryllis Modules",
+						"developer_email"			=> "qm-b@hotmail.de",
+					
+					/** Administrative information */
+						"hasAdmin"					=> 1,
+						"adminindex"				=> "admin/index.php",
+						"adminmenu"					=> "admin/menu.php",
+					
+					/** Install and update informations */
+						"onInstall"					=> "include/onupdate.inc.php",
+						"onUpdate"					=> "include/onupdate.inc.php",
+						"onUninstall"				=> "include/onupdate.inc.php",
+					
+					/** Search information */
+						"hasSearch"					=> 1,
+						"search"					=> array("file" => "include/search.inc.php", "func" => "album_search"),
+					
+					/** Menu information */
+						"hasMain"					=> 1,
+					
+					/** Notification and comment information */
+						"hasNotification"			=> 1,
+						"hasComments"				=> 1
+				);
 $modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>";
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=412]Claudia[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=365]Thomas[/url]";
 $modversion['people']['translators'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// ADMINISTRATIVE INFORMATION ////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-$modversion['hasMain'] 		= 1;
-$modversion['hasAdmin'] 	= 1;
-$modversion['adminindex']	= 'admin/album.php';
-$modversion['adminmenu'] 	= 'admin/menu.php';
-	
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// SUPPORT //////////////////////////////////////////////////////
@@ -92,17 +105,6 @@ $i++;
 $modversion['object_items'][$i] = 'message';
 
 $modversion['tables'] = icms_getTablesArray( $modversion['dirname'], $modversion['object_items'] );
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////// INSTALLATION / UPGRADE //////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// OnUpdate - upgrade DATABASE 
-$modversion['onUpdate'] = 'include/onupdate.inc.php';
-
-// OnInstall - Insert Sample Form, create folders
-$modversion['onInstall'] = 'include/onupdate.inc.php';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// TEMPLATES /////////////////////////////////////////////////////
@@ -190,23 +192,12 @@ $modversion['blocks'][$i]['options']		= '260';
 $modversion['blocks'][$i]['template']		= 'album_block_single_image.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
 **/
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////// SEARCH //////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-/** Search information */
-$modversion['hasSearch'] = 1;
-$modversion['search'] ['file'] = 'include/search.inc.php';
-$modversion['search'] ['func'] = 'album_search';
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Comments
-$modversion['hasComments'] = 1;
 $modversion['comments']['pageName'] = 'index.php';
 $modversion['comments']['itemName'] = 'album_id';
 
@@ -519,8 +510,6 @@ $modversion['config'][$i] = array(
 //////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-$modversion['hasNotification'] = 1;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';
 $modversion['notification']['lookup_func'] = 'album_notify_iteminfo';
 
