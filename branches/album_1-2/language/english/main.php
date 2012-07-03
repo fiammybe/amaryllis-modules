@@ -45,3 +45,4 @@ define("_MD_ALBUM_ALBUMS_BY_TAGS", "All albums by Tag");
 define("_MD_ALBUM_ALBUM_CREATED", "New album has been created. Thank you for your submission");
 define("_MD_ALBUM_ALBUM_MODIFIED", "Album has been modified");
 define("_MD_ALBUM_ALBUM_EDIT", "Edit your Album");
+define("_MD_ALBUM_IMAGES_EDIT", "Edit");
