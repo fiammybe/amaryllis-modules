@@ -21,6 +21,7 @@
         	#icms-uptopmessage a {display: block; display: none; z-index: 999; opacity: .9; position: fixed; top: 100%; margin-top: -80px; left: 50%; margin-left: -160px;
 							border-radius: 24px; -moz-border-radius: 24px; -webkit-border-radius: 24px; -o-border-radius: 24px; -khtml-border-radius:24px; -icab-border-radius:24px; -ms-border-radius:24px;
 							width: 300px; line-height: 48px; height: 48px; padding: 10px; background-color: #000; font-size: 24px; text-align: center; color: #fff;}
+			#credit {font-weight: bold;color: #336699;}
         </style>
     </head>
     <body>
@@ -31,7 +32,7 @@
 	        <h2 id="index">Index</h2>
 	        <ul>
 	        	<li><a href="#keyfeatures">Keyfeatures</a></li>
-	        	<li><a href="#firsstart">Keyfeatures</a>
+	        	<li><a href="#firsstart">First Start</a>
 	        		<ul>
 	        			<li><a href="#preferences">Preferences</a></li>
 	        			<li><a href="#adjustindex">Adjust Indexpage</a></li>
@@ -40,7 +41,7 @@
 	        		</ul>
 	        	</li>
 	        	<li><a href="#permissions">Permissions</a></li>
-	        	<li><a href="#keyfeatures">Batchupload</a></li>
+	        	<li><a href="#batchupload">Batchupload</a></li>
 	        	<li><a href="#messages">Comment System for single images</a></li>
 	        	<li><a href="#blocks">Module Blocks</a></li>
 	        	<li><a href="#templates">Templates</a></li>
@@ -223,7 +224,7 @@
         	<h2 id="batchupload">Batchupload <img style="vertical-align: middle" src="../images/new.png" alt="new!" /></h2>
         	<p>Currently the module has the possibility to upload multiple files via ftp into "uploads/album/batch/". Go to ACP Tab "Batchupload". At First select the target Album, check all images to add, enter a description, select tags, if sprockets module is installed and enabled, enter copyright text or use default, enter the urllink.</p>
         	<p>Click on "Submit" to apply batch. All images will now be moved to "uploads/album/images/" and added to database. If copyrights, urrlink, tags are enabled, it will all be done at once.</p>
-        	<h2 id="messages">Comment System for single images <img style="vertical-align: middle" src="../images/new.png" alt="new!" /></h2>
+        	<h2 id="messages">Comment System for single images <img style="vertical-align: middle" src="../images/updated.png" alt="new!" /></h2>
         	<p>If allowed in preferences, you can have a small message/comment system in Album images. If allowed, you'll see a textarea field behind each image. Here users (highly recommanded not to allow guests writing comments..) can add a comment to the picture inside colorbox, which will be visible directly behind the image. Album comments are visible inside an album and are managed in impresscms. The image comments can be managed by you inside the module.
         		</p>
         	<h2 id="blocks">Module Blocks</h2>
@@ -308,6 +309,17 @@
         </div>
         
         <div id="icms-uptopmessage"><a href="#top">back top</a></div>
+        
+        <div id="credit">
+			<p class="copyright">
+				<script type="text/javascript" language="JavaScript">
+					DatumAktuell = new Date(); JahrAktuell = DatumAktuell.getFullYear();
+					document.write("| &copy; 2011-"+ JahrAktuell + " "); 
+				</script>
+				<a href="http://code.google.com/p/amaryllis-modules/" title="Amaryllis Modules" target="_blank" rel="external">Amaryllis Modules</a> |
+				<a href="print.php?print=manual" target="_blank" rel="external"><img src="../images/print.png" alt="print" /></a>
+			</p>
+		</div>
         
         <!-- script for uptop-link -->
 		<script type="text/javascript">

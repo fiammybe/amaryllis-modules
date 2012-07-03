@@ -77,3 +77,23 @@ define("_AM_ALBUM_BATCHUPLOAD_URL_DSC", "Description");
 define("_AM_ALBUM_BATCHUPLOAD_URL_TARGET", "Target");
 // admin/images.php
 define("_AM_ALBUM_IMAGES_FIELDS_UPDATED", "Fields successfully updated.");
+//index.php
+define("_AM_ALBUM_INDEX", "Album Module - Overview");
+define("_AM_ALBUM_INDEX_TOTAL", "Total Albums");
+define("_AM_ALBUM_INDEX_INACTIVE_ALBUMS", "Inactive Albums");
+define("_AM_ALBUM_INDEX_DENIED_ALBUMS", "Albums awaiting approval");
+define("_AM_ALBUM_INDEX_TOTAL_IMAGES", "Total Images");
+define("_AM_ALBUM_INDEX_INACTIVE_IMAGES", "Inactive Images");
+define("_AM_ALBUM_INDEX_DENIED_IMAGES", "Images awaiting approval");
+define("_AM_ALBUM_INDEX_TOTAL_MESSAGES", "Total image Comments");
+define("_AM_ALBUM_INDEX_DENIED_MESSAGES", "Image comments awaiting approval");
+define("_AM_ALBUM_INDEX_BATCHFILES", "Total files in Batch folder");
+define("_AM_ALBUM_ADDITIONAL", "Additional Informations");
+define("_AM_ALBUM_SITEMAP_MODULE", "Sitemap Module");
+define("_AM_ALBUM_SITEMAP_INSTALLED", "Sitemap Module installed");
+define("_AM_ALBUM_SITEMAP_NOTINSTALLED", "Sitemap Module not installed");
+define("_AM_ALBUM_SITEMAP_PLUGIN_FOUND", "and icmspoll plugin found");
+define("_AM_ALBUM_SITEMAP_PLUGIN_NOTFOUND", "and icmspoll plugin not found. Please update module or copy manually from '/modules/icmspoll/extras/modules/sitemap/' to '/modules/sitemap/plugins'");
+define("_AM_ALBUM_INDEX_GDLIB", "GD-Library");
+define("_AM_ALBUM_INDEX_GDLIB_FOUND", "It looks like GD lib is installed");
+define("_AM_ALBUM_INDEX_GDLIB_NOT_FOUND", "It looks like GD is not installed. Please check this before using the module");
