@@ -47,7 +47,20 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
-
+	
+	/**
+	 * getImages returns images objects
+	 * 
+	 * @param $active - only active images
+	 * @param $approve - approved images
+	 * @param $start - start of images for pagination
+	 * @param $limit - imit to fetch - to be set in module preferences
+	 * @param $order by field
+	 * @param $sort - sort ASC/DESC/RAND()
+	 * @param $a_id - album_id to get by Album
+	 * @param $tag_id - to get only with tag_id
+	 * @param $publisher - published by
+	 */
 	public function getImages($active = FALSE, $approve = FALSE, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC', $a_id = FALSE, $tag_id = FALSE, $publisher = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if($start) $criteria->setStart($start);
@@ -150,6 +163,10 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		}
 	}
 	
+	/**
+	 * gives a list of all images in batch upload folder
+	 * /uploads/album/batch
+	 */
 	public function getImagesFromBatch() {
 		$images = array();
 		$images = icms_core_Filesystem::getFileList(ALBUM_UPLOAD_ROOT . 'batch/', '', array('gif', 'jpg', 'png'));
@@ -160,10 +177,51 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	/**
+	 * watermarking with image
+	 * 
+	 * @param $SourceFile - is source of the image file to be watermarked
+	 * @param $WatermarkText - is the text of the watermark
+	 * @param $DestinationFile - is the destination location where the watermarked images will be placed
+	 */
+	function watermarkImage ($source, $watermark, $dest) { 
+		list($width, $height) = getimagesize($source);
+		$image_p = imagecreatetruecolor($width, $height);
+		$image = imagecreatefromjpeg($source);
+		imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width, $height); 
+		$black = imagecolorallocate($image_p, 0, 0, 0);
+		$font = 'arial.ttf';
+		$font_size = 10;
+		imagettftext($image_p, $font_size, 0, 10, 20, $black, $font, $watermark);
+		if ($DestinationFile<>'') {
+			imagejpeg ($image_p, $dest, 100);
+		} else {
+			header('Content-Type: image/jpeg');
+			imagejpeg($image_p, null, 100);
+		}
+		imagedestroy($image); 
+		imagedestroy($image_p);
+	}
+	
 	protected function beforeInsert(&$obj) {
 		$dsc = $obj->getVar("img_description", "s");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
 		$obj->setVar("img_description", $dsc);
+		return TRUE;
+	}
+	
+	protected function beforeSave(&$obj) {
+		$source = ICMS_UPLOAD_PATH . '/album/images/';
+		$img = $obj->getVar("img_url", "e");
+		$watermark = $obj->getVar("img_copyright", "e");
+		//$watermark = icms_core_DataFilter::undoHtmlSpecialChars($watermark);
+		$dest = ICMS_UPLOAD_PATH . '/album/images/';
+		$timestamp = $obj->getVar("img_published_date", "e");
+		$new_img = $timestamp . "_" . $img;
+		$this->watermarkImage($source . $img, $watermark, $dest . $new_img);
+		icms_core_Filesystem::deleteFile(ALBUM_UPLOAD_ROOT . "images/" . $img);
+		$obj->setVar("img_url", $new_img);
+		
 		return TRUE;
 	}
 	

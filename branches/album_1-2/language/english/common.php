@@ -98,3 +98,8 @@ define("_CO_ALBUM_IMAGES_IMG_URLLINK_DSC", "Enter a full url (included http://)"
 // constants added in class/Album.php
 define("_CO_ALBUM_ALBUM_ALBUM_TAGS", "Tags");
 define("_CO_ALBUM_ALBUM_ALBUM_TAGS_DSC", "Select the tags for this album");
+/**
+ * added in 1.2
+ */
+define("_CO_ALBUM_IMAGES_IMG_COPYRIGHT", "Watermark text");
+define("_CO_ALBUM_IMAGES_IMG_COPYRIGHT_DSC", "You can add a watermark Text to your image");

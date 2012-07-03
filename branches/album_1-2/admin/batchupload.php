@@ -60,6 +60,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$imagesObject->setVar("img_approve", TRUE);
 				$imagesObject->setVar("weight", $i);
 				$imagesObject->setVar("img_publisher", icms::$user->getVar("uid", "e"));
+				$imagesObject->setVar("img_copyright", $_POST['img_copyright']);
+				if($_POST['img_urllink']) {
+					
+				}
 				//if($albumConfig['need_image_links'] == 1) $imagesObject->setVar("img_urllink", $_POST['img_urllink']);
 				
 				icms_core_Filesystem::copyRecursive(ALBUM_BATCH_ROOT . $value, ALBUM_IMAGES_UPLOAD . $value);
@@ -95,15 +99,23 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$seltags->addOptionArray($album_images_handler->getImagesTags());
 				$form->addElement($seltags);
 			}
+			$form->addElement(new icms_form_elements_Text(_CO_ALBUM_IMAGES_IMG_COPYRIGHT, "img_copyright", 50, 255 ));
 			/**
 			if($albumConfig['need_image_links'] == 1) {
 				$addUrllink = new icms_ipf_form_elements_Urllink($album_images_handler->create(TRUE), "img_urllink");
 				$form->addElement($addUrllink);
 			}
 			*/
+			$tray = new icms_form_elements_Tray(_CO_ALBUM_IMAGES_IMG_URLLINK, "<br />", "img_urllink");
+			$cap = new icms_form_elements_Text(_AM_ALBUM_BATCHUPLOAD_URL_CAP, "img_url_caption", 50, 255);
+			$dsc = new icms_form_elements_Text(_AM_ALBUM_BATCHUPLOAD_URL_DSC, "img_url_dsc", 50, 255);
+			$url = new icms_form_elements_Text(_AM_ALBUM_BATCHUPLOAD_URL_URL, "img_url_url", 50, 255);
+			$tray->addElement($cap);
+			$tray->addElement($dsc);
+			$tray->addElement($url);
+			$form->addElement($tray);
 			$form->addElement(new icms_form_elements_Button("", "submit", _SUBMIT, "submit"));
-			$form->display();
-			
+			$form->display();			
 			break;
 	}
 	include_once 'admin_footer.php';

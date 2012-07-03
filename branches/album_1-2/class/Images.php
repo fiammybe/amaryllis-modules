@@ -40,6 +40,7 @@ class AlbumImages extends icms_ipf_Object {
 		$this->initCommonVar('weight');
 		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar('img_urllink', XOBJ_DTYPE_URLLINK);
+		$this->quickInitVar('img_copyright', XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->initCommonVar('dohtml', FALSE, 1);
 		$this->initCommonVar('dobr', FALSE, 1);
 		$this->initCommonVar('doimage', FALSE, 1);
@@ -60,7 +61,6 @@ class AlbumImages extends icms_ipf_Object {
 			$this->hideFieldFromForm("img_urllink");
 			$this->hideFieldFromSingleView("img_urllink");
 		}
-		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 		if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
 			$this->setControl("img_tags", array("name" => "selectmulti", "itemHandler" => "images", "method" => "getImagesTags", "module" => "album"));
 		} else {
@@ -68,7 +68,7 @@ class AlbumImages extends icms_ipf_Object {
 			$this->hideFieldFromSingleView("img_tags");
 		}
 		
-		$this->hideFieldFromForm( array('img_publisher', 'img_published_date', 'img_updated_date'));
+		$this->hideFieldFromForm( array('img_copyright', 'img_publisher', 'img_published_date', 'img_updated_date'));
 		$this->hideFieldFromSingleView(array('dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode'));
 
 	}
