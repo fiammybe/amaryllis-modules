@@ -147,3 +147,6 @@ define("_MI_ALBUM_CONF_IMG_DEFAULT_COPYR", "Default copyright");
 define("_MI_ALBUM_CONF_IMG_DEFAULT_COPYR_DSC", "Set a default copyright for all Images");
 define("_MI_ALBUM_CONF_IMG_ALLOW_UPLOADER_COPYR", "Allow users to set theier own copyright on upload?");
 define("_MI_ALBUM_CONF_IMG_ALLOW_UPLOADER_COPYR_DSC", "Set to 'YES', if users can use an own copyright notice. Otherwise you definately need a default copyright");
+// added to mainmenu
+define("_MI_ALBUM_MENUMAIN_ADDALBUM", "Submit Album");
+define("_MI_ALBUM_MENUMAIN_ADDIMAGES", "Submit image");

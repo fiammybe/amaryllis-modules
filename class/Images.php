@@ -182,7 +182,7 @@ class AlbumImages extends icms_ipf_Object {
 			$publisher_uid = $this->getVar('img_publisher', 'e');
 			$userinfo = array();
 			$userObj = icms::handler('icms_member')->getuser($publisher_uid);
-			if (is_object($userObj)) {
+			if (is_object($userObj) && !$userObj->isNew()) {
 				$userinfo['uid'] = $publisher_uid;
 				$userinfo['uname'] = $userObj->getVar('uname');
 				$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
