@@ -18,12 +18,34 @@
         	#album_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
         	#album_manual a, #album_manual a:visited {color: #336699}
         	#album_manual a:hover {color: #336699; text-decoration: underline;}
+        	#icms-uptopmessage a {display: block; display: none; z-index: 999; opacity: .9; position: fixed; top: 100%; margin-top: -80px; left: 50%; margin-left: -160px;
+							border-radius: 24px; -moz-border-radius: 24px; -webkit-border-radius: 24px; -o-border-radius: 24px; -khtml-border-radius:24px; -icab-border-radius:24px; -ms-border-radius:24px;
+							width: 300px; line-height: 48px; height: 48px; padding: 10px; background-color: #000; font-size: 24px; text-align: center; color: #fff;}
         </style>
     </head>
     <body>
+    	<div id="top">&nbsp;</div>
     	<div id="album_manual">
 	        <h1>Album Manual</h1>
 	        	<p>Album is a gallery module for ImpressCMS.</p>
+	        <h2 id="index">Index</h2>
+	        <ul>
+	        	<li><a href="#keyfeatures">Keyfeatures</a></li>
+	        	<li><a href="#firsstart">Keyfeatures</a>
+	        		<ul>
+	        			<li><a href="#preferences">Preferences</a></li>
+	        			<li><a href="#adjustindex">Adjust Indexpage</a></li>
+	        			<li><a href="#firstalbum">Create your First Album</a></li>
+	        			<li><a href="#fillimages">Fill album with images</a></li>
+	        		</ul>
+	        	</li>
+	        	<li><a href="#permissions">Permissions</a></li>
+	        	<li><a href="#keyfeatures">Batchupload</a></li>
+	        	<li><a href="#messages">Comment System for single images</a></li>
+	        	<li><a href="#blocks">Module Blocks</a></li>
+	        	<li><a href="#templates">Templates</a></li>
+	        	<li><a href="#album_footer">Conclusion</a></li>
+	        </ul>
 	        <h2>Keyfeatures</h2>
 				<ul>
 					<li>You can create albums and Sub-Albums to order your images</li>
@@ -31,9 +53,9 @@
 					<li>Link Images to your products</li>
 					<li>Following mime types are supported, yet: jpg, jpeg, png, gif</li>
 				</ul>
-	        <h2>First Start</h2>
+	        <h2 id="firsstart">First Start</h2>
 	        <p>At first check out the preferences, to be sure it's all used like you need it.</p>
-	        <h3>Preferences</h3>
+	        <h3 id="preferences">Preferences</h3>
 	        <ul>
 	        	<li>Use Sprockets
 	        		<ul>
@@ -102,35 +124,50 @@
 	      					you will see a small popular Icon and you can see it in the popular block. You can turn off this functionality by setting to 0</li>
 	        		</ul>
 	        	</li>
+	        	<li>Use copyright <img style="vertical-align: middle" src="../images/new.png" alt="new!" />
+	        		<ul>
+	        			<li>Allow/disalow copyrights for images</li>
+	        		</ul>
+	        	</li>
+	        	<li>Default copyright <img style="vertical-align: middle" src="../images/new.png" alt="new!" />
+	        		<ul>
+	        			<li>Default copyright. You can enter a default one, but copyright can be changed on upload site.</li>
+	        		</ul>
+	        	</li>
+	        	<li>Allow users to add theier own copyrights <img style="vertical-align: middle" src="../images/new.png" alt="new!" />
+	        		<ul>
+	        			<li>Allow/disalow users to change the default copyright for images</li>
+	        		</ul>
+	        	</li>
 	        	<li>Days new / Days updated
 	        		<ul>
 	      				<li>Similar to the popular function: Enter the days, an Album should marked as new/updated. Set to 0 to turn off.</li>
 	        		</ul>
 	        	</li>
-	        	<li>Use a comment system for single images?
+	        	<li>Use a comment system for single images? <img style="vertical-align: middle" src="../images/updated.png" alt="new!" />
 	        		<ul>
 	      				<li>Here you can enable/disable the comment function for single images. If the comments are turned on, registred users will see a comment field below every image inside the colorbox. So
 	      					every user can comment the image. The system comment function will only be used for albums.</li>
 	        		</ul>
 	        	</li>
-	        	<li>New comments for images needs approval?
+	        	<li>New comments for images needs approval? <img style="vertical-align: middle" src="../images/updated.png" alt="new!" />
 	        		<ul>
 	      				<li>If this option is set to "Yes", the comments will not be shown directly after posting. They will be marked as not apparoved and you will see them in the waiting block of impresscms.
 	      					After you have approved the comment, it will be displayed. You also can set comments as not approved manually, if you like.</li>
 	        		</ul>
 	        	</li>
-	        	<li>Do you need a field for adding an url to single images?
+	        	<li>Do you need a field for adding an url to single images? <img style="vertical-align: middle" src="../images/updated.png" alt="new!" />
 	        		<ul>
 	        			<li>If set to yes, you will see a new field in images upload form, where you can enter a link to an external/internal site (product page, eternal shop etc.)</li>
 	        		</ul>
 	        	</li>
 	        </ul>
 	        <p>Perfectly! Preferences are done. The last preferences are system related: use the system comment system/notification system or even not. The system comment system will only be displayed for single Albums, to allow users/guests leave a comment for an Album.</p>
-	        <h3>Adjust index page</h3>
+	        <h3 id="adjustindex">Adjust index page</h3>
 	        <p>Now Let's have a look at the index Page. For this find the tab "Edit Indexpage" in Module Menu. Select the Index image, which you'd like to display on index or upload a new one using the image upload field. The Index image will be displayed on all module sites.</p>
 	        <p>The Index header is just a header on module home, like the heading. It can be used for some more Text on module home to explain/invite guests to register and upload or whatever you like to.</p>
 	        <p>The index footer is like the index image displayed on all sites of the module.</p>
-	        <h3>Create your First Album</h3>
+	        <h3 id="firstalbum">Create your First Album</h3>
 	        <p>Before you can upload any images you definately need to create an Album. Go to Tab "Manage Albums" and click "Add Album". Now you see the Form to create an Album. The First Album needs to be created on ACP, all other can also be created on frontend, if you like to.</p>
 	        <p>Just fill the form. It's your first Album, so you can not chosse a Parent Album here. Select an album image or upload a new one. The Album Description will be displayed in a tooltip on index view and as a Description on single Album view. If sprockets Module is installed you will see a list of Tags. Select the related tags for this Album.</p>
 	        <p>At least you can see several yes/no radio buttons. An album can only be visible on Frontend, if the following are set to yes:</p>
@@ -145,6 +182,7 @@
 	        	</li>
 	        </ul>
 	        <p>Well done! You have created your first Album. Continue with adding images, now. Just fill the form on Tab "Manage Images" => "Add Image" and you're done. Just a few remarks:</p>
+        	<h3 id="fillimages">Fill album with images</h3>
         	<ul>
         		<li>Image Description
         			<ul>
@@ -159,6 +197,12 @@
         		<li>Image Tags
         			<ul>
         				<li>Select the image related tags. A random notice: Tags will allways be displayed as a link, to filter all albums/images assigned to this tag.</li>
+        			</ul>
+        		</li>
+        		<li>Image Copyright <img style="vertical-align: middle" src="../images/new.png" alt="new!" />
+        			<ul>
+        				<li>If enabled in preferences you can enter a copyright text per image or use default one (both together is possible, too.. just allow default copyright and change if needed)
+        					Select the Position and the color of the copyright and you're done. The copyright will be added by uploading/adding new images</li>
         			</ul>
         		</li>
         		<li>Additional informations, which are displayed on single index-view inside colorbox:
@@ -176,7 +220,13 @@
         	<p>Here you can set several Permissions: View Permissions for single Albums will set the view permissions per user group to each album. Just select -> submit -> done.</p>
         	<p>The same for Images and Image submit permissions. Image submit permissions will allow each group, to upload images into a single album. On front end you can see a submit icon behind each album, where you have permissions to submit. Just click the icon, if you're using the Disclaimer -> accept. Now you can enter all informations. Album id will be set by the module related on the Album, where you're submitting.</p>
         	<p>Now the only Permissions, which are handled different and can not be set here: Album submit permissions. You need to enable this in Module Preferences -> "uploader groups". All selected groups will have permissions to create theier own albums.</p>
-        	<h2>Module Blocks</h2>
+        	<h2 id="batchupload">Batchupload <img style="vertical-align: middle" src="../images/new.png" alt="new!" /></h2>
+        	<p>Currently the module has the possibility to upload multiple files via ftp into "uploads/album/batch/". Go to ACP Tab "Batchupload". At First select the target Album, check all images to add, enter a description, select tags, if sprockets module is installed and enabled, enter copyright text or use default, enter the urllink.</p>
+        	<p>Click on "Submit" to apply batch. All images will now be moved to "uploads/album/images/" and added to database. If copyrights, urrlink, tags are enabled, it will all be done at once.</p>
+        	<h2 id="messages">Comment System for single images <img style="vertical-align: middle" src="../images/new.png" alt="new!" /></h2>
+        	<p>If allowed in preferences, you can have a small message/comment system in Album images. If allowed, you'll see a textarea field behind each image. Here users (highly recommanded not to allow guests writing comments..) can add a comment to the picture inside colorbox, which will be visible directly behind the image. Album comments are visible inside an album and are managed in impresscms. The image comments can be managed by you inside the module.
+        		</p>
+        	<h2 id="blocks">Module Blocks</h2>
         	<p>Currently the Module has two Blocks:</p>
         	<ul>
         		<li>Album Menu Block
@@ -204,7 +254,7 @@
         			</ul>
         		</li>
         	</ul>
-        	<h2>Templates</h2>
+        	<h2 id="templates">Templates</h2>
         	<p>There's a long list of Templates available and I'll try to give a short overview:</p>
         	<ul>
         		<li>/album_admin.html
@@ -256,5 +306,37 @@
 				<p>You might also like to follow the recent changes in Album Module? Please, have a look at <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/album/trunk/" title="'Album' SVN on Assembla" rel="external">'Album' SVN on Assembla</a> or make a checkout of my <a href="http://code.google.com/p/amaryllis-modules/" title="Album" rel="external">module svn on google code</a>.</p>
 			</div>
         </div>
+        
+        <div id="icms-uptopmessage"><a href="#top">back top</a></div>
+        
+        <!-- script for uptop-link -->
+		<script type="text/javascript">
+			$(function () { // run this code on page load (AKA DOM load)
+	 
+				/* set variables locally for increased performance */
+				var scroll_timer;
+				var displayed = false;
+				var $message = $('#icms-uptopmessage a');
+				var $window = $(window);
+				var top = $(document.body).children(0).position().top;
+	 
+				/* react to scroll event on window */
+				$window.scroll(function () {
+					window.clearTimeout(scroll_timer);
+					scroll_timer = window.setTimeout(function () { // use a timer for performance
+						if($window.scrollTop() <= top) // hide if at the top of the page
+							{
+							displayed = false;
+							$message.fadeOut(500);
+							}
+						else if(displayed == false) // show if scrolling down
+							{
+							displayed = true;
+							$message.stop(true, true).show().click(function () { $message.fadeOut(500); });
+							}
+					}, 100);
+				});
+			});
+		</script>
 	</body>
 </html>
