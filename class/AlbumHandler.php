@@ -353,7 +353,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		if ($obj->getVar('album_pid','e') == $obj->getVar('album_id','e')){
 			$obj->setVar('album_pid', 0);
 		}
-		if (!$obj->getVar('album_img_upload') == "") {
+		if (!$obj->getVar("album_img_upload", "e") == "") {
 			$obj->setVar('album_img', $obj->getVar('album_img_upload') );
 		}
 		$dsc = $obj->getVar("album_description", "s");
