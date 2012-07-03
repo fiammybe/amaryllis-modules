@@ -29,7 +29,7 @@ function editalbum($album_id = 0) {
 	}
 	if (!$albumObj->isNew()){
 		$albumObj->setVar( 'album_updated_date', (time() - 100) );
-		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_ALBUM . ' > ' . _MI_ALBUM_ALBUM_EDITING);
+		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_ALBUM . ' > ' . _MI_ALBUM_ALBUM_EDITING . ' &raquo;' . $albumObj->getVar("album_title", "e") . "&laquo;");
 		$sform = $albumObj->getForm(_AM_ALBUM_ALBUM_EDIT, 'addalbum');
 		$sform->assign($icmsAdminTpl);
 	} else {

@@ -28,8 +28,8 @@ function editimages($images_id = 0) {
 	}
 	if (!$imagesObj->isNew()){
 		$imagesObj->setVar( 'img_updated_date', (time() - 100) );
-		icms::$module->displayAdminmenu( 2, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT);
-		$sform = $imagesObj->getForm(_AM_ALBUM_IMAGES_EDIT, "addimages");
+		icms::$module->displayAdminmenu( 2, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT . " &raquo;" . $imagesObj->getVar("img_title", "e"). "&laquo;");
+		$sform = $imagesObj->getForm(_AM_ALBUM_IMAGES_EDIT  . " &raquo;" . $imagesObj->getVar("img_title", "e"). "&laquo;", "addimages");
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$imagesObj->setVar('img_publisher', $img_uid);
