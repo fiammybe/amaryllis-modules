@@ -22,7 +22,7 @@
 					<{/foreach}>
 				</fieldset>
 				<input type="hidden" name="user_id" value="<{$user_id}>" />
-				<{if $poll.hasVoted}>
+				<{if !$block.icmspoll_singlepoll.hasVoted}>
 					<div class="box">
 						<input type="label" readonly size="50" class="btn icmspoll" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 					</div>
