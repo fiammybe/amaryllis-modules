@@ -75,6 +75,7 @@ $modversion = array(
 						"hasNotification"			=> 1,
 						"hasComments"				=> 1
 				);
+
 $modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>";
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=412]Claudia[/url]";
@@ -105,6 +106,33 @@ $i++;
 $modversion['object_items'][$i] = 'message';
 
 $modversion['tables'] = icms_getTablesArray( $modversion['dirname'], $modversion['object_items'] );
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////// MAINMENU INFORMATION ///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'album') {
+	global $album_isAdmin;
+	$album_handler = icms_getModuleHandler('album', basename(dirname(__FILE__)), 'album');
+	$images_handler = icms_getModuleHandler('images', basename(dirname(__FILE__)), 'album');
+	$i = 0;
+	$imagesbyuser = $images_handler->filterUsers(FALSE);
+	foreach ($imagesbyuser as $link => $value) {
+		$i++;
+		$modversion['sub'][$i]['name'] = _MD_ALBUM_GET_BY_PUBLISHER . " " . $value;
+		$modversion['sub'][$i]['url'] = 'index.php?op=getByPublisher&uid=' . $link;
+	}
+	if ($album_handler->userCanSubmit()) {
+		$i++;
+		$modversion['sub'][$i]['name'] = _MI_ALBUM_MENUMAIN_ADDALBUM;
+		$modversion['sub'][$i]['url'] = 'album.php?op=mod';
+	}
+	if($album_isAdmin) {
+		$i++;
+		$modversion['sub'][$i]['name'] = _MI_ALBUM_MENUMAIN_ADDIMAGES;
+		$modversion['sub'][$i]['url'] = 'images.php?op=mod';
+	}
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// TEMPLATES /////////////////////////////////////////////////////

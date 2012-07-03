@@ -194,6 +194,17 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		}
 	}
 	
+	public function filterUsers($showNull = FALSE) {
+		$sql = "SELECT DISTINCT (img_publisher) FROM " . icms::$xoopsDB->prefix("album_images");
+		if ($result = icms::$xoopsDB->query($sql)) {
+			if($showNull) $bids[0] = '--------------';
+			while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+				$bids[$myrow['img_publisher']] = icms_member_user_Object::getUnameFromId((int)$myrow['img_publisher']);
+			}
+			return $bids;
+		}
+	}
+	
 	/**
 	 * gives a list of all images in batch upload folder
 	 * /uploads/album/batch
