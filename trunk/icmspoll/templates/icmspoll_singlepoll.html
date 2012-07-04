@@ -64,19 +64,26 @@
 		</div>
 		
 		<div class="singlepoll_form">
-		    <div class="poll_option_set">
-    			<{foreach item=option from=$options name=options}>
-    				<div class="result_option">
-    				   <div class="icmspoll_option_<{$option.color}>" style="width:<{$option.result}>" >
-    				       <{$option.result}>
-    				   </div>
-                    </div>
-    				<div class="poll_option_txt">
-    					<{$option.text}>
-    				</div>
-    				<{$poll.delimeter}>
-    			<{/foreach}>
-			</div>
+		    <div class="poll_result">
+		    	<div class="icmspoll_result_options">
+	    			<{foreach item=option from=$options name=options}>
+	    				<div class="result_option">
+	    				   <div class="icmspoll_option_<{$option.color}> icmspoll_option_color" style="width:<{$option.result}>" >
+	    				       &nbsp;
+	    				   </div>
+	    				   <div class="option_result_value">
+	    				   		<{$option.result}>
+	    				   </div>
+	                    </div>
+	                    <div class="icmspoll_clear_left">&nbsp;</div>
+	    				<div class="poll_option_txt">
+	    					<{$option.text}>
+	    				</div>
+	    				<{$poll.delimeter}>
+	    			<{/foreach}>
+    			</div>
+    		</div>
+    		<div class="icmspoll_clear_left">&nbsp;</div>
 			<{if $poll.hasVoted && !$poll.hasExpired}>
 				<div class="box">
 					<input type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
