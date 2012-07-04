@@ -22,11 +22,6 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 icms_loadLanguageFile("icmspoll", "common");
 
 class IcmspollIndexpageHandler extends icms_ipf_Handler {
-
-	public $_moduleName;
-	
-	public $_uploadPath;
-
 	/**
 	 * Constructor
 	 *
@@ -36,7 +31,6 @@ class IcmspollIndexpageHandler extends icms_ipf_Handler {
 		parent::__construct($db, "indexpage", "index_key", "index_header", "index_heading", "icmspoll");
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
-		
 	}
 
 	static public function getImageList() {

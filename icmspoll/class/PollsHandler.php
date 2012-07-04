@@ -28,6 +28,8 @@ if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dir
  */
 class IcmspollPollsHandler extends icms_ipf_Handler {
 	
+	private $_poll_delimeters;
+	
 	public function __construct(&$db) {
 		parent::__construct($db, 'polls', 'poll_id', 'question', 'description', 'icmspoll');
 		$this->addPermission("polls_view", _CO_ICMSPOLL_POLLS_VIEWPERM, _CO_ICMSPOLL_POLLS_VIEWPERM_DSC);
@@ -35,8 +37,10 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	}
 	
 	public function getDelimeters() {
-		$delimeters = array(1 => _CO_ICMSPOLL_POLLS_DELIMETER_BRTAG, 2 => _CO_ICMSPOLL_POLLS_DELIMETER_SPACE);
-		return $delimeters;
+		if(!$this->_poll_delimeters) {
+			$this->_poll_delimeters = array(1 => _CO_ICMSPOLL_POLLS_DELIMETER_BRTAG, 2 => _CO_ICMSPOLL_POLLS_DELIMETER_SPACE);
+		}
+		return $this->_poll_delimeters;
 	}
 	
 	public function getPolls($start = 0, $limit = 0, $order = "end_time", $sort = "DESC", $uid = FALSE, $expired = FALSE, $inBlocks = FALSE, $started = TRUE) {
@@ -93,7 +97,6 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		$pollObj = $this->get($poll_id);
 		if(is_object($pollObj) && !$pollObj->isNew()) {
 			$pollObj->setVar("started", "1");
-			$this->insert($pollObj, TRUE);
 			if (!$pollObj->getVar("notification_sent", "e") == 1 ) {
 				$pollObj->sendNotifPollPublished();
 				$pollObj->setVar('notification_sent', 1);
