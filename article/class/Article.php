@@ -490,7 +490,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	}
 	
 	function getItemLink($onlyUrl = FALSE) {
-		$seo = $this->handler->makelink($this);
+		$seo = $this->getVar("short_url", "e");
 		$url = ARTICLE_URL . 'singlearticle.php?article_id=' . $this -> getVar( 'article_id' ) . '&amp;article=' . $seo;
 		if ($onlyUrl) return $url;
 		return '<a href="' . $url . '" title="' . $this -> getVar( 'article_title' ) . ' ">' . $this -> getVar( 'article_title' ) . '</a>';
