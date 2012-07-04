@@ -58,3 +58,5 @@
 .icmspoll {width: 10em; padding: 0 20px 0 45px;}
 .voted {background: white url("images/voted.png") no-repeat center left; width: 15em; padding: 0 20px 0 45px;}
 .voted:hover {background: #F8F8F8 url("images/voted.png") no-repeat center left;text-decoration: none;}
+.poll_result {display: block;}
+.box {display: block;}
