@@ -195,6 +195,23 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		}
 	}
 	
+	public function updateTotalInits($poll_id) {
+		$options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
+		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("poll_id", (int)$poll_id));
+		$options = $options_handler->getObjects($crit, TRUE, FALSE);
+		$i = 0;
+		foreach ($options as $option) {
+			$optionObj = $options_handler->get($option['id']);
+			$init = $optionObj->getVar("option_init", "e");
+			$i = $i+(int)$init;
+		}
+		$pollObj = $this->get((int)$poll_id);
+		$pollObj->updating_expired = TRUE;
+		$pollObj->setVar("total_init_value", $i);
+		$this->insert($pollObj, TRUE);
+		return TRUE;
+	}
+	
 	/**
 	 * core search function
 	 */

@@ -30,7 +30,7 @@ function editoption($option_id = 0, $poll_id = 0) {
 	
 	if(!$optionObj->isNew()) {
 		icms::$module->displayAdminmenu( 2, _MI_ICMSPOLL_MENU_OPTIONS . ' > ' . _MI_ICMSPOLL_MENU_OPTIONS_EDITING);
-		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_EDITING, 'addoptions', "options.php?op=addoptions&poll_id=" . $poll_id, _CO_ICMS_SUBMIT, "location.href='options.php'");
+		$sform = $optionObj->getForm(_MI_ICMSPOLL_MENU_OPTIONS_EDITING, 'addoptions', "options.php?op=addoption&option_id=" . $optionObj->id(), _CO_ICMS_SUBMIT, "location.href='options.php'");
 		$sform->assign($icmsAdminTpl);
 	} else {
 		icms::$module->displayAdminmenu( 2, _MI_ICMSPOLL_MENU_OPTIONS . " > " . _MI_ICMSPOLL_MENU_OPTIONS_CREATINGNEW);
@@ -89,22 +89,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			foreach ($_POST['IcmspollOptions_objects'] as $key => $value) {
 				$changed = FALSE;
 				$optionsObj = $options_handler->get($value);
-				if($optionsObj->getVar('option_text', 'e') != $_POST['option_text'][$key]) {
-					$optionsObj->setVar('option_text', $_POST['option_text'][$key]);
-					$changed = TRUE;
-				}
-				if($optionsObj->getVar('option_color', 'e') != $_POST['option_color'][$key]) {
-					$optionsObj->setVar('option_color', $_POST['option_color'][$key]);
-					$changed = TRUE;
-				}
-				if($optionsObj->getVar('poll_id', 'e') != $_POST['poll_id'][$key]) {
-					$optionsObj->setVar('poll_id', $_POST['poll_id'][$key]);
-					$changed = TRUE;
-				}
-				if($optionsObj->getVar('option_init', 'e') != $_POST['option_init'][$key]) {
-					$optionsObj->setVar('option_init', (int)($_POST['option_init'][$key]));
-					$changed = TRUE;
-				}
+				$optionObj->_updating = TRUE;
+				
 				if($optionsObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 					$optionsObj->setVar('weight', (int)($_POST['weight'][$key]));
 					$changed = TRUE;
@@ -119,11 +105,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			icms::$module->displayAdminmenu(2, _MI_ICMSPOLL_MENU_OPTIONS);
 			
 			$objectTable = new icms_ipf_view_Table($options_handler, NULL);
-			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollIdControl"));
-			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionTextControl"));
-			$objectTable->addColumn(new icms_ipf_view_Column("option_color", FALSE, FALSE, "getOptionColorControl"));
-			if($icmpollConfig['allow_init_value'] == 1) {
-				$objectTable->addColumn(new icms_ipf_view_Column("option_init", FALSE, 75, "getOptionInitControl"));
+			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollName"));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionText"));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_color", FALSE, FALSE, ""));
+			if($icmspollConfig['allow_init_value'] == 1) {
+				$objectTable->addColumn(new icms_ipf_view_Column("option_init", FALSE, 75, ""));
 			}
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
 			

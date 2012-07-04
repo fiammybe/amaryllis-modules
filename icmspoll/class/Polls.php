@@ -51,10 +51,11 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("poll_comments", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("notification_sent", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("message_sent", XOBJ_DTYPE_INT, FALSE);
-		$this->initCommonVar("dohtml", FALSE, 1);
-		$this->initCommonVar("dobr", FALSE);
-		$this->initCommonVar("doimage", FALSE, 1);
-		$this->initCommonVar("dosmiley", FALSE, 1);
+		$this->quickInitVar("total_init_value", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
+		//$this->initCommonVar("dohtml", FALSE, 1);
+		//$this->initCommonVar("dobr", FALSE);
+		//$this->initCommonVar("doimage", FALSE, 1);
+		//$this->initCommonVar("dosmiley", FALSE, 1);
 		$this->initCommonVar("docxode", FALSE, 1);
 		
 		$this->setControl("description", array('name' => 'textarea', 'form_editor' => 'htmlarea'));
@@ -66,7 +67,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->setControl("expired", "yesno");
 		$this->setControl("started", "yesno");
 		
-		$this->hideFieldFromForm(array("message_sent", "notification_sent", "started", "expired", "created_on", "poll_comments", "user_id", "votes", "voters"));
+		$this->hideFieldFromForm(array("total_init_value", "message_sent", "notification_sent", "started", "expired", "created_on", "poll_comments", "user_id", "votes", "voters"));
 		$this->hideFieldFromSingleView(array("started", "expired"));
 
 	}
@@ -200,6 +201,8 @@ class IcmspollPolls extends icms_ipf_Object {
 					if(!$icmspoll_log_handler->insert($logObj, TRUE)) {
 					} else {
 						$icmspoll_option_handler->updateCount($optionObj);
+						$this->updating_expired = TRUE;
+						$this->handler->updateCount($this->id());
 					}
 				}
 			}
@@ -214,10 +217,15 @@ class IcmspollPolls extends icms_ipf_Object {
 				$logObj->setVar("user_id", $user_id);
 				$logObj->setVar("time", time());
 				$icmspoll_log_handler->insert($logObj, TRUE);
-				$icmspoll_option_handler->updateCount($optionObj);
+				if(!$icmspoll_log_handler->insert($logObj, TRUE)) {
+				} else {
+					$icmspoll_option_handler->updateCount($optionObj);
+					$this->updating_expired = TRUE;
+					$this->handler->updateCount($this->id());
+				}
 			}
 		}
-		$this->handler->updateCount($this->id());
+		
 		return TRUE;
 	}
 

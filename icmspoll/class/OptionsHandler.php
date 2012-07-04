@@ -109,6 +109,14 @@ class IcmspollOptionsHandler extends icms_ipf_Handler {
 		return TRUE;
 	}
 	
+	protected function afterSave(&$obj) {
+		if($obj->_updating) return TRUE;
+		$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+		$polls_handler->updateTotalInits($obj->getVar("poll_id", "e"));
+		unset($polls_handler);
+		return TRUE;
+	}
+	
 	protected function afterDelete(&$obj) {
 		$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
 		$log_handler->deleteByOptionId($obj->id());

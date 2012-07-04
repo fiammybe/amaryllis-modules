@@ -21,6 +21,8 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class IcmspollOptions extends icms_ipf_Object {
+	
+	public $_updating = FALSE;
 
 	/**
 	 * constructor
@@ -53,31 +55,6 @@ class IcmspollOptions extends icms_ipf_Object {
 		return $pollObj->getQuestion();
 	}
 	
-	public function getPollIdControl() {
-		$icmspoll_polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
-		$options = $icmspoll_polls_handler->getList();
-		$control = new icms_form_elements_Select('', 'poll_id[]', $this->getVar('poll_id', 'e'));
-		$control->addOptionArray($options);
-		return $control->render();
-	}
-	
-	public function getOptionTextControl() {
-		$control = new icms_form_elements_Text('', 'option_text[]', 50, 255,$this->getVar('option_text', 'e'));
-		return $control->render();
-	}
-	
-	public function getOptionColorControl() {
-		$options = $this->handler->getOptionColors();
-		$control = new icms_form_elements_Select('', 'option_color[]', $this->getVar('option_color', 'e'));
-		$control->addOptionArray($options);
-		return $control->render();
-	}
-	
-	public function getOptionInitControl() {
-		$control = new icms_form_elements_Text('', 'option_init[]', 5, 7,$this->getVar('option_init', 'e'));
-		return $control->render();
-	}
-	
 	public function getWeightControl() {
 		$control = new icms_form_elements_Text('', 'weight[]', 5, 7,$this->getVar('weight', 'e'));
 		$control->setExtra( 'style="text-align:center;"' );
@@ -90,26 +67,24 @@ class IcmspollOptions extends icms_ipf_Object {
 		return $optionText;
 	}
 	
-	public function getOptionResult($endresult = FALSE) {
+	public function getOptionEndresult() {
 		global $icmspoll_isAdmin;
-		if($endresult) {
-			$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-			$poll_id = $this->getVar("poll_id", "e");
-			$option_id = $this->getVar("option_id", "e");
-			$option_result = $log_handler->getVotesPerCentByOptionId($poll_id, $option_id) . "%";
-		} else {
-			if($icmspoll_isAdmin) {
-				$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-				$poll_id = $this->getVar("poll_id", "e");
-				$option_id = $this->getVar("option_id", "e");
-				$option_result = $log_handler->getVotesPerCentByOptionId($poll_id, $option_id) . "%";
-			} else {
-				$option_init = $this->getVar("option_init", "e");
-				$option_count = $this->getVar("option_count", "e");
-				$option_result = ($option_init + $option_count) . " " . _CO_ICMSPOLL_OPTIONS_VOTES; 
-			}
-		}
+		$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+		$pollObj = $polls_handler->get($this->getVar("poll_id", "e"));
+		$total_votes = $pollObj->getVar("votes", "e");
+		$total_opt_votes = $this->getVar("option_count", "e");
+		$option_result =  @round((($total_opt_votes / $total_votes) * 100),2) . "%";
+		unset($log_handler);
 		return $option_result;
+	}
+	
+	public function getOptionResult() {
+		$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+		$pollObj = $polls_handler->get($this->getVar("poll_id", "e"));
+		$total_votes = $pollObj->getVar("total_init_value", "e") + $pollObj->getVar("votes", "e");
+		$total_opt_votes = $this->getVar("option_init", "e") + $this->getVar("option_count", "e");
+		$option_endresult =  @round((($total_opt_votes / $total_votes) * 100),2) . "%";
+		return $option_endresult;
 	}
 	
 	public function getOptionAnonVotes() {
@@ -146,7 +121,7 @@ class IcmspollOptions extends icms_ipf_Object {
 		$ret['text'] = $this->getOptionText();
 		$ret['color'] = $this->getVar("option_color", "e");
 		$ret['result'] = $this->getOptionResult();
-		$ret['endresult'] = $this->getOptionResult(TRUE);
+		$ret['endresult'] = $this->getOptionEndresult();
 		$ret['anon_votes'] = $this->getOptionAnonVotes();
 		$ret['user_votes'] = $this->getOptionUserVotes();
 		$ret['total_votes'] = $this->getTotalOptionVotes();
