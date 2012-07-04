@@ -86,6 +86,7 @@ class IcmspollOptionsHandler extends icms_ipf_Handler {
 		$icmspoll_log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
 		$votes = $icmspoll_log_handler->getTotalVotesByOptionId($obj->id());
 		$obj->setVar("option_count", $votes);
+		$obj->_updating = TRUE;
 		$this->insert($obj, TRUE);
 		return TRUE;
 	}

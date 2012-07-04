@@ -21,6 +21,11 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 class IcmspollIndexpage extends icms_ipf_Object {
 	
+	private $index_heading;
+	private $index_header;
+	private $index_footer;
+	private $index_image;
+	
 	public function __construct(&$handler) {
 		parent::__construct($handler);
 
@@ -51,40 +56,44 @@ class IcmspollIndexpage extends icms_ipf_Object {
 	}
 
 	public function getIndexImg() {
-		$indeximage = $image_tag = '';
-		$indeximage = $this->getVar('index_image', 'e');
-		if (!$indeximage == "" && !$indeximage == "0") {
-			$image_tag = ICMSPOLL_UPLOAD_URL . 'indexpage/' . $indeximage;
-			return '<div class="icmspoll_indeximage"><img src="' . $image_tag . '" /></div>';
+		if(!$this->index_image) {
+			$indeximage = $this->getVar('index_image', 'e');
+			if (!$indeximage == "" && !$indeximage == "0") {
+				$image_tag = ICMSPOLL_UPLOAD_URL . 'indexpage/' . $indeximage;
+				$this->index_image = '<div class="icmspoll_indeximage"><img src="' . $image_tag . '" /></div>';
+			}
 		}
-		return FALSE;
+		return $this->index_image;
 	}
 	
 	public function getIndexHeader() {
-		$indexheader = '';
-		$indexheader = $this->getVar('index_header', 'e');
-		if($indexheader != "") {
-			return '<div class="icmspoll_indexheader">' . $indexheader . '</div>';
+		if(!$this->index_header) {
+			$indexheader = $this->getVar('index_header', 'e');
+			if($indexheader != "") {
+				$this->index_header = '<div class="icmspoll_indexheader">' . $indexheader . '</div>';
+			}
 		}
-		return FALSE;
+		return $this->index_header;
 	}
 
 	public function getIndexHeading() {
-		$indexheading = '';
-		$indexheading = icms_core_DataFilter::checkVar($this->getVar('index_heading', 's'), 'str', 'encodelow');
-		if($indexheading != "") {
-			return '<div class="icmspoll_indexheading">' . $indexheading . '</div>';
+		if(!$this->index_heading) {
+			$indexheading = icms_core_DataFilter::checkVar($this->getVar('index_heading', 's'), 'str', 'encodelow');
+			if($indexheading != "") {
+				$this->index_heading = '<div class="icmspoll_indexheading">' . $indexheading . '</div>';
+			}
 		}
-		return FALSE;
+		return $this->index_heading;
 	}
 	
 	public function getIndexFooter() {
-		$indexfooter = '';
-		$indexfooter = icms_core_DataFilter::checkVar($this->getVar('index_footer', 's'), 'str', 'encodelow');
-		if($indexfooter != "") {
-			return '<div class="icmspoll_indexfooter">' . $indexfooter . '</div>';
+		if(!$this->index_footer) {
+			$indexfooter = icms_core_DataFilter::checkVar($this->getVar('index_footer', 's'), 'str', 'encodelow');
+			if($indexfooter != "") {
+				$this->index_footer = '<div class="icmspoll_indexfooter">' . $indexfooter . '</div>';
+			}
 		}
-		return FALSE;
+		return $this->index_footer;
 	}
 
 	function toArray() {
