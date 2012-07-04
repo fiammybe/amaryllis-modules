@@ -265,7 +265,7 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 	protected function afterDelete(& $obj) {
 		$notification_handler = icms::handler( 'icms_data_notification' );
 		$module_handler = icms::handler('icms_module');
-		$module = $module_handler->getByDirname( icms::$module -> getVar( 'dirname' ) );
+		$module = $module_handler->getByDirname( icms::$module->getVar( 'dirname' ) );
 		$module_id = icms::$module->getVar('mid');
 		$category = 'global';
 		$category_id = $obj->id();

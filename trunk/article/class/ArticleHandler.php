@@ -23,6 +23,7 @@ icms_loadLanguageFile("article", "common");
 
 class ArticleArticleHandler extends icms_ipf_Handler {
 	
+	private $_article_related = array();
 	/**
 	 * Constructor
 	 *
@@ -273,15 +274,12 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function getRelated() {
-		$related = $this->getList(TRUE, TRUE);
-		return $related;
+		if(!$this->_article_related) {
+			$this->_article_related = $this->getList(TRUE, TRUE);
+		}
+		return $this->_article_related;
 	}
 	
-	public function makeLink($article) {
-		$seo = str_replace(" ", "-", $article->getVar('short_url'));
-		return $seo;
-	}
-
 	public function getCountCriteria ($active = FALSE, $approve = FALSE, $groups = array(), $perm = 'article_grpperm', $article_publisher = FALSE, $article_id = FALSE, $article_cid = FALSE, $tag_id = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if ($active) $criteria->add(new icms_db_criteria_Item('article_active', TRUE));
@@ -358,6 +356,8 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$teaser = $obj->getVar("article_teaser", "s");
 		$teaser = icms_core_DataFilter::checkVar($teaser, "html", "input");
 		$obj->setVar("article_teaser", $teaser);
+		$title = str_replace(" ", "_", $obj->getVar('short_url'));
+		$obj->setVar("short_url", $title);
 		return TRUE;
 	}
 	

@@ -50,9 +50,9 @@ require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 	// set document information
 	$pdf->SetCreator(PDF_CREATOR);
 	$pdf->SetAuthor(PDF_AUTHOR);
-	$pdf->SetTitle($doc_title);
-	$pdf->SetSubject($doc_title);
-	$pdf->SetKeywords($doc_keywords);
+	$pdf->SetTitle($title);
+	$pdf->SetSubject($title);
+	$pdf->SetKeywords($keywords);
 	$sitename = $icmsConfig['sitename'];
 	$siteslogan = $icmsConfig['slogan'];
 	$pdfheader = icms_core_DataFilter::undoHtmlSpecialChars($sitename.' - '.$siteslogan);
