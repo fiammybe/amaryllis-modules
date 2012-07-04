@@ -136,9 +136,9 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 	 * @param $option_id
 	 */
 	function getTotalVotesByOptionId($option_id) {
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item("option_id", $option_id));
-		$votes = $this->getCount($criteria);
+		$anon = $this->getAnonVotesByOptionId($option_id);
+		$users = $this->getUserVotesByOptionId($option_id);
+		$votes = $anon + $users;
 		return $votes;
 	}
 	/**
@@ -176,7 +176,21 @@ class 	IcmspollLogHandler extends icms_ipf_Handler {
 	 * @param $options_id ->  current option
 	 * 
 	 */
-	function getVotesPerCentByOptionId($poll_id, $option_id) {
+	function getVotesPerCentByOptionId($poll_id, $option_id, $inits = 0) {
+		$totalVotes = $this->getTotalVotesByPollId($poll_id, TRUE);
+		$totalOptVotes = ($this->getTotalVotesByOptionId($option_id, NULL)) + (int)$inits;
+		$optVote = @round((($totalOptVotes / $totalVotes) * 100),2);
+		return $optVote;
+	}
+	
+	/**
+	 * returns per cent of votes by option
+	 * 
+	 * @param $poll_id ->poll_id of the current option
+	 * @param $options_id ->  current option
+	 * 
+	 */
+	function getEndresultPerCentByOptionId($poll_id, $option_id) {
 		$totalVotes = $this->getTotalVotesByPollId($poll_id);
 		$totalOptVotes = $this->getTotalVotesByOptionId($option_id);
 		$optVote = @round((($totalOptVotes / $totalVotes) * 100),2);
