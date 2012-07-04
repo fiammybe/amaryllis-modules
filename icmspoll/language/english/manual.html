@@ -18,13 +18,33 @@
         	#icmspoll_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
         	#icmspoll_manual a, #icmspoll_manual a:visited {color: #336699}
         	#icmspoll_manual a:hover {color: #336699; text-decoration: underline;}
+        	#icms-uptopmessage a {display: block; display: none; z-index: 999; opacity: .9; position: fixed; top: 100%; margin-top: -80px; left: 50%; margin-left: -160px;
+							border-radius: 24px; -moz-border-radius: 24px; -webkit-border-radius: 24px; -o-border-radius: 24px; -khtml-border-radius:24px; -icab-border-radius:24px; -ms-border-radius:24px;
+							width: 300px; line-height: 48px; height: 48px; padding: 10px; background-color: #000; font-size: 24px; text-align: center; color: #fff;}
+			#credit {font-weight: bold;color: #336699;}
         </style>
     </head>
     <body>
+    	<div id="top">&nbsp;</div>
     	<div id="icmspoll_manual">
 	        <h1>Icmspoll Manual</h1>
 	        	<p>Icmspoll is a poll module for ImpressCMS, which can easily be used with iforum, the forum module of ImpressCMS, too. It's designed to provide user polls and/or visitor polls.</p>
-	        <h2>Keyfeatures</h2>
+	        <h2 id="index">Index</h2>
+		        <ul>
+		        	<li><a href="#keyfeatures">Keyfeatures</a></li>
+		        	<li><a href="#firsstart">First Start</a>
+		        		<ul>
+		        			<li><a href="#preferences">Preferences</a></li>
+		        			<li><a href="#adjustindex">Adjust Indexpage</a></li>
+		        			<li><a href="#addpoll">Create a poll</a></li>
+		        			<li><a href="#addoptions">Create Options</a></li>
+		        		</ul>
+		        	</li>
+		        	<li><a href="#blocks">Module Blocks</a></li>
+		        	<li><a href="#templates">Templates</a></li>
+		        	<li><a href="#icmspoll_footer">Conclusion</a></li>
+		        </ul>
+	        <h2 id="keyfeatures">Keyfeatures</h2>
 				<ul>
 					<li>You can create polls with multiple options</li>
 					<li>Your options can be selected by using radio buttons or checkboxes, whatever is needed for your poll</li>
@@ -32,10 +52,10 @@
 					<li>Use core permission system to select, which groups can view the poll</li>
 					<li>Use core permission system to select, which groups can vote the poll</li>
 				</ul>
-	        <h2>First Start</h2>
+	        <h2 id="firststart">First Start</h2>
 				<p>There are several things you should do <b>before</b> you try to create a new poll. Please, follow the instructions.</p>
 				
-				<h3>Check out the module preferences</h3>
+				<h3 id="preferences">Check out the module preferences</h3>
 					<p>There might be some preferences, you'd like to change before using the module first time. Go to Modules > Icmspoll > Preferences</p>
 					<ul>
 						<li>Group Permissions
@@ -137,7 +157,11 @@
 							</ul>
 						</li>
 					</ul>
-				<h3>Create a poll</h3>
+				<h3 id="adjustindex">Adjust index page</h3>
+	        		<p>Now Let's have a look at the index Page. For this find the tab "Edit Indexpage" in Module Menu. Select the Index image, which you'd like to display on index or upload a new one using the image upload field. The Index image will be displayed on all module sites.</p>
+	        		<p>The Index header is just a header on module home, like the heading. It can be used for some more Text on module home to explain/invite guests to register and upload or whatever you like to.</p>
+	        		<p>The index footer is like the index image displayed on all sites of the module.</p>
+				<h3 id="addpoll">Create a poll</h3>
 					<p>The next important will be creating a poll. Otherwise you can not see the page to submit polls. Go to Tab 'Polls' > Add poll. 
 						Just Fill out the fields. </p>
 					<ul>
@@ -198,9 +222,9 @@
 						</li>
 					</ul>
 					<p>Done! After submitting you should directly be redirected to the options page and be able to add options to your poll.</p>
-				<h3>Create Options</h3>
+				<h3 id="addoptions">Create Options</h3>
 					<p>The options form is very short. Just enter the text for the option, select a color as background and enter a weight. Before submitting the option, be sure, the correct poll is selected.</p>
-				<h2>Blocks</h2>
+				<h2 id="blocks">Blocks</h2>
 				<p>Currently you have 4 blocks for 'Icmspoll' module:</p>
 				<ul>
 					<li>Recent Polls
@@ -225,12 +249,111 @@
 					</li>
 				</ul>
 				<p>You can clone all blocks, if needed.</p>
-	 
+	 		
+	 		<h2 id="templates">Templates</h2>
+        	<p>There's a long list of Templates available and I'll try to give a short overview:</p>
+        	<ul>
+        		<li>/icmspoll_admin.html
+        			<ul>
+        				<li>contains all necessary variables to display admin-side. Less informations enough, and I think, most people will never use this template for changes ;-)</li>
+        			</ul>
+        		</li>
+        		<li>/icmspoll_requirements.html
+        			<ul>
+        				<li>The same: only an admin template and will only be used, if the requirements check failed on installation.</li>
+        			</ul>
+        		</li>
+        		<li>/icmspoll_index.html
+        			<ul>
+        				<li>Most relevant part: contains the whole index. If you're calling module home, a single poll or by Publisher it will be displayed using this Template. It
+        					also includes several other templates, but this is the "Main Template"</li>
+        			</ul>
+        		</li>
+        		<li>/icmspoll_header.html
+        			<ul>
+        				<li>Header Template. Contains Breadcrumb and index image of the module.</li>
+        			</ul>
+        		</li>
+        		<li>/icmspoll_footer.html
+        			<ul>
+        				<li>Footer Template: contains the module footer, a link to ACP, if you're an Admin, system comment rule displayed on single result view and notification system.</li>
+        			</ul>
+        		</li>
+        		<li>/icmspoll_polls.html
+        			<ul>
+        				<li>Contains all single poll in a poll loop. For each Poll this template will be included. Just provide Poll wuestion/description with link to poll</li>
+        			</ul>
+        		</li>
+        		<li>/icmspoll_results.html
+        			<ul>
+        				<li>Contains all around poll results. If you're calling the list of polls or even a single result or results by publisher: it's all inside this theme</li>
+        			</ul>
+        		</li>
+        		<li>/icmspoll_singlepoll.html
+        			<ul>
+        				<li>Singlepoll with poll form or interim result</li>
+        			</ul>
+        		</li>
+        		<li>/icmspoll_print.html
+        			<ul>
+        				<li>Provides a print layout for poll results</li>
+        			</ul>
+        		</li>
+        		<li>/icmspoll_forms.html
+        			<ul>
+        				<li>Displays upload/submit forms for creating a poll or uploading a new image on frontend.</li>
+        			</ul>
+        		</li>
+        	</ul>
+	 		
 			<div id="icmspoll_footer">
-			<h2>Conclusion</h2>
-				<p>Thank you for using 'Icmspoll' module. If you have some trouble while using icmspoll module, please visit <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>. You have some suggestions, what you'd like to change or add to the module? No problem! We can talk about. Please, use also <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a> for this!</p>  
-				<p>You might also like to follow the recent changes in icmspoll module? Please, have a look at <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/icmspoll/trunk/" title="'Icmspoll' SVN on Assembla" rel="external">'Icmspoll' SVN on Assembla</a> or make a checkout of my <a href="http://code.google.com/p/amaryllis-modules/" title="Icmspoll" rel="external">module svn on google code</a>.</p>
+				<h2>Conclusion</h2>
+					<p>Thank you for using 'Icmspoll' module. If you have some trouble while using icmspoll module, please visit <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>. You have some suggestions, what you'd like to change or add to the module? No problem! We can talk about. Please, use also <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a> for this!</p>  
+					<p>You might also like to follow the recent changes in icmspoll module? Please, have a look at <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/icmspoll/trunk/" title="'Icmspoll' SVN on Assembla" rel="external">'Icmspoll' SVN on Assembla</a> or make a checkout of my <a href="http://code.google.com/p/amaryllis-modules/" title="Icmspoll" rel="external">module svn on google code</a>.</p>
 			</div>
 		</div>
+		
+		<div id="icms-uptopmessage"><a href="#top">back top</a></div>
+        
+        <div id="credit">
+			<p class="copyright">
+				<script type="text/javascript" language="JavaScript">
+					DatumAktuell = new Date(); JahrAktuell = DatumAktuell.getFullYear();
+					document.write("| &copy; 2012-"+ JahrAktuell + " "); 
+				</script>
+				<a href="http://code.google.com/p/amaryllis-modules/" title="Amaryllis Modules" target="_blank" rel="external">Amaryllis Modules</a> |
+				<a href="print.php?print=manual" target="_blank" rel="external"><img src="../images/print.png" alt="print" /></a>
+			</p>
+		</div>
+        
+        <!-- script for uptop-link -->
+		<script type="text/javascript">
+			$(function () { // run this code on page load (AKA DOM load)
+	 
+				/* set variables locally for increased performance */
+				var scroll_timer;
+				var displayed = false;
+				var $message = $('#icms-uptopmessage a');
+				var $window = $(window);
+				var top = $(document.body).children(0).position().top;
+	 
+				/* react to scroll event on window */
+				$window.scroll(function () {
+					window.clearTimeout(scroll_timer);
+					scroll_timer = window.setTimeout(function () { // use a timer for performance
+						if($window.scrollTop() <= top) // hide if at the top of the page
+							{
+							displayed = false;
+							$message.fadeOut(500);
+							}
+						else if(displayed == false) // show if scrolling down
+							{
+							displayed = true;
+							$message.stop(true, true).show().click(function () { $message.fadeOut(500); });
+							}
+					}, 100);
+				});
+			});
+		</script>
     </body>
 </html>

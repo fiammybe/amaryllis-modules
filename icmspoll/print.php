@@ -42,10 +42,13 @@ if(in_array($clean_print, $valid_print, TRUE)) {
 			global $icmsConfig;
 			$poll = $pollObj->toArray();
 			$printtitle = $icmsConfig['sitename']." - ". strip_tags($pollObj->getVar('question','n' ));
+			$version = number_format(icms::$module->getVar('version')/100, 2);
+			$version = !substr($version, -1, 1) ? substr($version, 0, 3) : $version;
+			$powered_by = "Powered by &nbsp;<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Icmspoll</a>";
 			$options = $options_handler->getAllByPollId($clean_poll_id);
 			$icmsTpl->assign('printtitle', $printtitle);
 			$icmsTpl->assign('printlogourl', ICMS_URL . "/" .  $icmspollConfig['icmspoll_print_logo']);
-			$icmsTpl->assign('printfooter', icms_core_DataFilter::undoHtmlSpecialChars($icmspollConfig['icmspoll_print_footer']));
+			$icmsTpl->assign('printfooter', icms_core_DataFilter::undoHtmlSpecialChars($icmspollConfig['icmspoll_print_footer'] . $powered_by . "&nbsp;" . $version));
 			$icmsTpl->assign('poll', $poll);
 			$icmsTpl->assign('options', $options);
 			$icmsTpl->assign('icmspoll_is_admin', $icmspoll_isAdmin);
@@ -96,12 +99,14 @@ if(in_array($clean_print, $valid_print, TRUE)) {
 				$content .= _MD_ICMSPOLL_RESULTS_BY_OPTION_USERS . " : " . $option['user_votes'] . "<br />";
 				$content .= _MD_ICMSPOLL_RESULTS_BY_OPTION_ANON . " : " . $option['anon_votes'] . "<br /><br />";
 			}
-			
+			$version = number_format(icms::$module->getVar('version')/100, 2);
+			$version = !substr($version, -1, 1) ? substr($version, 0, 3) : $version;
+			$powered_by = "Powered by &nbsp;<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Icmspoll</a>";
 			//icms_view_Printerfriendly::generate($content, $title, FALSE, $title);
 			$icmsTpl = new icms_view_Tpl();
 			$icmsTpl->assign('printtitle', $title);
 			$icmsTpl->assign('printlogourl', ICMS_URL . "/" . $icmspollConfig['icmspoll_print_logo']);
-			$icmsTpl->assign('printfooter', icms_core_DataFilter::undoHtmlSpecialChars($icmspollConfig['icmspoll_print_footer']));
+			$icmsTpl->assign('printfooter', icms_core_DataFilter::undoHtmlSpecialChars($icmspollConfig['icmspoll_print_footer'] . $powered_by . "&nbsp;" . $version));
 			$icmsTpl->assign("options", $options);
 			$icmsTpl->assign('poll', $poll);
 			$icmsTpl->assign("content", $content);
