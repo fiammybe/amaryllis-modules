@@ -46,3 +46,20 @@ define("_MD_ALBUM_ALBUM_CREATED", "New album has been created. Thank you for you
 define("_MD_ALBUM_ALBUM_MODIFIED", "Album has been modified");
 define("_MD_ALBUM_ALBUM_EDIT", "Edit your Album");
 define("_MD_ALBUM_IMAGES_EDIT", "Edit");
+/**
+ * added in 1.2
+ */
+// admin/batchupload.php
+define("_MD_ALBUM_BATCHUPLOAD", "Batchupload");
+define("_MD_ALBUM_BATCHUPLOAD_ADD", "Batchupload");
+define("_MD_ALBUM_BATCHUPLOAD_SEL_IMAGES", "Select images to add to the selected Album");
+define("_MD_ALBUM_BATCHUPLOAD_IMG_DSC", "Set an image description for all images of the selected set.");
+define("_MD_ALBUM_BATCHUPLOAD_NOALBUM", "No Album selected. Please select Album first.");
+define("_MD_ALBUM_BATCHUPLOAD_URL_CAP", "Caption");
+define("_MD_ALBUM_BATCHUPLOAD_URL_URL", "URL");
+define("_MD_ALBUM_BATCHUPLOAD_URL_DSC", "Description");
+define("_MD_ALBUM_BATCHUPLOAD_URL_TARGET", "Target");
+define("_MD_ALBUM_BATCHUPLOAD_IMAGES", "Add images from batch folder");
+define("_MD_ALBUM_BATCHUPLOAD_SELECT_SOURCE", "Select the source of your batchupload");
+define("_MD_ALBUM_BATCHUPLOAD_ZIPUPL", "Add images from an zipfile to upload");
+define("_MD_ALBUM_BATCHUPLOAD_UPLOAD_ZIP", "Upload a new zip file");
