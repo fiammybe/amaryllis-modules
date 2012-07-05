@@ -79,12 +79,10 @@ if (extension_loaded('gd') && function_exists('gd_info')) {
 	$gdlib = _AM_ALBUM_INDEX_GDLIB_NOT_FOUND;
 }
 
-
 echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 			<legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_ALBUM_INDEX . '</legend>
 			
 			<div style="display: table; padding: 8px;">
-				
 				
 				<div style="display: table-row;">
 					<div style="display: table-cell; width: 250px;">'
@@ -199,5 +197,4 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 		</fieldset>
 		<br />';
 		
-
 include_once 'admin_footer.php';
