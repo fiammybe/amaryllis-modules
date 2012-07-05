@@ -158,8 +158,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				 * display disclaimer yes/no?
 				 */
 				if($downloadsConfig['downloads_show_down_disclaimer'] == 1) {
+					$discl = str_replace('{X_SITENAME}', $icmsConfig['sitename'], $downloadsConfig['downloads_down_disclaimer']);
 					$icmsTpl->assign('show_down_disclaimer', TRUE );
-					$icmsTpl->assign('down_disclaimer', $downloadsConfig['downloads_down_disclaimer']);
+					$icmsTpl->assign('down_disclaimer', $discl);
 				} else {
 					$icmsTpl->assign('show_down_disclaimer', FALSE);
 				}

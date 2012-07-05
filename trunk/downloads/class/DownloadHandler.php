@@ -279,8 +279,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 
 	public function getDownloadVersionStatus() {
 		if (!$this->_download_version_status) {
-			$version_status = array(1 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_FINAL, 2 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_ALPHA, 3 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_BETA, 4 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_RC, 5 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_NONE);
-			return $version_status;
+			$this->_download_version_status = array(1 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_FINAL, 2 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_ALPHA, 3 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_BETA, 4 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_RC, 5 => _CO_DOWNLOADS_DOWNLOAD_VERSION_STATUS_NONE);
 		}
 		return $this->_download_version_status;
 	}
@@ -327,8 +326,7 @@ class DownloadsDownloadHandler extends icms_ipf_Handler {
 	
 	public function getRelated() {
 		if (!$this->_download_related) {
-			$related = $this->getList(TRUE);
-			return $related;
+			$this->_download_related = $this->getList(TRUE);
 		}
 		return $this->_download_related;
 	}
