@@ -22,6 +22,14 @@ if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dir
 
 class IcmspollLog extends icms_ipf_Object {
 
+	private $_optionsText;
+	
+	private $_pollName;
+	
+	private $_logIP;
+	
+	private $_logUser;
+
 	public function __construct(&$handler) {
 		//$this->db =& Database::getInstance();
 		parent::__construct($handler);
@@ -41,25 +49,32 @@ class IcmspollLog extends icms_ipf_Object {
 	}
 	
 	function getUser() {
-		return icms_member_user_Handler::getUserLink($this->getVar('user_id', 'e'));
+		if(!$this->_logUser) {
+			$this->_logUser = icms_member_user_Handler::getUserLink($this->getVar('user_id', 'e'));
+		} return $this->_logUser;
 	}
 	
 	public function getPollName() {
-		$icmspoll_polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
-		$pollObj = $icmspoll_polls_handler->get($this->getVar("poll_id", "e"));
-		return $pollObj->getQuestion();
+		if(!$this->_pollName) {
+			$icmspoll_polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+			$pollObj = $icmspoll_polls_handler->get($this->getVar("poll_id", "e"));
+			$this->_pollName = $pollObj->getQuestion();
+		} return $this->_pollName;
 	}
 	
 	public function getOptionText() {
-		$icmspoll_options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
-		$optionsObj = $icmspoll_options_handler->get($this->getVar("option_id", "e"));
-		return $optionsObj->getOptionText();
+		if(!$this->_optionsText) {
+			$icmspoll_options_handler = icms_getModuleHandler("options", ICMSPOLL_DIRNAME, "icmspoll");
+			$optionsObj = $icmspoll_options_handler->get($this->getVar("option_id", "e"));
+			$this->_optionsText = $optionsObj->getOptionText();
+		} return $this->_optionsText;
 	}
 	
 	public function getLogIP() {
-		$ip = $this->getVar("ip", "s");
-		$ip = icms_core_DataFilter::checkVar($ip, "ip", "ipv4");
-		return $ip;
+		if(!$this->_logIP) {
+			$ip = $this->getVar("ip", "s");
+			$this->_logIP = icms_core_DataFilter::checkVar($ip, "ip", "ipv4");
+		} return $this->_logIP;
 	}
 	
 	public function toArray() {

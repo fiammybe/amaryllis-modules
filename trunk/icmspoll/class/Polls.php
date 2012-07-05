@@ -268,8 +268,12 @@ class IcmspollPolls extends icms_ipf_Object {
 		return '<a href="' . $url . '" title="' . _CO_ICMSPOLL_POLLS_GET_MORE_RESULTS_BY_USER . $uname . '" >' . _CO_ICMSPOLL_POLLS_GET_MORE_RESULTS_BY_USER . $uname . '</a>';
 	}
 	
+	public function isMultiple() {
+		return ($this->getVar("multiple", "e") == 1) ? TRUE : FALSE;
+	}
+	
 	public function getInputType() {
-		return ($this->getVar("multiple", "e") == 1) ? "checkbox" : "radio";
+		return ($this->isMultiple()) ? "checkbox" : "radio";
 	}
 	
 	function userCanEditAndDelete() {
@@ -296,6 +300,7 @@ class IcmspollPolls extends icms_ipf_Object {
 		
 		$ret['comments'] = $this->getVar("poll_comments", "e");
 		$ret['inputtype'] = $this->getInputType();
+		$ret['isMultiple'] = $this->isMultiple();
 		
 		$ret['viewAccessGranted'] = $this->viewAccessGranted();
 		$ret['voteAccessGranted'] = $this->voteAccessGranted();
