@@ -211,8 +211,9 @@ if(in_array($clean_op, $valid_op)) {
 			 * check, if upload disclaimer is necessary and retrieve the link
 			 */
 			if($albumConfig['album_show_upl_disclaimer'] == 1) {
+				$discl = str_replace('{X_SITENAME}', $icmsConfig['sitename'], $albumConfig['album_upl_disclaimer']);
 				$icmsTpl->assign('album_upl_disclaimer', TRUE );
-				$icmsTpl->assign('up_disclaimer', $albumConfig['album_upl_disclaimer']);
+				$icmsTpl->assign('up_disclaimer', $discl);
 			} else {
 				$icmsTpl->assign('album_upl_disclaimer', FALSE);
 			}
