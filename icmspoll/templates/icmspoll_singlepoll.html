@@ -20,7 +20,7 @@
 				    <div class="option_set">
     					<{foreach item=option from=$options name=options}>
     						<div class="icmspoll_option_<{$option.color}>">
-    							<input class="icmspoll_option_<{$option.inputtype}>" type="<{$poll.inputtype}>" name="poll_option" value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
+    							<input class="icmspoll_option_<{$option.inputtype}>" type="<{$poll.inputtype}>" name="poll_option<{if $poll.isMultiple}>[]<{/if}>" value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
     							<{$option.text}>
 	    						<{if $option.userCanEditAndDelete}>
 									<span class="options_buttonbar">
