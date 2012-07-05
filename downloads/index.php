@@ -174,8 +174,9 @@ if(in_array($clean_op, $valid_op)) {
 			 */
 			
 			if($downloadsConfig['downloads_show_upl_disclaimer'] == 1) {
+				$discl = str_replace('{X_SITENAME}', $icmsConfig['sitename'], $downloadsConfig['downloads_upl_disclaimer']);
 				$icmsTpl->assign('downloads_upl_disclaimer', TRUE );
-				$icmsTpl->assign('up_disclaimer', $downloadsConfig['downloads_upl_disclaimer']);
+				$icmsTpl->assign('up_disclaimer', $discl);
 			} else {
 				$icmsTpl->assign('downloads_upl_disclaimer', FALSE);
 			}
