@@ -2,15 +2,15 @@
 /**
  * 'Album' is a light weight gallery module
  *
- * File: /admin/album.php
+ * File: /admin/batchupload.php
  *
- * List, add, edit and delete album objects
+ * batchupload to add images from batch folder (uploaded via ftp) or to upload a new set via zip file
  *
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				album
+ * 				Album
  * @since		1.20
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
@@ -207,7 +207,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			$submit_op = ($clean_op == 'addzip') ? "batchupload.php?op=zipupload" : "batchupload.php?op=batchupload";
 			
-			$form = new icms_form_Theme(_AM_ALBUM_BATCHUPLOAD_ADD, "op", $submit_op, "post", TRUE);
+			$case = ($clean_op == 'addzip') ? _AM_ALBUM_BATCHUPLOAD_ZIPUPL : _AM_ALBUM_BATCHUPLOAD_IMAGES;
+			
+			$form = new icms_form_Theme(_AM_ALBUM_BATCHUPLOAD_ADD . " - " . $case, "op", $submit_op, "post", TRUE);
 			
 			$selalbum = new icms_form_elements_Select(_CO_ALBUM_IMAGES_A_ID, "a_id");
 			$selalbum->addOptionArray($album_album_handler->getAlbumListForPid());
@@ -217,9 +219,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if($clean_op == 'addimages' || $clean_op ==  '') {
 				$selimages = new icms_form_elements_Checkbox(_AM_ALBUM_BATCHUPLOAD_SEL_IMAGES, "img_ids");
 				$selimages->addOptionArray($album_images_handler->getImagesFromBatch());
+				$selimages->setRequired();
 				$form->addElement($selimages);
 			} elseif ($clean_op == 'addzip') {
 				$uploader = new icms_form_elements_File(_AM_ALBUM_BATCHUPLOAD_UPLOAD_ZIP, "img_zip", 20000000);
+				$uploader->setRequired();
 				$form->addElement($uploader);
 				$form->setExtra('enctype="multipart/form-data"');
 			}
