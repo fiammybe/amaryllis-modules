@@ -264,8 +264,9 @@ if(in_array($clean_op, $valid_op)) {
 			 */
 			
 			if($articleConfig['show_upl_disclaimer'] == 1) {
+				$discl = str_replace('{X_SITENAME}', $icmsConfig['sitename'], $articleConfig['upl_disclaimer']);
 				$icmsTpl->assign('article_upl_disclaimer', TRUE );
-				$icmsTpl->assign('up_disclaimer', $articleConfig['upl_disclaimer']);
+				$icmsTpl->assign('up_disclaimer', $discl);
 			} else {
 				$icmsTpl->assign('article_upl_disclaimer', FALSE);
 			}
