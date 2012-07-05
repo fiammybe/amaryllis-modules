@@ -27,7 +27,7 @@ function editimages($imagesObj, $clean_album_id) {
 		}
 		$imagesObj->hideFieldFromForm(array('a_id', 'meta_description', 'meta_keywords', 'img_publisher', 'img_active', 'img_approve', 'img_published_date', 'img_updated_date' ) );
 		$imagesObj->setVar( 'img_updated_date', (time() - 100) );
-		if($albumConfig['image_needs_approval'] == 1) {
+		if($albumConfig['image_needs_approval'] == 1 && !$album_isAdmin) {
 			$imagesObj->setVar('img_approve', FALSE );
 		} else {
 			$imagesObj->setVar('img_approve', TRUE );

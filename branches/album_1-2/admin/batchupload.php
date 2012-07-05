@@ -77,11 +77,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 						if($_POST['img_copyright']) $imagesObject->setVar("img_copyright", $_POST['img_copyright']);
 						if($_POST['url_img_urllink']) {
 							$urllink_handler = icms::handler("icms_data_urllink");
-							$sql = "SHOW TABLE STATUS WHERE name='" . icms::$xoopsDB->prefix('icms_data_urllink') . "'";
-							$result = icms::$xoopsDB->queryF($sql);
-							$row = icms::$xoopsDB->fetchBoth($result);
-							$url_id = $row['Auto_increment'];
-							$imagesObject->setVar("img_urllink", $url_id);
 							$urlObj = $urllink_handler->create(TRUE);
 							$urlObj->setVar("mid", (int)$_POST['mid_img_urllink']);
 							$urlObj->setVar("caption", $_POST['caption_img_urllink']);
@@ -128,11 +123,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 					if($_POST['img_copyright']) $imagesObject->setVar("img_copyright", $_POST['img_copyright']);
 					if($_POST['url_img_urllink']) {
 						$urllink_handler = icms::handler("icms_data_urllink");
-						$sql = "SHOW TABLE STATUS WHERE name='" . icms::$xoopsDB->prefix('icms_data_urllink') . "'";
-						$result = icms::$xoopsDB->queryF($sql);
-						$row = icms::$xoopsDB->fetchBoth($result);
-						$url_id = $row['Auto_increment'];
-						$imagesObject->setVar("img_urllink", $url_id);
 						$urlObj = $urllink_handler->create(TRUE);
 						$urlObj->setVar("mid", (int)$_POST['mid_img_urllink']);
 						$urlObj->setVar("caption", $_POST['caption_img_urllink']);
@@ -165,10 +155,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				if($_POST['img_copyright']) $imagesObject->setVar("img_copyright", $_POST['img_copyright']);
 				if($_POST['url_img_urllink']) {
 					$urllink_handler = icms::handler("icms_data_urllink");
-					$sql = "SHOW TABLE STATUS WHERE name='" . icms::$xoopsDB->prefix('icms_data_urllink') . "'";
-					$result = icms::$xoopsDB->queryF($sql);
-					$row = icms::$xoopsDB->fetchBoth($result);
-					$url_id = $row['Auto_increment'];
 					$urlObj = $urllink_handler->create(TRUE);
 					$urlObj->setVar("mid", (int)$_POST['mid_img_urllink']);
 					$urlObj->setVar("caption", $_POST['caption_img_urllink']);
@@ -252,6 +238,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$tray->addElement($url);
 			$tray->addElement($tar);
 			$tray->addElement($mid);
+			if($albumConfig['need_image_links'] == 0) $tray->setHidden();
 			$form->addElement($tray);
 			
 			$form->addElement(new icms_form_elements_Button("", "submit", _SUBMIT, "submit"));

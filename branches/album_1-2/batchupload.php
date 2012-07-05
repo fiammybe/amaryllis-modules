@@ -35,16 +35,16 @@ $valid_op = array ('batchupload', 'addimages', 'addzip', 'zipupload');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : 'addzip';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
-
+if($clean_op == 'addimages' && !$album_isAdmin) redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
-if($clean_album_id == 0 && !$album_isAdmin) redirect_header(icms_getPreviousPage(), 3, "Nö, weil kein Admin");
+if($clean_album_id == 0 && !$album_isAdmin) redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 
 $album_album_handler = icms_getModuleHandler('album', ALBUM_DIRNAME, 'album');
 $album_images_handler = icms_getModuleHandler('images', ALBUM_DIRNAME, 'album');
 
 $albumObj = $album_album_handler->get($clean_album_id);
 if(!$album_isAdmin) {
-if((!is_object($albumObj) && !$albumObj->submitAccessGranted())) redirect_header(icms_getPreviousPage(), 3, "Nö, weil kein Object");
+if((!is_object($albumObj) && !$albumObj->submitAccessGranted())) redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 }
 if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
@@ -78,17 +78,16 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 						$imagesObject->setVar("img_url", $file);
 						if($_POST['img_tags']) $imagesObject->setVar("img_tags", $_POST['img_tags']);
 						$imagesObject->setVar("img_active", $_POST['img_active']);
-						$imagesObject->setVar("img_approve", TRUE);
+						if($albumConfig['image_needs_approval'] == 1 && !$album_isAdmin) {
+							$imagesObject->setVar("img_approve", FALSE);
+						} else {
+							$imagesObject->setVar("img_approve", TRUE);
+						}
 						$imagesObject->setVar("weight", $i);
 						$imagesObject->setVar("img_publisher", icms::$user->getVar("uid", "e"));
 						if($_POST['img_copyright']) $imagesObject->setVar("img_copyright", $_POST['img_copyright']);
 						if($_POST['url_img_urllink']) {
 							$urllink_handler = icms::handler("icms_data_urllink");
-							$sql = "SHOW TABLE STATUS WHERE name='" . icms::$xoopsDB->prefix('icms_data_urllink') . "'";
-							$result = icms::$xoopsDB->queryF($sql);
-							$row = icms::$xoopsDB->fetchBoth($result);
-							$url_id = $row['Auto_increment'];
-							$imagesObject->setVar("img_urllink", $url_id);
 							$urlObj = $urllink_handler->create(TRUE);
 							$urlObj->setVar("mid", (int)$_POST['mid_img_urllink']);
 							$urlObj->setVar("caption", $_POST['caption_img_urllink']);
@@ -129,17 +128,16 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 					$imagesObject->setVar("img_url", $value);
 					if($_POST['img_tags']) $imagesObject->setVar("img_tags", $_POST['img_tags']);
 					$imagesObject->setVar("img_active", $_POST['img_active']);
-					$imagesObject->setVar("img_approve", TRUE);
+					if($albumConfig['image_needs_approval'] == 1 && !$album_isAdmin) {
+						$imagesObject->setVar("img_approve", FALSE);
+					} else {
+						$imagesObject->setVar("img_approve", TRUE);
+					}
 					$imagesObject->setVar("weight", $i);
 					$imagesObject->setVar("img_publisher", icms::$user->getVar("uid", "e"));
 					if($_POST['img_copyright']) $imagesObject->setVar("img_copyright", $_POST['img_copyright']);
 					if($_POST['url_img_urllink']) {
 						$urllink_handler = icms::handler("icms_data_urllink");
-						$sql = "SHOW TABLE STATUS WHERE name='" . icms::$xoopsDB->prefix('icms_data_urllink') . "'";
-						$result = icms::$xoopsDB->queryF($sql);
-						$row = icms::$xoopsDB->fetchBoth($result);
-						$url_id = $row['Auto_increment'];
-						$imagesObject->setVar("img_urllink", $url_id);
 						$urlObj = $urllink_handler->create(TRUE);
 						$urlObj->setVar("mid", (int)$_POST['mid_img_urllink']);
 						$urlObj->setVar("caption", $_POST['caption_img_urllink']);
@@ -148,7 +146,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 						$urlObj->setVar("target", $_POST['target_img_urllink']);
 						$urllink_handler->insert($urlObj, TRUE);
 						$imagesObject->setVar("img_urllink", $urlObj->id());
-						
 					}
 					icms_core_Filesystem::copyRecursive(ALBUM_BATCH_ROOT . $value, ALBUM_IMAGES_UPLOAD . $value);
 					icms_core_Filesystem::deleteFile(ALBUM_BATCH_ROOT . $value);
@@ -166,16 +163,16 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$imagesObject->setVar("img_url", $value);
 				if($_POST['img_tags']) $imagesObject->setVar("img_tags", $_POST['img_tags']);
 				$imagesObject->setVar("img_active", $_POST['img_active']);
-				$imagesObject->setVar("img_approve", TRUE);
+				if($albumConfig['image_needs_approval'] == 1 && !$album_isAdmin) {
+					$imagesObject->setVar("img_approve", FALSE);
+				} else {
+					$imagesObject->setVar("img_approve", TRUE);
+				}
 				$imagesObject->setVar("weight", $i);
 				$imagesObject->setVar("img_publisher", icms::$user->getVar("uid", "e"));
 				if($_POST['img_copyright']) $imagesObject->setVar("img_copyright", $_POST['img_copyright']);
 				if($_POST['url_img_urllink']) {
 					$urllink_handler = icms::handler("icms_data_urllink");
-					$sql = "SHOW TABLE STATUS WHERE name='" . icms::$xoopsDB->prefix('icms_data_urllink') . "'";
-					$result = icms::$xoopsDB->queryF($sql);
-					$row = icms::$xoopsDB->fetchBoth($result);
-					$url_id = $row['Auto_increment'];
 					$urlObj = $urllink_handler->create(TRUE);
 					$urlObj->setVar("mid", (int)$_POST['mid_img_urllink']);
 					$urlObj->setVar("caption", $_POST['caption_img_urllink']);
@@ -244,7 +241,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$seltags->addOptionArray($album_images_handler->getImagesTags());
 				$form->addElement($seltags);
 			}
-			$form->addElement(new icms_form_elements_Text(_CO_ALBUM_IMAGES_IMG_COPYRIGHT, "img_copyright", 50, 255, $albumConfig['img_default_copyright'] ));
+			
+			$copyright = new icms_form_elements_Text(_CO_ALBUM_IMAGES_IMG_COPYRIGHT, "img_copyright", 50, 255, $albumConfig['img_default_copyright'] );
+			if($albumConfig['img_allow_uploader_copyright'] == 0) $copyright->setHidden();
+			$form->addElement($copyright);
 			
 			$tray = new icms_form_elements_Tray(_CO_ALBUM_IMAGES_IMG_URLLINK, "<br />", "img_urllink");
 			$mid = new icms_form_elements_Hidden("mid_img_urllink", icms::$module->getVar("mid"));
@@ -259,7 +259,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$tray->addElement($url);
 			$tray->addElement($tar);
 			$tray->addElement($mid);
+			if($albumConfig['need_image_links'] == 0) $tray->setHidden();
 			$form->addElement($tray);
+			
 			$form->addElement(new icms_form_elements_Hiddentoken());
 			$form->addElement(new icms_form_elements_Button("", "submit", _SUBMIT, "submit"));
 			$form->display();			
