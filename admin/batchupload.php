@@ -27,7 +27,7 @@ include_once 'admin_header.php';
 if(!defined("ALBUM_BATCH_ROOT")) define("ALBUM_BATCH_ROOT", ICMS_UPLOAD_PATH . '/' . ALBUM_DIRNAME . '/batch/' );
 if(!defined("ALBUM_IMAGES_UPLOAD")) define("ALBUM_IMAGES_UPLOAD", ICMS_UPLOAD_PATH . '/' . ALBUM_DIRNAME . '/images/');
 
-$valid_op = array ('batchupload', '');
+$valid_op = array ('batchupload', 'addimages', 'addzip', 'zipupload', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
@@ -40,10 +40,74 @@ $clean_images_id = isset($_GET['img_id']) ? filter_input(INPUT_GET, 'img_id', FI
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
+		case 'zipupload':
+			icms_cp_header();
+			icms::$module->displayAdminmenu(4, _MI_ALBUM_MENU_BATCHUPLOAD);
+			if($_POST['a_id'] <= 0) redirect_header(icms_getPreviousPage(), 4, _AM_ALBUM_BATCHUPLOAD_NOALBUM);
+			$uploader = new icms_file_MediaUploadHandler(ALBUM_BATCH_ROOT, array("application/zip"), 20000000);
+			$uploader->setPrefix('', FALSE);
+			if($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
+				if ($uploader->upload(0777)) {
+					$new_name = array_shift(explode(".", $uploader->getSavedFileName()));
+					mkdir(ALBUM_UPLOAD_ROOT . $new_name, 0777, TRUE);
+					$zip = new ZipArchive;
+					if ($zip->open(ALBUM_BATCH_ROOT . $uploader->getSavedFileName()) === TRUE) {
+		    			$zip->extractTo(ALBUM_BATCH_ROOT . $new_name . '/');
+						$zip->close();
+					    echo '<code>Zip File successfully extracted to ' . ALBUM_BATCH_ROOT . $new_name . "</code><br />";
+					} else {
+						echo '<code>An error occured while extracting the archive.</code><br />';
+					}
+					$files = icms_core_Filesystem::getFileList(ALBUM_BATCH_ROOT . $new_name . '/', '', array('gif', 'jpg', 'png'));
+					$i = 0;
+					foreach ($files as $file) {
+						$i++;
+						$img_title = array_shift(explode(".", $file));
+						$imagesObject = $album_images_handler->create(TRUE);
+						$imagesObject->setVar("a_id", $_POST['a_id']);
+						$imagesObject->setVar("img_title", $img_title);
+						$imagesObject->setVar("img_published_date", time() - 100);
+						$imagesObject->setVar("img_description", $img_title . " - " . $_POST['img_dsc']);
+						$imagesObject->setVar("img_url", $file);
+						if($_POST['img_tags']) $imagesObject->setVar("img_tags", $_POST['img_tags']);
+						$imagesObject->setVar("img_active", $_POST['img_active']);
+						$imagesObject->setVar("img_approve", TRUE);
+						$imagesObject->setVar("weight", $i);
+						$imagesObject->setVar("img_publisher", icms::$user->getVar("uid", "e"));
+						if($_POST['img_copyright']) $imagesObject->setVar("img_copyright", $_POST['img_copyright']);
+						if($_POST['url_img_urllink']) {
+							$urllink_handler = icms::handler("icms_data_urllink");
+							$sql = "SHOW TABLE STATUS WHERE name='" . icms::$xoopsDB->prefix('icms_data_urllink') . "'";
+							$result = icms::$xoopsDB->queryF($sql);
+							$row = icms::$xoopsDB->fetchBoth($result);
+							$url_id = $row['Auto_increment'];
+							$imagesObject->setVar("img_urllink", $url_id);
+							$urlObj = $urllink_handler->create(TRUE);
+							$urlObj->setVar("mid", (int)$_POST['mid_img_urllink']);
+							$urlObj->setVar("caption", $_POST['caption_img_urllink']);
+							$urlObj->setVar("description", $_POST['desc_img_urllink']);
+							$urlObj->setVar("url", $_POST['url_img_urllink']);
+							$urlObj->setVar("target", $_POST['target_img_urllink']);
+							$urllink_handler->insert($urlObj, TRUE);
+							$imagesObject->setVar("img_urllink", $urlObj->id());
+						}
+						icms_core_Filesystem::copyRecursive(ALBUM_BATCH_ROOT . $new_name . '/' . $file, ALBUM_IMAGES_UPLOAD . $file);
+						icms_core_Filesystem::deleteFile(ALBUM_BATCH_ROOT . $new_name . '/' . $file);
+						
+						$album_images_handler->insert($imagesObject, TRUE);
+						echo "<code> File " . $file . " successfully moved.</code><br />";
+					}
+				}
+				icms_core_Filesystem::deleteRecursive(ALBUM_BATCH_ROOT . $new_name . '/');
+				echo "<code> Folder " . $new_name . " successfully removed.</code><br />";
+				icms_core_Filesystem::deleteFile(ALBUM_BATCH_ROOT . $uploader->getSavedFileName());
+				echo "<code> Folder " . $new_name . " successfully removed.</code><br />";
+			}
+			break;
 		case 'batchupload':
 			icms_cp_header();
 			icms::$module->displayAdminmenu(4, _MI_ALBUM_MENU_BATCHUPLOAD);
-			if($_POST['a_id'] <= 0) redirect_header(ALBUM_ADMIN_URL . "batchupload.php", 4, _AM_ALBUM_BATCHUPLOAD_NOALBUM);
+			if($_POST['a_id'] <= 0) redirect_header(icms_getPreviousPage(), 4, _AM_ALBUM_BATCHUPLOAD_NOALBUM);
 			$files = $_POST['img_ids'];
 			$i = 0;
 			if(is_array($files)) {
@@ -123,21 +187,42 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			echo '<br /><br /><a class="formButton" href="' . ALBUM_ADMIN_URL . 'batchupload.php">' . _BACK . '</a>';
 
 			break;
-		
+		case 'addimages':
+		case 'addzip':
 		default:
 			icms_cp_header();
 			icms::$module->displayAdminmenu(4, _MI_ALBUM_MENU_BATCHUPLOAD);
 			
-			$form = new icms_form_Theme(_AM_ALBUM_BATCHUPLOAD_ADD, "op", "batchupload.php?op=batchupload", "post", TRUE);
+			echo "<h2 style='color: #336699;'>" . _AM_ALBUM_BATCHUPLOAD_SELECT_SOURCE . "</h2>";
+			
+			$opform = new icms_form_Simple('', 'opform', 'batchupload.php', "get");
+			$op_select = new icms_form_elements_Select("", 'op', $clean_op);
+			$op_select->setExtra('onchange="document.forms.opform.submit()"');
+			$op_select->addOption('addimages', _AM_ALBUM_BATCHUPLOAD_IMAGES);
+			$op_select->addOption('addzip', _AM_ALBUM_BATCHUPLOAD_ZIPUPL);
+			$opform->addElement($op_select);
+			$opform->display();
+			
+			echo "<br />";
+			
+			$submit_op = ($clean_op == 'addzip') ? "batchupload.php?op=zipupload" : "batchupload.php?op=batchupload";
+			
+			$form = new icms_form_Theme(_AM_ALBUM_BATCHUPLOAD_ADD, "op", $submit_op, "post", TRUE);
 			
 			$selalbum = new icms_form_elements_Select(_CO_ALBUM_IMAGES_A_ID, "a_id");
 			$selalbum->addOptionArray($album_album_handler->getAlbumListForPid());
 			$selalbum->setRequired();
 			$form->addElement($selalbum);
 			
-			$selimages = new icms_form_elements_Checkbox(_AM_ALBUM_BATCHUPLOAD_SEL_IMAGES, "img_ids");
-			$selimages->addOptionArray($album_images_handler->getImagesFromBatch());
-			$form->addElement($selimages);
+			if($clean_op == 'addimages' || $clean_op ==  '') {
+				$selimages = new icms_form_elements_Checkbox(_AM_ALBUM_BATCHUPLOAD_SEL_IMAGES, "img_ids");
+				$selimages->addOptionArray($album_images_handler->getImagesFromBatch());
+				$form->addElement($selimages);
+			} elseif ($clean_op == 'addzip') {
+				$uploader = new icms_form_elements_File(_AM_ALBUM_BATCHUPLOAD_UPLOAD_ZIP, "img_zip", 20000000);
+				$form->addElement($uploader);
+				$form->setExtra('enctype="multipart/form-data"');
+			}
 			
 			$form->addElement(new icms_form_elements_Textarea(_AM_ALBUM_BATCHUPLOAD_IMG_DSC, "img_dsc", "", 7, 50));
 			

@@ -44,7 +44,7 @@ if(!defined("ALBUM_UPLOAD_URL")) define("ALBUM_UPLOAD_URL", ICMS_URL . '/uploads
 
 
 // this needs to be the latest db version
-define('ALBUM_DB_VERSION',1);
+define('ALBUM_DB_VERSION',2);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,5 +125,10 @@ function icms_module_install_album($module) {
 	// copy sitemap plugin, if sitemap is installed
 	copySitemapPlugin();
 
+	return TRUE;
+}
+
+function icms_module_uninstall_album($module) {
+	
 	return TRUE;
 }

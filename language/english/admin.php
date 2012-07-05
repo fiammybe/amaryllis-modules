@@ -75,6 +75,10 @@ define("_AM_ALBUM_BATCHUPLOAD_URL_CAP", "Caption");
 define("_AM_ALBUM_BATCHUPLOAD_URL_URL", "URL");
 define("_AM_ALBUM_BATCHUPLOAD_URL_DSC", "Description");
 define("_AM_ALBUM_BATCHUPLOAD_URL_TARGET", "Target");
+define("_AM_ALBUM_BATCHUPLOAD_IMAGES", "Add images from batch folder");
+define("_AM_ALBUM_BATCHUPLOAD_SELECT_SOURCE", "Select the source of your batchupload");
+define("_AM_ALBUM_BATCHUPLOAD_ZIPUPL", "Add files from an zipfile to upload");
+define("_AM_ALBUM_BATCHUPLOAD_UPLOAD_ZIP", "Upload a new zip file");
 // admin/images.php
 define("_AM_ALBUM_IMAGES_FIELDS_UPDATED", "Fields successfully updated.");
 //index.php
