@@ -26,10 +26,10 @@ define("_CO_ALBUM_ALBUM_ALBUM_PUBLISHED_DATE", "Published Date");
 define("_CO_ALBUM_ALBUM_ALBUM_PUBLISHED_DATE_DSC", "");
 define("_CO_ALBUM_ALBUM_ALBUM_UPDATED_DATE", "Updated Date");
 define("_CO_ALBUM_ALBUM_ALBUM_UPDATED_DATE_DSC", "");
-define("_CO_ALBUM_ALBUM_ALBUM_IMG", "Album Image");
-define("_CO_ALBUM_ALBUM_ALBUM_IMG_DSC", "Set Album image. You can upload a new album-image in 'Album Image upload'");
-define("_CO_ALBUM_ALBUM_ALBUM_IMG_UPLOAD", "Album Image upload");
-define("_CO_ALBUM_ALBUM_ALBUM_IMG_UPLOAD_DSC", "upload a new Album Image. Please, only use file upload, not url to the image. This will not be supported");
+define("_CO_ALBUM_ALBUM_ALBUM_IMG", "Album Cover");
+define("_CO_ALBUM_ALBUM_ALBUM_IMG_DSC", "Set Album Cover or upload a new one");
+define("_CO_ALBUM_ALBUM_ALBUM_IMG_UPLOAD", "Cover upload");
+define("_CO_ALBUM_ALBUM_ALBUM_IMG_UPLOAD_DSC", "");
 define("_CO_ALBUM_ALBUM_ALBUM_DESCRIPTION", "Description");
 define("_CO_ALBUM_ALBUM_ALBUM_DESCRIPTION_DSC", "Set Description of the album");
 define("_CO_ALBUM_ALBUM_WEIGHT", "weight");
@@ -98,3 +98,26 @@ define("_CO_ALBUM_IMAGES_IMG_URLLINK_DSC", "Enter a full url (included http://)"
 // constants added in class/Album.php
 define("_CO_ALBUM_ALBUM_ALBUM_TAGS", "Tags");
 define("_CO_ALBUM_ALBUM_ALBUM_TAGS_DSC", "Select the tags for this album");
+/**
+ * added in 1.2
+ */
+define("_CO_ALBUM_IMAGES_IMG_COPYRIGHT", "Watermark text");
+define("_CO_ALBUM_IMAGES_IMG_COPYRIGHT_DSC", "You can add a watermark Text to your image");
+define("_CO_ALBUM_IMAGES_IMG_COPY_POS", "Position of the copyright");
+define("_CO_ALBUM_IMAGES_IMG_COPY_POS_DSC", "");
+define("_CO_ALBUM_IMAGES_IMG_COPY_COLOR", "Color of the copyright");
+define("_CO_ALBUM_IMAGES_IMG_COPY_COLOR_DSC", "");
+define("_CO_ALBUM_IMAGES_WATERMARKPOS_TL", "Top Left");
+define("_CO_ALBUM_IMAGES_WATERMARKPOS_TR", "Top right");
+define("_CO_ALBUM_IMAGES_WATERMARKPOS_TC", "top center");
+define("_CO_ALBUM_IMAGES_WATERMARKPOS_CL", "center left");
+define("_CO_ALBUM_IMAGES_WATERMARKPOS_CR", "center right");
+define("_CO_ALBUM_IMAGES_WATERMARKPOS_C", "center center");
+define("_CO_ALBUM_IMAGES_WATERMARKPOS_BL", "bottom left");
+define("_CO_ALBUM_IMAGES_WATERMARKPOS_BR", "bottom right");
+define("_CO_ALBUM_IMAGES_WATERMARKPOS_BC", "bottom center");
+define("_CO_ALBUM_IMAGES_WATERMARKCOLOR_BLACK", "black");
+define("_CO_ALBUM_IMAGES_WATERMARKCOLOR_BLUE", "blue");
+define("_CO_ALBUM_IMAGES_WATERMARKCOLOR_GREEN", "green");
+define("_CO_ALBUM_IMAGES_WATERMARKCOLOR_WHITE", "white");
+define("_CO_ALBUM_IMAGES_WATERMARKCOLOR_RED", "red");

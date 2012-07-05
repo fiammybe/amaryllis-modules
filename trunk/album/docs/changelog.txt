@@ -1,5 +1,18 @@
 = *Album* Changelog =
 
+== Version 1.2 => Release Date: XX.07.2012 ==
+* added copyrights to image upload
+* added copyright color and copyright position to image upload
+* added batchupload for backend via FTP and Zip
+* added batchupload to Front end via Zip and vor Admins via FTP
+* added to config: enable/disable copyrights, default copyright text, possibility to allow/disalow changing the copyright on frontend submitting
+* added links to main menu to get easily images by creator
+* updated manual
+* updated all language files to aply changes above
+* added print support to manual
+* added index tab in ACP and changed index.php to display module informations
+* changed module index site in ACP to admin/index.php
+
 == Version 1.1 => Release Date: XX.03.2012 ==
 * changed upload path for albumimages and indexpage
 * added possibility to filter by publisher

@@ -308,9 +308,8 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 
 		if (isset($albumObj->vars['counter']) && !is_object(icms::$user) || (!$album_isAdmin && $albumObj->getVar('album_uid', 'e') != icms::$user->uid ()) ) {
 			$new_counter = $albumObj->getVar('counter') + 1;
-			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
-				. ' WHERE ' . $this->keyName . '=' . $albumObj->id();
-			$this->query($sql, NULL, TRUE);
+			$albumObj->setVar("counter", $new_counter);
+			$this->insert($albumObj, TRUE);
 		}
 		return TRUE;
 	}
@@ -354,7 +353,7 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		if ($obj->getVar('album_pid','e') == $obj->getVar('album_id','e')){
 			$obj->setVar('album_pid', 0);
 		}
-		if (!$obj->getVar('album_img_upload') == "") {
+		if (!$obj->getVar("album_img_upload", "e") == "") {
 			$obj->setVar('album_img', $obj->getVar('album_img_upload') );
 		}
 		$dsc = $obj->getVar("album_description", "s");
