@@ -19,10 +19,10 @@
 
 // general informations
 define("_MI_ALBUM_NAME", "Album");
-define("_MI_ALBUM_DSC", "'Album' is a light weight photo-album module, which can handle image-uploads and categorize them to albums.");
+define("_MI_ALBUM_DSC", "'Album' ist ein Gallerie-Modul, welches den Bild upload ermöglicht und diese in Alben kategorisiert. Alben nutzen die Rechte-Verwaltung von ImpressCMS und Bilder können mit Kommentaren von Besuchern versehen werden.");
 
 // templates
-define("_MI_ALBUM_INDEX_TPL", "'Album' index page in frontend");
+define("_MI_ALBUM_INDEX_TPL", "'Album' Index Seite im front end");
 define("_MI_ALBUM_HEADER_TPL", "'Album' header contains breadcrumb");
 define("_MI_ALBUM_ADMIN_FORM_TPL", "'Album' Admin form");
 define("_AM_ALBUM_REQUIREMENTS_TPL", "'Album' Requirements check");
@@ -104,49 +104,48 @@ define("_MI_ALBUM_GLOBAL_ALBUM_PUBLISHED_NOTIFY_DSC", "Receive notification when
 define("_MI_ALBUM_GLOBAL_ALBUM_PUBLISHED_NOTIFY_SBJ", "[{X_SITENAME}] {X_MODULE} auto-notify : New Album published");
 
 // ACP menu
-define("_MI_ALBUM_MENU_ALBUM", "Manage Albums");
-define("_MI_ALBUM_MENU_IMAGES", "Manage Images");
-define("_MI_ALBUM_MENU_IMAGEUPLOAD", "Module Image upload");
-define("_MI_ALBUM_MENU_INDEXPAGE", "Edit Indexpage");
+define("_MI_ALBUM_MENU_ALBUM", "Alben");
+define("_MI_ALBUM_MENU_IMAGES", "Bilder");
+define("_MI_ALBUM_MENU_INDEXPAGE", "Indexseite");
 define("_MI_ALBUM_MENU_TEMPLATES", "Templates");
 // Submenu while calling a tab
-define("_MI_ALBUM_ALBUM_EDITING", "Edit your Album");
-define("_MI_ALBUM_ALBUM_CREATINGNEW", "Create a new Album");
-define("_MI_ALBUM_IMAGES_EDIT", "Edit your Image");
-define("_MI_ALBUM_IMAGES_UPLOADNEW", "Upload a new Image");
+define("_MI_ALBUM_ALBUM_EDITING", "Bearbeiten Sie Ihr Album");
+define("_MI_ALBUM_ALBUM_CREATINGNEW", "Erstellen Sie ein neues Album");
+define("_MI_ALBUM_IMAGES_EDIT", "Bearbeiten Sie Ihr Bild");
+define("_MI_ALBUM_IMAGES_UPLOADNEW", "Laden Sie ein neues Bild hoch");
 
 /**
  * added in 1.1
  */
 // added messages, permissions and manual to menu
-define("_MI_ALBUM_MENU_MESSAGE", "Image Comments");
-define("_MI_ALBUM_MENU_PERMISSIONS", "Permissions");
+define("_MI_ALBUM_MENU_MESSAGE", "Bild-Kommentare");
+define("_MI_ALBUM_MENU_PERMISSIONS", "Berechtigungen");
 define("_MI_ALBUM_MENU_MANUAL", "Manual");
 //added to config
-define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL", "New comments for images needs approval?");
-define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL_DSC", "If you need approval before publishing new comments on images, select yes");
-define("_MI_ALBUM_USE_MESSAGES", "Use a comment system for single images?");
-define("_MI_ALBUM_USE_MESSAGES_DSC", "Allow, disallow comments for single images.");
-define("_MI_ALBUM_NEED_IMAGE_LINKS", "Do you need a field for adding an url to single images?");
-define("_MI_ALBUM_NEED_IMAGE_LINKS_DSC", "Set yes, to get a new field to add a url-link to a product site to single images");
+define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL", "Brauchen Sie eine Genehmigung für neue Bild-Kommentare?");
+define("_MI_ALBUM_MESSAGE_NEEDS_APPROVAL_DSC", "Bild-Kommentare können als 'abgelehnt' übermittelt, bis sie genehmigt wurden und sind so lange nicht sichtbar");
+define("_MI_ALBUM_USE_MESSAGES", "Möchten Sie das Kommentar-System für Bilder nutzen?");
+define("_MI_ALBUM_USE_MESSAGES_DSC", "Ein-/Ausschalten der Funktion für Bildkommentare.");
+define("_MI_ALBUM_NEED_IMAGE_LINKS", "Benötigen Sie URL-Links, die zu jedem Bild zugefügt werden können?");
+define("_MI_ALBUM_NEED_IMAGE_LINKS_DSC", "Wenn eingeschaltet, kann man unter jedem Bild einen Link bereitstellen, z.B. zu einer Produktseite");
 //added to blocks
-define("_MI_ALBUM_BLOCK_RECENT_IMAGES", "Recent Images");
-define("_MI_ALBUM_BLOCK_RECENT_IMAGES_DSC", "Display recent images of an album, a user or all recent images");
+define("_MI_ALBUM_BLOCK_RECENT_IMAGES", "Letzte Bilder");
+define("_MI_ALBUM_BLOCK_RECENT_IMAGES_DSC", "Anzeigen der letzten Bilder");
 define("_MI_ALBUM_BLOCK_SINGLE_IMAGE", "Single Image");
 define("_MI_ALBUM_BLOCK_SINGLE_IMAGE_DSC", "Display a single image in a block");
 /**
  * added in 1.2
  */
 // added batchupload and index to menu
-define("_MI_ALBUM_MENU_BATCHUPLOAD", "Batchupload");
+define("_MI_ALBUM_MENU_BATCHUPLOAD", "Stapelverarbeitung");
 define("_MI_ALBUM_MENU_INDEX", "Index");
 //added to config
-define("_MI_ALBUM_CONF_IMG_USE_COPYR", "Use copyright text for images?");
-define("_MI_ALBUM_CONF_IMG_USE_COPYR_DSC", "Set to 'YES' if you like to use copyrights for your image");
-define("_MI_ALBUM_CONF_IMG_DEFAULT_COPYR", "Default copyright");
-define("_MI_ALBUM_CONF_IMG_DEFAULT_COPYR_DSC", "Set a default copyright for all Images");
-define("_MI_ALBUM_CONF_IMG_ALLOW_UPLOADER_COPYR", "Allow users to set theier own copyright on upload?");
-define("_MI_ALBUM_CONF_IMG_ALLOW_UPLOADER_COPYR_DSC", "Set to 'YES', if users can use an own copyright notice. Otherwise you definately need a default copyright");
+define("_MI_ALBUM_CONF_IMG_USE_COPYR", "Wasserzeichen für Bilder verwenden?");
+define("_MI_ALBUM_CONF_IMG_USE_COPYR_DSC", "Wählen Sie ja, um Ihre Bilder automatisch mit einem Wasserzeichen zu versehen");
+define("_MI_ALBUM_CONF_IMG_DEFAULT_COPYR", "Standard-Text für Wasserzeichen");
+define("_MI_ALBUM_CONF_IMG_DEFAULT_COPYR_DSC", "Setzen Sie einen Standard für alle Bilder");
+define("_MI_ALBUM_CONF_IMG_ALLOW_UPLOADER_COPYR", "Wollen Sie das Ändern des Wasserzeichen für einzelne Bilder erlauben");
+define("_MI_ALBUM_CONF_IMG_ALLOW_UPLOADER_COPYR_DSC", "Wenn dies erlaubt wird, kann man den Wasserzeichentext beim Bildupload ändern, andernfalls wird ausschließlich der voreingestellte verwendet");
 // added to mainmenu
-define("_MI_ALBUM_MENUMAIN_ADDALBUM", "Submit Album");
-define("_MI_ALBUM_MENUMAIN_ADDIMAGES", "Submit image");
+define("_MI_ALBUM_MENUMAIN_ADDALBUM", "Übermittle Album");
+define("_MI_ALBUM_MENUMAIN_ADDIMAGES", "Übermittle Bilder");

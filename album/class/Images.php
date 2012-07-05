@@ -28,8 +28,8 @@ class AlbumImages extends icms_ipf_Object {
 		parent::__construct($handler);
 
 		$this->quickInitVar('img_id', XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar('a_id', XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar('img_title', XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar('a_id', XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar('img_title', XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar('img_published_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_updated_date', XOBJ_DTYPE_LTIME, FALSE);
 		$this->quickInitVar('img_description', XOBJ_DTYPE_TXTAREA, FALSE);
@@ -40,6 +40,9 @@ class AlbumImages extends icms_ipf_Object {
 		$this->initCommonVar('weight');
 		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar('img_urllink', XOBJ_DTYPE_URLLINK);
+		$this->quickInitVar('img_copyright', XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, $albumConfig['img_default_copyright']);
+		$this->quickInitVar('img_copy_pos', XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, "BL");
+		$this->quickInitVar('img_copy_color', XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, "black");
 		$this->initCommonVar('dohtml', FALSE, 1);
 		$this->initCommonVar('dobr', FALSE, 1);
 		$this->initCommonVar('doimage', FALSE, 1);
@@ -51,7 +54,8 @@ class AlbumImages extends icms_ipf_Object {
 		$this->setControl('img_publisher', 'user');
 		$this->setControl('a_id', array('name' => 'select', 'itemHandler' => 'album', 'method' => 'getAlbumListForPid', 'module' => 'album'));
 		$this->setControl('img_description', 'dhtmltextarea' );
-		
+		$this->setControl('img_copy_pos', array('name' => 'select', 'itemHandler' => 'images', 'method' => 'getWatermarkPositions', 'module' => 'album'));
+		$this->setControl('img_copy_color', array('name' => 'select', 'itemHandler' => 'images', 'method' => 'getWatermarkColors', 'module' => 'album'));
 		$this->setControl( 'img_url', 'image');
 		$url = ICMS_URL . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
 		$path = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
@@ -60,14 +64,15 @@ class AlbumImages extends icms_ipf_Object {
 			$this->hideFieldFromForm("img_urllink");
 			$this->hideFieldFromSingleView("img_urllink");
 		}
-		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 		if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
 			$this->setControl("img_tags", array("name" => "selectmulti", "itemHandler" => "images", "method" => "getImagesTags", "module" => "album"));
 		} else {
 			$this->hideFieldFromForm("img_tags");
 			$this->hideFieldFromSingleView("img_tags");
 		}
-		
+		if($albumConfig['img_allow_uploader_copyright'] == 0) {
+			$this->hideFieldFromForm('img_copyright');
+		}
 		$this->hideFieldFromForm( array('img_publisher', 'img_published_date', 'img_updated_date'));
 		$this->hideFieldFromSingleView(array('dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode'));
 
@@ -81,6 +86,9 @@ class AlbumImages extends icms_ipf_Object {
 		return $album->getVar ( 'album_title' );
 	}
 	
+	/**
+	 * prepare some control fields for ACP Image overview
+	 */
 	public function img_active() {
 		$img_active = $this->getVar('img_active', 'e');
 		if ($img_active == FALSE) {
@@ -103,10 +111,32 @@ class AlbumImages extends icms_ipf_Object {
 		}
 	}
 
+	public function getTitleControl() {
+		$control = new icms_form_elements_Text( '', 'img_title[]', 15, 255,$this->getVar('img_title', 'e'));
+		return $control->render();
+	}
+	
+	public function getDscControl() {
+		$control = new icms_form_elements_Textarea( '', 'img_description[]', $this->getVar('img_description', 'e'), 3, 40);
+		return $control->render();
+	}
+
 	public function getWeightControl() {
 		$control = new icms_form_elements_Text( '', 'weight[]', 5, 7,$this -> getVar( 'weight', 'e' ) );
 		$control->setExtra( 'style="text-align:center;"' );
 		return $control->render();
+	}
+	
+	public function getAlbumControl() {
+		global $album_album_handler;
+		$control = new icms_form_elements_Select("", 'a_id[]', $this->getVar("a_id", "e"));
+		$control->addOptionArray($album_album_handler->getAlbumListForPid());
+		return $control->render();
+	}
+	
+	public function getImgPreview() {
+		$img = '<img src="' . $this->getImagePath() . '" . width=64% />';
+		return $img;
 	}
 	
 	public function getImageTag($indexview = TRUE) {
@@ -148,25 +178,7 @@ class AlbumImages extends icms_ipf_Object {
 	
 	// get publisher for frontend
 	public function getPublisher($link = FALSE) {
-		
-			$publisher_uid = $this->getVar('img_publisher', 'e');
-			$userinfo = array();
-			$userObj = icms::handler('icms_member')->getuser($publisher_uid);
-			if (is_object($userObj)) {
-				$userinfo['uid'] = $publisher_uid;
-				$userinfo['uname'] = $userObj->getVar('uname');
-				$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
-			} else {
-				global $icmsConfig;
-				$userinfo['uid'] = 0;
-				$userinfo['uname'] = $icmsConfig['anonymous'];
-			}
-		
-		if ($link && $userinfo['uid']) {
-			return $userinfo['link'];
-		} else {
-			return $userinfo['uname'];
-		}
+		return icms_member_user_Handler::getUserLink($this->getVar('img_publisher', 'e'));
 	}
 	
 	public function getImageDescription() {
