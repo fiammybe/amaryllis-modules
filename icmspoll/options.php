@@ -140,6 +140,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if($icmspollConfig['allow_init_value'] == 1) {
 				$objectTable->addColumn(new icms_ipf_view_Column("option_init", FALSE, 75, ""));
 			}
+			$objectTable->addColumn(new icms_ipf_view_Column("option_count", FALSE, FALSE, ""));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
 			
 			$objectTable->addFilter("poll_id", "filterPolls");
