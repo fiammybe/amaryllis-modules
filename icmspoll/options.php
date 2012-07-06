@@ -134,11 +134,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if(!$icmspoll_isAdmin) redirect_header(ICMSPOLL_URL, 3, _NOPERM);
 			
 			$objectTable = new icms_ipf_view_Table($options_handler, NULL, array("edit", "delete"), TRUE);
-			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollIdControl"));
-			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionTextControl"));
-			$objectTable->addColumn(new icms_ipf_view_Column("option_color", FALSE, FALSE, "getOptionColorControl"));
-			if($icmpollConfig['allow_init_value'] == 1) {
-				$objectTable->addColumn(new icms_ipf_view_Column("option_init", FALSE, 75, "getOptionInitControl"));
+			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollName"));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionText"));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_color", FALSE, FALSE, ""));
+			if($icmspollConfig['allow_init_value'] == 1) {
+				$objectTable->addColumn(new icms_ipf_view_Column("option_init", FALSE, 75, ""));
 			}
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
 			
