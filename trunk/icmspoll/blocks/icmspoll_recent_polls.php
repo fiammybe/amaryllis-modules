@@ -26,6 +26,7 @@ function b_icmspoll_recent_polls_show($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
+	$polls_handler->checkStarted();
 	$block["icmspoll_polls"] = $polls_handler->getPolls(0, $options[0], $options[3], $options[4], $options[1], $options[2], TRUE);
 	return $block;
 }

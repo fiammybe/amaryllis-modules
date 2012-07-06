@@ -17,6 +17,12 @@
  *
  */
 
+header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+ 
 include_once 'header.php';
 
 $xoopsOption['template_main'] = 'icmspoll_index.html';
@@ -73,6 +79,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			 */
 			if(is_object($pollObj) && !$pollObj->isNew() && $pollObj->viewAccessGranted()) {
 				$poll = $pollObj->toArray();
+				$pollObj->hasStarted();
 				$icmsTpl->assign("poll", $poll);
 				$options = $options_handler->getAllByPollId($clean_poll_id, "weight", "ASC");
 				$icmsTpl->assign("options", $options);
@@ -82,6 +89,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			 * if not a single poll is requested, display poll list
 			 */
 			} elseif ($clean_poll_id == 0) {
+				$polls_handler->checkStarted();
 				$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, FALSE, FALSE);
 				if($polls) {
 					$icmsTpl->assign('polllist', $polls);

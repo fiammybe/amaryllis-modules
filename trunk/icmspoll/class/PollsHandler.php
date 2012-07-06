@@ -66,6 +66,17 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	public function checkStarted() {
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("expired", 0));
+		$criteria->add(new icms_db_criteria_Item("started", 0));
+		$polls = $this->getObjects($criteria, TRUE);
+		
+		foreach(array_keys($polls) as $i) {
+			$ret[$i] = $polls[$i]->hasStarted();
+		}
+		return $ret;
+	}
+	
 	public function getPollsCount ($expired = FALSE, $user_id = FALSE, $started = TRUE) {
 		$criteria = new icms_db_criteria_Compo();
 		if($expired && !$started) {
