@@ -193,7 +193,7 @@ class IcmspollPolls extends icms_ipf_Object {
 				if ( $this->id() == $optionObj->getVar("poll_id") ) {
 					$logObj = $icmspoll_log_handler->create(TRUE);
 					$logObj->setVar("poll_id", $this->getVar("poll_id", "e"));
-					$logObj->setVar("option_id", $vote);
+					$logObj->setVar("option_id", $option);
 					$logObj->setVar("ip", $ip);
 					$logObj->setVar("session_id", $sess_id);
 					$logObj->setVar("user_id", $user_id);
