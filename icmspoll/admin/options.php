@@ -107,11 +107,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable = new icms_ipf_view_Table($options_handler, NULL);
 			$objectTable->addColumn(new icms_ipf_view_Column("poll_id", FALSE, FALSE, "getPollName"));
 			$objectTable->addColumn(new icms_ipf_view_Column("option_text", FALSE, FALSE, "getOptionText"));
-			$objectTable->addColumn(new icms_ipf_view_Column("option_color", FALSE, FALSE, ""));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_color", "center", 75, ""));
 			if($icmspollConfig['allow_init_value'] == 1) {
-				$objectTable->addColumn(new icms_ipf_view_Column("option_init", FALSE, 75, ""));
+				$objectTable->addColumn(new icms_ipf_view_Column("option_init", 'center', 75, ""));
 			}
-			$objectTable->addColumn(new icms_ipf_view_Column("option_count", FALSE, FALSE, ""));
+			$objectTable->addColumn(new icms_ipf_view_Column("option_count", "center", 75, ""));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
 			
 			$objectTable->addFilter("poll_id", "filterPolls");
