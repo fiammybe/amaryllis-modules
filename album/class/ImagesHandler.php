@@ -200,8 +200,8 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 			if($showNull) $bids[0] = '--------------';
 			while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 				$bids[$myrow['img_publisher']] = icms_member_user_Object::getUnameFromId((int)$myrow['img_publisher']);
+				return $bids;
 			}
-			return $bids;
 		}
 	}
 	
