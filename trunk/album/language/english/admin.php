@@ -81,6 +81,7 @@ define("_AM_ALBUM_BATCHUPLOAD_ZIPUPL", "Add images from an zipfile to upload");
 define("_AM_ALBUM_BATCHUPLOAD_UPLOAD_ZIP", "Upload a new zip file");
 // admin/images.php
 define("_AM_ALBUM_IMAGES_FIELDS_UPDATED", "Fields successfully updated.");
+define("_AM_NO_ALBUM_FOUND", "Sorry, no Album found. Please create Album first.");
 //index.php
 define("_AM_ALBUM_INDEX", "Album Module - Overview");
 define("_AM_ALBUM_INDEX_TOTAL", "Total Albums");

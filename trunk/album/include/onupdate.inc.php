@@ -57,13 +57,13 @@ function album_upload_paths() {
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
 	$path = ICMS_UPLOAD_PATH . '/album';
-	if(!is_dir($path . '/album')) icms_core_Filesystem::mkdir($path . '/album');
+	if(!is_dir($path . '/album')) mkdir($path . '/album', 0777);
 	$categoryimages = array();
 	$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/album/images/folders/', '', array('gif', 'jpg', 'png'));
 	foreach($categoryimages as $image) {
 		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/album/' . $image);
 	}
-	if(!is_dir($path . '/indexpage')) icms_core_Filesystem::mkdir($path . '/indexpage');
+	if(!is_dir($path . '/indexpage')) mkdir($path . '/indexpage', 0777);
 	$image = 'album_indeximage.png';
 	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indexpage/' . $image);
 	if(!is_dir($path . '/batch')) icms_core_Filesystem::mkdir($path . '/batch');
