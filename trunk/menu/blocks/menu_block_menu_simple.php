@@ -33,7 +33,7 @@ function b_menu_menu_simple_show($options) {
 	$block['jsfile'] = $options[3];
 	$block['script_url'] = MENU_URL . "scripts/";
 	
-	$xoTheme->addStylesheet('/modules/' . MENU_DIRNAME . '/' . $options[4]);
+	$xoTheme->addStylesheet('/modules/' . MENU_DIRNAME . '/scripts/' . $options[4]);
 	
 	return $block;
 }
