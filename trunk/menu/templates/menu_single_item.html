@@ -1,6 +1,6 @@
 <{if $block.megamenu}>
 	<{if $item.accessGranted}>
-		<li <{if $block.megamenu.display_img == 1}> style="background: url(<{$item.img}>) no-repeat;"<{/if}>>
+		<li <{if $block.display_images == 1}> style="background: url(<{$item.img}>) no-repeat;"<{/if}>>
 			<a class="menu_menulink" href="<{$item.url}>" title="<{$item.title}>" target="<{$item.target}>" <{if $item.target == "_blank"}> rel="external" <{/if}> >
 				<{if $block.megamenu.display_img == 1 || $block.megamenu.display_img == 2 }>
 					<{$item.title}>
