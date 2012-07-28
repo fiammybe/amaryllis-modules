@@ -1,0 +1,42 @@
+<{*
+	
+	$item.id = id des items
+	$item.title = title des items
+	$item.dsc = Beschreibung
+	$item.url = url des items
+	$item.img = pfad zum icon des items
+	$item.target = target _self oder _blank
+	$item.hassub = gibt true zurück, wenn subs vorhanden, sonst false
+	$item.accessGranted = checkt berechtigung zum sehen des links
+	$item.subs = gibt die subitems als array zurück
+	
+	
+	*}>
+
+
+<{if $item.accessGranted}>
+	<li>
+		<a class="menu_menulink" href="<{$item.url}>" title="<{$item.title}>" target="<{$item.target}>" <{if $item.target == "_blank"}> rel="external" <{/if}> >
+			<{if $block.menu_menu.display_img == 1 || $block.menu_menu.display_img == 2 }>
+				<{$item.title}>
+			<{/if}>
+			<{if $block.menu_menu.display_img == 1 || $block.menu_menu.display_img == 3 }>
+				<img class="item_image" id="item_icon_<{$item.id}>" src="<{$item.img}>" alt="<{$item.title}>" />
+			<{/if}>
+		</a>
+		<{if $block.menu_menu.display_dsc}>
+			<div class="item_dsc">
+				<{$item.title}>
+			</div>
+		<{/if}>
+		<{if $item.hassub}>
+			<ul>
+				<{foreach item=item from=$item.subs}>
+					<{includeq file="db:menu_single_item.html"}>
+				<{/foreach}>
+			</ul>
+		<{/if}>
+	</li>
+
+
+<{/if}>

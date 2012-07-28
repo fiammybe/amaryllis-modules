@@ -1,0 +1,9 @@
+<{if $menu_item_title}><h1><{$menu_item_title}></h1><{/if}>
+<{if $menu_item_info}><p><{$menu_item_info}></p><{/if}>
+<{if $menu_item_table}><{$menu_item_table}><{/if}>
+<{if $additem}><{includeq file='db:system_common_form.html' form=$additem}><{/if}>
+
+<{if $menu_menu_title}><h1><{$menu_menu_title}></h1><{/if}>
+<{if $menu_menu_info}><p><{$menu_menu_info}></p><{/if}>
+<{if $menu_menu_table}><{$menu_menu_table}><{/if}>
+<{if $addmenu}><{includeq file='db:system_common_form.html' form=$addmenu}><{/if}>
