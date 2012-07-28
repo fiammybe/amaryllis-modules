@@ -61,7 +61,7 @@ function b_menu_megamenu_show($options) {
 	}
 	$block['script'] = $jsfile;
 	
-	(!$options[7] == "0") ? $xoTheme->addStylesheet('/modules/' . MENU_DIRNAME . '/scripts/megamenu/css/skins/' . $options[7]) : "";
+	(!$options[7] == "0" && !$menu_kind == "vertical") ? $xoTheme->addStylesheet('/modules/' . MENU_DIRNAME . '/scripts/megamenu/css/skins/' . $options[7]) : "";
 	$xoTheme->addStylesheet('/modules/' . MENU_DIRNAME . '/scripts/megamenu/css/' . $cssfile);
 	$block['color_class'] = array_shift(explode(".", $options[7]));
 	return $block;
