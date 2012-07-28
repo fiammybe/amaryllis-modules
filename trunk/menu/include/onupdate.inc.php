@@ -19,24 +19,40 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-// this needs to be the latest db version
 define('MENU_DB_VERSION', 1);
 
-/**
- * it is possible to define custom functions which will be call when the module is updating at the
- * correct time in update incrementation. Simpy define a function named <direname_db_upgrade_db_version>
- */
-/*
-function menu_db_upgrade_1() {
+function create_block_pos() {
+	$block_pos_handler = icms::handler("icms_view_block_position");
+	$blockposObj = $block_pos_handler->create(TRUE);
+	$blockposObj->setVar("pname", "menu_block");
+	$blockposObj->setVar("title", "Menu Block");
+	$blockposObj->setVar("description", "Menu Block created by Menu module");
+	$block_pos_handler->insert($blockposObj, TRUE);
 }
-function menu_db_upgrade_2() {
+
+function remove_block_pos() {
+	$block_pos_handler = icms::handler("icms_view_block_position");
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("pname", "menu_block"));
+	$sql = "SELECT id FROM " . $block_pos_handler->table . " " . $criteria->renderWhere();
+	if (!$result = icms::$xoopsDB->query($sql)) return FALSE;
+	list($myrow) = icms::$xoopsDB->fetchRow($result);
+	$blockposObj = $block_pos_handler->get($myrow);
+	$block_pos_handler->delete($blockposObj);
 }
-*/
 
 function icms_module_update_menu($module) {
+	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
+	$icmsDatabaseUpdater -> moduleUpgrade($module);
     return TRUE;
 }
 
 function icms_module_install_menu($module) {
+	// create own block position
+	create_block_pos();
+	return TRUE;
+}
+
+function icms_module_uninstall_menu($module) {
+	remove_block_pos();
 	return TRUE;
 }
