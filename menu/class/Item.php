@@ -66,6 +66,13 @@ class MenuItem extends icms_ipf_Object {
 		}
 	}
 	
+	function getCloneItemLink() {
+		$ret = '<a href="' . $this->handler->_moduleUrl . 'admin/' . $this->handler->_itemname . '.php?op=clone&amp;item_id=' . $this->id() . '" title="' . _AM_MENU_ITEM_CLONE
+		 . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" /></a>';
+
+		return $ret;
+	}
+	
 	public function getItemMenu() {
 		$menu_id = $this->getVar("item_menu", "e");
 		$menu_handler = icms_getModuleHandler("menu", MENU_DIRNAME, "menu");
