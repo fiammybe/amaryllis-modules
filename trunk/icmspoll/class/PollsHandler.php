@@ -70,7 +70,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("expired", 0));
 		$criteria->add(new icms_db_criteria_Item("started", 0));
 		$polls = $this->getObjects($criteria, TRUE);
-		
+		$ret = array();
 		foreach(array_keys($polls) as $i) {
 			$ret[$i] = $polls[$i]->hasStarted();
 		}

@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Icmspoll Manual</title>
+        <style>
+        	#icmspoll_manual {margin: 2em;}
+        	#icmspoll_manual h1, h2, h3 {font-family: Georgia, "Times New Roman", Times, serif; padding-bottom: 1em; padding-top: 1em; line-height: 1.7em; font-weight: bold;}
+        	#icmspoll_manual h1 {text-align: center; font-size: 1.5em; font-variant: small caps; color: #336699;}
+        	#icmspoll_manual h2 {font-size: 1.250em; color: #6699CC;}
+        	#icmspoll_manual h3 {font-size: 1.1em; color: #6699FF;}
+        	#icmspoll_manual p {font-size: .9em; margin: 0; padding: 5px;}
+        	#icmspoll_manual ul li {list-style-type: square; margin-left: 20px; line-height: 1.5em; font-weight: bolder; }
+        	#icmspoll_manual ul li ul li {list-style-type: disc; margin-left: 30px; font-weight: normal; }
+        	#icmspoll_footer {border: 1px dotted; margin: 2em auto; padding: 0 1em 2em; --moz-border-radius: 1.5em; -webkit-border-radius: 1.5em; border-radius: 1.5em;}
+        	#icmspoll_footer h2 {padding: .5em 0 0;}
+        	#icmspoll_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
+        	#icmspoll_manual a, #icmspoll_manual a:visited {color: #336699}
+        	#icmspoll_manual a:hover {color: #336699; text-decoration: underline;}
+        </style>
+    </head>
+    <body>
+    	<div id="icmspoll_manual">
+	        <h1>Icmspoll Manual</h1>
+	        	<p>Icmspoll é um módulo de pesquisa para ImpressCMS, que podem facilmente ser usados ??com iForum, o módulo de fórum de ImpressCMS também. Ele foi projetado para fornecer as pesquisas dos utilizadores e / ou sondagens de visitantes.</p>
+	        <h2>Keyfeatures</h2>
+				<ul>
+					<li>Você pode criar enquetes com multiplas opções de escolha</li>
+					<li>As opções podem ser selecionadas usando radio buttons ou checkboxes, o que for melhor para sua pesquisa</li>
+					<li>Saída diferente dos resultados para administradores e usuários do módulo simples / convidados</li>
+					<li>Use o sistema de permissão do módulo para selecionar quais grupos podem ver a enquete</li>
+					<li>Use o sistema de permissão do módulo para selecionar quais grupos podem votar a enquete</li>
+				</ul>
+	        <h2>Iniciar Primeiro</h2>
+				<p>Existem diversas coisas a serem feitas <b>antes</b> de você criar uma pesquisa. Por favor siga as instruções</p>
+				
+				<h3>Check as preferências do módulo</h3>
+					<p>Existem algumas preferências que você pode querer alterar antes de iniciar o módulo. Vá em Modulos > Icmspoll > Preferencia</p>
+					<ul>
+						<li>Permissão Grupo
+							<ul>
+								<li>
+									As permissões do grupo são apenas para definir as permissões para a criação de novas enquetes. Todos os grupos selecionados terão permissão para apresentar novas pesquisas.
+								</li>
+							</ul>
+						</li>
+						<li>Formatar Data
+							<ul>
+								<li>
+									O formato da data irá ser usada para exibir a data em toda a interface do módulo. Você precisa de ajuda para obter o formato de data preferido? Veja <a href="http://php.net/manual/en/function.date.php">aqui</a> detalhes e instruções.
+								</li>
+							</ul>
+						</li>
+						<li>Restrição por IP
+							<ul>
+								<li>
+									Configura a restrição de voto por endereço IP.
+								</li>
+							</ul>
+						</li>
+						<li>Restringir por impressão digital da sessão
+							<ul>
+								<li>
+									Defina as restrições para as pesquisas de voto por impressão digital da sessão.
+								</li>
+							</ul>
+						</li>
+						<li>Restrição por usuário
+							<ul>
+								<li>
+									Defina as restrições para as pesquisas de voto por identificação de usuário.
+								</li>
+							</ul>
+						</li>
+						<li>Mostar caminho da pagina
+							<ul>
+								<li>
+									Selecione "SIM" para exibir o caminho no topo da página, "Não" para desabilitar.
+								</li>
+							</ul>
+						</li>
+						<li>Exibir enquetes
+							<ul>
+								<li>
+									Definir o limite para as pesquisas a serem listadas na visualização do índice. "0" desliga-se a limitação e busca todas.
+								</li>
+							</ul>
+						</li>
+						<li>Pesquisa em Ordem padrão
+							<ul>
+								<li>
+									Definir a ordem padrão para as enquetes sobre visualização do índice.
+								</li>
+							</ul>
+						</li>
+						<li>Enquete de classificação padrão
+							<ul>
+								<li>
+									Defina o tipo padrão para as enquetes sobre visualização do índice.
+								</li>
+							</ul>
+						</li>
+						<li>Permitir valor inicial?
+							<ul>
+								<li>
+									Selecione "SIM" para permitir valor inicialpara as opções
+								</li>
+							</ul>
+						</li>
+						<li>Imprimir Rodapé
+							<ul>
+								<li>
+									Adicionar um rodapé de impressão para os layouts, se necessário
+								</li>
+							</ul>
+						</li>
+						<li>Imprimir logo
+							<ul>
+								<li>
+									Você pode definir o logo a ser impresso. Basta digitar a url do caminho para o logotipo. ex.: /themes/mytheme/images/logo.gif
+								</li>
+							</ul>
+						</li>
+						<li>use RSS Feeds
+							<ul>
+								<li>
+									Se você gosta de fornecer um link RSS e usar o recurso de RSS de "Icmspoll", definir como yes.
+								</li>
+							</ul>
+						</li>
+						<li>Limit of RSS Feeds
+							<ul>
+								<li>
+									Definir o limite de pesquisas para RSS feeds. "0" desativará RSS-Limit.
+								</li>
+							</ul>
+						</li>
+					</ul>
+				<h3>Criando uma enquete</h3>
+					<p>O próximo passo importante será a criação de uma enquete. Caso contrário, você não conseguirá visualizar a página de apuração. Ir para "enquetes"> Adicionar. 
+						Basta preencher os campos. </p>
+					<ul>
+						<li>Questões
+							<ul>
+								<li>A questão é usado como um título e fornece também o link para a votação em exibição.</li>
+							</ul>
+						</li>
+						<li>Descriçõa
+							<ul>
+								<li>A descrição pode ser usado, para descrever a questão mais detalhado e será exibido na tela de índice como em exibição simples na enquete.</li>
+							</ul>
+						</li>
+						<li>Selecione o delimitador a ser usado
+							<ul>
+								<li>O módulo oferece atualmente dois delimitadores: a &lt;br /&gt;-Tag e um espaço. Os delimitadores são usados ??para os campos de opções dentro do formulário.</li>
+							</ul>
+						</li>
+						<li>Inicio da Enquete
+							<ul>
+								<li>Este será o horário de início, quando a votação é visível. Lembre-se do tempo que você precisa adicionar opções para a enquete!</li>
+							</ul>
+						</li>
+						<li>Fim da Enquete
+							<ul>
+								<li>O fim do período para votação</li>
+							</ul>
+						</li>
+						<li>Exibir em bloco
+							<ul>
+								<li>Defina SIM, se a enquete deve ser exibida no "Bloco Enquetes recentes"</li>
+							</ul>
+						</li>
+						<li>Peso
+							<ul>
+								<li>Digite peso para ordem de exibição da enquetes.</li>
+							</ul>
+						</li>
+						<li>Permitir multiplas seleções
+							<ul>
+								<li>Defina SIM, se vc quiser permitir que o participante slecione mais de uma opção.</li>
+							</ul>
+						</li>
+						<li>Notificar o autor quando a enquete expirar?
+							<ul>
+								<li>Será enviado uma notificação para o criador da enquete, se a enquete expirou.</li>
+							</ul>
+						</li>
+						<li>Exibir Permissões
+							<ul>
+								<li>Defina os grupos que possuem permissão para visualizar a enquete</li>
+							</ul>
+						</li>
+						<li>Permissões de Voto
+							<ul>
+								<li>Defina os grupos que possuem permissão para votar na enquete</li>
+							</ul>
+						</li>
+					</ul>
+					<p>Pronto! Após o envio, vc deve ser direcionado para a página de opções, e ser capaz de adicionar opções para sua enquete.</p>
+				<h3>Criando opções</h3>
+					<p>O formulário de opções é muito curto. Basta digitar o texto para a opção, escolher uma cor como fundo e inserir um peso, se desejar. Antes de salvar a opção, certifique-se ter selecionado a enquete correta.</p>
+				<h2>Blocos</h2>
+				<p>Atualmente estão disponívies 4 blocos para o módulo:</p>
+				<ul>
+					<li>Enquetes Recentes
+						<ul>
+							<li>O bloco "Enquetes Recentes" como o próprio nome diz exibirá as ultimas enquetes conforme a classificação definida : ordem publicação/expirado.</li>
+						</ul>
+					</li>
+					<li>Enquete Única
+						<ul>
+							<li>este bloco irá exibir uma unica enquete,que pode ser posicionda em qualquer lugar.</li>
+						</ul>
+					</li>
+					<li>Resultados Recentes
+						<ul>
+							<li>Este bloco irá exibir enquetes expiradas,com um link para a página de votação. </li>
+						</ul>
+					</li>
+					<li>Unico Resultado
+						<ul>
+							<li>Este bloco irá exibir o resultado de uma única enquete,com dados diferentes para clientes/usuários e administradores do módulo.</li>
+						</ul>
+					</li>
+				</ul>
+				<p>Você pode conar todos os blocos, se precisar.</p>
+	 
+			<div id="icmspoll_footer">
+			<h2>Conclusão</h2>
+				<p>Obrigado por utilizar o módulo 'Icmspoll'. Se você tiver algum problema utilizando o módulo, por favor visite <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>. Por favor, use tambem <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a> para isto!</p>  
+				<p>Você também pode acompanhar as mudanças recentes no módulo icmspoll! Por favor, dê uma olhada <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/icmspoll/trunk/" title="'Icmspoll' SVN on Assembla" rel="external">'Icmspoll' SVN on Assembla</a> ou faça uma checagem no meu SVN <a href="http://code.google.com/p/amaryllis-modules/" title="Icmspoll" rel="external"> no google code</a>.</p>
+			</div>
+		</div>
+    </body>
+</html>
