@@ -1,6 +1,6 @@
 <{if $block.megamenu}>
 	<{if $item.accessGranted}>
-		<li <{if $block.display_images == 1}> style="background: url(<{$item.img}>) no-repeat;"<{/if}>>
+		<li <{if $block.display_images == 1 && $item.item_pid && $item.hassub > "0"}> style="background: url(<{$item.img}>) no-repeat; padding: <{$block.megamenu.img_width}>px 0 0;"<{/if}>>
 			<a class="menu_menulink" href="<{$item.url}>" title="<{$item.title}>" target="<{$item.target}>" <{if $item.target == "_blank"}> rel="external" <{/if}> >
 				<{if $block.megamenu.display_img == 1 || $block.megamenu.display_img == 2 }>
 					<{$item.title}>
@@ -13,7 +13,7 @@
 			<{/if}>
 			<{if $item.hassub}>
 				<ul>
-					<{foreach item=item from=$item.subs}>
+					<{foreach item=item from=$item.subs name=subs}>
 						<{includeq file="db:menu_single_item.html"}>
 					<{/foreach}>
 				</ul>
@@ -28,7 +28,7 @@
 					<{$item.title}>
 				<{/if}>
 				<{if $block.menu_menu.display_img == 1 || $block.menu_menu.display_img == 3 }>
-					<img class="item_image" id="item_icon_<{$item.id}>" src="<{$item.img}>" alt="<{$item.title}>" />
+					<img class="item_image" id="item_icon_<{$item.id}>" src="<{$item.img}>" width="img_width" alt="<{$item.title}>" />
 				<{/if}>
 			</a>
 			<{if $block.menu_menu.display_dsc}>

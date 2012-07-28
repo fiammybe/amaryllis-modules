@@ -118,7 +118,7 @@ class MenuItem extends icms_ipf_Object {
 	public function getItemImagePath() {
 		$image = $this->getVar("item_image", "e");
 		if(($image != "") && ($image != "0")) {
-			$path = $this->handler->_uploadUrl . 'item/' . $image;
+			$path = $this->handler->_uploadUrl . $this->handler->_itemname . '/' . $image;
 			return $path;
 		} else {
 			return FALSE;
