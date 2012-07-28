@@ -18,7 +18,7 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
+define("MENU_DIRNAME", basename(dirname(dirname(__FILE__))));
 define('MENU_DB_VERSION', 1);
 
 function create_block_pos() {
@@ -53,6 +53,10 @@ function icms_module_install_menu($module) {
 }
 
 function icms_module_uninstall_menu($module) {
+	// remove menu block pos
 	remove_block_pos();
+	// delete uploaded files
+	$path = ICMS_UPLOAD_PATH . "/" . MENU_DIRNAME;
+	icms_core_Filesystem::deleteRecursive($path);
 	return TRUE;
 }
