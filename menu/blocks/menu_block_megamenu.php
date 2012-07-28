@@ -96,7 +96,7 @@ function b_menu_megamenu_edit($options) {
 	
 	$fullWidth = new icms_form_elements_Radioyn('', 'options[6]', $options[6]);
 	
-	$styles = getFileList("css");
+	$styles = getCssFileList("css");
 	$selstyle = new icms_form_elements_Select('', 'options[7]', $options[7]);
 	$selstyle->addOptionArray($styles);
 	
@@ -146,8 +146,8 @@ function b_menu_megamenu_edit($options) {
 	return $form;
 }
 
-function getFileList($src = "") {
-	$filesList = icms_core_Filesystem::getFileList(ICMS_MODULES_PATH . '/' . MENU_DIRNAME . '/scripts//megamenu/css/skins/', '', array($src));
+function getCssFileList($src = "") {
+	$filesList = icms_core_Filesystem::getFileList(ICMS_MODULES_PATH . '/' . MENU_DIRNAME . '/scripts/megamenu/css/skins/', '', array($src));
 	$files[0] = '-----------------------';
 	foreach(array_keys($filesList) as $i ) {
 		$files[$i] = $filesList[$i];
