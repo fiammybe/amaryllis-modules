@@ -31,3 +31,4 @@ define("_AM_MENU_MENU_CREATED", "Menu successfully created");
 define("_AM_MENU_ITEM_CREATED", "Menu Item successfull created");
 define("_AM_MENU_MENU_MODIFIED", "Menu successfully modified");
 define("_AM_MENU_ITEM_MODIFIED", "Menu Item successfull modified");
+define("_AM_MENU_ITEM_CLONE", "Clone");

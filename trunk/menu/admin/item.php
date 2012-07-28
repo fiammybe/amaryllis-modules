@@ -17,7 +17,7 @@
  *
  */
 
-function edititem($item_id = 0, $menu_id = 0) {
+function edititem($item_id = 0, $menu_id = 0, $clone = FALSE) {
 	global $item_handler, $icmsModule, $icmsAdminTpl;
 
 	$itemObj = $item_handler->get($item_id);
@@ -25,6 +25,12 @@ function edititem($item_id = 0, $menu_id = 0) {
 	if (!$itemObj->isNew()){
 		icms::$module->displayAdminMenu(1, _MI_MENU_MENU_ITEM . " > " . _CO_ICMS_EDITING);
 		$sform = $itemObj->getForm(_CO_ICMS_EDITING, "additem", "item.php?op=additem&item_id=" . $itemObj->id(), _CO_ICMS_SUBMIT, "location.href='item.php'");
+		$sform->assign($icmsAdminTpl);
+	} elseif (!$itemObj->isNew() && $clone) {
+		icms::$module->displayAdminMenu(0, _AM_CONTENT_CONTENTS . " > " . _AM_CONTENT_CONTENT_CLONE);
+		$itemObj->setVar('item_id', 0);
+		$itemObj->setNew();
+		$sform = $itemObj->getForm(_AM_MENU_ITEM_CLONE, 'additem');
 		$sform->assign($icmsAdminTpl);
 	} else {
 		icms::$module->displayAdminMenu(1, _MI_MENU_MENU_ITEM . " > " . _CO_ICMS_CREATINGNEW);
@@ -42,7 +48,7 @@ $menu_handler = icms_getModuleHandler("menu", MENU_DIRNAME, "menu");
 $count = $menu_handler->getCount(FALSE);
 if(!$count > 0) redirect_header(MENU_ADMIN_URL, 3, _AM_MENU_NO_MENUS_FOUND);
 
-$valid_op = array ("mod", "changedField", "additem", "del", "visible", "changeWeight", "");
+$valid_op = array ("mod", "changedField", "clone", "additem", "del", "visible", "changeWeight", "");
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
@@ -55,6 +61,11 @@ $item_handler = icms_getModuleHandler("item", MENU_DIRNAME, "menu");
 
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
+		case "clone" :
+			icms_cp_header();
+			edititem($clean_item_id,$clean_menu_id, TRUE);
+			break;
+		
 		case "mod":
 		case "changedField":
 			icms_cp_header();
@@ -105,6 +116,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column("item_pid", FALSE, FALSE, "getParentItem"));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
 			
+			$objectTable->addCustomAction('getCloneItemLink');
 			$objectTable->addIntroButton("additem", "item.php?op=mod", _ADD);
 			$objectTable->addFilter("item_active", "filterActive");
 			$objectTable->addFilter("item_menu", "filterMenu");
