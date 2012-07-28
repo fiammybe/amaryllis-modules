@@ -1,0 +1,32 @@
+<script src="<{$block.script_url}><{$block.jsfile}>"></script>
+
+<{* 
+	$block.menu_menu : ruft das "menu object" auf
+	$block.menu_menu.id : menu id
+	$block.menu_menu.kind : menu art (möglich: horizontal/vertical) Wird evtl nicht gebraucht, aber es gibt scripte, die beides unterstützen.. deswegen
+	$block.menu_menu.display_home : wenn true, wird der home-link angezeigt (sollte $icms_url sein..)
+	$block.menu_menu.home_title : title des home links
+	$block.menu_menu.home_img : icon für den home link (verwendet als pfad im img-tag)
+	$block.menu_menu.display_img legt 3 Varianten fest: 1 = link mit icon, 2= link ohne icon, 3 = nur icon als link für alle items sowie den home link
+	$block.menu_menu.img_width : breite des icons als zahl, ohne px
+	$block.menu_menu.display_dsc : legt fest, ob die Beschreibung der items mit angezeigt werden soll (gibt true oder false zurück)
+
+	 *}>
+
+<ul>
+	<{if $block.menu_menu.display_home}>
+		<li>
+			<a class="menu_homelink" href="<{$icms_url}>" title="<{$block.menu_menu.home_title}>">
+				<{if $block.menu_menu.display_img == 1 || $block.menu_menu.display_img == 2 }>
+					<{$block.menu_menu.home_title}>
+				<{/if}>
+				<{if $block.menu_menu.display_img == 1 || $block.menu_menu.display_img == 3 }>
+					<img class="item_image" id="item_icon_<{$block.menu_menu.id}>" src="<{$block.menu_menu.home_img}>" alt="<{$block.menu_menu.home_title}>" />
+				<{/if}>
+			</a>
+		</li>
+	<{/if}>
+	<{foreach item=item from=$block.menu_items}>
+		<{includeq file="db:menu_single_item.html"}>
+	<{/foreach}>
+</ul>
