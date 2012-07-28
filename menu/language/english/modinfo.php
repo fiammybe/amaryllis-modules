@@ -33,3 +33,5 @@ define("_MI_MENU_TPL_REQUIREMENTS", "Requirements Check");
 // blocks
 define("_MI_MENU_BLOCK_MENU_SIMPLE", "simple menu block");
 define("_MI_MENU_BLOCK_MENU_SIMPLE_DSC", "");
+define("_MI_MENU_BLOCK_MENU_MEGA", "megamenu block");
+define("_MI_MENU_BLOCK_MENU_MEGA_DSC", "");
