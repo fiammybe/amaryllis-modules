@@ -38,6 +38,8 @@ define("_CO_MENU_MENU_MENU_IMAGES_WIDTH", "Images display width");
 define("_CO_MENU_MENU_MENU_IMAGES_WIDTH_DSC", "Set the width of the menu icons to be displayed.");
 define("_CO_MENU_MENU_MENU_ITEMS_DSC", "Display item Description");
 define("_CO_MENU_MENU_MENU_ITEMS_DSC_DSC", "");
+define("_CO_MENU_MENU_MENU_ULID", "ID of the ul-tag");
+define("_CO_MENU_MENU_MENU_ULID_DSC", "Predefine the id of the ul tag of the menu. Currently there are two possibilities: <br /> 'horiznav' for horizontal nav and <br /> 'dhtmlgoodies_slidedown_menu' for vertical <br /> Megamenu uses it's own id");
 
 define("_CO_MENU_MENU_KIND_HORIZONTAL", "Horizontal");
 define("_CO_MENU_MENU_KIND_VERTICAL", "Vertical");

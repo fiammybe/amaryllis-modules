@@ -39,6 +39,7 @@ class MenuMenu extends icms_ipf_Object {
 		$this->quickInitVar("menu_images", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("menu_images_width", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("menu_items_dsc", XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar("menu_ulid", XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, "dhtmlgoodies_slidedown_menu");
 		
 		$this->setControl("menu_dsc", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("menu_kind", array("name" => "select", "itemHandler" => "menu", "method" => "getMenuKinds", "module" => "menu"));
@@ -113,6 +114,7 @@ class MenuMenu extends icms_ipf_Object {
 		$ret['display_img'] = $this->getVar("menu_images", "e");
 		$ret['img_width'] = $this->getVar("menu_images_width", "e");
 		$ret['display_dsc'] = $this->displayDsc();
+		$ret['ul_id'] = $this->getVar("menu_ulid", "e");
 		return $ret;
 	}
 }
