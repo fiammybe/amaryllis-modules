@@ -12,7 +12,12 @@
 	$block.menu_menu.display_dsc : legt fest, ob die Beschreibung der items mit angezeigt werden soll (gibt true oder false zurück)
 
 	 *}>
-
+<{if $block.menu_menu.kind == vertical}>
+<div id="dhtmlgoodies_slidedown_menu">
+<{/if}>
+<{if $block.menu_menu.kind == horizontal}>
+<div id="horiznav">
+<{/if}>
 <ul>
 	<{if $block.menu_menu.display_home}>
 		<li>
@@ -30,3 +35,9 @@
 		<{includeq file="db:menu_single_item.html"}>
 	<{/foreach}>
 </ul>
+</div>
+<{if $block.menu_menu.kind == vertical}>
+<script type="text/javascript">
+		initSlideDownMenu();
+</script>
+<{/if}>
