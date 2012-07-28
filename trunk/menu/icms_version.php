@@ -134,7 +134,7 @@ $modversion['templates'][$i] = array(
 
 $i=0;
 
-// Menu Block
+// simple Menu Block
 $i++;
 $modversion['blocks'][$i]['file']			= 'menu_block_menu_simple.php';
 $modversion['blocks'][$i]['name']			= _MI_MENU_BLOCK_MENU_SIMPLE;
@@ -143,4 +143,14 @@ $modversion['blocks'][$i]['show_func']		= 'b_menu_menu_simple_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_menu_menu_simple_edit';
 $modversion['blocks'][$i]['options']		= '1|weight|ASC|0|0'; // menu id|order|sort|js|css
 $modversion['blocks'][$i]['template']		= 'menu_block_menu_simple.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE;
+// megamenu Block
+$i++;
+$modversion['blocks'][$i]['file']			= 'menu_block_megamenu.php';
+$modversion['blocks'][$i]['name']			= _MI_MENU_BLOCK_MENU_MEGA;
+$modversion['blocks'][$i]['description']	= _MI_MENU_BLOCK_MENU_MEGA_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_menu_megamenu_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_menu_megamenu_edit';
+$modversion['blocks'][$i]['options']		= '1|weight|ASC|1|fade|hover|1|0|right|'; // menu id|order|sort|show images|effect|event|full width|style|direction
+$modversion['blocks'][$i]['template']		= 'menu_block_megamenu.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
