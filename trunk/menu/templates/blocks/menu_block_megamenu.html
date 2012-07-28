@@ -3,13 +3,12 @@
 
 <{if $block.vertical == TRUE}>
 	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			jQuery('#mega-menu').dcVerticalMegaMenu({
+		$(document).ready(function() {
+			$('#mega-menu').dcVerticalMegaMenu({
 				rowItems: '4',
 				speed: 'fast',
 				effect: '<{$block.effect}>',
-				event: '<{$block.event}>',
-				direction: <{$block.direction}>
+				direction: '<{$block.direction}>'
 			});
 		});
 	</script>
@@ -27,8 +26,7 @@
 	</script>
 <{/if}>
 
-
-<ul id="mega-menu" class="mega-menu <{$block.color_class}>">
+<ul id="mega-menu" class="mega-menu <{if $block.vertical == FALSE}><{$block.color_class}><{/if}>">
 	<{if $block.megamenu.display_home}>
 		<li style="">
 			<a href="<{$icms_url}>" title="<{$block.megamenu.home_title}>">
