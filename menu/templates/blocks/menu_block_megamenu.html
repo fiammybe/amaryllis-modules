@@ -1,0 +1,44 @@
+<script src="<{$block.script_url}><{$block.script}>" type="text/javascript"></script>
+<script src="<{$block.script_url}>jquery.hoverIntent.minified.js" type="text/javascript"></script>
+
+<{if $block.vertical == TRUE}>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			jQuery('#mega-menu').dcVerticalMegaMenu({
+				rowItems: '4',
+				speed: 'fast',
+				effect: '<{$block.effect}>',
+				event: '<{$block.event}>',
+				direction: <{$block.direction}>
+			});
+		});
+	</script>
+<{else}>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			jQuery('#mega-menu').dcMegaMenu({
+				rowItems: '4',
+				speed: 'fast',
+				effect: '<{$block.effect}>',
+				event: '<{$block.event}>',
+				fullWidth: <{$block.fullWidth}>
+			});
+		});
+	</script>
+<{/if}>
+
+
+<ul id="mega-menu" class="mega-menu <{$block.color_class}>">
+	<{if $block.megamenu.display_home}>
+		<li style="">
+			<a href="<{$icms_url}>" title="<{$block.megamenu.home_title}>">
+				<{if $block.megamenu.display_img == 1 || $block.megamenu.display_img == 2 }>
+					<{$block.megamenu.home_title}>
+				<{/if}>
+			</a>
+		</li>
+	<{/if}>
+	<{foreach item=item from=$block.mega_items}>
+		<{includeq file="db:menu_single_item.html"}>
+	<{/foreach}>
+</ul>

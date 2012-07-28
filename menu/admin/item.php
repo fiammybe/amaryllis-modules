@@ -22,13 +22,14 @@ function edititem($item_id = 0, $menu_id = 0, $clone = FALSE) {
 
 	$itemObj = $item_handler->get($item_id);
 
-	if (!$itemObj->isNew()){
+	if (!$itemObj->isNew() && !$clone){
 		icms::$module->displayAdminMenu(1, _MI_MENU_MENU_ITEM . " > " . _CO_ICMS_EDITING);
 		$sform = $itemObj->getForm(_CO_ICMS_EDITING, "additem", "item.php?op=additem&item_id=" . $itemObj->id(), _CO_ICMS_SUBMIT, "location.href='item.php'");
 		$sform->assign($icmsAdminTpl);
 	} elseif (!$itemObj->isNew() && $clone) {
 		icms::$module->displayAdminMenu(0, _AM_CONTENT_CONTENTS . " > " . _AM_CONTENT_CONTENT_CLONE);
 		$itemObj->setVar('item_id', 0);
+		$itemObj->setVar('item_image', 0);
 		$itemObj->setNew();
 		$sform = $itemObj->getForm(_AM_MENU_ITEM_CLONE, 'additem');
 		$sform->assign($icmsAdminTpl);

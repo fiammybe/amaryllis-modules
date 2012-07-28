@@ -56,6 +56,7 @@ define("_CO_MENU_ITEM_ITEM_MENU_DSC", "Select the Menu");
 define("_CO_MENU_ITEM_ITEM_URL", "Url of the link");
 define("_CO_MENU_ITEM_ITEM_URL_DSC", "You can enter a full url or use <br /> {ICMS_URL} to get the icms base url <br /> {MOD_URL} to get the modules url to /modules/ or <br /> {UID} to get the uid");
 define("_CO_MENU_ITEM_ITEM_IMAGE", "Image");
+define("_CO_MENU_ITEM_ITEM_Target", "Target");
 define("_CO_MENU_ITEM_ITEM_IMAGE_DSC", "");
 define("_CO_MENU_ITEM_ITEM_PID", "Parent Link");
 define("_CO_MENU_ITEM_ITEM_PID_DSC", "Select the parent of the curent link");
