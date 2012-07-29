@@ -19,14 +19,14 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-define("_MB_MENU_SELECT_MENU", "Wählen Sie ein Menü");
+define("_MB_MENU_SELECT_MENU", "WÃ¤hlen Sie ein MenÃ¼");
 define("_MB_MENU_ORDER", "Geordnet nach");
 define("_MB_MENU_SORT", "Sortiert");
-define("_MB_MENU_JSSELECT", "Wählen Sie eine javascript-Datei zum Einbinden");
-define("_MB_MENU_CSSSELECT", "Wählen Sie eine CSS-Datei zum Einbinden");
+define("_MB_MENU_JSSELECT", "WÃ¤hlen Sie eine javascript-Datei zum Einbinden");
+define("_MB_MENU_CSSSELECT", "WÃ¤hlen Sie eine CSS-Datei zum Einbinden");
 define("_MB_MENU_SHOWIMGS", "Bilder anzeigen?");
-define("_MB_MENU_SELEFFEKT", "Effekt (bezieht sich nur auf das vertikale Menü)");
+define("_MB_MENU_SELEFFEKT", "Effekt (bezieht sich nur auf das vertikale MenÃ¼)");
 define("_MB_MENU_SELEVENT", "Event");
-define("_MB_MENU_FULLWIDTH", "Maximale Breite des Untermenüs?");
-define("_MB_MENU_SELSTYLE", "Style (bezieht sich nur auf das horizontale Menü)");
-define("_MB_MENU_SELDIRECTION", "Richtung (bezieht sich nur auf das vertikale Menü)");
+define("_MB_MENU_FULLWIDTH", "Maximale Breite des UntermenÃ¼s?");
+define("_MB_MENU_SELSTYLE", "Style (bezieht sich nur auf das horizontale MenÃ¼)");
+define("_MB_MENU_SELDIRECTION", "Richtung (bezieht sich nur auf das vertikale MenÃ¼");
