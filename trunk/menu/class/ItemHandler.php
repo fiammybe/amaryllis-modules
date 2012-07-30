@@ -22,9 +22,11 @@ if(!defined("MENU_DIRNAME")) define("MENU_DIRNAME", basename(dirname(dirname(__F
 
 class MenuItemHandler extends icms_ipf_Handler {
 	
-	public $_targets = array();
+	private $_targets;
 	
 	private $_items;
+	
+	private $_menusForItem;
 	/**
 	 * Constructor
 	 *
@@ -51,14 +53,29 @@ class MenuItemHandler extends icms_ipf_Handler {
 	}
 	
 	public function getTargets() {
-		if(!$this->_targets) {
+		if(!count($this->_targets)) {
 			$this->_targets["_blank"] = "_blank";
 			$this->_targets["_self"] = "_self";
 		}
 		return $this->_targets;
 	}
 	
-	public function getItemListForPid($act=FALSE, $item_id=NULL, $menu_id = FALSE, $start=0,$limit=0,$order='item_menu',$sort='ASC',$perm="item_view",$showNull = TRUE) {
+	public function getMenuList() {
+		if (!count($this->_menusForItem)) {
+			$menus = $this->getMenuArray();
+			foreach ($menus as $key => $value) {
+				$this->_menusForItem[$key] = $value;
+			}
+		}
+		return $this->_menusForItem;
+	}
+	
+	public function getMenuArray() {
+		$menu_handler = icms_getModuleHandler("menu", MENU_DIRNAME, "menu");
+		return $menu_handler->getMenuList();
+	}
+	
+	public function getItemListForPid($act=FALSE, $item_id=NULL, $menu_id = MENU_MENU_ID, $start=0,$limit=0,$order='item_menu',$sort='ASC',$perm="item_view",$showNull = TRUE) {
 		$menu_handler = icms_getModuleHandler("menu", MENU_DIRNAME, "menu");
 		$criteria = $this->getItemCriterias($act, $item_id, $menu_id, $start, $limit, $order, $sort, $perm);
 		//$criteria->setGroupby("item_menu");
@@ -182,6 +199,4 @@ class MenuItemHandler extends icms_ipf_Handler {
 		}
 		return TRUE;
 	}
-
-
 }

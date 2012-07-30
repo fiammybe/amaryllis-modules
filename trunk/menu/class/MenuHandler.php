@@ -33,12 +33,15 @@ class MenuMenuHandler extends icms_ipf_Handler {
 		$this->enableUpload(array("image/gif", "image/jpeg", "image/pjpeg", "image/png"), 512000, 500, 500);
 	}
 	
-	public function getMenuList($showNull = TRUE) {
+	public function getMenuList($showNull = FALSE) {
 		if(!count($this->_menuList)) {
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->setSort('menu_name');
 			$criteria->setOrder('ASC');
 			$menus = $this->getObjects($criteria);
+			if($showNull) {
+				$this->_menuList[0] = "---------------";
+			}
 			foreach ($menus as $menu) {
 				$this->_menuList[$menu->getVar("menu_id")] = $menu->title();
 			}
