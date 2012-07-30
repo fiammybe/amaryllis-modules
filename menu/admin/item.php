@@ -112,7 +112,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable = new icms_ipf_view_Table($item_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("item_active", "center", 50, "item_active"));
 			$objectTable->addColumn(new icms_ipf_view_Column("item_image", "center", 100, "getImgPreview"));
-			$objectTable->addColumn(new icms_ipf_view_Column("item_name"));
+			$objectTable->addColumn(new icms_ipf_view_Column("item_name", FALSE, FALSE, "title"));
 			$objectTable->addColumn(new icms_ipf_view_Column("item_menu", FALSE, FALSE, "getItemMenu"));
 			$objectTable->addColumn(new icms_ipf_view_Column("item_pid", FALSE, FALSE, "getParentItem"));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
