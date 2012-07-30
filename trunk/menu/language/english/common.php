@@ -39,8 +39,8 @@ define("_CO_MENU_MENU_MENU_IMAGES_WIDTH_DSC", "Set the width of the menu icons t
 define("_CO_MENU_MENU_MENU_ITEMS_DSC", "Display item Description");
 define("_CO_MENU_MENU_MENU_ITEMS_DSC_DSC", "");
 define("_CO_MENU_MENU_MENU_ULID", "ID of the ul-tag");
-define("_CO_MENU_MENU_MENU_ULID_DSC", "Predefine the id of the ul tag of the menu. Currently there are three possibilities: <br /> 'horiznav' for horizontal nav and <br /> 
-		'dhtmlgoodies_slidedown_menu' for vertical <br /> 'accordion' for vertical accordion <br /> Megamenu uses it's own id");
+define("_CO_MENU_MENU_MENU_ULID_DSC", "Predefine the id of the ul tag of the menu. Currently there are four possibilities: <br /> 'horiznav' for horizontal nav and <br /> 
+										 'accordion' for vertical accordion <br />'sf-v-menu' for vertical superfish <br />'sf-h-menu' for horizontal superfish <br />  Megamenu uses it's own id");
 define("_CO_MENU_MENU_KIND_HORIZONTAL", "Horizontal");
 define("_CO_MENU_MENU_KIND_VERTICAL", "Vertical");
 define("_CO_MENU_MENU_KIND_DYNAMIC", "Dynamic");
