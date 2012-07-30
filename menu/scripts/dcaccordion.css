@@ -1,0 +1,10 @@
+ul#accordion,ul#accordion li,ul#accordion li ul  {border:0;outline:none !important;margin:0 !important;padding:0 !important;}
+ul#accordion, ul#accordion li{list-style: none;}
+#accordion {font: bold 13px Arial, sans-serif;}
+#accordion , #accordion li {margin: 0; padding: 0; border: none;}
+#accordion  a {padding: 10px 10px 10px 28px; background: #000 url(images/bg_graphite.png) repeat-x 0 0; text-decoration:none; display: block; color: #fff; font-weight: normal;border-bottom: 1px solid #fff;}
+#accordion  ul a {background: #343434;}
+#accordion  a.dcjq-parent, a.dcjq-parent:hover {background: #000 url(images/graphite_arrow_right.png) no-repeat 0 0; font-weight: bold; color: #fff;}
+#accordion  a.dcjq-parent.active {background: #000 url(images/graphite_arrow_down.png) no-repeat 0 0;}
+#accordion  a:hover {background: #121212;}
+#accordion  a:active{}
