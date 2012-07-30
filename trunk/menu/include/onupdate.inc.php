@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 define("MENU_DIRNAME", basename(dirname(dirname(__FILE__))));
-define('MENU_DB_VERSION', 1);
+define('MENU_DB_VERSION', 2);
 
 function create_block_pos() {
 	$block_pos_handler = icms::handler("icms_view_block_position");
@@ -42,7 +42,7 @@ function remove_block_pos() {
 
 function icms_module_update_menu($module) {
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-	$icmsDatabaseUpdater -> moduleUpgrade($module);
+	$icmsDatabaseUpdater -> moduleUpgrade($module, TRUE);
     return TRUE;
 }
 

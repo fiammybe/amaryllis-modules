@@ -25,7 +25,7 @@ define("_MB_MENU_SORT", "Sort");
 define("_MB_MENU_JSSELECT", "Select js-file to include");
 define("_MB_MENU_CSSSELECT", "Select css file to include");
 define("_MB_MENU_SHOWIMGS", "Show images?");
-define("_MB_MENU_SELEFFEKT", "Effekt (effect 'show' is only vor vertical menu)");
+define("_MB_MENU_SELEFFEKT", "Effect (effect 'show' is only vor vertical menu)");
 define("_MB_MENU_SELEVENT", "Event");
 define("_MB_MENU_FULLWIDTH", "Full width for submenus?");
 define("_MB_MENU_SELSTYLE", "Style (takes only effect, if the menu is horizontal)");
