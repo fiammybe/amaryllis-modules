@@ -23,7 +23,7 @@
 <{elseif $block.menu_menu}>
 	<{if $item.accessGranted}>
 		<li>
-			<a class="menu_menulink" href="<{$item.url}>" title="<{$item.title}>" target="<{$item.target}>" <{if $item.target == "_blank"}> rel="external" <{/if}> >
+			<a class="menu_menulink <{if $item.item_pid == 0 }>heading<{/if}>" href="<{$item.url}>" title="<{$item.title}>" target="<{$item.target}>" <{if $item.target == "_blank"}> rel="external" <{/if}> >
 				<{if $block.menu_menu.display_img == 1 || $block.menu_menu.display_img == 2 }>
 					<{$item.title}>
 				<{/if}>
