@@ -40,7 +40,6 @@ class MenuItemHandler extends icms_ipf_Handler {
 		if($limit) $criteria->setLimit((int)$limit);
 		if($order) $criteria->setSort($order);
 		if($sort) $criteria->setOrder($sort);
-		$criteria->setGroupby("item_menu");
 		if($act) $criteria->add(new icms_db_criteria_Item('item_active', TRUE));
 		if (is_null($item_pid)) $item_pid = 0;
 		$criteria->add(new icms_db_criteria_Item('item_pid', $item_pid));
@@ -57,19 +56,22 @@ class MenuItemHandler extends icms_ipf_Handler {
 		return $this->_targets;
 	}
 	
-	public function getItemListForPid($act=FALSE, $item_id=NULL, $menu_id = FALSE, $start=0,$limit=0,$order='item_name',$sort='ASC',$perm="item_view",$showNull = TRUE) {
+	public function getItemListForPid($act=FALSE, $item_id=NULL, $menu_id = FALSE, $start=0,$limit=0,$order='item_menu',$sort='ASC',$perm="item_view",$showNull = TRUE) {
+		$menu_handler = icms_getModuleHandler("menu", MENU_DIRNAME, "menu");
 		$criteria = $this->getItemCriterias($act, $item_id, $menu_id, $start, $limit, $order, $sort, $perm);
+		//$criteria->setGroupby("item_menu");
 		$items = & $this->getObjects($criteria, TRUE);
 		$ret = array();
 		if($showNull) {
 			$ret[0] = '-----------------------';
 		}
 		foreach(array_keys($items) as $i) {
-			$ret[$i] = $items[$i]->title() . " (" . $items[$i]->getVar("item_menu") . ") ";
-			$subitems = $this->getItemListForPid($act, $items[$i]->id(), $menu_id, $start, $limit, $order, $sort, $perm, $showNull);
+			$menu = $menu_handler->get($items[$i]->getVar("item_menu"))->title();
+			$ret[$i] = $items[$i]->title() . " (" . $menu . ") ";
+			$subitems = $this->getItemListForPid($act, $items[$i]->id(), $menu_id, $start, $limit, $order, $sort, $perm, FALSE);
 			if($subitems) {
 				foreach(array_keys($subitems) as $j) {
-					$ret[$j] = '-' . $subitems[$j];
+					$ret[$j] = '-' . $subitems[$j] . " (" . $menu . ") ";
 				}
 			}
 		}
