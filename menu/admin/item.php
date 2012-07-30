@@ -18,10 +18,16 @@
  */
 
 function edititem($item_id = 0, $menu_id = 0, $clone = FALSE) {
-	global $item_handler, $icmsModule, $icmsAdminTpl;
-
+	global $item_handler, $icmsAdminTpl;
+	
 	$itemObj = $item_handler->get($item_id);
-
+	
+	if (isset($_POST['op']) && $_POST['op'] == 'changedField' && in_array($_POST['changedField'], array('item_menu', 'item_target'))) {
+		$controller = new icms_ipf_Controller($item_handler);
+		$controller->postDataToObject($itemObj);
+	}
+	($menu_id && $menu_id != '' &&!$_POST['op'] == 'changedField') ? $itemObj->setVar("item_menu", $menu_id) : $itemObj->getVar("item_menu", "e"); 
+	define("MENU_MENU_ID", $itemObj->getVar("item_menu", "e"));
 	if (!$itemObj->isNew() && !$clone){
 		icms::$module->displayAdminMenu(1, _MI_MENU_MENU_ITEM . " > " . _CO_ICMS_EDITING);
 		$sform = $itemObj->getForm(_CO_ICMS_EDITING, "additem", "item.php?op=additem&item_id=" . $itemObj->id(), _CO_ICMS_SUBMIT, "location.href='item.php'");
@@ -35,11 +41,13 @@ function edititem($item_id = 0, $menu_id = 0, $clone = FALSE) {
 		$sform->assign($icmsAdminTpl);
 	} else {
 		icms::$module->displayAdminMenu(1, _MI_MENU_MENU_ITEM . " > " . _CO_ICMS_CREATINGNEW);
-		$itemObj->setVar("item_menu", $menu_id);
-		$sform = $itemObj->getForm(_CO_ICMS_CREATINGNEW, "additem", "item.php?op=additem&menu_id=" . $menu_id, _CO_ICMS_SUBMIT, "location.href='item.php'");
+		//$itemObj->setVar("item_menu", $menu_id);
+		$sform = $itemObj->getForm(_CO_ICMS_CREATINGNEW, "additem", "item.php?op=additem&menu_id=" . $itemObj->getVar("item_menu"), _CO_ICMS_SUBMIT, "location.href='item.php'");
 		$sform->assign($icmsAdminTpl);
 
 	}
+	
+	echo "menu id = " . MENU_MENU_ID ;
 	$icmsAdminTpl->display("db:menu_admin.html");
 }
 

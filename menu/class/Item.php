@@ -34,8 +34,8 @@ class MenuItem extends icms_ipf_Object {
 		$this->quickInitVar("item_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("item_name", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("item_dsc", XOBJ_DTYPE_TXTAREA, FALSE);
-		$this->quickInitVar("item_menu", XOBJ_DTYPE_INT, TRUE);
-		$this->quickInitVar("item_url", XOBJ_DTYPE_TXTBOX, TRUE);
+		$this->quickInitVar("item_menu", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
+		$this->quickInitVar("item_url", XOBJ_DTYPE_TXTBOX, TRUE, FALSE, FALSE, "{MOD_URL}");
 		$this->quickInitVar("item_target", XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, "_self");
 		$this->quickInitVar("item_image", XOBJ_DTYPE_IMAGE, FALSE);
 		$this->quickInitVar("item_pid", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
@@ -44,14 +44,14 @@ class MenuItem extends icms_ipf_Object {
 		$this->initCommonVar("weight");
 		// set controls
 		$this->setControl("item_dsc", array("name" => "textarea", "form_editor" => "htmlarea"));
-		$this->setControl("item_menu", array("name" => "select", "itemHandler" => "menu", "method" => "getMenuList", "module" => "menu"));
-		$this->setControl("item_pid", array("name" => "select", "itemHandler" => "item", "method" => "getItemListForPid", "module" => "menu"));
+		$this->setControl("item_menu", array("itemHandler" => "item", "method" => "getMenuList", "module" => "menu", "onSelect" => "submit"));
+		$this->setControl("item_pid", array("itemHandler" => "item", "method" => "getItemListForPid", "module" => "menu"));
 		$this->setControl("item_target", array("name" => "select", "itemHandler" => "item", "method" => "getTargets", "module" => "menu"));
 		$this->setControl("item_image", "image");
 		$this->setControl("item_active", "yesno");
 		$this->setControl("item_hassub", "yesno");
 		//hide static fields
-		$this->hideFieldFromForm(array("item_hassub"));
+		$this->hideFieldFromForm("item_hassub");
 
 	}
 
