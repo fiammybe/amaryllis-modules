@@ -40,7 +40,7 @@ class MenuItemHandler extends icms_ipf_Handler {
 		if($limit) $criteria->setLimit((int)$limit);
 		if($order) $criteria->setSort($order);
 		if($sort) $criteria->setOrder($sort);
-		$criteria->groupby("item_menu");
+		$criteria->setGroupby("item_menu");
 		if($act) $criteria->add(new icms_db_criteria_Item('item_active', TRUE));
 		if (is_null($item_pid)) $item_pid = 0;
 		$criteria->add(new icms_db_criteria_Item('item_pid', $item_pid));
@@ -65,7 +65,7 @@ class MenuItemHandler extends icms_ipf_Handler {
 			$ret[0] = '-----------------------';
 		}
 		foreach(array_keys($items) as $i) {
-			$ret[$i] = $items[$i]->title();
+			$ret[$i] = $items[$i]->title() . " (" . $items[$i]->getVar("item_menu") . ") ";
 			$subitems = $this->getItemListForPid($act, $items[$i]->id(), $menu_id, $start, $limit, $order, $sort, $perm, $showNull);
 			if($subitems) {
 				foreach(array_keys($subitems) as $j) {
