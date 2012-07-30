@@ -40,6 +40,7 @@ class MenuItemHandler extends icms_ipf_Handler {
 		if($limit) $criteria->setLimit((int)$limit);
 		if($order) $criteria->setSort($order);
 		if($sort) $criteria->setOrder($sort);
+		$criteria->groupby("item_menu");
 		if($act) $criteria->add(new icms_db_criteria_Item('item_active', TRUE));
 		if (is_null($item_pid)) $item_pid = 0;
 		$criteria->add(new icms_db_criteria_Item('item_pid', $item_pid));
@@ -120,6 +121,13 @@ class MenuItemHandler extends icms_ipf_Handler {
 	protected function beforeInsert(&$obj) {
 		if($obj->_updating == TRUE) return TRUE;
 		$pid = $obj->getVar("item_pid", "e");
+		if($pid > 0) {
+			$parent = $this->get($pid);
+			if(!$parent->getVar("item_menu") == $obj->getVar("item_menu")) {
+				$obj->setErrors(_CO_MENU_ITEM_WRONG_MENU);
+				return FALSE;
+			}
+		}
 		if($pid == $obj->id()) {
 			$obj->setVar("item_pid", 0);
 		}
