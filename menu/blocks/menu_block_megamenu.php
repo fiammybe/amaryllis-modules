@@ -42,7 +42,7 @@ function b_menu_megamenu_show($options) {
 			$block['index_megamenu'] = $category_handler->getCategories(FALSE, TRUE, TRUE, 0, 0, $options[1], $options[2], NULL, FALSE, TRUE, "cat_view");
 		}
 	}
-	
+	$block['block_id'] = $options[9];
 	$block['script_url'] = MENU_URL . "scripts/megamenu/";
 	$block['display_images'] = $options[3];
 	$block['effect'] = $options[4];
@@ -70,6 +70,8 @@ function b_menu_megamenu_show($options) {
 function b_menu_megamenu_edit($options) {
 	
 	include_once ICMS_MODULES_PATH . '/' . MENU_DIRNAME . '/include/common.php';
+	
+	$clean_bid = isset($_GET["bid"]) ? filter_input(INPUT_GET, "bid", FILTER_SANITIZE_NUMBER_INT) : 0 ;
 	
 	$menu_handler = icms_getModuleHandler('menu', MENU_DIRNAME, 'menu');
 	
@@ -103,6 +105,8 @@ function b_menu_megamenu_edit($options) {
 	$directions = array('left' => 'left' , 'right' => 'right');
 	$seldirection = new icms_form_elements_Select('', 'options[8]', $options[8]);
 	$seldirection->addOptionArray($directions);
+	
+	$hidden = new icms_form_elements_Hidden("options[9]", $clean_bid);
 	
 	$form = '<table width="100%">';
 	$form .= '<tr>';
@@ -140,6 +144,9 @@ function b_menu_megamenu_edit($options) {
 	$form .= '<tr>';
 	$form .= '<td>' . _MB_MENU_SELDIRECTION . '</td>';
 	$form .= '<td>' . $seldirection->render() . '</td>';
+	$form .= '</tr>';
+	$form .= '<tr>';
+	$form .= '<td>' . $hidden->render() . '</td>';
 	$form .= '</tr>';
 	$form .= '</table>';
 

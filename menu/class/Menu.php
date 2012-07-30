@@ -102,7 +102,6 @@ class MenuMenu extends icms_ipf_Object {
 		return ($display_dsc == 1) ? TRUE : FALSE;
 	}
 	
-
 	public function toArray() {
 		$ret = parent::toArray();
 		$ret['id'] = $this->id();
