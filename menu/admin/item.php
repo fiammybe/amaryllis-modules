@@ -47,7 +47,6 @@ function edititem($item_id = 0, $menu_id = 0, $clone = FALSE) {
 
 	}
 	
-	echo "menu id = " . MENU_MENU_ID ;
 	$icmsAdminTpl->display("db:menu_admin.html");
 }
 
