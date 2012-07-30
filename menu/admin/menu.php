@@ -88,7 +88,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0, _MI_MENU_MENU_ITEM);
 			$objectTable = new icms_ipf_view_Table($menu_handler);
-			$objectTable->addColumn(new icms_ipf_view_Column("menu_name"));
+			$objectTable->addColumn(new icms_ipf_view_Column("menu_name", FALSE, FALSE, "title"));
 			$objectTable->addColumn(new icms_ipf_view_Column("menu_kind", FALSE, FALSE, "getMenuKind"));
 			$objectTable->addColumn(new icms_ipf_view_Column("menu_images", FALSE, FALSE, "getMenuImgDisplay"));
 			
