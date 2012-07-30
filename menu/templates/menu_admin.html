@@ -7,3 +7,7 @@
 <{if $menu_menu_info}><p><{$menu_menu_info}></p><{/if}>
 <{if $menu_menu_table}><{$menu_menu_table}><{/if}>
 <{if $addmenu}><{includeq file='db:system_common_form.html' form=$addmenu}><{/if}>
+
+<{if $manual_path}>
+	<{includeq file=$manual_path}>
+<{/if}>

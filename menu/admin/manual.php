@@ -20,14 +20,14 @@
 include_once 'admin_header.php';
 
 icms_cp_header();
-icms::$module->displayAdminMenu( 0, _MI_ICMSPOLL_MENU_MANUAL);
+icms::$module->displayAdminMenu( -1, _MI_MENU_MENU_MANUAL);
 $file = isset($_GET['file']) ? filter_input(INPUT_GET, "file", FILTER_SANITIZE_SPECIAL_CHARS) : "manual.html";
 $lang = "language/" . $icmsConfig['language'];
-$manual = ICMSPOLL_ROOT_PATH . "$lang/$file";
+$manual = MENU_ROOT_PATH . "$lang/$file";
 if (!file_exists($manual)) {
 	$lang = 'language/english';
-	$manual = ICMSPOLL_ROOT_PATH . "$lang/$file";
+	$manual = MENU_ROOT_PATH . "$lang/$file";
 }
 $icmsAdminTpl->assign("manual_path", $manual);
-$icmsAdminTpl->display('db:icmspoll_admin.html');
+$icmsAdminTpl->display('db:menu_admin.html');
 icms_cp_footer();
