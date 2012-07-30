@@ -32,7 +32,7 @@ function b_menu_menu_simple_show($options) {
 	$block['menu_items'] = $item_handler->getItems(TRUE, NULL, $options[0], FALSE,FALSE,$options[1],$options[2],"item_view");
 	$block['jsfile'] = $options[3];
 	$block['script_url'] = MENU_URL . "scripts/";
-	
+	$block['block_id'] = $options[5];
 	($options[4] != "0") ? $xoTheme->addStylesheet('/modules/' . MENU_DIRNAME . '/scripts/' . $options[4]) : $block['nocss'] = TRUE;
 	
 	return $block;
@@ -41,6 +41,8 @@ function b_menu_menu_simple_show($options) {
 function b_menu_menu_simple_edit($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_MODULES_PATH . '/' . $moddir . '/include/common.php';
+	$clean_bid = isset($_GET["bid"]) ? filter_input(INPUT_GET, "bid", FILTER_SANITIZE_NUMBER_INT) : 0 ;
+	
 	$menu_handler = icms_getModuleHandler('menu', MENU_DIRNAME, 'menu');
 	
 	$selmenu = new icms_form_elements_Select("", "options[0]", $options[0]);
@@ -62,6 +64,8 @@ function b_menu_menu_simple_edit($options) {
 	$cssselect = new icms_form_elements_Select('', 'options[4]', $options[4]);
 	$cssselect->addOptionArray($cssfiles);
 	
+	$hidden = new icms_form_elements_Hidden("options[5]", $clean_bid);
+	
 	$form = '<table>';
 	$form .= '<tr>';
 	$form .= '<td>' . _MB_MENU_SELECT_MENU . '</td>';
@@ -82,6 +86,9 @@ function b_menu_menu_simple_edit($options) {
 	$form .= '<tr>';
 	$form .= '<td>' . _MB_MENU_CSSSELECT . '</td>';
 	$form .= '<td>' . $cssselect->render() . '</td>';
+	$form .= '</tr>';
+	$form .= '<tr>';
+	$form .= '<td>' . $hidden->render() . '</td>';
 	$form .= '</tr>';
 	$form .= '</table>';
 	return $form;
