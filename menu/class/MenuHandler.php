@@ -26,15 +26,24 @@ class MenuMenuHandler extends icms_ipf_Handler {
 	
 	public $_displayArray;
 	
+	private $_menuList;
+	
 	public function __construct(&$db) {
 		parent::__construct($db, "menu", "menu_id", "menu_name", "menu_dsc", MENU_DIRNAME);
 		$this->enableUpload(array("image/gif", "image/jpeg", "image/pjpeg", "image/png"), 512000, 500, 500);
 	}
 	
 	public function getMenuList($showNull = TRUE) {
-		$ret[0] = '-----------';
-		$ret = $this->getList();
-		return $ret;
+		if(!count($this->_menuList)) {
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->setSort('menu_name');
+			$criteria->setOrder('ASC');
+			$menus = $this->getObjects($criteria);
+			foreach ($menus as $menu) {
+				$this->_menuList[$menu->getVar("menu_id")] = $menu->title();
+			}
+		}
+		return $this->_menuList;
 	}
 	
 	public function getMenuKinds() {
@@ -56,6 +65,12 @@ class MenuMenuHandler extends icms_ipf_Handler {
 		}
 		return $this->_displayArray;
 	}
-
-
+	
+	protected function afterDelete(&$obj) {
+		$item_handler = icms_getModuleHandler("item", MENU_DIRNAME, "menu");
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item("item_menu", $obj->id()));
+		$item_handler->deleteAll($criteria);
+		return TRUE;
+	}
 }
