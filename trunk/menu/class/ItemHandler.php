@@ -23,6 +23,8 @@ if(!defined("MENU_DIRNAME")) define("MENU_DIRNAME", basename(dirname(dirname(__F
 class MenuItemHandler extends icms_ipf_Handler {
 	
 	public $_targets = array();
+	
+	private $_items;
 	/**
 	 * Constructor
 	 *
@@ -71,11 +73,33 @@ class MenuItemHandler extends icms_ipf_Handler {
 			$subitems = $this->getItemListForPid($act, $items[$i]->id(), $menu_id, $start, $limit, $order, $sort, $perm, FALSE);
 			if($subitems) {
 				foreach(array_keys($subitems) as $j) {
-					$ret[$j] = '-' . $subitems[$j] . " (" . $menu . ") ";
+					$ret[$j] = '-' . $subitems[$j];
 				}
 			}
 		}
 		return $ret;
+	}
+	
+	public function getItemList($menu = FALSE, $item_pid = FALSE,$showNull = TRUE) {
+		if(!count($this->_items)) {
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->setSort('item_menu');
+			$criteria->setOrder('ASC');
+			if($menu) $criteria->add(new icms_db_criteria_Item("item_menu", $menu));
+			if($item_pid) $criteria->add(new icms_db_criteria_Item("item_pid", $item_pid));
+			$items = $this->getObjects($criteria);
+			
+			foreach ($items as $item) {
+				$this->_items[$item->getVar("item_id")] = $item->title();
+				if($item->hasSubs()) {
+					$subitems = $item->getItemSubs();
+					foreach ($subitems as $subitem) {
+						$this->_items[$subitems[$subitem]] = "- " . $subitems[$subitem];
+					}
+				}
+			}
+		}
+		return $this->_items;
 	}
 	
 	public function getItems($act = FALSE, $item_pid = NULL, $menu_id = FALSE, $start=0,$limit=0,$order='item_name',$sort='ASC',$perm="item_view") {
