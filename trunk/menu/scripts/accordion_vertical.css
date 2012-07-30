@@ -1,0 +1,10 @@
+ul#accordion { width: 100%; }
+ul#accordion li a {display: block; padding-left: 30px;}
+ul#accordion li.ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1;}
+ul#accordion .ui-accordion .ui-accordion-li-fix { display: inline; }
+ul#accordion .ui-accordion .ui-accordion-header-active { border-bottom: 0 !important; }
+ul#accordion .ui-accordion .ui-accordion-header a { display: block; font-size: 1em; padding: .5em .5em .5em .7em; }
+ul#accordion .ui-accordion-icons .ui-accordion-header a { padding-left: 2.2em; }
+ul#accordion .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
+ul#accordion .ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
+ul#accordion .ui-accordion .ui-accordion-content-active { display: block; }
