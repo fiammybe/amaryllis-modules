@@ -39,8 +39,8 @@ define("_CO_MENU_MENU_MENU_IMAGES_WIDTH_DSC", "Legen Sie die Breite des Icons fe
 define("_CO_MENU_MENU_MENU_ITEMS_DSC", "Display item Description");
 define("_CO_MENU_MENU_MENU_ITEMS_DSC_DSC", "");
 define("_CO_MENU_MENU_MENU_ULID", "ID des ul-tag");
-define("_CO_MENU_MENU_MENU_ULID_DSC", "Legen sie die id des ul-Tags f�r das Menü fest. Momentan gibt es folgende Möglichkeit: <br />'horiznav' für eine horizontale Navigation<br />'accordion' für eine vertikale 'Akkordeon-Navigation' <br />
-										'sf-v-menu' für das 'vertikale-superfish-Men�' und 'sf-h-menu' für das 'horizontale-superfish-Men�'.<br />Das Megamenu verwendet eine eigene id");
+define("_CO_MENU_MENU_MENU_ULID_DSC", "Legen sie die id des ul-Tags für das Menü fest. Momentan gibt es folgende Möglichkeit: <br />'horiznav' für eine horizontale Navigation<br />'accordion' für eine vertikale 'Akkordeon-Navigation' <br />
+										'sf-v-menu' für das 'vertikale-superfish-Menü' und 'sf-h-menu' für das 'horizontale-superfish-Menü'.<br />Das Megamenu verwendet eine eigene id");
 
 define("_CO_MENU_MENU_KIND_HORIZONTAL", "Horizontal");
 define("_CO_MENU_MENU_KIND_VERTICAL", "Vertikal");
