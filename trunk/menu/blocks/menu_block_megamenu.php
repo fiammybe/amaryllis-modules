@@ -39,7 +39,7 @@ function b_menu_megamenu_show($options) {
 	if($menu_kind == "dynamic_horizontal" || $menu_kind == "dynamic_vertical") {
 		if(icms_get_module_status("index")) {
 			$category_handler = icms_getModuleHandler("category", $moddir, "index");
-			$block['index_megamenu'] = $category_handler->getCategories(FALSE, TRUE, TRUE, 0, 0, $options[1], $options[2], NULL, FALSE, TRUE, "cat_view");
+			$block['index_cats'] = $category_handler->getCategories(FALSE, TRUE, TRUE, 0, 0, $options[1], $options[2], NULL, FALSE, TRUE, "cat_view");
 		}
 	}
 	$block['block_id'] = $options[9];
