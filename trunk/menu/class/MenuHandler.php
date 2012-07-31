@@ -54,7 +54,8 @@ class MenuMenuHandler extends icms_ipf_Handler {
 			$this->_menuKinds['horizontal'] = _CO_MENU_MENU_KIND_HORIZONTAL;
 			$this->_menuKinds['vertical'] = _CO_MENU_MENU_KIND_VERTICAL;
 			if(icms_get_module_status("index")) {
-				$this->_menuKinds['dynamic'] = _CO_MENU_MENU_KIND_DYNAMIC;
+				$this->_menuKinds['dynamic_horizontal'] = _CO_MENU_MENU_KIND_DYNAMIC_H;
+				$this->_menuKinds['dynamic_vertical'] = _CO_MENU_MENU_KIND_DYNAMIC_V;
 			}
 		}
 		return $this->_menuKinds;

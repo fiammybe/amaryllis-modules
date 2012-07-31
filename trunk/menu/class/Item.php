@@ -52,7 +52,7 @@ class MenuItem extends icms_ipf_Object {
 		$this->setControl("item_hassub", "yesno");
 		//hide static fields
 		$this->hideFieldFromForm("item_hassub");
-
+		
 	}
 
 	public function item_active() {
