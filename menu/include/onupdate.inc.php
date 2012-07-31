@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 define("MENU_DIRNAME", basename(dirname(dirname(__FILE__))));
-define('MENU_DB_VERSION', 2);
+define('MENU_DB_VERSION', 1);
 
 function create_block_pos() {
 	$block_pos_handler = icms::handler("icms_view_block_position");
