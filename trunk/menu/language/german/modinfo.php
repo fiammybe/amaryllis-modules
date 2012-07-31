@@ -22,7 +22,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 define("_MI_MENU_MD_NAME", "menu");
 define("_MI_MENU_MD_DESC", "ImpressCMS Simple menu");
 // ACP-Menu
-define("_MI_MENU_MENU_MENU", "MenÃ¼s");
+define("_MI_MENU_MENU_MENU", "Menüs");
 define("_MI_MENU_MENU_ITEM", "Items");
 define("_MI_MENU_MENU_MANUAL", "Anleitung");
 // Templates
