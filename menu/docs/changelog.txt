@@ -1,3 +1,4 @@
-<b><u>=> Unreleased: Version 1.0 Beta</u></b>
+= *Menu* Changelog =
 
+== Version 1.0 => Release Date: XX.08.2012 ==
 - First public release of the module.
