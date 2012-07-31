@@ -20,15 +20,15 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 // Requirements
-define("_AM_MENU_REQUIREMENTS", "Menü Anforderung");
-define("_AM_MENU_REQUIREMENTS_INFO", "Eine Prüfung Ihres Systems ergab, dass leider nicht alle Voraussetzungen für den Betrieb von Menu erfüllt sind. Die untenstehenden Anforderungen werden benötigt.");
-define("_AM_MENU_REQUIREMENTS_ICMS_BUILD", "Menu benötigt mindestens ImpressCMS 1.3.");
-define("_AM_MENU_REQUIREMENTS_SUPPORT", "Sollten Sie Fragen oder Vorschläge haben, können Sie unser deutschsprachiges Forum in Anspruch nehmen! <a href='http://www.impresscms.de/modules/forum/'>http://www.impresscms.de</a>.");
+define("_AM_MENU_REQUIREMENTS", "MenÃ¼ Anforderung");
+define("_AM_MENU_REQUIREMENTS_INFO", "Eine Prï¿½fung Ihres Systems ergab, dass leider nicht alle Voraussetzungen fÃ¼r den Betrieb von Menu erfÃ¼llt sind. Die untenstehenden Anforderungen werden benÃ¶tigt.");
+define("_AM_MENU_REQUIREMENTS_ICMS_BUILD", "Menu benÃ¶tigt mindestens ImpressCMS 1.3.");
+define("_AM_MENU_REQUIREMENTS_SUPPORT", "Sollten Sie Fragen oder VorschlÃ¤ge haben, kÃ¶nnen Sie unser deutschsprachiges Forum in Anspruch nehmen! <a href='http://www.impresscms.de/modules/forum/'>http://www.impresscms.de</a>.");
 
-define("_AM_MENU_NO_MENUS_FOUND", "Kein Menü gefunden. Bitte erstellen Sie zuerst ein Menü.");
+define("_AM_MENU_NO_MENUS_FOUND", "Kein MenÃ¼ gefunden. Bitte erstellen Sie zuerst ein MenÃ¼.");
 define("_AM_MENU_WEIGHT_UPDATED", "Reihenfolge erfolgreich bearbeitet");
-define("_AM_MENU_MENU_CREATED", "Menü erfolgreich erstellt");
-define("_AM_MENU_ITEM_CREATED", "Menü Item erfolgreich erstellt");
-define("_AM_MENU_MENU_MODIFIED", "Menü erfolgreich bearbeitet");
-define("_AM_MENU_ITEM_MODIFIED", "Menü Item erfolgreich bearbeitet");
+define("_AM_MENU_MENU_CREATED", "MenÃ¼ erfolgreich erstellt");
+define("_AM_MENU_ITEM_CREATED", "MenÃ¼ Item erfolgreich erstellt");
+define("_AM_MENU_MENU_MODIFIED", "MenÃ¼ erfolgreich bearbeitet");
+define("_AM_MENU_ITEM_MODIFIED", "MenÃ¼ Item erfolgreich bearbeitet");
 define("_AM_MENU_ITEM_CLONE", "Klonen");
