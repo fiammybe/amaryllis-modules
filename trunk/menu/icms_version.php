@@ -33,7 +33,7 @@ $modversion = array(
 						"credits"					=> "<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Amaryllis Modules</a>",
 						"help"						=> "admin/manual.php",
 						"license"					=> "GNU General Public License (GPL)",
-						"official"					=> 0,
+						"official"					=> 1,
 						"dirname"					=> basename(dirname(__FILE__)),
 						"modname"					=> "menu",
 					
@@ -44,10 +44,10 @@ $modversion = array(
 					
 					/**  Development information */
 						"status_version"			=> "1.0",
-						"status"					=> "Beta",
+						"status"					=> "RC",
 						"date"						=> "00:00 XX.XX.2012",
 						"author_word"				=> "",
-						"warning"					=> _CO_ICMS_WARNING_BETA,
+						"warning"					=> _CO_ICMS_WARNING_RC,
 					
 					/** Contributors */
 						"developer_website_url"		=> "http://code.google.com/p/amaryllis-modules/",
