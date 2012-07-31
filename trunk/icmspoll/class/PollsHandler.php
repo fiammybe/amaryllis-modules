@@ -117,22 +117,6 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		}
 	}
 	
-	public function sendMessageExpired() {
-        $subject = _CO_ICMSPOLL_POLLS_MESSAGE_SUBJECT;
-        $itemLink = $this->getItemLink();
-        $message = sprintf(_CO_ICMSPOLL_POLLS_MESSAGE_BDY, $itemLink);
-        $pm_handler = icms::handler("icms_data_privmessage");
-        $pmObj = $pm_handler->create(TRUE);
-        $pmObj->setVar("subject", $subject);
-        $pmObj->setVar("from_userid", 1);
-        $pmObj->setVar("to_userid", $this->getVar("user_id", "e"));
-        $pmObj->setVar("msg_time", time());
-        $pmObj->setVar("msg_text", $message);
-        $pm_handler->insert($pmObj, TRUE);
-		unset($itemLink, $message, $pm_handler, $pmObj);
-        return TRUE;
-    }
-	
 	/**
 	 * set a poll as expired
 	 */
