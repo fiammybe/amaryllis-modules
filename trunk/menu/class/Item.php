@@ -110,7 +110,7 @@ class MenuItem extends icms_ipf_Object {
 		$uid = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
 		$url = $this->getVar("item_url", "e");
 		$url = str_replace("{UID}", $uid, $url);
-		$url = str_replace("{ICMS_URL}", ICMS_URL, $url);
+		$url = str_replace("{ICMS_URL}", ICMS_URL . "/", $url);
 		$url = str_replace("{MOD_URL}", ICMS_MODULES_URL . "/", $url);
 		return $url;
 	}
