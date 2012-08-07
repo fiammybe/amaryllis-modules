@@ -1,6 +1,9 @@
 <script src="<{$block.script_url}><{$block.jsfile}>"></script>
 
 <div>
+	<{if $block.menu_menu.ul_id == horiznav}>
+		<div id="<{$block.menu_menu.ul_id}>">
+	<{/if}>
 	<ul id="<{$block.menu_menu.ul_id}>">
 		<{if $block.menu_menu.display_home}>
 			<li>
@@ -18,6 +21,9 @@
 			<{includeq file="db:menu_single_item.html"}>
 		<{/foreach}>
 	</ul>
+	<{if $block.menu_menu.ul_id == horizontal}>
+		</div>
+	<{/if}>
 </div>
 <{if $block.menu_menu.kind == vertical}>
 	<script type="text/javascript">
