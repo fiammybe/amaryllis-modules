@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=<{$icms_charset}>" />
+		<meta http-equiv="content-language" content="<{$icms_langcode}>" />
+		<meta name="robots" content="<{$icms_meta_robots}>" />
+		<meta name="keywords" content="<{$icms_meta_keywords}>" />
+		<meta name="description" content="<{$icms_meta_description}>" />
+		<meta name="rating" content="<{$icms_meta_rating}>" />
+		<meta name="author" content="<{$icms_meta_author}>" />
+		<meta name="copyright" content="<{$icms_meta_copyright}>" />
+		<meta name="generator" content="ImpressCMS" />
+		<title><{$printtitle}></title>
+		<link rel="stylesheet" type="text/css" media="all" href="<{$icms_url}>/modules/article/module_article_print.css" />
+	</head>
+
+	<body>
+		<div id="pagelayer">
+		    <div style="text-align: center;"><img src="<{$printlogourl}>" border="0" alt="<{$article.title}>" /></div>
+		    <div style="text-align: right; margin-top: 10px; border: 1px solid; padding: 2px;"><{$printheader}></div>
+		
+		    <div id="title"><{$article.title}></div>
+		
+			<div class="article_info">
+				<{$smarty.const._MD_ARTICLE_PUBLISHER}>&nbsp;:&nbsp;<{$article.publisher}>
+				<{$smarty.const._MD_ARTICLE_PUBLISHED_ON}>&nbsp;:&nbsp;<{$article.published_on}>
+				<{$smarty.const._MD_ARTICLE_SUBMITTER}>&nbsp;:&nbsp;<{$article.submitter}>
+				<{if $article.updated_on}>
+					<{$smarty.const._MD_ARTICLE_UPDATED_ON}>&nbsp;:&nbsp;<{$article.updated_on}>
+				<{/if}>
+				<{if $article.updater}>
+					<{$smarty.const._MD_ARTICLE_UPDATER}>&nbsp;:&nbsp;<{$article.updater}>
+				<{/if}>
+				<{if $article.file}>
+					<{$smarty.const._MD_ARTICLE_FILE}><{$article.file}>&nbsp;(&nbsp;<{$article.filesize}>&nbsp;|&nbsp;<{$article.filetype}>&nbsp;)
+				<{/if}>
+			</div>
+			
+			<div id="article_body">
+				<{foreach item=body from=$article.body_array}>
+					<div class="z">
+						<{$body}>
+					</div>
+				<{/foreach}>
+			</div>
+		    
+		     
+			
+			 
+			<{if $printfooter}>
+		      <div id="article_footer"><{$printfooter}></div>
+			<{/if}>
+		</div>
+		  
+		<script for=window event=onload language="javascript">
+			if (window.print)
+		    window.print();
+		</script>
+		  
+	</body>
+</html>

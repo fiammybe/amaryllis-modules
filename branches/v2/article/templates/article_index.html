@@ -1,0 +1,243 @@
+<{includeq file='db:index_header.html'}>
+<{if $op_select_form}>
+	<{$op_select_form}>
+<{/if}>
+
+<{if $byTags}>
+	<!-- display index header -->
+	<{$article_index.header}>
+	<!-- display index heading -->
+	<{$article_index.heading}>
+	<div class="article_content">
+		<h2><{$smarty.const._MD_ARTICLE_ARTICLES_BY_TAGS}>&nbsp;<{$article_tag}></h2>
+		<div class="article_articlelist">
+			<{if $article_pagenav }><!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+			<!-- article rule -->
+			<{foreach item=link from=$articles}>
+				<{includeq file='db:index_link.html'}>
+			<{/foreach}>
+			
+			<{if $article_pagenav }> <!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+		</div>
+	</div>
+<{/if}>
+
+<{if $byPopular}>
+	<!-- display index header -->
+	<{$article_index.header}>
+	<!-- display index heading -->
+	<{$article_index.heading}>
+	<div class="article_content">
+		<h2><{$smarty.const._MD_ARTICLE_POPULAR_ARTICLES}></h2>
+		<div class="article_articlelist">
+			<{if $article_pagenav }><!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+			<!-- article rule -->
+			<{foreach item=article from=$articles}>
+				<{includeq file='db:article_article.html'}>
+			<{/foreach}>
+			
+			<{if $article_pagenav }> <!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+		</div>
+	</div>
+<{/if}>
+
+<{if $byRecentUpdated}>
+	<!-- display index header -->
+	<{$article_index.header}>
+	<!-- display index heading -->
+	<{$article_index.heading}>
+	<div class="article_content">
+		<h2><{$smarty.const._MD_ARTICLE_RECENT_UPDATED_ARTICLES}></h2>
+		<div class="article_articlelist">
+			<{if $article_pagenav }><!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+			<!-- article rule -->
+			<{foreach item=article from=$articles}>
+				<{includeq file='db:article_article.html'}>
+			<{/foreach}>
+			
+			<{if $article_pagenav }> <!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+		</div>
+	</div>
+<{/if}>
+
+<{if $byRecentArticles}>
+	<!-- display index header -->
+	<{$article_index.header}>
+	<!-- display index heading -->
+	<{$article_index.heading}>
+	<div class="article_content">
+		<h2><{$smarty.const._MD_ARTICLE_RECENT_ARTICLES}></h2>
+		<div class="article_articlelist">
+			<{if $article_pagenav }><!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+			<!-- article rule -->
+			<{foreach item=article from=$articles}>
+				<{includeq file='db:article_article.html'}>
+			<{/foreach}>
+			
+			<{if $article_pagenav }> <!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+		</div>
+	</div>
+<{/if}>
+
+<{if $byAuthor}>
+	<!-- display index header -->
+	<{$article_index.header}>
+	<!-- display index heading -->
+	<{$article_index.heading}>
+	<div class="article_content">
+		<h2><{$smarty.const._MD_ARTICLE_ARTICLELIST_AUTHOR}>&nbsp;<{$article_user}></h2>
+		<div class="article_articlelist">
+			<{if $article_pagenav }><!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+			<!-- article rule -->
+			<{foreach item=article from=$articles}>
+				<{includeq file='db:article_article.html'}>
+			<{/foreach}>
+			
+			<{if $article_pagenav }> <!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+		</div>
+	</div>
+<{/if}>
+
+<{if $getMostCommented}>
+	<!-- display index header -->
+	<{$article_index.header}>
+	<!-- display index heading -->
+	<{$article_index.heading}>
+	<div class="article_content">
+		<h2><{$smarty.const._MD_ARTICLE_MOST_COMMENTED}></h2>
+		<div class="article_articlelist">
+			<{if $article_pagenav }><!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+			<!-- article rule -->
+			<{foreach item=article from=$articles}>
+				<{includeq file='db:article_article.html'}>
+			<{/foreach}>
+			
+			<{if $article_pagenav }> <!-- pagination control -->
+				<{$article_pagenav}>
+			<{/if}>
+		</div>
+	</div>
+<{/if}>
+
+<{if $category_columns}>
+	<!-- display index header -->
+	<{$article_index.header}>
+	<!-- display index heading -->
+	<{$article_index.heading}>
+	<div class="article_content">
+		<div class="article_cats"><!-- START category index view -->
+			<{if $user_submit}>
+				<a class="<{if $article_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>">
+					<img class="article_icon_middle" src="<{$article_images_url}>add_cat.png" title="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>" />
+				</a>
+			<{/if}>
+			<!-- pagination control -->
+			<{if $category_pagenav}><{$category_pagenav}><{/if}>
+			<!-- category row -->
+			<{foreach item=category_column from=$category_columns}>
+				<div class="category_row table_row">
+					<{foreach item=category from=$category_column}>
+						<!-- category rule -->
+						<{includeq file='db:article_category.html'}>
+					<{/foreach}>
+					<div class="article_clear_both">&nbsp;</div>
+				</div>
+			<{/foreach}>
+			<!-- pagination control -->
+			<{if $category_pagenav}><{$category_pagenav}><{/if}>
+			
+		</div>
+	</div>
+
+	<{if $article_upl_disclaimer}>
+		<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
+		</div>
+	<{/if}>
+		
+<{/if}>
+	
+<{if $article_single_cat}>
+	<div class="">
+		<div class="article_scat_title">
+			<h1><{$article_single_cat.title}></h1>		
+		</div>&nbsp;
+		<{if $article_single_cat.userCanEditAndDelete}>
+			<{$article_single_cat.editItemLink}><{$article_single_cat.deleteItemLink}>
+		<{/if}>
+		<{if $article_single_cat.user_upload}>
+			<a class="<{if $article_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_100" href="<{$article_single_cat.user_upload}>" title="<{$smarty.const._MD_ARTICLE_UPLOAD}>">
+				<img class="article_icon_middle" src="<{$article_images_url}>add_file.png" title="<{$smarty.const._MD_ARTICLE_UPLOAD}>" alt="<{$smarty.const._MD_ARTICLE_UPLOAD}>" />
+			</a>
+			<{if $up_disclaimer}>
+				<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
+					<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
+				</div>
+			<{/if}>
+		<{/if}>
+		<{if $article_single_cat.dsc}>
+			<div class="article_cat_desc"> <{$article_single_cat.dsc}> </div>
+		<{/if}>
+		<{if $sub_category_columns}> <!-- subcategories -->
+			<h2><{$smarty.const._MD_ARTICLE_CATEGORY_SUBCATLIST}></h2>
+			<div class="article_scat">
+				<!-- pagination control -->
+				<{if $category_pagenav }><{$category_pagenav}><{/if}>
+				
+				<{foreach item=category_column from=$sub_category_columns}>
+					<div class="category_row table_row">
+						<{foreach item=category from=$category_column}>
+							<!-- category rule -->
+							<{includeq file='db:article_category.html'}>
+						<{/foreach}>
+						<div class="article_clear_both">&nbsp;</div>
+					</div>
+				<{/foreach}>
+				
+				<!-- pagination control -->
+				<{if $category_pagenav }><{$category_pagenav}><{/if}>
+			</div>
+		<{/if}>
+		
+		<{if $article_files }>
+			<h2><{$smarty.const._MD_ARTICLE_ARTICLELIST}></h2>
+			<div class="article_articlelist">
+				<{if $article_pagenav }><!-- pagination control -->
+					<{$article_pagenav}>
+				<{/if}>
+				<!-- article rule -->
+				<{foreach item=article from=$article_files}>
+					<{includeq file='db:article_article.html'}>
+				<{/foreach}>
+				
+				<{if $article_pagenav }> <!-- pagination control -->
+					<{$article_pagenav}>
+				<{/if}>
+			</div>
+		<{/if}>
+	</div>
+<{/if}>
+
+<{includeq file='db:article_footer.html'}>

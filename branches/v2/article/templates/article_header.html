@@ -1,0 +1,27 @@
+<link href="<{$article_url}>module_article.css" rel="stylesheet" type="text/css" />
+
+<{if $article_show_breadcrumb}>
+	<!-- module breadcrumb -->
+	<div class="article_headertable">
+		<{if $article_module_home}><span class="article_modulename"><{$article_module_home}></span><{/if}>
+		<{if $article_cat_path}>
+			<span class="article_breadcrumb">
+				<{if $article_module_home}>&nbsp;:&nbsp;<{/if}><{$article_cat_path}>
+			</span>
+		<{/if}>
+	</div>
+<{/if}>
+
+<{if $article_show_rss}> <!-- display rss fedd link -->
+	<div class="article_rss">
+		<a href="<{$article_url}>rss.php" title="RSS-Feeds">
+			<img src="<{$article_images_url}>rss.png" alt="RSS-Feeds" />
+		</a>
+	</div>
+	<div class="article_clear_both">&nbsp;</div>
+<{else}>
+	<div class="article_clear_left">&nbsp;</div>
+<{/if}>
+
+<!-- display index_image -->
+<{$article_index.image}>

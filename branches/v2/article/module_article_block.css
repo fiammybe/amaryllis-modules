@@ -1,0 +1,206 @@
+/**
+ * 'Article' is an article management module for ImpressCMS
+ *
+ * File: /module_article.css
+ * 
+ * css file for article module blocks
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Article
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		article
+ *
+ */
+
+	.article_clear_both {
+		clear: both;
+		height: 1px;
+	}
+	
+	.article_clear_left {
+		clear: left;
+		height: 1px;
+	}
+	
+	.article_clear_right {
+		clear: right;
+		height: 1px;
+	}
+	
+	/**
+	 * 	newsticker
+	 */
+	.news_tickercontainer { /* the outer div with the black border */
+		border: 1px solid #000;
+		background: #fff; 
+		width: 95%;
+		height: 27px; 
+		margin: 2em auto;
+		padding: 0;
+		overflow: hidden; 
+	}
+	.news_tickercontainer .mymask { /* that serves as a mask. so you get a sort of padding both left and right */
+		position: relative;
+		left: 10px;
+		top: 8px;
+		width: 90%;
+		overflow: hidden;
+	}
+	ul.newsticker_articles { /* that's your list */
+		position: relative;
+		left: 95%;
+		font: bold 10px Verdana;
+		list-style-type: none;
+		margin: 0 auto;
+		padding: 0;
+	}
+	ul.newsticker_articles li {
+		float: left; /* important: display inline gives incorrect results when you check for elem's width */
+		margin: 0;
+		padding: 0;
+		background: #fff;
+	}
+	ul.newsticker_articles a {
+		white-space: nowrap;
+		padding: 0;
+		color: #ff0000;
+		font: bold 10px Verdana;
+		margin: 0 50px 0 0;
+	} 
+	ul.newsticker_articles span {
+		margin: 0 10px 0 0;
+	}
+	
+	/**
+	 * 	other blocks
+	 */
+	.article_more {
+		text-align: right;
+		width: 100%;
+		display: block;
+	}
+	
+	.single_article {
+		background: #ECF7FD;
+		margin: 1em auto;
+		padding: 15px;
+		height: 250px;
+	}
+	
+	.article_spot_img {
+		position: relative;
+		float: left;
+		margin: 0 15px 5px 0;
+	}
+	
+	.article_spot_left {
+		position: relative;
+		width: 150px;
+		margin: 0 15px 5px 0;
+		height: 250px;
+		float: left;
+	}
+	
+	.article_spot_cats {
+		width: auto;
+		background: #DAEBF3;
+	}
+	
+	.article_block_info {
+		font-size: .8em;
+		width: 100%;
+		text-align: right;
+	}
+	
+	.article_block_pdate p {
+		position: relative;
+		font-size: 1.2em;
+		font-weight: bold;
+		line-height: 250px;
+		vertical-align: middle;
+	}
+	
+	.article_block_pdate {
+		position: relative;
+		float: left;
+		width: 90px;
+		margin: 0 15px 5px 0;
+		height: 250px;
+	}
+	
+	.article_b_img{
+		position: relative;
+		float: left;
+		margin: 0 15px 5px 0;
+	}
+	
+	.article_block_add {
+		position: relative;
+		float: right;
+		width: 350px;
+	}
+	
+	.article_teaser {
+		height: 150px;
+		overflow: auto;
+	}
+	
+	.article_middle {
+		position: relative;
+		float: left;
+		width: 150px;
+		margin: 0 15px 5px 0;
+		height: 250px;
+	}
+	
+	.article_popup {
+		display: none;
+	}
+	
+	.single_article_img {
+		display: inline;
+	}
+	
+	.article_gal_img {
+		margin: 15px;
+		float: left;
+	}
+	
+	/**
+	 * 	read more button
+	 */
+	.read_more {
+		
+		position: absolute;
+		bottom: 15px;
+		display: block;
+	}
+
+	.btn {
+		display: inline-block;
+		width: 100px;
+		height: 44px;
+		line-height: 44px;
+		padding: 0 0 0 50px;
+		background: white url("images/goto.png") no-repeat center left;
+		color: #999;
+		font-weight: bold;
+		font-size: 12px;
+		text-shadow: 0 1px 0 #fff;
+		position: relative;
+		border: 1px solid #DFDFDF;
+		margin: 0 0 10px 0;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 8px;
+		border-radius: 8px;
+	}
+
+	.btn:hover {
+		border-color:#cacaca;
+		background: #F8F8F8 url("images/goto.png") no-repeat center left;
+		text-decoration: none;
+	}

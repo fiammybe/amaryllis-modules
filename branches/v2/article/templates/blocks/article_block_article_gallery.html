@@ -1,0 +1,26 @@
+<{if $block.show_view_all == 1}>
+	<div class="article_more">
+		<a href="<{$block.view_all}>" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
+	</div>
+<{/if}>
+<div class="article_list">
+	<{foreach item=article_article from=$block.article_gallery}>
+		<div class="single_article_img">
+			<{if $article_article.imgpath}>
+				<div class="article_gal_img" original-title="<{$article_article.title}>">
+					<a href="<{$article_article.seoURL}>" title="<{$article_article.title}>">
+						<img class="article_galleryimage" src="<{$article_article.image}>" alt="<{$article_article.title}>" />
+					</a>
+				</div>
+			<{/if}>
+			<{if $block.showteaser == 1}>
+				<div class="article_popup">
+					<{$article_article.teaser}>
+				</div>
+			<{/if}>
+		</div>
+	<{/foreach}>
+</div>
+<div class="article_clear_both">&nbsp;</div>
+<script src="<{$icms_url}>/modules/index/scripts/jquery.qtip.min.js" type="text/javascript"></script>
+<link href="<{$icms_url}>/modules/index/scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />

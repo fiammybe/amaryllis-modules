@@ -1,0 +1,21 @@
+<{includeq file='db:album_header.html'}>
+
+<div style="margin: 2em auto;">
+	<{if $album_album_form}>
+		<{includeq file='db:system_common_form.html' form=$album_album_form}>
+	<{/if}>
+	
+	<{if $album_images_form}>
+		<{includeq file='db:system_common_form.html' form=$album_images_form}>
+	<{/if}>
+	
+	<{if $album_images_table}>
+		<{$album_images_table}>
+	<{/if}>
+	
+	<{if $icmspersistable_delete_confirm}>
+		<{$icmspersistable_delete_confirm}>
+	<{/if}>
+</div>
+
+<{includeq file='db:album_footer.html'}>

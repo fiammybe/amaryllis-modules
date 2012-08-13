@@ -1,0 +1,45 @@
+<!-- admin index view -->
+<{if $article_index_title}>
+	<h1><{$article_index_title}></h1>
+<{/if}>
+<{if $article_index_info}>
+	<p><{$article_index_info}></p>
+<{/if}>
+<{if $article_index_table}>
+	<{$article_index_table}>
+<{/if}>
+<{if $addindex}>
+	<{includeq file='db:system_common_form.html' form=$addindex}>
+<{/if}>
+
+<!-- admin article page -->
+<{if $article_article_title}>
+	<h1><{$article_article_title}></h1>
+<{/if}>
+<{if $article_article_info}>
+	<p><{$article_article_info}></p>
+<{/if}>
+<{if $article_article_table}>
+	<{$article_article_table}>
+<{/if}>
+<{if $addarticle}>
+	<{includeq file='db:system_common_form.html' form=$addarticle}>
+<{/if}>
+
+<!-- admin index page -->
+<{if $article_indexpage_title}>
+	<h1><{$article_indexpage_title}></h1>
+<{/if}>
+<{if $article_indexpage_info}>
+	<p><{$article_indexpage_info}></p>
+<{/if}>
+<{if $article_indexpage_table}>
+	<{$article_indexpage_table}>
+<{/if}>
+<{if $addindexpage}>
+	<{includeq file='db:system_common_form.html' form=$addindexpage}>
+<{/if}>
+<!-- article manual -->
+<{if $manual_path}>
+	<{includeq file=$manual_path}>
+<{/if}>

@@ -1,0 +1,199 @@
+<{includeq file='db:index_header.html'}>
+
+<{if $byTags}>
+	<!-- display index header -->
+	<{$index_index.header}>
+	<!-- display index heading -->
+	<{$index_index.heading}>
+	
+	<{if $album_column}>
+		<h2><{$smarty.const._MD_ALBUM_ALBUMS_BY_TAGS}>&nbsp;"<{$tag.name}>"</h2>
+		<{if $album_pagenav }><!-- pagination control -->
+			<{$album_pagenav}>
+		<{/if}>
+		<!-- album rule -->
+		<{foreach item=album_column from=$album_column}>
+			<div class="album_row table_row">
+				<!-- album rule -->
+				<{foreach item=album from=$album_column}>
+					<{includeq file='db:album_album.html'}>
+				<{/foreach}>
+			</div>
+		<{/foreach}>
+		
+		<{if $album_pagenav }><!-- pagination control -->
+			<{$album_pagenav}>
+		<{/if}>
+	<{/if}>
+	<!-- start image loop -->
+	<h2><{$smarty.const._MD_ALBUM_IMAGES_BY_TAGS}>&nbsp;&raquo;<{$tag.name}>&laquo;</h2>
+	<{if $album_image_rows}>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+		<!-- image rows -->
+		<div class="album_images">
+			<{foreach item=album_row from=$album_image_rows}>
+				<div class="album_images_row" <{$album_row_margins}> >
+					<{foreach item=album_images from=$album_row}>
+						<{includeq file='db:album_images.html'}>
+					<{/foreach}>
+				</div>
+			<{/foreach}>
+		</div>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+	<{/if}>
+<{/if}>
+
+<{if $byPublisher}>
+	<!-- display index header -->
+	<{$album_index.header}>
+	<!-- display index heading -->
+	<{$album_index.heading}>
+	<!-- start image loop -->
+	<h2><{$smarty.const._MD_ALBUM_BY_PUBLISHER}>&nbsp;<{$pname}></h2>
+	<{if $album_image_rows}>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+		<!-- image rows -->
+		<div class="album_images">
+			<{foreach item=album_row from=$album_image_rows}>
+				<div class="album_images_row" <{$album_row_margins}> >
+					<{foreach item=album_images from=$album_row}>
+						<{includeq file='db:album_images.html'}>
+					<{/foreach}>
+				</div>
+			<{/foreach}>
+		</div>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+	<{/if}>
+<{/if}>
+
+<{if $album_columns}> <!-- album index view -->
+	<!-- display index header -->
+	<{$index_index.header}>
+	<!-- display index heading -->
+	<{$index_index.heading}>
+	<div>
+		<{if $album_pagenav }><!-- pagination control -->
+			<{$album_pagenav}>
+		<{/if}>
+		<{foreach item=album_column from=$album_columns}>
+			<div class="album_row table_row">
+				<!-- album rule -->
+				<{foreach item=album from=$album_column}>
+					<{includeq file='db:album_album.html'}>
+				<{/foreach}>
+			</div>
+		<{/foreach}>
+		<{if $album_pagenav }><!-- pagination control -->
+			<{$album_pagenav}>
+		<{/if}>
+		<{if $user_submit}>
+			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+				<img src="<{$album_images_url}>add_cat.png" title="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />
+			</a>
+		<{/if}>
+	</div>
+<!-- E N D album index -->
+<{/if}>
+
+<{if $single_album}> <!-- display single album -->
+	<!-- album title -->
+	<div class="album_album_title"><{$single_album.title}></div>
+	<{if $single_album.album_is_updated}>
+		<img style="vertical-align: middle; width:16px; height:16px" src="<{$single_album.album_is_updated}>" />
+	<{elseif $single_album.album_is_new}>
+		<img style="vertical-align: middle; width:16px; height:16px" src="<{$single_album.album_is_new}>" />
+	<{/if}>
+	<{if $single_album.album_popular}>
+		<img style="vertical-align: middle; width:16px; height:16px" src="<{$single_album.album_popular}>" />
+	<{/if}>
+	<{if $single_album.userCanEditAndDelete}>
+		<{$single_album.editItemLink}><{$single_album.deleteItemLink}>
+	<{/if}>
+	<{if $user_submit}>
+		<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$album_url}>album.php?op=mod&album_pid=<{$single_album.id}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+			<img style="vertical-align: middle; width:16px; height:16px" src="<{$album_images_url}>add_cat.png" title="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />
+		</a>
+	<{/if}>
+	<{if $single_album.user_upload}>
+		<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$album_url}>images.php?op=mod&album_id=<{$single_album.id}>" title="<{$smarty.const._MD_ALBUM_UPLOAD}>">
+			<img style="vertical-align: middle; width:16px; height:16px" src="<{$album_images_url}>add_file.png" title="<{$smarty.const._MD_ALBUM_UPLOAD}>" alt="<{$smarty.const._MD_ALBUM_UPLOAD}>" />
+		</a>
+		<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=20}>" href="<{$album_url}>batchupload.php?op=addzip&album_id=<{$single_album.id}>" title="<{$smarty.const._MD_ALBUM_BATCHUPLOAD}>">
+			<img style="vertical-align: middle; width:16px; height:16px" src="<{$album_images_url}>add_zip.png" title="<{$smarty.const._MD_ALBUM_BATCHUPLOAD}>" alt="<{$smarty.const._MD_ALBUM_BATCHUPLOAD}>" />
+		</a>
+	<{/if}>
+	
+	
+	<{if $single_album.tags}>
+		(&nbsp;<{$smarty.const._MD_ALBUM_TAGS}>&nbsp;:&nbsp;
+			<div class="album_tags">
+				<{foreach item=tag from=$single_album.tags name=tags}>
+					<span class="album_tag" original-title="<{$tag.title}>">
+						<{if $tag.icon}>
+							<img width=16px height=16px src="<{$tag.icon}>" title="<{$tag.name}>" alt="<{$tag.name}>" />
+						<{/if}>
+						<a href="<{$tag.seoURL}>" title="<{$tag.name}>">
+							<{$tag.name}>
+						</a>
+						<{if !$smarty.foreach.tags.last}>&nbsp;|&nbsp;<{/if}>
+					</span>
+					<{if $tag.dsc}>
+						<span class="popup_tag"><{$tag.dsc}></span>
+					<{/if}>
+				<{/foreach}>
+			</div>
+		&nbsp;)
+	<{/if}>
+	
+	<!-- album description -->
+	<div class="album_album_desc"> <{$single_album.dsc}> </div>
+	<!-- start image loop -->
+	<{if $album_image_rows}>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+		<!-- image rows -->
+		<div class="album_images">
+			<{foreach item=album_row from=$album_image_rows}>
+				<div class="album_images_row" <{$album_row_margins}> >
+					<{foreach item=album_images from=$album_row}>
+						<{includeq file='db:album_images.html'}>
+					<{/foreach}>
+				</div>
+			<{/foreach}>
+		</div>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+	<{/if}>
+	<{if $subalbum_columns}> <!-- subalbums -->
+		<!-- pagination control -->
+		<{if $album_pagenav }><{$album_pagenav}><{/if}>
+		<{foreach item=subalbum_column from=$subalbum_columns}>
+			<div class="album_row table_row">
+				<{foreach item=album from=$subalbum_column}>
+					<{includeq file='db:album_album.html'}>
+				<{/foreach}>
+			</div>
+		<{/foreach}>
+		<!-- pagination control -->
+		<{if $album_pagenav }><{$album_pagenav}><{/if}>
+	<!-- E N D subalbums -->
+	<{/if}>
+<!-- E N D single_album -->
+<{/if}>
+
+<{if $album_upl_disclaimer}>
+		<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
+		</div>
+	<{/if}>
+<{includeq file='db:album_footer.html'}>
