@@ -12,7 +12,7 @@
  * 				album
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: menu.php 677 2012-07-05 18:10:29Z st.flohrer $
  * @package		album
  *
  */
@@ -39,10 +39,6 @@ $adminmenu[$i]['link'] = 'admin/message.php';
 $i++;
 $adminmenu[$i]['title'] = _MI_ALBUM_MENU_BATCHUPLOAD;
 $adminmenu[$i]['link'] = 'admin/batchupload.php';
-
-$i++;
-$adminmenu[$i]['title'] = _MI_ALBUM_MENU_INDEXPAGE;
-$adminmenu[$i]['link'] = 'admin/indexpage.php?op=mod&indexkey=1';
 
 $i++;
 $adminmenu[$i]['title'] = _MI_ALBUM_MENU_PERMISSIONS;

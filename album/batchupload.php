@@ -39,10 +39,10 @@ if($clean_op == 'addimages' && !$album_isAdmin) redirect_header(icms_getPrevious
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
 if($clean_album_id == 0 && !$album_isAdmin) redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 
-$album_album_handler = icms_getModuleHandler('album', ALBUM_DIRNAME, 'album');
-$album_images_handler = icms_getModuleHandler('images', ALBUM_DIRNAME, 'album');
+$album_handler = icms_getModuleHandler('album', ALBUM_DIRNAME, 'album');
+$images_handler = icms_getModuleHandler('images', ALBUM_DIRNAME, 'album');
 
-$albumObj = $album_album_handler->get($clean_album_id);
+$albumObj = $album_handler->get($clean_album_id);
 if(!$album_isAdmin) {
 if((!is_object($albumObj) && !$albumObj->submitAccessGranted())) redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 }
@@ -70,7 +70,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 					foreach ($files as $file) {
 						$i++;
 						$img_title = array_shift(explode(".", $file));
-						$imagesObject = $album_images_handler->create(TRUE);
+						$imagesObject = $images_handler->create(TRUE);
 						$imagesObject->setVar("a_id", $_POST['a_id']);
 						$imagesObject->setVar("img_title", $img_title);
 						$imagesObject->setVar("img_published_date", time() - 100);
@@ -100,7 +100,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 						icms_core_Filesystem::copyRecursive(ALBUM_BATCH_ROOT . $new_name . '/' . $file, ALBUM_IMAGES_UPLOAD . $file);
 						icms_core_Filesystem::deleteFile(ALBUM_BATCH_ROOT . $new_name . '/' . $file);
 						
-						$album_images_handler->insert($imagesObject, TRUE);
+						$images_handler->insert($imagesObject, TRUE);
 						echo "<code> File " . $file . " successfully moved.</code><br />";
 					}
 				}
@@ -120,7 +120,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				foreach ($files as $file => $value) {
 					$i++;
 					$img_title = array_shift(explode(".", $value));
-					$imagesObject = $album_images_handler->create(TRUE);
+					$imagesObject = $images_handler->create(TRUE);
 					$imagesObject->setVar("a_id", $_POST['a_id']);
 					$imagesObject->setVar("img_title", $img_title);
 					$imagesObject->setVar("img_published_date", time() - 100);
@@ -150,12 +150,12 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 					icms_core_Filesystem::copyRecursive(ALBUM_BATCH_ROOT . $value, ALBUM_IMAGES_UPLOAD . $value);
 					icms_core_Filesystem::deleteFile(ALBUM_BATCH_ROOT . $value);
 					
-					$album_images_handler->insert($imagesObject, TRUE);
+					$images_handler->insert($imagesObject, TRUE);
 					echo "<code> File " . $value . " successfully moved.</code><br />";
 				}
 			} else {
 				$img_title = array_shift(explode(".", $value));
-				$imagesObject = $album_images_handler->create(TRUE);
+				$imagesObject = $images_handler->create(TRUE);
 				$imagesObject->setVar("a_id", $_POST['a_id']);
 				$imagesObject->setVar("img_title", $img_title);
 				$imagesObject->setVar("img_published_date", time() - 100);
@@ -185,7 +185,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				icms_core_Filesystem::copyRecursive(ALBUM_BATCH_ROOT . $value, ALBUM_IMAGES_UPLOAD . $value);
 				icms_core_Filesystem::deleteFile(ALBUM_BATCH_ROOT . $value);
 				
-				$album_images_handler->insert($imagesObject, TRUE);
+				$images_handler->insert($imagesObject, TRUE);
 				echo "<code> File " . $value . " successfully moved.</code><br /><br />";
 			}
 			echo '<br /><br /><a class="formButton" href="' . ALBUM_ADMIN_URL . 'batchupload.php">' . _BACK . '</a>';
@@ -215,14 +215,14 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$form = new icms_form_Theme(_MD_ALBUM_BATCHUPLOAD_ADD . " - " . $case, "op", $submit_op, "post", TRUE);
 			
 			$selalbum = new icms_form_elements_Select(_CO_ALBUM_IMAGES_A_ID, "a_id", $clean_album_id);
-			$selalbum->addOptionArray($album_album_handler->getAlbumListForPid());
+			$selalbum->addOptionArray($album_handler->getAlbumListForPid());
 			$selalbum->setRequired();
 			if(!$album_isAdmin) $selalbum->setHidden();
 			$form->addElement($selalbum);
 			
 			if($clean_op == 'addimages' || $clean_op ==  '') {
 				$selimages = new icms_form_elements_Checkbox(_MD_ALBUM_BATCHUPLOAD_SEL_IMAGES, "img_ids");
-				$selimages->addOptionArray($album_images_handler->getImagesFromBatch());
+				$selimages->addOptionArray($images_handler->getImagesFromBatch());
 				$selimages->setRequired();
 				$form->addElement($selimages);
 			} elseif ($clean_op == 'addzip') {
@@ -236,32 +236,46 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			$form->addElement(new icms_form_elements_Radioyn(_CO_ALBUM_IMAGES_IMG_ACTIVE, "img_active", 1));
 			
-			if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
-				$seltags = new icms_form_elements_Select(_CO_ALBUM_IMAGES_IMG_TAGS, "img_tags", 0, 10, TRUE);
-				$seltags->addOptionArray($album_images_handler->getImagesTags());
-				$form->addElement($seltags);
+			if(icms_get_module_status("index")) {
+				$tags = new icms_form_elements_Text(_CO_ALBUM_IMAGES_IMG_TAGS, "img_tags", 75, 255);
+				$form->addElement($tags);
 			}
 			
-			$copyright = new icms_form_elements_Text(_CO_ALBUM_IMAGES_IMG_COPYRIGHT, "img_copyright", 50, 255, $albumConfig['img_default_copyright'] );
-			if($albumConfig['img_allow_uploader_copyright'] == 0) $copyright->setHidden();
-			$form->addElement($copyright);
-			
-			$tray = new icms_form_elements_Tray(_CO_ALBUM_IMAGES_IMG_URLLINK, "<br />", "img_urllink");
-			$mid = new icms_form_elements_Hidden("mid_img_urllink", icms::$module->getVar("mid"));
-			$cap = new icms_form_elements_Text(_MD_ALBUM_BATCHUPLOAD_URL_CAP, "caption_img_urllink", 50, 255);
-			$dsc = new icms_form_elements_Text(_MD_ALBUM_BATCHUPLOAD_URL_DSC, "desc_img_urllink", 50, 255);
-			$url = new icms_form_elements_Text(_MD_ALBUM_BATCHUPLOAD_URL_URL, "url_img_urllink", 50, 255);
-			$tar = new icms_form_elements_Radio(_MD_ALBUM_BATCHUPLOAD_URL_TARGET, "target_img_urllink", "_blank");
-			$tar->addOption("_blank", "_blank");
-			$tar->addOption("_self", "_self");
-			$tray->addElement($cap);
-			$tray->addElement($dsc);
-			$tray->addElement($url);
-			$tray->addElement($tar);
-			$tray->addElement($mid);
-			if($albumConfig['need_image_links'] == 0) $tray->setHidden();
-			$form->addElement($tray);
-			
+			if($albumConfig['img_allow_uploader_copyright'] == 1) {
+				$form->addElement(new icms_form_elements_Text(_CO_ALBUM_IMAGES_IMG_COPYRIGHT, "img_copyright", 50, 255, $albumConfig['img_default_copyright'] ));
+				
+				$copypos = new icms_form_elements_Select(_CO_ALBUM_IMAGES_IMG_COPY_POS, "copy_pos");
+				$copypos->addOptionArray($images_handler->getWatermarkPositions());
+				$form->addElement($copypos);
+				
+				$copycolor = new icms_form_elements_Select(_CO_ALBUM_IMAGES_IMG_COPY_COLOR, "copy_color");
+				$copycolor->addOptionArray($images_handler->getWatermarkColors());
+				$form->addElement($copycolor);
+				
+				$copyfont = new icms_form_elements_Select(_CO_ALBUM_IMAGES_IMG_COPY_FONT, "copy_font");
+				$copyfont->addOptionArray($images_handler->getWatermarkFont());
+				$form->addElement($copyfont);
+				
+				$copyfontsize = new icms_form_elements_Select(_CO_ALBUM_IMAGES_IMG_COPY_FONTSIZE, "copy_font_size");
+				$copyfontsize->addOptionArray($images_handler->getWatermarkFontSize());
+				$form->addElement($copyfontsize);
+			}
+			if($albumConfig['need_image_links'] == 1) {
+				$tray = new icms_form_elements_Tray(_CO_ALBUM_IMAGES_IMG_URLLINK, "<br />", "img_urllink");
+				$mid = new icms_form_elements_Hidden("mid_img_urllink", icms::$module->getVar("mid"));
+				$cap = new icms_form_elements_Text(_MD_ALBUM_BATCHUPLOAD_URL_CAP, "caption_img_urllink", 50, 255);
+				$dsc = new icms_form_elements_Text(_MD_ALBUM_BATCHUPLOAD_URL_DSC, "desc_img_urllink", 50, 255);
+				$url = new icms_form_elements_Text(_MD_ALBUM_BATCHUPLOAD_URL_URL, "url_img_urllink", 50, 255);
+				$tar = new icms_form_elements_Radio(_MD_ALBUM_BATCHUPLOAD_URL_TARGET, "target_img_urllink", "_blank");
+				$tar->addOption("_blank", "_blank");
+				$tar->addOption("_self", "_self");
+				$tray->addElement($cap);
+				$tray->addElement($dsc);
+				$tray->addElement($url);
+				$tray->addElement($tar);
+				$tray->addElement($mid);
+				$form->addElement($tray);
+			}
 			$form->addElement(new icms_form_elements_Hiddentoken());
 			$form->addElement(new icms_form_elements_Button("", "submit", _SUBMIT, "submit"));
 			$form->display();			

@@ -24,24 +24,20 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
  * make a newsticker block available throughout the module, if this is enabled in module configuration
  */
 if($articleConfig['display_newsticker'] == 1) {
-	$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
-	$newsticker_articles = $article_article_handler->getArticlesforBlocks(0, 10, FALSE, FALSE, FALSE, 'article_published_date', 'DESC');
+	if(!$article_handler) $article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
+	$newsticker_articles = $article_handler->getArticles(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 0, 10, 'weight', 'ASC', FALSE, FALSE);
 	$icmsTpl->assign("newsticker_articles", $newsticker_articles);
 }
 
 /**
  * check, if rss feeds are enabled. if so, display link
  */
-if($articleConfig['use_rss'] == 1) {
-	$icmsTpl->assign("article_show_rss", TRUE);
+if($indexConfig['use_rss'] == 1) {
+	$icmsTpl->assign("index_show_rss", TRUE);
 }
-/**
- * check, if breadcrumb should be displayed
- */
-if( $articleConfig['show_breadcrumbs'] == TRUE ) {
-	$icmsTpl->assign('article_show_breadcrumb', TRUE);
-} else {
-	$icmsTpl->assign('article_show_breadcrumb', FALSE);
+// check, if breadcrumb should be displayed
+if( $indexConfig['show_breadcrumbs'] == TRUE ) {
+	$icmsTpl->assign('index_show_breadcrumb', TRUE);
 }
 
 $icmsTpl->assign('thumbnail_width', $articleConfig['thumbnail_width']);
@@ -52,16 +48,18 @@ $icmsTpl->assign('display_height', $articleConfig['display_height']);
 $icmsTpl->assign("article_adminpage", "<a class='article_adminlinks' href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_ARTICLE_ADMIN_PAGE . "</a>");
 $icmsTpl->assign("article_is_admin", icms_userIsAdmin(ARTICLE_DIRNAME));
 $icmsTpl->assign('article_url', ARTICLE_URL);
-$icmsTpl->assign('article_module_home', '<a href="' . ARTICLE_URL . '" title="' . icms::$module->getVar('name') . '">' . icms::$module->getVar('name') . '</a>');
+$icmsTpl->assign('module_home', '<a href="' . ARTICLE_URL . '" title="' . icms::$module->getVar('name') . '">' . icms::$module->getVar('name') . '</a>');
 $icmsTpl->assign('article_images_url', ARTICLE_IMAGES_URL);
+$icmsTpl->assign('index_images_url', INDEX_ICONS_URL);
+$icmsTpl->assign('index_url', INDEX_URL);
+$icmsTpl->assign('index_module_home', '<a href="' . INDEX_URL . 'index.php" title="' . $index_moduleName . '">' . $index_moduleName . '</a>');
 
-/**
- * force article.js to header
- */
-$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/jquery.qtip.min.js', array('type' => 'text/javascript'));
-$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/scripts/jquery.qtip.min.css');
-$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/pagination.js', array('type' => 'text/javascript'));
-$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/newsticker.js', array('type' => 'text/javascript'));
+//force article.js to header
+$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/module_article.css');
+$xoTheme->addStylesheet('/modules/' . INDEX_DIRNAME . '/scripts/module_index.css');
+$xoTheme->addScript('/modules/' . INDEX_DIRNAME . '/scripts/jquery.qtip.min.js', array('type' => 'text/javascript'));
+$xoTheme->addStylesheet('/modules/' . INDEX_DIRNAME . '/scripts/jquery.qtip.min.css');
 $xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/article.js', array('type' => 'text/javascript'));
 
+if($articleConfig['display_newsticker'] == 1) {$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/newsticker.js', array('type' => 'text/javascript')); }
 include_once ICMS_ROOT_PATH . '/footer.php';

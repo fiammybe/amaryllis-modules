@@ -4,9 +4,15 @@
 			<li><span><{$newsticker.published_on}></span><{$newsticker.itemLink}></li>
 		<{/foreach}>
 	</ul>
+	
+	<script type="text/javascript">// use newsticker
+		$(document).ready(function(){
+			$("ul#articles_newsticker").liScroll({travelocity: 0.10});
+		});
+	</script>
 <{/if}>
 <!-- Index footer -->
-<{$article_index.footer}>
+<{$index_index.footer}>
 
 <!-- display admin link -->
 <{if $article_is_admin}>

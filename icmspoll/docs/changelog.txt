@@ -1,5 +1,0 @@
-=Changelog Icmspoll=
-
-== Icmspoll 2.0 Release-Date: XX.07.2012 ==
-
-- First Final release of Icmspoll Module

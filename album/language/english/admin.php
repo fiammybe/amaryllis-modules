@@ -12,7 +12,7 @@
  * 				album
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: admin.php 684 2012-07-07 15:02:21Z st.flohrer $
  * @package		album
  * 
  */
@@ -27,7 +27,7 @@ define("_AM_ALBUM_REQUIREMENTS", "'Album' Requirements");
 define("_AM_ALBUM_REQUIREMENTS_INFO", "We've reviewed your system, unfortunately it doesn't meet all the requirements needed for 'Album' to function. Below are the requirements needed.");
 define("_AM_ALBUM_REQUIREMENTS_ICMS_BUILD", "'Album' requires at least ImpressCMS 1.3 final.");
 define("_AM_ALBUM_REQUIREMENTS_SUPPORT", "Should you have any question or concerns, please visit our forums at <a href='http://community.impresscms.org/modules/newbb/viewforum.php?forum=9'>ImpressCMS Community</a>.");
-
+define("_AM_ALBUM_REQUIREMENTS_INDEXMOD", "Please install index module first");
 // constants used in ACP
 define("_AM_ALBUM_ALBUM_ADD", "Add album");
 define("_AM_ALBUM_ALBUM_CREATE", "New album");

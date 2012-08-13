@@ -12,26 +12,25 @@
  * 				album
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: images.php 677 2012-07-05 18:10:29Z st.flohrer $
  * @package		album
  * 
  */
 
 function editimages($images_id = 0) {
-	global $album_images_handler, $icmsModule, $icmsAdminTpl;
+	global $images_handler, $icmsModule, $icmsAdminTpl;
 
-	$imagesObj = $album_images_handler->get($images_id);
-	if(is_object(icms::$user)) {
-		$img_uid = icms::$user->getVar("uid");
-	} else {
-		$img_uid = 0;
-	}
+	$imagesObj = $images_handler->get($images_id);
+	$img_uid = icms::$user->getVar("uid");
 	if (!$imagesObj->isNew()){
+		$imagesObj->hideFieldFromForm(array("img_approve", "img_copyright", "img_copy_pos", "img_copy_font", "img_copy_fontsize", "img_copy_color"));
 		$imagesObj->setVar( 'img_updated_date', (time() - 100) );
+		$imagesObj->setVar("img_tags", $imagesObj->getImageTags(TRUE));
 		icms::$module->displayAdminmenu( 2, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT . " &raquo;" . $imagesObj->getVar("img_title", "e"). "&laquo;");
 		$sform = $imagesObj->getForm(_AM_ALBUM_IMAGES_EDIT  . " &raquo;" . $imagesObj->getVar("img_title", "e"). "&laquo;", "addimages");
 		$sform->assign($icmsAdminTpl);
 	} else {
+		$imagesObj->hideFieldFromForm(array("img_approve"));
 		$imagesObj->setVar('img_publisher', $img_uid);
 		$imagesObj->setVar( 'img_published_date', (time() - 100) );
 		icms::$module->displayAdminmenu( 2, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_UPLOADNEW);
@@ -56,7 +55,7 @@ if($count == 0) {
 	$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 	if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 	
-	$album_images_handler = icms_getModuleHandler('images', basename(dirname(dirname(__FILE__))), 'album');
+	$images_handler = icms_getModuleHandler('images', basename(dirname(dirname(__FILE__))), 'album');
 	$clean_img_id = isset($_GET["img_id"]) ? filter_input(INPUT_GET, "img_id", FILTER_SANITIZE_NUMBER_INT) : 0 ;
 	
 	if (in_array($clean_op, $valid_op, TRUE)) {
@@ -68,23 +67,23 @@ if($count == 0) {
 				break;
 	
 			case "addimages":
-				$controller = new icms_ipf_Controller($album_images_handler);
+				$controller = new icms_ipf_Controller($images_handler);
 				$controller->storeFromDefaultForm(_AM_ALBUM_IMAGES_CREATED, _AM_ALBUM_IMAGES_MODIFIED);
 				break;
 	
 			case "del":
-				$controller = new icms_ipf_Controller($album_images_handler);
+				$controller = new icms_ipf_Controller($images_handler);
 				$controller->handleObjectDeletion();
 				break;
 	
 			case "view" :
-				$imagesObj = $album_images_handler->get($clean_img_id);
+				$imagesObj = $images_handler->get($clean_img_id);
 				icms_cp_header();
 				$imagesObj->displaySingleObject();
 				break;
 	
 			case "visible":
-				$visibility = $album_images_handler -> changeVisible( $clean_img_id );
+				$visibility = $images_handler->changeField($clean_img_id,"img_active");
 				$ret = 'images.php';
 				if ($visibility == 0) {
 					redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_IMAGE_OFFLINE );
@@ -94,25 +93,25 @@ if($count == 0) {
 				break;
 			
 			case 'changeApprove':
-				$approve = $album_images_handler -> changeApprove( $clean_img_id );
-				$ret = 'images.php';
-				if ($approve == 0) {
-					redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_APPROVE_FALSE );
-				} else {
-					redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_APPROVE_TRUE );
+				$approve = $images_handler->changeField($clean_img_id, "img_approve");
+				if($approve == 1) {
+					$imagesObj = $images_handler->get(($clean_img_id));
+					$imagesObj->sendMessageApproved();
 				}
+				$red_message = ($approve == 0) ? _AM_ALBUM_APPROVE_FALSE : _AM_ALBUM_APPROVE_TRUE;
+				redirect_header(ALBUM_ADMIN_URL . 'images.php', 2, $red_message);
 				break;
 				
 			case "changeWeight":
 				foreach ($_POST['AlbumImages_objects'] as $key => $value) {
 					$changed = FALSE;
-					$imagesObj = $album_images_handler -> get( $value );
+					$imagesObj = $images_handler -> get( $value );
 					if ($imagesObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 						$imagesObj->setVar('weight', (int)($_POST['weight'][$key]));
 						$changed = TRUE;
 					}
 					if ($changed) {
-						$album_images_handler -> insert($imagesObj);
+						$images_handler -> insert($imagesObj);
 					}
 				}
 				$ret = 'images.php';
@@ -122,7 +121,7 @@ if($count == 0) {
 			case 'changeFields':
 				foreach ($_POST['AlbumImages_objects'] as $key => $value) {
 					$changed = FALSE;
-					$imagesObj = $album_images_handler->get($value);
+					$imagesObj = $images_handler->get($value);
 					if($imagesObj->getVar('img_title', 'e') != $_POST['img_title'][$key]) {
 						$imagesObj->setVar('img_title', $_POST['img_title'][$key]);
 						$changed = TRUE;
@@ -140,7 +139,8 @@ if($count == 0) {
 						$changed = TRUE;
 					}
 					if($changed) {
-						$album_images_handler->insert($imagesObj);
+						$imagesObj->_updating_table = TRUE;
+						$images_handler->insert($imagesObj);
 					}
 				}
 				$ret = 'images.php';
@@ -149,20 +149,8 @@ if($count == 0) {
 			default:
 				icms_cp_header();
 				icms::$module->displayAdminMenu(2, _MI_ALBUM_MENU_IMAGES);
-				$criteria = '';
-				// if no op is set, but there is a (valid) album_id, display a single album
-				if ($clean_img_id) {
-					$imagesObj = $album_images_handler->get($clean_img_id);
-					if ($imagesObj->id()) {
-						$imagesObj->displaySingleObject();
-					}
-				}
-				if (empty($criteria)) {
-					$criteria = null;
-				}
-				
-				$objectTable = new icms_ipf_view_Table($album_images_handler, $criteria);
-				$objectTable->addColumn( new icms_ipf_view_Column( 'img_active', 'center', TRUE, 'img_active' ) );
+				$objectTable = new icms_ipf_view_Table($images_handler, FALSE);
+				$objectTable->addColumn( new icms_ipf_view_Column( 'img_active', 'center', 50, 'img_active' ) );
 				$objectTable->addColumn(new icms_ipf_view_Column('img_url', 'center', 70, 'getImgPreview'));
 				$objectTable->addColumn( new icms_ipf_view_Column( 'img_title', FALSE, FALSE, 'getTitleControl' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'a_id', FALSE, FALSE, 'getAlbumControl' ) );

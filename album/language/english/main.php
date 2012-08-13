@@ -12,7 +12,7 @@
  * 				album
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: main.php 677 2012-07-05 18:10:29Z st.flohrer $
  * @package		album
  * 
  */
@@ -63,3 +63,5 @@ define("_MD_ALBUM_BATCHUPLOAD_IMAGES", "Add images from batch folder");
 define("_MD_ALBUM_BATCHUPLOAD_SELECT_SOURCE", "Select the source of your batchupload");
 define("_MD_ALBUM_BATCHUPLOAD_ZIPUPL", "Add images from an zipfile to upload");
 define("_MD_ALBUM_BATCHUPLOAD_UPLOAD_ZIP", "Upload a new zip file");
+
+define("_MD_IMG_WAITING_APPROVAL", "Your message has been submitted ans is awaiting approval. Thanks for submitting.");

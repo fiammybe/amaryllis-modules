@@ -23,7 +23,7 @@ define("_MOD_ARTICLE_BROKEN_FILES", "Waiting broken files");
 
 function b_waiting_article() {
 	$module_handler = icms::handler('icms_module')->getByDirname("article");
-	$article_category_handler = icms_getModuleHandler("category", "article");
+	$category_handler = icms_getModuleHandler("category", "index");
 	$article_article_handler = icms_getModuleHandler("article", "article");
 	
 	$ret = array();
@@ -32,7 +32,7 @@ function b_waiting_article() {
 	$block = array();
 	$approved = new icms_db_criteria_Compo();
 	$approved->add(new icms_db_criteria_Item("category_approve", 0));
-	$result = $article_category_handler->getCount($approved);
+	$result = $category_handler->getCount($approved);
 	if ($result > 0) {
 		$block['adminlink'] = ICMS_URL."/modules/article/admin/category.php";
 		list($block['pendingnum']) = $result;

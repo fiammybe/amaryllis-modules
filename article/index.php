@@ -12,7 +12,7 @@
  * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: index.php 678 2012-07-05 23:07:23Z st.flohrer $
  * @package		article
  *
  */
@@ -27,259 +27,271 @@ include_once ICMS_ROOT_PATH . '/header.php';
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$article_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'article' );
-$indexpageObj = $article_indexpage_handler->get(1);
-$index = $indexpageObj->toArray();
-$icmsTpl->assign('article_index', $index);
+$indexpage_handler = icms_getModuleHandler( 'indexpage', INDEX_DIRNAME, 'index' );
+$indexpageObj = $indexpage_handler->getIndexByMid(icms::$module->getVar("mid", "e"));
+$icmsTpl->assign('index_index', $indexpageObj->toArray());
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_category_start = isset($_GET['cat_nav']) ? filter_input(INPUT_GET, 'cat_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_cat_nav = isset($_GET['cat_nav']) ? filter_input(INPUT_GET, 'cat_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_article_start = isset($_GET['article_nav']) ? filter_input(INPUT_GET, 'article_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_article_id = isset($_GET['article_id']) ? filter_input(INPUT_GET, 'article_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
-$clean_category_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : FALSE;
-$clean_category_pid = isset($_GET['category_pid']) ? filter_input(INPUT_GET, 'category_pid', FILTER_SANITIZE_NUMBER_INT) : ($clean_category_uid ? FALSE : 0);
+$clean_tag_seo = isset($_GET['tag']) ? filter_input(INPUT_GET, "tag") : FALSE;
+$clean_tag = "";
+if(!$clean_tag_seo) $clean_tag = isset($_GET['tag_id']) ? filter_input(INPUT_GET, 'tag_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
-$article_category_handler = icms_getModuleHandler( 'category', ARTICLE_DIRNAME, 'article' );
-$article_article_handler = icms_getModuleHandler( 'article', ARTICLE_DIRNAME, 'article' );
+$clean_cat_seo = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat") : FALSE;
+$clean_cat_id = "";
+if(!$clean_cat_seo) $clean_cat_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
-$valid_op = array ('getByTags', 'getMostPopular', 'viewRecentUpdated', 'viewRecentArticles', 'getByAuthor', 'getMostCommented', '');
+$article_handler = icms_getModuleHandler( 'article', ARTICLE_DIRNAME, 'article' );
+
+$valid_op = array ('getByTag', 'getMostPopular', 'viewRecentUpdated', 'viewRecentArticles', 'getByAuthor', 'getMostCommented', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
+$form = new icms_form_Simple("", "opform", "index.php", "get");
+$select = new icms_form_elements_Select("", "op", $clean_op);
+$select->setExtra('onchange="document.forms.opform.submit()"');
+$select->addOption("", "-------------------------");
+$select->addOption("viewRecentArticles", _MD_ARTICLE_GET_RECENT_CREATED);
+$select->addOption("viewRecentUpdated", _MD_ARTICLE_GET_RECENT_UPDATED);
+$select->addOption("getMostPopular", _MD_ARTICLE_GET_POPULAR);
+$select->addOption("getMostCommented", _MD_ARTICLE_GET_COMMENTED);
+$form->addElement($select);
+$icmsTpl->assign("op_select_form", $form->render());
+
 if(in_array($clean_op, $valid_op)) {
 	switch ($clean_op) {
-		case 'getByTags':
-			$clean_tag_id = isset($_GET['tag']) ? filter_input(INPUT_GET, 'tag', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$article = $article_article_handler->getArticles($clean_article_start, icms::$module->config['show_articles'], $clean_tag_id, FALSE, FALSE,  FALSE);
-			$icmsTpl->assign('articles', $article);
+		case 'getByTag':
+			icms_loadLanguageFile("index", "main");
+			$xoTheme->addStylesheet('/modules/' . INDEX_DIRNAME . '/scripts/module_index.css');
+			$tag_handler = icms_getModuleHandler("tag", INDEX_DIRNAME, "index");
+			$tagObj = ($clean_tag_seo != FALSE) ? $tag_handler->getTagBySeo($clean_tag_seo) : FALSE; 
+			if(!$tagObj) $tagObj = ($clean_tag != 0) ? $category_handler->get($clean_tag) : FALSE;
+			if(!$tagObj || !$tagObj->accessGranted()) redirect_header(ARTICLE_URL);
+			
+			$link_handler = icms_getModuleHandler("link", INDEX_DIRNAME, "index");
+			$links = $link_handler->getLinks($tagObj->id(), 1, icms::$module->getVar("mid"),$article_handler->_itemname, FALSE);
+			
+			$tag_title = $tagObj->title();
+			
+			$icmsTpl->assign('articles', $links);
 			$icmsTpl->assign("byTags", TRUE);
-			$sprocketsModule = icms_getModuleInfo("sprockets");
-			if(icms_get_module_status("sprockets")) {
-				$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
-				$tag = $sprockets_tag_handler->get($clean_tag_id);
-				$icmsTpl->assign("article_tag", $tag->getVar("title"));
-			}
+			$icmsTpl->assign("article_tag", $tag_title);
+			
 			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id, $clean_tag_id);
-			/**
-			 * pagination
-			 */
-			if (!empty($clean_tag_id)) {
-				$extra_arg = 'op=getByTags&tag=' . $clean_tag_id;
+			$count = $article_handler->getArticlesCount(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, FALSE, $tagObj->id());
+			// pagination
+			if (!empty($clean_tag) && !empty($clean_article_start)) {
+				$extra_arg = 'tag_id=' . $clean_tag . '&article_nav=' . $clean_article_start;
+			} elseif ($clean_tag_seo && !empty($clean_article_start)) {
+				$extra_arg = 'tag=' . $clean_tag_seo . '&article_nav=' . $clean_article_start;
+			} elseif (!empty($clean_tag) && empty($clean_article_start)) {
+				$extra_arg = 'tag_id=' . $clean_tag;
+			} elseif ($clean_tag_seo && empty($clean_article_start)) {
+				$extra_arg = 'tag=' . $clean_tag_seo;
 			} else {
 				$extra_arg = FALSE;
 			}
-			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$article_pagenav = new icms_view_PageNav($count, $indexConfig['show_items'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
 			break;
 			
 		case 'getMostPopular':
-			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "counter", "DESC");
+			$articles = $article_handler->getArticles(TRUE, TRUE, $clean_uid, $clean_article_id, FALSE, $clean_tag, FALSE, TRUE, $clean_article_start, $indexConfig['show_items'], "counter", "DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byPopular", TRUE);
-			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
-			if (!empty($clean_category_id)) {
-				$extra_arg = 'op=getMostPopular&category_id=' . $clean_category_id;
+			$count = $article_handler->getArticlesCount(TRUE, TRUE, $clean_uid, $clean_article_id, FALSE, $clean_tag, FALSE, TRUE, $clean_article_start, $indexConfig['show_items'], "counter", "DESC");
+			if (!empty($clean_cat_id)) {
+				$extra_arg = 'op=getMostPopular&category_id=' . $clean_cat_id;
 			} else {
 				$extra_arg = 'op=getMostPopular';
 			}
-			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$article_pagenav = new icms_view_PageNav($count, $indexConfig['show_items'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
 			/**
 			 * assign breadcrumb cat-path
 			 */
-			if ($articleConfig['show_breadcrumbs'] == TRUE) {
-				$article_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'article');
+			if ($indexConfig['show_breadcrumbs'] == TRUE) {
+				$category_handler = icms_getModuleHandler( 'category', INDEX_DIRNAME, 'index' );
 				$icmsTpl->assign('article_show_breadcrumb', TRUE);
-				$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($clean_category_id, 1));
+				$icmsTpl->assign('article_cat_path', $category_handler->getBreadcrumbForPid($clean_cat_id, 1));
 			} else {
 				$icmsTpl->assign('article_cat_path', FALSE);
 			}
 			break;
 		
 		case 'viewRecentUpdated':
-			$article = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "article_updated_date", "DESC");
-			$icmsTpl->assign('articles', $articles);
+			$article = $article_handler->getArticles(TRUE, TRUE, $clean_uid, $clean_article_id, FALSE, $clean_tag, FALSE, FALSE, $clean_article_start, $indexConfig['show_items'], "article_updated_date", "DESC");
+			$icmsTpl->assign('articles', $article);
 			$icmsTpl->assign("byRecentUpdated", TRUE);
-			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
-			if (!empty($clean_category_id)) {
-				$extra_arg = 'op=viewRecentUpdated&category_id=' . $clean_category_id;
+			$count = $article_handler->getArticlesCount(TRUE,TRUE,$clean_uid,$clean_article_id, FALSE, $clean_tag, FALSE, FALSE, $clean_article_start, $indexConfig['show_items'], "article_updated_date","DESC");
+			if (!empty($clean_cat_id)) {
+				$extra_arg = 'op=viewRecentUpdated&category_id=' . $clean_cat_id;
 			} else {
 				$extra_arg = 'op=viewRecentUpdated';
 			}
-			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$article_pagenav = new icms_view_PageNav($count, $indexConfig['show_items'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
 			/**
 			 * assign breadcrumb cat-path
 			 */
-			if ($articleConfig['show_breadcrumbs'] == TRUE) {
-				$article_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'article');
-				$icmsTpl->assign('article_show_breadcrumb', TRUE);
-				$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($clean_category_id, 1));
-			} else {
-				$icmsTpl->assign('article_cat_path', FALSE);
-			}
+			
 			break;
 		
 		case 'viewRecentArticles':
-			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "article_published_date", "DESC");
+			$articles = $article_handler->getArticles(TRUE, TRUE, $clean_uid, $clean_article_id, FALSE, $clean_tag, FALSE, FALSE, $clean_article_start, $indexConfig['show_items'], "article_published_date","DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byRecentArticles", TRUE);
 			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
-			if (!empty($clean_category_id)) {
-				$extra_arg = 'op=viewRecentArticles&category_id=' . $clean_category_id;
+			$count = $article_handler->getArticlesCount(TRUE, TRUE, $clean_uid, $clean_article_id, FALSE, $clean_tag, FALSE, FALSE,$clean_article_start,$indexConfig['show_items'],"article_published_date","DESC");
+			if (!empty($clean_cat_id)) {
+				$extra_arg = 'op=viewRecentArticles&category_id=' . $clean_cat_id;
 			} else {
 				$extra_arg = 'op=viewRecentArticles';
 			}
-			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$article_pagenav = new icms_view_PageNav($count, $indexConfig['show_items'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
 			/**
 			 * assign breadcrumb cat-path
 			 */
-			if ($articleConfig['show_breadcrumbs'] == TRUE) {
-				$article_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'article');
+			if ($indexConfig['show_breadcrumbs'] == TRUE) {
+				$category_handler = icms_getModuleHandler( 'category', INDEX_DIRNAME, 'index' );
 				$icmsTpl->assign('article_show_breadcrumb', TRUE);
-				$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($clean_category_id, 1));
+				//$icmsTpl->assign('article_cat_path', $category_handler->getBreadcrumbForPid($clean_cat_id, 1));
 			} else {
 				$icmsTpl->assign('article_cat_path', FALSE);
 			}
 			break;
 		
 		case 'getByAuthor':
-			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, $clean_uid, FALSE, FALSE, "article_published_date", "DESC");
+			$articles = $article_handler->getArticles(TRUE,TRUE,$clean_uid,$clean_article_id,FALSE,$clean_tag,FALSE,FALSE,$clean_article_start,$indexConfig['show_items'],"article_published_date","DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("byAuthor", TRUE);
 			$icmsTpl->assign("article_user", icms_member_user_Handler::getUserLink($clean_uid));
 			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
-			if (!empty($clean_category_id)) {
-				$extra_arg = 'op=getByAuthor&category_id=' . $clean_category_id;
+			$count = $article_handler->getArticlesCount(TRUE,TRUE,$clean_uid,$clean_article_id,FALSE,$clean_tag,FALSE,FALSE,$clean_article_start,$indexConfig['show_items'],"article_published_date","DESC");
+			if (!empty($clean_cat_id)) {
+				$extra_arg = 'op=getByAuthor&category_id=' . $clean_cat_id;
 			} else {
 				$extra_arg = 'op=getByAuthor';
 			}
-			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$article_pagenav = new icms_view_PageNav($count, $indexConfig['show_items'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
 			break;
 		
 		case 'getMostCommented':
-			$articles = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id, "article_comments", "DESC");
+			$articles = $article_handler->getArticles(TRUE, TRUE, $clean_uid, $clean_article_id,FALSE,$clean_tag,FALSE,FALSE,$clean_article_start,$indexConfig['show_items'],"article_comments","DESC");
 			$icmsTpl->assign('articles', $articles);
 			$icmsTpl->assign("getMostCommented", TRUE);
-			$count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
-			if (!empty($clean_category_id)) {
-				$extra_arg = 'op=getMostCommented&category_id=' . $clean_category_id;
+			$count = $article_handler->getArticlesCount(TRUE, TRUE, $clean_uid, $clean_article_id,FALSE,$clean_tag,FALSE,FALSE,$clean_article_start,$indexConfig['show_items'],"article_comments","DESC");
+			if (!empty($clean_cat_id)) {
+				$extra_arg = 'op=getMostCommented&category_id=' . $clean_cat_id;
 			} else {
 				$extra_arg = 'op=getMostCommented';
 			}
-			$article_pagenav = new icms_view_PageNav($count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+			$article_pagenav = new icms_view_PageNav($count, $indexConfig['show_items'], $clean_article_start, 'article_nav', $extra_arg);
 			$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
 			/**
 			 * assign breadcrumb cat-path
 			 */
-			if ($articleConfig['show_breadcrumbs'] == TRUE) {
-				$article_category_handler = icms_getModuleHandler('category', basename(dirname(__FILE__)), 'article');
+			if ($indexConfig['show_breadcrumbs'] == TRUE) {
+				$category_handler = icms_getModuleHandler( 'category', INDEX_DIRNAME, 'index' );
 				$icmsTpl->assign('article_show_breadcrumb', TRUE);
-				$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($clean_category_id, 1));
+				//$icmsTpl->assign('article_cat_path', $category_handler->getBreadcrumbForPid($clean_cat_id, 1));
 			} else {
 				$icmsTpl->assign('article_cat_path', FALSE);
 			}
 			break;
 		
 		default:
-			if ($clean_category_id != 0) {
-				$categoryObj = $article_category_handler->get($clean_category_id);
-			} else {
-				$categoryObj = FALSE;
-			}
+			$category_handler = icms_getModuleHandler( 'category', INDEX_DIRNAME, 'index' );
+			$catObj = ($clean_cat_seo != FALSE) ? $category_handler->getCatBySeo($clean_cat_seo) : FALSE; 
+			if(!$catObj) $catObj = ($clean_cat_id != 0) ? $category_handler->get($clean_cat_id) : FALSE;
 			/**
 			 * retrieve a single category including files of the category and subcategories
 			 */
-			if (is_object($categoryObj) && $categoryObj->accessGranted()) {
-				$article_category_handler->updateCounter($clean_category_id);
-				$category = $categoryObj->toArray();
+			if (is_object($catObj) && !$catObj->isNew() && $catObj->accessGranted()) {
+				//update hit counter
+				$category_handler->updateCounter($catObj->id());
+				// assign category vars to template
+				$category = $catObj->toArray();
 				$icmsTpl->assign('article_single_cat', $category);
-				$article = $article_article_handler->getArticles($clean_article_start, $articleConfig['show_articles'], FALSE, FALSE, FALSE,  $clean_category_id);
-				$icmsTpl->assign('article_files', $article);
-				if ($articleConfig['show_breadcrumbs']){
-					$icmsTpl->assign('article_cat_path', $article_category_handler->getBreadcrumbForPid($categoryObj->getVar('category_id', 'e'), 1));
-				}else{
-					$icmsTpl->assign('article_cat_path',FALSE);
+				// get articles assigned to the categories
+				$articles = $article_handler->getArticles(TRUE, TRUE, FALSE, FALSE, $catObj->id(), FALSE, FALSE, FALSE,	$clean_article_start, $indexConfig['show_items'], 'weight', 'ASC', FALSE, FALSE);
+				$icmsTpl->assign('article_files', $articles);
+				// get Breadcrumb
+				if ($indexConfig['show_breadcrumbs'] == 1){
+					$icmsTpl->assign('index_cat_path', $category_handler->getBreadcrumbForPid($catObj->id()));
 				}
-				if($article_category_handler->userCanSubmit()) {
-					$icmsTpl->assign('user_submit', TRUE);
-					$icmsTpl->assign('user_submit_link', ARTICLE_URL . 'category.php?op=mod&category_id=' . $categoryObj->id());
-				} else {
-					$icmsTpl->assign('user_submit', FALSE);
-				}
-				$categories = $article_category_handler->getArticleCategories($clean_category_start, $articleConfig['show_categories'], $clean_category_uid,  FALSE, $clean_category_id, "weight", "ASC", TRUE, TRUE);
-				$article_category_columns = array_chunk($categories, $articleConfig['show_category_columns']);
+				// check, if user can submit to provide submit links
+				($category_handler->userCanSubmit()) ? $icmsTpl->assign('submit_link', INDEX_URL . 'category.php?op=mod&amp;category_id=' . $clean_cat_id) : $icmsTpl->assign('submit_link', FALSE);
+				// get sub categories 
+				$categories = $category_handler->getCategories(FALSE, TRUE, TRUE, $clean_cat_nav, $indexConfig['show_categories'], "weight", "ASC", $catObj->id(), FALSE, FALSE);
+				$article_category_columns = array_chunk($categories, $indexConfig['show_category_columns']);
 				$icmsTpl->assign('sub_category_columns', $article_category_columns);
 				/**
 				 * check pagination
 				 */
-				$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-				$files_count = $article_article_handler->getCountCriteria(TRUE, TRUE, $groups,'article_grpperm',FALSE,FALSE, $clean_category_id);
-				if (!empty($clean_category_id) && !empty($clean_category_start)) {
-					$extra_arg = 'category_id=' . $clean_category_id . '&cat_nav=' . $clean_category_start;
-				} elseif (!empty($clean_category_id) && empty($clean_category_start)) {
-					$extra_arg = 'category_id=' . $clean_category_id;
+				$files_count = $article_handler->getArticlesCount(TRUE, TRUE, FALSE, FALSE, $catObj->id(), FALSE, FALSE, FALSE,	$clean_article_start, $indexConfig['show_items'],
+																	 'weight', 'ASC', FALSE, FALSE);
+				if (!empty($clean_cat_id) && !empty($clean_cat_nav)) {
+					$extra_arg = 'category_id=' . $clean_cat_id . '&cat_nav=' . $clean_cat_nav;
+				} elseif ($clean_cat_seo && !empty($clean_cat_nav)) {
+					$extra_arg = 'cat=' . $clean_cat_seo . '&cat_nav=' . $clean_cat_nav;
+				} elseif (!empty($clean_cat_id) && empty($clean_cat_nav)) {
+					$extra_arg = 'category_id=' . $clean_cat_id;
+				} elseif ($clean_cat_seo && empty($clean_cat_nav)) {
+					$extra_arg = 'cat=' . $clean_cat_seo;
 				} else {
 					$extra_arg = FALSE;
 				}
-				$article_pagenav = new icms_view_PageNav($files_count, $articleConfig['show_articles'], $clean_article_start, 'article_nav', $extra_arg);
+				$article_pagenav = new icms_view_PageNav($files_count, $indexConfig['show_items'], $clean_article_start, 'article_nav', $extra_arg);
 				$icmsTpl->assign('article_pagenav', $article_pagenav->renderNav());
 				
-				
-			/**
-			 * if there's no valid category, retrieve a list of all primary categories
-			 */
-			} elseif ($clean_category_id == 0) {
-				$categories = $article_category_handler->getArticleCategories($clean_category_start, $articleConfig['show_categories'], $clean_category_uid,  FALSE, $clean_category_pid, "weight", "ASC", TRUE, TRUE);
-				$article_category_columns = array_chunk($categories, $articleConfig['show_category_columns']);
-				$icmsTpl->assign('category_columns', $article_category_columns);
-				/**
-				 * pagination control
-				 */
-				$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-				$category_count = $article_category_handler->getCategoriesCount(TRUE, TRUE, $groups,'category_grpperm',FALSE,FALSE, $clean_category_id);
-				$category_pagenav = new icms_view_PageNav($category_count, $articleConfig['show_categories'], $clean_category_start, 'cat_nav', FALSE);
+			//if there's no valid category, retrieve a list of all primary categories
+			} elseif (!$clean_cat_seo && $clean_cat_id == 0) {
+				// fetch categories assigned to this item
+				$link_handler = icms_getModuleHandler("link", INDEX_DIRNAME, "index");
+				$criteria = $link_handler->getLinkCriterias(FALSE, 1, icms::$module->getVar("mid"), $article_handler->_itemname, FALSE);
+				$criteria2 = new icms_db_criteria_Compo();
+				$sql = "SELECT DISTINCT (link_cid) FROM " . icms::$xoopsDB->prefix('index_link') . " " . $criteria->renderWhere();
+				if ($result = icms::$xoopsDB->query($sql)) {
+					while ($myrow = icms::$xoopsDB->fetchBoth($result)) {
+						$criteria2->add(new icms_db_criteria_Item("category_id", $myrow['link_cid']), "OR");
+					}
+				}
+				$criteria3 = $category_handler->getCategoryCriterias(FALSE, TRUE, TRUE, $clean_cat_nav, $indexConfig['show_categories'], $indexConfig['category_default_order'], $indexConfig['category_default_sort']);
+				$criteria3->add($criteria2);
+				$categories = $category_handler->getObjects($criteria3, TRUE, FALSE);
+				// split categories to predefined columns
+				$cat_columns = array_chunk($categories, $indexConfig['show_category_columns']);
+				$icmsTpl->assign('category_columns', $cat_columns);
+				// pagination control
+				$category_count = $category_handler->getCategoriesCount($clean_cat_seo, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, $clean_cat_id);
+				$category_pagenav = new icms_view_PageNav($category_count, $indexConfig['show_categories'], $clean_cat_nav, 'cat_nav', FALSE);
 				$icmsTpl->assign('category_pagenav', $category_pagenav->renderNav());
-				
-			/**
-			 * if not valid single category or no permissions -> redirect to module home
-			 */
+				// check, if user can submit to provide submit links
+				($category_handler->userCanSubmit()) ? $icmsTpl->assign('submit_link', INDEX_URL . 'category.php?op=mod&amp;category_id=' . $clean_cat_id) : $icmsTpl->assign('submit_link', FALSE);
+			// if not valid single category or no permissions -> redirect to module home
 			} else {
 				redirect_header(ARTICLE_URL, 3, _NOPERM);
 			}
 			
-			/**
-			 * check, if upload disclaimer is necessary and retrieve the link
-			 */
-			
+			// check, if upload disclaimer is necessary and retrieve the link
 			if($articleConfig['show_upl_disclaimer'] == 1) {
 				$discl = str_replace('{X_SITENAME}', $icmsConfig['sitename'], $articleConfig['upl_disclaimer']);
 				$icmsTpl->assign('article_upl_disclaimer', TRUE );
 				$icmsTpl->assign('up_disclaimer', $discl);
-			} else {
-				$icmsTpl->assign('article_upl_disclaimer', FALSE);
-			}
-			/**
-			 * check, if user can submit
-			 */
-			if($article_category_handler->userCanSubmit()) {
-				$icmsTpl->assign('user_submit', TRUE);
-				$icmsTpl->assign('user_submit_link', ARTICLE_URL . 'category.php?op=mod&amp;category_id=' . $clean_category_id);
-			} else {
-				$icmsTpl->assign('user_submit', FALSE);
 			}
 			break;
 	}
 	include_once 'footer.php';
+} else {
+	redirect_header(ARTICLE_URL, 3, _NOPERM);
 }

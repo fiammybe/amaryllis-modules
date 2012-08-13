@@ -12,7 +12,7 @@
  * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: pdf.php 670 2012-07-04 12:55:18Z st.flohrer $
  * @package		article
  *
  */

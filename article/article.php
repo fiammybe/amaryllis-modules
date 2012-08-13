@@ -18,8 +18,9 @@
  */
 
 function editarticle($articleObj, $clean_category_id) {
-	global $article_article_handler, $article_category_handler, $icmsTpl, $articleConfig;
+	global $article_handler, $category_handler, $icmsTpl, $articleConfig;
 	
+	$articleObj->setVar("dobr", $articleObj->needDobr());
 	if (!$articleObj->isNew()){
 		if(!$articleObj->userCanEditAndDelete()){
 			redirect_header(icms_getPreviousPage(), 3, _NOPERM);
@@ -32,7 +33,7 @@ function editarticle($articleObj, $clean_category_id) {
 		$sform->assign($icmsTpl, 'article_article_form');
 		$icmsTpl->assign('article_cat_path', $articleObj->getVar('article_title') . ' > ' . _MD_ARTICLE_ARTICLE_EDIT);
 	} else {
-		$categoryObj = $article_category_handler->get($clean_category_id);
+		$categoryObj = $category_handler->get($clean_category_id);
 		if(!$categoryObj->submitAccessGranted()) {
 			redirect_header(icms_getPreviousPage, 3, _NOPERM);
 		}
@@ -58,18 +59,6 @@ $xoopsOption['template_main'] = 'article_forms.html';
 include_once ICMS_ROOT_PATH . '/header.php';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-$clean_index_key = $indexpageObj = $article_indexpage_handler = $indexpageObj = '';
-$clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
-$article_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'article' );
-
-$indexpageObj = $article_indexpage_handler->get($clean_index_key);
-$index = $indexpageObj->toArray();
-$icmsTpl->assign('article_index', $index);
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -82,13 +71,13 @@ $valid_op = array ('mod', 'addarticle', 'del');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-$article_article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
-$article_category_handler = icms_getModuleHandler("category", ARTICLE_DIRNAME, "article");
+$article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
+$category_handler = icms_getModuleHandler("category", INDEX_DIRNAME, "index");
 
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case('mod'):
-			$articleObj = $article_article_handler->get($clean_article_id);
+			$articleObj = $article_handler->get($clean_article_id);
 			if ($clean_article_id > 0 && $articleObj->isNew()) {
 				redirect_header(ARTICLE_URL, 3, _NOPERM);
 			}
@@ -99,17 +88,17 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			if (!icms::$security->check()) {
 				redirect_header('index.php', 3, _MD_ARTICLE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 			}
-			$articleObj = $article_article_handler->get($clean_article_id);
+			$articleObj = $article_handler->get($clean_article_id);
 			if($articleObj->isNew()) {
 				$articleObj->sendArticleNotification('article_submitted');
 			} else {
 				$articleObj->sendArticleNotification('article_modified');
 			}
-			$controller = new icms_ipf_Controller($article_article_handler);
+			$controller = new icms_ipf_Controller($article_handler);
 			$controller->storeFromDefaultForm(_MD_ARTICLE_ARTICLE_CREATED, _MD_ARTICLE_ARTICLE_MODIFIED);
 			break;
 		case('del'):
-			$articleObj = $article_article_handler->get($clean_article_id);
+			$articleObj = $article_handler->get($clean_article_id);
 			if (!$articleObj->userCanEditAndDelete()) {
 				redirect_header($articleObj->getItemLink(TRUE), 3, _NOPERM);
 			}
@@ -119,7 +108,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 					redirect_header('index.php', 3, _MD_ARTICLE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
 				}
 			}
-			$controller = new icms_ipf_Controller($article_article_handler);
+			$controller = new icms_ipf_Controller($article_handler);
 			$controller->handleObjectDeletionFromUserSide();
 			break;
 	}

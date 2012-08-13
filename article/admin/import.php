@@ -83,14 +83,14 @@ function article_import_smartsection_articles() {
  * import smartsection categories
  */
 function article_import_smartsection_categories() {
-	$article_category_handler = icms_getModuleHandler("category", ARTICLE_DIRNAME, "article");
+	$category_handler = icms_getModuleHandler("category", ARTICLE_DIRNAME, "article");
 	$table = new icms_db_legacy_updater_Table('smartsection_categories');
 	if ($table->exists()) {
 		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('smartsection_categories');
 		$result = icms::$xoopsDB->query($sql);
 		echo '<code>';
 		while ($row = icms::$xoopsDB->fetchArray($result)) {
-			$obj = $article_category_handler->create(TRUE);
+			$obj = $category_handler->create(TRUE);
 			$obj->setVar("category_id", $row['categoryid']);
 			$obj->setVar('category_title', $row['name']);
 			$obj->setVar('category_pid', $row['parentid']);
@@ -101,7 +101,7 @@ function article_import_smartsection_categories() {
 			$obj->setVar('short_url', 'short_url');
 			$obj->setVar('category_publisher', 1);
 			$obj->setVar('category_submitter', 1);
-			$article_category_handler->insert($obj, TRUE);
+			$category_handler->insert($obj, TRUE);
 		}
 		echo '</code>';
 		unset($table);
@@ -242,7 +242,7 @@ function article_import_linked_tags() {
  * Import from news topics
  */
 function article_import_news_topics() {
-	$article_category_handler = icms_getModuleHandler("category", ARTICLE_DIRNAME, "article");
+	$category_handler = icms_getModuleHandler("category", ARTICLE_DIRNAME, "article");
 	
 	$table = new icms_db_legacy_updater_Table('topics');
 	if ($table->exists()) {
@@ -250,7 +250,7 @@ function article_import_news_topics() {
 		$result = icms::$xoopsDB->query($sql);
 		echo '<code>';
 		while ($row = icms::$xoopsDB->fetchArray($result)) {
-			$obj = $article_category_handler->create(TRUE);
+			$obj = $category_handler->create(TRUE);
 			$obj->setVar("category_id", $row['topic_id']);
 			$obj->setVar('category_title', $row['topic_title']);
 			$obj->setVar('category_pid', $row['topic_pid']);
@@ -258,7 +258,7 @@ function article_import_news_topics() {
 			$obj->setVar('category_image', $row['topic_imgurl']);
 			$obj->setVar('category_publisher', 1);
 			$obj->setVar('category_submitter', 1);
-			$article_category_handler->insert($obj, TRUE);
+			$category_handler->insert($obj, TRUE);
 		}
 		echo '</code>';
 		echo '<code><b>News item table successfully dropped.</b></code><br />';
@@ -435,7 +435,7 @@ $valid_op = array ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11', '12',
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-$article_category_handler = icms_getModuleHandler('category', ARTICLE_DIRNAME, 'article');
+$category_handler = icms_getModuleHandler('category', INDEX_DIRNAME, 'index');
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {

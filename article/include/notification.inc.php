@@ -39,8 +39,8 @@ function article_notify_iteminfo($category, $item_id){
 			break;
 		
 		case 'category':
-			$article_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "article");
-			$category = $article_category_handler->get($item_id);
+			$category_handler = icms_getModuleHandler("category", INDEX_DIRNAME, "index");
+			$category = $category_handler->get($item_id);
 			$item['name'] = $category->getVar('category_title');
 			$item['url'] = $category->getItemLink(TRUE);
 			break;

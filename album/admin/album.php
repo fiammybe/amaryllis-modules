@@ -13,26 +13,28 @@
  * 				album
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: album.php 677 2012-07-05 18:10:29Z st.flohrer $
  * @package		album
  *
  */
 
 function editalbum($album_id = 0) {
-	global $album_album_handler, $icmsAdminTpl;
+	global $album_handler, $icmsAdminTpl;
 
-	$albumObj = $album_album_handler->get($album_id);
-	if(is_object(icms::$user)) {
-		$album_uid = icms::$user->getVar("uid");
-	} else {
-		$album_uid = 0;
-	}
+	$albumObj = $album_handler->get($album_id);
+	$album_uid = icms::$user->getVar("uid");
+	
 	if (!$albumObj->isNew()){
+		$albumObj->hideFieldFromForm(array("album_approve", "meta_keywords", "meta_description", "album_updated"));
+		$albumObj->makeFieldReadOnly("short_url");
 		$albumObj->setVar( 'album_updated_date', (time() - 100) );
+		$albumObj->setVar('album_updated', TRUE);
+		$albumObj->setVar('album_tags', $albumObj->getAlbumTags(TRUE));
 		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_ALBUM . ' > ' . _MI_ALBUM_ALBUM_EDITING . ' &raquo;' . $albumObj->getVar("album_title", "e") . "&laquo;");
 		$sform = $albumObj->getForm(_AM_ALBUM_ALBUM_EDIT, 'addalbum');
 		$sform->assign($icmsAdminTpl);
 	} else {
+		$albumObj->hideFieldFromForm(array("album_approve", "meta_keywords", "meta_description", "album_updated"));
 		$albumObj->setVar("album_uid", $album_uid);
 		$albumObj->setVar( 'album_published_date', (time() - 100) );
 		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_ALBUM . " > " . _MI_ALBUM_ALBUM_CREATINGNEW);
@@ -52,7 +54,7 @@ $valid_op = array ('mod', 'changedField', 'addalbum', 'del', 'view', 'visible', 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-$album_album_handler = icms_getModuleHandler('album', ALBUM_DIRNAME, 'album');
+$album_handler = icms_getModuleHandler('album', ALBUM_DIRNAME, 'album');
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
 
 if (in_array($clean_op, $valid_op, TRUE)) {
@@ -64,72 +66,60 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case 'addalbum':
-			$controller = new icms_ipf_Controller($album_album_handler);
+			$controller = new icms_ipf_Controller($album_handler);
 			$controller->storeFromDefaultForm(_AM_ALBUM_ALBUM_CREATED, _AM_ALBUM_ALBUM_MODIFIED);
 			break;
 
 		case 'del':
-			$controller = new icms_ipf_Controller($album_album_handler);
+			$controller = new icms_ipf_Controller($album_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		case 'view' :
-			$albumObj = $album_album_handler->get($clean_album_id);
+			$albumObj = $album_handler->get($clean_album_id);
 			icms_cp_header();
 			$albumObj->displaySingleObject();
 			break;
 
 		case 'visible':
-			$visibility = $album_album_handler -> changeVisible( $clean_album_id );
-			$ret = 'album.php';
-			if ($visibility == 0) {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_OFFLINE );
-			} else {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_ONLINE );
-			}
+			$visibility = $album_handler->changeField($clean_album_id, "album_active");
+			$red_message = ($visibility == 0) ? _AM_ALBUM_OFFLINE : _AM_ALBUM_ONLINE;
+			redirect_header(ALBUM_ADMIN_URL . 'album.php', 2, $red_message);
 			break;
 			
 		case 'changeIndex':
-			$visibility = $album_album_handler -> changeIndex( $clean_album_id );
-			$ret = 'album.php';
-			if ($visibility == 0) {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_OFFLINE );
-			} else {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_ONLINE );
-			}
+			$visibility = $album_handler->changeField($clean_album_id, "album_onindex");
+			$red_message = ($visibility == 0) ? _AM_ALBUM_OFFLINE : _AM_ALBUM_ONLINE;
+			redirect_header(ALBUM_ADMIN_URL . 'album.php', 2, $red_message);
 			break;
 			
 		case 'changeApprove':
-			$visibility = $album_album_handler -> changeApprove( $clean_album_id );
-			$ret = 'album.php';
-			if ($visibility == 0) {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_OFFLINE );
-			} else {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_ONLINE );
+			$approve = $album_handler->changeField($clean_album_id, "album_approve");
+			if($approve == 1) {
+				$albumObj = $album_handler->get($clean_album_id);
+				$albumObj->sendMessageApproved();
 			}
+			$red_message = ($approve == 0) ? _AM_ALBUM_OFFLINE : _AM_ALBUM_ONLINE;
+			redirect_header(ALBUM_ADMIN_URL . 'album.php', 2, $red_message);
 			break;
 			
 		case 'changeShow':
-			$show = $album_album_handler -> changeShow( $clean_album_id );
-			$ret = 'album.php';
-			if ($show == 0) {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_ALBUM_INBLOCK_FALSE );
-			} else {
-				redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_ALBUM_INBLOCK_TRUE );
-			}
+			$visibility = $album_handler->changeField($clean_album_id, "album_inblocks");
+			$red_message = ($visibility == 0) ? _AM_ALBUM_OFFLINE : _AM_ALBUM_ONLINE;
+			redirect_header(ALBUM_ADMIN_URL . 'album.php', 2, $red_message);
 			break;
 			
 		case "changeWeight":
 			foreach ($_POST['AlbumAlbum_objects'] as $key => $value) {
 				$changed = FALSE;
-				$albumObj = $album_album_handler -> get( $value );
-
+				$albumObj = $album_handler -> get( $value );
 				if ($albumObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 					$albumObj->setVar('weight', (int)($_POST['weight'][$key]));
 					$changed = TRUE;
 				}
 				if ($changed) {
-					$album_album_handler -> insert($albumObj);
+					$albumObj->updating_counter = TRUE;
+					$album_handler->insert($albumObj);
 				}
 			}
 			$ret = 'album.php';
@@ -141,7 +131,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_ALBUM );
 			$criteria = '';
 			if ($clean_album_id) {
-				$albumObj = $album_album_handler->get($clean_album_id);
+				$albumObj = $album_handler->get($clean_album_id);
 				if ($albumObj->id()) {
 					$albumObj->displaySingleObject();
 				}
@@ -150,7 +140,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$criteria = null;
 			}
 			// create album table
-			$objectTable = new icms_ipf_view_Table($album_album_handler, $criteria);
+			$objectTable = new icms_ipf_view_Table($album_handler, $criteria);
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_active', 'center', FALSE, 'album_active' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_title', FALSE, FALSE, 'getPreviewItemLink' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_pid', FALSE, FALSE, 'getAlbumParent' ) );

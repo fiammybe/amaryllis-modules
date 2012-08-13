@@ -25,6 +25,11 @@ if (ICMS_VERSION_BUILD < 50) {
 	$failed_requirements[] = _AM_ARTICLE_REQUIREMENTS_ICMS_BUILD;
 }
 
+$indexModule = icms_get_module_status("index");
+if (!$indexModule) {
+	$failed_requirements[] = _AM_ARTICLE_REQUIREMENTS_INDEXMOD;
+}
+
 if (count($failed_requirements) > 0) {
 	icms_cp_header();
 	$icmsAdminTpl->assign("failed_requirements", $failed_requirements);

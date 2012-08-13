@@ -24,8 +24,9 @@ $modversion = array(
 						"name"						=> _MI_ARTICLE_MD_NAME,
 						"version"					=> 1.0,
 						"description"				=> _MI_ARTICLE_MD_DSC,
-						"author"					=> "QM-B",
-						"credits"					=> "Thanks to Lotus for his testings and McDonald for the nice Layer for the index-Image",
+						"author"					=> "<a href='http://community.impresscms.org/userinfo.php?uid=1314' title='QM-B'>QM-B</a>",
+						"author_realname"			=> "Steffen Flohrer",
+						"credits"					=> "<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Amaryllis Modules</a>",
 						"help"						=> "",
 						"license"					=> "GNU General Public License (GPL)",
 						"official"					=> 0,
@@ -38,11 +39,11 @@ $modversion = array(
 						"image"						=> "images/article_icon_big.png", /* for backward compatibility */
 					
 					/**  Development information */
-						"status_version"			=> "1.0",
-						"status"					=> "Final",
-						"date"						=> "13.03.2012",
+						"status_version"			=> "2.0",
+						"status"					=> "Beta",
+						"date"						=> "XX.XX.2012",
 						"author_word"				=> "",
-						"warning"					=> _CO_ICMS_WARNING_FINAL,
+						"warning"					=> _CO_ICMS_WARNING_BETA,
 					
 					/** Contributors */
 						"developer_website_url"		=> "http://code.google.com/p/amaryllis-modules/",
@@ -67,17 +68,20 @@ $modversion = array(
 				);
 
 /** other possible types: testers, translators, documenters and other */
-$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
+$modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' title='QM-B'>QM-B</a>";
+$modversion['people']['documenters'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' title='QM-B'>QM-B</a>";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 $modversion['people']['translators'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 
 /** Manual */
-$modversion['manual']['wiki'][] = "<a href='" . ICMS_URL  . "/modules/article/admin/manual.php' target='_self'>Module Manual</a>";
+$modversion['manual'][][] = "<a href='" . ICMS_URL  . "/modules/article/admin/manual.php' target='_self'>Module Manual</a>";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// SUPPORT //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+$modversion['submit_bug'] = 'http://code.google.com/p/amaryllis-modules/issues/entry?template=Defect%20report%20from%20user';
+$modversion['submit_feature'] = 'http://code.google.com/p/amaryllis-modules/issues/entry?template=Defect%20report%20from%20user';
 $modversion['support_site_url'] = 'http://community.impresscms.org/modules/newbb/viewforum.php?forum=9';
 $modversion['support_site_name']= 'ImpressCMS Community Forum';
 
@@ -87,11 +91,7 @@ $modversion['support_site_name']= 'ImpressCMS Community Forum';
 
 $i= 0;
 $i++;
-$modversion['object_items'][$i] = 'category';
-$i++;
 $modversion['object_items'][$i] = 'article';
-$i++;
-$modversion['object_items'][$i] = 'indexpage';
 
 $modversion["tables"] = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
 
@@ -100,11 +100,6 @@ $modversion["tables"] = icms_getTablesArray($modversion['dirname'], $modversion[
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $i = 0;
-$i++;
-$modversion['templates'][$i] = array(
-										'file'			=> 'article_header.html',
-										'description'	=> _MI_ARTICLE_HEADER_TPL
-								);
 $i++;
 $modversion['templates'][$i] = array(
 										'file'			=> 'article_footer.html',
@@ -160,54 +155,14 @@ $i=0;
 
 // Recent articles block
 $i++;
-$modversion['blocks'][$i]['file']			= 'article_recent_articles.php';
+$modversion['blocks'][$i]['file']			= 'article_articles.php';
 $modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_RECENT_ARTICLE;
 $modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_RECENT_ARTICLE_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_article_recent_article_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_article_recent_article_edit';
-$modversion['blocks'][$i]['options']		= '10|0|1';
-$modversion['blocks'][$i]['template']		= 'article_block_recent_articles.html';
+$modversion['blocks'][$i]['show_func']		= 'b_article_articles_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_article_articles_edit';
+$modversion['blocks'][$i]['options']		= '10|0|1|article_title|ASC|1';
+$modversion['blocks'][$i]['template']		= 'article_block_articles.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
-// Recent articles block
-$i++;
-$modversion['blocks'][$i]['file']			= 'article_recent_articles_list.php';
-$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_RECENT_ARTICLE_LIST;
-$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_RECENT_ARTICLE_LIST_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_article_recent_article_list_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_article_recent_article_list_edit';
-$modversion['blocks'][$i]['options']		= '10|0';
-$modversion['blocks'][$i]['template']		= 'article_block_recent_articles_list.html';
-$modversion['blocks'][$i]['can_clone']		= TRUE ;
-// recent updated block
-$i++;
-$modversion['blocks'][$i]['file']			= 'article_recent_updated.php';
-$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_RECENT_UPDATED;
-$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_RECENT_UPDATED_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_article_recent_updated_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_article_recent_updated_edit';
-$modversion['blocks'][$i]['options']		= '10|0|1';
-$modversion['blocks'][$i]['template']		= 'article_block_recent_updated.html';
-$modversion['blocks'][$i]['can_clone']		= TRUE ;
-// most popular block
-$i++;
-$modversion['blocks'][$i]['file']			= 'article_most_popular.php';
-$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_MOST_POPULAR;
-$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_MOST_POPULAR_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_article_most_popular_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_article_most_popular_edit';
-$modversion['blocks'][$i]['options']		= '10|0|1';
-$modversion['blocks'][$i]['template']		= 'article_block_most_popular.html';
-$modversion['blocks'][$i]['can_clone']		= TRUE ;
-// category menu block
-$i++;
-$modversion['blocks'][$i]['file']			= 'article_category_menu.php';
-$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_CATEGORY_MENU;
-$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_CATEGORY_MENU_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_article_category_menu_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_article_category_menu_edit';
-$modversion['blocks'][$i]['options']		= 'category_title|ASC|1|0';
-$modversion['blocks'][$i]['template']		= 'article_block_category_menu.html';
-$modversion['blocks'][$i]['can_clone']		= TRUE ;
 // article spotlight block
 $i++;
 $modversion['blocks'][$i]['file']			= 'article_spotlight.php';
@@ -218,16 +173,6 @@ $modversion['blocks'][$i]['edit_func']		= 'b_article_spotlight_edit';
 $modversion['blocks'][$i]['options']		= '10|0|1';
 $modversion['blocks'][$i]['template']		= 'article_block_article_spotlight.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE ;
-// article random block
-$i++;
-$modversion['blocks'][$i]['file']			= 'article_random_articles.php';
-$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_RANDOM_ARTICLES;
-$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_RANDOM_ARTICLES_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_article_random_articles_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_article_random_articles_edit';
-$modversion['blocks'][$i]['options']		= '10|0|1';
-$modversion['blocks'][$i]['template']		= 'article_block_random_articles.html';
-$modversion['blocks'][$i]['can_clone']		= TRUE ;
 // article gallery block
 $i++;
 $modversion['blocks'][$i]['file']			= 'article_spotlight_gallery.php';
@@ -237,16 +182,6 @@ $modversion['blocks'][$i]['show_func']		= 'b_article_spotlight_image_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_article_spotlight_image_edit';
 $modversion['blocks'][$i]['options']		= '10|0|1|1';
 $modversion['blocks'][$i]['template']		= 'article_block_article_gallery.html';
-$modversion['blocks'][$i]['can_clone']		= TRUE ;
-// article most commented
-$i++;
-$modversion['blocks'][$i]['file']			= 'article_most_commented.php';
-$modversion['blocks'][$i]['name']			= _MI_ARTICLE_BLOCK_MOST_COMMENTED;
-$modversion['blocks'][$i]['description']	= _MI_ARTICLE_BLOCK_MOST_COMMENTED_DSC;
-$modversion['blocks'][$i]['show_func']		= 'b_article_most_commented_show';
-$modversion['blocks'][$i]['edit_func']		= 'b_article_most_commented_edit';
-$modversion['blocks'][$i]['options']		= '10|0|1';
-$modversion['blocks'][$i]['template']		= 'article_block_most_commented.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE ;
 // article newsticker
 $i++;
@@ -285,59 +220,12 @@ $i=0;
 
 $i++;
 $modversion['config'][$i] = array(
-								'name'			=> 'article_allowed_groups',
-								'title'			=> '_MI_ARTICLE_AUTHORIZED_GROUPS',
-								'description'	=> '_MI_ARTICLE_AUTHORIZED_GROUPS_DSC',
-								'formtype'		=> 'group_multi',
-								'valuetype'		=> 'array',
-								'default'		=> 1
-							);
-$i++;
-$modversion['config'][$i] = array(
 								'name' 			=> 'article_dateformat',
 								'title' 		=> '_MI_ARTICLE_DATE_FORMAT',
 								'description' 	=> '_MI_ARTICLE_DATE_FORMAT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'string',
 								'default' 		=> 'j/n/Y'
-							);
-
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'show_breadcrumbs',
-								'title' 		=> '_MI_ARTICLE_SHOW_BREADCRUMBS',
-								'description' 	=> '_MI_ARTICLE_SHOW_BREADCRUMBS_DSC',
-								'formtype' 		=> 'yesno',
-								'valuetype' 	=> 'int',
-								'default' 		=>  1
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name'			=> 'show_categories',
-								'title'			=> '_MI_ARTICLE_SHOW_CATEGORIES',
-								'description' 	=> '_MI_ARTICLE_SHOW_CATEGORIES_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype'		=> 'int',
-								'default' 		=> 15
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name'			=> 'show_category_columns',
-								'title'			=> '_MI_ARTICLE_SHOW_CATEGORY_COLUMNS',
-								'description' 	=> '_MI_ARTICLE_SHOW_CATEGORY_COLUMNS_DSC',
-								'formtype' 		=> 'select',
-								'valuetype'		=> 'int',
-								'options'		=> array('1' => 1, '2' => 2, '3' => 3, '4' => 4),
-								'default' 		=> 2
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'show_articles',
-								'title' 		=> '_MI_ARTICLE_SHOW_ARTICLE',
-								'description'	=> '_MI_ARTICLE_SHOW_ARTICLE_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> 20
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -364,7 +252,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_ARTICLE_DISPLAY_WIDTH_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> 260
+								'default' 		=> 500
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -373,7 +261,7 @@ $modversion['config'][$i] = array(
 								'description'	=> '_MI_ARTICLE_DISPLAY_HEIGHT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
-								'default' 		=> 160
+								'default' 		=> 300
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -448,24 +336,7 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'text',
 								'default' 		=> _MI_ARTICLE_DOWN_DISCLAIMER_TEXT
 							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'use_rss',
-								'title' 		=> '_MI_ARTICLE_USE_RSS',
-								'description' 	=> '_MI_ARTICLE_USE_RSS_DSC',
-								'formtype' 		=> 'yesno',
-								'valuetype' 	=> 'int',
-								'default' 		=> 1
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'use_sprockets',
-								'title' 		=> '_MI_ARTICLE_USE_SPROCKETS',
-								'description' 	=> '_MI_ARTICLE_USE_SPROCKETS_DSC',
-								'formtype' 		=> 'yesno',
-								'valuetype' 	=> 'int',
-								'default' 		=> 1
-							);
+
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'need_attachments',
@@ -495,15 +366,6 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
-								'name' 			=> 'category_needs_approval',
-								'title' 		=> '_MI_ARTICLE_CATEGORY_APPROVE',
-								'description' 	=> '_MI_ARTICLE_CATEGORY_APPROVE_DSC',
-								'formtype' 		=> 'yesno',
-								'valuetype' 	=> 'int',
-								'default' 		=> 1
-							);
-$i++;
-$modversion['config'][$i] = array(
 								'name' 			=> 'article_popular',
 								'title' 		=> '_MI_ARTICLE_POPULAR',
 								'description' 	=> '',
@@ -511,24 +373,6 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'int',
 								'options' 		=> array('0' => 0, '5' => 5, '10' => 10, '50' => 50, '100' => 100, '200' => 200, '500' => 500, '1000' => 1000, '1500' => 1500, '2000' => 2000, '3000' => 3000),
 								'default' 		=> 100
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'article_daysnew',
-								'title' 		=> '_MI_ARTICLE_DAYSNEW',
-								'description' 	=> '',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> 10
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'article_daysupdated',
-								'title' 		=> '_MI_ARTICLE_DAYSUPDATED',
-								'description' 	=> '',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> 10
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -605,15 +449,7 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
 							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'article_rss_limit',
-								'title' 		=> '_MI_ARTICLE_RSSLIMIT',
-								'description' 	=> '_MI_ARTICLE_RSSLIMIT_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> 10
-							);
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////
@@ -645,24 +481,6 @@ $modversion['notification']['category'][$i]['description'] = _MI_ARTICLE_ARTICLE
 $modversion['notification']['category'][$i]['subscribe_from'] = array('index.php', 'singlearticle.php');
 $modversion['notification']['category'][$i]['item_name'] = 'article_id';
 $modversion['notification']['category'][$i]['allow_bookmark'] = 1;
-
-$i++;
-$modversion['notification']['event'][$i]['name'] = 'new_category';
-$modversion['notification']['event'][$i]['category'] = 'global';
-$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_CAP;
-$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_DSC;
-$modversion['notification']['event'][$i]['mail_template'] = 'global_category_published';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_SBJ;
-$i++;
-$modversion['notification']['event'][$i]['name'] = 'category_modified';
-$modversion['notification']['event'][$i]['category'] = 'global';
-$modversion['notification']['event'][$i]['admin_only'] = 1;
-$modversion['notification']['event'][$i]['title'] = _MI_ARTICLE_GLOBAL_CATEGORYMODIFIED_NOTIFY;
-$modversion['notification']['event'][$i]['caption'] = _MI_ARTICLE_GLOBAL_CATEGORYMODIFIED_NOTIFY_CAP;
-$modversion['notification']['event'][$i]['description'] = _MI_ARTICLE_GLOBAL_CATEGORYMODIFIED_NOTIFY_DSC;
-$modversion['notification']['event'][$i]['mail_template'] = 'global_category_modified';
-$modversion['notification']['event'][$i]['mail_subject'] = _MI_ARTICLE_GLOBAL_NEWCATEGORY_NOTIFY_SBJ;
 $i++;
 $modversion['notification']['event'][$i]['name'] = 'new_article';
 $modversion['notification']['event'][$i]['category'] = 'global';

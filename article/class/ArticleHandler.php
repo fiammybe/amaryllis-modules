@@ -12,18 +12,24 @@
  * 				Article
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: ArticleHandler.php 670 2012-07-04 12:55:18Z st.flohrer $
  * @package		article
  *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
+if(!defined("ARTICLE_DIRNAME")) define("ARTICLE_DIRNAME", basename(dirname(dirname(__FILE__))));
 icms_loadLanguageFile("article", "common");
 
 class ArticleArticleHandler extends icms_ipf_Handler {
 	
 	private $_article_related = array();
+	public $_articleCatArray;
+	
+	public $_article_cache_path;
+	public $_article_thumbs_path;
+	public $_article_images_path;
+	
 	/**
 	 * Constructor
 	 *
@@ -33,30 +39,27 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		global $articleConfig;
 		parent::__construct($db, "article", "article_id", "article_title", "article_teaser", "article");
 		$this->addPermission('article_grpperm', _CO_ARTICLE_ARTICLE_ARTICLE_GRPPERM, _CO_ARTICLE_ARTICLE_ARTICLE_GRPPERM_DSC);
-		$mimetypes = $this->checkMimeType();
+		$mimetypes = icms_file_MediaUploadHandler::checkMimeType();
 		$this->enableUpload($mimetypes, $articleConfig['upload_file_size'], $articleConfig['image_upload_width'], $articleConfig['image_upload_height']);
+		$this->_article_cache_path = ICMS_CACHE_PATH . "/" . $this->_moduleName . "/" . $this->_itemname;
+		$this->_article_thumbs_path = $this->_article_cache_path . "/thumbs";
+		$this->_article_images_path = $this->_article_cache_path . "/images";
 	}
 
-	/**
-	 * check enabled mime types in system
-	 */
-	public function checkMimeType() {
-		global $icmsModule;
-		$mimetypeHandler = icms_getModulehandler('mimetype', 'system');
-		$modulename = basename(dirname(dirname(__FILE__)));
-		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
-			icms_file_MediaUploadHandler::setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
-			return FALSE;
+	public function getArticleThumbsPath() {
+		$dir = $this->_article_thumbs_path;
+		if (!file_exists($dir)) {
+			icms_core_Filesystem::mkdir($dir);
 		}
-		$AllowedMimeTypes = $mimetypeHandler->AllowedModules($this->mediaRealType, $modulename);
-		if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes))
-				|| (!empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes))
-				|| (empty($this->allowedMimeTypes) && !$AllowedMimeTypes))
-			{
-			icms_file_MediaUploadHandler::setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
-			return FALSE;
+		return $dir . "/";
+	}
+	
+	public function getArticleImagesPath() {
+		$dir = $this->_article_images_path;
+		if (!file_exists($dir)) {
+			icms_core_Filesystem::mkdir($dir);
 		}
-		return TRUE;
+		return $dir . "/";
 	}
 	
 	static public function getImageList() {
@@ -70,17 +73,24 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	public function getArticleCategoryArray() {
+		global $indexModule;
+		if(!count($this->_articleCatArray)) {
+			if(icms_get_module_status("index")) {
+			    $indexModule = icms_getModuleInfo("index");
+				$category_handler = icms_getModuleHandler("category", $indexModule->getVar("dirname"),  "index");
+				$this->_articleCatArray = $category_handler->getCategoryListForPid(FALSE,FALSE,FALSE,FALSE,FALSE,'category_title','ASC',0,FALSE,FALSE,"cat_submit",FALSE);
+			}
+		} return $this->_articleCatArray;
+	}
+	
 	/**
 	 * some ways to retrieve articles
 	 */
-	public function getList($article_active = null, $approve = FALSE) {
+	public function getArticleList($active = null, $approve = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
-		if (isset($article_active)) {
-			$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
-		}
-		if (isset($approve)) {
-			$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
-		}
+		if($approve) $criteria->add(new icms_db_criteria_Item("article_approve", TRUE));
+		if($active) $criteria->add(new icms_db_criteria_Item('article_active', TRUE));
 		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
 		$articles = $this->getObjects($criteria, TRUE);
 		$ret[0] = '-----------';
@@ -90,76 +100,53 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	// some criterias used by other requests
-	public function getArticleCriteria($start = 0, $limit = 0, $article_publisher = FALSE, $article_id = FALSE,$article_cid = FALSE, $order = 'article_published_date', $sort = 'DESC') {
-		$criteria = new icms_db_criteria_Compo();
-		if ($start) $criteria->setStart($start);
-		if ($limit) $criteria->setLimit((int)$limit);
-		if ($order) $criteria->setSort($order);
-		if ($sort) $criteria->setOrder($sort);
-		if ($article_publisher) {
-			$tray = new icms_db_criteria_Compo();
-			$tray->add(new icms_db_criteria_Item("article_publisher", '%:"' . $article_publisher . '";%', "LIKE"));
-			$criteria->add($tray);
-		}
-		if ($article_id) {
-			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('short_url', $article_id,'LIKE'));
-			$alt_article_id = str_replace('-',' ',$article_id);
-			//Added for backward compatiblity in case short_url contains spaces instead of dashes.
-			$crit->add(new icms_db_criteria_Item('short_url', $alt_article_id),'OR');
-			$crit->add(new icms_db_criteria_Item('article_id', $article_id),'OR');
-			$criteria->add($crit);
-		}
-		if ($article_cid != FALSE && $article_cid > 0)	{
-			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
-			$criteria->add($critTray);
-		}
-		return $criteria;
-	}
-	
-	public function getArticles($start = 0, $limit = 0,$tag_id = FALSE, $article_publisher = FALSE, $article_id = FALSE,  $article_cid = FALSE, $order = 'weight', $sort = 'ASC') {
-		$criteria = $this->getArticleCriteria($start, $limit, $article_publisher, $article_id,  $article_cid, $order, $sort);
-		if($tag_id) {
-			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("article_tags", '%:"' . $tag_id . '";%', "LIKE"));
-			$criteria->add($critTray);
-		}
-		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
-		$article = $this->getObjects($criteria, TRUE, FALSE);
-		$ret = array();
-		foreach ($article as $article){
-			$ret[$article['article_id']] = $article;
-		}
-		return $ret;
-	}
-	
-	public function getArticlesForBlocks($start = 0, $limit = 0, $article_cid = FALSE,$updated = FALSE,$popular = FALSE, $order = 'article_published_date', $sort = 'DESC', $img_req = FALSE) {
+	public function getArticleCriterias($approve = FALSE, $active = FALSE, $publisher = FALSE, $article_id = FALSE, $article_cid = FALSE, $tag = FALSE, $updated = FALSE, 
+										$popular = FALSE, $start = 0, $limit = 0, $order= 'weight', $sort = 'ASC', $inblocks = FALSE, $img_req = FALSE) {
 		global $articleConfig;
 		$criteria = new icms_db_criteria_Compo();
 		if($start) $criteria->setStart($start);
-	 	if($limit) $criteria->setLimit($limit);
-		if($order)$criteria->setSort($order);
+		if($limit) $criteria->setLimit((int)$limit);
+		if($order) $criteria->setSort($order);
 		if($sort) $criteria->setOrder($sort);
-		$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
-		$criteria->add(new icms_db_criteria_Item('article_inblocks', TRUE));
-		$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
-		if($updated == TRUE) $criteria->add(new icms_db_criteria_Item('article_updated', TRUE));
-		if($popular == TRUE) {
-			$pop = $articleConfig['article_popular'];
-			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item('counter', $pop, ">="));
-			$criteria->add($critTray);
-		}
-		if ($article_cid != FALSE)	{
-			$crit = new icms_db_criteria_Compo();
-			$crit->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
+		if($approve) $criteria->add(new icms_db_criteria_Item("article_approve", TRUE));
+		if($active) $criteria->add(new icms_db_criteria_Item('article_active', TRUE));
+		if($publisher) $criteria->add(new icms_db_criteria_Compo(new icms_db_criteria_Item("article_publisher", '%:"' . $publisher . '";%', "LIKE")));
+		if ($article_id) {
+			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item('short_url', $article_id,'LIKE'));
+			$crit->add(new icms_db_criteria_Item('short_url', $article_id),'OR');
+			$crit->add(new icms_db_criteria_Item('article_id', $article_id),'OR');
 			$criteria->add($crit);
 		}
-		if($img_req != FALSE) {
-			$criteria->add(new icms_db_criteria_Item("article_img", "0", "!="));
+		if ($article_cid) $criteria->add(new icms_db_criteria_Compo(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE")));
+		if($tag) {
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("article_tags", $tag . ',%', "LIKE"), 'OR');
+			$critTray->add(new icms_db_criteria_Item("article_tags", '%,' . $tag . ',%', "LIKE"), 'OR');
+			$critTray->add(new icms_db_criteria_Item("article_tags", '%,' . $tag, "LIKE"), 'OR');
+			$criteria->add($critTray);
 		}
+		if($updated) $criteria->add(new icms_db_criteria_Item('article_updated', TRUE));
+		if($popular) {
+			$pop = $articleConfig['article_popular'];
+			$criteria->add(new icms_db_criteria_Compo(new icms_db_criteria_Item("counter", $pop, ">=")));
+		}
+		if($inblocks) $criteria->add(new icms_db_criteria_Item('article_inblocks', TRUE));
+		if($img_req) $criteria->add(new icms_db_criteria_Item("article_img", "0", "!="));
 		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
+		return $criteria;
+	}
+	
+	public function getArticleBySeo($seo) {
+		$article = FALSE;
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", trim($seo)));
+		$articles = $this->getObjects($criteria, FALSE, FALSE);
+		if($articles) $article = $this->get($articles[0]['article_id']);
+		return $article;
+	}
+	
+	public function getArticles($approve = FALSE, $active = FALSE, $publisher = FALSE, $article_id = FALSE, $article_cid = FALSE, $tag = FALSE, $updated = FALSE, $popular = FALSE,
+										$start = 0, $limit = 0, $order= 'weight', $sort = 'ASC', $inblocks = FALSE, $img_req = FALSE) {
+		$criteria = $this->getArticleCriterias($approve, $active, $publisher, $article_id, $article_cid, $tag, $updated, $popular, $start, $limit, $order, $sort, $inblocks, $img_req);
 		$articles = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($articles as $article){
@@ -167,104 +154,52 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
-
+	
+	public function getArticlesCount($approve = FALSE, $active = FALSE, $publisher = FALSE, $article_id = FALSE, $article_cid = FALSE, $tag = FALSE, $updated = FALSE, $popular = FALSE,
+										$start = 0, $limit = 0, $order= 'weight', $sort = 'ASC', $inblocks = FALSE, $img_req = FALSE) {
+		$criteria = $this->getArticleCriterias($approve, $active, $publisher, $article_id, $article_cid, $tag, $updated, $popular, $start, $limit, $order, $sort, $inblocks, $img_req);
+		return $this->getCount($criteria);
+	}
 	/**
 	 * handling some functions to easily switch some fields
 	 */
-	public function changeVisible($article_id) {
-		$visibility = '';
+	public function changeField($article_id, $field) {
 		$articleObj = $this->get($article_id);
-		if ($articleObj->getVar('article_active', 'e') == TRUE) {
-			$articleObj->setVar('article_active', 0);
-			$visibility = 0;
+		if ($articleObj->getVar("$field", 'e') == TRUE) {
+			$articleObj->setVar("$field", 0);
+			$value = 0;
 		} else {
-			$articleObj->setVar('article_active', 1);
-			$visibility = 1;
+			$articleObj->setVar("$field", 1);
+			$value = 1;
 		}
+		$articleObj->updating_counter = TRUE;
 		$this->insert($articleObj, TRUE);
-		return $visibility;
+		return $value;
 	}
-	
-	public function changeShow($article_id) {
-		$show = '';
-		$articleObj = $this->get($article_id);
-		if ($articleObj->getVar('article_inblocks', 'e') == TRUE) {
-			$articleObj->setVar('article_inblocks', 0);
-			$show = 0;
-		} else {
-			$articleObj->setVar('article_inblocks', 1);
-			$show = 1;
-		}
-		$this->insert($articleObj, TRUE);
-		return $show;
-	}
-	
-	public function changeApprove($article_id) {
-		$approve = '';
-		$articleObj = $this->get($article_id);
-		if ($articleObj->getVar('article_approve', 'e') == TRUE) {
-			$articleObj->setVar('article_approve', 0);
-			$approve = 0;
-		} else {
-			$articleObj->setVar('article_approve', 1);
-			$approve = 1;
-		}
-		$this->insert($articleObj, TRUE);
-		return $approve;
-	}
-	
-	public function changeBroken($article_id) {
-		$broken = '';
-		$articleObj = $this->get($article_id);
-		if ($articleObj->getVar('article_broken_file', 'e') == TRUE) {
-			$articleObj->setVar('article_broken_file', 0);
-			$broken = 0;
-		} else {
-			$articleObj->setVar('article_broken_file', 1);
-			$broken = 1;
-		}
-		$this->insert($articleObj, TRUE);
-		return $broken;
-	}
-	
+
 	/**
 	 * Adding some filters for object table in ACP
 	 */
-	public function article_active_filter() {
+	public function filterActive() {
 		return array(0 => 'Offline', 1 => 'Online');
 	}
 	
-	public function article_inblocks_filter() {
+	public function filterInblocks() {
 		return array(0 => 'Hidden', 1 => 'Visible');
 	}
 	
-	public function article_approve_filter() {
+	public function filterApprove() {
 		return array(0 => 'Denied', 1 => 'Approved');
 	}
 	
-	public function article_broken_filter() {
+	public function filterBroken() {
 		return array(0 => 'Online', 1 => 'Broken');
 	}
-		
-	/**
-	 * handle some object fields
-	 */
-	public function getArticleTags() {
-		global $articleConfig;
-		$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
-		if(icms_get_module_status("sprockets")) {
-			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
-			$criteria = new icms_db_criteria_Compo();
-			$criteria->add(new icms_db_criteria_Item("label_type", 0));
-			$criteria->add(new icms_db_criteria_Item("navigation_element", 0));
-			
-			$tags = $sprockets_tag_handler->getObjects(FALSE, TRUE, FALSE);
-			$ret[] = '------------';
-			foreach(array_keys($tags) as $i) {
-				$ret[$tags[$i]['tag_id']] = $tags[$i]['title'];
-			}
-			return $ret;
-		}
+	
+	public function filterCid() {
+		global $indexModule;
+		$category_handler = icms_getModuleHandler("category", $indexModule->getVar("dirname"), "index");
+		return $category_handler->getCategoryListForPid();
 	}
 	
 	public function getLink($article_id = NULL) {
@@ -274,42 +209,22 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function getRelated() {
-		if(!$this->_article_related) {
-			$this->_article_related = $this->getList(TRUE, TRUE);
+		if(!count($this->_article_related)) {
+			$this->_article_related = $this->getArticleList(TRUE, TRUE);
 		}
 		return $this->_article_related;
-	}
-	
-	public function getCountCriteria ($active = FALSE, $approve = FALSE, $groups = array(), $perm = 'article_grpperm', $article_publisher = FALSE, $article_id = FALSE, $article_cid = FALSE, $tag_id = FALSE) {
-		$criteria = new icms_db_criteria_Compo();
-		if ($active) $criteria->add(new icms_db_criteria_Item('article_active', TRUE));
-		if($approve) $criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
-		if ($article_cid != FALSE)	{
-			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
-			$criteria->add($critTray);
-		}
-		if($tag_id) {
-			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("article_tags", '%:"' . $tag_id . '";%', "LIKE"));
-			$criteria->add($critTray);
-		}
-		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
-		$count = $this->getCount($criteria);
-		return $count;
 	}
 	
 	//update hit-counter
 	public function updateCounter($article_id) {
 		global $article_isAdmin;
 		$articleObj = $this->get($article_id);
-		if (!is_object($articleObj)) return FALSE;
-
-		if (isset($articleObj->vars['counter']) && !is_object(icms::$user) || (!$article_isAdmin && $articleObj->getVar('article_submitter', 'e') != icms::$user->getVar("uid")) ) {
+		if (!is_object($articleObj) && $articleObj->isNew()) return FALSE;
+		if(!is_object(icms::$user) || (!$article_isAdmin && $articleObj->getVar('article_submitter', 'e') != icms::$user->getVar("uid")) ) {
 			$new_counter = $articleObj->getVar('counter') + 1;
-			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
-				. ' WHERE ' . $this->keyName . '=' . $articleObj->id();
-			$this->query($sql, null, TRUE);
+			$articleObj->setVar("counter", $new_counter);
+			$articleObj->updating_counter = TRUE;
+			$this->insert($articleObj, TRUE);
 		}
 		return TRUE;
 	}
@@ -353,15 +268,52 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	protected function beforeInsert(&$obj) {
+		if ($obj->updating_counter) 
+		return TRUE;
 		$teaser = $obj->getVar("article_teaser", "s");
 		$teaser = icms_core_DataFilter::checkVar($teaser, "html", "input");
 		$obj->setVar("article_teaser", $teaser);
-		$title = str_replace(" ", "_", $obj->getVar('short_url'));
-		$obj->setVar("short_url", $title);
+		$seo = trim($obj->getVar("short_url", "e"));
+		$title = $obj->title();
+		if(!$seo == "") {
+			$seotitle = str_replace(" ", "_", $seo);
+			$seotitle = icms_ipf_Metagen::generateSeoTitle($seo, FALSE);
+		} else {
+			$seotitle = icms_ipf_Metagen::generateSeoTitle($title, FALSE);
+		}
+		$obj->setVar("short_url", $seotitle);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seotitle));
+		if($this->getCount($criteria) > 0) {
+			$obj->setErrors(_CO_INDEX_ERRORS_TAG_SEO_EXISTS);
+			return FALSE;
+		}
 		return TRUE;
 	}
 	
 	protected function beforeSave(&$obj) {
+		if ($obj->updating_counter)
+		return TRUE;
+		$tags = trim($obj->getVar("article_tags"));
+		if($tags != "" && $tags != "0" && icms_get_module_status("index")) {
+			$indexModule = icms_getModuleInfo("index");
+			$tag_handler = icms_getModuleHandler("tag", $indexModule->getVar("dirname"), "index");
+			$tagarray = explode(",", $tags);
+			$tagarray = array_map('strtolower', $tagarray);
+			$newArray = array();
+			foreach ($tagarray as $key => $tag) {
+				$intersection = array_intersect($tagarray, array($tag));
+				$count = count($intersection);
+				if($count > 1) {
+					unset($tagarray[$key]);
+				} else {
+					$tag_id = $tag_handler->addTag($tag, FALSE, $obj, $obj->getVar("article_published_date", "e"), $obj->getVar("article_submitter", "e"), "article_teaser", $obj->getVar("article_img", "e"));
+					$newArray[] = $tag_id;
+				}
+				unset($intersection, $count);
+			}
+			$obj->setVar("article_tags", implode(",", $newArray));
+			unset($tags, $indexModule, $tag_handler, $tags, $tagarray);
+		}
 		$body = $obj->getVar("article_body", "s");
 		$body_parts = explode('[pagebreak]', $body);
 		$obj->setVar("article_pagescount", count($body_parts));
@@ -372,40 +324,50 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	protected function afterSave(&$obj) {
-		if ($obj->updating_counter) return TRUE;
-
-		if (!$obj->getVar('article_notification_sent') && $obj->getVar('article_active', 'e') == TRUE && $obj->getVar('article_approve', 'e') == TRUE) {
-			$obj->sendArticleNotification('article_published');
-			$obj->setVar('article_notification_sent', TRUE);
-			$this->insert($obj);
+		global $articleConfig, $indexModule;
+		if ($obj->updating_counter)
+		return TRUE;
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("article_id", $obj->id()));
+		$sql = "SELECT (article_cid) FROM " . $this->table . " " . $criteria->renderWhere();
+		$result = $this->db->query($sql);
+		list($myrow) = $this->db->fetchRow($result);
+		$cats = unserialize($myrow);
+		$link_handler = icms_getModuleHandler("link", $indexModule->getVar("dirname"), "index");
+		foreach ($cats as $key => $value) {
+			$link_handler->addLink($value, 1, icms::$module->getVar("mid"), $this->_itemname, $obj->id(), $obj->getVar("article_img", "e"), $obj->getVar("article_published_date", "e"),
+									 $obj->getVar("article_submitter", "e"), "article_teaser");
 		}
-		if(icms_get_module_status("sprockets")) {
-			$tags = $obj->getVar("article_tags", "s");
-			if($tags != "" && $tags != "0") {
-				$sprocketsModule = icms_getModuleInfo("sprockets");
-				$sprockets_taglink_handler = icms_getModuleHandler("taglink", "sprockets");
-				foreach ($tags as $tag) {
-					$tagObj = $sprockets_taglink_handler->create(TRUE);
-					$tagObj->setVar("tid", (int)$tag);
-					$tagObj->setVar("mid", icms::$module->getVar("mid", "e"));
-					$tagObj->setVar("item", $obj->getVar("article_title", "e"));
-					$tagObj->setVar("iid", $obj->getVar("article_id", "e"));
-					$sprockets_taglink_handler->insertD($tagObj, TRUE);
-				}
+		
+		if (!$obj->notifSent() && $obj->isActive() && $obj->isApproved()) {
+			if($obj->isNew()) {
+				$obj->sendArticleNotification('article_published');
+			} else {
+				$obj->sendArticleNotification('article_modified');
 			}
+			$obj->setVar('article_notification_sent', TRUE);
+			$obj->updating_counter = TRUE;
+			$this->insert($obj, TRUE);
 		}
+		if($articleConfig['article_autopost_twitter'] == 1 && icms_get_module_status("index") && $obj->isNew()) {
+			IndexAutopublisher::sendTwitterPost($obj);
+		}
+		
 		return TRUE;
 	}
 	
 	protected function afterDelete(& $obj) {
 		$notification_handler = icms::handler( 'icms_data_notification' );
 		$module_handler = icms::handler('icms_module');
-		$module = $module_handler->getByDirname( icms::$module -> getVar( 'dirname' ) );
-		$module_id = icms::$module->getVar('mid');
+		$module = $module_handler->getByDirname(ARTICLE_DIRNAME);
+		$module_id = $module->getVar('mid');
 		$category = 'global';
 		$article_id = $obj->id();
 		// delete global notifications
 		$notification_handler->unsubscribeByItem($module_id, $category, $article_id);
+		//delete all linked categories and tags
+		$link_handler = icms_getModuleHandler("link", "index");
+		$link_handler->deleteAllByCriteria(FALSE, FALSE, $module_id, $this->_itemname, $obj->id());
+		unset($notification_handler, $module_handler, $module, $link_handler);
 		return TRUE;
 	}
 

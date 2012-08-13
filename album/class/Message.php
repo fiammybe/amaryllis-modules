@@ -18,6 +18,7 @@
  */
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
+if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class AlbumMessage extends icms_ipf_Object {
 	
@@ -30,6 +31,9 @@ class AlbumMessage extends icms_ipf_Object {
 		$this->quickInitVar("message_body", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("message_date", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("message_approve", XOBJ_DTYPE_INT);
+		$this->initCommonVar("dohtml", FALSE, TRUE);
+		$this->initCommonVar("dosmiley", FALSE, TRUE);
+		$this->initCommonVar("dobr", FALSE, FALSE);
 		
 		$this->setControl("message_body", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("message_approve", "yesno");
@@ -49,7 +53,7 @@ class AlbumMessage extends icms_ipf_Object {
 	
 	public function getItem() {
 		$item = $this->getVar("message_item", "e");
-		$album_images_handler = icms_getModuleHandler("images", basename(dirname(dirname(__FILE__))), "album");
+		$album_images_handler = icms_getModuleHandler("images", ALBUM_DIRNAME, "album");
 		$itemObj = $album_images_handler->get($item);
 		return $itemObj->getVar("img_title", "e");
 	}
@@ -83,12 +87,32 @@ class AlbumMessage extends icms_ipf_Object {
 				<img src="' . ALBUM_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
 		}
 	}
+	
+	public function accessGranted() {
+		if(!$this->isApproved() && $this->sameUser()) {return TRUE;}
+		if($this->isApproved()) return TRUE;
+		return FALSE; 
+	}
+	
+	public function isApproved() {
+		return ($this->getVar("message_approve", "e") == 1) ? TRUE : FALSE;
+	}
+	
+	public function sameUser() {
+		$userid = $this->getVar("message_uid", "e");
+        $user = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;
+		return ($userid == $user) ? TRUE : FALSE;
+	}
 
 	public function toArray() {
 		$ret = parent::toArray();
-		$ret['body'] = $this->getMessageBody();
+		$ret['body'] = $this->summary();
 		$ret['date'] = $this->getPublishedDate();
-		$ret['user'] = $this->getPublisher();
+		$ret['ulink'] = $this->getPublisher();
+		$ret['avatar'] = $this->getPublisherAvatar();
+		$ret['is_approved'] = $this->isApproved();
+		$ret['mycomment'] = $this->sameUser();
+		$ret['accessGranted'] = $this->accessGranted();
 		return $ret;
 	}
 }

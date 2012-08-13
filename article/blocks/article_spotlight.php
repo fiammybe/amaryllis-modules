@@ -18,20 +18,16 @@
  */
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
-
+if(!defined("ARTICLE_DIRNAME")) define("ARTICLE_DIRNAME", basename(dirname(dirname(__FILE__))));
 function b_article_spotlight_show($options) {
 	global $articleConfig, $xoTheme;
 	
-	$moddir = basename(dirname(dirname(__FILE__)));
-	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
+	include_once ICMS_ROOT_PATH . '/modules/' . ARTICLE_DIRNAME . '/include/common.php';
+	$article_handler = icms_getModuleHandler('article', ARTICLE_DIRNAME, 'article');
 	
-	$articleConfig = icms_getModuleConfig(basename(dirname(dirname(__FILE__))));
-	$articles = $article_article_handler->getArticlesForBlocks(0, $options[0], $options[1]);
+	$articles = $article_handler->getArticles(TRUE, TRUE, FALSE, FALSE, $options[1], FALSE, FALSE, FALSE,0, $options[0], "article_published_date", "DESC", TRUE);
 	$block['view_all'] = ARTICLE_URL . 'index.php?op=viewRecentArticles&category_id=' . $options[1];
 	$block['show_view_all'] = $options[2];
-	$block['thumbnail_width'] = $articleConfig['thumbnail_width'];
-	$block['thumbnail_height'] = $articleConfig['thumbnail_height'];
 	$block['article_spotlight'] = $articles;
 	
 	$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/module_article_block.css');
@@ -40,18 +36,18 @@ function b_article_spotlight_show($options) {
 }
 
 function b_article_spotlight_edit($options) {
-	$moddir = basename(dirname(dirname(__FILE__)));
-	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
-	$article_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
-	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+	include_once ICMS_ROOT_PATH . '/modules/' . ARTICLE_DIRNAME . '/include/common.php';
+	$article_handler = icms_getModuleHandler('article', ARTICLE_DIRNAME, 'article');
+	$category_handler = icms_getModuleHandler('category', INDEX_DIRNAME, 'index');
+	$limit = new icms_form_elements_Text("", 'options[0]', 7, 40, $options[0]);
 	$selcats = new icms_form_elements_Select('', 'options[1]', $options[1]);
-	$selcats->addOptionArray($article_category_handler->getCategoryListForPid());
+	$selcats->addOptionArray($category_handler->getCategoryListForPid());
 	$showmore = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
 	
-	$form = '<table><tr>';
-	$form .= '<tr><td>' . _MB_ARTICLE_ARTICLE_RECENT_LIMIT . '</td>';
-	$form .= '<td>' . '<input type="text" name="options[0]" value="' . $options[0] . '"/></td>';
+	$form = '<table width="100%">';
+	$form .= '<tr>';
+	$form .= '<td>' . _MB_ARTICLE_ARTICLE_RECENT_LIMIT . '</td>';
+	$form .= '<td>' . $limit->render() . '</td>';
 	$form .= '</tr>';
 	$form .= '<tr>';
 	$form .= '<td width="30%">' . _MB_ARTICLE_CATEGORY_CATSELECT . '</td>';

@@ -103,8 +103,6 @@
 			slideshow: true,
 			slideshowAuto: false
 		});
-		// use newsticker
-		$("ul#articles_newsticker").liScroll({travelocity: 0.10});
 		
 		//initiate qtip for category description
 		$('div.article_category').each(function(){
@@ -152,30 +150,13 @@
 				},
 			});
 		});
-		// related to initiate g+
-		(function() {
-		    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-		    po.src = 'https://apis.google.com/js/plusone.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-		})();
-		// related to fb-like
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) {return;}
-			js = d.createElement(s); js.id = id;
-			js.src = '//connect.facebook.net/en_US/all.js#xfbml=1';
-			fjs.parentNode.insertBefore(js, fjs);
-		  }
-		  (document, 'script', 'facebook-jssdk'));
-		if($('#socialshareprivacy').length > 0){ $('#socialshareprivacy').socialSharePrivacy(); }
-		
 	});
 	
 	// initiate tag form
 	$(document).ready(function(){
 		$(".tag_form").dialog({
 			modal: true,
-			width: 700,
+			width: 800,
 			height: 600,
 			autoOpen: false,
 			resizable: true,
@@ -184,7 +165,7 @@
 		$(".tag_link").click(function(e) {
 			e.preventDefault();
 			var targetUrl = $(this).attr("href");
-			$(".article_tag").dialog('option', 'buttons', {
+			$("span.article_tagf").dialog('option', 'buttons', {
 				"Submit" : function() {
 					window.location.href = targetUrl;
 				},

@@ -78,8 +78,8 @@ if($op == 'viewarticle') {
 	}
 	$form->display();
 } elseif ($op == 'viewcategory') {
-	$article_category_handler = icms_getmodulehandler("category", ARTICLE_DIRNAME, "article");
-	$categories = $article_category_handler->getObjects(FALSE, TRUE);
+	$category_handler = icms_getmodulehandler("category", INDEX_DIRNAME, "index");
+	$categories = $category_handler->getObjects(FALSE, TRUE);
 	foreach (array_keys($categories) as $i) {
 		if ($restriction == "") {
 			$form->addItem($categories[$i]->getVar('category_id'),
@@ -88,8 +88,8 @@ if($op == 'viewarticle') {
 	}
 	$form->display();
 } elseif ($op == 'submitarticle') {
-	$article_category_handler = icms_getmodulehandler("category", ARTICLE_DIRNAME, "article");
-	$categories = $article_category_handler->getObjects(FALSE, TRUE);
+	$category_handler = icms_getmodulehandler("category", ARTICLE_DIRNAME, "article");
+	$categories = $category_handler->getObjects(FALSE, TRUE);
 	foreach (array_keys($categories) as $i) {
 		if ($restriction == "") {
 			$form->addItem($categories[$i]->getVar('category_id'),

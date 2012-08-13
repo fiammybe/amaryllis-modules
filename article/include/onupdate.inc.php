@@ -21,55 +21,54 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 // this needs to be the latest db version
 define('ARTICLE_DB_VERSION', 1);
-
+if(!defined("ARTICLE_DIRNAME")) define("ARTICLE_DIRNAME", basename(dirname(dirname(__FILE__))));
+if(!defined("ARTICLE_ROOT_PATH")) define("ARTICLE_ROOT_PATH", ICMS_ROOT_PATH.'/modules/' . ARTICLE_DIRNAME . '/');
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// SOME NEEDED FUNCTIONS ////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function article_upload_paths() {
-	
-	//Create folders and set permissions
-	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
-		if(!is_dir($path . '/category')) icms_core_Filesystem::mkdir($path . '/category');
-		$categoryimages = array();
-		$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/' . $moddir .'/images/folders/', '', array('gif', 'jpg', 'png'));
-		foreach($categoryimages as $image) {
-			icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/category/' . $image);
-		}
-		icms_core_Filesystem::mkdir($path . '/indexpage');
-		$image2 = 'article_indeximage.png';
-		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2, $path . '/indexpage/' . $image2);
-}
-
-function copySitemapPlugin() {
-	$dir = ICMS_ROOT_PATH . '/modules/article/extras/modules/sitemap/';
-	$file = 'article.php';
-	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
-	if(is_dir($plugin_folder)) {
-		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
-	}
+	$path = ICMS_ROOT_PATH . '/uploads/index/indexpage/';
+	$image = 'article_indeximage.png';
+	if(!is_file($path . $image)) icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . ARTICLE_DIRNAME . '/images/' . $image, $path . $image);
 }
 
 function article_indexpage() {
-	$article_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'article' );
-	$indexpageObj = $article_indexpage_handler -> create(TRUE);
+	$module_handler = icms::handler('icms_module');
+	$module = $module_handler->getByDirname(ARTICLE_DIRNAME);
+	$module_id = $module->getVar('mid');
+	$indexpage_handler = icms_getModuleHandler('indexpage', 'index');
+	$indexpageObj = $indexpage_handler -> create(TRUE);
 	echo '<code>';
-	$indexpageObj -> setVar( 'index_header', 'Articles' );
-	$indexpageObj -> setVar( 'index_heading', 'Here you can search our articles. ' );
-	$indexpageObj -> setVar( 'index_footer', '&copy; 2012 | Article module footer');
-	$indexpageObj -> setVar( 'index_image', 'article_indeximage.png');
-	$indexpageObj->setVar('dohtml', 1);
-	$indexpageObj->setVar('dobr', 1);
-	$indexpageObj->setVar('doimage', 1);
-	$indexpageObj->setVar('dosmiley', 1);
-	$indexpageObj->setVar('doxcode', 1);
-	$article_indexpage_handler -> insert( $indexpageObj, TRUE );
-	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
+	$indexpageObj->setVar('index_header', 'Articles' );
+	$indexpageObj->setVar('index_heading', 'Here you can search our articles. ' );
+	$indexpageObj->setVar('index_footer', '&copy; ' . date("Y") . ' | Article module footer');
+	$indexpageObj->setVar('index_image', 'article_indeximage.png');
+	$indexpageObj->setVar('index_mid', $module_id);
+	$indexpage_handler->insert( $indexpageObj, TRUE );
+	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully added!<br />';
 	echo '</code>';
+	unset($module_handler, $module, $module_id, $indexpage_handler, $indexpageObj);
 	
 }
+
+function deleteLinkedModuleItems() {
+	$module_handler = icms::handler('icms_module');
+	$module = $module_handler->getByDirname(ARTICLE_DIRNAME);
+	$module_id = $module->getVar('mid');
+	$link_handler = icms_getModuleHandler("link", "index");
+	$link_handler->deleteAllByMId($module_id);
+	unset($link_handler);
+	$indexpage_handler = icms_getModuleHandler("indexpage", "index");
+	$indexpage_handler->deleteByMid($module_id);
+	unset($indexpage_handler);
+}
+
+function deleteFiles() {
+	icms_core_Filesystem::deleteRecursive(ICMS_UPLOAD_PATH . "/" . ARTICLE_DIRNAME);
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// UPDATE ARTICLE MODULE ////////////////////////////////////////////////
@@ -81,7 +80,7 @@ function icms_module_update_article($module) {
 	article_upload_paths();
 	
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-	$icmsDatabaseUpdater -> moduleUpgrade($module);
+	$icmsDatabaseUpdater->moduleUpgrade($module);
     return TRUE;
 }
 
@@ -91,9 +90,14 @@ function icms_module_install_article($module) {
 	
 	//prepare indexpage
 	article_indexpage();
-	
-	// copy sitemap plugin
-	copySitemapPlugin();
 
+	return TRUE;
+}
+
+function icms_module_uninstall_article($module) {
+	// delete all linked items in index module
+	deleteLinkedModuleItems();
+	//delete all Files from upload folder, the connection.php in article module and the generated trust path file
+	deleteFiles();
 	return TRUE;
 }

@@ -12,7 +12,7 @@
  * 				album
  * @since		1.20
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: index.php 677 2012-07-05 18:10:29Z st.flohrer $
  * @package		album
  *
  */

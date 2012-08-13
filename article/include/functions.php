@@ -19,54 +19,6 @@
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
-function article_display_new($time) {
-	global $articleConfig;
-	$new = ( time() - ( 86400 * (int)( $articleConfig['article_daysnew'] ) ) );
-	if ( $articleConfig['article_daysnew'] !== 0) {
-		if ( $new < $time ) {
-			$new = ARTICLE_IMAGES_URL . 'new.png';
-			
-		} else {
-			return FALSE;
-		}
-	} else {
-		return FALSE;
-	}
-	return $new;
-}
-
-function article_display_updated($time) {
-	global $articleConfig;
-	$updated = ( time() - ( 86400 * (int)( $articleConfig['article_daysupdated'] ) ) );
-	if ( $articleConfig['article_daysupdated'] !== 0) {
-		if ( $updated < $time ) {
-			$updated = ARTICLE_IMAGES_URL . 'updated.png';
-			
-		} else {
-			return FALSE;
-		}
-	} else {
-		return FALSE;
-	}
-	return $updated;
-}
-
-function article_display_popular($counter) {
-	global $articleConfig;
-	$popular = $articleConfig['article_popular'];
-	if ( $popular !== 0) {
-		if ( $popular < $counter ) {
-			$popular = ARTICLE_IMAGES_URL . 'popular.png';
-			
-		} else {
-			return FALSE;
-		}
-	} else {
-		return FALSE;
-	}
-	return $popular;
-}
-
 function articleConvertFileSize( $size, $type = 'byte', $decimal = 2 ) {
 	$size = (int)( $size );
 	switch ($type) {
@@ -105,14 +57,5 @@ function articleFileSizeType ($type) {
 		case '4':
 			return 'gb';
 			break;
-	}
-}
-
-function articleCopySitemapPlugin() {
-	$dir = ICMS_ROOT_PATH . '/modules/article/extras/modules/sitemap/';
-	$file = 'article.php';
-	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
-	if(is_dir($plugin_folder)) {
-		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
 	}
 }

@@ -19,8 +19,7 @@
 
 include_once "admin_header.php";
 
-$article_article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
-$article_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'article');
+$article_handler = icms_getModuleHandler('article', basename(dirname(dirname(__FILE__))), 'article');
 
 icms_cp_header();
 icms::$module->displayAdminMenu(0, _MI_ARTICLE_MENU_INDEX);
@@ -29,31 +28,29 @@ global $articleConfig;
 $criteria = '';
 $criteria = new icms_db_criteria_Compo();
 $criteria->add(new icms_db_criteria_Item('article_broken_file', TRUE));
-$broken = $article_article_handler->getCount($criteria, TRUE, FALSE);
+$broken = $article_handler->getCount($criteria, TRUE, FALSE);
 
+$link_handler = icms_getModuleHandler("link", INDEX_DIRNAME, "index");
+$crit = new icms_db_criteria_Compo();
+$crit->add(new icms_db_criteria_Item("link_case", 1));
+$crit->add(new icms_db_criteria_Item("link_item", $article_handler->_itemname));
+$sql = "SELECT DISTINCT (link_cid) FROM " . icms::$xoopsDB->prefix("index_link") . " " . $crit->renderWhere();
+$result = icms::$xoopsDB->query($sql);
+list($count) = count(icms::$xoopsDB->fetchRow($result));
 
 // get all files count
-$totalfiles = $article_article_handler->getCount();
-// get all cats count
-$totalcats = $article_category_handler->getCount();
+$totalfiles = $article_handler->getCount();
 
 // check files to approve
 if ($articleConfig['article_needs_approval'] == 1) {
 	$criteria2 = '';
 	$criteria2 = new icms_db_criteria_Compo();
 	$criteria2 -> add(new icms_db_criteria_Item('article_approve', 0));
-	$article_approve = $article_article_handler->getCount($criteria2, TRUE, FALSE);
+	$article_approve = $article_handler->getCount($criteria2, TRUE, FALSE);
 }
 
-//check categories to approve
-if ($articleConfig['category_needs_approval'] == 1) {
-	$criteria4 = '';
-	$criteria4 = new icms_db_criteria_Compo();
-	$criteria4 -> add(new icms_db_criteria_Item('category_approve', 0));
-	$category_approve = $article_category_handler->getCount($criteria4, TRUE, FALSE);
-}
 
-//$mimetypes = $article_article_handler->checkMimeType();
+//$mimetypes = $article_handler->checkMimeType();
 echo ' <div style="margin: 2em 0em;"><p>' . _AM_ARTICLE_INDEX_WARNING . '</p></div>'; 
 
 echo '	<fieldset style="border: #E8E8E8 1px solid; width: 450px;">
@@ -67,7 +64,7 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 450px;">
 						. _AM_ARTICLE_INDEX_TOTAL .
 					'</div>
 					<div style="display: table-cell;">'
-						. $totalfiles . _AM_ARTICLE_FILES_IN . $totalcats . _AM_ARTICLE_CATEGORIES .
+						. $totalfiles . _AM_ARTICLE_FILES_IN . $count . _AM_ARTICLE_CATEGORIES .
 					'</div>
 				</div>
 				
@@ -86,15 +83,6 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 450px;">
 					'</div>
 					<div style="display: table-cell;">'
 						. $article_approve .
-					'</div>
-				</div>
-				
-				<div style="display: table-row;">
-					<div style="display: table-cell;">'
-						. _AM_ARTICLE_INDEX_NEED_APPROVAL_CATS .
-					'</div>
-					<div style="display: table-cell;">'
-						. $category_approve .
 					'</div>
 				</div>
 				

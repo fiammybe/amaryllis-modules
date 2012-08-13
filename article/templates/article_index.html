@@ -1,4 +1,7 @@
-<{includeq file='db:article_header.html'}>
+<{includeq file='db:index_header.html'}>
+<{if $op_select_form}>
+	<{$op_select_form}>
+<{/if}>
 
 <{if $byTags}>
 	<!-- display index header -->
@@ -12,8 +15,8 @@
 				<{$article_pagenav}>
 			<{/if}>
 			<!-- article rule -->
-			<{foreach item=article from=$articles}>
-				<{includeq file='db:article_article.html'}>
+			<{foreach item=link from=$articles}>
+				<{includeq file='db:index_link.html'}>
 			<{/foreach}>
 			
 			<{if $article_pagenav }> <!-- pagination control -->
@@ -147,7 +150,7 @@
 		<div class="article_cats"><!-- START category index view -->
 			<{if $user_submit}>
 				<a class="<{if $article_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>">
-					<img style="vertical-align: middle;" src="<{$article_images_url}>add_cat.png" title="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>" />
+					<img class="article_icon_middle" src="<{$article_images_url}>add_cat.png" title="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ARTICLE_SUBMIT_CAT}>" />
 				</a>
 			<{/if}>
 			<!-- pagination control -->
@@ -177,7 +180,7 @@
 <{/if}>
 	
 <{if $article_single_cat}>
-	<div class="article_scat">
+	<div class="">
 		<div class="article_scat_title">
 			<h1><{$article_single_cat.title}></h1>		
 		</div>&nbsp;
@@ -186,20 +189,20 @@
 		<{/if}>
 		<{if $article_single_cat.user_upload}>
 			<a class="<{if $article_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_100" href="<{$article_single_cat.user_upload}>" title="<{$smarty.const._MD_ARTICLE_UPLOAD}>">
-				<img style="vertical-align: middle;" src="<{$article_images_url}>add_file.png" title="<{$smarty.const._MD_ARTICLE_UPLOAD}>" alt="<{$smarty.const._MD_ARTICLE_UPLOAD}>" />
+				<img class="article_icon_middle" src="<{$article_images_url}>add_file.png" title="<{$smarty.const._MD_ARTICLE_UPLOAD}>" alt="<{$smarty.const._MD_ARTICLE_UPLOAD}>" />
 			</a>
-			<{if $article_upl_disclaimer}>
+			<{if $up_disclaimer}>
 				<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
 					<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
 				</div>
 			<{/if}>
 		<{/if}>
-
-		<div class="article_cat_desc"> <{$article_single_cat.dsc}> </div>
-		
+		<{if $article_single_cat.dsc}>
+			<div class="article_cat_desc"> <{$article_single_cat.dsc}> </div>
+		<{/if}>
 		<{if $sub_category_columns}> <!-- subcategories -->
 			<h2><{$smarty.const._MD_ARTICLE_CATEGORY_SUBCATLIST}></h2>
-			<div class="article_subcatlist">
+			<div class="article_scat">
 				<!-- pagination control -->
 				<{if $category_pagenav }><{$category_pagenav}><{/if}>
 				

@@ -13,7 +13,7 @@
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @package		album
- * @version		$Id$
+ * @version		$Id: icms_version.php 684 2012-07-07 15:02:21Z st.flohrer $
  * 
  */
 
@@ -43,7 +43,7 @@ $modversion = array(
 						'image'						=> "images/album_icon.png", /* for backward compatibility */
 					
 					/**  Development information */
-						"status_version"			=> "1.2",
+						"status_version"			=> "2.0",
 						"status"					=> "Beta",
 						"date"						=> "01:46 05.02.2012",
 						"author_word"				=> "",
@@ -100,8 +100,6 @@ $i++;
 $modversion['object_items'][$i] = 'album';
 $i++;
 $modversion['object_items'][$i] = 'images';
-$i++;
-$modversion['object_items'][$i] = 'indexpage';
 $i++;
 $modversion['object_items'][$i] = 'message';
 
@@ -207,10 +205,10 @@ $modversion['blocks'][$i]['name']			= _MI_ALBUM_BLOCK_RECENT_IMAGES;
 $modversion['blocks'][$i]['description']	= _MI_ALBUM_BLOCK_RECENT_IMAGES_DSC;
 $modversion['blocks'][$i]['show_func']		= 'b_album_recent_images_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_album_recent_images_edit';
-$modversion['blocks'][$i]['options']		= '10|0|0|weight|ASC|500|335|1|1|1';	//Limit|Album|Publisher|sort|order|width|height|horizontal|autoscroll|Description
+$modversion['blocks'][$i]['options']		= '10|0|0|weight|ASC|1|1|1';	//Limit|Album|Publisher|sort|order|width|height|horizontal|autoscroll|Description
 $modversion['blocks'][$i]['template']		= 'album_block_recent_images.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
-/**
+
 // single image block
 $i++;
 $modversion['blocks'][$i]['file']			= 'album_single_image.php';
@@ -218,10 +216,10 @@ $modversion['blocks'][$i]['name']			= _MI_ALBUM_BLOCK_SINGLE_IMAGE;
 $modversion['blocks'][$i]['description']	= _MI_ALBUM_BLOCK_SINGLE_IMAGE_DSC;
 $modversion['blocks'][$i]['show_func']		= 'b_album_single_image_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_album_single_image_edit';
-$modversion['blocks'][$i]['options']		= '260';
+$modversion['blocks'][$i]['options']		= '1|260|160|500|300|1|0'; //Image|Thumb width|Tuhumb height|Img Width|Image Height|Display DSC|Display Messages
 $modversion['blocks'][$i]['template']		= 'album_block_single_image.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
-**/
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
@@ -243,15 +241,18 @@ $modversion['comments']['callback']['update'] = 'album_com_update';
 global $icmsConfig;
 
 $i=0;
+/**
 $i++;
 $modversion['config'][$i] = array(
-								'name' 			=> 'use_sprockets',
-								'title' 		=> '_MI_ALBUM_USE_SPROCKETS',
-								'description' 	=> '_MI_ALBUM_USE_SPROCKETS_DSC',
+								'name' 			=> 'need_cats',
+								'title' 		=> '_MI_ALBUM_NEED_CATS',
+								'description' 	=> '_MI_ALBUM_NEED_CATS_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
-								'default' 		=>  0
+								'default' 		=>  1
 							);
+ * 
+ */
 $i++;
 $modversion['config'][$i] = array(
 								'name'			=> 'uploader_groups',
@@ -534,7 +535,50 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'int',
 								'default' 		=>  0
 							);
-
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'album_default_order',
+								'title'			=> '_MI_ALBUM_CONFIG_DEFAULT_ORDER',
+								'description'	=> '_MI_ALBUM_CONFIG_DEFAULT_ORDER_DSC',
+								'formtype'		=> 'select',
+								'valuetype'		=> 'string',
+								'default'		=>"weight",
+								'options'		=> array( _MI_ALBUM_CONF_DEFAULT_ORDER_WEIGHT => "weight", 
+													_MI_ALBUM_CONF_DEFAULT_ORDER_CREATIONDATE => "album_published_date",
+													_MI_ALBUM_CONF_DEFAULT_ORDER_TITLE => "album_title" )
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'album_default_sort',
+								'title'			=> '_MI_ALBUM_CONFIG_DEFAULT_SORT',
+								'description'	=> '_MI_ALBUM_CONFIG_DEFAULT_SORT_DSC',
+								'formtype'		=> 'select',
+								'valuetype'		=> 'string',
+								'default'		=> "ASC",
+								'options'		=> array( _ASCENDING => "ASC", _DESCENDING => "DESC")
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'img_default_order',
+								'title'			=> '_MI_ALBUM_CONFIG_DEFAULT_ORDER_IMG',
+								'description'	=> '_MI_ALBUM_CONFIG_DEFAULT_ORDER_IMG_DSC',
+								'formtype'		=> 'select',
+								'valuetype'		=> 'string',
+								'default'		=> "weight",
+								'options'		=> array( _MI_ALBUM_CONF_DEFAULT_ORDER_WEIGHT => "weight", 
+													_MI_ALBUM_CONF_DEFAULT_ORDER_CREATIONDATE => "img_published_date",
+													_MI_ALBUM_CONF_DEFAULT_ORDER_TITLE => "img_title" )
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'img_default_sort',
+								'title'			=> '_MI_ALBUM_CONFIG_DEFAULT_SORT_IMG',
+								'description'	=> '_MI_ALBUM_CONFIG_DEFAULT_SORT_IMG_DSC',
+								'formtype'		=> 'select',
+								'valuetype'		=> 'string',
+								'default'		=> "ASC",
+								'options'		=> array( _ASCENDING => "ASC", _DESCENDING => "DESC")
+							);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////

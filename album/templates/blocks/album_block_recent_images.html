@@ -1,15 +1,9 @@
 <!-- Slider Kit scripts -->
 <script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/jquery.sliderkit.1.9.2.pack.js"></script>
-<script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/jquery.ae.image.resize.js"></script>
 <script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/sliderkit.imagefx.1.0.pack.js"></script>
 <!-- Slider Kit styles -->
 <link rel="stylesheet" type="text/css" href="<{$icms_url}>/modules/album/scripts/sliderkit-core.css" media="screen, projection" />
 <link rel="stylesheet" type="text/css" href="<{$icms_url}>/modules/album/scripts/sliderkit-demos.css" media="screen, projection" />
-<script>
-    $(function() {
-      $( ".resizeme" ).aeImageResize({ height: <{$block.display_height}>, width: <{$block.display_width}> });
-    });
-</script>
 
 <{* single horizontal image *}>
 <{if $block.horizontal == 1}>
@@ -42,7 +36,7 @@
 			<{foreach item=image from=$block.album_images}>
 				<div class="sliderkit-panel">
 					<a title="<{$image.title}>">
-						<img class="resizeme" src="<{$image.img_path}>" alt="<{$image.title}>" />
+						<img class="" src="<{$image.img}>" alt="<{$image.title}>" />
 					</a>
 				</div>
 			<{/foreach}>
@@ -68,11 +62,7 @@
 			});
 		});
 	</script>
-	<script>
-	    $(function() {
-	      $( ".resize_thumb" ).aeImageResize({ height: 50, width: 75 });
-	    });
-	</script>
+	
 	<script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/sliderkit.delaycaptions.1.1.pack.js"></script>
 	<!-- Start photosgallery-captions -->
 	<div class="sliderkit photosgallery-captions" style="width:<{$block.display_width}>px;">
@@ -82,7 +72,7 @@
 					<{foreach item=image from=$block.album_images}>
 						<li>
 							<a href="#img-<{$image.id}>" rel="nofollow" title="<{$image.title}>">
-								<img class="resize_thumb" src="<{$image.img_path}>" alt="<{$image.title}>" />
+								<img class="" src="<{$image.thumb}>" alt="<{$image.title}>" />
 							</a>
 						</li>
 					<{/foreach}>
@@ -96,7 +86,7 @@
 		<div class="sliderkit-panels">
 			<{foreach item=image from=$block.album_images}>
 				<div class="sliderkit-panel" style="width:auto; margin: 0 auto;" id="img-<{$image.id}>">
-					<img class="resizeme" src="<{$image.img_path}>" alt="<{$image.title}>" />
+					<img class="resizeme" src="<{$image.img}>" alt="<{$image.title}>" />
 					<div class="sliderkit-panel-textbox">
 						<div class="sliderkit-panel-text">
 							<h4><{$image.title}></h4>
@@ -181,11 +171,6 @@
 			});
 		});
 	</script>
-	<script>
-	    $(function() {
-	      $( ".resize_thumb" ).aeImageResize({ height: 50, width: 75 });
-	    });
-	</script>
 	<script type="text/javascript" src="<{$icms_url}>/modules/album/scripts/sliderkit.delaycaptions.1.1.pack.js"></script>
 	<div class="sliderkit photosgallery-vertical">
 		<div class="sliderkit-nav">						
@@ -194,7 +179,7 @@
 					<{foreach item=image from=$block.album_images}>
 						<li>
 							<a href="#img-<{$image.id}>" rel="nofollow" title="<{$image.title}>">
-								<img class="resize_thumb" src="<{$image.img_path}>" alt="<{$image.title}>" />
+								<img class="" src="<{$image.thumb}>" alt="<{$image.title}>" />
 							</a>
 						</li>
 					<{/foreach}>
@@ -206,7 +191,7 @@
 		<div class="sliderkit-panels" style="padding-left: 95px;">
 			<{foreach item=image from=$block.album_images}>
 				<div class="sliderkit-panel" style="width:<{$block.display_width}>px;height:<{$block.display_height}>px;" id="img-<{$image.id}>">
-					<img class="resizeme" src="<{$image.img_path}>" alt="<{$image.title}>" />
+					<img class="resizeme" src="<{$image.img}>" alt="<{$image.title}>" />
 					<div class="sliderkit-panel-textbox">
 						<div class="sliderkit-panel-text">
 							<h4><{$image.title}></h4>
@@ -245,11 +230,7 @@
 				});
 			});
 		</script>
-		<script>
-		    $(function() {
-		      $( ".resize_thumb" ).aeImageResize({ height: 130, width: 87 });
-		    });
-		</script>
+		
 		<div id="carousel-demo5" class="sliderkit">
 			<div class="sliderkit-nav">
 				<div class="sliderkit-nav-clip">
@@ -257,7 +238,7 @@
 						<{foreach item=image from=$block.album_images}>
 							<li style="overflow-y: auto;">
 								<a href="#" rel="nofollow" title="<{$image.title}>">
-									<img class="resize_thumb" src="<{$image.img_path}>" alt="<{$image.title}>" />
+									<img class="" src="<{$image.thumb}>" alt="<{$image.title}>" />
 								</a>
 								<h3><{$image.title}></h3>
 								<p><{$image.dsc}></p>
@@ -296,11 +277,7 @@
 				});
 			});
 		</script>
-		<script>
-		    $(function() {
-		      $( ".resize_thumb" ).aeImageResize({ height: 50, width: 75 });
-		    });
-		</script>
+		
 		<div class="sliderkit carousel-demo2">
 			<div class="sliderkit-nav">
 				<div class="sliderkit-nav-clip">
@@ -308,7 +285,7 @@
 						<{foreach item=image from=$block.album_images}>
 							<li>
 								<a href="#" rel="nofollow" title="<{$image.title}>">
-									<img class="resize_thumb" src="<{$image.img_path}>" alt="<{$image.title}>" />
+									<img class="" src="<{$image.thumb}>" alt="<{$image.title}>" />
 								</a>
 							</li>
 						<{/foreach}>

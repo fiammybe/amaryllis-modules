@@ -9,6 +9,10 @@
 		<{includeq file='db:system_common_form.html' form=$album_images_form}>
 	<{/if}>
 	
+	<{if $album_images_table}>
+		<{$album_images_table}>
+	<{/if}>
+	
 	<{if $icmspersistable_delete_confirm}>
 		<{$icmspersistable_delete_confirm}>
 	<{/if}>

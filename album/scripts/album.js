@@ -56,11 +56,12 @@
 				speed:500,
 				opacity: 0.9,
 				photo: true,
-				scalePhotos: true,
+				scalePhotos: false,
 				slideshow: true,
 				arrowKey: true,
 				slideshowAuto: false,
 				inline: true,
+				arrowKey: false,
 				maxWidth: maxW,
 				maxHeight: maxH,
 				innerWidth: innerW,
@@ -113,31 +114,5 @@
 					}
 				},
 			});
-		});
-		
-		// file votings
-		$("a.file_vote").click(function() {
-			var id = $(this).attr("download_id");
-			var name = $(this).attr("name");
-			var dataString = 'download_id='+ id ;
-			var parent = $(this);
-			if (name=='up') {
-				$.ajax({
-					type: "POST",
-					url: "ajax.php?op=vote_up&download_id="+ id ,
-					data: dataString,
-					cache: false,
-				});
-			} else {
-				$.ajax({
-					type: "POST",
-					url: "ajax.php?op=vote_down",
-					data: dataString,
-					cache: false,
-					
-				});
-			}
-			$("#file_voting").load(location.href + " #file_voting > *");
-			return false;
 		});
 	});

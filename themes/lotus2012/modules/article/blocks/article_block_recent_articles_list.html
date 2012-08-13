@@ -1,8 +1,0 @@
-<{if $block.show_view_all == 1}>
-	<a href="<{$block.view_all}>" class="viewmore" title="<{$smarty.const._MB_ARTICLE_VIEW_ALL}>"><{$smarty.const._MB_ARTICLE_VIEW_ALL}></a>
-<{/if}>
-<ul>
-	<{foreach item=article_article from=$block.article_article}>
-		<li><{$article_article.itemLink}></li>
-	<{/foreach}>
-</ul>

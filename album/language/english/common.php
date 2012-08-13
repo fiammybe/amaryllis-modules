@@ -12,7 +12,7 @@
  * 				album
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id$
+ * @version		$Id: common.php 677 2012-07-05 18:10:29Z st.flohrer $
  * @package		album
  * 
  */
@@ -55,16 +55,6 @@ define("_CO_ALBUM_ALBUM_ALBUM_COMMENTS_DSC", "");
 define("_CO_ALBUM_ALBUM_ALBUM_NOTIFICATION_SENT", "Notification sent?");
 define("_CO_ALBUM_ALBUM_ALBUM_NOTIFICATION_SENT_DSC", "");
 
-// language constants for editing indexpage
-define("_CO_ALBUM_INDEXPAGE_INDEX_HEADER", "Title");
-define("_CO_ALBUM_INDEXPAGE_INDEX_HEADER_DSC", "Set Title displayed in the index at frontend ");
-define("_CO_ALBUM_INDEXPAGE_INDEX_HEADING", "Description for Indexpage");
-define("_CO_ALBUM_INDEXPAGE_INDEX_HEADING_DSC", "");
-define("_CO_ALBUM_INDEXPAGE_INDEX_IMAGE", "Indeximage");
-define("_CO_ALBUM_INDEXPAGE_INDEX_IMAGE_DSC", "Set indeximage");
-define("_CO_ALBUM_INDEXPAGE_INDEX_IMG_UPLOAD", "Upload new indeximage");
-define("_CO_ALBUM_INDEXPAGE_INDEX_FOOTER", "footer on indexpage");
-define("_CO_ALBUM_INDEXPAGE_INDEX_FOOTER_DSC", "Set the footer displayed on Indexpage");
 // language constants for adding new images
 define("_CO_ALBUM_IMAGES_IMG_TITLE", "Title");
 define("_CO_ALBUM_IMAGES_A_ID", "Album");
@@ -107,6 +97,10 @@ define("_CO_ALBUM_IMAGES_IMG_COPY_POS", "Position of the copyright");
 define("_CO_ALBUM_IMAGES_IMG_COPY_POS_DSC", "");
 define("_CO_ALBUM_IMAGES_IMG_COPY_COLOR", "Color of the copyright");
 define("_CO_ALBUM_IMAGES_IMG_COPY_COLOR_DSC", "");
+define("_CO_ALBUM_IMAGES_IMG_COPY_FONT", "Font");
+define("_CO_ALBUM_IMAGES_IMG_COPY_FONT_DSC", "Select the font to be used");
+define("_CO_ALBUM_IMAGES_IMG_COPY_FONTSIZE", "Fontsize");
+define("_CO_ALBUM_IMAGES_IMG_COPY_FONTSIZE_DSC", "Select the fontsize to be used");
 define("_CO_ALBUM_IMAGES_WATERMARKPOS_TL", "Top Left");
 define("_CO_ALBUM_IMAGES_WATERMARKPOS_TR", "Top right");
 define("_CO_ALBUM_IMAGES_WATERMARKPOS_TC", "top center");
@@ -121,3 +115,6 @@ define("_CO_ALBUM_IMAGES_WATERMARKCOLOR_BLUE", "blue");
 define("_CO_ALBUM_IMAGES_WATERMARKCOLOR_GREEN", "green");
 define("_CO_ALBUM_IMAGES_WATERMARKCOLOR_WHITE", "white");
 define("_CO_ALBUM_IMAGES_WATERMARKCOLOR_RED", "red");
+define("_CO_ALBUM_HAS_PAAROVED", "Your submitted Album has been approved");
+define("_CO_ALBUM_ALBUM_ALBUM_CID", "Category");
+define("_CO_ALBUM_ALBUM_ALBUM_CID_DSC", "If needed select a Category");

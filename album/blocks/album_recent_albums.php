@@ -24,9 +24,9 @@ function b_album_album_recent_show($options) {
 	
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
+	$album_album_handler = icms_getModuleHandler('album', $moddir, 'album');
 
-	$block['album_album'] = $album_album_handler->getAlbumsForBlocks(0, $options[0]);
+	$block['album_album'] = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, 0, $options[0], 'album_published_date', 'DESC', "album_grpperm", TRUE);
 	
 	return $block;
 }
@@ -34,7 +34,7 @@ function b_album_album_recent_show($options) {
 function b_album_album_recent_edit($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
+	$album_album_handler = icms_getModuleHandler('album', $moddir, 'album');
 	$form = '<table>';
 	$form .= '<tr>';
 	$form .= '<td>' . _MB_ALBUM_ALBUM_RECENT_LIMIT . '</td>';

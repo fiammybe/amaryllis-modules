@@ -53,8 +53,7 @@ $article_isAdmin = icms_userIsAdmin( ARTICLE_DIRNAME );
 
 $articleConfig = icms_getModuleConfig( ARTICLE_DIRNAME );
 
-if($articleConfig['use_sprockets'] == 1) {
-	icms_loadLanguageFile("sprockets", "common");
-}
+icms_loadLanguageFile("index", "common");
+include_once ICMS_ROOT_PATH . '/modules/index/include/common.php';
 
 $icmsPersistableRegistry = icms_ipf_registry_Handler::getInstance();

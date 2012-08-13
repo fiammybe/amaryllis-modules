@@ -27,20 +27,12 @@ $adminmenu[$i]['title'] = _MI_ARTICLE_MENU_ARTICLE;
 $adminmenu[$i]['link'] = 'admin/article.php';
 
 $i++;
-$adminmenu[$i]['title'] = _MI_ARTICLE_MENU_CATEGORY;
-$adminmenu[$i]['link'] = 'admin/category.php';
-
-$i++;
-$adminmenu[$i]['title'] = _MI_ARTICLE_MENU_INDEXPAGE;
-$adminmenu[$i]['link'] = 'admin/indexpage.php?op=mod&index_id=1';
-
-$i++;
 $adminmenu[$i]['title'] = _MI_ARTICLE_MENU_PERMISSIONS;
 $adminmenu[$i]['link'] = 'admin/permissions.php';
 
 global $icmsConfig;
-$articleModule = icms_getModuleInfo( basename( dirname( dirname( __FILE__) ) ) );
 $moddir = basename( dirname( dirname( __FILE__) ) );
+$articleModule = icms_getModuleInfo($moddir);
 $i = 0;
 	
 	$headermenu[$i]['title'] = _CO_ICMS_GOTOMODULE;

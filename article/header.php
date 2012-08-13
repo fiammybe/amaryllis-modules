@@ -19,4 +19,8 @@
 
 include_once "../../mainfile.php";
 include_once dirname(__FILE__) . '/include/common.php';
+if(icms_get_module_status("index")) {
+	$indexModule = icms_getModuleInfo("index");
+	include_once ICMS_ROOT_PATH . "/modules/" . $indexModule->getVar("dirname") . "/include/common.php";
+}
 icms_loadLanguageFile("article", "main");
