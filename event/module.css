@@ -1,0 +1,33 @@
+/**
+ * 'Event' is an event/category module for ImpressCMS, which can display google categorys, too
+ *
+ * File: /class/EventHandler.php
+ * 
+ * Classes responsible for managing event event objects
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Event
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		event
+ *
+ */
+
+.index_headertable { margin-bottom: 2em; float: left;}
+.index_rss { float: right;}
+.event_clear_both { clear: both; height: 1px;}
+.event_clear_left { clear: left; height: 1px;}
+.event_clear_right { clear: right; height: 1px;}
+.index_indeximage { text-align: center;}    
+.index_indexheader { text-align: center; font-size: 2em; margin: 2em auto;}    
+.index_indexheading, .index_indexfooter { margin: 1em auto;}
+.index_no_items { font-size: 1.2em; margin: 1.5em 0; color: red;}
+.event_adminlinks { text-align: center;}
+
+#calendar_legend { width: 100%; margin: 2em auto;}
+.legend_color {float: left; min-width: 15px; min-height: 15px;}
+.legend_item {margin-top: 1em;}
+.legend_title {margin-left: 1em;}

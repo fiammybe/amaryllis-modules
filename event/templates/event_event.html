@@ -1,0 +1,192 @@
+<{includeq file='db:event_header.html'}>
+<{if $event_event}>
+<div id="event-event-container">
+	<h1><{$event_event.event_name}></h1>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CID}></b>: <{$event_event.event_cid}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_DSC}></b></div>
+				<div><{$event_event.event_dsc}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CONTACT}></b>: <{$event_event.event_contact}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CEMAIL}></b>: <{$event_event.event_cemail}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_URL}></b>: <{$event_event.event_url}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_PHONE}></b>: <{$event_event.event_phone}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STREET}></b>: <{$event_event.event_street}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_ZIP}></b>: <{$event_event.event_zip}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CITY}></b>: <{$event_event.event_city}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STARTDATE}></b>: <{$event_event.event_startdate}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STARTTIME}></b>: <{$event_event.event_starttime}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_ENDDATE}></b>: <{$event_event.event_enddate}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_ENDTIME}></b>: <{$event_event.event_endtime}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_PUBLIC}></b>: <{$event_event.event_public}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_ISRECUR}></b>: <{$event_event.event_isrecur}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_RECUR_RULES}></b>: <{$event_event.event_recur_rules}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_RECUR_START}></b>: <{$event_event.event_recur_start}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_RECUR_END}></b>: <{$event_event.event_recur_end}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_SUBMITTER}></b>: <{$event_event.event_submitter}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CREATED_ON}></b>: <{$event_event.event_created_on}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_APPROVE}></b>: <{$event_event.event_approve}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_ACTIVE}></b>: <{$event_event.event_active}></div>
+		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_IMAGE}></b>: <{$event_event.event_image}></div>
+
+</div>
+<{/if}>
+<{if $event_event_table}>
+<h1><{$event_title}></h1>
+<{$event_event_table}>
+<{/if}>
+<{includeq file='db:event_footer.html'}>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function () {
+
+         var lastView;
+
+         $('#calendar').fullCalendar({
+             header: {
+                 left: 'today',
+                 center: 'prev,title,next',
+                 right: 'month,basicDay'
+             },
+             slotMinutes: 30,
+             firstHour: 5,
+             editable: false,
+             timeFormat: 'H:mm',
+             firstday: 0, //Sunday0 Monday1..etc
+             allDayDefault : true,
+             //loading: function(bool) { if (bool) $('#loadingImg').show(); else $('#loadingImg').hide(); alert( $('#calendar').fullCalendar('clientEvents') ) },
+
+             loading: function(bool) { if (bool) $('#loadingImg').show(); else $('#loadingImg').hide();  },
+
+             //VIEW CHANGE - ALSO ADDS INITIAL SOURCES PER DAY VIEW
+             viewDisplay: function(view) {
+                                        if (lastView == undefined) { lastView = 'firstRun';  }
+
+                                        if (view.name != lastView )
+                                        {
+
+                                                if (view.name == 'month') 
+                                                  { 
+                                                    if ( '<%=brsEnabled %>' == 'True' ) { $('#calendar').fullCalendar( 'removeEventSource', '/diaryFeed.aspx?style=brsComplex' ); $('#calendar').fullCalendar( 'addEventSource', '/diaryFeed.aspx?style=brsBasic' );     }
+                                                    if ( '<%=activeEnabled %>' == 'True' ) {  $('#calendar').fullCalendar( 'removeEventSource', '/diaryFeed.aspx?style=fixturesComplex' ); $('#calendar').fullCalendar( 'addEventSource', '/diaryFeed.aspx?style=fixturesBasic' );    }
+                                                    if ( '<%=previousEnabled %>' == 'True' ) { $('#calendar').fullCalendar( 'removeEventSource', '/diaryFeed.aspx?style=previousComplex' ); $('#calendar').fullCalendar( 'addEventSource', '/diaryFeed.aspx?style=previousBasic' );   }
+                                                    if ( '<%=newsEventEnabled %>' == 'True' ) { $('#calendar').fullCalendar( 'removeEventSource', '/diaryFeed.aspx?style=newsEvents' ); $('#calendar').fullCalendar( 'addEventSource', '/diaryFeed.aspx?style=newsEvents' );   }
+                                                  }
+                                                 if (view.name == 'basicDay') 
+                                                  { 
+                                                    if ( '<%=brsEnabled %>' == 'True' ) { $('#calendar').fullCalendar( 'removeEventSource', '/diaryFeed.aspx?style=brsBasic' );  $('#calendar').fullCalendar( 'addEventSource', '/diaryFeed.aspx?style=brsComplex' );   }
+                                                    if ( '<%=activeEnabled %>' == 'True' ) { $('#calendar').fullCalendar( 'removeEventSource', '/diaryFeed.aspx?style=fixturesBasic' );  $('#calendar').fullCalendar( 'addEventSource', '/diaryFeed.aspx?style=fixturesComplex' );   }
+                                                    if ( '<%=previousEnabled %>' == 'True' ) { $('#calendar').fullCalendar( 'removeEventSource', '/diaryFeed.aspx?style=previousBasic' );  $('#calendar').fullCalendar( 'addEventSource', '/diaryFeed.aspx?style=previousComplex' );   }
+                                                    if ( '<%=newsEventEnabled %>' == 'True' ) { $('#calendar').fullCalendar( 'removeEventSource', '/diaryFeed.aspx?style=newsEvents' ); $('#calendar').fullCalendar( 'addEventSource', '/diaryFeed.aspx?style=newsEvents' );   }
+                                                  }
+
+                                         lastView = view.name;
+                                        }
+                                    },
+
+             //EVENT CLICK
+             eventClick: function( event, jsEvent, view ) 
+             { 
+                //STOP GOOGLE LINK FROM FOLLOWING THROUGH ON ALL OCCASIONS
+                if (event.url != undefined) { if (event.url.indexOf("google") > 0) { return false; } }
+
+                if (event.newsEvent == "True") 
+                    {
+                        //SOME OTHER SPECIFIC FUNCTION
+                    }
+                    else
+                    {
+                        var view = $('#calendar').fullCalendar('getView');
+                        if  (view.name == 'month') 
+                        {
+                            $('#calendar').fullCalendar('changeView', 'basicDay');
+                            $('#calendar').fullCalendar( 'gotoDate', event.start );
+                        }
+                        if  (view.name == 'basicDay') 
+                        {   
+                            //HANDLES CLICK OF EVENT IN DAY VIEW TO EXPAND DIV WITH EXTRA INFORMATION
+
+                        }
+                    }
+             },
+
+             //HOVER
+             //eventMouseover: function( event, jsEvent, view ) { if (event.PopUp == 'yes') { $(this).CreateBubblePopup({ innerHtml: + '<br/>Click for more infromation.'  , themePath: 'images/bubblepopup-theme', themeName: 'black'  }); }  } ,
+
+             //DAY CLICK
+             //dayClick: function( event, jsEvent, view ) { alert("Day Clicked.. Booking?") } ,
+
+             //ALL COMBINED INITIAL FEEDS
+             eventSources: [ <%=myGoogleCalendars %> ] 
+
+         });
+
+         //ATTACHING A LOADING IMAGE
+         $('.fc-header-title').append('<img id="loadingImg" style="width:16px; height:11px; float:none; margin-top: -25px;" src="images/loadingSmall.gif" />');
+
+         //HDID FILTER
+         if ('<%=activeEnabled %>' == 'True') {
+
+         $('.fc-header-left').append('<span class="fc-button fc-button-today fc-state-default fc-corner-left fc-corner-right fc-state-active"><span class="fc-button-inner"><span id="filterHDID" class="fc-button-content">hdid</span><span class="fc-button-effect"><span></span></span></span></span>');
+         $("#filterHDID").click(function() {  if ($(this).parents('span').hasClass('fc-state-active')) 
+            {
+               $('.data-fixtures').css('display', 'none')
+               $(this).parents('span').removeClass('fc-state-active');
+               if ('<%=previousEnabled %>' == 'True') { $('.data-previous').css('display', 'none');  
+                                                      }
+            } 
+            else 
+            {
+               $('.data-fixtures').css('display', 'inline')
+               $(this).parents('span').addClass('fc-state-active');
+               if ( '<%=previousEnabled %>' == 'True') { $('.data-previous').css('display', 'inline')  
+                                                       }
+               }              });
+         }
+
+
+         //BRS FILTER
+         if ( '<%=brsEnabled %>' == 'True' ) {
+
+         $('.fc-header-left').append('<span class="fc-button fc-button-today fc-state-default fc-corner-left fc-corner-right fc-state-active"><span class="fc-button-inner"><span id="filterBRS" class="fc-button-content">brs</span><span class="fc-button-effect"><span></span></span></span></span>');
+         $("#filterBRS").click(function() {  if ($(this).parents('span').hasClass('fc-state-active')) 
+            {
+                $('.data-brs').css('display', 'none')
+                //$('#calendar').fullCalendar('removeEventSource', '/diaryFeed.aspx?style=brs'); 
+                $(this).parents('span').removeClass('fc-state-active');
+            } 
+            else 
+            {
+               $('.data-brs').css('display', 'inline')
+               //$('#calendar').fullCalendar('addEventSource', '/diaryFeed.aspx?style=brs');  
+               $(this).parents('span').addClass('fc-state-active');
+               }              });
+         }
+
+         //GOOGLE FEED FILTER
+         if ( '<%=googleEnabled %>' == 'True') {
+
+            $('.fc-header-left').append('<span class="fc-button fc-button-today fc-state-default fc-corner-left fc-corner-right fc-state-active"><span class="fc-button-inner"><span id="filterGCAL" class="fc-button-content">google</span><span class="fc-button-effect"><span></span></span></span></span>');
+            $("#filterGCAL").click(function() {  if ($(this).parents('span').hasClass('fc-state-active')) 
+            {
+                $('#calendar').fullCalendar('removeEventSource', <%=myGoogleCalendars%>);  $(this).parents('span').removeClass('fc-state-active');
+            } 
+            else 
+            {
+               $('#calendar').fullCalendar('addEventSource', <%= myGoogleCalendars%>);  $(this).parents('span').addClass('fc-state-active');
+               }              });
+        }
+
+        //MORE
+
+
+
+     });
+</script>

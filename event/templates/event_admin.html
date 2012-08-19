@@ -1,0 +1,15 @@
+<!-- events -->
+<{if $event_event_title}><h1><{$event_event_title}></h1><{/if}>
+<{if $event_event_info}><p><{$event_event_info}></p><{/if}>
+<{if $event_event_table}><{$event_event_table}><{/if}>
+<{if $addevent}><{includeq file='db:system_common_form.html' form=$addevent}><{/if}>
+<!-- categories -->
+<{if $event_category_title}><h1><{$event_category_title}></h1><{/if}>
+<{if $event_category_info}><p><{$event_category_info}></p><{/if}>
+<{if $event_category_table}><{$event_category_table}><{/if}>
+<{if $addcategory}><{includeq file='db:system_common_form.html' form=$addcategory}><{/if}>
+<!-- google calendars -->
+<{if $event_calendar_title}><h1><{$event_calendar_title}></h1><{/if}>
+<{if $event_calendar_info}><p><{$event_calendar_info}></p><{/if}>
+<{if $event_calendar_table}><{$event_calendar_table}><{/if}>
+<{if $addcalendar}><{includeq file='db:system_common_form.html' form=$addcalendar}><{/if}>

@@ -1,0 +1,207 @@
+<!-- scripts for initializing and cofiguring the calendar -->
+<script type='text/javascript' src='<{$event_script_url}>fullcalendar.min.js'></script>
+<{if $calendars}>
+<script type='text/javascript' src='<{$event_script_url}>gcal.js'></script>
+<{/if}>
+<script type='text/javascript' src='<{$event_script_url}>jquery.qtip.min.js'></script>
+<script type='text/javascript'>
+	$(document).ready(function() {
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
+		var calendar = $('#calendar').fullCalendar({
+			defaultView: '<{$default_view}>',
+			aspectRatio: 1.35,
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			//slotMinutes: <{$agenda_slot}>,
+            firstHour: <{$agenda_start}>,
+            defaultEventMinutes: <{$event_minutes}>,
+			axisFormat: 'HH:mm',
+			timeFormat: {
+			    agenda: 'H:mm{ - h:mm}'
+			},
+			dragOpacity: {
+			    agenda: .5
+			},
+			minTime: <{$agenda_min}>,
+			maxTime: <{$agenda_max}>,
+			dayNumberClickable: true,
+			dayClick: function(date, allDay, jsEvent, view) {
+				if(view.name != 'month')
+					return;
+    			$('#calendar').fullCalendar('changeView', 'agendaDay')
+    				.fullCalendar('gotoDate', date);
+			},
+
+			isRTL: <{$event_rtl}>,
+			firstDay: <{$first_day}>,
+			weekends: <{$display_weekend}>,
+			monthNames: ['<{$smarty.const._CO_EVENT_JANUARY}>','<{$smarty.const._CO_EVENT_FEBRUARY}>','<{$smarty.const._CO_EVENT_MARCH}>','<{$smarty.const._CO_EVENT_APRIL}>','<{$smarty.const._CO_EVENT_MAY}>',
+							'<{$smarty.const._CO_EVENT_JUNE}>','<{$smarty.const._CO_EVENT_JULY}>','<{$smarty.const._CO_EVENT_AUGUST}>','<{$smarty.const._CO_EVENT_SEPTEMBER}>','<{$smarty.const._CO_EVENT_OCTOBER}>',
+							'<{$smarty.const._CO_EVENT_NOVEMBER}>','<{$smarty.const._CO_EVENT_DECEMBER}>'],
+			monthNamesShort: ['<{$smarty.const._CO_EVENT_JAN}>','<{$smarty.const._CO_EVENT_FEB}>','<{$smarty.const._CO_EVENT_MAR}>','<{$smarty.const._CO_EVENT_APR}>','<{$smarty.const._CO_EVENT_MAI}>','<{$smarty.const._CO_EVENT_JUN}>',
+								 '<{$smarty.const._CO_EVENT_JUL}>','<{$smarty.const._CO_EVENT_AUG}>','<{$smarty.const._CO_EVENT_SEP}>','<{$smarty.const._CO_EVENT_OCT}>','<{$smarty.const._CO_EVENT_NOV}>','<{$smarty.const._CO_EVENT_DEC}>'],
+			dayNames: ['<{$smarty.const._CO_EVENT_SUNDAY}>','<{$smarty.const._CO_EVENT_MONDAY}>','<{$smarty.const._CO_EVENT_TUESDAY}>','<{$smarty.const._CO_EVENT_WEDNESDAY}>','<{$smarty.const._CO_EVENT_THURSDAY}>',
+							 '<{$smarty.const._CO_EVENT_FRIDAY}>','<{$smarty.const._CO_EVENT_SATURDAY}>'],
+			dayNamesShort: ['<{$smarty.const._CO_EVENT_SU}>','<{$smarty.const._CO_EVENT_MO}>','<{$smarty.const._CO_EVENT_TU}>','<{$smarty.const._CO_EVENT_WE}>','<{$smarty.const._CO_EVENT_TH}>',
+								'<{$smarty.const._CO_EVENT_FR}>','<{$smarty.const._CO_EVENT_SA}>'],
+			buttonText: {
+				prev: '&nbsp;&#9668;&nbsp;',
+				next: '&nbsp;&#9658;&nbsp;',
+				prevYear: '&nbsp;&lt;&lt;&nbsp;',
+				nextYear: '&nbsp;&gt;&gt;&nbsp;',
+				today: '<{$smarty.const._CO_EVENT_TODAY}>',
+				month: '<{$smarty.const._CO_EVENT_MONTH}>',
+				week: '<{$smarty.const._CO_EVENT_WEEK}>',
+				day: '<{$smarty.const._CO_EVENT_DAY}>'
+			},
+			// time formats
+			titleFormat: {
+				month: 'MMMM yyyy',
+				week: "MMM d[ yyyy]{ '&#8212;'[ MMM] d yyyy}",
+				day: 'dddd, MMM d, yyyy'
+			},
+			columnFormat: {
+				month: 'ddd',
+				week: 'ddd M/d',
+				day: 'dddd M/d'
+			},
+			timeFormat: 'H(:mm)',
+			allDayText: '<{$smarty.const._CO_EVENT_ALLDAY}>',
+			// jquery-ui theming
+			theme: true,
+			buttonIcons: {
+				prev: 'circle-triangle-w',
+				next: 'circle-triangle-e'
+			},
+			<{if $calendars}>
+			eventSources: [
+				<{foreach item=cal from=$calendars name=calendar}>
+				{
+					url: "<{$cal.url}>",
+					className: 'nice-event',
+					color: "<{$cal.color}>"
+				}<{if !$smarty.foreach.calendar.last}>,<{/if}>
+				<{/foreach}>
+			],
+			<{/if}>
+			//events
+			events: [
+				<{foreach item=cal from=$calendars name=calendar}>
+				{
+					url: "<{$cal.url}>",
+					className: 'nice-event',
+					color: "<{$cal.color}>"
+				}<{if !$smarty.foreach.calendar.last}>,<{/if}>
+				<{/foreach}>
+				<{if $calendars && $events}>,<{/if}>
+				<{foreach item=event from=$events name=event}>
+					{
+						id: <{$event.id}>,
+						title: '<{$event.name}>',
+						start: <{$event.start}>,
+						end: <{$event.end}>,
+						allDay: <{$event.allDay}>,
+						url: '<{$event.itemURL}>',
+						description: '<{$event.dsc}>',
+						color: '<{$event.color}>',
+						//textColor: <{$event.textcolor}>,
+						<{if $event.canEditAndDelete}>
+							editable: true
+						<{else}>
+							editable: false
+						<{/if}>
+					}<{if !$smarty.foreach.event.last}>,<{/if}>
+				<{/foreach}>
+			],
+			eventRender: function(event, element) {
+        		element.qtip({    
+		            content: {    
+		                title: { text: event.title },
+		                text: '<span class="title">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'HH:mm')) + 
+		                		'<br /><span class="title">End: </span>' + ($.fullCalendar.formatDate(event.end, 'HH:mm')) + 
+		                		'<br /><span class="title">Description: </span>' + event.description 
+		                		
+		            },
+		            show: { solo: true },
+		            //hide: { when: 'inactive', delay: 3000 }, 
+		            style: { 
+		                width: 500,
+		                padding: 5,
+		                classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
+		                tip: 'topLeft',
+						textAlign:'left',
+						tip:'bottomLeft',
+		                classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow'
+		            },
+		            position: {
+						target: 'mouse',
+						my:'bottomLeft',
+						adjust: {
+							x: 0,  y: -5
+						}
+					}
+		        });
+    		},
+    		<{if $can_submit}>
+    		dropAccept: '*',
+			selectable: true,
+			selectHelper: true,
+			editable: true,
+			select: function(startDate, endDate, allDay) {
+				var view = calendar.fullCalendar('getView');
+				if(view.name = 'month')
+					return false;
+				var title = prompt('<{$smarty.const._MD_EVENT_TITLE}>');
+				var now = new Date();
+				if(startDate < now) {
+					alert('<{$smarty.const._CO_EVENT_CANNOT_BOOK_PAST}>');
+					calendar.fullCalendar( 'unselect' );
+				} else {
+					var title = prompt('New Charges:');
+					if (title) {
+						calendar.fullCalendar('renderEvent', {
+								title: title,
+								start: startDate,
+								end: endDate,
+								allDay: allDay,
+								//description: description
+							}, true // make the event "unstick"
+						);
+						var startDateString = $.fullCalendar.formatDate(startDate, 'yyyy-MM-dd');
+						var endDateString = $.fullCalendar.formatDate(endDate, 'yyyy-MM-dd');
+						$.ajax({
+							type: 'POST',
+							url: './submit.php?op=addevent',
+							data: {
+			                    startDate: startDateString,
+								endDate: endDateString,
+								eventTitle: title
+							},
+							dateType: 'json',
+							success: function (resp) {
+								calendar.fullCalendar('refetchEvents');
+							}
+						});
+					} // end of inner if
+				} // end of else
+				calendar.fullCalendar('unselect');
+			}
+			<{else}>
+			selectable: false,
+			selectHelper: false,
+			editable: false
+			<{/if}>
+		});
+	});
+</script>
+<style type="text/css">
+        /* the 'fix' for the datepicker when using jquery layout */
+        #ui-datepicker-div { z-index: 5; }
+</style>

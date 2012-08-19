@@ -1,0 +1,22 @@
+<{includeq file='db:event_header.html'}>
+<{includeq file='db:event_calconf.html'}>
+
+<div id='calendar'></div>
+
+<div id="calendar_legend">
+	<fieldset style="border: #e8e8e8 1px solid;">
+		<legend><{$smarty.const._MD_EVENT_LEGEND}></legend>
+		<{foreach item=cat from=$categories name=category}>
+			<div class="legend_item" style="">
+				<span class="legend_color" style="background-color: <{$cat.color}>">&nbsp;</span><span class="legend_title"><{$cat.name}></span><br />
+			</div>
+		<{/foreach}>
+		<{foreach item=cal from=$calendars name=calendar}>
+			<div class="legend_item" style="">
+				<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title"><{$cal.name}></span><br />
+			</div>
+		<{/foreach}>
+	</fieldset>
+</div>
+
+<{includeq file='db:event_footer.html'}>
