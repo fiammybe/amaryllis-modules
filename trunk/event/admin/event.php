@@ -35,6 +35,8 @@ function editevent($event_id = 0) {
 		$eventObj->setVar("event_enddate", time()+120*60);
 		$eventObj->setVar("event_submitter", icms::$user->getVar("uid"));
 		$eventObj->setVar("event_created_on", time() - 100);
+		$eventObj->setVar("event_contact", icms::$user->getVar("uname"));
+		$eventObj->setVar("event_cemail", icms::$user->getVar("email"));
 		$icmsModule->displayAdminMenu(0, _AM_EVENT_EVENTS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $eventObj->getForm(_AM_EVENT_EVENT_CREATE, "addevent");
 		$sform->assign($icmsAdminTpl);

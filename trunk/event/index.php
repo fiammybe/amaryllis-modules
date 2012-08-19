@@ -29,7 +29,7 @@ include_once ICMS_ROOT_PATH . "/header.php";
 
 if(icms_get_module_status("index")) {
 	$indexpage_handler = icms_getModuleHandler( 'indexpage', INDEX_DIRNAME, 'index' );
-	$indexpageObj = $indexpage_handler->getIndexByMid(icms::$module->getVar("mid", "e"));
+	$indexpageObj = $indexpage_handler->getIndexByMid(icms::$module->getVar("mid"));
 	if(is_object($indexpageObj)) $icmsTpl->assign('index_index', $indexpageObj->toArray());
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

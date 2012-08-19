@@ -34,7 +34,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->quickInitVar("event_cid", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("event_dsc", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("event_contact", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("event_cemail", XOBJ_DTYPE_EMAIL, FALSE);
+		$this->quickInitVar("event_cemail", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("event_url", XOBJ_DTYPE_URLLINK, FALSE);
 		$this->quickInitVar("event_phone", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("event_street", XOBJ_DTYPE_TXTBOX, TRUE);
@@ -43,16 +43,8 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->quickInitVar("event_allday", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("event_startdate", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_enddate", XOBJ_DTYPE_LTIME, TRUE);
-		$this->quickInitVar("event_public", XOBJ_DTYPE_INT, FALSE);
-		$this->quickInitVar("event_isrecur", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
+		$this->quickInitVar("event_public", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		
-		$this->quickInitVar("event_recur_rules", XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, 0);
-		$this->quickInitVar("event_recur_freq", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
-		$this->quickInitVar("event_recur_days", XOBJ_DTYPE_SIMPLE_ARRAY, FALSE, FALSE, FALSE);
-		$this->quickInitVar("event_recur_start", XOBJ_DTYPE_STIME, FALSE);
-		$this->quickInitVar("event_recur_end", XOBJ_DTYPE_SIMPLE_ARRAY, FALSE);
-		
-		$this->quickInitVar("event_disable_recur", XOBJ_DTYPE_SIMPLE_ARRAY, FALSE, FALSE, FALSE);
 		$this->quickInitVar("event_submitter", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("event_created_on", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_approve", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
@@ -68,18 +60,12 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->setControl("event_cid", array("name" => "select", "itemHandler" => "event", "method" => "getCategoryList", "module" => "event"));
 		$this->setControl("event_public", "yesno");
 		$this->setControl("event_allday", "yesno");
-		$this->setControl("event_isrecur", array("name" => "yesno", "onSelect" => "submit"));
-		$this->setControl("event_recur_rules", array("name" => "select", "itemHandler" => "event", "method" => "getRecurs", "module" => "event"));
-		$this->setControl("event_recur_freq", array("name" => "select", "itemHandler" => "event", "method" => "getRecurFreq", "module" => "event"));
-		$this->setControl("event_recur_days", array("name" => "select", "itemHandler" => "event", "method" => "getRecurDays", "module" => "event"));
-		
 		$this->setControl("event_submitter", "user");
 		$this->setControl("event_approve", "yesno");
 		
 		$this->initiateSEO();
 		
-		$this->hideFieldFromForm(array("short_url", "meta_description", "meta_keywords", "event_submitter", "event_created_on", "event_approve", "event_comments", "event_notif_sent",
-										"event_isrecur", "event_recur_rules", "event_disable_recur", "event_recur_freq", "event_recur_days", "event_recur_start", "event_recur_end"));
+		$this->hideFieldFromForm(array("short_url", "meta_description", "meta_keywords", "event_submitter", "event_created_on", "event_approve", "event_comments", "event_notif_sent"));
 	}
 
     public function getCategory($cattitle = TRUE) {
@@ -87,16 +73,57 @@ class mod_event_Event extends icms_ipf_seo_Object {
         $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
         $cat = $category_handler->get($cid);
         $title = $cat->title();
-        $color = $cat->getColor();
+        $ret['title'] = $title;
+        $ret['color'] = $cat->getColor();
+		$ret['url'] = $cat->getItemLink(FALSE);
         unset($category_handler, $cat);
-        return ($cattitle) ? $title : $color;
+        return ($cattitle) ? $title : $ret;
     }
     
+	public function accessGranted() {
+		if ($this->userCanEditAndDelete()) return TRUE;
+		$gperm_handler = icms::handler('icms_member_groupperm');
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$module = icms::handler('icms_module')->getByDirname(EVENT_DIRNAME);
+		$viewperm = $gperm_handler->checkRight('cat_view', $this->getVar('event_cid', 'e'), $groups, $module->getVar("mid"));
+		if ($viewperm && $this->isApproved()) return TRUE;
+		return FALSE;
+	}
+	
     function userCanEditAndDelete() {
 		global $event_isAdmin;
 		if (!is_object(icms::$user)) return FALSE;
 		if ($event_isAdmin) return TRUE;
 		return $this->getVar("event_submitter", "e") == icms::$user->getVar("uid", "e");
+	}
+	
+	public function getContact() {
+		$ret = FALSE;
+		$contact = $this->getVar("event_contact", "e");
+		$email = $this->getVar("event_cemail", "e");
+		if($contact == "" || $contact == "0") return FALSE;
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("uname", trim($contact)));
+		$member_handler = icms::handler('icms_member_user');
+		$users = $member_handler->getObjects($criteria, TRUE);
+		if($users) {
+			$user = $member_handler->get($users);
+			$ret['contact'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $user->getVar("uid") . '" title="' . $contact . '">' . ucfirst($contact) . '</a>';
+			$ret['avatar'] = $user->gravatar();
+			if(!$email == "" || !$email = "0") {
+				$ret['email'] = icms_core_DataFilter::checkVar($email, "email", 1, 0);
+			}
+		} else {
+			$ret['contact'] = ucfirst($contact);
+			if(!$email == "" || !$email = "0") {
+				$ret['avatar'] =  "http://www.gravatar.com/avatar/" . md5(strtolower($email)) . "?d=identicon";
+				$ret['email'] = icms_core_DataFilter::checkVar($email, "email", 1, 0);
+			} 
+		}
+		return $ret;
+	}
+	
+	public function isApproved() {
+		return ($this->getVar("event_approve", "e") == 1) ? TRUE : FALSE;
 	}
 	
 	public function getItemLink($urlOnly = FALSE) {
@@ -110,8 +137,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
         $ret['id'] = $this->id();
         $ret['name'] = $this->title();
         $ret['dsc'] = $this->summary();
-        $ret['cid'] = $this->getCategory(TRUE);
-        $ret['color'] = $this->getCategory(FALSE);
+        $ret['cat'] = $this->getCategory(FALSE);
         $ret['start'] = $this->getVar("event_startdate", "e");
 		$ret['end'] = $this->getVar("event_enddate", "e");
 		$ret['allDay'] = ($this->getVar("event_allday", "e") == 1) ? "true" : "false";
@@ -119,7 +145,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
         if(defined("EVENT_FOR_SINGLEVIEW")) {
-            
+            $ret['contact'] = $this->getContact();
         }
         return $ret;
 	}

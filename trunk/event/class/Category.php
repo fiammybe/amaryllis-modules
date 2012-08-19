@@ -60,6 +60,12 @@ class mod_event_Category extends icms_ipf_seo_Object {
         
     }
 
+	public function getItemLink($urlOnly = FALSE) {
+		$url = EVENT_URL . 'category.php?cat=' . $this->short_url();
+		if($urlOnly) return $url;
+		return '<a href="' . $url . '" title="' . $this->title() . '">' . $this->title() . '</a>';
+	}
+
 	public function toArray() {
 		$ret = parent::toArray();
 		$ret['id'] = $this->id();

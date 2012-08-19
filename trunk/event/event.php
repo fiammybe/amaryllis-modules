@@ -15,21 +15,21 @@ include_once "header.php";
 $xoopsOption["template_main"] = "event_event.html";
 include_once ICMS_ROOT_PATH . "/header.php";
 
-$event_event_handler = icms_getModuleHandler("event", basename(dirname(__FILE__)), "event");
+$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 
-/** Use a naming convention that indicates the source of the content of the variable */
-$clean_event_id = isset($_GET["event_id"]) ? (int)$_GET["event_id"] : 0 ;
-$eventObj = $event_event_handler->get($clean_event_id);
+$clean_event = isset($_GET["event"]) ? filter_input(INPUT_GET, "event") : FALSE ;
+$eventObj = $event_handler->getEventBySeo($clean_event);
 
-if($eventObj && !$eventObj->isNew()) {
-	$icmsTpl->assign("event_event", $eventObj->toArray());
+if($eventObj && !$eventObj->isNew() && $eventObj->accessGranted()) {
+	define("EVENT_FOR_SINGLEVIEW", TRUE);
+	$icmsTpl->assign("event", $eventObj->toArray());
 
-	$icms_metagen = new icms_ipf_Metagen($eventObj->getVar("event_name"), $eventObj->getVar("meta_keywords", "n"), $eventObj->getVar("meta_description", "n"));
+	$icms_metagen = new icms_ipf_Metagen($eventObj->title(), $eventObj->meta_keywords(), $eventObj->meta_description());
 	$icms_metagen->createMetaTags();
 } else {
 	$icmsTpl->assign("event_title", _MD_EVENT_ALL_EVENTS);
 
-	$objectTable = new icms_ipf_view_Table($event_event_handler, FALSE, array());
+	$objectTable = new icms_ipf_view_Table($event_handler, FALSE, array());
 	$objectTable->isForUserSide();
 	$objectTable->addColumn(new icms_ipf_view_Column("event_name"));
 	$icmsTpl->assign("event_event_table", $objectTable->fetch());
