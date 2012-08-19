@@ -13,7 +13,7 @@
  */
 
 function event_com_update($item_id, $total_num) {
-    $event_post_handler = icms_getModuleHandler("post", basename(dirname(dirname(__FILE__))), "event");
+    $event_post_handler = icms_getModuleHandler("event", basename(dirname(dirname(__FILE__))), "event");
     $event_post_handler->updateComments($item_id, $total_num);
 }
 

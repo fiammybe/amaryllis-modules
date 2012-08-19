@@ -40,7 +40,8 @@ class mod_event_EventHandler extends icms_ipf_Handler {
     public function getCategoryList() {
         if(!count($this->_catArray)) {
             $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
-            $cats = $category_handler->getObjects(FALSE, TRUE, FALSE);
+			$criteria = $category_handler->getCategoryCriterias();
+            $cats = $category_handler->getObjects($criteria, TRUE, FALSE);
             foreach ($cats as $key => $value) {
                 $this->_catArray[$key] = $value['name'];
             }
@@ -88,7 +89,14 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		} return $this->_recEndArray;
 	}
 
-	public function getEventCriterias( $cat_id, $perm = 'cat_view', $end = "month") {
+	/**
+	 * event criterias
+	 * @param $cat_id can be int cid or an array of cids
+	 * @param $perm => string "cat_view" or "cat_submit"
+	 * @param $start => int UNIX Timestamp
+	 * @param $end => int UNIX Timestamp
+	 */
+	public function getEventCriterias( $cat_id, $perm = 'cat_view',$start = 0, $end = "month", $private = TRUE) {
 		$criteria = new icms_db_criteria_Compo();
 		if($cat_id !== FALSE) {
 			$perm_handler = new icms_ipf_permission_Handler($this);
@@ -103,6 +111,13 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 				}
 			}
 		}
+		if($private) {
+			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("event_public", 1), 'OR');
+			$critTray->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
+			$criteria->add($critTray);
+		}
 		$criteria->add(new icms_db_criteria_Item("event_startdate", time(), '>='));
 		if($end == "month") {
 			$criteria->add(new icms_db_criteria_Item("event_enddate", time() + 60*60*24*31, '<=' ));
@@ -112,7 +127,6 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			$criteria->add(new icms_db_criteria_Item("event_enddate", time() + 60*60*24*30*12, '<=' ));
 		}
 		return $criteria;
-		
 	}
 
 	public function getEvents($cat_ids = FALSE, $perm = 'cat_view', $end = "month") {
@@ -125,6 +139,12 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	
+	public function getEventBySeo($seo) {
+		$event = FALSE;
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", trim($seo)));
+		$events = $this->getObjects($criteria, FALSE, FALSE);
+		if($events) $event = $this->get($events[0]['event_id']);
+		return $event;
+	}
 
 }

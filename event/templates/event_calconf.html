@@ -110,7 +110,7 @@
 						allDay: <{$event.allDay}>,
 						url: '<{$event.itemURL}>',
 						description: '<{$event.dsc}>',
-						color: '<{$event.color}>',
+						color: '<{$event.cat.color}>',
 						//textColor: <{$event.textcolor}>,
 						<{if $event.canEditAndDelete}>
 							editable: true
@@ -170,7 +170,7 @@
 								title: title,
 								start: startDate,
 								end: endDate,
-								allDay: allDay,
+								allDay: allDay
 								//description: description
 							}, true // make the event "unstick"
 						);
@@ -201,7 +201,3 @@
 		});
 	});
 </script>
-<style type="text/css">
-        /* the 'fix' for the datepicker when using jquery layout */
-        #ui-datepicker-div { z-index: 5; }
-</style>
