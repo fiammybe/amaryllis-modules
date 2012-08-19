@@ -67,8 +67,8 @@ $modversion = array(
                         "onUninstall"               => "include/onupdate.inc.php",
                     
                     /** Search information */
-                        "hasSearch"                 => 1,
-                        "search"                    => array("file" => "include/search.inc.php", "func" => "index_search"),
+                        "hasSearch"                 => 0,
+                        "search"                    => array("file" => "include/search.inc.php", "func" => "event_search"),
                     
                     /** Menu information */
                         "hasMain"                   => 1,

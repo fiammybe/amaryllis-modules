@@ -68,8 +68,8 @@ function event_indexpage() {
 
 function deleteLinkedModuleItems() {
 	$module_handler = icms::handler('icms_module');
-	$module = $module_handler->getByDirname(EVENT_DIRNAME);
-	$module_id = $module->getVar('mid');
+	//$module = $module_handler->getByDirname(EVENT_DIRNAME);
+	$module_id = icms::$module->getVar('mid');
 	$link_handler = icms_getModuleHandler("link", "index");
 	$link_handler->deleteAllByMId($module_id);
 	unset($link_handler);
