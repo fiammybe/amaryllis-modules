@@ -1,15 +1,20 @@
 <?php
 /**
- * event version infomation
+ * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
- * This file holds the configuration information of this module
- *
- * @copyright	
+ * File: /icms_version.php
+ * 
+ * holds the module informations
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Event
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		event
  * @version		$Id$
+ * @package		event
+ *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
@@ -217,6 +222,25 @@ $modversion['config'][$i] = array(
 							);
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/** Notification information */
-/** To come soon in imBuilding... */
+$modversion['notification']['lookup_file'] = 'include/notification.inc.php';
+$modversion['notification']['lookup_func'] = 'event_notify_iteminfo';
+
+$modversion['notification']['category'][] = array (
+													'name'				=> 'global',
+													'title'				=> _MI_EVENT_GLOBAL_NOTIFY,
+													'description'		=> _MI_EVENT_GLOBAL_NOTIFY_DSC,
+													'subscribe_from'	=> array('index.php')
+												);
+$modversion['notification']['event'][] = array(
+													'name'				=> 'event_published',
+													'category'			=> 'global',
+													'title'				=> _MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY,
+													'caption'			=> _MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_CAP,
+													'description'		=> _MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_DSC,
+													'mail_template'		=> 'global_event_published',
+													'mail_subject'		=> _MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_SBJ
+												);

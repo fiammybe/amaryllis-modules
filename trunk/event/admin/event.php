@@ -55,7 +55,7 @@ if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
 $valid_op = array ("mod", "changedField", "addevent", "del", "view", "");
 
-$event_handler = icms_getModuleHandler("event", basename(dirname(dirname(__FILE__))), "event");
+$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 
 $clean_event_id = isset($_GET["event_id"]) ? filter_input(INPUT_GET, "event_id", FILTER_SANITIZE_NUMBER_INT) : 0;
 
@@ -89,11 +89,23 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$eventObj->displaySingleObject();
 			break;
 
+		case 'changeApprove':
+			$approve = $event_handler->changeField($clean_event_id, "event_approve");
+			if($approve == 1) {
+				$eventObj = $event_handler->get($clean_event_id);
+				$eventObj->sendMessageApproved();
+			}
+			$red_message = ($approve == 0) ? _AM_EVENT_EVENT_DENIED : _AM_EVENT_EVENT_APPROVED;
+			redirect_header(EVENT_ADMIN_URL . 'event.php', 2, $red_message);
+			break;
+			
 		default:
 			icms_cp_header();
 			$icmsModule->displayAdminMenu(0, _AM_EVENT_EVENTS);
 			$objectTable = new icms_ipf_view_Table($event_handler);
-			$objectTable->addColumn(new icms_ipf_view_Column("event_name"));
+			$objectTable->addColumn(new icms_ipf_view_Column("event_approve", "center", 50, "event_approve"));
+			$objectTable->addColumn(new icms_ipf_view_Column("event_name", FALSE, FALSE, "getItemLink"));
+			$objectTable->addColumn(new icms_ipf_view_Column("event_cid", FALSE, FALSE, "getCategory"));
 			$objectTable->addIntroButton("addevent", "event.php?op=mod", _AM_EVENT_EVENT_CREATE);
 			$icmsAdminTpl->assign("event_event_table", $objectTable->fetch());
 			$icmsAdminTpl->display("db:event_admin.html");
