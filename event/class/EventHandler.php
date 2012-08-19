@@ -220,6 +220,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			$obj->setVar("event_tags", implode(",", $newArray));
 			unset($tags, $indexModule, $tag_handler, $tags, $tagarray);
 		}
+		return TRUE;
 	}
 	
 	public function afterSave(&$obj) {

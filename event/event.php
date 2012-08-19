@@ -30,7 +30,15 @@ $eventObj = $event_handler->getEventBySeo($clean_event);
 if($eventObj && !$eventObj->isNew() && $eventObj->accessGranted()) {
 	define("EVENT_FOR_SINGLEVIEW", TRUE);
 	$icmsTpl->assign("event", $eventObj->toArray());
-
+	
+	/**
+	 * include the comment rules
+	 */
+	if ($eventConfig['com_rule']) {
+		$icmsTpl->assign('event_event_comment', TRUE);
+		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
+	}
+	
 	$icms_metagen = new icms_ipf_Metagen($eventObj->title(), $eventObj->meta_keywords(), $eventObj->meta_description());
 	$icms_metagen->createMetaTags();
 } else {

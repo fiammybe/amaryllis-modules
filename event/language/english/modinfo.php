@@ -25,6 +25,7 @@ define("_MI_EVENT_MD_DESC", "ImpressCMS Simple event");
 define("_MI_EVENT_MENU_EVENTS", "Events");
 define("_MI_EVENT_MENU_CATEGORY", "Category");
 define("_MI_EVENT_MENU_CALENDAR", "Calendars");
+define("_MI_EVENT_MENU_MANUAL", "Manual");
 // config
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW", "Default View");
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW_DSC", "Select the default view for the calendar");
@@ -46,12 +47,12 @@ define("_MI_EVENT_CONFIG_EVENT_MINUTES", "Default event minutes");
 define("_MI_EVENT_CONFIG_EVENT_MINUTES_DSC", "");
 
 // notifications
-define('_MI_INDEX_GLOBAL_NOTIFY', 'Global');
-define('_MI_INDEX_GLOBAL_NOTIFY_DSC', 'Global Article notification options.');
-define('_MI_INDEX_CATEGORY_NOTIFY', 'Category');
-define('_MI_INDEX_CATEGORY_NOTIFY_DSC', 'Notification options that apply to the current file category.');
-define('_MI_INDEX_GLOBAL_CATEGORY_PUBLISHED_NOTIFY', 'New Category');
-define('_MI_INDEX_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_CAP', 'Notify me when a new file category is created.');
-define('_MI_INDEX_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_DSC', 'Receive notification when a new file category is created.');
-define('_MI_INDEX_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file category');
+define('_MI_EVENT_GLOBAL_NOTIFY', 'Global');
+define('_MI_EVENT_GLOBAL_NOTIFY_DSC', 'Global Article notification options.');
+define('_MI_EVENT_EVENT_NOTIFY', 'Category');
+define('_MI_EVENT_EVENT_NOTIFY_DSC', 'Notification options that apply to the current file category.');
+define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY', 'New Category');
+define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_CAP', 'Notify me when a new file category is created.');
+define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_DSC', 'Receive notification when a new file category is created.');
+define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file category');
 //define("", "");
