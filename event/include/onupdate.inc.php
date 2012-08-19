@@ -1,45 +1,88 @@
 <?php
 /**
- * File containing onUpdate and onInstall functions for the module
+ * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
- * This file is included by the core in order to trigger onInstall or onUpdate functions when needed.
- * Of course, onUpdate function will be triggered when the module is updated, and onInstall when
- * the module is originally installed. The name of this file needs to be defined in the
- * icms_version.php
- *
- * <code>
- * $modversion['onInstall'] = "include/onupdate.inc.php";
- * $modversion['onUpdate'] = "include/onupdate.inc.php";
- * </code>
- *
- * @copyright	
+ * File: /include/onupdate.inc.php
+ * 
+ * install, update and uninstall informations
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Event
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		event
  * @version		$Id$
+ * @package		event
+ *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 // this needs to be the latest db version
 define('EVENT_DB_VERSION', 1);
 
-/**
- * it is possible to define custom functions which will be call when the module is updating at the
- * correct time in update incrementation. Simpy define a function named <direname_db_upgrade_db_version>
- */
-/*
-function event_db_upgrade_1() {
-}
-function event_db_upgrade_2() {
-}
-*/
-
 function icms_module_update_event($module) {
+	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
+	$icmsDatabaseUpdater->moduleUpgrade($module);
     return TRUE;
 }
 
 function icms_module_install_event($module) {
+	event_indexpage();
+	
 	return TRUE;
+}
+function icms_module_uninstall_event($module) {
+	deleteLinkedModuleItems();
+	
+	return TRUE;
+}
+
+
+function event_indexpage() {
+	if(icms_get_module_status("index")) {
+		$mid = icms::handler('icms_module')->getByDirname(EVENT_DIRNAME)->getVar('mid');
+	
+		$indexModule = icms_getModuleInfo("index");
+		$indexpage_handler = icms_getModuleHandler( 'indexpage', $indexModule->getVar("dirname"), 'index' );
+		/**
+		$index_path = ICMS_UPLOAD_PATH . '/' . $indexModule->getVar("dirname") . '/' . $indexpage_handler->_itemname;
+		$image = 'event_indeximage.png';
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . EVENT_DIRNAME . '/images/' . $image, $index_path . '/' . $image);
+		*/
+		$indexpageObj = $indexpage_handler->create(TRUE);
+		$indexpageObj->setVar('index_header', 'Events' );
+		$indexpageObj->setVar('index_heading', 'Watch our events' );
+		$indexpageObj->setVar('index_footer', '&copy; 2012 | Event module footer');
+		$indexpageObj->setVar('index_image', '');
+		$indexpageObj->setVar('index_mid', $mid);
+		$indexpage_handler -> insert($indexpageObj, TRUE);
+		echo '<code>';
+		echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully created!<br />';
+		echo '&nbsp;&nbsp;-- <b> Indeximage </b> successfully moved!<br />';
+		echo '</code>';
+	}
+}
+
+function deleteLinkedModuleItems() {
+	$module_handler = icms::handler('icms_module');
+	$module = $module_handler->getByDirname(EVENT_DIRNAME);
+	$module_id = $module->getVar('mid');
+	$link_handler = icms_getModuleHandler("link", "index");
+	$link_handler->deleteAllByMId($module_id);
+	unset($link_handler);
+	$indexpage_handler = icms_getModuleHandler("indexpage", "index");
+	$indexpage_handler->deleteByMid($module_id);
+	unset($indexpage_handler);
+}
+
+function copySitemapPlugin() {
+	$dir = ICMS_ROOT_PATH . '/modules/event/include/';
+	$file = 'event.php';
+	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
+	if(is_dir($plugin_folder)) {
+		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
+	}
 }

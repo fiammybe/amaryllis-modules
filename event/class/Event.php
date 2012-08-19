@@ -21,6 +21,8 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class mod_event_Event extends icms_ipf_seo_Object {
+	
+	public $_updating = FALSE;
 	/**
 	 * Constructor
 	 *
@@ -44,7 +46,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->quickInitVar("event_startdate", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_enddate", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_public", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
-		
+		$this->quickInitVar("event_tags", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("event_submitter", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("event_created_on", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_approve", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
@@ -63,9 +65,25 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->setControl("event_submitter", "user");
 		$this->setControl("event_approve", "yesno");
 		
+		if(!icms_get_module_status("index")) {
+			$this->hideFieldFromForm("event_tags");
+			$this->hideFieldFromSingleView("event_tags");
+		}
+		
 		$this->initiateSEO();
 		
 		$this->hideFieldFromForm(array("short_url", "meta_description", "meta_keywords", "event_submitter", "event_created_on", "event_approve", "event_comments", "event_notif_sent"));
+	}
+
+	public function event_approve() {
+		$active = $this->getVar('event_approve', 'e');
+		if ($active == FALSE) {
+			return '<a href="' . EVENT_ADMIN_URL . 'event.php?event_id=' . $this->id() . '&amp;op=changeApprove">
+				<img src="' . EVENT_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
+		} else {
+			return '<a href="' . EVENT_ADMIN_URL . 'event.php?event_id=' . $this->id() . '&amp;op=changeApprove">
+				<img src="' . EVENT_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
+		}
 	}
 
     public function getCategory($cattitle = TRUE) {
@@ -126,6 +144,10 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		return ($this->getVar("event_approve", "e") == 1) ? TRUE : FALSE;
 	}
 	
+	public function notifSent() {
+		return ($this->getVar("event_notif_sent", "e") == 1) ? TRUE : FALSE;
+	}
+	
 	public function getItemLink($urlOnly = FALSE) {
 		$url = EVENT_URL . 'event.php?event=' . $this->short_url();
 		if($urlOnly) return $url;
@@ -148,5 +170,54 @@ class mod_event_Event extends icms_ipf_seo_Object {
             $ret['contact'] = $this->getContact();
         }
         return $ret;
+	}
+	
+	function sendNotification($case) {
+		$valid_case = array("event_submitted", "event_modified");
+		if(in_array($case, $valid_case, TRUE)) {
+			$module = icms::handler('icms_module')->getByDirname(EVENT_DIRNAME);
+			$mid = $module->getVar('mid');
+			$tags ['EVENT_TITLE'] = $this->title();
+			$tags ['EVENT_URL'] = $this->getItemLink(FALSE);
+			$tags ['EVENT_CAT'] = $this->getCategory(TRUE);
+			switch ($case) {
+				case 'event_submitted':
+					$category = 'global';
+					$file_id = 0;
+					$recipient = array();
+					break;
+				
+				case 'event_modified':
+					$category = 'global';
+					$file_id = 0;
+					$recipient = array();
+					break;
+			}
+			icms::handler('icms_data_notification')->triggerEvent($category, $file_id, $case, $tags, $recipient, $mid);
+		}
+	}
+	
+	public function sendMessageApproved() {
+		$pm_handler = icms::handler('icms_data_privmessage');
+		$file = "event_approved.tpl";
+		$lang = "language/" . $icmsConfig['language'] . "/mail_template";
+		$tpl = EVENT_ROOT_PATH . "$lang/$file";
+		if (!file_exists($tpl)) {
+			$lang = 'language/english/mail_template';
+			$tpl = EVENT_ROOT_PATH . "$lang/$file";
+		}
+		$user = $this->getVar("event_submitter", "e");
+		$message = file_get_contents($tpl);
+		$message = str_replace("{EVENT_CAT}", $this->getCategory(TRUE), $message);
+		$message = str_replace("{EVENT_TITLE}", $this->title(), $message);
+		$uname = icms::handler('icms_member_user')->get($user)->getVar("uname");
+		$message = str_replace("{X_UNAME}", $uname, $message);
+		$pmObj = $pm_handler->create(TRUE);
+		$pmObj->setVar("subject", _CO_EVENT_HAS_APPROVED);
+		$pmObj->setVar("from_userid", 1);
+		$pmObj->setVar("to_userid", (int)$user);
+		$pmObj->setVar("msg_time", time());
+		$pmObj->setVar("msg_text", $message);
+		$pm_handler->insert($pmObj, TRUE);
 	}
 }

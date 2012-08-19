@@ -1,15 +1,20 @@
 <?php
 /**
- * New comment post
+ * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
- * This file holds the configuration information of this module
- *
- * @copyright	
+ * File: /comment_post.php
+ * 
+ * post comments
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Event
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		event
  * @version		$Id$
+ * @package		event
+ *
  */
 
 include_once "header.php";

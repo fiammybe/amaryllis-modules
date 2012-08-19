@@ -1,29 +1,34 @@
 <?php
 /**
- * New comment form
+ * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
- * This file holds the configuration information of this module
- *
- * @copyright	
+ * File: /comment_new.php
+ * 
+ * new comments
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Event
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		event
  * @version		$Id$
+ * @package		event
+ *
  */
 
 include_once "header.php";
 $com_itemid = isset($_GET["com_itemid"]) ? (int)$_GET["com_itemid"] : 0;
 if ($com_itemid > 0) {
-	$event_post_handler = icms_getModuleHandler("post", basename(dirname(__FILE__)), "event");
-	$postObj = $event_post_handler->get($com_itemid);
-	if ($postObj && !$postObj->isNew()) {
-		$com_replytext = "test...";
-		$bodytext = $postObj->getPostLead();
+	$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
+	$eventObj = $event_handler->get($com_itemid);
+	if ($eventObj && !$eventObj->isNew()) {
+		$com_replytext = "";
+		$bodytext = $eventObj->summary();
 		if ($bodytext != "") {
 			$com_replytext .= "<br /><br />".$bodytext;
 		}
-		$com_replytitle = $postObj->getVar("post_title");
+		$com_replytitle = $eventObj->title();
 		include_once ICMS_ROOT_PATH . "/include/comment_new.php";
 	}
 }

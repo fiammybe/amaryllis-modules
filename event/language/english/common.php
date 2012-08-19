@@ -1,13 +1,20 @@
 <?php
 /**
- * English language constants commonly used in the module
+ * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
- * @copyright	
+ * File: /language/english/common.php
+ * 
+ * english common language file
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Event
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		event
  * @version		$Id$
+ * @package		event
+ *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
@@ -61,6 +68,8 @@ define("_CO_EVENT_EVENT_EVENT_ENDDATE", "End Date");
 define("_CO_EVENT_EVENT_EVENT_ENDDATE_DSC", "");
 define("_CO_EVENT_EVENT_EVENT_PUBLIC", "Event is Public?");
 define("_CO_EVENT_EVENT_EVENT_PUBLIC_DSC", "Select &#039;Yes&#039;, if the event is public and should be displayed in Events Block");
+define("_CO_EVENT_EVENT_EVENT_TAGS", "Tags");
+define("_CO_EVENT_EVENT_EVENT_TAGS_DSC", "You can enter multiple tags by seperating with a comma");
 define("_CO_EVENT_EVENT_EVENT_SUBMITTER", "Submitted By");
 define("_CO_EVENT_EVENT_EVENT_SUBMITTER_DSC", "");
 define("_CO_EVENT_EVENT_EVENT_CREATED_ON", "Submitted on");
@@ -71,8 +80,7 @@ define("_CO_EVENT_EVENT_EVENT_COMMENTS", "Comments");
 define("_CO_EVENT_EVENT_EVENT_COMMENTS_DSC", "");
 define("_CO_EVENT_EVENT_EVENT_NOTIF_SENT", "Notification Sent");
 define("_CO_EVENT_EVENT_EVENT_NOTIF_SENT_DSC", "");
-
-
+define("_CO_EVENT_HAS_APPROVED", "Your submitted Event has been approved");
 
 //rules
 define("_CO_EVENT_MONDAY", "Monday");
@@ -126,13 +134,4 @@ define("_CO_EVENT_MONTH", "Month");
 define("_CO_EVENT_MONTHS", "Months");
 define("_CO_EVENT_YEAR", "Year");
 define("_CO_EVENT_YEARS", "Years");
-define("_CO_EVENT_DAILY", "Daily");
-define("_CO_EVENT_WEEKLY", "Weekly");
-define("_CO_EVENT_MONTHLY", "Monthly");
-define("_CO_EVENT_YEARLY", "Yearly");
-define("_CO_EVENT_EVERY_WEEKDAY", "Monday to Friday");
-define("_CO_EVENT_EVERY_WEEKEND", "Every Weekend");
-define("_CO_EVENT_NEVER", "Never");
-define("_CO_EVENT_ENDSAFTER", "Ends after");
-define("_CO_EVENT_OCCURRENCES", "Occurences");
 define("_CO_EVENT_CANNOT_BOOK_PAST", "You cannot book a conference in the past!");

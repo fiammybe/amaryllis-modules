@@ -1,24 +1,31 @@
 <?php
 /**
- * English language constants related to module information
+ * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
- * @copyright	
+ * File: /language/english/modinfo.php
+ * 
+ * english modinfo language file
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.0
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Event
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
- * @package		event
  * @version		$Id$
+ * @package		event
+ *
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 define("_MI_EVENT_MD_NAME", "event");
 define("_MI_EVENT_MD_DESC", "ImpressCMS Simple event");
-
+// acp menu
 define("_MI_EVENT_MENU_EVENTS", "Events");
 define("_MI_EVENT_MENU_CATEGORY", "Category");
 define("_MI_EVENT_MENU_CALENDAR", "Calendars");
-
+// config
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW", "Default View");
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW_DSC", "Select the default view for the calendar");
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW_MONTH", "Month");
@@ -37,9 +44,14 @@ define("_MI_EVENT_CONFIG_AGENDA_SLOT", "Slot minutes in Agenda view");
 define("_MI_EVENT_CONFIG_AGENDA_SLOT_DSC", "");
 define("_MI_EVENT_CONFIG_EVENT_MINUTES", "Default event minutes");
 define("_MI_EVENT_CONFIG_EVENT_MINUTES_DSC", "");
-define("_MI_EVENT_CONFIG_", "");
-define("_MI_EVENT_CONFIG_", "");
-define("_MI_EVENT_CONFIG_", "");
-define("_MI_EVENT_CONFIG_", "");
-define("_MI_EVENT_CONFIG_", "");
-define("_MI_EVENT_CONFIG_", "");
+
+// notifications
+define('_MI_INDEX_GLOBAL_NOTIFY', 'Global');
+define('_MI_INDEX_GLOBAL_NOTIFY_DSC', 'Global Article notification options.');
+define('_MI_INDEX_CATEGORY_NOTIFY', 'Category');
+define('_MI_INDEX_CATEGORY_NOTIFY_DSC', 'Notification options that apply to the current file category.');
+define('_MI_INDEX_GLOBAL_CATEGORY_PUBLISHED_NOTIFY', 'New Category');
+define('_MI_INDEX_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_CAP', 'Notify me when a new file category is created.');
+define('_MI_INDEX_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_DSC', 'Receive notification when a new file category is created.');
+define('_MI_INDEX_GLOBAL_CATEGORY_PUBLISHED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file category');
+//define("", "");
