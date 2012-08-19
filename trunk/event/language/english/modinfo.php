@@ -48,11 +48,11 @@ define("_MI_EVENT_CONFIG_EVENT_MINUTES_DSC", "");
 
 // notifications
 define('_MI_EVENT_GLOBAL_NOTIFY', 'Global');
-define('_MI_EVENT_GLOBAL_NOTIFY_DSC', 'Global Article notification options.');
+define('_MI_EVENT_GLOBAL_NOTIFY_DSC', 'Global Event notification options.');
 define('_MI_EVENT_EVENT_NOTIFY', 'Category');
-define('_MI_EVENT_EVENT_NOTIFY_DSC', 'Notification options that apply to the current file category.');
-define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY', 'New Category');
-define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_CAP', 'Notify me when a new file category is created.');
-define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_DSC', 'Receive notification when a new file category is created.');
-define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New file category');
+define('_MI_EVENT_EVENT_NOTIFY_DSC', 'Notification options that apply to the current event category.');
+define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY', 'New Event');
+define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_CAP', 'Notify me when a new event is created.');
+define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_DSC', 'Receive notification when a new event is created.');
+define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New event');
 //define("", "");

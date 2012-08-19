@@ -159,7 +159,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			$eventObj->setVar("$field", 1);
 			$value = 1;
 		}
-		$eventObj->updating_counter = TRUE;
+		$eventObj->_updating = TRUE;
 		$this->insert($eventObj, TRUE);
 		return $value;
 	}
@@ -199,6 +199,8 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	}
 	
 	protected function beforeSave(&$obj) {
+		if($obj->_updating)
+		return TRUE;
 		$tags = trim($obj->getVar("event_tags"));
 		if($tags != "" && $tags != "0" && icms_get_module_status("index")) {
 			$indexModule = icms_getModuleInfo("index");
@@ -224,6 +226,8 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	}
 	
 	public function afterSave(&$obj) {
+		if($obj->_updating)
+		return TRUE;
 		if (!$obj->notifSent() && $obj->isApproved()) {
 			if($obj->isNew()) {
 				$obj->sendNotification('event_published');
