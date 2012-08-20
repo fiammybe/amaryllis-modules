@@ -20,7 +20,8 @@ date_default_timezone_set('Europe/Berlin');
 function addEvent($event_id = 0) {
 	global $event_handler,$icmsTpl;
 	$eventObj = $event_handler->get($event_id);
-	
+	$uname = (is_object(icms::$user)) ? icms::$user->getVar("uname") : " ";
+	$mail = (is_object(icms::$user)) ? icms::$user->getVar("email") : " ";
 	if($eventObj->isNew()) {
 		$form = new icms_form_Theme(_MD_EVENT_ADDEVENT, "addevent", "submit.php?op=addevent", "post", TRUE);
 		
@@ -30,9 +31,9 @@ function addEvent($event_id = 0) {
 		
 		$form->addElement(new icms_form_elements_Textarea(_CO_EVENT_EVENT_EVENT_DSC, "event_dsc", "", 7, 50));
 		
-		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_CONTACT, "event_contact", 75, 255));
+		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_CONTACT, "event_contact", 75, 255, $uname));
 		
-		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_CEMAIL, "event_cemail", 75, 255));
+		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_CEMAIL, "event_cemail", 75, 255, $mail));
 		
 		$tray = new icms_form_elements_Tray(_CO_EVENT_EVENT_EVENT_URL, "<br />", "event_url");
 		$mid = new icms_form_elements_Hidden("mid_event_url", icms::$module->getVar("mid"));
@@ -56,7 +57,7 @@ function addEvent($event_id = 0) {
 		$form->addElement(new icms_form_elements_Radioyn(_CO_EVENT_EVENT_EVENT_PUBLIC, "event_public", 1));
 			
 		if(icms_get_module_status("index")) {
-			$form->addElement(new icms_form_elements_Text(_CO_ALBUM_IMAGES_IMG_TAGS, "img_tags", 75, 255));
+			$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_TAGS, "event_tags", 75, 255));
 		}
 		
 		$form->assign($icmsTpl);
@@ -91,8 +92,6 @@ $event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 $categories = $category_handler->getCategories("cat_view");
 $icmsTpl->assign("categories", $categories);
 
-//$cat_array = $category_handler->getCategories("cat_view");
-$catIds = $category_handler->getIdsFromObjectsAsArray($categories);
 $events = $event_handler->getEvents(TRUE, "cat_view");
 $icmsTpl->assign("events", $events );
 

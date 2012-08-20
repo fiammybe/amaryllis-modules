@@ -173,6 +173,7 @@
 						title = title;
 						start = startDate;
 						end = endDate;
+						allday: allDay;
 						if(title) $("div#dialog_box").dialog("open");
 						lastView = view.name;
 					} // end of else
@@ -195,17 +196,19 @@
         	modal: true,
         	buttons: {
 	            "Create Event": function() {
+	            	allFields.removeClass( "ui-state-error" );
 					$.ajax({
-						url: "bookings.php",
+						url: "<{$event_url}>submit.php?op=addevent",
 						type: "POST",
-						data: {e: email.val(), t: +title, n: name.val(), p: description.val(), start: +start, end: +end},                
+						data: {title: +title, start: +start, end: +end, allday: +allday, event_contact: event_contact.val(), event_cemail: event_cemail.val(), mid_event_url: mid_event_url.val() },                
 						dataType: "HTML",
-						success: function(data) {
-							$('.result').html(data);
-							$("#calendar").fullCalendar( 'refetchEvents' );
-						}
+						$("#dialog_box").html(data)
+						//$(this).trigger('submit');
 					});
 					$( this ).dialog( "close" );
+				},
+				"Cancel" : function() {
+					$(this).dialog("close");
 				}
 			},
 			Cancel: function() {

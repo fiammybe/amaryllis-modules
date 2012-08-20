@@ -54,11 +54,38 @@ class mod_event_Category extends icms_ipf_seo_Object {
         return $this->getVar("category_color");
     }
     
-    public function accessGranted() {
-        $user_grp = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-        $user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;
-        
-    }
+    function submitAccessGranted() {
+		global $event_isAdmin;
+		if($event_isAdmin) return TRUE;
+		$gperm_handler = icms::handler('icms_member_groupperm');
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$module = icms::handler('icms_module')->getByDirname(EVENT_DIRNAME);
+		$viewperm = $gperm_handler->checkRight('cat_submit', $this->id(), $groups, $module->getVar("mid", "e"));
+		if($viewperm && $this->isApproved()) return TRUE;
+		return FALSE;
+	}
+
+	function accessGranted() {
+		if ($this->userCanEditAndDelete()) return TRUE;
+		$gperm_handler = icms::handler('icms_member_groupperm');
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$module = icms::handler('icms_module')->getByDirname(EVENT_DIRNAME);
+		$viewperm = $gperm_handler->checkRight('cat_view', $this->id(), $groups, $module->getVar("mid", "e"));
+		if ($viewperm && $this->isApproved()) return TRUE;
+		return FALSE;
+	}
+
+	public function userCanEditAndDelete() {
+		global $event_isAdmin;
+		if($event_isAdmin) return TRUE;
+		if(!is_object(icms::$user)) return FALSE;
+		return (icms::$user->getVar("uid")) == ($this->getVar("category_submitter", "e"));
+	}
+	
+	public function isApproved() {
+		return ($this->getVar("category_approve", "e") == 1) ? TRUE : FALSE;
+	}
+
 
 	public function getItemLink($urlOnly = FALSE) {
 		$url = EVENT_URL . 'category.php?cat=' . $this->short_url();
