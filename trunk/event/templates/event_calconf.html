@@ -10,6 +10,7 @@
 		var d = date.getDate();
 		var m = date.getMonth();
 		var y = date.getFullYear();
+		var lastView;
 		
 		var calendar = $('#calendar').fullCalendar({
 			defaultView: '<{$default_view}>',
@@ -19,12 +20,12 @@
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
-			//slotMinutes: <{$agenda_slot}>,
+			slotMinutes: <{$agenda_slot}>,
             firstHour: <{$agenda_start}>,
             defaultEventMinutes: <{$event_minutes}>,
 			axisFormat: 'HH:mm',
 			timeFormat: {
-			    agenda: 'H:mm{ - h:mm}'
+			    agenda: 'HH:mm'
 			},
 			dragOpacity: {
 			    agenda: .5
@@ -35,6 +36,7 @@
 			dayClick: function(date, allDay, jsEvent, view) {
 				if(view.name != 'month')
 					return;
+				lastView = view.name;
     			$('#calendar').fullCalendar('changeView', 'agendaDay')
     				.fullCalendar('gotoDate', date);
 			},
@@ -72,7 +74,7 @@
 				week: 'ddd M/d',
 				day: 'dddd M/d'
 			},
-			timeFormat: 'H(:mm)',
+			timeFormat: 'HH:mm',
 			allDayText: '<{$smarty.const._CO_EVENT_ALLDAY}>',
 			// jquery-ui theming
 			theme: true,
@@ -81,24 +83,26 @@
 				next: 'circle-triangle-e'
 			},
 			<{if $calendars}>
-			eventSources: [
-				<{foreach item=cal from=$calendars name=calendar}>
-				{
-					url: "<{$cal.url}>",
-					className: 'nice-event',
-					color: "<{$cal.color}>"
-				}<{if !$smarty.foreach.calendar.last}>,<{/if}>
-				<{/foreach}>
-			],
-			<{/if}>
+				eventSources: [
+					<{foreach item=cal from=$calendars name=calendar}>
+					{
+						url: "<{$cal.url}>",
+						className: 'nice-event',
+						color: "<{$cal.color}>",
+						currentTimezone: 'Europe/Berlin'
+					}<{if !$smarty.foreach.calendar.last}>,<{/if}>
+					<{/foreach}>
+				],
+				<{/if}>
 			//events
 			events: [
 				<{foreach item=cal from=$calendars name=calendar}>
-				{
-					url: "<{$cal.url}>",
-					className: 'nice-event',
-					color: "<{$cal.color}>"
-				}<{if !$smarty.foreach.calendar.last}>,<{/if}>
+					{
+						url: "<{$cal.url}>",
+						className: 'google_cal',
+						color: "<{$cal.color}>",
+						currentTimezone: 'Europe/Berlin'
+					}<{if !$smarty.foreach.calendar.last}>,<{/if}>
 				<{/foreach}>
 				<{if $calendars && $events}>,<{/if}>
 				<{foreach item=event from=$events name=event}>
@@ -111,6 +115,7 @@
 						url: '<{$event.itemURL}>',
 						description: '<{$event.dsc}>',
 						color: '<{$event.cat.color}>',
+						currentTimezone: 'Europe/Berlin', // an option!
 						//textColor: <{$event.textcolor}>,
 						<{if $event.canEditAndDelete}>
 							editable: true
@@ -120,6 +125,7 @@
 					}<{if !$smarty.foreach.event.last}>,<{/if}>
 				<{/foreach}>
 			],
+			ignoreTimezone: false,
 			eventRender: function(event, element) {
         		element.qtip({    
 		            content: {    
@@ -149,55 +155,62 @@
 					}
 		        });
     		},
-    		<{if $can_submit}>
-    		dropAccept: '*',
-			selectable: true,
-			selectHelper: true,
-			editable: true,
-			select: function(startDate, endDate, allDay) {
-				var view = calendar.fullCalendar('getView');
-				if(view.name = 'month')
-					return false;
-				var title = prompt('<{$smarty.const._MD_EVENT_TITLE}>');
-				var now = new Date();
-				if(startDate < now) {
-					alert('<{$smarty.const._CO_EVENT_CANNOT_BOOK_PAST}>');
-					calendar.fullCalendar( 'unselect' );
-				} else {
-					var title = prompt('New Charges:');
-					if (title) {
-						calendar.fullCalendar('renderEvent', {
-								title: title,
-								start: startDate,
-								end: endDate,
-								allDay: allDay
-								//description: description
-							}, true // make the event "unstick"
-						);
-						var startDateString = $.fullCalendar.formatDate(startDate, 'yyyy-MM-dd');
-						var endDateString = $.fullCalendar.formatDate(endDate, 'yyyy-MM-dd');
-						$.ajax({
-							type: 'POST',
-							url: './submit.php?op=addevent',
-							data: {
-			                    startDate: startDateString,
-								endDate: endDateString,
-								eventTitle: title
-							},
-							dateType: 'json',
-							success: function (resp) {
-								calendar.fullCalendar('refetchEvents');
-							}
-						});
-					} // end of inner if
-				} // end of else
-				calendar.fullCalendar('unselect');
-			}
+    		<{if $cat_submit}>
+	    		dropAccept: '*',
+				selectable: true,
+				selectHelper: true,
+				editable: true,
+				select: function(startDate, endDate, allDay) {
+					var view = $('#calendar').fullCalendar('getView');
+					if(view.name != "agendaWeek" && view.name != "agendaDay" )
+						return;
+					if(startDate < date) {
+						alert('<{$smarty.const._CO_EVENT_CANNOT_BOOK_PAST}>');
+						calendar.fullCalendar( 'unselect' );
+					} else {
+						if(lastView != 'month')
+						var title = prompt('<{$smarty.const._MD_EVENT_TITLE}>');
+						title = title;
+						start = startDate;
+						end = endDate;
+						if(title) $("div#dialog_box").dialog("open");
+						lastView = view.name;
+					} // end of else
+					//calendar.fullCalendar('unselect');
+				}
 			<{else}>
-			selectable: false,
-			selectHelper: false,
-			editable: false
+				selectable: false,
+				selectHelper: false,
+				editable: false,
+				select: function(startDate, endDate, allDay) {
+					calendar.fullCalendar('unselect');
+				}
 			<{/if}>
 		});
+		
+		$( "#dialog_box" ).dialog({
+        	autoOpen: false,
+        	height: 800,
+        	width: 800,
+        	modal: true,
+        	buttons: {
+	            "Create Event": function() {
+					$.ajax({
+						url: "bookings.php",
+						type: "POST",
+						data: {e: email.val(), t: +title, n: name.val(), p: description.val(), start: +start, end: +end},                
+						dataType: "HTML",
+						success: function(data) {
+							$('.result').html(data);
+							$("#calendar").fullCalendar( 'refetchEvents' );
+						}
+					});
+					$( this ).dialog( "close" );
+				}
+			},
+			Cancel: function() {
+				$( this ).dialog( "close" );
+			}
+        });
 	});
 </script>

@@ -23,10 +23,6 @@ if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(_
 class mod_event_EventHandler extends icms_ipf_Handler {
     
     private $_catArray;
-	private $_recurArray;
-	private $_recFreq;
-	private $_recDays;
-	private $_recEndArray;
 	
 	/**
 	 * Constructor
@@ -48,47 +44,6 @@ class mod_event_EventHandler extends icms_ipf_Handler {
         } return $this->_catArray;
     }
     
-    public function getRecurs() {
-        if(!count($this->_recurArray)) {
-        	$this->_recurArray['dayly'] = _CO_EVENT_DAILY;
-			$this->_recurArray['everyweekday'] = _CO_EVENT_EVERY_WEEKDAY;
-			$this->_recurArray['everyweekend'] = _CO_EVENT_EVERY_WEEKEND;
-			
-			$this->_recurArray['weekly'] = _CO_EVENT_WEEKLY;
-			$this->_recurArray['monthly'] = _CO_EVENT_MONTHLY;
-			$this->_recurArray['yearly'] = _CO_EVENT_YEARLY;
-        } return $this->_recurArray;
-    }
-	
-	public function getRecurFreq() {
-		if(!count($this->_recFreq)) {
-			for($x=0; $x<31; $x++) {
-				$this->_recFreq[$x] = $x;
-			}
-		} return $this->_recFreq;
-	}
-	
-	public function getRecurDays() {
-		if(!count($this->_recDays)) {
-			$this->_recDays[1] = _CO_EVENT_MO;
-			$this->_recDays[2] = _CO_EVENT_TU;
-			$this->_recDays[3] = _CO_EVENT_WE;
-			$this->_recDays[4] = _CO_EVENT_TH;
-			$this->_recDays[5] = _CO_EVENT_FR;
-			$this->_recDays[6] = _CO_EVENT_SA;
-			$this->_recDays[7] = _CO_EVENT_SU;
-		} return $this->_recDays;
-	}
-	
-	public function getRecurEndArray() {
-		if(!count($this->_recEndArray)) {
-			$ele_after = new icms_form_elements_Text("", "ends_after", 7, 10, EVENT_RECUR_ENDVALUE, FALSE);
-			$ele_on = new icms_form_elements_Date("", "ends_date", "", time() + 86400000 );
-			$this->_recEndArray['never'] = _CO_EVENT_NEVER;
-			$this->_recEndArray[''] = _CO_EVENT_ENDSAFTER . ' ' . $ele->render() . ' ' . _CO_EVENT_OCCURRENCES;
-		} return $this->_recEndArray;
-	}
-
 	/**
 	 * event criterias
 	 * @param $cat_id can be int cid or an array of cids
@@ -98,25 +53,23 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	 */
 	public function getEventCriterias( $cat_id, $perm = 'cat_view',$start = 0, $end = "month", $private = TRUE) {
 		$criteria = new icms_db_criteria_Compo();
-		if($cat_id !== FALSE) {
-			$perm_handler = new icms_ipf_permission_Handler($this);
-			$grantedItems = $perm_handler->getGrantedItems($perm);
-			if(!is_array($cat_id)) {
-				$criteria->add(new icms_db_criteria_Item("event_cid", $cat_id));
-				$criteria->add(new icms_db_criteria_Item($cat_id, '(' . implode(', ', $grantedItems) . ')', 'IN'));
-			} else {
-				foreach ($cat_id as $key => $value) {
-					$criteria->add(new icms_db_criteria_Item("event_cid", $value), 'OR');
-					$criteria->add(new icms_db_criteria_Item($value, '(' . implode(', ', $grantedItems) . ')', 'IN'));
-				}
+		$category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
+		$cids = $category_handler->userView();
+		if(!empty($cids)) {
+			$tray = new icms_db_criteria_Compo();
+			foreach ($cids as $key => $value) {
+				$tray->add(new icms_db_criteria_Item("event_cid", $value), 'OR');
 			}
+			$criteria->add($tray);
+		} else {
+			$criteria->add(new icms_db_criteria_Item("event_cid", 0, '=='));
 		}
 		if($private) {
 			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
-			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("event_public", 1), 'OR');
-			$critTray->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
-			$criteria->add($critTray);
+			//$critTray = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item("event_public", 1));
+			$criteria->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
+			//$criteria->add($critTray);
 		}
 		$criteria->add(new icms_db_criteria_Item("event_startdate", time(), '>='));
 		if($end == "month") {
@@ -130,7 +83,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	}
 
 	public function getEvents($cat_ids = FALSE, $perm = 'cat_view', $end = "month") {
-		$criteria = $this->getEventCriterias($cat_ids, $perm, $end);
+		$criteria = $this->getEventCriterias($cat_ids, $perm, 0, $end);
 		$events = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($events as $event) {
@@ -195,6 +148,10 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			$seo = $seo . '_' . time();
 			$obj->setVar("short_url", $seo);
 		}
+		$dsc = $obj->getVar("event_dsc", "s");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
+		$dsc = str_replace("'",'"', $dsc);
+		$obj->setVar("event_dsc", $dsc);
 		return TRUE;
 	}
 	
