@@ -19,4 +19,12 @@
 	</fieldset>
 </div>
 
+<{if $cat_submit}>
+	<div id="dialog_box" class="ui-helper-hidden event_form" >
+		<{if $addevent}>
+			<{includeq file='db:system_default_form.html' form=$addevent}>
+		<{/if}>
+	</div>
+<{/if}>
+
 <{includeq file='db:event_footer.html'}>

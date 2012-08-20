@@ -32,20 +32,50 @@ class mod_event_CategoryHandler extends icms_ipf_Handler {
         $this->addPermission("cat_submit", _CO_EVENT_CATEGORY_CAT_SUBMIT, _CO_EVENT_CATEGORY_CAT_SUBMIT_DSC);
 	}
     
-    public function getCategoryCriterias($perm = 'cat_submit') {
+    public function getCategoryCriterias($perm = "cat_submit", $cat_ids = FALSE) {
         $criteria = new icms_db_criteria_Compo();
-		$this->setGrantedObjectsCriteria($criteria, $perm);
+		$criteria->add(new icms_db_criteria_Item("category_approve", TRUE));
+		if($cat_ids && is_array($cat_ids)) {
+			$critTray = new icms_db_criteria_Compo();
+			foreach ($cat_ids as $key => $value) {
+				$critTray->add(new icms_db_criteria_Item("category_id", (int)$value), 'OR');
+			}
+			$criteria->add($critTray);
+		} elseif($cat_ids && !is_array($cat_ids)) {
+			$criteria->add(new icms_db_criteria_Item("category_id", (int)$cat_ids));
+		} else {
+			$cat_ids = $this->userView();
+			$critTray = new icms_db_criteria_Compo();
+			foreach ($cat_ids as $key => $value) {
+				$critTray->add(new icms_db_criteria_Item("category_id", (int)$value), 'OR');
+			}
+			$criteria->add($critTray);
+		}
+		$this->setGrantedObjectsCriteria($criteria, "$perm");
 		return $criteria;
     }
 	
-	public function getCategories($perm = 'cat_view') {
-		$criteria = $this->getCategoryCriterias($perm);
-		$categories = $this->getObjects($criteria, TRUE, FALSE);
+	public function getCategories($perm = "cat_submit", $cat_ids = FALSE) {
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$criteria = $this->getCategoryCriterias($perm, $cat_ids);
+		$categories = $this->getObjects($criteria, FALSE, FALSE);
 		$ret = array();
 		foreach ($categories as $category) {
 			$ret[$category['id']] = $category;
 		}
 		return $ret;
+	}
+	
+	public function userSubmit() {
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$perms = icms::handler('icms_member_groupperm')->getItemIds("cat_submit", $groups, icms::$module->getVar("mid"));
+		return (empty($perms)) ? FALSE : TRUE;
+	}
+	
+	public function userView() {
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$perms = icms::handler('icms_member_groupperm')->getItemIds("cat_view", $groups, icms::$module->getVar("mid"));
+		return $perms;
 	}
 
 	protected function beforeInsert(&$obj) {
