@@ -45,9 +45,9 @@ $modversion = array(
 					/**  Development information */
 						"status_version"			=> "1.0",
 						"status"					=> "RC",
-						"date"						=> "00:00 XX.XX.2012",
+						"date"						=> "23:04:02 21.08.2012",
 						"author_word"				=> "",
-						"warning"					=> _CO_ICMS_WARNING_RC,
+						"warning"					=> _CO_ICMS_WARNING_FINAL,
 					
 					/** Contributors */
 						"developer_website_url"		=> "http://code.google.com/p/amaryllis-modules/",
