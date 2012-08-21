@@ -123,7 +123,8 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column("item_menu", FALSE, FALSE, "getItemMenu"));
 			$objectTable->addColumn(new icms_ipf_view_Column("item_pid", FALSE, FALSE, "getParentItem"));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
-			
+			$objectTable->setDefaultOrder("ASC");
+			$objectTable->setDefaultSort("weight");
 			$objectTable->addCustomAction('getCloneItemLink');
 			$objectTable->addIntroButton("additem", "item.php?op=mod", _ADD);
 			$objectTable->addFilter("item_active", "filterActive");
