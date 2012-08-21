@@ -33,14 +33,17 @@ class mod_event_Category extends icms_ipf_seo_Object {
 		$this->quickInitVar("category_name", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("category_dsc", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("category_color", XOBJ_DTYPE_OTHER, TRUE);
+		$this->quickInitVar("category_txtcolor", XOBJ_DTYPE_OTHER, TRUE, FALSE, FALSE, "#000000");
         $this->quickInitVar("category_approve", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
         $this->quickInitVar("category_submitter", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
         $this->quickInitVar("category_created_on", XOBJ_DTYPE_LTIME, TRUE);
         $this->quickInitVar("category_pubcal", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
         $this->initCommonVar("dohtml", FALSE, TRUE);
+		$this->initCommonVar("dobr", FALSE, TRUE);
         
         $this->setControl('category_dsc', array("name" => "textarea"));
         $this->setControl("category_color", "color");
+		$this->setControl("category_txtcolor", "color");
 		$this->setControl("category_approve", "yesno");
         $this->setControl("category_pubcal", "yesno");
         
@@ -54,6 +57,10 @@ class mod_event_Category extends icms_ipf_seo_Object {
         return $this->getVar("category_color");
     }
     
+	public function getTextColor() {
+        return $this->getVar("category_txtcolor");
+    }
+	
     function submitAccessGranted() {
 		global $event_isAdmin;
 		if($event_isAdmin) return TRUE;
@@ -86,6 +93,16 @@ class mod_event_Category extends icms_ipf_seo_Object {
 		return ($this->getVar("category_approve", "e") == 1) ? TRUE : FALSE;
 	}
 
+	public function getEvents() {
+		$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+		$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_cid", $this->id()));
+		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_public", 1));
+		$crit->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
+		$criteria->add($crit);
+		$events = $event_handler->getObjects($criteria, TRUE, FALSE);
+		return $events;
+	}
 
 	public function getItemLink($urlOnly = FALSE) {
 		$url = EVENT_URL . 'category.php?cat=' . $this->short_url();
@@ -99,7 +116,8 @@ class mod_event_Category extends icms_ipf_seo_Object {
         $ret['name'] = $this->title();
         $ret['dsc'] = $this->summary();
         $ret['color'] = $this->getColor();
-        
+        $ret['txtcolor'] = $this->getTextColor();
+		$ret['events'] = $this->getEvents();
         return $ret;
 	}
 }

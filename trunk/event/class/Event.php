@@ -39,7 +39,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->quickInitVar("event_cemail", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("event_url", XOBJ_DTYPE_URLLINK, FALSE);
 		$this->quickInitVar("event_phone", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("event_street", XOBJ_DTYPE_TXTBOX, TRUE);
+		$this->quickInitVar("event_street", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("event_zip", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("event_city", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("event_allday", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
@@ -47,6 +47,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->quickInitVar("event_enddate", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_public", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar("event_tags", XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar("event_joiner", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 'X');
 		$this->quickInitVar("event_submitter", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("event_created_on", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_approve", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
@@ -72,7 +73,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		
 		$this->initiateSEO();
 		
-		$this->hideFieldFromForm(array("short_url", "meta_description", "meta_keywords", "event_submitter", "event_created_on", "event_approve", "event_comments", "event_notif_sent"));
+		$this->hideFieldFromForm(array("event_joiner", "short_url", "meta_description", "meta_keywords", "event_submitter", "event_created_on", "event_approve", "event_comments", "event_notif_sent"));
 	}
 
 	public function event_approve() {
@@ -93,6 +94,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
         $title = $cat->title();
         $ret['title'] = $title;
         $ret['color'] = $cat->getColor();
+		$ret['txtcolor'] = $cat->getTextColor();
 		$ret['url'] = $cat->getItemLink(FALSE);
         unset($category_handler, $cat);
         return ($cattitle) ? $title : $ret;
@@ -159,7 +161,6 @@ class mod_event_Event extends icms_ipf_seo_Object {
         $ret['id'] = $this->id();
         $ret['name'] = $this->title();
         $ret['dsc'] = $this->summary();
-        $ret['cat'] = $this->getCategory(FALSE);
         $ret['start'] = $this->getVar("event_startdate", "e");
 		$ret['end'] = $this->getVar("event_enddate", "e");
 		$ret['allDay'] = ($this->getVar("event_allday", "e") == 1) ? "true" : "false";
@@ -168,6 +169,8 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$ret['itemURL'] = $this->getItemLink(TRUE);
         if(defined("EVENT_FOR_SINGLEVIEW")) {
             $ret['contact'] = $this->getContact();
+			$ret['cat'] = $this->getCategory(FALSE);
+			
         }
         return $ret;
 	}

@@ -19,8 +19,8 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-define("_MI_EVENT_MD_NAME", "event");
-define("_MI_EVENT_MD_DESC", "ImpressCMS Simple event");
+define("_MI_EVENT_MD_NAME", "Event");
+define("_MI_EVENT_MD_DESC", "ImpressCMS Simple Event module");
 // acp menu
 define("_MI_EVENT_MENU_EVENTS", "Events");
 define("_MI_EVENT_MENU_CATEGORY", "Category");

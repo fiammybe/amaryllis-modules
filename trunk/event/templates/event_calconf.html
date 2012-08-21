@@ -87,8 +87,9 @@
 					<{foreach item=cal from=$calendars name=calendar}>
 					{
 						url: "<{$cal.url}>",
-						className: 'nice-event',
+						className: 'google_cal',
 						color: "<{$cal.color}>",
+						textColor: '<{$cal.txtcolor}>',
 						currentTimezone: 'Europe/Berlin'
 					}<{if !$smarty.foreach.calendar.last}>,<{/if}>
 					<{/foreach}>
@@ -101,11 +102,13 @@
 						url: "<{$cal.url}>",
 						className: 'google_cal',
 						color: "<{$cal.color}>",
+						textColor: '<{$cal.txtcolor}>',
 						currentTimezone: 'Europe/Berlin'
 					}<{if !$smarty.foreach.calendar.last}>,<{/if}>
 				<{/foreach}>
-				<{if $calendars && $events}>,<{/if}>
-				<{foreach item=event from=$events name=event}>
+				<{if $calendars && $categories}>,<{/if}>
+				<{foreach item=cat from=$categories name=categories}>
+					<{foreach item=event from=$cat.events name=event}>
 					{
 						id: <{$event.id}>,
 						title: '<{$event.name}>',
@@ -114,15 +117,16 @@
 						allDay: <{$event.allDay}>,
 						url: '<{$event.itemURL}>',
 						description: '<{$event.dsc}>',
-						color: '<{$event.cat.color}>',
-						currentTimezone: 'Europe/Berlin', // an option!
-						//textColor: <{$event.textcolor}>,
+						color: '<{$cat.color}>',
+						textColor: '<{$cat.txtcolor}>',
 						<{if $event.canEditAndDelete}>
 							editable: true
 						<{else}>
 							editable: false
 						<{/if}>
 					}<{if !$smarty.foreach.event.last}>,<{/if}>
+					<{/foreach}>
+					<{if !$smarty.foreach.categories.last && $cat.events}>,<{/if}>
 				<{/foreach}>
 			],
 			ignoreTimezone: false,
@@ -130,9 +134,9 @@
         		element.qtip({    
 		            content: {    
 		                title: { text: event.title },
-		                text: '<span class="title">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'HH:mm')) + 
-		                		'<br /><span class="title">End: </span>' + ($.fullCalendar.formatDate(event.end, 'HH:mm')) + 
-		                		'<br /><span class="title">Description: </span>' + event.description 
+		                text: '<span class="start">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'HH:mm')) + 
+		                		'<br /><span class="End">End: </span>' + ($.fullCalendar.formatDate(event.end, 'HH:mm')) + 
+		                		'<br /><span class="dsc">Description: </span>' + event.description 
 		                		
 		            },
 		            show: { solo: true },
@@ -200,12 +204,13 @@
 					$.ajax({
 						url: "<{$event_url}>submit.php?op=addevent",
 						type: "POST",
-						data: {title: +title, start: +start, end: +end, allday: +allday, event_contact: event_contact.val(), event_cemail: event_cemail.val(), mid_event_url: mid_event_url.val() },                
-						dataType: "HTML",
-						$("#dialog_box").html(data)
-						//$(this).trigger('submit');
+						data: {title: +title, start: +start, end: +end, allday: +allday, event_contact: event_contact.val(), event_cemail: event_cemail.val(), mid_event_url: mid_event_url.val(), event_phone: event_phone.val(),
+							   event_street: event_street.val(), event_city: event_city.val(), event_zip: event_zip.val() },                
+						dataType: "HTML"
+						//$("#dialog_box").html(data)
+						
 					});
-					$( this ).dialog( "close" );
+					$(this).dialog("close");
 				},
 				"Cancel" : function() {
 					$(this).dialog("close");

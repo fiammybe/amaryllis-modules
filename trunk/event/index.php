@@ -16,7 +16,7 @@
  * @package		event
  *
  */
-date_default_timezone_set('Europe/Berlin');
+
 function addEvent($event_id = 0) {
 	global $event_handler,$icmsTpl;
 	$eventObj = $event_handler->get($event_id);
@@ -84,6 +84,7 @@ if(icms_get_module_status("index")) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $clean_date = isset($_GET['date']) ? filter_input(INPUT_GET, "date") : $eventConfig['default_view'];
+$clean_cat = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat") : FALSE;
 
 $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 $calendar_handler = icms_getModuleHandler("calendar", EVENT_DIRNAME, "event");
@@ -91,9 +92,6 @@ $event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 
 $categories = $category_handler->getCategories("cat_view");
 $icmsTpl->assign("categories", $categories);
-
-$events = $event_handler->getEvents(TRUE, "cat_view");
-$icmsTpl->assign("events", $events );
 
 $icmsTpl->assign("default_view", $clean_date);
 

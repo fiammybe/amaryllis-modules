@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class mod_event_Calendar extends icms_ipf_Object {
+class mod_event_Calendar extends icms_ipf_seo_Object {
 	/**
 	 * Constructor
 	 *
@@ -31,9 +31,17 @@ class mod_event_Calendar extends icms_ipf_Object {
 		$this->quickInitVar("calendar_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("calendar_name", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("calendar_url", XOBJ_DTYPE_TXTBOX, TRUE, FALSE, FALSE, 'https://www.google.com/calendar/feeds/' );
+		$this->quickInitVar("calendar_dsc", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("calendar_color", XOBJ_DTYPE_OTHER, TRUE);
+		$this->quickInitVar("calendar_txtcolor", XOBJ_DTYPE_OTHER, TRUE, FALSE, FALSE, "#00000");
+		$this->initCommonVar("dohtml", FALSE, TRUE);
+		$this->initCommonVar("dobr", FALSE, TRUE);
 		$this->setControl("calendar_color", "color");
-
+		$this->setControl("calendar_txtcolor", "color");
+		
+		$this->initiateSEO();
+		
+		$this->hideFieldFromForm(array("short_url", "meta_description", "meta_keywords"));
 	}
 	
 	public function toArray() {
@@ -42,6 +50,7 @@ class mod_event_Calendar extends icms_ipf_Object {
 		$ret['name'] = $this->title();
 		$ret['url'] = $this->getVar("calendar_url", "e");
 		$ret['color'] = $this->getVar("calendar_color", "e");
+		$ret['txtcolor'] = $this->getVar("calendar_txtcolor", "e");
 		return $ret;
 	}
 
