@@ -10,36 +10,40 @@
  * @version		$Id$
  */
 
-/** Include the module's header for all pages */
-include_once 'header.php';
-include_once ICMS_ROOT_PATH . '/header.php';
 
-/** To come soon in imBuilding...
+//include_once 'header.php';
 
-$clean_post_uid = isset($_GET['uid']) ? intval($_GET['uid']) : FALSE;
-
-$event_feed = new icms_feeds_Rss();
-
-$event_feed->title = $icmsConfig['sitename'] . ' - ' . $icmsModule->name();
-$event_feed->url = XOOPS_URL;
-$event_feed->description = $icmsConfig['slogan'];
-$event_feed->language = _LANGCODE;
-$event_feed->charset = _CHARSET;
-$event_feed->category = $icmsModule->name();
-
-$event_post_handler = icms_getModuleHandler("post", basename(dirname(__FILE__)), "event");
-//EventPostHandler::getPosts($start = 0, $limit = 0, $post_uid = FALSE, $year = FALSE, $month = FALSE
-$postsArray = $event_post_handler->getPosts(0, 10, $clean_post_uid);
-
-foreach($postsArray as $postArray) {
-	$event_feed->feeds[] = array (
-	  'title' => $postArray['post_title'],
-	  'link' => str_replace('&', '&amp;', $postArray['itemUrl']),
-	  'description' => htmlspecialchars(str_replace('&', '&amp;', $postArray['post_lead']), ENT_QUOTES),
-	  'pubdate' => $postArray['post_published_date_int'],
-	  'guid' => str_replace('&', '&amp;', $postArray['itemUrl']),
-	);
-}
-
-$event_feed->render();
-*/
+//include_once ICMS_ROOT_PATH . '/header.php';
+include_once dirname(__FILE__) . '/include/common.php';
+//if($eventConfig['use_rss'] == 1) {
+	
+	$clean_post_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : FALSE;
+	$clean_date = isset($_GET['date']) ? filter_input(INPUT_GET, "date") : FALSE;
+	$clean_start = isset($_GET['startDate']) ? filter_input(INPUT_GET, "startDate") : FALSE;
+	$clean_start = isset($_GET['endDate']) ? filter_input(INPUT_GET, "endDate") : FALSE;
+	
+	$eventModule = icms_getModuleInfo(EVENT_DIRNAME);
+	$event_feed = new icms_feeds_Rss();
+	$event_feed->title = $icmsConfig['sitename'] . ' - ' . $eventModule->getVar("name");
+	$event_feed->url = ICMS_URL;
+	$event_feed->description = $icmsConfig['slogan'];
+	$event_feed->language = _LANGCODE;
+	$event_feed->charset = _CHARSET;
+	$event_feed->category = $eventModule->getVar("name");
+	
+	$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
+	$postsArray = $event_handler->getEvents();
+	
+	foreach($postsArray as $postArray) {
+		$event_feed->feeds[] = array (
+		  'title' => $postArray['name'],
+		  'link' => str_replace('&', '&amp;', $postArray['itemURL']),
+		  'author' => $postArray['submitter'],
+		  'description' => icms_core_DataFilter::htmlSpecialChars(str_replace('&', '&amp;', $postArray['dsc']), ENT_QUOTES, _CHARSET),
+		  'pubdate' => $postArray['event_created_on'],
+		  'guid' => str_replace('&', '&amp;', $postArray['itemURL']),
+		  'category' => $postArray['cat'],
+		);
+	}
+	$event_feed->render();
+//}

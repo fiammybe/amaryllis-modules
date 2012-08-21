@@ -26,8 +26,20 @@ class mod_event_CalendarHandler extends icms_ipf_Handler {
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
-		parent::__construct($db, "calendar", "calendar_id", "calendar_name", "calendar_color", "event");
+		parent::__construct($db, "calendar", "calendar_id", "calendar_name", "calendar_dsc", "event");
 
 	}
 
+	protected function beforeInsert(&$obj) {
+		if($obj->_updating)
+		return TRUE;
+		$seo = $obj->short_url();
+		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle($obj->title(), FALSE);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
+		if($this->getCount($criteria)) {
+			$seo = $seo . '_' . time();
+			$obj->setVar("short_url", $seo);
+		}
+		return TRUE;
+	}
 }

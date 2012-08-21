@@ -79,8 +79,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			icms_cp_header();
 			$icmsModule->displayAdminMenu(2, _AM_EVENT_CALENDARS);
 			$objectTable = new icms_ipf_view_Table($calendar_handler);
-			$objectTable->addColumn(new icms_ipf_view_Column("calendar_name", FALSE, FALSE,''));
-			$objectTable->addColumn(new icms_ipf_view_Column("calendar_dsc", FALSE, FALSE,''));
+			$objectTable->addColumn(new icms_ipf_view_Column("calendar_name", FALSE, FALSE,FALSE));
 			$objectTable->addColumn(new icms_ipf_view_Column("calendar_url", FALSE, FALSE,''));
 			$objectTable->addIntroButton("addcalendar", "calendar.php?op=mod", _AM_EVENT_CALENDAR_CREATE);
 			$icmsAdminTpl->assign("event_calendar_table", $objectTable->fetch());

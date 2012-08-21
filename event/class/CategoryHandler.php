@@ -90,4 +90,11 @@ class mod_event_CategoryHandler extends icms_ipf_Handler {
 		}
 		return TRUE;
 	}
+	
+	protected function afterDelete(&$obj) {
+		$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
+		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_cid", $obj->id()));
+		$event_handler->deleteAll($crit);
+		return TRUE;
+	}
 }

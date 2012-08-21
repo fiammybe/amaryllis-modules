@@ -13,3 +13,7 @@
 <{if $event_calendar_info}><p><{$event_calendar_info}></p><{/if}>
 <{if $event_calendar_table}><{$event_calendar_table}><{/if}>
 <{if $addcalendar}><{includeq file='db:system_common_form.html' form=$addcalendar}><{/if}>
+<!-- module manual -->
+<{if $manual_path}>
+	<{includeq file=$manual_path}>
+<{/if}>

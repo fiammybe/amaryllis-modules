@@ -28,7 +28,8 @@
 .event_adminlinks { text-align: center;}
 
 #calendar_legend { width: 100%; margin: 2em auto;}
-.legend_color {float: left; min-width: 15px; min-height: 15px;}
-.legend_item {margin-top: 1em;}
+.legend_color {float: left; min-width: 30px; min-height: 16px; border: 1px solid black}
+.legend_item {margin: 1em 1em 0 0; float: left; width: 150px; overflow: hidden;}
 .legend_title {margin-left: 1em;}
+.event_popup {display: none;}
 

@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Event Manual</title>
+        <style>
+        	#event_manual {margin: 2em;}
+        	#event_manual h1, h2, h3 {font-family: Georgia, "Times New Roman", Times, serif; padding-bottom: 1em; padding-top: 1em; line-height: 1.7em; font-weight: bold;}
+        	#event_manual h1 {text-align: center; font-size: 1.5em; font-variant: small caps; color: #336699;}
+        	#event_manual h2 {font-size: 1.250em; color: #6699CC;}
+        	#event_manual h3 {font-size: 1.1em; color: #6699FF;}
+        	#event_manual p {font-size: .9em; margin: 0; padding: 5px;}
+        	#event_manual ul li {list-style-type: square; margin-left: 20px; line-height: 1.5em; font-weight: bolder; }
+        	#event_manual ul li ul li {list-style-type: disc; margin-left: 30px; font-weight: normal; }
+        	#event_footer {border: 1px dotted; margin: 2em auto; padding: 0 1em 2em; --moz-border-radius: 1.5em; -webkit-border-radius: 1.5em; border-radius: 1.5em;}
+        	#event_footer h2 {padding: .5em 0 0;}
+        	#event_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
+        	#event_manual a, #event_manual a:visited {color: #336699}
+        	#event_manual a:hover {color: #336699; text-decoration: underline;}
+        	#icms-uptopmessage a {display: block; display: none; z-index: 999; opacity: .9; position: fixed; top: 100%; margin-top: -80px; left: 50%; margin-left: -160px;
+							border-radius: 24px; -moz-border-radius: 24px; -webkit-border-radius: 24px; -o-border-radius: 24px; -khtml-border-radius:24px; -icab-border-radius:24px; -ms-border-radius:24px;
+							width: 300px; line-height: 48px; height: 48px; padding: 10px; background-color: #000; font-size: 24px; text-align: center; color: #fff;}
+			#credit {font-weight: bold;color: #336699;}
+			div.icmsCode, div.xoopsCode, div.tip, div.icmsCodeHtml {position: relative; margin-bottom: 1.5em; border: none; padding: 1em 1em 0.25em 58px; margin: 1em auto 1.5em auto; width: 75%; border-radius: 10px;
+							-moz-border-radius: 10px;-o-border-radius: 10px; -webkit-border-radius: 10px; -khtml-border-radius: 10px; -ms-border-radius: 10px;}
+			div.icmsCode, div.xoopsCode p, div.tip p, .icmsCodePhp p {margin-bottom: 1em;}
+			div.tip { background: #d5e9f6 url(../images/alert.png) no-repeat 10px 10px;}
+			div.icmsCode, div.xoopsCode,  div.icmsCodeHtml { background: #d5e9f6 url(../images/code.png) no-repeat 10px 10px; display: block; overflow : auto; text-align : left;
+							font : 500 1em/1.5em "Lucida Console", "Courier New", monospace; border : 1px solid #EEE8E1;}
+        </style>
+    </head>
+    <body>
+    	<div id="top">&nbsp;</div>
+    	<div id="event_manual">
+	        <h1>Event Manual</h1>
+	        	<p>Event is a simple event-handling module for ImpressCMS which can also display some public rss calendars</p>
+	        <h2 id="index">Index</h2>
+	        <ul>
+	        	<li><a href="#keyfeatures">Keyfeatures</a></li>
+	        	<li><a href="#firsstart">First Start</a>
+	        		<ul>
+	        			<li><a href="#firstcat">Create first Category</a></li>
+	        			<li><a href="#firstevent">Create First Event(s)</a></li>
+	        			<li><a href="#firstcal">Import the first Calendar</a></li>
+	        		</ul>
+	        	</li>
+	        	<li><a href="#blocks">Module Blocks</a></li>
+	        	<li><a href="#templates">Templates</a></li>
+	        	<li><a href="#event_footer">Conclusion</a></li>
+	        </ul>
+	        <h2>Keyfeatures</h2>
+				<ul>
+					<li>Create fast and simple an event and categorize them using different categories/colors</li>
+					<li>Categories are using the group permissions of ImpressCMS to allow different Groups to view categories and it's Events</li>
+					<li>Categories have a group permission for submitting new Events to handle Groups and different submit permissions</li>
+					<li>Import public calendars simple by using RSS-Feeds (e.g. public google calendars)</li>
+				</ul>
+	        <h2 id="firsstart">First Start</h2>
+	        <h3 id="firstcat">Create First Category</h3>
+	        	<p>Creating categories is simple. There are not really much fields.</p>
+	        	<ul>
+	        		<li>Title will be used for Calendar Legend</li>
+	        		<li>Description will be hovered in a qtip-span in Legend</li>
+	        		<li>Color will be used as a background Color of the events displayed in calendar</li>
+	        		<li>Textcolor will be used as a text Color of the events displayed in calendar. Default would be black. But in some darker colors it might be better to adjust the text-color</li>
+	        	</ul>
+	        	<p>That's it. After setting the permissions you can go forward and add some events to your category</p>
+        	<h3 id="firstevent">Create First Event(s)</h3>
+        	<ul>
+        		<li></li>
+        	</ul>
+        	
+        	<h2 id="templates">Templates</h2>
+        	<p>There're just a few templates available:</p>
+        	<ul>
+        		<li>/event_admin.html
+        			<ul>
+        				<li>contains all necessary variables to display admin-side. Less informations enough, and I think, most people will never use this template for changes ;-)</li>
+        			</ul>
+        		</li>
+        		<li>/event_requirements.html
+        			<ul>
+        				<li>The same: only an admin template and will only be used, if the requirements check failed on installation.</li>
+        			</ul>
+        		</li>
+        		<li>/event_header.html &amp; /event_footer.html
+        			<ul>
+        				<li>Header and footer holding additional informations like RSS-Feeds, Header informations, comment loop, notifications</li>
+        			</ul>
+        		</li>
+        		<li>/event_index.html
+        			<ul>
+        				<li>Currently displays the calendar and whatever needed for</li>
+        			</ul>
+        		</li>
+        		<li>/event_event.html
+        			<ul>
+        				<li>Dipsplaying full event Informations for a single event</li>
+        			</ul>
+        		</li>
+        		<li>/event_calconf.html
+        			<ul>
+        				<li>Is holding the calendar jquery configuration of the calendar</li>
+        			</ul>
+        		</li>
+        	</ul>
+        	
+        	<div id="event_footer">
+				<h2>Conclusion</h2>
+				<p>Thank you for using 'Event' module. If you have some trouble while using Menu Module, please visit 
+					<a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">
+						ImpressCMS Community Forum
+					</a>
+					. You have some suggestions, what you'd like to change or add to the module? No problem! We can talk about. Please, use also 
+					<a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">
+						ImpressCMS Community Forum
+					</a> 
+					for this!
+				</p>  
+				<p>You might also like to follow the recent changes in 'Event' Module? Please, have a look at 
+					<a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/menu/trunk/" title="'Event' SVN on Assembla" rel="external">
+						'Event' SVN on Assembla
+					</a> 
+					or make a checkout of my
+					<a href="http://code.google.com/p/amaryllis-modules/" title="Menu" rel="external">
+						module svn on google code
+					</a>.
+				</p>
+			</div>
+        </div>
+        
+        <div id="icms-uptopmessage"><a href="#top">back top</a></div>
+        
+        <div id="credit">
+			<p class="copyright">
+				<script type="text/javascript" language="JavaScript">
+					DatumAktuell = new Date(); JahrAktuell = DatumAktuell.getFullYear();
+					document.write("| &copy; 2011-"+ JahrAktuell + " "); 
+				</script>
+				<a href="http://code.google.com/p/amaryllis-modules/" title="Amaryllis Modules" target="_blank" rel="external">Amaryllis Modules</a> |
+				<a href="print.php?print=manual" target="_blank" rel="external"><img src="../images/print.png" alt="print" /></a>
+			</p>
+		</div>
+        
+        <!-- script for uptop-link -->
+		<script type="text/javascript">
+			$(function () { // run this code on page load (AKA DOM load)
+	 
+				/* set variables locally for increased performance */
+				var scroll_timer;
+				var displayed = false;
+				var $message = $('#icms-uptopmessage a');
+				var $window = $(window);
+				var top = $(document.body).children(0).position().top;
+	 
+				/* react to scroll event on window */
+				$window.scroll(function () {
+					window.clearTimeout(scroll_timer);
+					scroll_timer = window.setTimeout(function () { // use a timer for performance
+						if($window.scrollTop() <= top) // hide if at the top of the page
+							{
+							displayed = false;
+							$message.fadeOut(500);
+							}
+						else if(displayed == false) // show if scrolling down
+							{
+							displayed = true;
+							$message.stop(true, true).show().click(function () { $message.fadeOut(500); });
+							}
+					}, 100);
+				});
+			});
+		</script>
+	</body>
+</html>

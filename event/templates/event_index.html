@@ -7,14 +7,25 @@
 	<fieldset style="border: #e8e8e8 1px solid;">
 		<legend><{$smarty.const._MD_EVENT_LEGEND}></legend>
 		<{foreach item=cat from=$categories name=category}>
-			<div class="legend_item" style="">
-				<span class="legend_color" style="background-color: <{$cat.color}>">&nbsp;</span><span class="legend_title"><{$cat.name}></span><br />
+			<div class="legend_item" original-title="<{$cal.name}>">
+				<span class="legend_color" style="background-color: <{$cat.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cat.txtcolor}>;"><{$cat.name}></span>
 			</div>
+			<{if $cat.dsc}>
+				<div class="event_popup">
+					<{$cat.dsc}>
+				</div>
+			<{/if}>
 		<{/foreach}>
+		
 		<{foreach item=cal from=$calendars name=calendar}>
-			<div class="legend_item" style="">
-				<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title"><{$cal.name}></span><br />
+			<div class="legend_item" original-title="<{$cal.name}>">
+				<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cal.txtcolor}>;"><{$cal.name}></span>
 			</div>
+			<{if $cal.dsc}>
+				<div class="event_popup">
+					<{$cal.dsc}>
+				</div>
+			<{/if}>
 		<{/foreach}>
 	</fieldset>
 </div>
@@ -26,5 +37,33 @@
 		<{/if}>
 	</div>
 <{/if}>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		//initiate qtip for category description
+		$('.legend_item').each(function(){
+			$(this).qtip({
+				content: {
+					text: $(this).next('div.event_popup').html(),
+					title: $(this).attr('original-title')
+				},
+				style: {
+					width:500,
+					viewport: $(window), // Keep it on-screen at all times if possible
+					textAlign:'left',
+					tip:'bottomLeft',
+					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
+				},
+				position:   {
+					target: 'mouse',
+					my:'bottomLeft',
+					adjust: {
+						x: 0,  y: -5
+					}
+				},
+			});
+		});
+	});
+</script>
 
 <{includeq file='db:event_footer.html'}>
