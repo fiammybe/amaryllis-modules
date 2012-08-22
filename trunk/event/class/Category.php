@@ -72,10 +72,15 @@ class mod_event_Category extends icms_ipf_seo_Object {
 		return FALSE;
 	}
 
-	function accessGranted() {
+	function accessGranted($userid = FALSE) {
 		if ($this->userCanEditAndDelete()) return TRUE;
 		$gperm_handler = icms::handler('icms_member_groupperm');
-		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		if($user) {
+			$member_handler = icms::handler('icms_member_user');
+			$groups = ($userid > 0) ? $member_handler->get($userid)->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		} else {
+			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		}
 		$module = icms::handler('icms_module')->getByDirname(EVENT_DIRNAME);
 		$viewperm = $gperm_handler->checkRight('cat_view', $this->id(), $groups, $module->getVar("mid", "e"));
 		if ($viewperm && $this->isApproved()) return TRUE;
@@ -93,17 +98,6 @@ class mod_event_Category extends icms_ipf_seo_Object {
 		return ($this->getVar("category_approve", "e") == 1) ? TRUE : FALSE;
 	}
 
-	public function getEvents() {
-		$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
-		$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_cid", $this->id()));
-		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_public", 1));
-		$crit->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
-		$criteria->add($crit);
-		$events = $event_handler->getObjects($criteria, TRUE, FALSE);
-		return $events;
-	}
-
 	public function getItemLink($urlOnly = FALSE) {
 		$url = EVENT_URL . 'category.php?cat=' . $this->short_url();
 		if($urlOnly) return $url;
@@ -117,7 +111,6 @@ class mod_event_Category extends icms_ipf_seo_Object {
         $ret['dsc'] = $this->summary();
         $ret['color'] = $this->getColor();
         $ret['txtcolor'] = $this->getTextColor();
-		$ret['events'] = $this->getEvents();
         return $ret;
 	}
 }

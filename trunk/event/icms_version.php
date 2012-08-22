@@ -116,7 +116,9 @@ $modversion['templates'] = array(
     array("file" => "event_calconf.html", "description" => "js configuration for calendar"),
 	array('file' => 'event_header.html', 'description' => 'Module Header'),
 	array('file' => 'event_footer.html', 'description' => 'Module Footer'),
-    array("file" => "event_requirements.html", "description" => "event requirements"));
+    array("file" => "event_requirements.html", "description" => "event requirements")
+	);
+	
 
 /** Blocks information */
 /** To come soon in imBuilding... */

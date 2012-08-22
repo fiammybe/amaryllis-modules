@@ -1,19 +1,19 @@
 <?php
 /**
- * 'Album' is a light weight gallery module
+ * 'Event' is an event/category module for ImpressCMS, which can display google categorys, too
  *
- * File: /admin/print.php
- *
- * print support for album Manual
+ * File: /admin/manual.php
+ * 
+ * print support for Module Manual
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Album
- * @since		1.20
+ * 				Event
+ * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		album
+ * @package		event
  *
  */
 
