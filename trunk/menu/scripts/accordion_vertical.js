@@ -11,9 +11,6 @@
         	//header: 'menu_heading',
         	collapsible: true
         });
-        $('#accordion .menu_heading').click(function() {
-			$(this).next().toggle('slow');
-			return false;
-		}).next().hide();
+        
 		
     });  
