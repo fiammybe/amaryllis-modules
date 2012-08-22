@@ -51,39 +51,22 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	 * @param $start => int UNIX Timestamp
 	 * @param $end => int UNIX Timestamp
 	 */
-	public function getEventCriterias( $cat_id, $perm = 'cat_view',$start = 0, $end = "month", $private = TRUE) {
+	public function getEventCriterias( $cat_id, $start = 0, $end = 0, $uid = 0) {
 		$criteria = new icms_db_criteria_Compo();
-		$category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
-		$cids = $category_handler->userView();
-		if(!empty($cids)) {
-			$tray = new icms_db_criteria_Compo();
-			foreach ($cids as $key => $value) {
-				$tray->add(new icms_db_criteria_Item("event_cid", $value), 'OR');
-			}
-			$criteria->add($tray);
-		} else {
-			$criteria->add(new icms_db_criteria_Item("event_cid", 0, '=='));
-		}
-		if($private) {
-			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
-			//$critTray = new icms_db_criteria_Compo();
-			$criteria->add(new icms_db_criteria_Item("event_public", 1));
-			$criteria->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
-			//$criteria->add($critTray);
-		}
-		$criteria->add(new icms_db_criteria_Item("event_startdate", time(), '>='));
-		if($end == "month") {
-			$criteria->add(new icms_db_criteria_Item("event_enddate", time() + 60*60*24*31, '<=' ));
-		} elseif ($end == "week") {
-			$criteria->add(new icms_db_criteria_Item("event_enddate", time() + 60*60*24*7, '<=' ));
-		} elseif($end == "year") {
-			$criteria->add(new icms_db_criteria_Item("event_enddate", time() + 60*60*24*30*12, '<=' ));
-		}
+		
+		$criteria->add(new icms_db_criteria_Item("event_cid", $cat_id));
+		
+		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_public", 1));
+		$crit->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
+		$criteria->add($crit);
+
+		$criteria->add(new icms_db_criteria_Item("event_startdate", $start, '>='));
+		$criteria->add(new icms_db_criteria_Item("event_enddate", $end, '<='));
 		return $criteria;
 	}
 
-	public function getEvents($cat_ids = FALSE, $perm = 'cat_view', $end = "month") {
-		$criteria = $this->getEventCriterias($cat_ids, $perm, 0, $end);
+	public function getEvents($cat_id = FALSE, $start = 0, $end = 0, $uid = 0) {
+		$criteria = $this->getEventCriterias($cat_id, $start, $end, $uid);
 		$events = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($events as $event) {

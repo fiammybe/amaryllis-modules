@@ -67,7 +67,7 @@ function addEvent($event_id = 0) {
 include_once "header.php";
 
 $xoopsOption["template_main"] = "event_index.html";
-//icms::$logger->disableLogger();
+
 include_once ICMS_ROOT_PATH . "/header.php";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,15 +88,14 @@ $clean_cat = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat") : FALSE;
 
 $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 $calendar_handler = icms_getModuleHandler("calendar", EVENT_DIRNAME, "event");
-$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 
 $categories = $category_handler->getCategories("cat_view");
 $icmsTpl->assign("categories", $categories);
 
 $icmsTpl->assign("default_view", $clean_date);
 
-$cat_submit = $category_handler->userSubmit();
-if($cat_submit) {
+if($category_handler->userSubmit()) {
+	$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 	$icmsTpl->assign("cat_submit", TRUE);
 	addEvent(0);
 }

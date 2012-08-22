@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Menu' is a menu module for ImpressCMS
+ * 'Event' is an event/category module for ImpressCMS, which can display google categorys, too
  *
  * File: /admin/manual.php
  * 
@@ -9,11 +9,11 @@
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Menu
+ * 				Event
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		menu
+ * @package		event
  *
  */
 

@@ -82,8 +82,17 @@
 				prev: 'circle-triangle-w',
 				next: 'circle-triangle-e'
 			},
-			<{if $calendars}>
-				eventSources: [
+			eventSources: [
+				<{foreach item=cat from=$categories name=category}>
+					{
+						url: "<{$event_url}>feeds.php?cat=<{$cat.id}>&uid=<{$icms_userid}>",
+						className: 'event_cal',
+						color: "<{$cat.color}>",
+						textColor: '<{$cat.txtcolor}>',
+					}<{if !$smarty.foreach.category.last}>,<{/if}>
+				<{/foreach}>
+				<{if $categories && $calendars}>,<{/if}>
+				<{if $calendars}>
 					<{foreach item=cal from=$calendars name=calendar}>
 					{
 						url: "<{$cal.url}>",
@@ -93,41 +102,10 @@
 						currentTimezone: 'Europe/Berlin'
 					}<{if !$smarty.foreach.calendar.last}>,<{/if}>
 					<{/foreach}>
-				],
 				<{/if}>
+			],
 			//events
 			events: [
-				<{foreach item=cal from=$calendars name=calendar}>
-					{
-						url: "<{$cal.url}>",
-						className: 'google_cal',
-						color: "<{$cal.color}>",
-						textColor: '<{$cal.txtcolor}>',
-						currentTimezone: 'Europe/Berlin'
-					}<{if !$smarty.foreach.calendar.last}>,<{/if}>
-				<{/foreach}>
-				<{if $calendars && $categories}>,<{/if}>
-				<{foreach item=cat from=$categories name=categories}>
-					<{foreach item=event from=$cat.events name=event}>
-					{
-						id: <{$event.id}>,
-						title: '<{$event.name}>',
-						start: <{$event.start}>,
-						end: <{$event.end}>,
-						allDay: <{$event.allDay}>,
-						url: '<{$event.itemURL}>',
-						description: '<{$event.dsc}>',
-						color: '<{$cat.color}>',
-						textColor: '<{$cat.txtcolor}>',
-						<{if $event.canEditAndDelete}>
-							editable: true
-						<{else}>
-							editable: false
-						<{/if}>
-					}<{if !$smarty.foreach.event.last}>,<{/if}>
-					<{/foreach}>
-					<{if !$smarty.foreach.categories.last && $cat.events}>,<{/if}>
-				<{/foreach}>
 			],
 			ignoreTimezone: false,
 			eventRender: function(event, element) {
@@ -136,7 +114,7 @@
 		                title: { text: event.title },
 		                text: '<span class="start">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'HH:mm')) + 
 		                		'<br /><span class="End">End: </span>' + ($.fullCalendar.formatDate(event.end, 'HH:mm')) + 
-		                		'<br /><span class="dsc">Description: </span>' + event.description 
+		                		'<br /><span class="dsc">Description: </span>' + event.description
 		                		
 		            },
 		            show: { solo: true },
