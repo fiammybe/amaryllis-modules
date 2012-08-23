@@ -23,7 +23,6 @@ $clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZ
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start") : 0;
 $clean_end = isset($_GET['end']) ? filter_input(INPUT_GET, "end") : 0;
 $clean_cat = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat", FILTER_SANITIZE_NUMBER_INT) : FALSE;
-$clean_cal = isset($_GET['cal']) ? filter_input(INPUT_GET, "cal", FILTER_SANITIZE_NUMBER_INT) : FALSE;
 
 if(!$clean_cat == FALSE ){
 	$category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");

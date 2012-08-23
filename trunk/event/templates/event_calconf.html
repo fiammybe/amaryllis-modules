@@ -102,7 +102,7 @@
 			eventSources: [
 				<{foreach item=cat from=$categories name=category}>
 					{
-						url: "<{$event_url}>feeds.php?cat=<{$cat.id}>&uid=<{$icms_userid}>",
+						url: "<{$event_url}>feeds.php?cat=<{$cat.id}><{if $icms_userid}>&uid=<{$icms_userid}><{/if}>",
 						className: 'event_cal',
 						color: "<{$cat.color}>",
 						textColor: '<{$cat.txtcolor}>',
@@ -178,6 +178,51 @@
 					} // end of else
 					//calendar.fullCalendar('unselect');
 				},
+				eventResize: function( event, dayDelta, minuteDelta, revertFunc, jsEvent, view ) {
+					if(view.name == "month") {
+						revertFunc();
+					}
+					if (!confirm("<{$smarty.const._MD_EVENT_SURE_RESIZE}>")) {
+						revertFunc();
+					} else {
+						$.ajax({
+							url: "<{$event_url}>submit.php?op=resizeevent",
+							type: "POST",
+							data: { event_cid: event.cid, event_id: event.id, day_diff: dayDelta, min_diff: minuteDelta},
+							dataType: "json",
+							success: function(response) {
+										if(response.status === "success") {
+											$('#calendar').fullCalendar('refetchEvents');
+											$("#error_messages").text(response.message);
+										} else if(response.status === "error") {
+											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+											revertFunc();
+										}
+							}
+						});
+					}
+				},
+				eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
+					if (!confirm("<{$smarty.const._MD_EVENT_SURE_DROP}> DAYS:" +dayDelta + "and Minute:" + minuteDelta )) {
+						revertFunc();
+					} else {
+						$.ajax({
+							url: "<{$event_url}>submit.php?op=dropevent",
+							type: "POST",
+							data: { event_cid: event.cid, event_id: event.id, day_diff: dayDelta, min_diff: minuteDelta, event_allday: allDay},
+							dataType: "json",
+							success: function(response) {
+										if(response.status === "success") {
+											$('#calendar').fullCalendar('refetchEvents');
+											$("#error_messages").text(response.message);
+										} else if(response.status === "error") {
+											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+											revertFunc();
+										}
+							}
+						});
+					}
+				}
 			<{else}>
 				selectable: false,
 				selectHelper: false,
@@ -206,16 +251,14 @@
 								event_phone: $("#event_phone").val(), event_street: $("#event_street").val(), event_city: $("#event_city").val(), event_zip: $("#event_zip").val(),
 								event_public: $('input:radio[name=event_public]:checked').val(), mid_event_url: $("#mid_event_url").val(), caption_event_url: $("#caption_event_url").val(), 
 								desc_event_url: $("#desc_event_url").val(), url_event_url: $("#url_event_url").val(), target_event_url: $("#target_event_url").val() },
-						//contentType: 'application/json;charset=UTF-8',
 						dataType: "json",
 						success: function(response) {
 									if(response.status === "success") {
 										dlg.dialog("close");
 										$('#calendar').fullCalendar('refetchEvents');
 										$('#form_message').dialog('open');
-										
 									} else if(response.status === "error") {
-										$("#form_error").text("Failure: " + response.message);
+										$("#form_error").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 									}
 						},
 					});
