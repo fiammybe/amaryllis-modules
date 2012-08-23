@@ -75,7 +75,7 @@ class mod_event_Category extends icms_ipf_seo_Object {
 	function accessGranted($userid = FALSE) {
 		if ($this->userCanEditAndDelete()) return TRUE;
 		$gperm_handler = icms::handler('icms_member_groupperm');
-		if($user) {
+		if($userid) {
 			$member_handler = icms::handler('icms_member_user');
 			$groups = ($userid > 0) ? $member_handler->get($userid)->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		} else {

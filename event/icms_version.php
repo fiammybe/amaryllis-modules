@@ -149,7 +149,7 @@ $modversion['config'][$i] = array(
                                 'formtype'      => 'select',
                                 'valuetype'     => 'text',
                                 'default'       => 'month',
-                                'options'       => array( _CO_EVENT_MONTH => "month", _CO_EVENT_DAY => "day")
+                                'options'       => array( _CO_EVENT_MONTH => "month", _CO_EVENT_WEEK => "agendaWeek", _CO_EVENT_DAY => "agendaDay")
                             );
 $i++;
 $modversion['config'][$i] = array(

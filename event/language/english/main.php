@@ -26,6 +26,9 @@ define("_MD_EVENT_LEGEND", "Legend");
 define("_MD_EVENT_THANKS", "Thanks");
 define("_MD_EVENT_EVENT", "Event");
 define("_MD_EVENT_FROMTO", "From/to");
+define("_MD_EVENT_FAILURE", "Failure");
+define("_MD_EVENT_SURE_RESIZE", "Are you sure, that you want to change the end of the Event?");
+define("_MD_EVENT_SURE_DROP", "Are you sure, that you want to drop the Event to this Place?");
 // constants for submit form
 define("_MD_EVENT_ADDEVENT", "Submit new Event");
 define("_MD_EVENT_ADDEVENT_URL_CAP", "Caption");
@@ -38,3 +41,6 @@ define("_MD_EVENT_SUBMITACCESS_FAILED", "Sorr, you don't have permissions to sub
 define("_MD_EVENT_NO_TITLE", "No title submitted");
 define("_MD_EVENT_STORING_FAILED", "Sorry, an accident while storing the Data. The Following errors occured:");
 define("_MD_EVENT_THANKS_SUBMITTING", "Your Event has successfully been added. Thanks for submitting");
+define("_MD_EVENT_ACCESS_FAILED", "Sorry, you don't have permissions to update the event");
+define("_MD_EVENT_SUCCESSFUL_RESIZED", "Event successfully updated");
+//define("", "");

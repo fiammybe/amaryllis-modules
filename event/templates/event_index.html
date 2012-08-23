@@ -35,9 +35,10 @@
 		<{if $addevent}>
 			<{includeq file='db:system_common_form.html' form=$addevent}>
 		<{/if}>
-	<div id="form_error"></div>
+	<div id="form_error">&nbsp;</div>
 	</div>
 	<div id="form_message" class="ui-helper-hidden"><{$smarty.const._MD_EVENT_THANKS_SUBMITTING}></div>
+	<div id="error_messages" class="">&nbsp;</div>
 <{/if}>
 
 <{includeq file='db:event_event.html'}>
