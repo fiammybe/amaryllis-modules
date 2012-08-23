@@ -23,17 +23,24 @@ function addEvent($event_id = 0) {
 	$uname = (is_object(icms::$user)) ? icms::$user->getVar("uname") : " ";
 	$mail = (is_object(icms::$user)) ? icms::$user->getVar("email") : " ";
 	if($eventObj->isNew()) {
-		$form = new icms_form_Theme(_MD_EVENT_ADDEVENT, "addevent", "submit.php?op=addevent", "post", TRUE);
+		$form = new icms_form_Theme(_MD_EVENT_ADDEVENT, "addevent", "submit.php?op=addevent", "post");
 		
-		$catselect = new icms_form_elements_Select(_CO_EVENT_EVENT_EVENT_CID, "event_cid");
+		$form->addElement(new icms_form_elements_Hidden("event_name", ""));
+		$form->addElement(new icms_form_elements_Hidden("event_startdate", ""));
+		$form->addElement(new icms_form_elements_Hidden("event_enddate", ""));
+		$form->addElement(new icms_form_elements_Hidden("event_allday", ""));
+		
+		$catselect = new icms_form_elements_Select(_CO_EVENT_EVENT_EVENT_CID, "event_cid", "1");
 		$catselect->addOptionArray($event_handler->getCategoryList());
 		$form->addElement($catselect);
 		
-		$form->addElement(new icms_form_elements_Textarea(_CO_EVENT_EVENT_EVENT_DSC, "event_dsc", "", 7, 50));
+		$desc = new icms_form_elements_Textarea(_CO_EVENT_EVENT_EVENT_DSC, "event_dsc", "", 7, 50);
+		$desc->setRequired();
+		$form->addElement($desc);
 		
-		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_CONTACT, "event_contact", 75, 255, $uname));
+		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_CONTACT, "event_contact", 50, 255, $uname));
 		
-		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_CEMAIL, "event_cemail", 75, 255, $mail));
+		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_CEMAIL, "event_cemail", 50, 255, $mail));
 		
 		$tray = new icms_form_elements_Tray(_CO_EVENT_EVENT_EVENT_URL, "<br />", "event_url");
 		$mid = new icms_form_elements_Hidden("mid_event_url", icms::$module->getVar("mid"));
@@ -50,9 +57,10 @@ function addEvent($event_id = 0) {
 		$tray->addElement($mid);
 		$form->addElement($tray);
 		
-		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_PHONE, "event_phone", 75, 255));
-		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_STREET, "event_street", 75, 255));
+		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_PHONE, "event_phone", 50, 255));
+		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_STREET, "event_street", 50, 255));
 		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_ZIP, "event_zip", 10, 10));
+		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_CITY, "event_city", 50, 255));
 		
 		$form->addElement(new icms_form_elements_Radioyn(_CO_EVENT_EVENT_EVENT_PUBLIC, "event_public", 1));
 			

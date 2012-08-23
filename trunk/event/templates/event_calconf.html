@@ -40,7 +40,24 @@
     			$('#calendar').fullCalendar('changeView', 'agendaDay')
     				.fullCalendar('gotoDate', date);
 			},
-
+			eventClick: function(event, jsEvent, view) {
+				startDate = $.fullCalendar.formatDate(event.start, 'HH:mm');
+				endDate = $.fullCalendar.formatDate(event.end, 'HH:mm');
+				$("div#cal_event").dialog("open");
+				$("div#cal_event").dialog({
+					title: event.title
+				});
+				$("div#event_name").text(event.title);
+				$("div#event_dsc").html(event.description);
+				$("span#event_startdate").text(startDate);
+				$("span#event_enddate").text(endDate);
+				$("div#event_contact").html(event.contact);
+				$("div#event_street").html(event.street);
+				$("span#event_zip").text(event.zip);
+				$("span#event_city").text(event.city);
+				$("div#event_cid").text(event.cat);
+				
+			},
 			isRTL: <{$event_rtl}>,
 			firstDay: <{$first_day}>,
 			weekends: <{$display_weekend}>,
@@ -104,9 +121,6 @@
 					<{/foreach}>
 				<{/if}>
 			],
-			//events
-			events: [
-			],
 			ignoreTimezone: false,
 			eventRender: function(event, element) {
         		element.qtip({    
@@ -118,7 +132,6 @@
 		                		
 		            },
 		            show: { solo: true },
-		            //hide: { when: 'inactive', delay: 3000 }, 
 		            style: { 
 		                width: 500,
 		                padding: 5,
@@ -153,14 +166,18 @@
 						if(lastView != 'month')
 						var title = prompt('<{$smarty.const._MD_EVENT_TITLE}>');
 						title = title;
-						start = startDate;
-						end = endDate;
-						allday: allDay;
-						if(title) $("div#dialog_box").dialog("open");
+						start = $.fullCalendar.formatDate( startDate, "MMMM dd, yyyy h:mm:ss tt");
+						end = $.fullCalendar.formatDate( endDate, "MMMM dd, yyyy h:mm:ss tt");
+						if(title) $("#submit_form").dialog("open");
+						$("#event_startdate").val(Date.parse(start) /1000);
+						$("#event_enddate").val(Date.parse(end) / 1000);
+						$("#event_name").val(title);
+						$("#event_allday").val(allDay);
+						
 						lastView = view.name;
 					} // end of else
 					//calendar.fullCalendar('unselect');
-				}
+				},
 			<{else}>
 				selectable: false,
 				selectHelper: false,
@@ -171,32 +188,72 @@
 			<{/if}>
 		});
 		
-		$( "#dialog_box" ).dialog({
+		//var targeturl = "<{$event_url}>submit.php?op=addevent";
+		$( "#submit_form" ).dialog({
+			title: "<{$smarty.const._MD_EVENT_ADDEVENT}>",
         	autoOpen: false,
-        	height: 800,
-        	width: 800,
+        	height: 700,
+        	width: "90%",
         	modal: true,
         	buttons: {
-	            "Create Event": function() {
-	            	allFields.removeClass( "ui-state-error" );
+	            "<{$smarty.const._MD_EVENT_CREATE_EVENT}>": function() {
+	            	var dlg = $(this);
 					$.ajax({
-						url: "<{$event_url}>submit.php?op=addevent",
+						url: $("#addevent").attr('action'),
 						type: "POST",
-						data: {title: +title, start: +start, end: +end, allday: +allday, event_contact: event_contact.val(), event_cemail: event_cemail.val(), mid_event_url: mid_event_url.val(), event_phone: event_phone.val(),
-							   event_street: event_street.val(), event_city: event_city.val(), event_zip: event_zip.val() },                
-						dataType: "HTML"
-						//$("#dialog_box").html(data)
-						
+						data: {event_name: $("#event_name").val(), event_startdate: $("#event_startdate").val(), event_enddate: $("#event_enddate").val(), event_allday: $("#event_allday").val(),
+								event_cid: $("#event_cid").val(), event_dsc: $("#event_dsc_tarea").val(), event_contact: $("#event_contact").val(), event_cemail: $("#event_cemail").val(), 
+								event_phone: $("#event_phone").val(), event_street: $("#event_street").val(), event_city: $("#event_city").val(), event_zip: $("#event_zip").val(),
+								event_public: $('input:radio[name=event_public]:checked').val(), mid_event_url: $("#mid_event_url").val(), caption_event_url: $("#caption_event_url").val(), 
+								desc_event_url: $("#desc_event_url").val(), url_event_url: $("#url_event_url").val(), target_event_url: $("#target_event_url").val() },
+						//contentType: 'application/json;charset=UTF-8',
+						dataType: "json",
+						success: function(response) {
+									if(response.status === "success") {
+										dlg.dialog("close");
+										$('#calendar').fullCalendar('refetchEvents');
+										$('#form_message').dialog('open');
+										
+									} else if(response.status === "error") {
+										$("#form_error").text("Failure: " + response.message);
+									}
+						},
 					});
-					$(this).dialog("close");
 				},
-				"Cancel" : function() {
-					$(this).dialog("close");
+				"<{$smarty.const._CANCEL}>" : function() {
+					$(this).dialog("destroy");
 				}
 			},
 			Cancel: function() {
-				$( this ).dialog( "close" );
+				$(this).dialog( "close" );
 			}
-        });
+       });
+       
+		$("#form_message").dialog({
+			title: "<{$smarty.const._MD_EVENT_THANKS}>",
+			autoOpen: false,
+			modal: true,
+			hide: "explode",
+			show: "slide",
+			resizable: false,
+			width: 300,
+			height: "auto",
+			buttons: {
+				Ok: function() {
+					$(this).dialog( "close" );
+				}
+			}
+		});
+		
+		$("#cal_event").dialog({
+			autoOpen: false,
+			modal: true,
+			hide: "explode",
+			show: "slide",
+			resizable: false,
+			width: 600,
+			height: "auto"
+		});
+		
 	});
 </script>

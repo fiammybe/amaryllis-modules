@@ -1,26 +1,70 @@
-<{includeq file='db:event_header.html'}>
-<{if $event}>
-<div id="event-event-container">
-	<h1><{$event.event_name}></h1>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CID}></b>: <{$event.event_cid}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_DSC}></b></div>
-				<div><{$event.event_dsc}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CONTACT}></b>: <{$event.contact.contact}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CEMAIL}></b>: <{$event.event_cemail}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_URL}></b>: <{$event.event_url}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_PHONE}></b>: <{$event.event_phone}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STREET}></b>: <{$event.event_street}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_ZIP}></b>: <{$event.event_zip}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CITY}></b>: <{$event.event_city}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STARTDATE}></b>: <{$event.event_startdate}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_ENDDATE}></b>: <{$event.event_enddate}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_SUBMITTER}></b>: <{$event.event_submitter}></div>
-		<div><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CREATED_ON}></b>: <{$event.event_created_on}></div>
-
-</div>
+<{if $single_event}>
+	<{includeq file='db:event_header.html'}>
+	<div id="cal_event">
+		<h2><{$single_event.name}></h2>
+		<div id="event_dsc"><{$single_event.dsc}></div>
+		
+		<div id="event_infos" class="event_table" style="width: 60%;">
+			<div class="event_row">
+				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CID}></b>:&nbsp;</div><div id="event_cid" class="event_cell"><{$single_event.cat}></div>
+			</div>
+			
+			<div class="event_row">
+				<div class="event_cell"><b><{$smarty.const._MD_EVENT_FROMTO}></b>:&nbsp;</div>
+					<div class="event_cell">
+						<span id="event_startdate"><{$single_event.start}></span> &nbsp;-&nbsp;<span id="event_enddate"><{$single_event.end}></span>
+					</div>
+			</div>
+		</div>
+		
+		<div id="event_contact_info" class="event_table" style="width: 60%;">
+			<div class="event_row">
+				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CONTACT}></b>:&nbsp;</div><div id="event_contact" class="event_cell"><{$single_event.contact}></div>
+			</div>
+			
+			<div class="event_row">
+				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STREET}></b>:&nbsp;</div><div id="event_street" class="event_cell"><{$single_event.street}></div>
+			</div>
+			<div class="event_row">
+				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CITY}></b>:&nbsp;</div>
+					<div class="event_cell">
+						<span id="event_zip"><{$single_event.zip}></span> &nbsp;<span id="event_city"><{$single_event.city}></span>
+					</div>
+			</div>
+		</div>
+	</div>
+	<{includeq file='db:event_footer.html'}>
+<{else}>
+	<div id="cal_event" class="ui-helper-hidden">
+		<div id="event_dsc"></div>
+		
+		<div id="event_infos" class="event_table">
+			<div class="event_row">
+				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CID}></b>:&nbsp;</div><div id="event_cid" class="event_cell"></div>
+			</div>
+			
+			<div class="event_row">
+				<div class="event_cell"><b><{$smarty.const._MD_EVENT_FROMTO}></b>:&nbsp;</div>
+					<div class="event_cell">
+						<span id="event_startdate">&nbsp;</span> &nbsp;-&nbsp;<span id="event_enddate">&nbsp;</span>
+					</div>
+			</div>
+		</div>
+		
+		<div id="event_contact_info" class="event_table">
+			<div class="event_row">
+				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CONTACT}></b>:&nbsp;</div><div id="event_contact" class="event_cell"></div>
+			</div>
+			
+			<div class="event_row">
+				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STREET}></b>:&nbsp;</div><div id="event_street" class="event_cell"></div>
+			</div>
+			<div class="event_row">
+				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CITY}></b>:&nbsp;</div>
+					<div class="event_cell">
+						<span id="event_zip">&nbsp;</span> &nbsp;<span id="event_city">&nbsp;</span>
+					</div>
+			</div>
+		</div>
+	</div>
 <{/if}>
-<{if $event_table}>
-<h1><{$event_title}></h1>
-<{$event_table}>
-<{/if}>
-<{includeq file='db:event_footer.html'}>

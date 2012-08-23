@@ -47,7 +47,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->quickInitVar("event_enddate", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_public", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar("event_tags", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("event_joiner", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 'X');
+		$this->quickInitVar("event_joiner", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, '0');
 		$this->quickInitVar("event_submitter", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("event_created_on", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_approve", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
@@ -87,17 +87,13 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		}
 	}
 
-    public function getCategory($cattitle = TRUE) {
+    public function getCategory() {
         $cid = $this->getVar("event_cid", "e");
         $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
         $cat = $category_handler->get($cid);
         $title = $cat->title();
-        $ret['title'] = $title;
-        $ret['color'] = $cat->getColor();
-		$ret['txtcolor'] = $cat->getTextColor();
-		$ret['url'] = $cat->getItemLink(FALSE);
         unset($category_handler, $cat);
-        return ($cattitle) ? $title : $ret;
+        return $title;
     }
     
 	public function accessGranted() {
@@ -127,10 +123,12 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$users = $member_handler->getObjects($criteria, TRUE);
 		if($users) {
 			$user = $member_handler->get($users);
-			$ret['contact'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $user->getVar("uid") . '" title="' . $contact . '">' . ucfirst($contact) . '</a>';
-			$ret['avatar'] = $user->gravatar();
+			$contact = '<a class="event_uinfo" href="' . ICMS_URL . '/userinfo.php?uid=' . $user->getVar("uid") . '" title="' . $contact . '">' . ucfirst($contact) . '</a>';
+			$avatar = $user->gravatar();
+			$ret = '<span class="event_contact"><img class="icon_middle" width="22px" height="22px" src="' . $avatar . '" />' . $contact . '</span>';
 			if(!$email == "" || !$email = "0") {
-				$ret['email'] = icms_core_DataFilter::checkVar($email, "email", 1, 0);
+				$email = icms_core_DataFilter::checkVar($email, "email", 1, 0);
+				$ret .= '<span class="event_contact_email">' . $email . '</span>';
 			}
 		} else {
 			$ret['contact'] = ucfirst($contact);
@@ -141,7 +139,11 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		}
 		return $ret;
 	}
-	
+
+	public function getValue($value) {
+		return (!$this->getVar("$value", "e") == "0") ? $this->getVar("$value", "e") : ""; 
+	}
+		
 	public function isApproved() {
 		return ($this->getVar("event_approve", "e") == 1) ? TRUE : FALSE;
 	}
@@ -167,11 +169,12 @@ class mod_event_Event extends icms_ipf_seo_Object {
         $ret['canEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
-        if(defined("EVENT_FOR_SINGLEVIEW")) {
-            $ret['contact'] = $this->getContact();
-			$ret['cat'] = $this->getCategory(FALSE);
-			
-        }
+        $ret['contact'] = $this->getContact();
+		$ret['street'] = $this->getValue("event_street");
+		$ret['city'] = $this->getValue("event_city");
+		$ret['zip'] = $this->getValue("event_zip");
+		$ret['phone'] = $this->getValue("event_phone");
+		$ret['cat'] = $this->getCategory();
         return $ret;
 	}
 	

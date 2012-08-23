@@ -24,12 +24,20 @@
 .index_indeximage { text-align: center;}    
 .index_indexheader { text-align: center; font-size: 2em; margin: 2em auto;}    
 .index_indexheading, .index_indexfooter { margin: 1em auto;}
-.index_no_items { font-size: 1.2em; margin: 1.5em 0; color: red;}
 .event_adminlinks { text-align: center;}
-
+.icon_middle {vertical-align: middle;}
 #calendar_legend { width: 100%; margin: 2em auto;}
 .legend_color {float: left; min-width: 30px; min-height: 16px; border: 1px solid black}
 .legend_item {margin: 1em 1em 0 0; float: left; width: 150px; overflow: hidden;}
 .legend_title {margin-left: 1em;}
 .event_popup {display: none;}
+#form_error {color: red; font-weight:bold; font-size: 1.5em; }
 
+.event_table {display: table; width: 80%;}
+.event_row {display: table-row; padding: .250em; line-height: 3em;}
+.event_cell { display: table-cell;}
+.ui-dialog-title { float:none !important; display: block; text-align: center; }
+div#event_dsc {margin: 2em 0; }
+span.event_contact {display: block;}
+span.event_contact img.icon_middle {margin-right: .5em;}
+span.event_contact_email {}
