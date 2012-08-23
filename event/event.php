@@ -29,7 +29,7 @@ $eventObj = $event_handler->getEventBySeo($clean_event);
 
 if($eventObj && !$eventObj->isNew() && $eventObj->accessGranted()) {
 	define("EVENT_FOR_SINGLEVIEW", TRUE);
-	$icmsTpl->assign("event", $eventObj->toArray());
+	$icmsTpl->assign("single_event", $eventObj->toArray());
 	
 	/**
 	 * include the comment rules

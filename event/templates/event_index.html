@@ -31,12 +31,16 @@
 </div>
 
 <{if $cat_submit}>
-	<div id="dialog_box" class="ui-helper-hidden event_form" >
+	<div id="submit_form" class="ui-helper-hidden event_form" >
 		<{if $addevent}>
-			<{includeq file='db:system_default_form.html' form=$addevent}>
+			<{includeq file='db:system_common_form.html' form=$addevent}>
 		<{/if}>
+	<div id="form_error"></div>
 	</div>
+	<div id="form_message" class="ui-helper-hidden"><{$smarty.const._MD_EVENT_THANKS_SUBMITTING}></div>
 <{/if}>
+
+<{includeq file='db:event_event.html'}>
 
 <script type="text/javascript">
 	$(document).ready(function(){

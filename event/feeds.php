@@ -36,7 +36,12 @@ if(!$clean_cat == FALSE ){
 			$feeds[] = array (
 				'id'			=> $event['id'],
 				'title'			=> $event['name'],
-				'url'			=> $event['itemURL'],
+				'cat'			=> $event['cat'],
+				'contact'		=> $event['contact'],
+				'street'		=> $event['street'],
+				'zip'			=> $event['zip'],
+				'city'			=> $event['city'],
+				'phone'			=> $event['phone'],
 				'start'			=> $event['start'],
 				'end'			=> $event['end'],
 				'allDay'		=> $event['allDay'],
