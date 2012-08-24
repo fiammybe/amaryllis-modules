@@ -11,7 +11,6 @@
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		var lastView;
-		
 		var calendar = $('#calendar').fullCalendar({
 			defaultView: '<{$default_view}>',
 			aspectRatio: 1.35,
@@ -218,6 +217,9 @@
 										} else if(response.status === "error") {
 											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 											revertFunc();
+										} else {
+											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
+											revertFunc();
 										}
 							}
 						});
@@ -232,6 +234,12 @@
 				}
 			<{/if}>
 		});
+		
+		<{if $gotoDate }>
+			//var date = "<{$gotoDate}>";
+			$('#calendar').fullCalendar('changeView', 'agendaDay')
+    				.fullCalendar('gotoDate', <{$gotoDate}>);
+		<{/if}>
 		
 		//var targeturl = "<{$event_url}>submit.php?op=addevent";
 		$( "#submit_form" ).dialog({
@@ -271,7 +279,6 @@
 				$(this).dialog( "close" );
 			}
        });
-       
 		$("#form_message").dialog({
 			title: "<{$smarty.const._MD_EVENT_THANKS}>",
 			autoOpen: false,
@@ -291,8 +298,8 @@
 		$("#cal_event").dialog({
 			autoOpen: false,
 			modal: true,
-			hide: "explode",
-			show: "slide",
+			hide: "clip",
+			show: "clip",
 			resizable: false,
 			width: 600,
 			height: "auto"

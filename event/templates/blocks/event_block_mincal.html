@@ -1,0 +1,23 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		//$('#event_datepicker').datepicker('option', 'onSelect', function() { window.location = "<{$block.event_url}>index.php?date=" + date; });
+		$('#event_datepicker').bind('onSelect', function() { window.location = "<{$block.event_url}>index.php?date=" + date; });
+		$('#event_datepicker').datepicker({
+			dateFormat: "yy-mm-dd",
+			onSelect: function(date) {
+				window.location = "<{$block.event_url}>index.php?date=" + date;
+			},
+			changeMonth: true,
+			changeYear: true,
+			inline: true
+		});
+		//$('#event_datepicker').datepicker('option', 'onSelect', function() { window.location = "<{$block.event_url}>index.php?date=" + date; });
+	});
+</script>
+
+<div id="event_datepicker">&nbsp;</div>
+
+
+<style type="text/css">
+	#event_datepicker { width: 95%; display: block;}
+</style>

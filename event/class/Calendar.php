@@ -34,6 +34,7 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 		$this->quickInitVar("calendar_dsc", XOBJ_DTYPE_TXTAREA, TRUE);
 		$this->quickInitVar("calendar_color", XOBJ_DTYPE_OTHER, TRUE);
 		$this->quickInitVar("calendar_txtcolor", XOBJ_DTYPE_OTHER, TRUE, FALSE, FALSE, "#00000");
+		$this->quickInitVar("calendar_tz", XOBJ_DTYPE_TXTBOX, TRUE, FALSE, FALSE);
 		$this->initCommonVar("dohtml", FALSE, TRUE);
 		$this->initCommonVar("dobr", FALSE, TRUE);
 		$this->setControl("calendar_color", "color");
@@ -51,6 +52,7 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 		$ret['url'] = $this->getVar("calendar_url", "e");
 		$ret['color'] = $this->getVar("calendar_color", "e");
 		$ret['txtcolor'] = $this->getVar("calendar_txtcolor", "e");
+		$ret['default_timezone'] = $this->getVar("calendar_tz", "e");
 		return $ret;
 	}
 

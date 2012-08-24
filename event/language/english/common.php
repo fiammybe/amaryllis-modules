@@ -44,6 +44,8 @@ define("_CO_EVENT_CALENDAR_CALENDAR_COLOR", "Color");
 define("_CO_EVENT_CALENDAR_CALENDAR_COLOR_DSC", "Background Color of the events assigned to this calendar");
 define("_CO_EVENT_CALENDAR_CALENDAR_TXTCOLOR", "Text Color");
 define("_CO_EVENT_CALENDAR_CALENDAR_TXTCOLOR_DSC", "Text Color of the events assigned to this calendar");
+define("_CO_EVENT_CALENDAR_CALENDAR_TZ", "Default Time Zone");
+define("_CO_EVENT_CALENDAR_CALENDAR_TZ_DSC", "Google Calendars Timezone. Look in Manual for more informations");
 // event
 define("_CO_EVENT_EVENT_EVENT_NAME", "Name of event");
 define("_CO_EVENT_EVENT_EVENT_NAME_DSC", "");

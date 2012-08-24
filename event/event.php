@@ -39,6 +39,8 @@ if($eventObj && !$eventObj->isNew() && $eventObj->accessGranted()) {
 		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 	}
 	
+	
+	
 	$icms_metagen = new icms_ipf_Metagen($eventObj->title(), $eventObj->meta_keywords(), $eventObj->meta_description());
 	$icms_metagen->createMetaTags();
 } else {

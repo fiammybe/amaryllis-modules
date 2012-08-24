@@ -29,6 +29,7 @@ define("_MD_EVENT_FROMTO", "From/to");
 define("_MD_EVENT_FAILURE", "Failure");
 define("_MD_EVENT_SURE_RESIZE", "Are you sure, that you want to change the end of the Event?");
 define("_MD_EVENT_SURE_DROP", "Are you sure, that you want to drop the Event to this Place?");
+define("_MD_EVENT_FAILUREWENTWRONG", "Something might be wrong. Please try another time.");
 // constants for submit form
 define("_MD_EVENT_ADDEVENT", "Submit new Event");
 define("_MD_EVENT_ADDEVENT_URL_CAP", "Caption");

@@ -47,7 +47,8 @@ if(!$clean_cat == FALSE ){
 				'author'		=> $event['submitter'],
 				'description'	=> $event['dsc'],
 				'pubdate'		=> $event['event_created_on'],
-				'editable'		=> $event['canEditAndDelete']
+				'editable'		=> $event['canEditAndDelete'],
+				'itemURL'		=> $event['itemURL']
 			);
 		}
 		echo json_encode($feeds);

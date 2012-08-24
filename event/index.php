@@ -91,8 +91,9 @@ if(icms_get_module_status("index")) {
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_date = isset($_GET['date']) ? filter_input(INPUT_GET, "date") : $eventConfig['default_view'];
+$clean_view = isset($_GET['view']) ? filter_input(INPUT_GET, "view") : $eventConfig['default_view'];
 $clean_cat = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat") : FALSE;
+$clean_date = isset($_GET['date']) ? filter_input(INPUT_GET, "date") : FALSE;
 
 $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 $calendar_handler = icms_getModuleHandler("calendar", EVENT_DIRNAME, "event");
@@ -100,14 +101,22 @@ $calendar_handler = icms_getModuleHandler("calendar", EVENT_DIRNAME, "event");
 $categories = $category_handler->getCategories("cat_view");
 $icmsTpl->assign("categories", $categories);
 
-$icmsTpl->assign("default_view", $clean_date);
+// default view 
+$icmsTpl->assign("default_view", $clean_view);
 
+if($clean_date) {
+	$date = explode("-", $clean_date);
+	$icmsTpl->assign("gotoDate", $date[0] .",". ($date[1] - 1) .",". $date[2]);
+}
+
+// checking for submit permissions for the current user and assign form
 if($category_handler->userSubmit()) {
 	$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 	$icmsTpl->assign("cat_submit", TRUE);
 	addEvent(0);
 }
 
+// fetch the calendars for legend and event sources
 $calendars = $calendar_handler->getObjects(FALSE, TRUE, FALSE);
 $icmsTpl->assign("calendars", $calendars);
 
