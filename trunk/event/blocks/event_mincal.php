@@ -24,7 +24,7 @@ function b_event_mincal_show($options) {
 	global $eventConfig, $xoTheme;
 	
 	$block['event_url'] = ICMS_MODULES_URL . "/" . EVENT_DIRNAME . "/" ;
-	
+	$block['isRTL'] = (defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? 'true' : 'false';
 	return $block;
 }
 
