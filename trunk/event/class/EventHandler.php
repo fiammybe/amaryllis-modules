@@ -112,8 +112,13 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		if($obj->_updating)
 		return TRUE;
 		$start = $obj->getVar("event_startdate", "e");
+		$end = $obj->getVar("event_enddate", "e");
 		if($start < time()) {
 			$obj->setErrors(_CO_EVENT_CANNOT_BOOK_PAST);
+			return FALSE;
+		}
+		if($end < $start) {
+			$obj->setErrors(_CO_EVENT_CANNOT_BOOK_PASTEND);
 			return FALSE;
 		}
 		$seo = $obj->short_url();

@@ -77,36 +77,45 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			}
 			if(!$event_handler->insert($event, TRUE)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));exit;}
 			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_THANKS_SUBMITTING,));
+			unset($_POST);
 			exit;
             break;
         
         case 'resizeevent':
+			$allday = $dayDelta = $minDelta = $end = $new_end = $clean_event = $event = "" ;
 			$clean_event = isset($_POST['event_id']) ? filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT) : 0;
             $event = $event_handler->get($clean_event);
 			if(!$event->userCanEditAndDelete()) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_ACCESS_FAILED)); exit;}
-			$uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;
-			$dayDelta = $_POST['day_diff'];
-			$minDelta = $_POST['min_diff'];
+			$allday = $dayDelta = $minDelta = $end = $new_end = "";
+			$dayDelta = filter_input(INPUT_POST, 'day_diff', FILTER_SANITIZE_NUMBER_INT);
+			$minDelta = filter_input(INPUT_POST, 'min_diff', FILTER_SANITIZE_NUMBER_INT);
 			$end = $event->getVar("event_enddate", "e");
-			$event->setVar("event_enddate", $end + ($minDelta*60) + ($dayDelta*60*60*24));
+			$new_end = $end + ($minDelta*60) + ($dayDelta*60*60*24);
+			$event->setVar("event_enddate", $new_end);
 			$event->_updating = TRUE;
 			if(!$event_handler->insert($event)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));exit;}
-			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_RESIZED,));
+			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_RESIZED));
             break;
 		case 'dropevent':
+			$allday = $dayDelta = $minDelta = $end = $new_end = $new_start = $clean_event = $event = "" ;
 			$clean_event = isset($_POST['event_id']) ? filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT) : 0;
             $event = $event_handler->get($clean_event);
 			if(!$event->userCanEditAndDelete()) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_ACCESS_FAILED)); exit;}
+			$allday = $dayDelta = $minDelta = $end = $new_end = "";
 			$allday = ($_POST['event_allday'] == "false") ? FALSE : TRUE;
-			$dayDelta = $_POST['day_diff'];
-			$minDelta = $_POST['min_diff'];
+			$dayDelta = filter_input(INPUT_POST, 'day_diff', FILTER_SANITIZE_NUMBER_INT);
+			$minDelta = filter_input(INPUT_POST, 'min_diff', FILTER_SANITIZE_NUMBER_INT);
 			$end = $event->getVar("event_enddate", "e");
-			$event->setVar("event_startdate", $end + ($minDelta*60) + ($dayDelta*60*60*24));
-			$event->setVar("event_enddate", $end + ($minDelta*60) + ($dayDelta*60*60*24));
+			$start = $event->getVar("event_startdate", "e");
+			$new_end = $end + ($minDelta*60) + ($dayDelta*60*60*24);
+			$new_start = $start + ($minDelta*60) + ($dayDelta*60*60*24);
+			$event->setVar("event_startdate", $new_start);
+			$event->setVar("event_enddate", $new_end);
 			$event->setVar("event_allday", $allday);
 			$event->_updating = TRUE;
+			unset($_POST);
 			if(!$event_handler->insert($event)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));exit;}
-			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_RESIZED,));
+			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_RESIZED));
 			break;
     }
     
