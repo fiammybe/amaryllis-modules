@@ -98,8 +98,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
             $event = $event_handler->get($clean_event);
 			if(!$event->userCanEditAndDelete()) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_ACCESS_FAILED)); exit;}
 			$allday = ($_POST['event_allday'] == "false") ? FALSE : TRUE;
-			$dayDelta = (int)$_POST['day_diff'];
-			$minDelta = (int)$_POST['min_diff'];
+			$dayDelta = $_POST['day_diff'];
+			$minDelta = $_POST['min_diff'];
 			$end = $event->getVar("event_enddate", "e");
 			$event->setVar("event_startdate", $end + ($minDelta*60) + ($dayDelta*60*60*24));
 			$event->setVar("event_enddate", $end + ($minDelta*60) + ($dayDelta*60*60*24));

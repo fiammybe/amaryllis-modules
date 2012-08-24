@@ -108,14 +108,6 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		return $this->getCategoryList();
 	}
 	
-	public function updateComments($event_id, $total_num) {
-		$eventObj = $this->get($event_id);
-		if ($eventObj && !$eventObj->isNew()) {
-			$eventObj->setVar('event_comments', $total_num);
-			$this->insert($eventObj, TRUE);
-		}
-	}
-
 	protected function beforeInsert(&$obj) {
 		if($obj->_updating)
 		return TRUE;

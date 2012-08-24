@@ -85,8 +85,6 @@ define("_CO_EVENT_EVENT_EVENT_CREATED_ON", "Submitted on");
 define("_CO_EVENT_EVENT_EVENT_CREATED_ON_DSC", "");
 define("_CO_EVENT_EVENT_EVENT_APPROVE", "Approved?");
 define("_CO_EVENT_EVENT_EVENT_APPROVE_DSC", "");
-define("_CO_EVENT_EVENT_EVENT_COMMENTS", "Comments");
-define("_CO_EVENT_EVENT_EVENT_COMMENTS_DSC", "");
 define("_CO_EVENT_EVENT_EVENT_NOTIF_SENT", "Notification Sent");
 define("_CO_EVENT_EVENT_EVENT_NOTIF_SENT_DSC", "");
 define("_CO_EVENT_HAS_APPROVED", "Your submitted Event has been approved");
