@@ -45,7 +45,9 @@ define("_MI_EVENT_CONFIG_AGENDA_SLOT", "Slot minutes in Agenda view");
 define("_MI_EVENT_CONFIG_AGENDA_SLOT_DSC", "");
 define("_MI_EVENT_CONFIG_EVENT_MINUTES", "Default event minutes");
 define("_MI_EVENT_CONFIG_EVENT_MINUTES_DSC", "");
-
+// blocks
+define("_MI_EVENT_BLOCK_MINICAL", "Minicalendar");
+define("_MI_EVENT_BLOCK_MINICAL_DSC", "Minicalendar for blocks");
 // notifications
 define('_MI_EVENT_GLOBAL_NOTIFY', 'Global');
 define('_MI_EVENT_GLOBAL_NOTIFY_DSC', 'Global Event notification options.');
