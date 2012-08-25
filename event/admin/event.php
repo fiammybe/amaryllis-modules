@@ -106,7 +106,13 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column("event_approve", "center", 50, "event_approve"));
 			$objectTable->addColumn(new icms_ipf_view_Column("event_name", FALSE, FALSE, "getItemLink"));
 			$objectTable->addColumn(new icms_ipf_view_Column("event_cid", FALSE, FALSE, "getCategory"));
+			$objectTable->addColumn(new icms_ipf_view_Column("event_startdate", FALSE, FALSE));
+			$objectTable->addColumn(new icms_ipf_view_Column("event_enddate", FALSE, FALSE));
+			$objectTable->addColumn(new icms_ipf_view_Column("event_submitter", FALSE, FALSE, "getSubmitter"));
 			$objectTable->addIntroButton("addevent", "event.php?op=mod", _AM_EVENT_EVENT_CREATE);
+			$objectTable->addFilter("event_cid", "filterCid");
+			$objectTable->addFilter("event_submitter", "filterUser");
+			$objectTable->addFilter("event_approve", "filterApprove");
 			$icmsAdminTpl->assign("event_event_table", $objectTable->fetch());
 			$icmsAdminTpl->display("db:event_admin.html");
 			break;

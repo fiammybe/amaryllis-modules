@@ -142,7 +142,18 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	public function getValue($value) {
 		return (!$this->getVar("$value", "e") == "0") ? $this->getVar("$value", "e") : ""; 
 	}
-		
+	
+	public function getEventUrl($urllink = TRUE) {
+		$urlObj = $this->getUrlLinkObj("event_url");
+		if($urllink)return $urlObj->render();
+		$urllink['url'] = $urlObj->getVar("url", "e");
+		$urllink['dsc'] = $urlObj->getVar("description", "e");
+		$urllink['cap'] = $urlObj->getVar("caption", "e");
+		$urllink['tar'] = $urlObj->getVar("target", "e");
+		$urllink['mid'] = $urlObj->getVar("mid");
+		return $urllink;
+	}
+	
 	public function isApproved() {
 		return ($this->getVar("event_approve", "e") == 1) ? TRUE : FALSE;
 	}
@@ -152,7 +163,10 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	}
 	
 	public function getItemLink($urlOnly = FALSE) {
-		$url = EVENT_URL . 'event.php?event=' . $this->short_url();
+		$start = $this->getVar("event_startdate", "e");
+		$date = $this->formatDate($start, "Y-m-d");
+		$time = $this->formatDate($start, "G");
+		$url = EVENT_URL . 'index.php?date=' . $date . "&time=" . $time;
 		if($urlOnly) return $url;
 		return '<a href="' . $url . '" title="' . $this->title() . '">' . $this->title() . '</a>';
 	}
@@ -174,6 +188,8 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$ret['zip'] = $this->getValue("event_zip");
 		$ret['phone'] = $this->getValue("event_phone");
 		$ret['cat'] = $this->getCategory();
+		$ret['urllink'] = $this->getEventUrl(TRUE);
+		$ret['urlpart'] = $this->getEventUrl(FALSE);
         return $ret;
 	}
 	
@@ -200,6 +216,24 @@ class mod_event_Event extends icms_ipf_seo_Object {
 			}
 			icms::handler('icms_data_notification')->triggerEvent($category, $file_id, $case, $tags, $recipient, $mid);
 		}
+	}
+	
+	public function formatDate($timestamp, $format) {
+		return date("$format", $timestamp);
+	}
+	
+	public function getSubmitter() {
+		$user = $this->getVar("event_submitter", "e");
+		return icms_member_user_Handler::getUserLink($user);
+	}
+	
+	public function calculateEnd() {
+		$end = $this->getVar("event_enddate", "e");
+		$dayDelta = -1;
+		$minDelta = 0;
+		$new_end = $end + ($minDelta*60) + ($dayDelta*60*60*24);
+		//$new_end = date('Y-m-d H:i:s', strtotime(''. +$dayDelta . ' days ' . +$minDelta . ' minutes', strtotime($end)));
+		return "Enddate moved from " . $this->formatDate($end) . " to " . $this->formatDate($new_end);
 	}
 	
 	public function sendMessageApproved() {
