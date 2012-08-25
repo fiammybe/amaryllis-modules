@@ -36,7 +36,7 @@ $icmsTpl->assign("event_rtl", $rtl);
 //$icmsTpl->assign("default_view", $eventConfig['default_view']);
 $icmsTpl->assign("first_day", $eventConfig['first_day']);
 $icmsTpl->assign("display_weekend", ($eventConfig['display_weekend'] == 1) ? 'true' : 'false');
-$icmsTpl->assign("agenda_start", $eventConfig['agenda_start']);
+//$icmsTpl->assign("agenda_start", $eventConfig['agenda_start']);
 $icmsTpl->assign("agenda_slot", $eventConfig['agenda_slot']);
 $icmsTpl->assign("agenda_min", $eventConfig['agenda_min']);
 $icmsTpl->assign("agenda_max", $eventConfig['agenda_max']);
