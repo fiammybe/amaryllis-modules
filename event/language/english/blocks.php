@@ -18,3 +18,8 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+
+define("_MB_EVENT_TIMERANGE", "Select time range to be displayed");
+define("_MB_EVENT_CURRENT_DAY", "Current Day");
+define("_MB_EVENT_CURRENT_WEEK", "Current Week");
+define("_MB_EVENT_CURRENT_MONTH", "Current Month");
