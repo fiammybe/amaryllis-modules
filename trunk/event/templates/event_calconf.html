@@ -213,20 +213,6 @@
 					}
 		        });
     		},
-			scrollToHour: function (hour) {
-				var self = this;
-				var scrollable = this.element.find(".fc-agenda-body");
-				var slot = hour;
-				var target = this.element.find(".fc-agenda-body .fc-axis:even:eq(" + slot + ")");
-				if(target.length > 0){
-					scrollable.animate({scrollTop: 0}, 0, function() {
-						var targetOffset = target.offset().top;
-						var scroll = targetOffset - scrollable.offset().top - target.outerHeight();
-						scrollable.animate({scrollTop: scroll}, 500);
-					});
-				}
-			},
-			
     		<{if $cat_submit}>
 	    		dropAccept: '*',
 				selectable: true,
@@ -344,7 +330,7 @@
 						dataType: "json",
 						success: function(response) {
 									if(response.status === "success") {
-										dlg.dialog("close");
+										dlg.dialog("destroy");
 										$('#calendar').fullCalendar('refetchEvents');
 										$('#form_message').dialog('open');
 									} else if(response.status === "error") {

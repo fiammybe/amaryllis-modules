@@ -114,28 +114,36 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	
 	public function getContact() {
 		$ret = FALSE;
-		$contact = $this->getVar("event_contact", "e");
+		$con = $this->getVar("event_contact", "e");
 		$email = $this->getVar("event_cemail", "e");
-		if($contact == "" || $contact == "0") return FALSE;
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("uname", trim($contact)));
+		if($con == "" || $con == "0") return FALSE;
 		$member_handler = icms::handler('icms_member_user');
-		$users = $member_handler->getObjects($criteria, TRUE);
-		if($users) {
-			$user = $member_handler->get($users);
-			$contact = '<a class="event_uinfo" href="' . ICMS_URL . '/userinfo.php?uid=' . $user->getVar("uid") . '" title="' . $contact . '">' . ucfirst($contact) . '</a>';
-			$avatar = $user->gravatar();
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("uname", trim(strtolower($con))));
+		$sql = "SELECT uid FROM " . icms::$xoopsDB->prefix('users') . " " . $criteria->renderWhere();
+		$result = icms::$xoopsDB->query($sql);
+		list($uid) = icms::$xoopsDB->fetchRow($result);
+		if(!$uid) {
+			$contact = ucwords($con);
+			$ret = '<span class="event_contact">';
+			if(!$email == "" || !$email = "0" && is_object(icms::$user)) {
+				$avatar =  "http://www.gravatar.com/avatar/" . md5(strtolower($email)) . "?d=identicon";
+				$email = icms_core_DataFilter::checkVar($email, "email", 1, 0);
+				$ret .= '<img class="icon_middle" width="22px" height="22px" src="' . $avatar . '" />';
+			}
+			$ret .=  $contact . '</span>';
+			if((!$email == "" || !$email = "0") && is_object(icms::$user)) $ret .= '<span class="event_contact_email">' . $email . '</span>';
+		} else {
+			$member = $member_handler->get($uid);
+			$contact = '<a class="event_uinfo" href="' . ICMS_URL . '/userinfo.php?uid=' . $member->getVar("uid") . '" title="' . $con . '">' . ucfirst($con) . '</a>';
+			$avatar = $member->gravatar();
 			$ret = '<span class="event_contact"><img class="icon_middle" width="22px" height="22px" src="' . $avatar . '" />' . $contact . '</span>';
 			if((!$email == "" || !$email = "0") && is_object(icms::$user)) {
 				$email = icms_core_DataFilter::checkVar($email, "email", 1, 0);
 				$ret .= '<span class="event_contact_email">' . $email . '</span>';
 			}
-		} else {
-			$ret['contact'] = ucfirst($contact);
-			if(!$email == "" || !$email = "0") {
-				$ret['avatar'] =  "http://www.gravatar.com/avatar/" . md5(strtolower($email)) . "?d=identicon";
-				$ret['email'] = icms_core_DataFilter::checkVar($email, "email", 1, 0);
-			} 
+			unset($member, $contact, $avatar, $uid);
 		}
+		unset($criteria, $member_handler, $members);
 		return $ret;
 	}
 
