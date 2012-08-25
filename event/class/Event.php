@@ -154,26 +154,6 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		return $urllink;
 	}
 	
-	public function getStartTime() {
-		$start = $this->getVar("event_startdate", "e");
-		return $this->formatDate($start, "G");
-	}
-	
-	public function getEndime() {
-		$end = $this->getVar("event_enddate", "e");
-		return $this->formatDate($end, "G");
-	}
-	
-	public function getDay() {
-		$start = $this->getVar("event_startdate", "e");
-		return $this->formatDate($start, "d");
-	}
-	
-	public function getMonth() {
-		$start = $this->getVar("event_startdate", "e");
-		return $this->formatDate($start, "m");
-	}
-	
 	public function isApproved() {
 		return ($this->getVar("event_approve", "e") == 1) ? TRUE : FALSE;
 	}
@@ -210,6 +190,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$ret['cat'] = $this->getCategory();
 		$ret['urllink'] = $this->getEventUrl(TRUE);
 		$ret['urlpart'] = $this->getEventUrl(FALSE);
+		$ret['is_approved'] = (!$this->isApproved()) ? "<span class='awaiting_approval'>" . _CO_EVENT_AWAITING_APPROVAL . "</span>" : "" ;
         return $ret;
 	}
 	

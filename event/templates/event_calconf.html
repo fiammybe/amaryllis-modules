@@ -61,6 +61,7 @@
 				$("span#event_city").text(event.city);
 				$("div#event_cid").text(event.cat);
 				$("div#event_url").html(event.urllink);
+				$("div#awaiting_approval").html(event.approval);
 				
 				$('#event_delete').click(function(){
 					var button = $(this);
@@ -191,7 +192,8 @@
 		                title: { text: event.title },
 		                text: '<span class="start">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'HH:mm')) + 
 		                		'<br /><span class="End">End: </span>' + ($.fullCalendar.formatDate(event.end, 'HH:mm')) + 
-		                		'<br /><span class="dsc">Description: </span>' + event.description
+		                		'<br /><span class="dsc">Description: </span>' + event.description +
+		                		'<br />' + event.approval
 					},
 					show: { solo: true },
 		            style: { 
