@@ -43,8 +43,25 @@ define("_MI_EVENT_CONFIG_AGENDA_MAX", "Max time for week/single day view.");
 define("_MI_EVENT_CONFIG_AGENDA_MAX_DSC", "The maximum time to be displayed on agenda view.");
 define("_MI_EVENT_CONFIG_AGENDA_SLOT", "Slot minutes in Agenda view");
 define("_MI_EVENT_CONFIG_AGENDA_SLOT_DSC", "");
-define("_MI_EVENT_CONFIG_EVENT_MINUTES", "Default event minutes");
-define("_MI_EVENT_CONFIG_EVENT_MINUTES_DSC", "");
+define("_MI_EVENT_CONFIG_DEFAULT_HEADER_M", "Date Format Header Month");
+define("_MI_EVENT_CONFIG_DEFAULT_HEADER_M_DSC", "The Date format for Calendar header in Month view. <b>Please check Manual for Date formatting!</b>");
+define("_MI_EVENT_CONFIG_DEFAULT_HEADER_W", "Date Format Header Week");
+define("_MI_EVENT_CONFIG_DEFAULT_HEADER_W_DSC", "The Date format for Calendar header in Week view. <b>Please check Manual for Date formatting!</b>");
+define("_MI_EVENT_CONFIG_DEFAULT_HEADER_D", "Date Format Header Day");
+define("_MI_EVENT_CONFIG_DEFAULT_HEADER_D_DSC", "The Date format for Calendar header in Day view. <b>Please check Manual for Date formatting!</b>");
+define("_MI_EVENT_CONFIG_DEFAULT_COLUMN_M", "Date Format Column Month");
+define("_MI_EVENT_CONFIG_DEFAULT_COLUMN_M_DSC", "The Date format for Calendar column in Month view. <b>Please check Manual for Date formatting!</b>");
+define("_MI_EVENT_CONFIG_DEFAULT_COLUMN_W", "Date Format Column Week");
+define("_MI_EVENT_CONFIG_DEFAULT_COLUMN_W_DSC", "The Date format for Calendar column in Week view. <b>Please check Manual for Date formatting!</b>");
+define("_MI_EVENT_CONFIG_DEFAULT_COLUMN_D", "Date Format Column Day");
+define("_MI_EVENT_CONFIG_DEFAULT_COLUMN_D_DSC", "The Date format for Calendar column in Day view. <b>Please check Manual for Date formatting!</b>");
+define("_MI_EVENT_CONFIG_DEFAULT_TIME_A", "Time Format Agenda (Week and Day)");
+define("_MI_EVENT_CONFIG_DEFAULT_TIME_A_DSC", "The Time format for Calendar Agenda view. <b>Please check Manual for Time formatting!</b>");
+define("_MI_EVENT_CONFIG_DEFAULT_TIME", "Time Format (Month, all outside Agenda View)");
+define("_MI_EVENT_CONFIG_DEFAULT_TIME_DSC", "The Time format for Calendar view outside the Agenda views. <b>Please check Manual for Time formatting!</b>");
+define("_MI_EVENT_CONFIG_USE_THEME", "Use the jquery ui theme?");
+define("_MI_EVENT_CONFIG_USE_THEME_DSC", "As default, the calendar uses the jQuery UI Theme. You might like to install another theme (google jquery ui theme roller) or just turn ui off to design your own theme");
+
 // blocks
 define("_MI_EVENT_BLOCK_MINICAL", "Minicalendar");
 define("_MI_EVENT_BLOCK_MINICAL_DSC", "Minicalendar for blocks");

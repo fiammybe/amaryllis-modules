@@ -22,7 +22,6 @@
 			},
 			slotMinutes: <{$agenda_slot}>,
             firstHour: <{$agenda_start}>,
-            defaultEventMinutes: <{$event_minutes}>,
 			axisFormat: 'HH:mm',
 			timeFormat: {
 			    agenda: 'HH:mm'
@@ -144,22 +143,21 @@
 			},
 			// time formats
 			titleFormat: {
-				month: 'MMMM yyyy',
-				week: "MMM d[ yyyy]{ '&#8212;'[ MMM] d yyyy}",
-				day: 'ddd, MMM d, yyyy'
+				month: '<{$default_header_m}>',
+				week: "<{$default_header_w}>",
+				day: '<{$default_header_d}>'
 			},
 			columnFormat: {
-				month: 'ddd',
-				week: 'ddd M/d',
-				day: 'dddd M/d'
+				month: '<{$default_column_m}>',
+				week: '<{$default_column_w}>',
+				day: '<{$default_column_d}>'
 			},
 			timeFormat:{
-				agenda: 'HH:mm{ - HH:mm}',
-				'': 'HH:mm'
+				agenda: '<{$default_time_a}>',
+				'': '<{$default_time}>'
 			},
 			allDayText: '<{$smarty.const._CO_EVENT_ALLDAY}>',
-			// jquery-ui theming
-			theme: true,
+			theme: <{$use_theme}>,
 			buttonIcons: {
 				prev: 'circle-triangle-w',
 				next: 'circle-triangle-e'

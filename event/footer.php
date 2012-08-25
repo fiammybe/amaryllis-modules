@@ -36,10 +36,21 @@ $icmsTpl->assign("event_rtl", $rtl);
 //$icmsTpl->assign("default_view", $eventConfig['default_view']);
 $icmsTpl->assign("first_day", $eventConfig['first_day']);
 $icmsTpl->assign("display_weekend", ($eventConfig['display_weekend'] == 1) ? 'true' : 'false');
-//$icmsTpl->assign("agenda_start", $eventConfig['agenda_start']);
+$icmsTpl->assign("default_header_m", $eventConfig['default_header_m']);
+$icmsTpl->assign("default_header_w", $eventConfig['default_header_w']);
+$icmsTpl->assign("default_header_d", $eventConfig['default_header_d']);
+
+$icmsTpl->assign("default_column_m", $eventConfig['default_column_m']);
+$icmsTpl->assign("default_column_w", $eventConfig['default_column_w']);
+$icmsTpl->assign("default_column_d", $eventConfig['default_column_d']);
+
+$icmsTpl->assign("default_time_a", $eventConfig['default_time_a']);
+$icmsTpl->assign("default_time", $eventConfig['default_time']);
+
+$icmsTpl->assign("use_theme", ($eventConfig['use_theme'] == 1) ? 'true' : 'false' );
+
 $icmsTpl->assign("agenda_slot", $eventConfig['agenda_slot']);
 $icmsTpl->assign("agenda_min", $eventConfig['agenda_min']);
 $icmsTpl->assign("agenda_max", $eventConfig['agenda_max']);
-$icmsTpl->assign("event_minutes", $eventConfig['event_minutes']);
 
 include_once ICMS_ROOT_PATH . '/footer.php';
