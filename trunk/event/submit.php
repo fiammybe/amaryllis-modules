@@ -75,11 +75,17 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$event->setVar("event_zip", filter_input(INPUT_POST, 'event_zip', FILTER_SANITIZE_NUMBER_INT));
 			$event->setVar("event_public", filter_input(INPUT_POST, 'event_public', FILTER_SANITIZE_NUMBER_INT));
 			$event->setVar("event_allday", $allday);
+			if(!$event_isAdmin) {
+				$event->setVar("event_approve", FALSE);
+			} else {
+				$event->setVar("event_approve", TRUE);
+			}
 			if(isset($_POST['event_tags']) && !empty($_POST['event_tags']) && icms_get_module_status("index")) {
 				$event->setVar("event_tags", filter_input(INPUT_POST,'event_tags'));
 			}
 			if(!$event_handler->insert($event)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));unset($_POST);exit;}
-			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_THANKS_SUBMITTING,));
+			$success_msg = ($event_isAdmin) ? _MD_EVENT_THANKS_SUBMITTING : _MD_EVENT_AWAITING_APPROVAL;
+			echo json_encode(array('status' => 'success','message'=> $success_msg,));
 			unset($_POST);
 			exit;
             break;

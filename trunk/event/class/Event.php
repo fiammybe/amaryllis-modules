@@ -227,15 +227,6 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		return icms_member_user_Handler::getUserLink($user);
 	}
 	
-	public function calculateEnd() {
-		$end = $this->getVar("event_enddate", "e");
-		$dayDelta = -1;
-		$minDelta = 0;
-		$new_end = $end + ($minDelta*60) + ($dayDelta*60*60*24);
-		//$new_end = date('Y-m-d H:i:s', strtotime(''. +$dayDelta . ' days ' . +$minDelta . ' minutes', strtotime($end)));
-		return "Enddate moved from " . $this->formatDate($end) . " to " . $this->formatDate($new_end);
-	}
-	
 	public function sendMessageApproved() {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$file = "event_approved.tpl";
