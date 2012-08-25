@@ -50,6 +50,12 @@
 				$("div#cal_event").dialog("open");
 				$("div#cal_event").dialog({
 					title: buttons + event.title,
+					buttons: [
+						{
+							text: "<{$smarty.const._CLOSE}>",
+							click: function() {$(this).dialog("destroy");}
+						}
+					]
 				});
 				$("div#event_name").text(event.title);
 				$("div#event_dsc").html(event.description);
@@ -344,7 +350,7 @@
 				}
 			},
 			Cancel: function() {
-				$(this).dialog( "close" );
+				$(this).dialog( "destroy" );
 			}
        });
 		$("#form_message").dialog({
@@ -358,7 +364,7 @@
 			height: "auto",
 			buttons: {
 				Ok: function() {
-					$(this).dialog( "close" );
+					$(this).dialog( "destroy" );
 				}
 			}
 		});
