@@ -34,7 +34,7 @@ function b_event_list_show($options) {
 		$end = strtotime('last day of this month'); 
 	} elseif ($options[1] == "month") {
 		$end = time() + 60*60*24*30;
-	} elseif ($options[1] == "day") {
+	} elseif ($options[1] == "curday") {
 		$time = mktime(23,59,59);
 	}
 	
@@ -58,7 +58,8 @@ function b_event_list_edit($options) {
 	$catselect->addOptionArray($event_handler->getCategoryList(TRUE));
 	
 	$timerange = new icms_form_elements_Select('', 'options[1]', $options[1]);
-	$timerange->addOptionArray(array("day" => _MB_EVENT_CURRENT_DAY, "curweek" => _MB_EVENT_CURRENT_WEEK, "week" => _CO_EVENT_WEEK, "curmonth" => _MB_EVENT_CURRENT_MONTH, "month" => _CO_EVENT_MONTH));
+	$timerange->addOptionArray(array("curday" => _MB_EVENT_CURRENT_DAY, "day" => _CO_EVENT_DAY, "curweek" => _MB_EVENT_CURRENT_WEEK, "week" => _CO_EVENT_WEEK,
+										 "curmonth" => _MB_EVENT_CURRENT_MONTH, "month" => _CO_EVENT_MONTH));
 	
 	$form = '<table width="100%">';
 	$form .= '<tr>';
