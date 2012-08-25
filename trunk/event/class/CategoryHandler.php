@@ -72,6 +72,27 @@ class mod_event_CategoryHandler extends icms_ipf_Handler {
 		return $perms;
 	}
 
+	public function filterApprove() {
+		return array(0 => 'Denied', 1 => 'Approved');
+	}
+	
+	/**
+	 * handling some functions to easily switch some fields
+	 */
+	public function changeField($category_id, $field) {
+		$categoryObj = $this->get($category_id);
+		if ($categoryObj->getVar("$field", 'e') == TRUE) {
+			$categoryObj->setVar("$field", 0);
+			$value = 0;
+		} else {
+			$categoryObj->setVar("$field", 1);
+			$value = 1;
+		}
+		$categoryObj->_updating = TRUE;
+		$this->insert($categoryObj, TRUE);
+		return $value;
+	}
+
 	protected function beforeInsert(&$obj) {
 		if($obj->_updating)
 		return TRUE;

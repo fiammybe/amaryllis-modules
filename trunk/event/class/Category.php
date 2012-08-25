@@ -53,10 +53,29 @@ class mod_event_Category extends icms_ipf_seo_Object {
         $this->hideFieldFromSingleView(array("category_approve", "category_submitter", "category_created_on", "category_pubcal"));
 	}
 
-    public function getColor() {
+	public function category_approve() {
+		$active = $this->getVar('category_approve', 'e');
+		if ($active == FALSE) {
+			return '<a href="' . EVENT_ADMIN_URL . 'category.php?category_id=' . $this->id() . '&amp;op=changeApprove">
+				<img src="' . EVENT_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
+		} else {
+			return '<a href="' . EVENT_ADMIN_URL . 'category.php?category_id=' . $this->id() . '&amp;op=changeApprove">
+				<img src="' . EVENT_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
+		}
+	}
+	
+	function category_color() {
+		return "<div style='background-color:" . $this->getColor() . "; border: 1px solid black; width:30px; height:20px;'>&nbsp;</div>";
+	}
+	
+	function category_txtcolor() {
+		return "<div style='background-color:" . $this->getTextColor() . "; border: 1px solid black; width:30px; height:20px;'>&nbsp;</div>";
+	}
+    
+	public function getColor() {
         return $this->getVar("category_color");
     }
-    
+	
 	public function getTextColor() {
         return $this->getVar("category_txtcolor");
     }

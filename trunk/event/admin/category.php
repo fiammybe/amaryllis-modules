@@ -47,7 +47,7 @@ include_once "admin_header.php";
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-$valid_op = array ("mod", "changedField", "addcategory", "del", "view", "");
+$valid_op = array ("mod", "changedField", "addcategory", "del", "view", "changeApprove", "");
 
 $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 
@@ -76,12 +76,25 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			icms_cp_header();
 			$categoryObj->displaySingleObject();
 			break;
-
+			
+		case 'changeApprove':
+			$approve = $event_handler->changeField($clean_event_id, "event_approve");
+			if($approve == 1) {
+				$eventObj = $event_handler->get($clean_event_id);
+				$eventObj->sendMessageApproved();
+			}
+			$red_message = ($approve == 0) ? _AM_EVENT_EVENT_DENIED : _AM_EVENT_EVENT_APPROVED;
+			redirect_header(EVENT_ADMIN_URL . 'event.php', 2, $red_message);
+			break;
+			
 		default:
 			icms_cp_header();
 			$icmsModule->displayAdminMenu(1, _AM_EVENT_CATEGORYS);
 			$objectTable = new icms_ipf_view_Table($category_handler);
-			$objectTable->addColumn(new icms_ipf_view_Column("category_name"));
+			$objectTable->addColumn(new icms_ipf_view_Column("category_approve", "center", 50, "category_approve"));
+			$objectTable->addColumn(new icms_ipf_view_Column("category_name", FALSE, FALSE, "title"));
+			$objectTable->addColumn(new icms_ipf_view_Column("category_color", "center", 150, "category_color" ));
+			$objectTable->addColumn(new icms_ipf_view_Column("category_txtcolor", "center", 150, "category_txtcolor"));
 			$objectTable->addIntroButton("addcategory", "category.php?op=mod", _AM_EVENT_CATEGORY_CREATE);
 			$icmsAdminTpl->assign("event_category_table", $objectTable->fetch());
 			$icmsAdminTpl->display("db:event_admin.html");

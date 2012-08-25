@@ -48,7 +48,17 @@ if(!$clean_cat == FALSE ){
 				'description'	=> $event['dsc'],
 				'pubdate'		=> $event['event_created_on'],
 				'editable'		=> $event['canEditAndDelete'],
-				'itemURL'		=> $event['itemURL']
+				'itemURL'		=> $event['itemURL'],
+				'cid'			=> $event['event_cid'],
+				'contact_name'	=> $event['event_contact'],
+				'contact_mail'	=> $event['event_cemail'],
+				'urllink'		=> $event['urllink'],
+				'url_url'		=> $event['urlpart']['url'],
+				'url_dsc'		=> $event['urlpart']['dsc'],
+				'url_cap'		=> $event['urlpart']['cap'],
+				'url_tar'		=> $event['urlpart']['tar'],
+				'url_mid'		=> $event['urlpart']['mid'],
+				'event_public'	=> $event['event_public']
 			);
 		}
 		echo json_encode($feeds);

@@ -42,9 +42,14 @@
 			eventClick: function(event, jsEvent, view) {
 				startDate = $.fullCalendar.formatDate(event.start, 'HH:mm');
 				endDate = $.fullCalendar.formatDate(event.end, 'HH:mm');
+				if(event.editable == true) {
+					var buttons = "<span class='event_buttonbar'><img id='event_delete' src='<{$event_images_url}>delete.png' alt='delete' /><img id='event_edit' src='<{$event_images_url}>edit.png' alt='edit' /></span>";
+				} else {
+					var buttons = "";
+				}
 				$("div#cal_event").dialog("open");
 				$("div#cal_event").dialog({
-					title: event.title
+					title: buttons + event.title,
 				});
 				$("div#event_name").text(event.title);
 				$("div#event_dsc").html(event.description);
@@ -55,6 +60,62 @@
 				$("span#event_zip").text(event.zip);
 				$("span#event_city").text(event.city);
 				$("div#event_cid").text(event.cat);
+				$("div#event_url").html(event.urllink);
+				
+				$('#event_delete').click(function(){
+					var button = $(this);
+					if (!confirm("<{$smarty.const._MD_EVENT_SURE_DELETE}>")) {
+						return false;
+					} else {
+						$.ajax({
+							url: "<{$event_url}>submit.php?op=del",
+							type: "POST",
+							data: { event_id: event.id},
+							dataType: "json",
+							success: function(response) {
+										if(response.status === "success") {
+											$("div#cal_event").dialog("destroy");
+											$('#calendar').fullCalendar('refetchEvents');
+											$("#error_messages").text(response.message);
+											
+										} else if(response.status === "error") {
+											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+											return false;
+										} else {
+											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
+											return false;
+										}
+							}
+						});
+					}
+				});
+				
+				$('#event_edit').click(function(){
+					var button = $(this);
+					start = $.fullCalendar.formatDate( event.start, "MMMM dd, yyyy h:mm:ss tt");
+					end = $.fullCalendar.formatDate( event.end, "MMMM dd, yyyy h:mm:ss tt");
+					$("#event_id").val(event.id);
+					$("#event_name").val(event.title);
+					$("#event_startdate").val(Date.parse(start) /1000);
+					$("#event_enddate").val(Date.parse(end) / 1000);
+					$("#event_allday").val(event.allDay);
+					$("#event_cid").val(event.cid);
+					$("#event_dsc_tarea").val(event.description);
+					$("#event_contact").val(event.contact_name);
+					$("#event_cemail").val(event.event_mail);
+					$("#event_phone").val(event.phone);
+					$("#event_street").val(event.street);
+					$("#event_city").val(event.city);
+					$("#event_zip").val(event.zip);
+					$("#'input:radio[name=event_public]:checked'").val(event.event_public);
+					$("#mid_event_url").val(event.url_mid);
+					$("#caption_event_url").val(event.url_cap);
+					$("#desc_event_url").val(event.url_dsc);
+					$("#url_event_url").val(event.url_url);
+					$("#target_event_url").val(event.url_tar);
+					$("div#cal_event").dialog("close");
+					$("#submit_form").dialog("open");
+				});
 				
 			},
 			isRTL: <{$event_rtl}>,
@@ -105,7 +166,7 @@
 				<{foreach item=cat from=$categories name=category}>
 					{
 						url: "<{$event_url}>feeds.php?cat=<{$cat.id}><{if $icms_userid}>&uid=<{$icms_userid}><{/if}>",
-						className: 'event_cal',
+						className: 'event_cal_<{$cat.id}>',
 						color: "<{$cat.color}>",
 						textColor: '<{$cat.txtcolor}>',
 					}<{if !$smarty.foreach.category.last}>,<{/if}>
@@ -115,10 +176,10 @@
 					<{foreach item=cal from=$calendars name=calendar}>
 					{
 						url: "<{$cal.url}>",
-						className: 'google_cal',
+						className: 'google_cal_<{$cal.id}>',
 						color: "<{$cal.color}>",
 						textColor: '<{$cal.txtcolor}>',
-						currentTimezone: 'Europe/Berlin'
+						currentTimezone: '<{$cal.default_tz}>'
 					}<{if !$smarty.foreach.calendar.last}>,<{/if}>
 					<{/foreach}>
 				<{/if}>
@@ -131,9 +192,8 @@
 		                text: '<span class="start">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'HH:mm')) + 
 		                		'<br /><span class="End">End: </span>' + ($.fullCalendar.formatDate(event.end, 'HH:mm')) + 
 		                		'<br /><span class="dsc">Description: </span>' + event.description
-		                		
-		            },
-		            show: { solo: true },
+					},
+					show: { solo: true },
 		            style: { 
 		                width: 500,
 		                padding: 5,
@@ -242,6 +302,7 @@
 			//var date = "<{$gotoDate}>";
 			$('#calendar').fullCalendar('changeView', 'agendaDay')
     				.fullCalendar('gotoDate', <{$gotoDate}>);
+    				
 		<{/if}>
 		
 		//var targeturl = "<{$event_url}>submit.php?op=addevent";
@@ -257,7 +318,7 @@
 					$.ajax({
 						url: $("#addevent").attr('action'),
 						type: "POST",
-						data: {event_name: $("#event_name").val(), event_startdate: $("#event_startdate").val(), event_enddate: $("#event_enddate").val(), event_allday: $("#event_allday").val(),
+						data: {event_id: $("#event_id").val(), event_name: $("#event_name").val(), event_startdate: $("#event_startdate").val(), event_enddate: $("#event_enddate").val(), event_allday: $("#event_allday").val(),
 								event_cid: $("#event_cid").val(), event_dsc: $("#event_dsc_tarea").val(), event_contact: $("#event_contact").val(), event_cemail: $("#event_cemail").val(), 
 								event_phone: $("#event_phone").val(), event_street: $("#event_street").val(), event_city: $("#event_city").val(), event_zip: $("#event_zip").val(),
 								event_public: $('input:radio[name=event_public]:checked').val(), mid_event_url: $("#mid_event_url").val(), caption_event_url: $("#caption_event_url").val(), 

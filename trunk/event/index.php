@@ -24,7 +24,7 @@ function addEvent($event_id = 0) {
 	$mail = (is_object(icms::$user)) ? icms::$user->getVar("email") : " ";
 	if($eventObj->isNew()) {
 		$form = new icms_form_Theme(_MD_EVENT_ADDEVENT, "addevent", "submit.php?op=addevent", "post");
-		
+		$form->addElement(new icms_form_elements_Hidden("event_id", $event_id));
 		$form->addElement(new icms_form_elements_Hidden("event_name", ""));
 		$form->addElement(new icms_form_elements_Hidden("event_startdate", ""));
 		$form->addElement(new icms_form_elements_Hidden("event_enddate", ""));
@@ -94,6 +94,7 @@ if(icms_get_module_status("index")) {
 $clean_view = isset($_GET['view']) ? filter_input(INPUT_GET, "view") : $eventConfig['default_view'];
 $clean_cat = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat") : FALSE;
 $clean_date = isset($_GET['date']) ? filter_input(INPUT_GET, "date") : FALSE;
+$clean_time = isset($_GET['time']) ? filter_input(INPUT_GET, "time", FILTER_SANITIZE_NUMBER_INT) : FALSE;
 
 $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 $calendar_handler = icms_getModuleHandler("calendar", EVENT_DIRNAME, "event");
@@ -107,6 +108,9 @@ $icmsTpl->assign("default_view", $clean_view);
 if($clean_date) {
 	$date = explode("-", $clean_date);
 	$icmsTpl->assign("gotoDate", $date[0] .",". ($date[1] - 1) .",". $date[2]);
+	if($clean_time) {
+		$icmsTpl->assign("start_hour", $clean_time);
+	}
 }
 
 // checking for submit permissions for the current user and assign form

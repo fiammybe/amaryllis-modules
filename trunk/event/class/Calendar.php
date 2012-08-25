@@ -52,7 +52,7 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 		$ret['url'] = $this->getVar("calendar_url", "e");
 		$ret['color'] = $this->getVar("calendar_color", "e");
 		$ret['txtcolor'] = $this->getVar("calendar_txtcolor", "e");
-		$ret['default_timezone'] = $this->getVar("calendar_tz", "e");
+		$ret['default_tz'] = $this->getVar("calendar_tz", "e");
 		return $ret;
 	}
 

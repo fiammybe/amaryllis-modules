@@ -108,6 +108,18 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		return $this->getCategoryList();
 	}
 	
+	public function filterUser(){
+		$sql = "SELECT DISTINCT event_submitter FROM " . $this->table;
+		if ($result = icms::$xoopsDB->query($sql)) {
+			$bids = array();
+			if($showNull) $bids[0] = '--------------';
+			while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+				$bids[$myrow['event_submitter']] = icms_member_user_Object::getUnameFromId((int)$myrow['event_submitter']);
+			}
+			return $bids;
+		}
+	}
+	
 	protected function beforeInsert(&$obj) {
 		if($obj->_updating)
 		return TRUE;
