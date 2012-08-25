@@ -53,7 +53,7 @@ if(!$category_handler->getCount()) redirect_header(EVENT_ADMIN_URL . "category.p
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-$valid_op = array ("mod", "changedField", "addevent", "del", "view", "");
+$valid_op = array ("mod", "changedField", "addevent", "del", "view", "changeApprove", "");
 
 $event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 
@@ -119,7 +119,3 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 	}
 	include_once 'admin_footer.php';
 }
-/**
- * If you want to have a specific action taken because the user input was invalid,
- * place it at this point. Otherwise, a blank page will be displayed
- */

@@ -43,3 +43,4 @@ span.event_contact img.icon_middle {margin-right: .5em;}
 
 .event_buttonbar {float:left; vertical-align: middle;}
 .event_buttonbar:hover {cursor:pointer; }
+.awaiting_approval {font-weight: bold; color: red;}

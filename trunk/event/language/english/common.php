@@ -90,6 +90,7 @@ define("_CO_EVENT_EVENT_EVENT_NOTIF_SENT_DSC", "");
 define("_CO_EVENT_HAS_APPROVED", "Your submitted Event has been approved");
 define("_CO_EVENT_CANNOT_BOOK_PAST", "You cannot book a conference in the past!");
 define("_CO_EVENT_CANNOT_BOOK_PASTEND", "The End Date needs to be after the start Date");
+define("_CO_EVENT_AWAITING_APPROVAL", "Your Event still is awaiting approval");
 //rules
 define("_CO_EVENT_MONDAY", "Monday");
 define("_CO_EVENT_TUESDAY", "Tuesday");

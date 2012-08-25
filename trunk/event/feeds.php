@@ -58,7 +58,8 @@ if(!$clean_cat == FALSE ){
 				'url_cap'		=> $event['urlpart']['cap'],
 				'url_tar'		=> $event['urlpart']['tar'],
 				'url_mid'		=> $event['urlpart']['mid'],
-				'event_public'	=> $event['event_public']
+				'event_public'	=> $event['event_public'],
+				'approval'		=> $event['is_approved']
 			);
 		}
 		echo json_encode($feeds);
