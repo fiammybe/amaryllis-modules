@@ -11,6 +11,7 @@
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		var lastView;
+		var isResizingEvent = false;
 		var calendar = $('#calendar').fullCalendar({
 			defaultView: '<{$default_view}>',
 			aspectRatio: 1.35,
@@ -214,6 +215,20 @@
 					}
 		        });
     		},
+			scrollToHour: function (hour) {
+				var self = this;
+				var scrollable = this.element.find(".fc-agenda-body");
+				var slot = hour;
+				var target = this.element.find(".fc-agenda-body .fc-axis:even:eq(" + slot + ")");
+				if(target.length > 0){
+					scrollable.animate({scrollTop: 0}, 0, function() {
+						var targetOffset = target.offset().top;
+						var scroll = targetOffset - scrollable.offset().top - target.outerHeight();
+						scrollable.animate({scrollTop: scroll}, 500);
+					});
+				}
+			},
+			
     		<{if $cat_submit}>
 	    		dropAccept: '*',
 				selectable: true,
@@ -242,11 +257,13 @@
 					} // end of else
 					//calendar.fullCalendar('unselect');
 				},
+				eventResizeStart: function () { isResizingEvent = true; },
+				eventResizeStop: function () { isResizingEvent = false; },
 				eventResize: function( event, dayDelta, minuteDelta, revertFunc, jsEvent, view ) {
 					if(view.name == "month") {
 						revertFunc();
 					}
-					if (!confirm("<{$smarty.const._MD_EVENT_SURE_RESIZE}> DAYS:" +dayDelta + "and Minutes:" + minuteDelta)) {
+					if (!confirm("<{$smarty.const._MD_EVENT_SURE_RESIZE}>")) {
 						revertFunc();
 					} else {
 						$.ajax({
@@ -267,7 +284,7 @@
 					}
 				},
 				eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
-					if (!confirm("<{$smarty.const._MD_EVENT_SURE_DROP}> DAYS:" +dayDelta + "and Minutes:" + minuteDelta )) {
+					if (!confirm("<{$smarty.const._MD_EVENT_SURE_DROP}>")) {
 						revertFunc();
 					} else {
 						$.ajax({
@@ -304,7 +321,8 @@
 			//var date = "<{$gotoDate}>";
 			$('#calendar').fullCalendar('changeView', 'agendaDay')
     				.fullCalendar('gotoDate', <{$gotoDate}>);
-    				
+    		//$('#calendar').fullCalendar('optionSet', 'firstHour', <{$start_hour}> );
+    		
 		<{/if}>
 		
 		//var targeturl = "<{$event_url}>submit.php?op=addevent";
@@ -359,6 +377,12 @@
 					$(this).dialog( "close" );
 				}
 			}
+		});
+		
+		$(window).resize(function() {
+			if (isResizingEvent) { return; }
+			var viewportHeight =  $(window).height()
+			$('#calendar').fullCalendar('option', 'contentHeight',  $(window).height());
 		});
 		
 		$("#cal_event").dialog({
