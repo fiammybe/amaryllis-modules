@@ -40,16 +40,17 @@
 	        	<li><a href="#keyfeatures">Keyfeatures</a></li>
 	        	<li><a href="#firsstart">First Start</a>
 	        		<ul>
-	        			<li><a href="#firstcat">Create first Category</a></li>
-	        			<li><a href="#firstevent">Create First Event(s)</a></li>
-	        			<li><a href="#firstcal">Import the first Calendar</a></li>
+	        			<li><a href="#preferences">Preferences</a></li>
+	        			<li><a href="#fillup">Fill up your Calendar</a></li>
+	        			<li><a href="#gcal">Google Calendars in Event</a></li>
+	        			<li><a href="#date_format">Date Format in Event Module</a></li>
 	        		</ul>
 	        	</li>
 	        	<li><a href="#blocks">Module Blocks</a></li>
 	        	<li><a href="#templates">Templates</a></li>
 	        	<li><a href="#event_footer">Conclusion</a></li>
 	        </ul>
-	        <h2>Keyfeatures</h2>
+	        <h2 id="keyfeatures">Keyfeatures</h2>
 				<ul>
 					<li>Create fast and simple an event and categorize them using different categories/colors</li>
 					<li>Categories are using the group permissions of ImpressCMS to allow different Groups to view categories and it's Events</li>
@@ -57,20 +58,164 @@
 					<li>Import public calendars simple by using RSS-Feeds (e.g. public google calendars)</li>
 				</ul>
 	        <h2 id="firsstart">First Start</h2>
-	        <h3 id="firstcat">Create First Category</h3>
-	        	<p>Creating categories is simple. There are not really much fields.</p>
+	        <h3 id="preferences">Preferences</h3>
+		        <p>The Module Preferences are short and simple:</p>
+		        <ul>
+		        	<li>Default View
+		        		<ul>
+		        			<li>The default view defines, which of the available views will be active, if you are calling the module. "Month" will display the current month, "Weekend" displays the current Week and
+		        				"Day" the current Day</li>
+		        		</ul>
+		        	</li>
+		        	<li>The first Day displayed in week view
+		        		<ul>
+		        			<li>Select, if the Monday should be the first day of a week or Sunday</li>
+		        		</ul>
+		        	</li>
+		        	<li>Display Weekend
+		        		<ul>
+		        			<li>Select, the weekend need to be displayed or even not</li>
+		        		</ul>
+		        	</li>
+		        	<li>Start time of the calendar
+		        		<ul>
+		        			<li>The start time means the time to be see at first. If the calendar is scaled (dependent on the theme you're using) you'll not see all hours.
+		        				 So the calendar will start at the predefined hour here. It will be possible to scroll up to the other hours</li>
+		        		</ul>
+		        	</li>
+		        	<li>Min time for week/single day view.
+		        		<ul>
+		        			<li>Here you can change the minimum visible hour. E.g. set to 6 o'clock, all hours before won't be visible in the calendar. If you set an Event before this time, you just can see in month view</li>
+		        		</ul>
+		        	</li>
+		        	<li>Max time for week/single day view.
+		        		<ul>
+		        			<li>The latest visible hour.</li>
+		        		</ul>
+		        	</li>
+		        	<li>Slot minutes in Agenda view
+		        		<ul>
+		        			<li>The slot minutes to split an hour in week and day view</li>
+		        		</ul>
+		        	</li>
+		        	<li>The following Date formats can be handled together:
+		        		<ul>
+		        			<li>Handle Date and Time formatting for calendars output. Form more informations check <a href="#date_format" title="Date Format">Date Format in Event Module</a> </li>
+		        		</ul>
+		        	</li>
+		        	<li>Use the UI Theme
+		        		<ul>
+		        			<li>As default, the calendar is styled by default ui theme included to core. To change the style you have two possibilities:
+		        				<ul>
+		        					<li>Search for another theme on jQuery UI Homepage (this will change all ui styles on the website or check out ui theme roller)</li>
+		        					<li>Turn UI Theme here off and design your custom design. This can also be done while ui-theme is enabled but it isn't that easies to design with ui theme in background</li>
+		        				</ul>
+		        			</li>
+		        		</ul>
+		        	</li>
+		        </ul>
+	        <h3 id="fillup">Fill up your calendar</h3>
+		        <p>The forms of the event module should all be small and simple enough. Just a few words around before you start up:</p>
+		        <ul>
+		        	<li>The Calendar Tab is <b>ONLY</b> necessary, if you like to render calendars via json feed, like Google Calendar. 
+		        		To read about Howto of adding Google Calendars go to <a href="#gcal" title="Google Calendars in Event">Google Calendars in Event</a> </li>
+		        	<li>The categories are used to define different colors/Text colors for Events to make it easier, to find the searched kind of Element. Google calendars are using the same feature. 
+		        		For Categories it is possible to set submit and view permissions. All allowed "view"-groups can view the events inside the category. The "submit"- Groups can submit events to the category</li>
+		        	<li>The Events have a field for contact person. As default, you'll find your account name and email inside their fields. If the contact name is another user and you type in the username, 
+		        		you'll get the user with avatar. Otherwise type in the Name and the E-Mail. If the email is registred to gravatar, you should see the avatar for this E-Mail. E-Mail Adresses are visible for registred users, not for guests.
+		        		 </li>
+		        </ul>
+	        
+        	<h3 id="gcal">Google Calendars in Event</h3>
+	        	<p>The Event Module has the possibility to add public google calendars to your Website calendar. Before adding calendars, check the following:</p>
 	        	<ul>
-	        		<li>Title will be used for Calendar Legend</li>
-	        		<li>Description will be hovered in a qtip-span in Legend</li>
-	        		<li>Color will be used as a background Color of the events displayed in calendar</li>
-	        		<li>Textcolor will be used as a text Color of the events displayed in calendar. Default would be black. But in some darker colors it might be better to adjust the text-color</li>
+	        		<li>You must first make your Google Calendar public or create a new calendar, which can made public
+	        			<ul>
+	        				<li>If you go to your google calendar, you'll find your calendars on the left side</li>
+	        				<li>Click to the Arrow on the right side next to the calendar you want to share and click on "Share Calendar"</li>
+	        				<li>Make sure "Share only my free/busy information" is unchecked. The calendar needs only to show data. Changings through event module or adding events is currently not possible.</li>
+	        				<li>Click next on calendar preferences (of the shared calendar) and check for the url. In the currently opened Setting box you'll find the Address of the calendar</li>
+	        				<li>Click on the <img src="../images/xml.gif" alt="XML" /> Button to get the URL you need to add the calendar in your "Calendar" Tab in Event module. </li>
+	        				<li>Check out the Time-Zone Settings on the same Page. The time zone need to be set in your Calendar, when you're adding your Google Calendar. Examples for time-Zones are: 
+	        					"Europe/Berlin", "America/Chicago", "America/Santo_Domingo", "Europe/London" and a lot of more. 
+	        					 Check out <a href="http://php.net/manual/en/timezones.php" rel="external" target="_blank" title="PHP.net">PHP.net Timezones</a>, if you don't know the needed Timezone</li>
+	        				<div class="tip">
+	        					There are a lot of useful public calendars you can use in gougle groups. For Example you might like to add Weeknumbers or Holiday.
+	        					<div class="icmsCode">
+	        						<p>https://www.google.com/calendar/feeds/de.german%23holiday%40group.v.calendar.google.com/public/basic for (german) holidays</p>
+	        						<p>https://www.google.com/calendar/feeds/e_2_de%23weeknum%40group.v.calendar.google.com/public/basic for week numbers</p>
+	        					</div>
+	        				</div>
+	        			</ul>
+	        		</li>
 	        	</ul>
-	        	<p>That's it. After setting the permissions you can go forward and add some events to your category</p>
-        	<h3 id="firstevent">Create First Event(s)</h3>
-        	<ul>
-        		<li></li>
-        	</ul>
-        	
+        	<h3 id="date_format">Date Format in Event Module</h3>
+        		<p>Now let's check the Date Preferences for Header and Column. At first let's get sure, we're talking about the same:</p>
+        		<p><a class'img_link' href="../images/manual_header.png" title="Header and Column" rel="lightbox"><img class="manual_img" src="../images/manual_header.png" width="330px" height="50px" alt="manual_header" /></a> </p>
+				For Both cases use the following possibilities to adjust the Header and/or Column as you like it:
+				<ul>
+					<li><strong>s</strong> - seconds</li>
+					<li><strong>ss</strong> - seconds, 2 digits</li>
+					<li><strong>m</strong> - minutes</li>
+					<li><strong>mm</strong> - minutes, 2 digits</li>
+					<li><strong>h</strong> - hours, 12-hour format</li>
+					<li><strong>hh</strong> - hours, 12-hour format, 2 digits</li>
+					<li><strong>H</strong> - hours, 24-hour format</li>
+					<li><strong>HH</strong> - hours, 24-hour format, 2 digits</li>
+					<li><strong>d</strong> - date number</li>
+					<li><strong>dd</strong> - date number, 2 digits</li>
+					<li><strong>ddd</strong> - date name, short</li>
+					<li><strong>dddd</strong> - date name, full</li>
+					<li><strong>M</strong> - month number</li>
+					<li><strong>MM</strong> - month number, 2 digits</li>
+					<li><strong>MMM</strong> - month name, short</li>
+					<li><strong>MMMM</strong> - month name, full</li>
+					<li><strong>yy</strong> - year, 2 digits</li>
+					<li><strong>yyyy</strong> - year, 4 digits</li>
+					<li><strong>t</strong> - 'a' or 'p'</li>
+					<li><strong>tt</strong> - 'am' or 'pm'</li>
+					<li><strong>T</strong> - 'A' or 'P'</li>
+					<li><strong>TT</strong> - 'AM' or 'PM'</li>
+					<li><strong>u</strong> - ISO8601 format</li>
+					<li><strong>S</strong> - 'st', 'nd', 'rd', 'th' for the date</li>
+				</ul>
+				<p>And some special Characters:</p>
+					<dl>
+						<dt><code>'...'</code></dt>
+						<dd>literal text</dd>
+						<dt><code>''</code></dt>
+						<dd>single quote (represented by two single quotes)</dd>
+						<dt><code>(...)</code></dt>
+						<dd>only displays format if one of the enclosed variables is non-zero</dd>
+					</dl>
+			
+			<h2 id="blocks">Module Blocks</h2>
+				<p>Currently the module comes up with 2 Blocks:</p>
+				<ul>
+					<li>Mini Calendar Block
+						<ul>
+							<li>The block is as simple as possible: it just shows a small month calendar. All Days are linked to the Agenda Day view, to make it as easy as possible to go from anywhere to a special day in Event calendar.
+								 The calendar has no more options to set (yet) and if you like to adjust it: The mini calendar is using the 
+								 <a href="http://jqueryui.com/demos/datepicker/#default" title="jQuery UI Datepicker" rel="external" target="_blank">jQuery UI Datepicker</a>, if
+								 you need a reference, how to adjust the calendar</li>
+						</ul>
+					</li>
+					<li>Event List
+						<ul>
+							<li>This block shows just a simple Event List, linked to the calendar. You can select the category to be displayed and the time range. So for examle select no category and time range "current month" 
+								and you'll get a list with all events of the current month. The foloowing time ranges are available yet:
+								<ul>
+									<li><strong>Current Day:</strong> Display all Events of the current Day</li>
+									<li><strong>Day:</strong> Display all Events in 24hours</li>
+									<li><strong>Current Week:</strong> Display all Events of the current Week</li>
+									<li><strong>Week:</strong> Display all Events for one week</li>
+									<li><strong>Current Month:</strong> Display all Events of the current Month</li>
+									<li><strong>Month:</strong> Display all Events for one month </li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
         	<h2 id="templates">Templates</h2>
         	<p>There're just a few templates available:</p>
         	<ul>
