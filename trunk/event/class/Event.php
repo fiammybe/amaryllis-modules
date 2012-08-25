@@ -125,7 +125,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 			$contact = '<a class="event_uinfo" href="' . ICMS_URL . '/userinfo.php?uid=' . $user->getVar("uid") . '" title="' . $contact . '">' . ucfirst($contact) . '</a>';
 			$avatar = $user->gravatar();
 			$ret = '<span class="event_contact"><img class="icon_middle" width="22px" height="22px" src="' . $avatar . '" />' . $contact . '</span>';
-			if(!$email == "" || !$email = "0") {
+			if((!$email == "" || !$email = "0") && is_object(icms::$user)) {
 				$email = icms_core_DataFilter::checkVar($email, "email", 1, 0);
 				$ret .= '<span class="event_contact_email">' . $email . '</span>';
 			}

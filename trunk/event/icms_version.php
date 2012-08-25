@@ -235,18 +235,89 @@ $modversion['config'][$i] = array(
 								'formtype'      => 'select',
                                 'valuetype'     => 'int',
                                 'default'       => 30,
-                                'options'       => array( "10" => 10, "15" => 15, "20" => 20, "30" => 30, "60" => 60 )
+                                'options'       => array( "5" => 5, "10" => 10, "15" => 15, "20" => 20, "30" => 30, "60" => 60 )
 							);
 $i++;
 $modversion['config'][$i] = array(
-								'name' 			=> 'event_minutes',
-								'title' 		=> '_MI_EVENT_CONFIG_EVENT_MINUTES',
-								'description'	=> '_MI_EVENT_CONFIG_EVENT_MINUTES_DSC',
-								'formtype' 		=> 'textbox',
+                                'name'          => 'default_header_m',
+                                'title'         => '_MI_EVENT_CONFIG_DEFAULT_HEADER_M',
+                                'description'   => '_MI_EVENT_CONFIG_DEFAULT_HEADER_M_DSC',
+                                'formtype'      => 'text',
+                                'valuetype'     => 'text',
+                                'default'       => 'MMMM yyyy'
+                            );
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'default_header_w',
+                                'title'         => '_MI_EVENT_CONFIG_DEFAULT_HEADER_W',
+                                'description'   => '_MI_EVENT_CONFIG_DEFAULT_HEADER_W_DSC',
+                                'formtype'      => 'text',
+                                'valuetype'     => 'text',
+                                'default'       => "MMM d[ yyyy]{ '&#8212;'[ MMM] d yyyy}"
+                            );
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'default_header_d',
+                                'title'         => '_MI_EVENT_CONFIG_DEFAULT_HEADER_D',
+                                'description'   => '_MI_EVENT_CONFIG_DEFAULT_HEADER_D_DSC',
+                                'formtype'      => 'text',
+                                'valuetype'     => 'text',
+                                'default'       => 'ddd, MMM d, yyyy'
+                            );
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'default_column_m',
+                                'title'         => '_MI_EVENT_CONFIG_DEFAULT_COLUMN_M',
+                                'description'   => '_MI_EVENT_CONFIG_DEFAULT_COLUMN_M_DSC',
+                                'formtype'      => 'text',
+                                'valuetype'     => 'text',
+                                'default'       => 'ddd'
+                            );
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'default_column_w',
+                                'title'         => '_MI_EVENT_CONFIG_DEFAULT_COLUMN_W',
+                                'description'   => '_MI_EVENT_CONFIG_DEFAULT_COLUMN_W_DSC',
+                                'formtype'      => 'text',
+                                'valuetype'     => 'text',
+                                'default'       => "ddd M/d"
+                            );
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'default_column_d',
+                                'title'         => '_MI_EVENT_CONFIG_DEFAULT_COLUMN_D',
+                                'description'   => '_MI_EVENT_CONFIG_DEFAULT_COLUMN_D_DSC',
+                                'formtype'      => 'text',
+                                'valuetype'     => 'text',
+                                'default'       => 'dddd M/d'
+                            );
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'default_time_a',
+                                'title'         => '_MI_EVENT_CONFIG_DEFAULT_TIME_A',
+                                'description'   => '_MI_EVENT_CONFIG_DEFAULT_TIME_A_DSC',
+                                'formtype'      => 'text',
+                                'valuetype'     => 'text',
+                                'default'       => "HH:mm{ - HH:mm}"
+                            );
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'default_time',
+                                'title'         => '_MI_EVENT_CONFIG_DEFAULT_TIME',
+                                'description'   => '_MI_EVENT_CONFIG_DEFAULT_TIME_DSC',
+                                'formtype'      => 'text',
+                                'valuetype'     => 'text',
+                                'default'       => 'HH:mm'
+                            );
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'use_theme',
+								'title' 		=> '_MI_EVENT_CONFIG_USE_THEME',
+								'description' 	=> '_MI_EVENT_CONFIG_USE_THEME_DSC',
+								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
-								'default' 		=> 120
+								'default' 		=> 1
 							);
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////
