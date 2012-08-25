@@ -1,75 +1,37 @@
-<{if $single_event}>
-	<{includeq file='db:event_header.html'}>
-	<div id="cal_event">
-		<h2><{$single_event.name}></h2>
-		<div id="event_dsc"><{$single_event.dsc}></div>
-		
-		<div id="event_infos" class="event_table" style="width: 60%;">
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CID}></b>:&nbsp;</div><div id="event_cid" class="event_cell"><{$single_event.cat}></div>
-			</div>
-			
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._MD_EVENT_FROMTO}></b>:&nbsp;</div>
-					<div class="event_cell">
-						<span id="event_startdate"><{$single_event.start}></span> &nbsp;-&nbsp;<span id="event_enddate"><{$single_event.end}></span>
-					</div>
-			</div>
+<div id="cal_event" class="ui-helper-hidden">
+	<div id="event_dsc"></div>
+	
+	<div id="event_infos" class="event_table">
+		<div class="event_row">
+			<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CID}></b>:&nbsp;</div><div id="event_cid" class="event_cell"></div>
 		</div>
 		
-		<div id="event_contact_info" class="event_table" style="width: 60%;">
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CONTACT}></b>:&nbsp;</div><div id="event_contact" class="event_cell"><{$single_event.contact}></div>
-			</div>
-			
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STREET}></b>:&nbsp;</div><div id="event_street" class="event_cell"><{$single_event.street}></div>
-			</div>
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CITY}></b>:&nbsp;</div>
-					<div class="event_cell">
-						<span id="event_zip"><{$single_event.zip}></span> &nbsp;<span id="event_city"><{$single_event.city}></span>
-					</div>
-			</div>
+		<div class="event_row">
+			<div class="event_cell"><b><{$smarty.const._MD_EVENT_FROMTO}></b>:&nbsp;</div>
+				<div class="event_cell">
+					<span id="event_startdate">&nbsp;</span> &nbsp;-&nbsp;<span id="event_enddate">&nbsp;</span>
+				</div>
+		</div>
+		
+		<div class="event_row">
+			<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_URL}></b>:&nbsp;</div>
+				<div id="event_url" class="event_cell">&nbsp;</div>
 		</div>
 	</div>
-	<{includeq file='db:event_footer.html'}>
-<{else}>
-	<div id="cal_event" class="ui-helper-hidden">
-		<div id="event_dsc"></div>
-		
-		<div id="event_infos" class="event_table">
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CID}></b>:&nbsp;</div><div id="event_cid" class="event_cell"></div>
-			</div>
-			
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._MD_EVENT_FROMTO}></b>:&nbsp;</div>
-					<div class="event_cell">
-						<span id="event_startdate">&nbsp;</span> &nbsp;-&nbsp;<span id="event_enddate">&nbsp;</span>
-					</div>
-			</div>
-			
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_URL}></b>:&nbsp;</div>
-					<div id="event_url" class="event_cell">&nbsp;</div>
-			</div>
+	
+	<div id="event_contact_info" class="event_table">
+		<div class="event_row">
+			<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CONTACT}></b>:&nbsp;</div><div id="event_contact" class="event_cell"></div>
 		</div>
 		
-		<div id="event_contact_info" class="event_table">
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CONTACT}></b>:&nbsp;</div><div id="event_contact" class="event_cell"></div>
-			</div>
-			
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STREET}></b>:&nbsp;</div><div id="event_street" class="event_cell"></div>
-			</div>
-			<div class="event_row">
-				<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CITY}></b>:&nbsp;</div>
-					<div class="event_cell">
-						<span id="event_zip">&nbsp;</span> &nbsp;<span id="event_city">&nbsp;</span>
-					</div>
-			</div>
+		<div class="event_row">
+			<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STREET}></b>:&nbsp;</div><div id="event_street" class="event_cell"></div>
+		</div>
+		<div class="event_row">
+			<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CITY}></b>:&nbsp;</div>
+				<div class="event_cell">
+					<span id="event_zip">&nbsp;</span> &nbsp;<span id="event_city">&nbsp;</span>
+				</div>
 		</div>
 	</div>
-<{/if}>
+</div>

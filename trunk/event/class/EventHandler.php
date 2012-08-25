@@ -33,11 +33,12 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		parent::__construct($db, "event", "event_id", "event_name", "event_dsc", "event");
 	}
     
-    public function getCategoryList() {
+    public function getCategoryList($showNull = FALSE) {
         if(!count($this->_catArray)) {
             $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 			$criteria = $category_handler->getCategoryCriterias();
             $cats = $category_handler->getObjects($criteria, TRUE, FALSE);
+            if($showNull) $this->_catArray[0] = "-------------------";
             foreach ($cats as $key => $value) {
                 $this->_catArray[$key] = $value['name'];
             }
@@ -51,22 +52,27 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	 * @param $start => int UNIX Timestamp
 	 * @param $end => int UNIX Timestamp
 	 */
-	public function getEventCriterias( $cat_id, $start = 0, $end = 0, $uid = 0) {
+	public function getEventCriterias( $cat_id, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC") {
 		$criteria = new icms_db_criteria_Compo();
-		
+		$criteria->setSort($order);
+		$criteria->setOrder($sort);
 		$criteria->add(new icms_db_criteria_Item("event_cid", $cat_id));
 		
 		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_public", 1));
 		$crit->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
 		$criteria->add($crit);
-
+		
+		$critTray = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_approve", 1));
+		$critTray->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
+		$criteria->add($critTray);
+		
 		$criteria->add(new icms_db_criteria_Item("event_startdate", $start, '>='));
 		$criteria->add(new icms_db_criteria_Item("event_enddate", $end, '<='));
 		return $criteria;
 	}
 
-	public function getEvents($cat_id = FALSE, $start = 0, $end = 0, $uid = 0) {
-		$criteria = $this->getEventCriterias($cat_id, $start, $end, $uid);
+	public function getEvents($cat_id = FALSE, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC") {
+		$criteria = $this->getEventCriterias($cat_id, $start, $end, $uid, $order, $sort);
 		$events = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($events as $event) {

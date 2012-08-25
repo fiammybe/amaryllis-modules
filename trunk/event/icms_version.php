@@ -136,6 +136,16 @@ $modversion['blocks'][$i]['edit_func']		= 'b_event_mincal_edit';
 $modversion['blocks'][$i]['options']		= '';
 $modversion['blocks'][$i]['template']		= 'event_block_mincal.html';
 $modversion['blocks'][$i]['can_clone']		= FALSE;
+// Event list block
+$i++;
+$modversion['blocks'][$i]['file']			= 'event_list.php';
+$modversion['blocks'][$i]['name']			= _MI_EVENT_BLOCK_LIST;
+$modversion['blocks'][$i]['description']	= _MI_EVENT_BLOCK_LIST_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_event_list_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_event_list_edit';
+$modversion['blocks'][$i]['options']		= '0|1'; //category|Time Range
+$modversion['blocks'][$i]['template']		= 'event_block_list.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
