@@ -56,7 +56,14 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
-		$criteria->add(new icms_db_criteria_Item("event_cid", $cat_id));
+		if($cat_id && !is_array($cat_id)){
+			$criteria->add(new icms_db_criteria_Item("event_cid", $cat_id));
+		} elseif ($cat_id && is_array($cat_id)) {
+			foreach($cat_id as $key => $value) {
+				$tray = new icms_db_criteria_Compo();
+				$tray->add(new icms_db_criteria_Item("event_cid", $cat_id), 'OR');
+			}
+		}
 		
 		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_public", 1));
 		$crit->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
@@ -66,8 +73,8 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		$critTray->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
 		$criteria->add($critTray);
 		
-		$criteria->add(new icms_db_criteria_Item("event_startdate", $start, '>='));
-		$criteria->add(new icms_db_criteria_Item("event_enddate", $end, '<='));
+		if($start > 0) $criteria->add(new icms_db_criteria_Item("event_startdate", $start, '>='));
+		if($end > 0) $criteria->add(new icms_db_criteria_Item("event_enddate", $end, '<='));
 		return $criteria;
 	}
 
