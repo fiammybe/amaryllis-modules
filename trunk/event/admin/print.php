@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Event' is an event/category module for ImpressCMS, which can display google categorys, too
+ * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /admin/manual.php
  * 

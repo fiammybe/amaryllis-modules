@@ -309,11 +309,8 @@
 		});
 		
 		<{if $gotoDate }>
-			//var date = "<{$gotoDate}>";
 			$('#calendar').fullCalendar('changeView', 'agendaDay')
     				.fullCalendar('gotoDate', <{$gotoDate}>);
-    		//$('#calendar').fullCalendar('optionSet', 'firstHour', <{$start_hour}> );
-    		
 		<{/if}>
 		
 		$( "#submit_form" ).dialog({

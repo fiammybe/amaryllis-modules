@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Event' is an event/category module for ImpressCMS, which can display google categorys, too
+ * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /index.php
  * 
@@ -83,8 +83,8 @@ include_once ICMS_ROOT_PATH . "/header.php";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if(icms_get_module_status("index")) {
-//	$indexpage_handler = icms_getModuleHandler( 'indexpage', INDEX_DIRNAME, 'index' );
-//	$indexpageObj = $indexpage_handler->getIndexByMid(icms::$module->getVar("mid"));
+	$indexpage_handler = icms_getModuleHandler( 'indexpage', INDEX_DIRNAME, 'index' );
+	$indexpageObj = $indexpage_handler->getIndexByMid(icms::$module->getVar("mid"));
 	if(is_object($indexpageObj)) $icmsTpl->assign('index_index', $indexpageObj->toArray());
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,24 +104,18 @@ $icmsTpl->assign("categories", $categories);
 
 // default view 
 $icmsTpl->assign("default_view", $clean_view);
-
-if($clean_time) {
-	$icmsTpl->assign("agenda_start", $clean_time);
-}
-
-
+// default "firstTime"
+$icmsTpl->assign("agenda_start", $clean_time);
 if($clean_date) {
 	$date = explode("-", $clean_date);
 	$icmsTpl->assign("gotoDate", $date[0] .",". ($date[1] - 1) .",". $date[2]);
 }
-
 // checking for submit permissions for the current user and assign form
 if($category_handler->userSubmit()) {
 	$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 	$icmsTpl->assign("cat_submit", TRUE);
 	addEvent(0);
 }
-
 // fetch the calendars for legend and event sources
 $calendars = $calendar_handler->getObjects(FALSE, TRUE, FALSE);
 $icmsTpl->assign("calendars", $calendars);
