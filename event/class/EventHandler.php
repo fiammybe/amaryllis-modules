@@ -60,10 +60,11 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		if($cat_id && !is_array($cat_id)){
 			$criteria->add(new icms_db_criteria_Item("event_cid", $cat_id));
 		} elseif ($cat_id && is_array($cat_id)) {
+			$tray = new icms_db_criteria_Compo();
 			foreach($cat_id as $key => $value) {
-				$tray = new icms_db_criteria_Compo();
-				$tray->add(new icms_db_criteria_Item("event_cid", $cat_id), 'OR');
+				$tray->add(new icms_db_criteria_Item("event_cid", $value), 'OR');
 			}
+			$criteria->add($tray);
 		}
 		
 		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_public", 1));
@@ -79,8 +80,8 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		return $criteria;
 	}
 
-	public function getEvents($cat_id = FALSE, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC") {
-		$criteria = $this->getEventCriterias($cat_id, $start, $end, $uid, $order, $sort);
+	public function getEvents($cat_id = FALSE, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE) {
+		$criteria = $this->getEventCriterias($cat_id, $start, $end, $uid, $order, $sort, $limit);
 		$events = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($events as $event) {
