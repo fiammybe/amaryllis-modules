@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Event' is an event/category module for ImpressCMS, which can display google categorys, too
+ * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /class/CategoryHandler.php
  * 
@@ -103,6 +103,10 @@ class mod_event_CategoryHandler extends icms_ipf_Handler {
 			$seo = $seo . '_' . time();
 			$obj->setVar("short_url", $seo);
 		}
+		$dsc = $obj->getVar("category_dsc", "s");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
+		$dsc = str_replace("'",'"', $dsc);
+		$obj->setVar("category_dsc", $dsc);
 		return TRUE;
 	}
 	

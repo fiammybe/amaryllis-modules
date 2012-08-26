@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Event' is an event/category module for ImpressCMS, which can display google categorys, too
+ * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /blocks/event_list.php
  * 
@@ -35,7 +35,9 @@ function b_event_list_show($options) {
 	} elseif ($options[1] == "month") {
 		$end = time() + 60*60*24*30;
 	} elseif ($options[1] == "curday") {
-		$time = mktime(23,59,59);
+		$end = mktime(23,59,59);
+	} elseif ($options[1] == "day") {
+		$end = time() + 60*60*24;
 	}
 	
 	$uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;

@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Event' is an event/category module for ImpressCMS, which can display google categorys, too
+ * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /class/Category.php
  * 
@@ -72,6 +72,17 @@ class mod_event_Category extends icms_ipf_seo_Object {
 		return "<div style='background-color:" . $this->getTextColor() . "; border: 1px solid black; width:30px; height:20px;'>&nbsp;</div>";
 	}
     
+    public function getCatDsc() {
+		$dsc = $this->getVar("category_dsc", "s");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "output");
+		$filtered = strpos($dsc, '<!-- input filtered -->');
+		if($filtered) {
+			$dsc = str_replace('<!-- input filtered -->', '', $dsc);
+			$dsc = str_replace('<!-- warning! output filtered only -->', '', $dsc);
+		}
+		return $dsc;
+	}
+
 	public function getColor() {
         return $this->getVar("category_color");
     }
@@ -127,7 +138,7 @@ class mod_event_Category extends icms_ipf_seo_Object {
 		$ret = parent::toArray();
 		$ret['id'] = $this->id();
         $ret['name'] = $this->title();
-        $ret['dsc'] = $this->summary();
+        $ret['dsc'] = $this->getCatDsc();
         $ret['color'] = $this->getColor();
         $ret['txtcolor'] = $this->getTextColor();
         return $ret;

@@ -33,14 +33,13 @@ $icmsTpl->assign('index_images_url', INDEX_ICONS_URL);
 $icmsTpl->assign('index_url', INDEX_URL);
 $icmsTpl->assign('index_module_home', '<a href="' . INDEX_URL . 'index.php" title="' . $index_moduleName . '">' . $index_moduleName . '</a>');
 
-$xoTheme->addStylesheet(EVENT_URL . 'module' . ((defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? '_rtl' : '') . '.css');
+$xoTheme->addStylesheet(EVENT_SCRIPT_URL . 'module_event.css');
 $xoTheme->addStylesheet(EVENT_URL . 'scripts/fullcalendar.css');
 $xoTheme->addStylesheet(EVENT_URL . 'scripts/jquery.qtip.min.css');
 
 $rtl = (defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? 'true' : 'false';
 $icmsTpl->assign("event_rtl", $rtl);
 
-//$icmsTpl->assign("default_view", $eventConfig['default_view']);
 $icmsTpl->assign("first_day", $eventConfig['first_day']);
 $icmsTpl->assign("display_weekend", ($eventConfig['display_weekend'] == 1) ? 'true' : 'false');
 $icmsTpl->assign("default_header_m", $eventConfig['default_header_m']);
