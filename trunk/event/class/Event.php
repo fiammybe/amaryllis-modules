@@ -172,7 +172,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	
 	public function getItemLink($urlOnly = FALSE) {
 		$start = $this->getVar("event_startdate", "e");
-		$date = $this->formatDate($start, "Y-m-d");
+		$date = $this->formatDate($start, "Y-m-j");
 		$time = $this->formatDate($start, "G");
 		$url = ICMS_MODULES_URL . "/" . EVENT_DIRNAME . '/index.php?date=' . $date . "&time=" . $time;
 		if($urlOnly) return $url;

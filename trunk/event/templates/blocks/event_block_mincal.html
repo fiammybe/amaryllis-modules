@@ -3,7 +3,7 @@
 		//$('#event_datepicker').datepicker('option', 'onSelect', function() { window.location = "<{$block.event_url}>index.php?date=" + date; });
 		$('#event_datepicker').bind('onSelect', function() { window.location = "<{$block.event_url}>index.php?date=" + date; });
 		$('#event_datepicker').datepicker({
-			dateFormat: "yy-mm-dd",
+			dateFormat: "yy-mm-d",
 			onSelect: function(date) {
 				window.location = "<{$block.event_url}>index.php?date=" + date;
 			},
