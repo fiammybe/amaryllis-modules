@@ -247,6 +247,20 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		return icms_member_user_Handler::getUserLink($user);
 	}
 	
+	public function sendMessageAwaiting() {
+		$pm_handler = icms::handler('icms_data_privmessage');
+		$user = $this->getVar("event_submitter", "e");
+		$uname = icms::handler('icms_member_user')->get($user)->getVar("uname");
+		$message = sprintf(_CO_EVENT_NEW_EVENT_APPROVAL, $uname);
+		$pmObj = $pm_handler->create(TRUE);
+		$pmObj->setVar("subject", _CO_EVENT_NEW_EVENT);
+		$pmObj->setVar("from_userid", 1);
+		$pmObj->setVar("to_userid", 1);
+		$pmObj->setVar("msg_time", time());
+		$pmObj->setVar("msg_text", $message);
+		$pm_handler->insert($pmObj, TRUE);
+	}
+	
 	public function sendMessageApproved() {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$file = "event_approved.tpl";

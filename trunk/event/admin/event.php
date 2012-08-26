@@ -109,7 +109,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column("event_startdate", FALSE, FALSE));
 			$objectTable->addColumn(new icms_ipf_view_Column("event_enddate", FALSE, FALSE));
 			$objectTable->addColumn(new icms_ipf_view_Column("event_submitter", FALSE, FALSE, "getSubmitter"));
-			$objectTable->addColumn(new icms_ipf_view_Column("event_contact", FALSE, FALSE, "getContact"));
 			$objectTable->addIntroButton("addevent", "event.php?op=mod", _AM_EVENT_EVENT_CREATE);
 			$objectTable->addFilter("event_cid", "filterCid");
 			$objectTable->addFilter("event_submitter", "filterUser");
