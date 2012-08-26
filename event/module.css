@@ -38,8 +38,8 @@
 .event_cell { display: table-cell;}
 .ui-dialog-title { float:none !important; display: block; text-align: center; }
 div#show_event_dsc {margin: 2em 0; }
-span.show_event_contact {display: block;}
-span.show_event_contact img.icon_middle {margin-right: .5em;}
+span.event_contact {display: block;}
+span.event_contact img.icon_middle {margin-right: .5em;}
 
 .event_buttonbar {float:left; vertical-align: middle;}
 .event_buttonbar:hover {cursor:pointer; }
