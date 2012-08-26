@@ -53,21 +53,21 @@
 					buttons: [
 						{
 							text: "<{$smarty.const._CLOSE}>",
-							click: function() {$(this).dialog("destroy");}
+							click: function() {$(this).dialog("close");}
 						}
 					]
 				});
-				$("div#event_name").text(event.title);
-				$("div#event_dsc").html(event.description);
-				$("span#event_startdate").text(startDate);
-				$("span#event_enddate").text(endDate);
-				$("div#event_contact").html(event.contact);
-				$("div#event_street").html(event.street);
-				$("span#event_zip").text(event.zip);
-				$("span#event_city").text(event.city);
-				$("div#event_cid").text(event.cat);
-				$("div#event_url").html(event.urllink);
-				$("div#awaiting_approval").html(event.approval);
+				//$("div#event_name").text(event.title);
+				$("div#show_event_dsc").html(event.description);
+				$("span#show_event_startdate").text(startDate);
+				$("span#show_event_enddate").text(endDate);
+				$("div#show_event_contact").html(event.contact);
+				$("div#show_event_street").html(event.street);
+				$("span#show_event_zip").text(event.zip);
+				$("span#show_event_city").text(event.city);
+				$("div#show_event_cid").text(event.cat);
+				$("div#show_event_url").html(event.urllink);
+				$("div#show_awaiting_approval").html(event.approval);
 				
 				$('#event_delete').click(function(){
 					var button = $(this);
@@ -237,12 +237,13 @@
 						title = title;
 						start = $.fullCalendar.formatDate( startDate, "MMMM dd, yyyy h:mm:ss tt");
 						end = $.fullCalendar.formatDate( endDate, "MMMM dd, yyyy h:mm:ss tt");
-						if(title) $("#submit_form").dialog("open");
 						$("#event_startdate").val(Date.parse(start) /1000);
 						$("#event_enddate").val(Date.parse(end) / 1000);
 						$("#event_name").val(title);
 						$("#event_allday").val(allDay);
-						
+						$("#event_id, #event_cid, #event_dsc_tarea, #event_contact, #event_cemail, #event_phone, #event_street, #event_city, #event_zip").val('');
+						$("#mid_event_url, #caption_event_url, #desc_event_url, #url_event_url, #target_event_url").val('');
+						if(title) $("#submit_form").dialog("open");
 						lastView = view.name;
 					} // end of else
 					//calendar.fullCalendar('unselect');
@@ -315,7 +316,6 @@
     		
 		<{/if}>
 		
-		//var targeturl = "<{$event_url}>submit.php?op=addevent";
 		$( "#submit_form" ).dialog({
 			title: "<{$smarty.const._MD_EVENT_ADDEVENT}>",
         	autoOpen: false,
@@ -336,7 +336,7 @@
 						dataType: "json",
 						success: function(response) {
 									if(response.status === "success") {
-										dlg.dialog("destroy");
+										dlg.dialog("close");
 										$('#calendar').fullCalendar('refetchEvents');
 										$('#form_message').dialog('open');
 									} else if(response.status === "error") {
@@ -346,11 +346,11 @@
 					});
 				},
 				"<{$smarty.const._CANCEL}>" : function() {
-					$(this).dialog("destroy");
+					$(this).dialog("close");
 				}
 			},
 			Cancel: function() {
-				$(this).dialog( "destroy" );
+				$(this).dialog( "close" );
 			}
        });
 		$("#form_message").dialog({
@@ -364,7 +364,7 @@
 			height: "auto",
 			buttons: {
 				Ok: function() {
-					$(this).dialog( "destroy" );
+					$(this).dialog( "close" );
 				}
 			}
 		});
@@ -381,7 +381,7 @@
 			hide: "clip",
 			show: "clip",
 			resizable: false,
-			width: 600,
+			width: 800,
 			height: "auto"
 		});
 		
