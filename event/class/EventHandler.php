@@ -52,8 +52,9 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	 * @param $start => int UNIX Timestamp
 	 * @param $end => int UNIX Timestamp
 	 */
-	public function getEventCriterias( $cat_id, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC") {
+	public function getEventCriterias( $cat_id, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
+		if($limit) $criteria->setLimit((int)$limit);
 		$criteria->setSort($order);
 		$criteria->setOrder($sort);
 		if($cat_id && !is_array($cat_id)){

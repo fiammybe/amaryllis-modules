@@ -17,7 +17,7 @@
  */
 
 .index_headertable { margin-bottom: 2em; float: left;}
-.index_rss { float: right;}
+.index_rss, .event_rss { float: right;}
 .event_clear_both { clear: both; height: 1px;}
 .event_clear_left { clear: left; height: 1px;}
 .event_clear_right { clear: right; height: 1px;}
