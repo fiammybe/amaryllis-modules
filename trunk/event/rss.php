@@ -1,15 +1,15 @@
 <?php
 /**
- * 'Article' is an event management module for ImpressCMS
+ * 'Event' is an event/category module for ImpressCMS, which can display google categorys, too
  *
  * File: /rss.php
  * 
- * hold the configuration information about the module
+ * module rss feeds
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Article
+ * 				Event
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
@@ -36,7 +36,7 @@ $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 $event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 $cat_ids = $category_handler->userView();
 $uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;
-$events = $event_handler->getEvents($cat_ids, 0, 0, $uid, "event_created_on", "DESC");
+$events = $event_handler->getEvents($cat_ids, 0, 0, $uid, "event_created_on", "DESC", "30");
 
 foreach($events as $event) {
 	$event_feed->feeds[] = array (
