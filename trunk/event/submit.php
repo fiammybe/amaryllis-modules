@@ -70,6 +70,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$event->setVar("event_url", $urllink);
 			$event->setVar("event_contact", filter_input(INPUT_POST,'event_contact'));
 			$event->setVar("event_cemail", filter_input(INPUT_POST, 'event_cemail'));
+			$event->setVar("event_city", filter_input(INPUT_POST, 'event_city'));
 			$event->setVar("event_phone", filter_input(INPUT_POST, 'event_phone'));
 			$event->setVar("event_street", filter_input(INPUT_POST, 'event_street'));
 			$event->setVar("event_zip", filter_input(INPUT_POST, 'event_zip', FILTER_SANITIZE_NUMBER_INT));
