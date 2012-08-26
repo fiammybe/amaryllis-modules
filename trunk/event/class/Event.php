@@ -178,12 +178,21 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		if($urlOnly) return $url;
 		return '<a href="' . $url . '" title="' . $this->title() . '">' . $this->title() . '</a>';
 	}
+	
+	public function getEventDsc() {
+		$dsc = $this->getVar("event_dsc", "s");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "output");
+		$filtered = strpos('<!-- input filtered -->');
+		$dsc = str_replace('<!-- input filtered -->', '', $dsc);
+		$dsc = str_replace('<!-- warning! output filtered only -->', '', $dsc);
+		return $dsc;
+	}
 
 	public function toArray() {
 		$ret = parent::toArray();
         $ret['id'] = $this->id();
         $ret['name'] = $this->title();
-        $ret['dsc'] = $this->summary();
+        $ret['dsc'] = $this->getEventDsc();
         $ret['start'] = $this->getVar("event_startdate", "e");
 		$ret['end'] = $this->getVar("event_enddate", "e");
 		$ret['allDay'] = ($this->getVar("event_allday", "e") == 1) ? TRUE : FALSE;

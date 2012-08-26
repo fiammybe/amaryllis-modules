@@ -67,7 +67,7 @@
 				$("span#show_event_city").text(event.city);
 				$("div#show_event_cid").text(event.cat);
 				$("div#show_event_url").html(event.urllink);
-				$("div#show_awaiting_approval").html(event.approval);
+				$("div#awaiting_approval").html(event.approval);
 				
 				$('#event_delete').click(function(){
 					var button = $(this);
@@ -241,7 +241,7 @@
 						$("#event_enddate").val(Date.parse(end) / 1000);
 						$("#event_name").val(title);
 						$("#event_allday").val(allDay);
-						$("#event_id, #event_cid, #event_dsc_tarea, #event_contact, #event_cemail, #event_phone, #event_street, #event_city, #event_zip").val('');
+						$("#event_id, #event_cid, #event_dsc_tarea, #event_phone, #event_street, #event_city, #event_zip").val('');
 						$("#mid_event_url, #caption_event_url, #desc_event_url, #url_event_url, #target_event_url").val('');
 						if(title) $("#submit_form").dialog("open");
 						lastView = view.name;
