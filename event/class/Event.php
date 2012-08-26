@@ -174,7 +174,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$start = $this->getVar("event_startdate", "e");
 		$date = $this->formatDate($start, "Y-m-d");
 		$time = $this->formatDate($start, "G");
-		$url = EVENT_URL . 'index.php?date=' . $date . "&time=" . $time;
+		$url = ICMS_MODULES_URL . "/" . EVENT_DIRNAME . '/index.php?date=' . $date . "&time=" . $time;
 		if($urlOnly) return $url;
 		return '<a href="' . $url . '" title="' . $this->title() . '">' . $this->title() . '</a>';
 	}
