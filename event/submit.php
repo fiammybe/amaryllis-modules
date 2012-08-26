@@ -86,8 +86,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			}
 			if(!$event_handler->insert($event)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));unset($_POST);exit;}
 			$success_msg = ($event_isAdmin) ? _MD_EVENT_THANKS_SUBMITTING : _MD_EVENT_AWAITING_APPROVAL;
+			if(!$event_isAdmin) { $event->sendMessageAwaiting(); }
 			echo json_encode(array('status' => 'success','message'=> $success_msg,));
-			unset($_POST);
+			unset($_POST, $event, $event_handler);
 			exit;
             break;
         
