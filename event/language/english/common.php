@@ -93,7 +93,7 @@ define("_CO_EVENT_CANNOT_BOOK_PASTEND", "The End Date needs to be after the star
 define("_CO_EVENT_AWAITING_APPROVAL", "Your Event still is awaiting approval");
 define("_CO_EVENT_NEW_EVENT_APPROVAL", "%s has submitted a new Event which is awaiting approval");
 define("_CO_EVENT_NEW_EVENT", "New Event is awaiting approval");
-//rules
+//calendar
 define("_CO_EVENT_MONDAY", "Monday");
 define("_CO_EVENT_TUESDAY", "Tuesday");
 define("_CO_EVENT_WEDNESDAY", "Wednesday");
@@ -145,3 +145,6 @@ define("_CO_EVENT_MONTH", "Month");
 define("_CO_EVENT_MONTHS", "Months");
 define("_CO_EVENT_YEAR", "Year");
 define("_CO_EVENT_YEARS", "Years");
+//waiting plugin
+define("_CO_EVENT_CATEGORY_APPROVE", "Waiting categories for approval");
+define("_CO_EVENT_EVENT_APPROVE", "Waiting events for approval");
