@@ -155,7 +155,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			$seo = $seo . '_' . time();
 			$obj->setVar("short_url", $seo);
 		}
-		$dsc = $obj->getVar("event_dsc", "s");
+		$dsc = $obj->getVar("event_dsc", "e");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
 		$dsc = str_replace("'",'"', $dsc);
 		$obj->setVar("event_dsc", $dsc);
