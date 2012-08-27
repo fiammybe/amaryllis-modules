@@ -181,12 +181,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	
 	public function getEventDsc() {
 		$dsc = $this->getVar("event_dsc", "s");
-		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "output");
-		$filtered = strpos($dsc, '<!-- input filtered -->');
-		if($filtered) {
-			$dsc = str_replace('<!-- input filtered -->', '', $dsc);
-			$dsc = str_replace('<!-- warning! output filtered only -->', '', $dsc);
-		}
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "edit");
 		return $dsc;
 	}
 
