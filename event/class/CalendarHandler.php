@@ -40,7 +40,7 @@ class mod_event_CalendarHandler extends icms_ipf_Handler {
 			$seo = $seo . '_' . time();
 			$obj->setVar("short_url", $seo);
 		}
-		$dsc = $obj->getVar("calendar_dsc", "s");
+		$dsc = $obj->getVar("calendar_dsc", "e");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
 		$dsc = str_replace("'",'"', $dsc);
 		$obj->setVar("calendar_dsc", $dsc);
