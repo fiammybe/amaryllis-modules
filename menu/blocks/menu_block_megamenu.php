@@ -29,11 +29,13 @@ function b_menu_megamenu_show($options) {
 	$menu_handler = icms_getModuleHandler("menu", MENU_DIRNAME, "menu");
 	$item_handler = icms_getModuleHandler("item", MENU_DIRNAME, "menu");
 	
+	$GLOBALS['MENU_ITEM_ORDER'] = $options[1];
+	$GLOBALS['MENU_ITEM_SORT'] = $options[2];
+	
 	$menuObj = $menu_handler->get($options[0]);
 	
 	$block['megamenu'] = $menuObj->toArray();
 	$block['mega_items'] = $item_handler->getItems(TRUE, NULL, $options[0], FALSE,FALSE,$options[1],$options[2],"item_view");
-	
 	
 	$menu_kind = $menuObj->getVar("menu_kind");
 	if($menu_kind == "dynamic_horizontal" || $menu_kind == "dynamic_vertical") {

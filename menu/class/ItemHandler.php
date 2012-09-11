@@ -97,7 +97,7 @@ class MenuItemHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getItems($act = FALSE, $item_pid = NULL, $menu_id = FALSE, $start=0,$limit=0,$order='item_name',$sort='ASC',$perm="item_view") {
+	public function getItems($act = FALSE, $item_pid = NULL, $menu_id = FALSE, $start=0,$limit=0,$order=MENU_ITEM_ORDER,$sort=MENU_ITEM_SORT,$perm="item_view") {
 		$criteria = $this->getItemCriterias($act, $item_pid, $menu_id, $start, $limit, $order, $sort, $perm);
 		$items = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
