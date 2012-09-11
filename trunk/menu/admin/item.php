@@ -51,6 +51,8 @@ function edititem($item_id = 0, $menu_id = 0, $clone = FALSE) {
 }
 
 include_once "admin_header.php";
+$GLOBALS['MENU_ITEM_ORDER'] = "item_name";
+$GLOBALS['MENU_ITEM_SORT'] = "ASC";
 
 $menu_handler = icms_getModuleHandler("menu", MENU_DIRNAME, "menu");
 $count = $menu_handler->getCount(FALSE);

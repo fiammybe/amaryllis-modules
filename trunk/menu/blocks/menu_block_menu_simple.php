@@ -26,6 +26,9 @@ function b_menu_menu_simple_show($options) {
 	$menu_handler = icms_getModuleHandler('menu', MENU_DIRNAME, 'menu');
 	$item_handler = icms_getModuleHandler('item', MENU_DIRNAME, 'menu');
 	
+	$GLOBALS['MENU_ITEM_ORDER'] = $options[1];
+	$GLOBALS['MENU_ITEM_SORT'] = $options[2];
+	
 	$menuObj = $menu_handler->get($options[0]);
 	
 	$block['menu_menu'] = $menuObj->toArray();
