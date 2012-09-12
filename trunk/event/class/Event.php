@@ -182,9 +182,9 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	public function getEventDsc() {
 		$dsc = $this->getVar("event_dsc", "s");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "output");
-		$filtered = strpos($dsc, '<!--input filtered-->');
+		$filtered = strpos($dsc, '<!-- input filtered -->');
 		if($filtered) {
-			$dsc = str_replace('<!--input filtered-->', '', $dsc);
+			$dsc = str_replace('<!-- input filtered -->', '', $dsc);
 		}
 		return $dsc;
 	}
@@ -249,6 +249,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	public function sendMessageAwaiting() {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$user = $this->getVar("event_submitter", "e");
+		if($user <= 0) return FALSE;
 		$uname = icms::handler('icms_member_user')->get($user)->getVar("uname");
 		$message = sprintf(_CO_EVENT_NEW_EVENT_APPROVAL, $uname);
 		$pmObj = $pm_handler->create(TRUE);
@@ -270,6 +271,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 			$tpl = EVENT_ROOT_PATH . "$lang/$file";
 		}
 		$user = $this->getVar("event_submitter", "e");
+		if($user <= 0) return FALSE;
 		$message = file_get_contents($tpl);
 		$message = str_replace("{EVENT_CAT}", $this->getCategory(TRUE), $message);
 		$message = str_replace("{EVENT_TITLE}", $this->title(), $message);
@@ -282,5 +284,6 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$pmObj->setVar("msg_time", time());
 		$pmObj->setVar("msg_text", $message);
 		$pm_handler->insert($pmObj, TRUE);
+		return TRUE;
 	}
 }
