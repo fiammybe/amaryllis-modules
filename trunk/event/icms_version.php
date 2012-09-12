@@ -114,6 +114,7 @@ $modversion['templates'] = array(
     array("file" => "event_calconf.html", "description" => "js configuration for calendar"),
 	array('file' => 'event_header.html', 'description' => 'Module Header'),
 	array('file' => 'event_footer.html', 'description' => 'Module Footer'),
+	array('file' => 'event_print.html', 'description' => 'Print Template'),
     array("file" => "event_requirements.html", "description" => "event requirements")
 	);
 	
@@ -315,6 +316,24 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'print_footer',
+								'title' 		=> '_MI_EVENT_CONFIG_PRINT_FOOTER',
+								'description' 	=> '_MI_EVENT_CONFIG_PRINT_FOOTER_DSC',
+								'formtype' 		=> 'textarea',
+								'valuetype' 	=> 'text',
+								'default' 		=> ''
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'print_logo',
+								'title' 		=> '_MI_EVENT_CONFIG_PRINT_LOGO',
+								'description' 	=> '_MI_EVENT_CONFIG_PRINT_LOGO_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'txt',
+								'default' 		=> 'themes/iTheme/img/logo.png'
 							);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

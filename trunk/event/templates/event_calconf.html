@@ -42,10 +42,20 @@
 			eventClick: function(event, jsEvent, view) {
 				startDate = $.fullCalendar.formatDate(event.start, 'HH:mm');
 				endDate = $.fullCalendar.formatDate(event.end, 'HH:mm');
-				if(event.editable == true) {
-					var buttons = "<span class='event_buttonbar'><img id='event_delete' src='<{$event_images_url}>delete.png' alt='delete' /><img id='event_edit' src='<{$event_images_url}>edit.png' alt='edit' /></span>";
+				if(event.seo) {
+					var printButton = "<a rel='external' target='blank' href='<{$event_url}>print.php?print=event&event=" + event.seo + "'><img id='event_print' src='<{$event_images_url}>print.png' alt='print' /></a>";
 				} else {
-					var buttons = "";
+					var printButton = "";
+				}
+				
+				if(event.editable == true) {
+					var buttons = "<span class='event_buttonbar'>" + 
+										"<img id='event_delete' src='<{$event_images_url}>delete.png' alt='delete' />" +
+										"<img id='event_edit' src='<{$event_images_url}>edit.png' alt='edit' />" +
+										printButton +
+									"</span>";
+				} else {
+					var buttons = "<span class='event_buttonbar'>" + printButton + "</span>";
 				}
 				$("div#cal_event").dialog("open");
 				$("div#cal_event").dialog({

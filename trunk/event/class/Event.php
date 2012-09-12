@@ -199,6 +199,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$ret['allDay'] = ($this->getVar("event_allday", "e") == 1) ? TRUE : FALSE;
         $ret['canEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['itemLink'] = $this->getItemLink(FALSE);
+		$ret['seo'] = $this->short_url();
 		$ret['itemURL'] = $this->getItemLink(TRUE);
         $ret['contact'] = $this->getContact();
 		$ret['street'] = $this->getValue("event_street");
