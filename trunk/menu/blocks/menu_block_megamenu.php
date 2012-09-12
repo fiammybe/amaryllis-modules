@@ -21,7 +21,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("MENU_DIRNAME")) define("MENU_DIRNAME", basename(dirname(dirname(__FILE__))));
- 
+
 function b_menu_megamenu_show($options) {
 	global $xoTheme;
 	include_once ICMS_MODULES_PATH . '/' . MENU_DIRNAME . '/include/common.php';
@@ -35,7 +35,7 @@ function b_menu_megamenu_show($options) {
 	$menuObj = $menu_handler->get($options[0]);
 	
 	$block['megamenu'] = $menuObj->toArray();
-	$block['mega_items'] = $item_handler->getItems(TRUE, NULL, $options[0], FALSE,FALSE,$options[1],$options[2],"item_view");
+	$block['mega_items'] = $item_handler->getItems(TRUE, NULL, $options[0], FALSE,FALSE,"item_view");
 	
 	$menu_kind = $menuObj->getVar("menu_kind");
 	if($menu_kind == "dynamic_horizontal" || $menu_kind == "dynamic_vertical") {
