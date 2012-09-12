@@ -49,6 +49,7 @@ if(!$clean_cat == FALSE ){
 				'pubdate'		=> $event['event_created_on'],
 				'editable'		=> $event['canEditAndDelete'],
 				'itemURL'		=> $event['itemURL'],
+				'seo'			=> $event['seo'],
 				'cid'			=> $event['event_cid'],
 				'contact_name'	=> $event['event_contact'],
 				'contact_mail'	=> $event['event_cemail'],
