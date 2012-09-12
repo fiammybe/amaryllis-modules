@@ -46,5 +46,3 @@ if (is_object($menuModule)) {
 $menu_isAdmin = icms_userIsAdmin( MENU_DIRNAME );
 
 $menuConfig = icms_getModuleConfig( MENU_DIRNAME );
-
-$icmsPersistableRegistry = icms_ipf_registry_Handler::getInstance();

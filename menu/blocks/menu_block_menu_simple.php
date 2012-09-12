@@ -32,7 +32,7 @@ function b_menu_menu_simple_show($options) {
 	$menuObj = $menu_handler->get($options[0]);
 	
 	$block['menu_menu'] = $menuObj->toArray();
-	$block['menu_items'] = $item_handler->getItems(TRUE, NULL, $options[0], FALSE,FALSE,$options[1],$options[2],"item_view");
+	$block['menu_items'] = $item_handler->getItems(TRUE, NULL, $options[0], FALSE,FALSE,"item_view");
 	$block['jsfile'] = $options[3];
 	$block['script_url'] = MENU_URL . "scripts/";
 	$block['block_id'] = $options[5];
