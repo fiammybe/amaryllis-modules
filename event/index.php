@@ -18,7 +18,7 @@
  */
 
 function addEvent($event_id = 0) {
-	global $event_handler,$icmsTpl;
+	global $event_handler,$icmsTpl, $event_isAdmin;
 	$eventObj = $event_handler->get($event_id);
 	$uname = (is_object(icms::$user)) ? icms::$user->getVar("uname") : " ";
 	$mail = (is_object(icms::$user)) ? icms::$user->getVar("email") : " ";
@@ -62,8 +62,12 @@ function addEvent($event_id = 0) {
 		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_ZIP, "event_zip", 10, 10));
 		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_CITY, "event_city", 50, 255));
 		
-		$form->addElement(new icms_form_elements_Radioyn(_CO_EVENT_EVENT_EVENT_PUBLIC, "event_public", 1));
-			
+		if(is_object(icms::$user)) {
+			$form->addElement(new icms_form_elements_Radioyn(_CO_EVENT_EVENT_EVENT_PUBLIC, "event_public", 1));
+		} else {
+			$form->addElement(new icms_form_elements_Hidden("event_public", 1));
+		}
+		
 		if(icms_get_module_status("index")) {
 			$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_TAGS, "event_tags", 75, 255));
 		}

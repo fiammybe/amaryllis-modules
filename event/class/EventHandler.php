@@ -53,6 +53,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	 * @param $end => int UNIX Timestamp
 	 */
 	public function getEventCriterias( $cat_id, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE) {
+		global $event_isAdmin;
 		$criteria = new icms_db_criteria_Compo();
 		if($limit) $criteria->setLimit((int)$limit);
 		$criteria->setSort($order);
@@ -71,9 +72,11 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		$crit->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
 		$criteria->add($crit);
 		
-		$critTray = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_approve", 1));
-		$critTray->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
-		$criteria->add($critTray);
+		if(!$event_isAdmin) {
+			$critTray = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_approve", 1));
+			if(is_object(icms::$user)) $critTray->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
+			$criteria->add($critTray);
+		}
 		
 		if($start > 0) $criteria->add(new icms_db_criteria_Item("event_startdate", $start, '>='));
 		if($end > 0) $criteria->add(new icms_db_criteria_Item("event_enddate", $end, '<='));
