@@ -37,12 +37,16 @@ if (!$articleObj->accessGranted()) {
 	redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 }
 
+$version = number_format(icms::$module->getVar('version')/100, 2);
+$version = !substr($version, -1, 1) ? substr($version, 0, 3) : $version;
+$powered_by = " Powered by &nbsp;<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Icmspoll</a>";
+
 $article = $articleObj->toArray();
 $content = '<a href="' . ICMS_URL . '/modules/article/article.php?article_id=' . $clean_article_id . '" title="' . $article['title'] . '">' . $article['title'] . '</a><br />';
 $content .= _MD_ARTICLE_CATS . ' : ' . $article['cats'] . '<br />'; 
 $content .= _MD_ARTICLE_PUBLISHER . ' : ' . $article['publisher'] . '<br />';
 $content .= strip_tags(implode(" ", $article['body_array']));
-$content .= $articleConfig['article_print_footer'];
+$content .= icms_core_DataFilter::undoHtmlSpecialChars($articleConfig['article_print_footer'] . $powered_by . "&nbsp;" . $version);
 
 require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 	icms_loadLanguageFile('core', 'pdf');
