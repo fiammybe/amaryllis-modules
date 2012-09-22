@@ -91,9 +91,8 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	 */
 	if($articleConfig['show_down_disclaimer'] == 1) {
 		$icmsTpl->assign('show_down_disclaimer', TRUE );
-		$icmsTpl->assign('down_disclaimer', $articleConfig['down_disclaimer']);
-	} else {
-		$icmsTpl->assign('show_down_disclaimer', FALSE);
+		$discl = str_replace('{X_SITENAME}', $icmsConfig['sitename'], $articleConfig['down_disclaimer']);
+		$icmsTpl->assign('down_disclaimer', $discl);
 	}
 	/**
 	 * check if Sprockets Module can be used and if it's available
