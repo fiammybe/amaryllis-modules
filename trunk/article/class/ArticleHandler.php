@@ -136,6 +136,14 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	public function getArticleBySeo($seo) {
+		$article = FALSE;
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", trim($seo)));
+		$articles = $this->getObjects($criteria, FALSE, FALSE);
+		if($articles) $article = $this->get($articles[0]['article_id']);
+		return $article;
+	}
+	
 	public function getArticlesForBlocks($start = 0, $limit = 0, $article_cid = FALSE,$updated = FALSE,$popular = FALSE, $order = 'article_published_date', $sort = 'DESC', $img_req = FALSE) {
 		global $articleConfig;
 		$criteria = new icms_db_criteria_Compo();
@@ -234,8 +242,8 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function getRelated() {
-		if(!$this->_article_related) {
-			$this->_article_related = $this->getList(TRUE, TRUE);
+		if(!count($this->_article_related)) {
+			$this->_article_related = $this->getArticleList(TRUE, TRUE);
 		}
 		return $this->_article_related;
 	}
@@ -263,13 +271,12 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	public function updateCounter($article_id) {
 		global $article_isAdmin;
 		$articleObj = $this->get($article_id);
-		if (!is_object($articleObj)) return FALSE;
-
-		if (isset($articleObj->vars['counter']) && !is_object(icms::$user) || (!$article_isAdmin && $articleObj->getVar('article_submitter', 'e') != icms::$user->getVar("uid")) ) {
+		if (!is_object($articleObj) && $articleObj->isNew()) return FALSE;
+		if(!is_object(icms::$user) || (!$article_isAdmin && $articleObj->getVar('article_submitter', 'e') != icms::$user->getVar("uid")) ) {
 			$new_counter = $articleObj->getVar('counter') + 1;
-			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
-				. ' WHERE ' . $this->keyName . '=' . $articleObj->id();
-			$this->query($sql, null, TRUE);
+			$articleObj->setVar("counter", $new_counter);
+			$articleObj->updating_counter = TRUE;
+			$this->insert($articleObj, TRUE);
 		}
 		return TRUE;
 	}
@@ -308,11 +315,10 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		$articleObj = $this->get($article_id);
 		if ($articleObj && !$articleObj->isNew()) {
 			$articleObj->setVar('article_comments', $total_num);
+			$articleObj->updating_counter = TRUE;
 			$this->insert($articleObj, TRUE);
 		}
 	}
-	
-	
 	
 	protected function beforeInsert(&$obj) {
 		$teaser = $obj->getVar("article_teaser", "e");
@@ -349,19 +355,28 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		global $articleConfig;
 		if ($obj->updating_counter) return TRUE;
 
-		if (!$obj->getVar('article_notification_sent') && $obj->getVar('article_active', 'e') == TRUE && $obj->getVar('article_approve', 'e') == TRUE) {
-			$obj->sendArticleNotification('article_published');
+		if (!$obj->notifSent() && $obj->isActive() && $obj->isApproved()) {
+			if($obj->isNew()) {
+				$obj->sendArticleNotification('article_published');
+			} else {
+				$obj->sendArticleNotification('article_modified');
+			}
 			$obj->setVar('article_notification_sent', TRUE);
-			$this->insert($obj);
+			$obj->updating_counter = TRUE;
+			$this->insert($obj, TRUE);
 		}
 		if(icms_get_module_status("sprockets")) {
-			$tags = $obj->getVar("article_tags", "s");
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("article_id", $obj->id()));
+			$sql = "SELECT (article_tags) FROM " . $this->table . " " . $criteria->renderWhere();
+			$result = $this->db->query($sql);
+			list($myrow) = $this->db->fetchRow($result);
+			$tags = unserialize($myrow);
 			if($tags != "" && $tags != "0") {
 				$sprocketsModule = icms_getModuleInfo("sprockets");
-				$sprockets_taglink_handler = icms_getModuleHandler("taglink", "sprockets");
-				foreach ($tags as $tag) {
+				$sprockets_taglink_handler = icms_getModuleHandler("taglink", $sprocketsModule->getVar("dirname"), "sprockets");
+				foreach ($tags as $key => $value) {
 					$tagObj = $sprockets_taglink_handler->create(TRUE);
-					$tagObj->setVar("tid", (int)$tag);
+					$tagObj->setVar("tid", (int)$value);
 					$tagObj->setVar("mid", icms::$module->getVar("mid", "e"));
 					$tagObj->setVar("item", $this->_itemname);
 					$tagObj->setVar("iid", $obj->id());
@@ -369,10 +384,6 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 				}
 			}
 		}
-		if($articleConfig['article_autopost_twitter'] == 1) {
-			$this->sendTwitterPost($obj);
-		}
-		
 		return TRUE;
 	}
 	

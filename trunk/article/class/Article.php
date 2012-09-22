@@ -462,10 +462,9 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	}
 	
 	function getItemLink($onlyUrl = FALSE) {
-		$seo = $this->getVar("short_url", "e");
-		$url = ARTICLE_URL . 'singlearticle.php?article_id=' . $this -> getVar( 'article_id' ) . '&amp;article=' . $seo;
+		$url = ARTICLE_URL . 'singlearticle.php?article=' . $this->short_url();
 		if ($onlyUrl) return $url;
-		return '<a href="' . $url . '" title="' . $this -> getVar( 'article_title' ) . ' ">' . $this -> getVar( 'article_title' ) . '</a>';
+		return '<a href="' . $url . '" title="' . $this->title() . ' ">' . $this->title() . '</a>';
 	}
 	
 	public function getViewItemLink() {
@@ -509,6 +508,18 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	
 	public function userCanComment() {
 		return ($this->getVar("article_cancomment", "e") == 1) ? TRUE : FALSE;
+	}
+	
+	public function isActive() {
+		return ($this->getVar("article_active", "e") == 1) ? TRUE : FALSE;
+	}
+	
+	public function isApproved() {
+		return ($this->getVar("article_approve", "e") == 1) ? TRUE : FALSE;
+	}
+	
+	public function notifSent() {
+		return ($this->getVar("article_notification_sent", "e") == 1) ? TRUE : FALSE;
 	}
 	
 	public function toArray() {

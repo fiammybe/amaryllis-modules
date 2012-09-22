@@ -20,8 +20,8 @@
 function addtags($clean_tag_id = 0, $clean_article_id = 0){
 	global $sprockets_tag_handler, $articleConfig, $icmsTpl;
 	
-	$article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
-	$articleObj = $article_article_handler->get($clean_article_id);
+	$article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
+	$articleObj = $article_handler->get($clean_article_id);
 	$sprocketsModule = icms::handler('icms_module')->getByDirname("sprockets");
 	if(icms_get_module_status("sprockets")) {
 		$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname"), "sprockets");
@@ -65,11 +65,14 @@ $clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'cate
 $clean_review_start = isset($_GET['rev_nav']) ? filter_input(INPUT_GET, 'rev_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_article_start = isset($_GET['article_nav']) ? filter_input(INPUT_GET, 'article_nav', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_seo = isset($_GET['article']) ? filter_input(INPUT_GET, 'article') : '';
-$article_article_handler = icms_getModuleHandler("article", basename(dirname(__FILE__)), "article");
-$articleObj = $article_article_handler->get($clean_article_id);
+
+$article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
+$articleObj = ($clean_seo != FALSE) ? $article_handler->getArticleBySeo($clean_seo) : FALSE; 
+if(!$articleObj) $articleObj = ($clean_article_id != 0) ? $article_handler->get($clean_article_id) : FALSE;
+
 if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	
-	$article_article_handler->updateCounter($clean_article_id);
+	$article_handler->updateCounter($articleObj);
 	/**
 	 * Get the requested article and send it to Array
 	 */	
