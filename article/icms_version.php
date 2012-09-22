@@ -68,16 +68,21 @@ $modversion = array(
 
 /** other possible types: testers, translators, documenters and other */
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
+$modversion['people']['documenters'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' title='QM-B'>QM-B</a>";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 $modversion['people']['translators'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 
-/** Manual */
+/** Wiki */
 $modversion['manual']['wiki'][] = "<a href='" . ICMS_URL  . "/modules/article/admin/manual.php' target='_self'>Module Manual</a>";
+/** Manual */
+$modversion['manual'][][] = "<a href='" . ICMS_URL  . "/modules/article/admin/manual.php' target='_self'>Module Manual</a>";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// SUPPORT //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+$modversion['submit_bug'] = 'http://code.google.com/p/amaryllis-modules/issues/entry?template=Defect%20report%20from%20user';
+$modversion['submit_feature'] = 'http://code.google.com/p/amaryllis-modules/issues/entry?template=Defect%20report%20from%20user';
 $modversion['support_site_url'] = 'http://community.impresscms.org/modules/newbb/viewforum.php?forum=9';
 $modversion['support_site_name']= 'ImpressCMS Community Forum';
 
