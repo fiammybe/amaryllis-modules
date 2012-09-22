@@ -121,16 +121,7 @@ define("_CO_ARTICLE_INDEXPAGE_INDEX_IMAGE", "Image");
 define("_CO_ARTICLE_INDEXPAGE_INDEX_IMAGE_DSC", "Select an index-Image OR upload a new one");
 define("_CO_ARTICLE_INDEXPAGE_INDEX_IMG_UPL", "Upload new image");
 define("_CO_ARTICLE_INDEXPAGE_INDEX_IMG_UPL_DSC", "");
-
 /**
- * added in 1.2
+ * added in 1.1
  */
-// autoarticle
-define("_CO_ARTICLE_AUTOARTICLE_AA_TITLE", "Title");
-define("_CO_ARTICLE_AUTOARTICLE_AA_HOST", "Host");
-define("_CO_ARTICLE_AUTOARTICLE_AA_HOST_DSC", "");
-define("_CO_ARTICLE_AUTOARTICLE_AA_UNAME", "Login-Name");
-define("_CO_ARTICLE_AUTOARTICLE_AA_UNAME_DSC", "");
-define("_CO_ARTICLE_AUTOARTICLE_AA_PW", "Password");
-define("_CO_ARTICLE_AUTOARTICLE_AA_PW_DSC", "");
-define("_CO_ARTICLE_AUTOARTICLE_AA_USERS", "");
+define("_CO_ARTICLE_HAS_APPROVED", "Your Article has been approved");

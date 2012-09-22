@@ -91,45 +91,31 @@ if($categories > 0) {
 				break;
 				
 			case 'visible':
-				$visibility = $article_article_handler -> changeVisible( $clean_article_id );
-				$ret = 'article.php';
-				if ($visibility == 0) {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_OFFLINE );
-				} else {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_ONLINE );
-				}
+				$visibility = $article_handler->changeField($clean_article_id, "article_active");
+				$red_message = ($visibility == 0) ? _AM_ARTICLE_ARTICLE_OFFLINE : _AM_ARTICLE_ARTICLE_ONLINE;
+				redirect_header(ARTICLE_ADMIN_URL . 'article.php', 2, $red_message);
 				break;
 			
 			case 'changeShow':
-				$show = $article_article_handler -> changeShow( $clean_article_id );
-				$ret = 'article.php';
-				if ($show == 0) {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_INBLOCK_FALSE );
-				} else {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_INBLOCK_TRUE );
-				}
+				$show = $article_handler->changeField($clean_article_id, "article_inblocks");
+				$red_message = ($show == 0) ? _AM_ARTICLE_ARTICLE_INBLOCK_FALSE : _AM_ARTICLE_ARTICLE_INBLOCK_TRUE;
+				redirect_header(ARTICLE_ADMIN_URL . 'article.php', 2, $red_message);
 				break;
 			
 			case 'changeBroken':
-				$show = $article_article_handler -> changeBroken( $clean_article_id );
-				$ret = 'article.php';
-				if ($show == 0) {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_ONLINE );
-				} else {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_OFFLINE );
-				}
+				$show = $article_handler->changeField($clean_article_id, "article_broken_file");
+				$red_message = ($show == 0) ? _AM_ARTICLE_ARTICLE_ONLINE : _AM_ARTICLE_ARTICLE_OFFLINE;
+				redirect_header(ARTICLE_ADMIN_URL . 'article.php', 2, $red_message);
 				break;
 			
 			case 'changeApprove':
-				$approve = $article_article_handler -> changeApprove( $clean_article_id );
-				$ret = 'article.php';
-				if ($approve == 0) {
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_DENIED );
-				} else {
-					$articleObj = $article_article_handler->get($clean_article_id);
-					$articleObj->sendArticleNotification('article_approved');
-					redirect_header( ARTICLE_ADMIN_URL . $ret, 2, _AM_ARTICLE_ARTICLE_APPROVED );
+				$approve = $article_handler->changeField($clean_article_id, "article_approve");
+				if($approve == 1) {
+					$articleObj = $article_handler->get(($clean_article_id));
+					$articleObj->sendMessageApproved();
 				}
+				$red_message = ($approve == 0) ? _AM_ARTICLE_ARTICLE_DENIED : _AM_ARTICLE_ARTICLE_APPROVED;
+				redirect_header(ARTICLE_ADMIN_URL . 'article.php', 2, $red_message);
 				break;
 				
 			case "changeWeight":

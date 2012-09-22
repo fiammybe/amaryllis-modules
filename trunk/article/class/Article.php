@@ -589,6 +589,31 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		}
 	}
 
+	function sendArticleNotification($case) {
+		$valid_case = array("new_article", "article_submitted", "article_modified");
+		if(in_array($case, $valid_case, TRUE)) {
+			$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+			$mid = $module->getVar('mid');
+			$tags ['ARTICLE_TITLE'] = $this->getVar('article_title');
+			$tags ['ARTICLE_URL'] = $this->getItemLink(FALSE);
+			$tags ['ARTICLE_CATS'] = $this->getArticleCid(TRUE);
+			switch ($case) {
+				case 'article_submitted':
+					$category = 'global';
+					$file_id = 0;
+					$recipient = array();
+					break;
+				
+				case 'article_modified':
+					$category = 'global';
+					$file_id = 0;
+					$recipient = array();
+					break;
+			}
+			icms::handler('icms_data_notification')->triggerEvent($category, $file_id, $case, $tags, $recipient, $mid);
+		}
+	}
+
 	public function sendMessageBroken() {
 		$message = _CO_ARTICLE_ARTICLE_MESSAGE_BDY;
 		$message .= '<br />' . _CO_ARTICLE_ARTICLE_ARTICLE_CID . ' : ' . $this->getArticleCid(TRUE);
@@ -603,6 +628,35 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$pmObj->setToGroups($group);
 		$pmObj->send();
 		return TRUE;
+	}
+	
+	public function sendMessageApproved() {
+		$pm_handler = icms::handler('icms_data_privmessage');
+		$file = "article_approved.tpl";
+		$lang = "language/" . $icmsConfig['language'] . "/mail_template";
+		$tpl = ARTICLE_ROOT_PATH . "$lang/$file";
+		if (!file_exists($tpl)) {
+			$lang = 'language/english/mail_template';
+			$tpl = ARTICLE_ROOT_PATH . "$lang/$file";
+		}
+		$users = $this->getVar("article_publisher", "s");
+		$user_array = explode(",", $users);
+		$message = file_get_contents($tpl);
+		$message = str_replace("{ARTICLE_CATS}", $this->getArticleCid(FALSE), $message);
+		$message = str_replace("{ARTICLE_TITLE}", $this->title(), $message);
+		foreach ($users as $user) {
+			if($user > 0) {
+				$uname = icms::handler('icms_member_user')->get($user)->getVar("uname");
+				$message = str_replace("{X_UNAME}", $uname, $message);
+				$pmObj = $pm_handler->create(TRUE);
+				$pmObj->setVar("subject", _CO_ARTICLE_HAS_APPROVED);
+				$pmObj->setVar("from_userid", 1);
+				$pmObj->setVar("to_userid", (int)$user);
+				$pmObj->setVar("msg_time", time());
+				$pmObj->setVar("msg_text", $message);
+				$pm_handler->insert($pmObj, TRUE); //$this->setErrors("PM Not sent") ;
+			}
+		}
 	}
 
 	function getReads() {

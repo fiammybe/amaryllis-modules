@@ -171,60 +171,18 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	/**
 	 * handling some functions to easily switch some fields
 	 */
-	public function changeVisible($article_id) {
-		$visibility = '';
+	public function changeField($article_id, $field) {
 		$articleObj = $this->get($article_id);
-		if ($articleObj->getVar('article_active', 'e') == TRUE) {
-			$articleObj->setVar('article_active', 0);
-			$visibility = 0;
+		if ($articleObj->getVar("$field", 'e') == TRUE) {
+			$articleObj->setVar("$field", 0);
+			$value = 0;
 		} else {
-			$articleObj->setVar('article_active', 1);
-			$visibility = 1;
+			$articleObj->setVar("$field", 1);
+			$value = 1;
 		}
+		$articleObj->updating_counter = TRUE;
 		$this->insert($articleObj, TRUE);
-		return $visibility;
-	}
-	
-	public function changeShow($article_id) {
-		$show = '';
-		$articleObj = $this->get($article_id);
-		if ($articleObj->getVar('article_inblocks', 'e') == TRUE) {
-			$articleObj->setVar('article_inblocks', 0);
-			$show = 0;
-		} else {
-			$articleObj->setVar('article_inblocks', 1);
-			$show = 1;
-		}
-		$this->insert($articleObj, TRUE);
-		return $show;
-	}
-	
-	public function changeApprove($article_id) {
-		$approve = '';
-		$articleObj = $this->get($article_id);
-		if ($articleObj->getVar('article_approve', 'e') == TRUE) {
-			$articleObj->setVar('article_approve', 0);
-			$approve = 0;
-		} else {
-			$articleObj->setVar('article_approve', 1);
-			$approve = 1;
-		}
-		$this->insert($articleObj, TRUE);
-		return $approve;
-	}
-	
-	public function changeBroken($article_id) {
-		$broken = '';
-		$articleObj = $this->get($article_id);
-		if ($articleObj->getVar('article_broken_file', 'e') == TRUE) {
-			$articleObj->setVar('article_broken_file', 0);
-			$broken = 0;
-		} else {
-			$articleObj->setVar('article_broken_file', 1);
-			$broken = 1;
-		}
-		$this->insert($articleObj, TRUE);
-		return $broken;
+		return $value;
 	}
 	
 	/**
