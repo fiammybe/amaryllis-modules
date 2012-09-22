@@ -23,9 +23,9 @@
  * @param int $article_id Articleid to be edited
 */
 function editarticle($article_id = 0) {
-	global $article_article_handler, $icmsModule, $icmsAdminTpl;
+	global $article_handler, $icmsModule, $icmsAdminTpl;
 
-	$articleObj = $article_article_handler->get($article_id);
+	$articleObj = $article_handler->get($article_id);
 	$article_uid = icms::$user->getVar("uid");
 	if (!$articleObj->isNew()){
 		
@@ -57,7 +57,7 @@ if($categories > 0) {
 	
 	$valid_op = array ('mod', 'changedField', 'addarticle', 'del', 'view', 'visible', 'changeShow', 'changeBroken', 'changeApprove', 'changeWeight', '');
 	
-	$article_article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
+	$article_handler = icms_getModuleHandler("article", basename(dirname(dirname(__FILE__))), "article");
 	$clean_article_id = isset($_GET["article_id"]) ? filter_input(INPUT_GET, "article_id", FILTER_SANITIZE_NUMBER_INT) : 0 ;
 	
 	if (in_array($clean_op, $valid_op, TRUE)) {
@@ -69,23 +69,23 @@ if($categories > 0) {
 				break;
 	
 			case "addarticle":
-				$articleObj = $article_article_handler->get($clean_article_id);
+				$articleObj = $article_handler->get($clean_article_id);
 				if($articleObj->isNew()) {
 					$articleObj->sendArticleNotification('article_submitted');
 				} else {
 					$articleObj->sendArticleNotification('article_modified');
 				}
-				$controller = new icms_ipf_Controller($article_article_handler);
+				$controller = new icms_ipf_Controller($article_handler);
 				$controller->storeFromDefaultForm(_AM_ARTICLE_ARTICLE_CREATED, _AM_ARTICLE_ARTICLE_MODIFIED);
 				break;
 	
 			case "del":
-				$controller = new icms_ipf_Controller($article_article_handler);
+				$controller = new icms_ipf_Controller($article_handler);
 				$controller->handleObjectDeletion();
 				break;
 	
 			case "view" :
-				$articleObj = $article_article_handler->get($clean_article_id);
+				$articleObj = $article_handler->get($clean_article_id);
 				icms_cp_header();
 				$articleObj->displaySingleObject();
 				break;
@@ -121,14 +121,14 @@ if($categories > 0) {
 			case "changeWeight":
 				foreach ($_POST['ArticleArticle_objects'] as $key => $value) {
 					$changed = FALSE;
-					$articleObj = $article_article_handler -> get( $value );
+					$articleObj = $article_handler -> get( $value );
 	
 					if ($articleObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 						$articleObj->setVar('weight', (int)($_POST['weight'][$key]));
 						$changed = TRUE;
 					}
 					if ($changed) {
-						$article_article_handler -> insert($articleObj);
+						$article_handler -> insert($articleObj);
 					}
 				}
 				$ret = 'article.php';
@@ -140,7 +140,7 @@ if($categories > 0) {
 				icms::$module->displayAdminMenu( 1, _MI_ARTICLE_MENU_ARTICLE );
 				$criteria = '';
 				if ($clean_article_id) {
-					$articleObj = $article_article_handler->get($clean_article_id);
+					$articleObj = $article_handler->get($clean_article_id);
 					if ($articleObj->id()) {
 						$articleObj->displaySingleObject();
 					}
@@ -149,7 +149,7 @@ if($categories > 0) {
 					$criteria = null;
 				}
 				// create article table
-				$objectTable = new icms_ipf_view_Table($article_article_handler, $criteria);
+				$objectTable = new icms_ipf_view_Table($article_handler, $criteria);
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_active', 'center', 50, 'article_active' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_title', FALSE, FALSE, 'getPreviewItemLink' ) );
 				$objectTable->addColumn( new icms_ipf_view_Column( 'article_cid', FALSE, FALSE, 'getArticleCid' ) );
