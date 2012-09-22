@@ -21,7 +21,8 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 // this needs to be the latest db version
 define('ARTICLE_DB_VERSION', 1);
-
+if(!defined("ARTICLE_DIRNAME")) define("ARTICLE_DIRNAME", basename(dirname(dirname(__FILE__))));
+if(!defined("ARTICLE_ROOT_PATH")) define("ARTICLE_ROOT_PATH", ICMS_ROOT_PATH.'/modules/' . ARTICLE_DIRNAME . '/');
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// SOME NEEDED FUNCTIONS ////////////////////////////////////////////////
@@ -71,6 +72,19 @@ function article_indexpage() {
 	
 }
 
+function createPWSalt() {
+	$filename = 'article_' . substr(md5(uniqid(rand())), 27);
+	$connfile = "conn.php";
+	$content = file_get_contents(ARTICLE_ROOT_PATH . "extras/conn.php");
+	$content .= "//define path to Article Connections /n";
+	$content .= "define( 'ARTICLE_CONNECTION_PATH', ICMS_TRUST_PATH . '/' . " . $filename . " ); /n";
+	icms_core_Filesystem::writeFile($content, $filename, "php", ARTICLE_ROOT_PATH);
+	chmod(ARTICLE_ROOT_PATH . $conn, 0444);
+	return $filename;
+}
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// UPDATE ARTICLE MODULE ////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +95,7 @@ function icms_module_update_article($module) {
 	article_upload_paths();
 	
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-	$icmsDatabaseUpdater -> moduleUpgrade($module);
+	$icmsDatabaseUpdater->moduleUpgrade($module);
     return TRUE;
 }
 

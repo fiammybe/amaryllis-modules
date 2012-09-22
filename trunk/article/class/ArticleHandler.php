@@ -18,7 +18,7 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
+if(!defined("ARTICLE_DIRNAME")) define("ARTICLE_DIRNAME", basename(dirname(dirname(__FILE__))));
 icms_loadLanguageFile("article", "common");
 
 class ArticleArticleHandler extends icms_ipf_Handler {
@@ -352,6 +352,8 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		}
 	}
 	
+	
+	
 	protected function beforeInsert(&$obj) {
 		$teaser = $obj->getVar("article_teaser", "s");
 		$teaser = icms_core_DataFilter::checkVar($teaser, "html", "input");
@@ -372,6 +374,7 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	protected function afterSave(&$obj) {
+		global $articleConfig;
 		if ($obj->updating_counter) return TRUE;
 
 		if (!$obj->getVar('article_notification_sent') && $obj->getVar('article_active', 'e') == TRUE && $obj->getVar('article_approve', 'e') == TRUE) {
@@ -388,12 +391,16 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 					$tagObj = $sprockets_taglink_handler->create(TRUE);
 					$tagObj->setVar("tid", (int)$tag);
 					$tagObj->setVar("mid", icms::$module->getVar("mid", "e"));
-					$tagObj->setVar("item", $obj->getVar("article_title", "e"));
-					$tagObj->setVar("iid", $obj->getVar("article_id", "e"));
-					$sprockets_taglink_handler->insertD($tagObj, TRUE);
+					$tagObj->setVar("item", $this->_itemname);
+					$tagObj->setVar("iid", $obj->id());
+					$sprockets_taglink_handler->insert($tagObj, TRUE);
 				}
 			}
 		}
+		if($articleConfig['article_autopost_twitter'] == 1) {
+			$this->sendTwitterPost($obj);
+		}
+		
 		return TRUE;
 	}
 	
