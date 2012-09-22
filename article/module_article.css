@@ -47,6 +47,8 @@
 		height: 1px;
 	}
 	
+	.icon_middle { vertical-align: middle; }
+	
 	.table_row {
 		display: table-row;
 		padding: .250em;
@@ -125,7 +127,7 @@
 	}
 	
 	.article_cat_desc {
-		margin: 0em 0em 1em;;
+		margin: 0em 0em 1em;
 	}
 	
 	.popup, .popup_tag {

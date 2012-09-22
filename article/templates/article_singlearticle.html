@@ -55,10 +55,10 @@
 		<h3><{$smarty.const._MD_ARTICLE_MORE_BY_PUBLISHER}></h3>	
 		<{foreach item=user from=$article.bypublisher}>
 			<div class="article_publisher">
-				<div class="article_avatar">
-					<img src="<{$user.avatar}>" alt="avatar" />
-				</div>
-				<div class="article_pub"><{$user.publisher}></div>
+				<span class="article_avatar">
+					<img class="icon_middle" src="<{$user.avatar}>" alt="avatar" width="22px" height="22px" />
+				</span>
+				<span class="article_pub"><{$user.publisher}></span>
 			</div>
 		<{/foreach}>
 		<div class="article_clear_left">&nbsp;</div>
@@ -100,7 +100,7 @@
 	<{if $article.file}>
 		<div class="article_attachment">
 			<h2><{$smarty.const._MD_ARTICLE_FILE}></h2>
-			<p><{$article.file}>&nbsp;(&nbsp;<{$article.filesize}>&nbsp;|&nbsp;<{$article.filetype}>&nbsp;)</p>
+			<p><a href="<{$article.file.url}>" class="<{if $show_down_disclaimer}>down_disclaimer<{/if}>  btn download" title="<{$article.file.filename}>"><{$article.file.filename}></a> &nbsp;(&nbsp;<{$article.file.filesize}>&nbsp;|&nbsp;<{$article.file.filetype}>&nbsp;)</p>
 			<{if $show_down_disclaimer}>
 				<div id="dialog-confirm-disclaimer" title="Download Disclaimer" class="ui-helper-hidden">
 					<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$down_disclaimer}></p>
@@ -125,10 +125,10 @@
 	<!-- avatar -->
 	<{foreach item=user from=$article.avatar}>
 		<div class="article_publisher">
-			<div class="article_avatar">
-				<img src="<{$user.avatar}>" alt="avatar" />
-			</div>
-			<div class="article_pub"><{$user.publisher}></div>
+			<span class="article_avatar">
+				<img class="icon_middle" src="<{$user.avatar}>" alt="avatar" width="22px" height="22px" />
+			</span>
+			<span class="article_pub"><{$user.publisher}></span>
 		</div>
 	<{/foreach}>
 	<div class="article_clear_left">&nbsp;</div>

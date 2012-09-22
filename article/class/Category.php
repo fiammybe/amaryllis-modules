@@ -18,6 +18,7 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+if(!defined("ARTICLE_DIRNAME")) define("ARTICLE_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class ArticleCategory extends icms_ipf_seo_Object {
 	

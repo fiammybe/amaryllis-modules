@@ -18,6 +18,7 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+if(!defined("ARTICLE_DIRNAME")) define("ARTICLE_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 include_once ICMS_ROOT_PATH . '/modules/' . basename(dirname(dirname(__FILE__))) . '/include/functions.php';
 
@@ -277,70 +278,41 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		}
 	}
 	
-	public function getArticleAttachment($url = TRUE, $path = FALSE ) {
+	public function getArticleAttachment() {
 		global $articleConfig;
 		$file_alt = $this->getVar("article_attachment_alt", "e");
 		$file = $this->getVar("article_attachment", "e");
-		
-		if($url){
-			if(!$file_alt == "") {
-				$url = ARTICLE_UPLOAD_URL . 'article/' . $file_alt;
-			} elseif(!$file == "0") {
-				$file = 'article_attachment';
-				$fileObj = $this->getFileObj($file);
-				$filelink = $fileObj->getVar("url", "e");
-				$titlelink = explode("/",$filelink);
-				$last = (isset($titlelink[count($titlelink)-1])) ? $titlelink[count($titlelink)-1] : null;
-				if($articleConfig['show_down_disclaimer'] == 1) {
-					$down_link = 'down_disclaimer';
-				} else {
-					$down_link = '';
-				}
-				$url = '<a class="' . $down_link . ' btn download" href="' . $filelink . '" title="' . $last . '"> ' . $last . '</a>';
-			} else {
-				$url = FALSE;
-			}
-			return $url;
-		} elseif ($path){
-			if(!$file_alt == "") {
-				$path = ARTICLE_UPLOAD_ROOT . 'article/' . $file_alt;
-			} elseif (!$file == "0") {
-				$file = 'article_attachment';
-				$fileObj = $this->getFileObj($file);
-				$url = $fileObj->getVar('url', 's');
-				$filename = basename($url);
-				$path = ICMS_ROOT_PATH . '/uploads/article/article/' . $filename;
-			} else {
-				$path = FALSE;
-			}
-			return $path;
-		}
-	}
-	
-	public function getFileSize() {
-		global $articleConfig;
-		$myfile = $this->getArticleAttachment(FALSE, TRUE);
-		if($myfile) {
-			$bytes = filesize($myfile);
+		$ret = FALSE;
+		if(!$file_alt == "") {
+			$url = ARTICLE_UPLOAD_URL . 'article/' . $file_alt;
+			$path = ARTICLE_UPLOAD_ROOT . $this->handler->_itemname . '/' . $file_alt;
+			
+			$filename = basename($url);
+			$bytes = filesize($path);
 			$filesize = articleConvertFileSize($bytes, articleFileSizeType($articleConfig['display_file_size']), 2);
-			return $filesize . '&nbsp;' . articleFileSizeType($articleConfig['display_file_size']) ;
-		} else {
-			return FALSE;
-		}
-	}
-	
-	public function getFileType() {
-		$myfile = $this->getArticleAttachment(FALSE, TRUE);
-		/**
-		 * @TODO if going fully php 5.3 use finfo
-		 */
-		if($myfile) {
-			$filetype = explode(".",$myfile);
-			$last = (isset($filetype[count($filetype)-1])) ? $filetype[count($filetype)-1] : null;
-			return $last;
-		} else {
-			return FALSE;
-		}
+			$filetype = array_pop(explode(".",$path));
+			$ret['url'] = $url;
+			$ret['filename'] = $filename;
+			$ret['filesize'] =  $filesize . '&nbsp;' . articleFileSizeType($articleConfig['display_file_size']) ;
+			$ret['filetype'] = $filetype;
+			unset($file, $file_alt, $url, $path, $filename, $bytes, $filesize, $filetype);
+		} elseif(!$file == "0") {
+			$ret = array();
+			$file = 'article_attachment';
+			$fileObj = $this->getFileObj($file);
+			$url = $fileObj->getVar('url', 's');
+			$filename = basename($url);
+			$path = ICMS_ROOT_PATH . '/uploads/article/article/' . $filename;
+			$bytes = filesize($path);
+			$filesize = articleConvertFileSize($bytes, articleFileSizeType($articleConfig['display_file_size']), 2);
+			$filetype = array_pop(explode(".",$path));
+			$ret['url'] = $url;
+			$ret['filename'] = $filename;
+			$ret['filesize'] =  $filesize . '&nbsp;' . articleFileSizeType($articleConfig['display_file_size']) ;
+			$ret['filetype'] = $filetype;
+			unset($file, $file_alt, $url, $path, $filename, $bytes, $filesize, $filetype);
+		} 
+		return $ret;
 	}
 	
 	public function getDemoLink() {
@@ -551,9 +523,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$ret['teaser'] = $this->getArticleTeaser();
 		$ret['body_array'] = $this->getArticleBody();
 		$ret['conclusion'] = $this->getArticleConclusion();
-		$ret['file'] = $this->getArticleAttachment(TRUE, FALSE);
-		$ret['filesize'] = $this->getFileSize();
-		$ret['filetype'] = $this->getFileType();
+		$ret['file'] = $this->getArticleAttachment();
 		$ret['demo'] = $this->getDemoLink();
 		$ret['tags'] = $this->getArticleTags(TRUE);
 		$ret['related'] = $this->getArticleRelated();
