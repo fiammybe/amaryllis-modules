@@ -50,9 +50,13 @@ global $icmsConfig;
 $article = $articleObj->toArray();
 $printtitle = $icmsConfig['sitename']." - ". $categories . ' > ' . strip_tags($articleObj->getVar('article_title','n' ));
 
+$version = number_format(icms::$module->getVar('version')/100, 2);
+$version = !substr($version, -1, 1) ? substr($version, 0, 3) : $version;
+$powered_by = " Powered by &nbsp;<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Article</a>";
+
 $icmsTpl->assign('printtitle', $printtitle);
-$icmsTpl->assign('printlogourl', $articleConfig['article_print_logo']);
-$icmsTpl->assign('printfooter', $articleConfig['article_print_footer']);
+$icmsTpl->assign('printlogourl', ICMS_URL . "/" . $articleConfig['article_print_logo']);
+$icmsTpl->assign('printfooter', icms_core_DataFilter::undoHtmlSpecialChars($articleConfig['article_print_footer'] . $powered_by . "&nbsp;" . $version));
 $icmsTpl->assign('article', $article);
 
 $icmsTpl->display('db:article_print.html');

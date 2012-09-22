@@ -298,7 +298,7 @@ $modversion['config'][$i] = array(
 								'title' 		=> '_MI_ARTICLE_DATE_FORMAT',
 								'description' 	=> '_MI_ARTICLE_DATE_FORMAT_DSC',
 								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'string',
+								'valuetype' 	=> 'text',
 								'default' 		=> 'j/n/Y'
 							);
 
@@ -566,7 +566,7 @@ $modversion['config'][$i] = array(
 								'title' 		=> '_MI_ARTICLE_PRINT_FOOTER',
 								'description' 	=> '_MI_ARTICLE_PRINT_FOOTER_DSC',
 								'formtype' 		=> 'textarea',
-								'valuetype' 	=> 'txt',
+								'valuetype' 	=> 'text',
 								'default' 		=> ''
 							);
 $i++;
@@ -575,8 +575,8 @@ $modversion['config'][$i] = array(
 								'title' 		=> '_MI_ARTICLE_PRINT_LOGO',
 								'description' 	=> '_MI_ARTICLE_PRINT_LOGO_DSC',
 								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'txt',
-								'default' 		=> ''
+								'valuetype' 	=> 'text',
+								'default' 		=> 'themes/iTheme/img/logo.png'
 							);
 $i++;
 $modversion['config'][$i] = array(
