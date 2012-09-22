@@ -115,6 +115,8 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$critTray->add(new icms_db_criteria_Item("article_cid", '%:"' . $article_cid . '";%', "LIKE"));
 			$criteria->add($critTray);
 		}
+		$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
+		$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
 		return $criteria;
 	}
 	
@@ -313,20 +315,32 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	
 	
 	protected function beforeInsert(&$obj) {
-		$teaser = $obj->getVar("article_teaser", "s");
+		$teaser = $obj->getVar("article_teaser", "e");
 		$teaser = icms_core_DataFilter::checkVar($teaser, "html", "input");
 		$obj->setVar("article_teaser", $teaser);
-		$title = str_replace(" ", "_", $obj->getVar('short_url'));
-		$obj->setVar("short_url", $title);
+		$seo = trim($obj->short_url());
+		$title = $obj->title();
+		if(!$seo == "") {
+			$seotitle = str_replace(" ", "_", $seo);
+			$seotitle = icms_ipf_Metagen::generateSeoTitle($seo, FALSE);
+		} else {
+			$seotitle = icms_ipf_Metagen::generateSeoTitle($title, FALSE);
+		}
+		$obj->setVar("short_url", $seotitle);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seotitle));
+		if($this->getCount($criteria) > 0) {
+			$obj->setVar("short_url", $seotitle.'_'.time());
+		}
 		return TRUE;
 	}
 	
 	protected function beforeSave(&$obj) {
-		$body = $obj->getVar("article_body", "s");
+		$body = $obj->getVar("article_body", "e");
 		$body_parts = explode('[pagebreak]', $body);
 		$obj->setVar("article_pagescount", count($body_parts));
 		if (!$obj->getVar('article_img_upl') == "") {
 			$obj->setVar('article_img', $obj->getVar('article_img_upl') );
+			$obj->setVar('article_img_upl', "");
 		}
 		return TRUE;
 	}

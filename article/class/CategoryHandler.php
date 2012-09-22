@@ -251,14 +251,15 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		return TRUE;
 	}
 	// some related functions for storing
-	protected function beforeInsert(&$obj) {
+	protected function beforeSave(&$obj) {
 		if ($obj->updating_counter)
 		return TRUE;
 		if ($obj->getVar('category_pid','e') == $obj->getVar('category_id','e')){
 			$obj->setVar('category_pid', 0);
 		}
-		if (!$obj->getVar('category_image_upl') == "") {
+		if ($obj->getVar('category_image_upl') !== "") {
 			$obj->setVar('category_image', $obj->getVar('category_image_upl') );
+			$obj->setVar('category_image_upl', "" );
 		}
 		return TRUE;
 	}
