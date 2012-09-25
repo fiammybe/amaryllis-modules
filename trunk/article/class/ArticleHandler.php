@@ -24,6 +24,7 @@ icms_loadLanguageFile("article", "common");
 class ArticleArticleHandler extends icms_ipf_Handler {
 	
 	private $_article_related = array();
+	private $_articleCatArray;
 	/**
 	 * Constructor
 	 *
@@ -70,17 +71,20 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	public function getArticleCategoryArray() {
+		if(!count($this->_articleCatArray)) {
+			$category_handler = icms_getModuleHandler("category", ARTICLE_DIRNAME,  "article");
+			$this->_articleCatArray = $category_handler->getCategoryListForPid('submit_article', TRUE,TRUE,FALSE, NULL, FALSE);
+		} return $this->_articleCatArray;
+	}
+	
 	/**
 	 * some ways to retrieve articles
 	 */
-	public function getList($article_active = null, $approve = FALSE) {
+	public function getArticleList($active = null, $approve = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
-		if (isset($article_active)) {
-			$criteria->add(new icms_db_criteria_Item('article_active', TRUE));
-		}
-		if (isset($approve)) {
-			$criteria->add(new icms_db_criteria_Item('article_approve', TRUE));
-		}
+		if($approve) $criteria->add(new icms_db_criteria_Item("article_approve", TRUE));
+		if($active) $criteria->add(new icms_db_criteria_Item('article_active', TRUE));
 		$this->setGrantedObjectsCriteria($criteria, "article_grpperm");
 		$articles = $this->getObjects($criteria, TRUE);
 		$ret[0] = '-----------';

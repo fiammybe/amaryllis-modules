@@ -77,25 +77,14 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getCategoryListForPid($groups = array(), $perm = 'category_grpperm', $status = NULL,$approved = NULL,$inblocks = NULL, $category_id = NULL, $showNull = TRUE) {
+	public function getCategoryListForPid($perm = 'submit_article', $status = NULL,$approved = NULL,$inblocks = NULL, $category_id = NULL, $showNull = TRUE) {
 		$criteria = new icms_db_criteria_Compo();
-		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
-			foreach($groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
-			}
-			$criteria->add($criteriaTray);
-			if ($perm == 'category_grpperm' || $perm == 'article_admin') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
-			}
-		}
 		if(isset($status)) $criteria->add(new icms_db_criteria_Item('category_active', TRUE));
 		if(isset($approved)) $criteria->add(new icms_db_criteria_Item('category_approve', TRUE));
 		if(isset($inblocks)) $criteria->add(new icms_db_criteria_Item('category_inblocks', TRUE));
 		if (is_null($category_id)) $category_id = 0;
 		$criteria->add(new icms_db_criteria_Item('category_pid', $category_id));
-		$this->setGrantedObjectsCriteria($criteria, "category_grpperm");
+		$this->setGrantedObjectsCriteria($criteria, "$perm");
 		$categories = & $this->getObjects($criteria, TRUE);
 		$ret = array();
 		if ($showNull) {
@@ -103,7 +92,7 @@ class ArticleCategoryHandler extends icms_ipf_Handler {
 		}
 		foreach(array_keys($categories) as $i) {
 			$ret[$i] = $categories[$i]->getVar('category_title');
-			$subcategories = $this->getCategoryListForPid($groups, $perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'), $showNull);
+			$subcategories = $this->getCategoryListForPid($perm, $status, $approved, $inblocks, $categories[$i]->getVar('category_id'), $showNull);
 			foreach(array_keys($subcategories) as $j) {
 				$ret[$j] = '-' . $subcategories[$j];
 			}

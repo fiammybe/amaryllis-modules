@@ -69,12 +69,13 @@ $form = new icms_form_Groupperm($title_of_form, icms::$module->getVar('mid'), $p
 
 if($op == 'viewarticle') {
 	$article_article_handler = icms_getmodulehandler("article", ARTICLE_DIRNAME, "article");
-	$articles = $article_article_handler->getObjects(FALSE, TRUE);
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("article_id", 0, "!="));
+	$articles = $article_article_handler->getObjects($criteria, TRUE);
 	foreach (array_keys($articles) as $i) {
-		if ($restriction == "") {
+		//if ($restriction == "") {
 			$form->addItem($articles[$i]->getVar('article_id'),
 			$articles[$i]->getVar('article_title'));
-		}
+		//}
 	}
 	$form->display();
 } elseif ($op == 'viewcategory') {
