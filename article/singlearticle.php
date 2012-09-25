@@ -68,11 +68,11 @@ $clean_seo = isset($_GET['article']) ? filter_input(INPUT_GET, 'article') : '';
 
 $article_handler = icms_getModuleHandler("article", ARTICLE_DIRNAME, "article");
 $articleObj = ($clean_seo != FALSE) ? $article_handler->getArticleBySeo($clean_seo) : FALSE; 
-if(!$articleObj) $articleObj = ($clean_article_id != 0) ? $article_handler->get($clean_article_id) : FALSE;
+if(!$articleObj || !is_object($articleObj)) $articleObj = ($clean_article_id != 0) ? $article_handler->get($clean_article_id) : FALSE;
 
 if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	
-	$article_handler->updateCounter($articleObj);
+	$article_handler->updateCounter($articleObj->id());
 	/**
 	 * Get the requested article and send it to Array
 	 */	

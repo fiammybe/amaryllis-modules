@@ -88,7 +88,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 		$this->quickInitVar("article_stats_close", XOBJ_DTYPE_FORM_SECTION_CLOSE);
 		
 		
-		$this->setControl("article_cid", array("name" => "selectmulti", "itemHandler" => "category", "method" => "getCategoryListForPid", "module" => "article"));
+		$this->setControl("article_cid", array("name" => "selectmulti", "itemHandler" => "article", "method" => "getArticleCategoryArray", "module" => "article"));
 		$this->setControl("article_img_upl", "image");
 		$this->setControl("article_img", array( "name" => "select", "itemHandler" => "article", "method" => "getImageList", "module" => "article"));
 		$this->setControl("article_teaser", array("name" => "textarea", "form_editor" => "htmlarea"));
@@ -280,7 +280,7 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	
 	public function getArticleAttachment() {
 		global $articleConfig;
-		$file_alt = $this->getVar("article_attachment_alt", "e");
+		$file_alt = trim($this->getVar("article_attachment_alt", "e"));
 		$file = $this->getVar("article_attachment", "e");
 		$ret = FALSE;
 		if(!$file_alt == "") {
