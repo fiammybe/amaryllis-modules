@@ -32,3 +32,5 @@ define("_AM_MENU_ITEM_CREATED", "Menü Item erfolgreich erstellt");
 define("_AM_MENU_MENU_MODIFIED", "Menü erfolgreich bearbeitet");
 define("_AM_MENU_ITEM_MODIFIED", "Menü Item erfolgreich bearbeitet");
 define("_AM_MENU_ITEM_CLONE", "Klonen");
+define("_AM_MENU_ITEM_ONLINE", "Online");
+define("_AM_MENU_ITEM_OFFLINE", "Offline");

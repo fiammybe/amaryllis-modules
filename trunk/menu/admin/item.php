@@ -96,7 +96,11 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$controller = new icms_ipf_Controller($item_handler);
 			$controller->handleObjectDeletion();
 			break;
-
+		case 'visible':
+			$visibility = $item_handler->changeField($clean_item_id, "item_active");
+			$red_message = ($visibility == 0) ? _AM_MENU_ITEM_OFFLINE : _AM_MENU_ITEM_ONLINE;
+			redirect_header(MENU_ADMIN_URL . 'item.php', 2, $red_message);
+			break;
 		case 'changeWeight':
 			foreach ($_POST['MenuItem_objects'] as $key => $value) {
 				$changed = FALSE;

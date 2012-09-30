@@ -58,10 +58,10 @@ class MenuItem extends icms_ipf_Object {
 	public function item_active() {
 		$active = $this->getVar('item_active', 'e');
 		if ($active == FALSE) {
-			return '<a href="' . MENU_ADMIN_URL . 'item.php?item_id=' . $this->getVar('item_active') . '&amp;op=visible">
+			return '<a href="' . MENU_ADMIN_URL . 'item.php?item_id=' . $this->id() . '&amp;op=visible">
 				<img src="' . MENU_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
-			return '<a href="' . MENU_ADMIN_URL . 'item.php?item_id=' . $this->getVar('item_active') . '&amp;op=visible">
+			return '<a href="' . MENU_ADMIN_URL . 'item.php?item_id=' . $this->id() . '&amp;op=visible">
 				<img src="' . MENU_IMAGES_URL . 'visible.png" alt="Online" /></a>';
 		}
 	}

@@ -115,22 +115,18 @@ class MenuItemHandler extends icms_ipf_Handler {
 		return $this->getCount($criteria);
 	}
 	
-	public function changeVisible($item_id) {
+	public function changeField($item_id, $field) {
 		$itemObj = $this->get($item_id);
-		$pid = $itemObj->getVar("item_pid", "e");
-		$itemObj->_updating = TRUE;
-		if ($itemObj->getVar('item_active', 'e') == TRUE) {
-			$itemObj->setVar('item_active', 0);
-			$visibility = 0;
+		if ($itemObj->getVar("$field", 'e') == TRUE) {
+			$itemObj->setVar("$field", 0);
+			$value = 0;
 		} else {
-			$itemObj->setVar('item_active', 1);
-			if($pid > 0) {
-				$itemObj->setVar("item_hassub", TRUE);
-			}
-			$visibility = 1;
+			$itemObj->setVar("$field", 1);
+			$value = 1;
 		}
+		$itemObj->_updating = TRUE;
 		$this->insert($itemObj, TRUE);
-		return $visibility;
+		return $value;
 	}
 	
 	public function filterMenu() {
@@ -162,6 +158,7 @@ class MenuItemHandler extends icms_ipf_Handler {
 	}
 	
 	protected function afterSave(&$obj) {
+		if($obj->_updating == TRUE) return TRUE;
 		$pid = $obj->getVar("item_pid", "e");
 		if($pid > 0 && $obj->getVar("item_active", "e") == 1) {
 			$item = $this->get($pid);
