@@ -144,66 +144,18 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		}
 	}
 	
-	//set album online/offline
-	public function changeVisible($album_id) {
-		$visibility = '';
+	public function changeField($album_id, $field) {
 		$albumObj = $this->get($album_id);
-		if ($albumObj->getVar('album_active', 'e') == TRUE) {
-			$albumObj->setVar('album_active', 0);
-			$visibility = 0;
+		if ($albumObj->getVar("$field", "e") == TRUE) {
+			$albumObj->setVar("$field", 0);
+			$value = 0;
 		} else {
-			$albumObj->setVar('album_active', 1);
-			$visibility = 1;
+			$albumObj->setVar("$field", 1);
+			$value = 1;
 		}
+		$albumObj->updating_counter = TRUE;
 		$this->insert($albumObj, TRUE);
-		return $visibility;
-	}
-	
-	// show/hide Album in Block
-	public function changeShow($album_id) {
-		$show = '';
-		$albumObj = $this->get($album_id);
-		if ($albumObj->getVar('album_inblocks', 'e') == TRUE) {
-			$albumObj->setVar('album_inblocks', 0);
-			$show = 0;
-		} else {
-			$albumObj->setVar('album_inblocks', 1);
-			$show = 1;
-		}
-		$this->insert($albumObj, TRUE);
-		return $show;
-	}
-
-	// approve/deny album
-	public function changeApprove($album_id) {
-		$approve = '';
-		$albumObj = $this->get($album_id);
-		if ($albumObj->getVar('album_approve', 'e') == TRUE) {
-			$albumObj->setVar('album_approve', 0);
-			$approve = 0;
-		} else {
-			$albumObj->setVar('album_approve', 1);
-			$approve = 1;
-		}
-		$this->insert($albumObj, TRUE);
-		return $approve;
-	}
-	
-	/**
-	 * An album can be approved and activated but hidden in index page.
-	 */
-	public function changeIndex($album_id) {
-		$onindex = '';
-		$albumObj = $this->get($album_id);
-		if ($albumObj->getVar('album_onindex', 'e') == TRUE) {
-			$albumObj->setVar('album_onindex', 0);
-			$onindex = 0;
-		} else {
-			$albumObj->setVar('album_onindex', 1);
-			$onindex = 1;
-		}
-		$this->insert($albumObj, TRUE);
-		return $onindex;
+		return $value;
 	}
 	
 	public function makeLink($album) {
@@ -355,10 +307,38 @@ class AlbumAlbumHandler extends icms_ipf_Handler {
 		}
 		if (!$obj->getVar("album_img_upload", "e") == "") {
 			$obj->setVar('album_img', $obj->getVar('album_img_upload') );
+			$obj->setVar('album_img_upload', '');
 		}
-		$dsc = $obj->getVar("album_description", "s");
+		$dsc = $obj->getVar("album_description", "e");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
 		$obj->setVar("album_description", $dsc);
+		
+		// check seo and check, if the seo doesn't exist twice
+		$seo = $obj->short_url();
+		$title = $obj->title();
+		if($seo == "") {
+			$seotitle = icms_ipf_Metagen::generateSeoTitle($title, FALSE);
+			$obj->setVar("short_url", $seotitle);
+			$seo = $seotitle;
+		} else {
+			$seotitle = icms_ipf_Metagen::generateSeoTitle($seo, FALSE);
+		}
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seotitle));
+		if($this->getCount($criteria) > 0) {
+			$obj->setVar("short_url", $seotitile.'_'.time());
+		}
+		
+		return TRUE;
+	}
+	
+	protected function beforeUpdate(&$obj) {
+		if ($obj->getVar('album_pid','e') == $obj->getVar('album_id','e')){
+			$obj->setVar('album_pid', 0);
+		}
+		if ($obj->getVar("album_img_upload", "e") != "") {
+			$obj->setVar('album_img', $obj->getVar('album_img_upload') );
+			$obj->setVar('album_img_upload', '');
+		}
 		return TRUE;
 	}
 	

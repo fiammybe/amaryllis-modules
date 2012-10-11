@@ -27,6 +27,7 @@ function editimages($images_id = 0) {
 		$img_uid = 0;
 	}
 	if (!$imagesObj->isNew()){
+		$this->hideFieldFromForm(array("img_copyright", "img_copy_pos", "img_copy_color", "img_copy_font", "img_copy_fontsize"));
 		$imagesObj->setVar( 'img_updated_date', (time() - 100) );
 		icms::$module->displayAdminmenu( 2, _MI_ALBUM_MENU_IMAGES . " > " . _MI_ALBUM_IMAGES_EDIT . " &raquo;" . $imagesObj->getVar("img_title", "e"). "&laquo;");
 		$sform = $imagesObj->getForm(_AM_ALBUM_IMAGES_EDIT  . " &raquo;" . $imagesObj->getVar("img_title", "e"). "&laquo;", "addimages");
