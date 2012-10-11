@@ -116,8 +116,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 						}
 						$tags = (isset($_POST['img_tags']) && $_POST['img_tags'] != "") ? $_POST['img_tags'] : '';
 						$copyright = isset($_POST['img_copyright']) && !empty($_POST['img_copyright']) ? $_POST['img_copyright'] : FALSE;
-						addImage($new_name, $_POST['a_id'], $img_title, $_POST['img_dsc'], time(), $file, $tags, $_POST['img_active'], $weight, icms::$user->getVar("uid"), $urllink, 
-									$copyright, $_POST['copy_pos'], $_POST['copy_color'], $_POST['copy_font'], $_POST['copy_font_size']);
+						addImage($new_name, $_POST['a_id'], $img_title, $_POST['img_dsc'], time(), $file, $tags, $_POST['img_active'], $weight, icms::$user->getVar("uid"), $urllink,
+										 $copyright, $_POST['copy_pos'], $_POST['copy_color'], $_POST['copy_font'], $_POST['copy_font_size']);
 						echo "<code> File " . $file . " successfully moved.</code><br />";
 					}
 				}
@@ -145,8 +145,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 					}
 					$tags = (isset($_POST['img_tags']) && $_POST['img_tags'] != "") ? $_POST['img_tags'] : '';
 					$copyright = isset($_POST['img_copyright']) && !empty($_POST['img_copyright']) ? $_POST['img_copyright'] : FALSE;
-					addImage(FALSE, $_POST['aid'], $img_title, time(), $value, $tags, $_POST['img_active'], $weight, icms::$user->getVar("uid"), $urllink, 
-								$copyright, $_POST['copy_pos'], $_POST['copy_color'], $_POST['copy_font'], $_POST['copy_font_size']);
+					addImage(FALSE, $_POST['a_id'], $img_title, $_POST['img_dsc'], time(), $value, $tags, $_POST['img_active'], $weight, icms::$user->getVar("uid"), $urllink,
+									$copyright,$_POST['copy_pos'], $_POST['copy_color'], $_POST['copy_font'], $_POST['copy_font_size']);
+					
 					echo "<code> File " . $value . " successfully moved.</code><br />";
 				}
 			}
