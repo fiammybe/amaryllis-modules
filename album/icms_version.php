@@ -117,7 +117,7 @@ if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'album') {
 	$images_handler = icms_getModuleHandler('images', basename(dirname(__FILE__)), 'album');
 	$i = 0;
 	$imagesbyuser = $images_handler->filterUsers(FALSE);
-	if($imagesbyuser !== "") {
+	if($imagesbyuser != "") {
 		foreach ($imagesbyuser as $link => $value) {
 			$i++;
 			$modversion['sub'][$i]['name'] = _MD_ALBUM_GET_BY_PUBLISHER . " " . $value;
@@ -303,7 +303,7 @@ $modversion['config'][$i] = array(
 								'title' 		=> '_MI_ALBUM_DATE_FORMAT',
 								'description' 	=> '_MI_ALBUM_DATE_FORMAT_DSC',
 								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'string',
+								'valuetype' 	=> 'text',
 								'default' 		=> 'j/n/Y'
 							);
 
