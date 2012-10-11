@@ -62,7 +62,7 @@ if(in_array($clean_op, $valid_op)) {
 				 * get images
 				 */
 				$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, $albumConfig['show_images'], 'weight', 'ASC', FALSE, $clean_tag_id);
-				$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
+				$album_image_rows = ($albumConfig['show_images_per_row'] !== 0) ? array_chunk($images, $albumConfig['show_images_per_row']) : FALSE;
 				$icmsTpl->assign('album_image_rows', $album_image_rows);
 				$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
 				$album_image_margins = 'align="center" style="display:inline-block; margin: 0px ' . $albumConfig['thumbnail_margin_right'] . 'px 0px ' . $albumConfig['thumbnail_margin_left'] . 'px;"';
@@ -71,12 +71,13 @@ if(in_array($clean_op, $valid_op)) {
 				$icmsTpl->assign('byTags', TRUE);
 				$icmsTpl->assign('tag_id', $clean_tag_id);
 				$icmsTpl->assign("sprockets_module", TRUE);
+				if(!$album_image_rows) $icmsTpl->assign('album_images', $images);
 				/**
 				 * get albums
 				 */
 				$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], FALSE, FALSE,  FALSE, 'album_published_date', 'DESC', $clean_tag_id);
 				$icmsTpl->assign("albums", $albums);
-				$album_columns = array_chunk($albums, $albumConfig['show_album_columns']);
+				$album_columns = ($albumConfig['show_album_columns'] !== 0) ? array_chunk($albums, $albumConfig['show_album_columns']) : FALSE;
 				$icmsTpl->assign('album_columns', $album_columns);
 				/**
 				 * pagination control
@@ -100,13 +101,14 @@ if(in_array($clean_op, $valid_op)) {
 		case 'getByPublisher':
 			$clean_album_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZE_NUMBER_INT) : FALSE;
 			$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, $albumConfig['show_images'], 'weight', 'ASC', FALSE, FALSE, $clean_album_uid);
-			$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
+			$album_image_rows = ($albumConfig['show_images_per_row'] != 0) ? array_chunk($images, $albumConfig['show_images_per_row']) : FALSE;
 			$icmsTpl->assign('album_image_rows', $album_image_rows);
 			$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
 			$album_image_margins = 'align="center" style="display:inline-block; margin: 0px ' . $albumConfig['thumbnail_margin_right'] . 'px 0px ' . $albumConfig['thumbnail_margin_left'] . 'px;"';
 			$icmsTpl->assign('album_row_margins', $album_row_margins);
 			$icmsTpl->assign('album_image_margins', $album_image_margins);
 			$icmsTpl->assign('byPublisher', TRUE);
+			if(!$album_image_rows) $icmsTpl->assign('album_images', $images);
 			
 			$userObj = icms::handler('icms_member')->getUser($clean_album_uid);
 			$pname = $userObj->getVar("uname");
@@ -148,19 +150,21 @@ if(in_array($clean_op, $valid_op)) {
 				$icmsTpl->assign('single_album', $album);
 				
 					$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], FALSE, FALSE, $album['id'], 'weight', 'ASC');
-					$subalbum_columns = array_chunk($albums, $albumConfig['show_album_columns']);
+					$subalbum_columns = ($albumConfig['show_album_columns'] != 0) ? array_chunk($albums, $albumConfig['show_album_columns']) : FALSE;
 					$icmsTpl->assign('subalbum_columns', $subalbum_columns);
+					if(!$subalbum_columns) $icmsTpl->assign("subalbums", $albums);
 				
 				/**
 				 * retrieve the images of these album, if there are some
 				 */
 				$images = $album_images_handler->getImages(TRUE, TRUE, $clean_img_start, $albumConfig['show_images'], 'weight', 'ASC', $clean_album_id);
-				$album_image_rows = array_chunk($images, $albumConfig['show_images_per_row']);
+				$album_image_rows = ($albumConfig['show_images_per_row'] != 0) ? array_chunk($images, $albumConfig['show_images_per_row']) : FALSE;
 				$icmsTpl->assign('album_image_rows', $album_image_rows);
 				$album_row_margins = 'style="margin:' . $albumConfig['thumbnail_margin_top'] . 'px 0px ' . $albumConfig['thumbnail_margin_bottom'] . 'px 0px;"';
 				$album_image_margins = 'align="center" style="display:inline-block; margin: 0px ' . $albumConfig['thumbnail_margin_right'] . 'px 0px ' . $albumConfig['thumbnail_margin_left'] . 'px;"';
 				$icmsTpl->assign('album_row_margins', $album_row_margins);
 				$icmsTpl->assign('album_image_margins', $album_image_margins);
+				if(!$album_image_rows) $icmsTpl->assign('album_images', $images);
 				/**
 				 * check if Sprockets Module can be used and if it's available
 				 */
@@ -199,8 +203,9 @@ if(in_array($clean_op, $valid_op)) {
 			 */
 			} elseif ($clean_album_id == 0) {
 				$albums = $album_album_handler->getAlbums(TRUE, TRUE, TRUE, $clean_album_start, $albumConfig['show_albums'], FALSE, $clean_album_id, 0, 'weight', 'ASC');
-				$album_columns = array_chunk($albums, $albumConfig['show_album_columns']);
+				$album_columns = ($albumConfig['show_album_columns'] != 0) ? array_chunk($albums, $albumConfig['show_album_columns']) : FALSE;
 				$icmsTpl->assign('album_columns', $album_columns);
+				if(!$album_columns) $icmsTpl->assign("all_albums", $albums);
 			/**
 			 * if permissions denied for a single album, redirect to index view
 			 */
