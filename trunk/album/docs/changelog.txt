@@ -1,6 +1,6 @@
 = *Album* Changelog =
 
-== Version 1.2 => Release Date: XX.07.2012 ==
+== Version 1.2 => Release Date: 11.10.2012 ==
 * added copyrights to image upload
 * added copyright color and copyright position to image upload
 * added batchupload for backend via FTP and Zip
