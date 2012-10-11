@@ -373,7 +373,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	}
 	
 	protected function beforeInsert(&$obj) {
-		$dsc = $obj->getVar("img_description", "s");
+		$dsc = $obj->getVar("img_description", "e");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
 		$obj->setVar("img_description", $dsc);
 		return TRUE;
