@@ -18,6 +18,7 @@
  */
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
+if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 include_once ICMS_ROOT_PATH . '/modules/album/include/common.php';
 
@@ -40,9 +41,12 @@ class AlbumImages extends icms_ipf_Object {
 		$this->initCommonVar('weight');
 		$this->quickInitVar('img_publisher', XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar('img_urllink', XOBJ_DTYPE_URLLINK);
-		$this->quickInitVar('img_copyright', XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, $albumConfig['img_default_copyright']);
-		$this->quickInitVar('img_copy_pos', XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, "BL");
-		$this->quickInitVar('img_copy_color', XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, "black");
+		$this->initVar('img_copyright', XOBJ_DTYPE_TXTBOX, $albumConfig['img_default_copyright'], FALSE, 255, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE);
+		$this->initVar('img_copy_pos', XOBJ_DTYPE_TXTBOX, "BL", FALSE, 255, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE);
+		$this->initVar('img_copy_color', XOBJ_DTYPE_TXTBOX, "black", FALSE, 255, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE);
+		$this->initVar('img_copy_font', XOBJ_DTYPE_TXTBOX, "arial.ttf", FALSE, 255, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE);
+		$this->initVar('img_copy_fontsize', XOBJ_DTYPE_INT, "20", FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE);
+		$this->quickInitVar("img_hasmsg", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->initCommonVar('dohtml', FALSE, 1);
 		$this->initCommonVar('dobr', FALSE, 1);
 		$this->initCommonVar('doimage', FALSE, 1);
@@ -56,10 +60,10 @@ class AlbumImages extends icms_ipf_Object {
 		$this->setControl('img_description', 'dhtmltextarea' );
 		$this->setControl('img_copy_pos', array('name' => 'select', 'itemHandler' => 'images', 'method' => 'getWatermarkPositions', 'module' => 'album'));
 		$this->setControl('img_copy_color', array('name' => 'select', 'itemHandler' => 'images', 'method' => 'getWatermarkColors', 'module' => 'album'));
-		$this->setControl( 'img_url', 'image');
-		$url = ICMS_URL . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
-		$path = ICMS_ROOT_PATH . '/uploads/' . basename(dirname(dirname(__FILE__))) . '/';
-		$this->setImageDir($url, $path);
+		$this->setControl('img_copy_font', array('name' => 'select', 'itemHandler' => 'images', 'method' => 'getWatermarkFont', 'module' => 'album'));
+		$this->setControl('img_copy_fontsize', array('name' => 'select', 'itemHandler' => 'images', 'method' => 'getWatermarkFontSize', 'module' => 'album'));
+		$this->setControl( 'img_url', array('name' => 'image', 'nourl' => TRUE));
+		
 		if($albumConfig['need_image_links'] == 0) {
 			$this->hideFieldFromForm("img_urllink");
 			$this->hideFieldFromSingleView("img_urllink");
@@ -73,7 +77,11 @@ class AlbumImages extends icms_ipf_Object {
 		if($albumConfig['img_allow_uploader_copyright'] == 0) {
 			$this->hideFieldFromForm('img_copyright');
 		}
-		$this->hideFieldFromForm( array('img_publisher', 'img_published_date', 'img_updated_date'));
+		if($albumConfig['img_use_copyright'] == 0) {
+			$this->hideFieldFromForm(array("img_copyright", "img_copy_pos", "img_copy_color", "img_copy_font", "img_copy_fontsize"));
+			$this->hideFieldFromSingleView(array("img_copyright", "img_copy_pos", "img_copy_color", "img_copy_font", "img_copy_fontsize"));
+		}
+		$this->hideFieldFromForm( array('img_hasmsg', 'img_publisher', 'img_published_date', 'img_updated_date'));
 		$this->hideFieldFromSingleView(array('dohtml', 'dobr', 'doimage', 'dosmiley', 'docxcode'));
 
 	}
@@ -178,7 +186,12 @@ class AlbumImages extends icms_ipf_Object {
 	
 	// get publisher for frontend
 	public function getPublisher($link = FALSE) {
-		return icms_member_user_Handler::getUserLink($this->getVar('img_publisher', 'e'));
+		if($link) {
+			return icms_member_user_Handler::getUserLink($this->getVar('img_publisher', 'e'));
+		} else {
+			$users = $this->handler->getUsersArray();
+			return $users[$this->getVar('img_publisher', 'e')];
+		}
 	}
 	
 	public function getImageDescription() {

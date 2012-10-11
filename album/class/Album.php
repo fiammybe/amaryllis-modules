@@ -77,12 +77,11 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 			$this->hideFieldFromForm("album_tags");
 			$this->hideFieldFromSingleView("album_tags");
 		}
+		$this->initiateSEO();
 		
 		// hide static fields from forms/single views
-		$this->hideFieldFromForm( array('album_updated_date','album_published_date','album_notification_sent', 'album_comments', 'counter'));
+		$this->hideFieldFromForm( array('meta_description', 'meta_keywords', 'album_updated_date','album_published_date','album_notification_sent', 'album_comments', 'counter'));
 		$this->hideFieldFromSingleView( array('album_notification_sent', 'album_comments', 'weight', 'counter'));
-
-		$this->initiateSEO();
 	}
 
 	public function getAlbumParent() {
@@ -347,10 +346,34 @@ class AlbumAlbum extends icms_ipf_seo_Object {
 	}
 
 	function sendNotifAlbumPublished() {
-		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+		$module = icms::handler('icms_module')->getByDirname(ALBUM_DIRNAME);
 		$tags ['ALBUM_TITLE'] = $this->getVar('album_title');
 		$tags ['ALBUM_URL'] = $this->getItemLink(TRUE);
 		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'album_published', $tags, array(), $module->getVar('mid'));
+	}
+
+	public function sendMessageApproved() {
+		$pm_handler = icms::handler('icms_data_privmessage');
+		$file = "album_approved.tpl";
+		$lang = "language/" . $icmsConfig['language'] . "/mail_template";
+		$tpl = ALBUM_ROOT_PATH . "$lang/$file";
+		if (!file_exists($tpl)) {
+			$lang = 'language/english/mail_template';
+			$tpl = ALBUM_ROOT_PATH . "$lang/$file";
+		}
+		$user = $this->getVar("album_uid", "e");
+		if($user <= 0) return;
+		$uname = icms::handler('icms_member_user')->get($user)->getVar("uname");
+		$message = file_get_contents($tpl);
+		$message = str_replace("{X_UNAME}", $uname, $message);
+		$message = str_replace("{ALBUM_TITLE}", $this->title(), $message);
+		$pmObj = $pm_handler->create(TRUE);
+		$pmObj->setVar("subject", _CO_ALBUM_HAS_APPROVED);
+		$pmObj->setVar("from_userid", 1);
+		$pmObj->setVar("to_userid", (int)$user);
+		$pmObj->setVar("msg_time", time());
+		$pmObj->setVar("msg_text", $message);
+		$pm_handler->insert($pmObj, TRUE);
 	}
 
 	function getReads() {

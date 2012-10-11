@@ -18,11 +18,17 @@
  */
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
+if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class AlbumImagesHandler extends icms_ipf_Handler {
 	
 	public $_watermarkPosition;
 	public $_watermarkColors;
+	public $_watermarkFontsize;
+	public $_watermarkFont;
+	
+	private $_albumsForImages;
+	private $_usersArray;
 	
 	/**
 	 * Constructor
@@ -34,6 +40,17 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		global $albumConfig;
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes,	$albumConfig['image_file_size'], $albumConfig['image_upload_width'], $albumConfig['image_upload_height']);
+	}
+	
+	public function getUsersArray() {
+		if(!count($this->_usersArray)) {
+			$member_handler = icms::handler('icms_member_user');
+			$usersArray = $member_handler->getObjects(FALSE, TRUE);
+			foreach(array_keys($usersArray) as $i) {
+				$this->_usersArray[$i] = $usersArray[$i]->getVar("uname");
+			}
+		}
+		return $this->_usersArray;
 	}
 	
 	public function getWatermarkPositions() {
@@ -61,6 +78,32 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 			asort($this->_watermarkColors);
 		}
 		return $this->_watermarkColors;
+	}
+	
+	public function getWatermarkFontSize() {
+		if(!count($this->_watermarkFontsize)) {
+			$this->_watermarkFontsize['12'] = "12pt";
+			$this->_watermarkFontsize['18'] = "18pt";
+			$this->_watermarkFontsize['20'] = "20pt";
+			$this->_watermarkFontsize['25'] = "25pt";
+			$this->_watermarkFontsize['28'] = "28pt";
+			$this->_watermarkFontsize['30'] = "30pt";
+			$this->_watermarkFontsize['35'] = "35pt";
+			$this->_watermarkFontsize['40'] = "40pt";
+			$this->_watermarkFontsize['45'] = "45pt";
+			$this->_watermarkFontsize['48'] = "48pt";
+			$this->_watermarkFontsize['50'] = "50pt";
+		}
+		return $this->_watermarkFontsize;
+	}
+	
+	public function getWatermarkFont() {
+		if(!count($this->_watermarkFont)) {
+			$fonts = icms_core_Filesystem::getFileList(ICMS_MODULES_PATH . '/'. ALBUM_DIRNAME . '/extras/fonts/', '', array('ttf'));
+			foreach(array_keys($fonts) as $i ) {
+				$this->_watermarkFont[$i] = $fonts[$i];
+			}
+		} return $this->_watermarkFont;
 	}
 	
 	// retrieve a list of Images
@@ -226,7 +269,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	 * @param $WatermarkText - is the text of the watermark
 	 * @param $DestinationFile - is the destination location where the watermarked images will be placed
 	 */
-	function watermarkImage ($source, $watermark, $dest, $color, $pos) { 
+	function watermarkImage ($source, $watermark, $dest, $color, $pos, $font = "arial.ttf", $font_size = 20) { 
 		list($img_width, $img_height, $img_type) = getimagesize($source);
 		$image_p = imagecreatetruecolor($img_width, $img_height);
 		switch ($img_type) {
@@ -258,8 +301,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 				$font_color = imagecolorallocate($image_p, 0, 255, 0);
 				break;
 		}
-		$font = '../extras/fonts/arial.ttf';
-		$font_size = 20;
+		$font = ICMS_MODULES_PATH.'/'.ALBUM_DIRNAME.'/extras/fonts/' . $font;
 		$font_shadow = imagecolorallocate($image_p, 128, 128, 128);
 		
 		$box = @ImageTTFBBox($font_size,0,$font,$watermark);
@@ -345,9 +387,11 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 			$watermark = $obj->getVar("img_copyright", "e");
 			$color = $obj->getVar("img_copy_color", "e");
 			$pos = $obj->getVar("img_copy_pos", "e");
+			$font = $obj->getVar("img_copy_font", "e");
+			$fontsize = $obj->getVar("img_copy_fontsize", "e");
 			$timestamp = $obj->getVar("img_published_date", "e");
 			$new_img = $timestamp . "_" . array_pop(explode("_", $img));
-			$this->watermarkImage($source . $img, $watermark, $source . $new_img, $color, $pos);
+			$this->watermarkImage($source . $img, $watermark, $source . $new_img, $color, $pos, $font, $fontsize);
 			icms_core_Filesystem::deleteFile(ALBUM_UPLOAD_ROOT . "images/" . $img);
 			$obj->setVar("img_url", $new_img);
 		}
