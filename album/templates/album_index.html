@@ -71,6 +71,21 @@
 		<{if $imgnav}> <!-- page navigation -->
 			<div class="images_pagenav"><{$imgnav}></div>
 		<{/if}>
+	<{else}>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+		<!-- image rows -->
+		<div class="album_images">
+				<div class="album_images_row" <{$album_row_margins}> >
+					<{foreach item=album_images from=$album_images}>
+						<{includeq file='db:album_images.html'}>
+					<{/foreach}>
+				</div>
+		</div>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
 	<{/if}>
 <{/if}>
 
@@ -106,6 +121,37 @@
 		<{/if}>
 	</div>
 <!-- E N D album index -->
+<{elseif $all_albums}>
+	<!-- display index header -->
+	<{$album_index.header}>
+	<!-- display index heading -->
+	<{$album_index.heading}>
+	<div>
+		<{if $album_pagenav }><!-- pagination control -->
+			<{$album_pagenav}>
+		<{/if}>
+		
+			<div class="album_row table_row">
+				<!-- album rule -->
+				<{foreach item=album from=$all_albums}>
+					<{includeq file='db:album_album.html'}>
+				<{/foreach}>
+			</div>
+		
+		<{if $album_pagenav }><!-- pagination control -->
+			<{$album_pagenav}>
+		<{/if}>
+		<{if $user_submit}>
+			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$user_submit_link}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
+				<img src="<{$album_images_url}>add_cat.png" title="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />
+			</a>
+		<{/if}>
+		<{if $album_upl_disclaimer}>
+			<div id="dialog-confirm-upl-disclaimer" title="Upload Disclaimer" class="ui-helper-hidden">
+				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$up_disclaimer}></p>
+			</div>
+		<{/if}>
+	</div>
 <{/if}>
 
 <{if $single_album}> <!-- display single album -->
@@ -185,7 +231,23 @@
 		<{if $imgnav}> <!-- page navigation -->
 			<div class="images_pagenav"><{$imgnav}></div>
 		<{/if}>
+	<{else}>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+		<!-- image rows -->
+		<div class="album_images">
+				<div class="album_images_row" <{$album_row_margins}> >
+					<{foreach item=album_images from=$album_images}>
+						<{includeq file='db:album_images.html'}>
+					<{/foreach}>
+				</div>
+		</div>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
 	<{/if}>
+	
 	<{if $subalbum_columns}> <!-- subalbums -->
 		<!-- pagination control -->
 		<{if $album_pagenav }><{$album_pagenav}><{/if}>
@@ -196,6 +258,17 @@
 				<{/foreach}>
 			</div>
 		<{/foreach}>
+		<!-- pagination control -->
+		<{if $album_pagenav }><{$album_pagenav}><{/if}>
+	<!-- E N D subalbums -->
+	<{elseif $subalbums}>
+		<!-- pagination control -->
+		<{if $album_pagenav }><{$album_pagenav}><{/if}>
+			<div class="album_row table_row">
+				<{foreach item=album from=$subalbum_column}>
+					<{includeq file='db:album_album.html'}>
+				<{/foreach}>
+			</div>
 		<!-- pagination control -->
 		<{if $album_pagenav }><{$album_pagenav}><{/if}>
 	<!-- E N D subalbums -->
