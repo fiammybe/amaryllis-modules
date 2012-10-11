@@ -43,9 +43,9 @@ $modversion = array(
 						'image'						=> "images/album_icon.png", /* for backward compatibility */
 					
 					/**  Development information */
-						"status_version"			=> "1.2",
+						"status_version"			=> "1.2.1",
 						"status"					=> "Final",
-						"date"						=> "15:03 11.10.2012",
+						"date"						=> "19:48 11.10.2012",
 						"author_word"				=> "",
 						"warning"					=> _CO_ICMS_WARNING_FINAL,
 					
@@ -80,6 +80,7 @@ $modversion['people']['developers'][] = "<a href='http://community.impresscms.or
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1314]QM-B[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=412]Claudia[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=365]Thomas[/url]";
+$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1088]gcambull[/url]";
 $modversion['people']['translators'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
