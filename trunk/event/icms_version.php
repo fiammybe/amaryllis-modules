@@ -44,10 +44,10 @@ $modversion = array(
                     
                     /**  Development information */
                         "status_version"            => "1.0",
-                        "status"                    => "Beta",
-                        "date"                      => "00:00 XX.XX.2012",
+                        "status"                    => "RC 1",
+                        "date"                      => "14:10 12.10.2012",
                         "author_word"               => "",
-                        "warning"                   => _CO_ICMS_WARNING_BETA,
+                        "warning"                   => _CO_ICMS_WARNING_RC,
                     
                     /** Contributors */
                         "developer_website_url"     => "http://code.google.com/p/amaryllis-modules/",
