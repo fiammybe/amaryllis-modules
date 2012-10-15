@@ -43,7 +43,7 @@ $i = 0;
 	$headermenu[$i]['link'] = '../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $eventModule->getVar('mid');
 	
 	$i++;
-	$headermenu[$i]['title'] = _MI_INDEX_MENU_TEMPLATES;
+	$headermenu[$i]['title'] = _MI_EVENT_MENU_TEMPLATES;
 	$headermenu[$i]['link'] = '../../system/admin.php?fct=tplsets&op=listtpl&tplset=' . $icmsConfig['template_set'] . '&moddir=' . $moddir;
 
 	$i++;
