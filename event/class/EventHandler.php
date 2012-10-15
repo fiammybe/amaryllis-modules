@@ -193,16 +193,14 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	}
 	
 	public function afterSave(&$obj) {
-		if($obj->_updating)
-		return TRUE;
 		if (!$obj->notifSent() && $obj->isApproved()) {
 			if($obj->isNew()) {
-				$obj->sendNotification('event_published');
+				$obj->sendNotification('event_submitted');
 			} else {
 				$obj->sendNotification('event_modified');
 			}
 			$obj->setVar('event_notif_sent', TRUE);
-			$obj->updating = TRUE;
+			$obj->_updating = TRUE;
 			$this->insert($obj, TRUE);
 		}
 		return TRUE;
