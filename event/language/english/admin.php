@@ -38,6 +38,10 @@ define("_AM_EVENT_EVENT_CREATED", "The event has been successfully created.");
 define("_AM_EVENT_EVENT_VIEW", "Event info");
 define("_AM_EVENT_EVENT_VIEW_DSC", "Here is the info about this event.");
 define("_AM_EVENT_NO_CATEGORY_FOUND", "No category found yet. Please create category first");
+
+define("_AM_EVENTS_EVENT_DELETE_RANGE", "Delete expired Events");
+define("_AM_EVENTS_EVENT_DELETE_BEFORE", "Delete all expired Events older than (in months)");
+define("_AM_EVENTS_EVENTS_DELETED", "Events deleted");
 // Category
 define("_AM_EVENT_CATEGORYS", "Categorys");
 define("_AM_EVENT_CATEGORYS_DSC", "All categorys in the module");

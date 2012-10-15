@@ -52,7 +52,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	 * @param $start => int UNIX Timestamp
 	 * @param $end => int UNIX Timestamp
 	 */
-	public function getEventCriterias( $cat_id, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE) {
+	public function getEventCriterias( $cat_id, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE, $public = TRUE) {
 		global $event_isAdmin;
 		$criteria = new icms_db_criteria_Compo();
 		if($limit) $criteria->setLimit((int)$limit);
@@ -68,9 +68,12 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			$criteria->add($tray);
 		}
 		
-		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_public", 1));
-		$crit->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
-		$criteria->add($crit);
+		if($public) {
+			if(is_null($uid)) $uid = 0;
+			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_public", 1));
+			$crit->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
+			$criteria->add($crit);
+		}
 		
 		if(!$event_isAdmin) {
 			$critTray = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_approve", 1));
@@ -99,6 +102,18 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		$events = $this->getObjects($criteria, FALSE, FALSE);
 		if($events) $event = $this->get($events[0]['event_id']);
 		return $event;
+	}
+
+	public function deleteOldEvents($range) {
+		if($range > 0) {
+			$time = time();
+			$del_range = 60*60*24*30*(int)$range;
+			$end_date = $time-$del_range;
+			$criteria = $this->getEventCriterias(FALSE, 0 , $end_date, FALSE, FALSE, FALSE, FALSE, FALSE);
+			$count = $this->getCount($criteria);
+			$this->deleteAll($criteria);
+			return $count;
+		}
 	}
 
 	/**

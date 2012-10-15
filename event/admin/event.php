@@ -51,9 +51,9 @@ $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 if(!$category_handler->getCount()) redirect_header(EVENT_ADMIN_URL . "category.php", 3, _AM_EVENT_NO_CATEGORY_FOUND);
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
-if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
+$clean_op = isset($_POST['op']) ? filter_input(INPUT_POST, 'op') : $clean_op;
 
-$valid_op = array ("mod", "changedField", "addevent", "del", "view", "changeApprove", "");
+$valid_op = array ("mod", "changedField", "addevent", "del", "view", "changeApprove", "delete_range", "");
 
 $event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 
@@ -98,10 +98,20 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$red_message = ($approve == 0) ? _AM_EVENT_EVENT_DENIED : _AM_EVENT_EVENT_APPROVED;
 			redirect_header(EVENT_ADMIN_URL . 'event.php', 2, $red_message);
 			break;
-			
+		
+		case 'delete_range':
 		default:
 			icms_cp_header();
 			$icmsModule->displayAdminMenu(0, _AM_EVENT_EVENTS);
+			
+			if($clean_op === "delete_range") {
+				$clean_range = isset($_POST['del_range']) ? filter_input(INPUT_POST, "del_range", FILTER_SANITIZE_NUMBER_INT) : FALSE;
+				if($clean_range) {
+					$delete = $event_handler->deleteOldEvents($clean_range);
+					echo '<br /><span style="color: red; font-weight: bold;">'.$delete.'&nbsp;'._AM_EVENTS_EVENTS_DELETED.'</span><br />';
+				}
+			}
+			
 			$objectTable = new icms_ipf_view_Table($event_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("event_approve", "center", 50, "event_approve"));
 			$objectTable->addColumn(new icms_ipf_view_Column("event_name", FALSE, FALSE, "getItemLink"));
@@ -115,6 +125,12 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addFilter("event_approve", "filterApprove");
 			$icmsAdminTpl->assign("event_event_table", $objectTable->fetch());
 			$icmsAdminTpl->display("db:event_admin.html");
+			
+			$form = new icms_form_Theme(_AM_EVENTS_EVENT_DELETE_RANGE, "delete_old", "");
+			$form->addElement(new icms_form_elements_Text(_AM_EVENTS_EVENT_DELETE_BEFORE, "del_range", 7, 255, 3), TRUE);
+			$form->addElement(new icms_form_elements_Hidden("op", "delete_range"));
+			$form->addElement(new icms_form_elements_Button("", "submit",_DELETE, "submit"));
+			$icmsAdminTpl->assign("event_delform", $form->display());
 			break;
 	}
 	include_once 'admin_footer.php';
