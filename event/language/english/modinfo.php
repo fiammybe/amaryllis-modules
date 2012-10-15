@@ -26,6 +26,7 @@ define("_MI_EVENT_MENU_EVENTS", "Events");
 define("_MI_EVENT_MENU_CATEGORY", "Category");
 define("_MI_EVENT_MENU_CALENDAR", "Calendars");
 define("_MI_EVENT_MENU_MANUAL", "Manual");
+define("_MI_EVENT_MENU_TEMPLATES", "Templates");
 // config
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW", "Default View");
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW_DSC", "Select the default view for the calendar");
