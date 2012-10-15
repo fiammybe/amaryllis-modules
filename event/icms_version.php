@@ -332,7 +332,7 @@ $modversion['config'][$i] = array(
 								'title' 		=> '_MI_EVENT_CONFIG_PRINT_LOGO',
 								'description' 	=> '_MI_EVENT_CONFIG_PRINT_LOGO_DSC',
 								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'txt',
+								'valuetype' 	=> 'text',
 								'default' 		=> 'themes/iTheme/img/logo.png'
 							);
 
