@@ -26,13 +26,14 @@ $icmsTpl->assign('event_url', EVENT_URL);
 $icmsTpl->assign('event_images_url', EVENT_IMAGES_URL);
 $icmsTpl->assign('event_script_url', EVENT_SCRIPT_URL);
 
-$icmsTpl->assign('index_show_rss', $indexConfig['use_rss']);
-$icmsTpl->assign('index_show_breadcrumb', $indexConfig['show_breadcrumbs']);
 $icmsTpl->assign('module_home', '<a href="' . EVENT_URL . '" title="' . icms::$module->getVar('name') . '">' . icms::$module->getVar('name') . '</a>');
-$icmsTpl->assign('index_images_url', INDEX_ICONS_URL);
-$icmsTpl->assign('index_url', INDEX_URL);
-$icmsTpl->assign('index_module_home', '<a href="' . INDEX_URL . 'index.php" title="' . $index_moduleName . '">' . $index_moduleName . '</a>');
-
+if(icms_get_module_status("index")) {
+	$icmsTpl->assign('index_images_url', INDEX_ICONS_URL);
+	$icmsTpl->assign('index_url', INDEX_URL);
+	$icmsTpl->assign('index_module_home', '<a href="' . INDEX_URL . 'index.php" title="' . $index_moduleName . '">' . $index_moduleName . '</a>');
+	$icmsTpl->assign('index_show_rss', $indexConfig['use_rss']);
+	$icmsTpl->assign('index_show_breadcrumb', $indexConfig['show_breadcrumbs']);
+}
 $xoTheme->addStylesheet(EVENT_SCRIPT_URL . 'module_event.css');
 $xoTheme->addStylesheet(EVENT_URL . 'scripts/fullcalendar.css');
 $xoTheme->addStylesheet(EVENT_URL . 'scripts/jquery.qtip.min.css');
