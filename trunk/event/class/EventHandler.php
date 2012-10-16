@@ -180,6 +180,25 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		return TRUE;
 	}
 	
+	protected function afterInsert(&$obj) {
+		if($obj->_updating) return TRUE;
+		if($obj->isApproved() && !$obj->notifSent()) {
+			$obj->sendNotification();
+			$obj->setVar('event_notif_sent', TRUE);
+			$obj->_updating = TRUE;
+			$this->insert($obj, TRUE);
+		}
+		return TRUE;
+	}
+	
+	protected function afterUpdate(&$obj) {
+		if($obj->isApproved()) {
+			
+			$obj->sendModNotification();
+		}
+		return TRUE;
+	}
+	
 	protected function beforeSave(&$obj) {
 		if($obj->_updating)
 		return TRUE;
@@ -203,20 +222,6 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			}
 			$obj->setVar("event_tags", implode(",", $newArray));
 			unset($tags, $indexModule, $tag_handler, $tags, $tagarray);
-		}
-		return TRUE;
-	}
-	
-	public function afterSave(&$obj) {
-		if (!$obj->notifSent() && $obj->isApproved()) {
-			if($obj->isNew()) {
-				$obj->sendNotification('event_submitted');
-			} else {
-				$obj->sendNotification('event_modified');
-			}
-			$obj->setVar('event_notif_sent', TRUE);
-			$obj->_updating = TRUE;
-			$this->insert($obj, TRUE);
 		}
 		return TRUE;
 	}

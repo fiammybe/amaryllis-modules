@@ -1,6 +1,6 @@
 Hello {X_UNAME},
 
-The following event has been published on {X_SITENAME} :
+The following Event has been modified on {X_SITENAME} :
 
 "{EVENT_TITLE}"
 

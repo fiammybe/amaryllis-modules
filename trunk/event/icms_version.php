@@ -348,7 +348,7 @@ $modversion['notification']['category'][] = array (
 													'name'				=> 'global',
 													'title'				=> _MI_EVENT_GLOBAL_NOTIFY,
 													'description'		=> _MI_EVENT_GLOBAL_NOTIFY_DSC,
-													'subscribe_from'	=> array('index.php')
+													'subscribe_from'	=> 'index.php'
 												);
 $modversion['notification']['event'][] = array(
 													'name'				=> 'event_published',
@@ -358,4 +358,15 @@ $modversion['notification']['event'][] = array(
 													'description'		=> _MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_DSC,
 													'mail_template'		=> 'global_event_published',
 													'mail_subject'		=> _MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_SBJ
+													//'mail_template_dir' => ICMS_MODULES_PATH.'/'.$modversion['dirname'].'/language/'.$icmsConfig['language'].'/mail_template/'
+												);
+$modversion['notification']['event'][] = array(
+													'name'				=> 'event_modified',
+													'category'			=> 'global',
+													'title'				=> _MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY,
+													'caption'			=> _MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_CAP,
+													'description'		=> _MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_DSC,
+													'mail_template'		=> 'global_event_modified',
+													'mail_subject'		=> _MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_SBJ
+													//'mail_template_dir' => ICMS_MODULES_PATH.'/'.$modversion['dirname'].'/language/'.$icmsConfig['language'].'/mail_template/'
 												);

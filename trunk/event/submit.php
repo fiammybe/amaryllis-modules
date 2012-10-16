@@ -46,7 +46,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$event = $event_handler->get($clean_event_id);
 			if($clean_event_id > 0 && $event->isNew())  { echo json_encode(array('status' => 'error','message'=> _NOPERM));unset($_POST); exit;}
             $clean_category = filter_input(INPUT_POST, "event_cid");
-            if(!$clean_category) redirect_header(EVENT_URL, 3, "Keine Clean Category");
+            if(!$clean_category) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
             $cat = $category_handler->get($clean_category);
             if(!$cat->submitAccessGranted()) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_SUBMITACCESS_FAILED));unset($_POST); exit;}
             $eventname = filter_input(INPUT_POST, "event_name");
@@ -87,7 +87,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if(!$event_handler->insert($event)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));unset($_POST);exit;}
 			$success_msg = ($event_isAdmin) ? _MD_EVENT_THANKS_SUBMITTING : _MD_EVENT_AWAITING_APPROVAL;
 			if(!$event_isAdmin) { $event->sendMessageAwaiting(); }
-			echo json_encode(array('status' => 'success','message'=> $success_msg,));
+			echo json_encode(array('status' => 'success','message'=> $success_msg));
+			
 			unset($_POST, $event, $event_handler);
 			exit;
             break;
@@ -106,6 +107,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$event->_updating = TRUE;
 			if(!$event_handler->insert($event)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));exit;}
 			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_RESIZED));
+			
+			exit;
             break;
 		case 'dropevent':
 			$allday = $dayDelta = $minDelta = $end = $new_end = $new_start = $clean_event = $event = "" ;
@@ -128,6 +131,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if(!$event_handler->insert($event)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));unset($_POST);exit;}
 			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_RESIZED));
 			unset($_POST);
+			exit;
 			break;
 		case 'del':
 			$event_id = filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT);
