@@ -80,4 +80,7 @@ define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY', 'New Event');
 define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_CAP', 'Notify me when a new event is created.');
 define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_DSC', 'Receive notification when a new event is created.');
 define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New event');
-//define("", "");
+define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY', 'Event Modified');
+define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_CAP', 'Notify me when an event has been modified.');
+define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_DSC', 'Receive notification when an event has been modified.');
+define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Event Modified');

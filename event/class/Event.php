@@ -213,29 +213,22 @@ class mod_event_Event extends icms_ipf_seo_Object {
         return $ret;
 	}
 	
-	function sendNotification($case) {
-		$valid_case = array("event_submitted", "event_modified");
-		if(in_array($case, $valid_case, TRUE)) {
-			$module = icms::handler('icms_module')->getByDirname(EVENT_DIRNAME);
-			$mid = $module->getVar('mid');
-			$tags ['EVENT_TITLE'] = $this->title();
-			$tags ['EVENT_URL'] = $this->getItemLink(FALSE);
-			$tags ['EVENT_CAT'] = $this->getCategory(TRUE);
-			switch ($case) {
-				case 'event_submitted':
-					$category = 'global';
-					$file_id = 0;
-					$recipient = array();
-					break;
-				
-				case 'event_modified':
-					$category = 'global';
-					$file_id = 0;
-					$recipient = array();
-					break;
-			}
-			icms::handler('icms_data_notification')->triggerEvent($category, $file_id, $case, $tags, $recipient, $mid);
-		}
+	public function sendNotification() {
+		$valid_case = array("event_published", "event_modified");
+		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+		$tags ['EVENT_TITLE'] = $this->title();
+		$tags ['EVENT_URL'] = $this->getItemLink(TRUE);
+		$tags ['EVENT_CAT'] = $this->getCategory(TRUE);
+		
+		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'event_published', $tags, array(), $module->getVar('mid'));
+	}
+	
+	public function sendModNotification() {
+		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
+		$tags ['EVENT_TITLE'] = $this->title();
+		$tags ['EVENT_URL'] = $this->getItemLink(TRUE);
+		$tags ['EVENT_CAT'] = $this->getCategory(TRUE);
+		return icms::handler('icms_data_notification')->triggerEvent('global', 0, 'event_modified', $tags, array(), $module->getVar('mid'));
 	}
 	
 	public function formatDate($timestamp, $format) {
