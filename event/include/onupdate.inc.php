@@ -23,20 +23,20 @@ if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(_
 // this needs to be the latest db version
 define('EVENT_DB_VERSION', 1);
 
-function icms_module_update_event($module) {
+function icms_module_update_event(&$module) {
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 	$icmsDatabaseUpdater->moduleUpgrade($module);
     return TRUE;
 }
 
-function icms_module_install_event($module) {
+function icms_module_install_event(&$module) {
 	event_indexpage();
 	
 	return TRUE;
 }
-function icms_module_uninstall_event($module) {
+function icms_module_uninstall_event(&$module) {
 	if(icms_get_module_status("index")) {
-		deleteLinkedModuleItems();
+		deleteLinkedModuleItems($module);
 	}
 	return TRUE;
 }
@@ -67,10 +67,8 @@ function event_indexpage() {
 	}
 }
 
-function deleteLinkedModuleItems() {
-	$module_handler = icms::handler('icms_module');
-	//$module = $module_handler->getByDirname(EVENT_DIRNAME);
-	$module_id = icms::$module->getVar('mid');
+function deleteLinkedModuleItems(&$module) {
+	$module_id = $module->getVar('mid');
 	$link_handler = icms_getModuleHandler("link", "index");
 	$link_handler->deleteAllByMId($module_id);
 	unset($link_handler);
@@ -80,10 +78,12 @@ function deleteLinkedModuleItems() {
 }
 
 function copySitemapPlugin() {
-	$dir = ICMS_ROOT_PATH . '/modules/event/include/';
-	$file = 'event.php';
-	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
-	if(is_dir($plugin_folder)) {
-		icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
+	if(!icms_get_module_status("index")) {
+		$dir = ICMS_ROOT_PATH . '/modules/event/include/';
+		$file = 'event.php';
+		$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
+		if(is_dir($plugin_folder)) {
+			icms_core_Filesystem::copyRecursive($dir . $file, $plugin_folder . $file);
+		}
 	}
 }
