@@ -19,7 +19,6 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-
 $icmsTpl->assign("event_adminpage", "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_EVENT_ADMIN_PAGE . "</a>");
 $icmsTpl->assign("event_is_admin", icms_userIsAdmin(EVENT_DIRNAME));
 $icmsTpl->assign('event_url', EVENT_URL);
@@ -34,9 +33,9 @@ if(icms_get_module_status("index")) {
 	$icmsTpl->assign('index_show_rss', $indexConfig['use_rss']);
 	$icmsTpl->assign('index_show_breadcrumb', $indexConfig['show_breadcrumbs']);
 }
-$xoTheme->addStylesheet(EVENT_SCRIPT_URL . 'module_event.css');
-$xoTheme->addStylesheet(EVENT_URL . 'scripts/fullcalendar.css');
-$xoTheme->addStylesheet(EVENT_URL . 'scripts/jquery.qtip.min.css');
+$icmsTheme->addStylesheet(EVENT_SCRIPT_URL . 'module_event.css');
+$icmsTheme->addStylesheet(EVENT_URL . 'scripts/fullcalendar.css');
+$icmsTheme->addStylesheet(EVENT_URL . 'scripts/jquery.qtip.min.css');
 
 $rtl = (defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? 'true' : 'false';
 $icmsTpl->assign("event_rtl", $rtl);
