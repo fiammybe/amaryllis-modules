@@ -72,7 +72,7 @@ $modversion = array(
                         "hasMain"                   => 1,
                     
                     /** Notification and comment information */
-                        "hasNotification"           => 1,
+                        "hasNotification"           => 0,
                         "hasComments"               => 1
                 );
 
