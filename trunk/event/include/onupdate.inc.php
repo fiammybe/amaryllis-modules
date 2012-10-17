@@ -35,8 +35,9 @@ function icms_module_install_event($module) {
 	return TRUE;
 }
 function icms_module_uninstall_event($module) {
-	deleteLinkedModuleItems();
-	
+	if(icms_get_module_status("index")) {
+		deleteLinkedModuleItems();
+	}
 	return TRUE;
 }
 
