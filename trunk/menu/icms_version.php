@@ -38,7 +38,7 @@ $modversion = array(
 						"modname"					=> "menu",
 					
 					/**  Images information  */
-						"iconsmall"					=> "images/menu_icon_small.png",
+						"iconsmall"					=> "images/icon_small.png",
 						"iconbig"					=> "images/menu_icon.png",
 						"image"						=> "images/menu_icon.png", /* for backward compatibility */
 					
