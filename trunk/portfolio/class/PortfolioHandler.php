@@ -18,8 +18,13 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+if(!defined("PORTFOLIO_DIRNAME")) define("PORTFOLIO_DIRNAME",basename(dirname(dirname(__FILE__))));
 
 class PortfolioPortfolioHandler extends icms_ipf_Handler {
+	
+	private $_portfolioArray;
+	private $_catArray;
+	private $_userArray;
 	
 	public function __construct(&$db) {
 		global $portfolioConfig;
@@ -27,19 +32,32 @@ class PortfolioPortfolioHandler extends icms_ipf_Handler {
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, $portfolioConfig['logo_file_size'], $portfolioConfig['logo_upload_width'], $portfolioConfig['logo_upload_height']);
 	}
+	
+	public function loadUsers() {
+		if(!count($this->_userArray)) {
+			$member_handler = icms::handler('icms_member_user');
+			$users = $member_handler->getObjects(FALSE, TRUE);
+			foreach (array_keys($users) as $key) {
+				$this->_userArray[$key] = $users[$key]->getVar("uname");
+			}
+		}
+		return $this->_userArray;
+	}
 
 	public function getPortfolioList($active = FALSE) {
-		$crit = new icms_db_criteria_Compo();
-		if($active) $crit->add(new icms_db_criteria_Item("portfolio_active", TRUE));
-		$portfolios = $this->getObjects($crit, TRUE, FALSE);
-		$ret[] = '-----------';
-		foreach(array_keys($portfolios) as $i) {
-			$ret[$i] = $portfolios[$i]->getVar("portfolio_title", "e");
+		if(!count($this->_portfolioArray)) {
+			$crit = new icms_db_criteria_Compo();
+			if($active) $crit->add(new icms_db_criteria_Item("portfolio_active", TRUE));
+			$portfolios = $this->getObjects($crit, TRUE, FALSE);
+			$this->_portfolioArray[0] = '-----------';
+			foreach($portfolios as $key => $value) {
+				$this->_portfolioArray[$key] = $value["portfolio_title"];
+			}
 		}
-		return $ret;
+		return $this->_portfolioArray;
 	}
 	
-	public function getPortfolios($active = FALSE, $order = "portfolio_title", $sort = "ASC", $start = 0, $limit = 0, $category = FALSE) {
+	public function getPortfolioCriterias($active = FALSE, $order = "portfolio_title", $sort = "ASC", $start = 0, $limit = 0, $category = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if ($start) $criteria->setStart($start);
 		if ($limit) $criteria->setLimit((int)$limit);
@@ -47,23 +65,31 @@ class PortfolioPortfolioHandler extends icms_ipf_Handler {
 		if($sort)$criteria->setOrder($sort);
 		if($active) $criteria->add(new icms_db_criteria_Item("portfolio_active", TRUE));
 		if($category) $criteria->add(new icms_db_criteria_Item("portfolio_cid", $category));
+		return $criteria;
+	}
+	
+	public function getPortfolios($active = FALSE, $order = "portfolio_title", $sort = "ASC", $start = 0, $limit = 0, $category = FALSE) {
+		$criteria = $this->getPortfolioCriterias($active, $order, $sort, $start, $limit, $category);
 		$portfolios = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($portfolios as $key => $portfolio) {
-			$ret[$portfolio['portfolio_id']] = $portfolio;
+			$ret[$key] = $portfolio;
 		}
 		return $ret;
 	}
 	
-	public function makeLink($portfolio) {
-		$count = $this->getCount(new icms_db_criteria_Item("short_url", $portfolio->getVar("short_url", "e")));
-		if ($count > 1) {
-			return $portfolio->getVar("portfolio_id", "e");
-		} else {
-			$seo = str_replace(" ", "-", $portfolio->getVar("short_url"));
-			return $seo;
-		}
+	public function getPortfoliosCount($active = FALSE, $order = "portfolio_title", $sort = "ASC", $start = 0, $limit = 0, $category = FALSE) {
+		$criteria = $this->getPortfolioCriterias($active, $order, $sort, $start, $limit, $category);
+		return $this->getCount($criteria);
 	}
+	
+	public function getPortfolioBySeo($seo) {
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", trim($seo)));
+		$portfolios = $this->getObjects($criteria, FALSE, FALSE);
+		if(!$portfolios) return FALSE;
+		$portfolio = $this->get($portfolios[0]['id']);
+		return $portfolio;
+	}	
 	
 	//set category online/offline
 	public function changeVisible($portfolio_id) {
@@ -85,13 +111,14 @@ class PortfolioPortfolioHandler extends icms_ipf_Handler {
 	}
 	
 	public function getCategoryList() {
-		$portfolio_category_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "portfolio");
-		$categorys = $portfolio_category_handler->getObjects(FALSE, TRUE);
-		$ret = array();
-		foreach (array_keys($categorys) as $i) {
-			$ret[$categorys[$i]->getVar('category_id')] = $categorys[$i]->getVar('category_title');
+		if(!count($this->_catArray)) {
+			$category_handler = icms_getModuleHandler("category", PORTFOLIO_DIRNAME, "portfolio");
+			$categorys = $portfolio_category_handler->getObjects(FALSE, TRUE);
+			foreach ($categorys as $key => $value) {
+				$this->_catArray[$key] = $value['title'];
+			}
 		}
-		return $ret;
+		return $this->_catArray;
 	}
 	
 	// some fuctions related to icms core functions
@@ -121,26 +148,40 @@ class PortfolioPortfolioHandler extends icms_ipf_Handler {
 		global $portfolio_isAdmin;
 		$portfolioObj = $this->get($portfolio_id);
 		if (!is_object($portfolioObj)) return FALSE;
-		if (isset($portfolioObj->vars['counter']) && !is_object(icms::$user) || (!$portfolio_isAdmin && $portfolioObj->getVar("portfolio_submitter", "e") != icms::$user->getVar("uid"))) {
+		if (!is_object(icms::$user) || (!$portfolio_isAdmin && $portfolioObj->getVar("portfolio_submitter", "e") != icms::$user->getVar("uid"))) {
 			$new_counter = $portfolioObj->getVar("counter", "e") + 1;
-			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
-				. ' WHERE ' . $this->keyName . '=' . $portfolioObj->id();
-			$this->query($sql, NULL, TRUE);
+			$portfolioObj->setVar("counter", $new_counter);
+			$portfolioObj->_updating = TRUE;
+			$this->insert($portfolioObj);
 		}
 		return TRUE;
 	}
 	
 	protected function beforeInsert(&$obj) {
+		if($obj->_updating) return TRUE;
 		// check summary for valid html input
-		$summary = $obj->getVar("portfolio_summary", "s");
+		$summary = $obj->getVar("portfolio_summary", "e");
 		$summary = icms_core_DataFilter::checkVar($summary, "html", "input");
 		$obj->setVar("portfolio_summary", $summary);
 		// check, if email is valid
-		$mail = $obj->getVar("portfolio_cemail", "s");
+		$mail = $obj->getVar("portfolio_cemail", "e");
 		$mail = icms_core_DataFilter::checkVar($mail, "email", 0, 0);
 		$obj->setVar("portfolio_cemail", $mail);
+		//check, id seo exists
+		$seo = trim($obj->short_url());
+		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
+		if($this->getCount($criteria)) {
+			$seo = $seo . '_' . time();
+			$obj->setVar("short_url", $seo);
+		}
 		return TRUE;
-		
 	}
 	
+	protected function afterDelete(&$obj) {
+		$img = $obj->getVar("portfolio_img", "e");
+		$path = ICMS_UPLOAD_PATH.'/'.PORTFOLIO_DIRNAME.'/'.$this->_itemname.'/';
+		if($img != "") icms_core_Filesystem::deleteFile($path.$img);
+		return TRUE;
+	}
 }

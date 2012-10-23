@@ -19,13 +19,12 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class PortfolioCategory extends icms_ipf_Object {
+class PortfolioCategory extends icms_ipf_seo_Object {
 	
-	public $updating_counter = FALSE;
+	public $_updating = FALSE;
 	
 	public function __construct(&$handler) {
 		icms_ipf_Object::__construct($handler);
-		
 		$this->quickInitVar("category_id", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("category_title", XOBJ_DTYPE_TXTBOX);
 		$this->initCommonVar("short_url");
@@ -50,18 +49,19 @@ class PortfolioCategory extends icms_ipf_Object {
 		$this->setControl("category_active", "yesno");
 		$this->setControl("category_logo_upl", "imageupload");
 		
-		$this->hideFieldFromForm(array("category_p_date", "category_u_date", "category_submitter", "category_updater"));
-		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley"));
+		$this->initiateSEO();
 		
+		$this->hideFieldFromForm(array("meta_description", "meta_keywords", "category_p_date", "category_u_date", "category_submitter", "category_updater"));
+		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley"));
 	}
 
 	public function category_active() {
 		$active = $this->getVar("category_active", "e");
 		if ($active == FALSE) {
-			return '<a href="' . PORTFOLIO_ADMIN_URL . 'category.php?category_id=' . $this->getVar("category_id") . '&amp;op=visible">
+			return '<a href="' . PORTFOLIO_ADMIN_URL . 'category.php?category_id=' . $this->id() . '&amp;op=visible">
 				<img src="' . PORTFOLIO_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
 		} else {
-			return '<a href="' . PORTFOLIO_ADMIN_URL . 'category.php?category_id=' . $this->getVar("category_id") . '&amp;op=visible">
+			return '<a href="' . PORTFOLIO_ADMIN_URL . 'category.php?category_id=' . $this->id() . '&amp;op=visible">
 				<img src="' . PORTFOLIO_IMAGES_URL . 'visible.png" alt="Online" /></a>';
 		}
 	}
@@ -77,7 +77,6 @@ class PortfolioCategory extends icms_ipf_Object {
 	 */
 	
 	public function getCategoryLogo() {
-		$logo = $image_tag = '';
 		$logo = $this->getVar("category_logo", "e");
 		if (!empty($logo)) {
 			$image_tag = PORTFOLIO_UPLOAD_URL . 'category/' . $logo;
@@ -91,11 +90,19 @@ class PortfolioCategory extends icms_ipf_Object {
 		return $catdsc;
 	}
 	
-	function getCategorySubmitter () {
+	function getCategorySubmitter ($link = FALSE) {
+		if(!$link) {
+			$users = $this->handler->loadUsers();
+			return $users[$this->getVar("category_submitter", "e")];
+		}
 		return icms_member_user_Handler::getUserLink($this->getVar("category_submitter", "e"));
 	}
 	
-	function getCategoryUpdater () {
+	function getCategoryUpdater ($link = FALSE) {
+		if(!$link) {
+			$users = $this->handler->loadUsers();
+			return $users[$this->getVar("category_updater", "e")];
+		}
 		return icms_member_user_Handler::getUserLink($this->getVar("category_updater", "e"));
 	}
 	
@@ -114,19 +121,18 @@ class PortfolioCategory extends icms_ipf_Object {
 	}
 	
 	function getItemLink($onlyUrl = FALSE) {
-		$seo = $this->handler->makelink($this);
-		$url = PORTFOLIO_URL . 'category.php?category_id=' . $this -> getVar("category_id", "e") . '&amp;category=' . $seo;
+		$url = PORTFOLIO_URL . 'category.php?category=' . $this->short_url();
 		if ($onlyUrl) return $url;
-		return '<a href="' . $url . '" title="' . $this -> getVar("category_title", "e") . ' ">' . $this -> getVar( "category_title" ) . '</a>';
+		return '<a href="' . $url . '" title="' . $this->title() . ' ">' . $this->title() . '</a>';
 	}
 	
 	public function getViewItemLink() {
-		$ret = '<a href="' . PORTFOLIO_ADMIN_URL . 'category.php?op=view&amp;category_id=' . $this->getVar("category_id", "e") . '" title="' . _CO_PORTFOLIO_VIEW . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
+		$ret = '<a href="' . PORTFOLIO_ADMIN_URL . 'category.php?op=view&amp;category_id=' . $this->id() . '" title="' . _CO_PORTFOLIO_VIEW . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
 		return $ret;
 	}
 	
 	function getPreviewItemLink() {
-		$ret = '<a href="' . PORTFOLIO_URL . 'category.php?category_id=' . $this->getVar("category_id", "e") . '" title="' . _CO_PORTFOLIO_PREVIEW . '" target="_blank">' . $this->getVar("category_title", "e") . '</a>';
+		$ret = '<a href="' . PORTFOLIO_URL . 'category.php?category=' . $this->short_url() . '" title="' . _CO_PORTFOLIO_PREVIEW . '" target="_blank">' . $this->title() . '</a>';
 		return $ret;
 	}
 	
@@ -137,17 +143,16 @@ class PortfolioCategory extends icms_ipf_Object {
 	
 	public function toArray() {
 		$ret = parent::toArray();
-		$ret['id'] = $this->getVar("category_id", "e");
-		$ret['title'] = $this->getVar("category_title", "e");
+		$ret['id'] = $this->id();
+		$ret['title'] = $this->title();
 		$ret['logo'] = $this->getCategoryLogo();
 		$ret['dsc'] = $this->getCategoryDsc();
-		$ret['submitter'] = $this->getCategorySubmitter();
-		$ret['updater'] = $this->getCategoryUpdater();
+		$ret['submitter'] = $this->getCategorySubmitter(TRUE);
+		$ret['updater'] = $this->getCategoryUpdater(TRUE);
 		$ret['published_on'] = $this->getCategoryPublishedDate();
 		$ret['updated_on'] = $this->getCategoryUpdatedDate();
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
-		
 		return $ret;
 	}
 }

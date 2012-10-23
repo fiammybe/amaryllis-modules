@@ -48,7 +48,7 @@ class PortfolioIndexpage extends icms_ipf_Object {
 		$this->initCommonVar("dobr", FALSE, 1);
 		$this->initCommonVar("doimage", FALSE, 1);
 		$this->initCommonVar("dosmiley", FALSE, 1);
-		$this->initCommonVar("docxode", FALSE, FALSE, FALSE, 1);
+		$this->initCommonVar("docxode", FALSE, 1);
 
 		$this->setControl( 'index_img_upload', 'imageupload' );
 		$this -> setControl( 'index_heading','dhtmltextarea' );
@@ -68,7 +68,7 @@ class PortfolioIndexpage extends icms_ipf_Object {
 	
 	public function getIndexHeader() {
 		$indexheader = '';
-		$indexheader = $this->getVar('index_header', 'e');
+		$indexheader = $this->title();
 		if($indexheader != "") {
 			return '<div class="portfolio_indexheader">' . $indexheader . '</div>';
 		}
@@ -76,9 +76,10 @@ class PortfolioIndexpage extends icms_ipf_Object {
 
 	public function getIndexHeading() {
 		$indexheading = '';
-		$indexheading = $this->getVar('index_heading', 's');
+		$indexheading = $this->summary();
 		if($indexheading != "") {
 			$indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
+			$indexheading = icms_core_DataFilter::undoHtmlSpecialChars($indexheading);
 			return '<div class="portfolio_indexheading">' . $indexheading . '</div>';
 		}
 	}
@@ -88,6 +89,7 @@ class PortfolioIndexpage extends icms_ipf_Object {
 		$indexfooter = $this->getVar('index_footer', 's');
 		if($indexfooter != "") {
 			$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
+			$indexfooter = icms_core_DataFilter::undoHtmlSpecialChars($indexfooter);
 			return '<div class="portfolio_indexfooter">' . $indexfooter . '</div>';
 		}
 	}

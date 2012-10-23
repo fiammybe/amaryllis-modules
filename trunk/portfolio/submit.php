@@ -16,47 +16,36 @@
  * @package		portfolio
  *
  */
-
-include_once "../../mainfile.php";
-include_once dirname(__FILE__) . '/include/common.php';
-
+function setStatus($status, $message) {
+	echo json_encode(array("status" => $status, "message" => $message));
+}
+include_once "header.php";
+icms::$logger->disableLogger();
 $valid_op = array ('addcontact');
 $clean_op = (isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '');
+$clean_op = (isset($_POST['op']) ? filter_input(INPUT_POST, 'op') : $clean_op);
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'addcontact':
 			global $portfolioConfig;
-			$clean_portfolio_id = isset($_GET['portfolio_id']) ? filter_input(INPUT_GET, 'portfolio_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$clean_contact_id = isset($_GET['contact_id']) ? filter_input(INPUT_GET, 'contact_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$portfolio_contact_handler = icms_getModuleHandler("contact", basename(dirname(__FILE__)), "portfolio");
-			$contactObj = $portfolio_contact_handler->get($clean_contact_id);
-			if($contactObj->isNew() ) {
-				if(is_object(icms::$user)){
-					$contact_uid = icms::$user->getVar("uid");
-				} else {
-					$contact_uid = 0;
-				}
-				$contactObj->setVar('contact_submitter', $contact_uid);
-				$contactObj->setVar('contact_date', (time()-200) );
-				$contactObj->sendMessageIncoming();
-				$controller = new icms_ipf_Controller($portfolio_contact_handler);
-				if($clean_portfolio_id > 0) {
-					$controller->storeFromDefaultForm(_THANKS_SUBMISSION_REV, _THANKS_SUBMISSION_REV, PORTFOLIO_URL . 'portfolio.php?portfolio_id=' . $clean_portfolio_id);
-				} elseif ($clean_category_id <= 0 &&(strpos(xoops_getenv('HTTP_REFERER'), PORTFOLIO_URL . 'index.php') == FALSE )) {
-					$controller->storeFromDefaultForm(_THANKS_SUBMISSION_REV, _THANKS_SUBMISSION_REV, PORTFOLIO_URL . 'category.php');
-				} elseif ($clean_category_id > 0) {
-					$controller->storeFromDefaultForm(_THANKS_SUBMISSION_REV, _THANKS_SUBMISSION_REV, PORTFOLIO_URL . 'category.php?category_id=' . $clean_category_id);
-				} else {
-					$controller->storeFromDefaultForm(_THANKS_SUBMISSION_REV, _THANKS_SUBMISSION_REV, PORTFOLIO_URL . 'index.php');
-				}
-			} else {
-				return redirect_header(icms_getPreviousPage(), 3, _NO_PERM);
-			}
+			$contact_handler = icms_getModuleHandler("contact", PORTFOLIO_DIRNAME, "portfolio");
+			$contact_uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;
+			if($portfolioConfig['guest_contact'] == 0 && $contact_uid <= 0) setStatus("error", _NOPERM);
+			$contactObj = $contact_handler->create(TRUE);
+			$contactObj->setVar("contact_title", filter_input(INPUT_POST, "contact_title"));
+			$contactObj->setVar("contact_name", filter_input(INPUT_POST, "contact_name"));
+			$contactObj->setVar("contact_mail", filter_input(INPUT_POST, "contact_mail", FILTER_VALIDATE_EMAIL));
+			$contactObj->setVar("contact_phone", filter_input(INPUT_POST, "contact_phone"));
+			$contactObj->setVar("contact_body", filter_input(INPUT_POST, "contact_body"));
+			$contactObj->setVar('contact_submitter', $contact_uid);
+			$contactObj->setVar('contact_date', (time()-200) );
+			$contactObj->setVar("contact_isnew", 0);
+			if(!$contact_handler->insert($contactObj)) {setStatus("error", _MD_PORTFOLIO_ERROR_STORING); unset($_POST); exit;}
+			$contactObj->sendMessageIncoming();
+			setStatus("success", _THANKS_SUBMISSION_REV); unset($_POST); exit;
 			break;
-			
 	}
 } else {
-	redirect_header(PORTFOLIO_URL . 'index.php', 4, _MD_PORTFOLIO_NO_PERM);
+	setStatus("error", _NOPERM); unset($_POST); exit;
 }

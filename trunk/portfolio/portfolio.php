@@ -17,26 +17,6 @@
  *
  */
 
-function addcontact($clean_contact_id = 0){
-	global $portfolio_contact_handler, $icmsTpl;
-	$portfolio_contact_handler = icms_getModuleHandler("contact", basename(dirname(__FILE__)), "portfolio");
-	$contactObj = $portfolio_contact_handler->get($clean_contact_id);
-	if ($contactObj->isNew()){
-		if(is_object(icms::$user)) {
-			$uid = icms::$user->getVar("uid");
-		} else {
-			$uid = 0;
-		}
-		$contactObj->setVar("contact_submitter", $uid);
-		$contactObj->setVar("contact_date", time() - 200);
-		$contactObj->setVar("contact_isnew", 0);
-		$contactObj = $contactObj->getSecureForm(_MD_PORTFOLIO_ADD_CONTACT, 'addcontact', PORTFOLIO_URL . "submit.php?op=addcontact", 'OK', TRUE, TRUE);
-		$contactObj->assign($icmsTpl, 'portfolio_contact_form');
-	} else {
-		exit;
-	}
-}
- 
 include_once 'header.php';
 
 $xoopsOption['template_main'] = 'portfolio_portfolio.html';
@@ -56,11 +36,11 @@ $icmsTpl->assign('portfolio_index', $index);
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$portfolio_portfolio_handler = icms_getModuleHandler( "portfolio", icms::$module->getVar('dirname'), "portfolio");
+$portfolio_handler = icms_getModuleHandler( "portfolio", icms::$module->getVar('dirname'), "portfolio");
 $clean_portfolio_id = isset($_GET['portfolio_id']) ? filter_input(INPUT_GET, 'portfolio_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-
-if ($clean_portfolio_id != 0) {
-	$portfolioObj = $portfolio_portfolio_handler->get($clean_portfolio_id);
+$clean_portfolio = isset($_GET['portfolio']) ? filter_input(INPUT_GET, 'portfolio') : FALSE;
+if ($clean_portfolio) {
+	$portfolioObj = $portfolio_handler->getPortfolioBySeo($clean_portfolio);
 } else {
 	$portfolioObj = FALSE;
 }
@@ -68,11 +48,12 @@ if ($clean_portfolio_id != 0) {
  * retrieve a single category including files of the category and subcategories
  */
 if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->accessGranted())) {
+	$portfolio_handler->updateCounter($portfolioObj->id());
 	$portfolio = $portfolioObj->toArray();
 	$icmsTpl->assign("portfolio", $portfolio);
 	
-	$albumModule = icms_getModuleInfo("album");
-	if($portfolioObj->displayAlbum() && $albumModule) {
+	if($portfolioObj->displayAlbum() && icms_get_module_status("album")) {
+		$albumModule = icms_getModuleInfo("album");
 		$aid = $portfolioObj->getVar("portfolio_album", "e");
 		$album_images_handler = icms_getModuleHandler("images", $albumModule->getVar("dirname", "album"));
 		$directory_name = basename(dirname( __FILE__ ) );
@@ -96,24 +77,6 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 		$album_image_rows = array_chunk($album_images, $albumConfig['show_images_per_row']);
 		$icmsTpl->assign('album_images', $album_images);
 		$icmsTpl->assign('album_image_rows', $album_image_rows);
-	}
-
-	/**
-	 * make contct form avaiable throughout the site
-	 */
-	if($portfolioConfig['guest_contact'] == 1) {
-		$icmsTpl->assign("contact_link", PORTFOLIO_URL . "submit.php?op=addcontact&portfolio_id=" . $portfolioObj->getVar("portfolio_id", "e"));
-		$icmsTpl->assign("contact_perm_denied", FALSE);
-		addcontact(0);
-	} else {
-		if(is_object(icms::$user)) {
-			addcontact(0);
-			$icmsTpl->assign("contact_link", PORTFOLIO_URL . "submit.php?op=addcontact");
-			$icmsTpl->assign("contact_perm_denied", FALSE);
-		} else {
-			$icmsTpl->assign("contact_link", ICMS_URL . "/user.php");
-			$icmsTpl->assign("contact_perm_denied", TRUE);
-		}
 	}
 
 	/**
@@ -179,11 +142,10 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 	}
 	
-	if ($portfolioConfig['show_breadcrumbs']){
-		$icmsTpl->assign('portfolio_cat_path', $portfolioObj->getPortfolioCid(TRUE));
-	}else{
+	if ($portfolioConfig['show_breadcrumbs'] == 1){
+		$icmsTpl->assign('portfolio_cat_path', $portfolioObj->getPortfolioCid(TRUE).' : '.$portfolioObj->title());
+	} else{
 		$icmsTpl->assign('portfolio_cat_path',FALSE);
 	}
 }
-
 include_once 'footer.php';

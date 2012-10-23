@@ -1,18 +1,18 @@
 /**
- * 'Article' is an article management module for ImpressCMS
+ * 'Portfolio' is an portfolio management module for ImpressCMS
  *
- * File: /scripts/article.js
+ * File: /scripts/portfolio.js
  * 
- * js file for article module
+ * js file for portfolio module
  * 
- * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				Article
+ * 				Portfolio
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		article
+ * @package		portfolio
  *
  */
 
@@ -82,29 +82,6 @@
 			});
 		});
 		
-		// initiate qtips for tags
-		$('span.article_tag').each(function(){
-			$(this).qtip({
-				content: {
-					text: $(this).next('span.popup_tag').html(),
-					title: $(this).attr('original-title')
-				},
-				style: {
-					width:500,
-					viewport: $(window), // Keep it on-screen at all times if possible
-					textAlign:'left',
-					tip:'bottomLeft',
-					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
-				},
-				position:   {
-					target: 'mouse',
-					my:'bottomLeft',
-					adjust: {
-						x: 0,  y: -5
-					}
-				},
-			});
-		});
 		(function() {
 		    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
 		    po.src = 'https://apis.google.com/js/plusone.js';
@@ -123,29 +100,7 @@
 	});
 
 	// initiate contact form
-	$(document).ready(function(){
-		$(".portfolio_form").dialog({
-			modal: true,
-			width: 700,
-			height: 400,
-			autoOpen: false,
-			resizable: false,
-			draggable: true
-		});
-		$(".contact_link").click(function(e) {
-			e.preventDefault();
-			var targetUrl = $(this).attr("href");
-			$(".portfolio_contact").dialog('option', 'buttons', {
-				"Submit" : function() {
-					window.location.href = targetUrl;
-				},
-				"Cancel" : function() {
-					$(this).dialog("close");
-				}
-			});
-			$(".portfolio_form").dialog("open");
-		});
-	});
+	
 
 	//contact permission denied
 	$(document).ready(function(){

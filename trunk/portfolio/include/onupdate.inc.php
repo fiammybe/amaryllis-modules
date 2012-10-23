@@ -18,9 +18,11 @@
  */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
+if(!defined("PORTFOLIO_DIRNAME")) define("PORTFOLIO_DIRNAME",basename(dirname(dirname(__FILE__))));
+
 icms_loadLanguageFile('portfolio', 'common');
 // this needs to be the latest db version
-define('PORTFOLIO_DB_VERSION', 1);
+define('PORTFOLIO_DB_VERSION', 2);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,13 +33,13 @@ function portfolio_upload_paths() {
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
 	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
-	if(!is_dir($path . '/category')) icms_core_Filesystem::mkdir($path . '/category');
+	if(!is_dir($path . '/category')) mkdir($path . '/category', 0777);
 	$categoryimages = array();
 	$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/' . $moddir .'/images/folders/', '', array('gif', 'jpg', 'png'));
 	foreach($categoryimages as $image) {
 		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/category/' . $image);
 	}
-	if(!is_dir($path . '/indexpage')) icms_core_Filesystem::mkdir($path . '/indexpage');
+	if(!is_dir($path . '/indexpage')) mkdir($path . '/indexpage', 0777);
 	$image2 = 'portfolio_indeximage.png';
 	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2, $path . '/indexpage/' . $image2);
 }
@@ -76,10 +78,50 @@ function portfolio_indexpage() {
 	$indexpageObj->setVar('doimage', 1);
 	$indexpageObj->setVar('dosmiley', 1);
 	$indexpageObj->setVar('doxcode', 1);
-	$portfolio_indexpage_handler -> insert( $indexpageObj, TRUE );
+	$portfolio_indexpage_handler->insert($indexpageObj, TRUE);
 	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
 	echo '</code>';
-	
+}
+
+function deleteFiles() {
+	$path = ICMS_UPLOAD_PATH.'/'.PORTFOLIO_DIRNAME;
+	icms_core_Filesystem::deleteRecursive($path);
+	return TRUE;
+}
+
+function upgrade_v1_1() {
+	$portfolio_handler = icms_getModuleHandler("portfolio", PORTFOLIO_DIRNAME, "portfolio");
+	$portfolios = $portfolio_handler->getObjects(FALSE, TRUE);
+	if($portfolios) {
+		foreach (array_keys($portfolios) as $key) {
+			if($portfolios[$key]->short_url() == "") {
+				$seo = icms_ipf_Metagen::generateSeoTitle(trim($portfolios[$key]->title()), FALSE);
+				$portfolios[$key]->setVar("short_url", $seo);
+				$portfolios[$key]->_updating = TRUE;
+				$portfolio_handler->insert($portfolios[$key]);
+			}
+		}
+	}
+	unset($portfolio_handler, $portfolios);
+	$category_handler = icms_getModuleHandler("category", PORTFOLIO_DIRNAME, "portfolio");
+	$cats = $category_handler->getObjects(FALSE, TRUE);
+	if($cats) {
+		foreach (array_keys($cats) as $key) {
+			if($cats[$key]->short_url() == "") {
+				$seo = icms_ipf_Metagen::generateSeoTitle(trim($cats[$key]->title()), FALSE);
+				$cats[$key]->setVar("short_url", $seo);
+				$cats[$key]->_updating = TRUE;
+				$category_handler->insert($cats[$key]);
+			}
+		}
+	}
+	unset($category_handler, $cats);
+	$img_path = ICMS_ROOT_PATH.'/modules/'.PORTFOLIO_DIRNAME.'/images/';
+	$icon_big = "portfolio_icon.png";
+	$icon_small = "portfolio_icon_small.png";
+	if(file_exists($img_path.$icon_big)) icms_core_Filesystem::deleteFile($img_path.$icon_big);
+	if(file_exists($img_path.$icon_small)) icms_core_Filesystem::deleteFile($img_path.$icon_small);
+	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,6 +129,7 @@ function portfolio_indexpage() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function icms_module_update_portfolio($module) {
+	upgrade_v1_1();
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 	$icmsDatabaseUpdater -> moduleUpgrade($module);
     return TRUE;
@@ -102,4 +145,8 @@ function icms_module_install_portfolio($module) {
 	copySitemapPlugin();
 
 	return TRUE;
+}
+
+function icms_module_uninstall_portfolio($module) {
+	deleteFiles();
 }

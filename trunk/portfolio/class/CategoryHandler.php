@@ -22,8 +22,8 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 class PortfolioCategoryHandler extends icms_ipf_Handler {
 	
 	public $_moduleName;
-	
-	public $_uploadPath;
+	private $_userArray;
+	private $_catArray;
 	
 	public function __construct(&$db) {
 		global $portfolioConfig;
@@ -31,32 +31,62 @@ class PortfolioCategoryHandler extends icms_ipf_Handler {
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, $portfolioConfig['logo_file_size'], $portfolioConfig['logo_upload_width'], $portfolioConfig['logo_upload_height']);
 	}
+	
+	public function loadUsers() {
+		if(!count($this->_userArray)) {
+			$member_handler = icms::handler('icms_member_user');
+			$users = $member_handler->getObjects(FALSE, TRUE);
+			foreach (array_keys($users) as $key) {
+				$this->_userArray[$key] = $users[$key]->getVar("uname") ;
+			}
+		}
+		return $this->_userArray;
+	}
+	
+	public function getCatBySeo($seo) {
+		$ret = FALSE;
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", trim($seo)));
+		$cats = $this->getObjects($criteria, FALSE, FALSE);
+		if(!$cats) return $ret;
+		$ret = $this->get($cats[0]['id']);
+		return $ret;
+	}
 
 	public function getCategoryList($active = FALSE, $shownull = FALSE) {
-		$crit = new icms_db_criteria_Compo();
-		if($active) $crit->add(new icms_db_criteria_Item("category_active", TRUE));
-		$categorys = &$this->getObjects($crit, TRUE);
-		$ret = array();
-		if($shownull) {$ret[] = '-----------';}
-		foreach(array_keys($categorys) as $i) {
-			$ret[$i] = $categorys[$i]->getVar("category_title", "e");
+		if(!count($this->_catArray)) {
+			$crit = new icms_db_criteria_Compo();
+			if($active) $crit->add(new icms_db_criteria_Item("category_active", TRUE));
+			$categorys = $this->getObjects($crit, TRUE, FALSE);
+			if($shownull) {$this->_catArray[0] = '-----------';}
+			foreach($categorys as $key => $value) {
+				$this->_catArray[$key] = $value['category_title'];
+			}
+		}
+		return $this->_catArray;
+	}
+	
+	public function getCategoriesCriterias($active = FALSE, $order = "weight", $sort = "ASC", $start = 0, $limit = 0) {
+		$criteria = new icms_db_criteria_Compo();
+		if ($start) $criteria->setStart($start);
+		if ($limit) $criteria->setLimit((int)$limit);
+		if ($order) $criteria->setSort($order);
+		if($sort) $criteria->setOrder($sort);
+		if($active) $criteria->add(new icms_db_criteria_Item("category_active", TRUE));
+		return $criteria;
+	}
+	
+	public function getCategories($active = FALSE, $order = "weight", $sort = "ASC", $start = 0, $limit = 0) {
+		$criteria = $this->getCategoriesCriterias($active, $order, $sort, $start, $limit);
+		$categorys = $this->getObjects($criteria, TRUE, FALSE);
+		foreach ($categorys as $key => $category) {
+			$ret[$key] = $category;
 		}
 		return $ret;
 	}
 	
-	public function getCategories($active = FALSE, $order = "weight", $sort = "ASC", $start = 0, $limit = 0) {
-		$criteria = new icms_db_criteria_Compo();
-		if ($start) $criteria->setStart($start);
-		if ($limit) $criteria->setLimit((int)$limit);
-		$criteria->setSort($order);
-		$criteria->setOrder($sort);
-		if($active) $criteria->add(new icms_db_criteria_Item("category_active", TRUE));
-		$categorys = $this->getObjects($criteria, TRUE, FALSE);
-		$ret = array();
-		foreach ($categorys as $key => $category) {
-			$ret[$category['category_id']] = $category;
-		}
-		return $ret;
+	public function getCategoriesCount($active = FALSE, $order = "weight", $sort = "ASC", $start = 0, $limit = 0) {
+		$criteria = $this->getCategoriesCriterias($active, $order, $sort, $start, $limit);
+		return $this->getCount($criteria);
 	}
 	
 	static public function getImageList() {
@@ -68,16 +98,6 @@ class PortfolioCategoryHandler extends icms_ipf_Handler {
 			$ret[$i] = $logos[$i];
 		}
 		return $ret;
-	}
-	
-	public function makeLink($category) {
-		$count = $this->getCount(new icms_db_criteria_Item("short_url", $category->getVar("short_url", "e")));
-		if ($count > 1) {
-			return $category->getVar("category_id", "e");
-		} else {
-			$seo = str_replace(" ", "-", $category->getVar("short_url"));
-			return $seo;
-		}
 	}
 	
 	//set category online/offline
@@ -103,31 +123,60 @@ class PortfolioCategoryHandler extends icms_ipf_Handler {
 	public function updateCounter($category_id) {
 		global $portfolio_isAdmin;
 		$categoryObj = $this->get($category_id);
-		if (!is_object($categoryObj)) return FALSE;
-		if (isset($categoryObj->vars['counter']) && !is_object(icms::$user) || (!$portfolio_isAdmin && $categoryObj->getVar("category_submitter", "e") != icms::$user->getVar("uid"))) {
+		if(!is_object($categoryObj)) return FALSE;
+		if(!is_object(icms::$user) || (!$portfolio_isAdmin && $categoryObj->getVar("category_submitter", "e") != icms::$user->getVar("uid"))) {
 			$new_counter = $categoryObj->getVar("counter", "e") + 1;
-			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
-				. ' WHERE ' . $this->keyName . '=' . $categoryObj->id();
-			$this->query($sql, NULL, TRUE);
+			$categoryObj->setVar("counter", $new_counter);
+			$categoryObj->_updating = TRUE;
+			$this->insert($categoryObj);
 		}
 		return TRUE;
 	}
 	
-	// some related functions for storing
-	protected function beforeSave(&$obj) {
-		//check, if a new logo is uploaded. If so, set new logo
-		$logo_upl = $obj->getVar("category_logo_upl", "e");
-		if ($logo_upl != '') {
-			$obj->setVar("category_logo", $logo_upl);
-		}
-		// check, if email is valid
-		$mail = $obj->getVar("category_mail", "s");
+	protected function beforeInsert(&$obj) {
+		if($obj->_updating) return TRUE;
+		$mail = $obj->getVar("category_mail", "e");
 		$mail = icms_core_DataFilter::checkVar($mail, "email", 0, 0);
 		$obj->setVar("category_mail", $mail);
-		// check summary for valid html input
-		$summary = $obj->getVar("category_summary", "s");
+		$summary = $obj->getVar("category_summary", "e");
 		$summary = icms_core_DataFilter::checkVar($summary, "html", "input");
 		$obj->setVar("category_summary", $summary);
+		if ($obj->getVar('category_logo_upl') != '') {
+			$obj->setVar('index_image', $obj->getVar('category_logo_upl') );
+			$obj->setVar('category_logo_upl', "" );
+		}
+		if($obj->_updating) return TRUE;
+		//check, id seo exists
+		$seo = trim($obj->short_url());
+		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
+		if($this->getCount($criteria)) {
+			$seo = $seo . '_' . time();
+			$obj->setVar("short_url", $seo);
+		}
+		return TRUE;
+	}
+	
+	protected function beforeUpdate(&$obj) {
+		if($obj->_updating) return TRUE;
+		$mail = $obj->getVar("category_mail", "e");
+		$mail = icms_core_DataFilter::checkVar($mail, "email", 0, 0);
+		$obj->setVar("category_mail", $mail);
+		$summary = $obj->getVar("category_summary", "e");
+		$summary = icms_core_DataFilter::checkVar($summary, "html", "input");
+		$obj->setVar("category_summary", $summary);
+		if ($obj->getVar('category_logo_upl') != '') {
+			$obj->setVar('index_image', $obj->getVar('category_logo_upl') );
+			$obj->setVar('category_logo_upl', "" );
+		}
+		return TRUE;
+	}
+	
+	protected function afterDelete(&$obj) {
+		$portfolio_handler = icms_getModuleHandler("portfolio", PORTFOLIO_DIRNAME, "portfolio");
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("portflio_cid", $obj->id()));
+		$portfolio_handler->deleteAll($criteria);
+		unset($portfolio_handler, $criteria);
 		return TRUE;
 	}
 }

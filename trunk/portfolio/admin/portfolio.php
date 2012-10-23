@@ -18,14 +18,14 @@
  */
 
 function editportfolio($portfolio_id = 0) {
-	global $portfolio_portfolio_handler, $icmsAdminTpl;
+	global $portfolio_handler, $icmsAdminTpl;
 
-	$portfolioObj = $portfolio_portfolio_handler->get($portfolio_id);
-	
+	$portfolioObj = $portfolio_handler->get($portfolio_id);
+	$portfolioObj->setVar("dobr", $portfolioObj->needDobr());
 	if (!$portfolioObj->isNew()){
 		$portfolioObj->setVar( 'portfolio_u_date', (time() - 100) );
 		$portfolioObj->setVar('portfolio_updater', icms::$user->getVar("uid"));
-		
+		$portfolioObj->makeFieldReadOnly("short_url");
 		icms::$module->displayAdminMenu( 0, _MI_PORTFOLIO_MENU_PORTFOLIO . ' > ' . _MI_PORTFOLIO_PORTFOLIO_EDIT);
 		$sform = $portfolioObj->getForm(_MI_PORTFOLIO_PORTFOLIO_EDIT, 'addportfolio');
 		$sform->assign($icmsAdminTpl);
@@ -36,7 +36,6 @@ function editportfolio($portfolio_id = 0) {
 		icms::$module->displayAdminMenu( 0, _MI_PORTFOLIO_MENU_PORTFOLIO . " > " . _MI_PORTFOLIO_PORTFOLIO_CREATINGNEW);
 		$sform = $portfolioObj->getForm(_MI_PORTFOLIO_PORTFOLIO_CREATINGNEW, 'addportfolio');
 		$sform->assign($icmsAdminTpl);
-
 	}
 	$icmsAdminTpl->display('db:portfolio_admin.html');
 }
@@ -46,9 +45,9 @@ include_once 'admin_header.php';
 $valid_op = array ('mod', 'changedField', 'addportfolio', 'del', 'view', 'visible', 'changeWeight', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
-if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
+$clean_op = (isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : $clean_op;
 
-$portfolio_portfolio_handler = icms_getModuleHandler('portfolio', basename(dirname(dirname(__FILE__))), 'portfolio');
+$portfolio_handler = icms_getModuleHandler('portfolio', PORTFOLIO_DIRNAME, 'portfolio');
 
 $clean_portfolio_id = isset($_GET['portfolio_id']) ? filter_input(INPUT_GET, 'portfolio_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_portfolio_id = ($clean_portfolio_id == 0 && isset($_POST['portfolio_id'])) ? filter_input(INPUT_POST, 'portfolio_id', FILTER_SANITIZE_NUMBER_INT) : $clean_portfolio_id;
@@ -62,24 +61,24 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case 'addportfolio':
-			$controller = new icms_ipf_Controller($portfolio_portfolio_handler);
+			$controller = new icms_ipf_Controller($portfolio_handler);
 			$controller->storeFromDefaultForm(_AM_PORTFOLIO_CREATED, _AM_PORTFOLIO_MODIFIED);
 			break;
 
 		case 'del':
-			$controller = new icms_ipf_Controller($portfolio_portfolio_handler);
+			$controller = new icms_ipf_Controller($portfolio_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		case 'view' :
-			$portfolioObj = $portfolio_portfolio_handler->get($clean_portfolio_id);
+			$portfolioObj = $portfolio_handler->get($clean_portfolio_id);
 			icms_cp_header();
 			icms::$module->displayAdminMenu(0, _MI_PORTFOLIO_MENU_PORTFOLIO);
 			$portfolioObj->displaySingleObject();
 			break;
 
 		case 'visible':
-			$visibility = $portfolio_portfolio_handler -> changeVisible( $clean_portfolio_id );
+			$visibility = $portfolio_handler->changeVisible($clean_portfolio_id);
 			$ret = 'portfolio.php';
 			if ($visibility == 0) {
 				redirect_header( PORTFOLIO_ADMIN_URL . $ret, 2, _AM_PORTFOLIO_OFFLINE );
@@ -91,14 +90,13 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case "changeWeight":
 			foreach ($_POST['PortfolioPortfolio_objects'] as $key => $value) {
 				$changed = FALSE;
-				$portfolioObj = $portfolio_portfolio_handler -> get( $value );
-
+				$portfolioObj = $portfolio_handler->get($value);
 				if ($portfolioObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 					$portfolioObj->setVar('weight', (int)($_POST['weight'][$key]));
 					$changed = TRUE;
 				}
 				if ($changed) {
-					$portfolio_portfolio_handler -> insert($portfolioObj);
+					$portfolio_handler->insert($portfolioObj);
 				}
 			}
 			$ret = 'portfolio.php';
@@ -110,7 +108,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			icms::$module->displayAdminMenu( 0, _MI_PORTFOLIO_MENU_PORTFOLIO );
 			$criteria = '';
 			if ($clean_portfolio_id) {
-				$portfolioObj = $portfolio_portfolio_handler->get($clean_portfolio_id);
+				$portfolioObj = $portfolio_handler->get($clean_portfolio_id);
 				if ($portfolioObj->id()) {
 					$portfolioObj->displaySingleObject();
 				}
@@ -119,7 +117,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$criteria = null;
 			}
 			// create portfolio table
-			$objectTable = new icms_ipf_view_Table($portfolio_portfolio_handler, $criteria);
+			$objectTable = new icms_ipf_view_Table($portfolio_handler, $criteria);
 			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_active','center', 50, 'portfolio_active'));
 			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_title', FALSE, FALSE, 'getPreviewItemLink'));
 			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_cid', FALSE, FALSE, 'getPortfolioCid'));
@@ -140,5 +138,5 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$icmsAdminTpl->display('db:portfolio_admin.html');
 			break;
 	}
-	icms_cp_footer();
+	include_once 'admin_footer.php';
 }

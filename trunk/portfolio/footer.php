@@ -17,7 +17,6 @@
  *
  */
 
-
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 /**
@@ -32,8 +31,24 @@ if($portfolioConfig['use_rss'] == 1) {
  */
 if( $portfolioConfig['show_breadcrumbs'] == TRUE ) {
 	$icmsTpl->assign('portfolio_show_breadcrumb', TRUE);
+}
+
+/**
+ * make contact form avaiable
+ */
+if($portfolioConfig['guest_contact'] == 1) {
+	$icmsTpl->assign("contact_link", PORTFOLIO_URL . "submit.php?op=addcontact");
+	$icmsTpl->assign("contact_perm_denied", FALSE);
+	$form->assign($icmsTpl);
 } else {
-	$icmsTpl->assign('portfolio_show_breadcrumb', FALSE);
+	if(is_object(icms::$user)) {
+		$icmsTpl->assign("contact_link", PORTFOLIO_URL . "submit.php?op=addcontact");
+		$icmsTpl->assign("contact_perm_denied", FALSE);
+		$form->assign($icmsTpl);
+	} else {
+		$icmsTpl->assign("contact_link", ICMS_URL . "/user.php");
+		$icmsTpl->assign("contact_perm_denied", TRUE);
+	}
 }
 
 $icmsTpl->assign('thumbnail_width', $portfolioConfig['thumbnail_width']);

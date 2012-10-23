@@ -62,6 +62,25 @@
 				<{/foreach}>
 			</div>
 			<{if $pagenav}><{$pagenav}><{/if}>
+		<{elseif $portfolios}>
+			<div class="portfolio_container">
+				<{foreach item=portfolio from=$portfolios}>
+					<div class="portfolio" original-title="<{$portfolio.title}>">
+						<div class="portfolio_title">
+							<{$portfolio.itemLink}><{if $portfolio.customer}>&nbsp;:&nbsp;<span class="portfolio_customer"><{$portfolio.customer}></span><{/if}>
+						</div>
+						<a href="<{$portfolio.cat_img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
+							<{resized_image file=$portfolio.cat_img width=$display_width height=$display_height fit="inside"}>
+						</a>
+						<div class="portfolio_read_more">
+							<a href="<{$portfolio.itemURL}>" title="<{$smarty.const._MD_PORTFOLIO_VIEW_DETAIL}>"><{$smarty.const._MD_PORTFOLIO_VIEW_DETAIL}></a>
+						</div>
+					</div>
+					<div class="popup">
+						<{$portfolio.summary}>
+					</div>
+				<{/foreach}>
+			</div>
 		<{/if}>
 	</div>
 <{/if}>
@@ -70,9 +89,8 @@
 	<p>
 		<{$smarty.const._MD_PORTFOLIO_HIRE_ME}>
 		<span class="portfolio_contact">
-			<a href="<{$contact_link}>" class="<{if $contact_perm_denied == TRUE}>perm_contact_link<{else}>contact_link<{/if}>" title="<{$smarty.const._MD_PORTFOLIO_CONTACT_ME}>"><{$smarty.const._MD_PORTFOLIO_CONTACT_ME}></a>
+			<a href="<{if $contact_perm_denied == TRUE}><{$contact_link}><{else}>#<{/if}>" class="<{if $contact_perm_denied == TRUE}>perm_contact_link<{else}>contact_link<{/if}>" title="<{$smarty.const._MD_PORTFOLIO_CONTACT_ME}>"><{$smarty.const._MD_PORTFOLIO_CONTACT_ME}></a>
 		</span>
 	</p>
 </div>
-
 <{includeq file='db:portfolio_footer.html'}>
