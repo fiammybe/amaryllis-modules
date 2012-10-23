@@ -94,19 +94,8 @@ if(!$portfolio_isAdmin) {
 				break;
 			
 			default:
-				$criteria = '';
-				if ($clean_contact_id) {
-					$contactObj = $portfolio_contact_handler->get($clean_contact_id);
-					if ($contactObj->id()) {
-						$contactObj->displaySingleObject();
-					}
-				}
-				if (empty($criteria)) {
-					$criteria = null;
-				}
 				// create contact table
-				$objectTable = new icms_ipf_view_Table($portfolio_contact_handler, $criteria, array('delete'));
-				$objectTable->isForUserSide();
+				$objectTable = new icms_ipf_view_Table($portfolio_contact_handler, FALSE, array('delete'), TRUE);
 				$objectTable->addColumn(new icms_ipf_view_Column('contact_isnew', 'center', 50, 'contact_isnew_userside'));
 				$objectTable->addColumn( new icms_ipf_view_Column('contact_title', FALSE, 150, 'getPreviewItemLink'));
 				$objectTable->addColumn( new icms_ipf_view_Column('contact_date', 'center', 50, 'getContactDate'));
