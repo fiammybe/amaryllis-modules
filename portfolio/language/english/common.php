@@ -26,6 +26,8 @@ define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_CID", "Category");
 define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_CID_DSC", "Select the categories for the portfolio");
 define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_SUMMARY", "Summary");
 define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_SUMMARY_DSC", "Short summary will be used on category index view");
+define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_SHOW_SUMMARY", "Display Summary");
+
 define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_DESCRIPTION", "Description");
 define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_DESCRIPTION_DSC", "");
 define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_IMG", "Image");
@@ -131,4 +133,8 @@ define("_CO_PORTFOLIO_EDIT", "edit");
 if(!defined("_CO_SUBMIT")) define("_CO_SUBMIT", "submit");
 define("_CO_PORTFOLIO_DELETE", "delete");
 define("_CO_PORTFOLIO_VIEW", "view");
-if(!defined("_NO_PERM")) define("_NO_PERM", "No permissions");
+/**
+ * added in 1.1
+ */
+define("_CO_PORTFOLIO_PORTFOLIO_CONTACT_SBJ", "New message in Portfolios");
+define("_CO_PORTFOLIO_PORTFOLIO_CONTACT_BDY", "You got a new messag in portfolio Module. Go to &raquo; %s &laquo; to view the message");

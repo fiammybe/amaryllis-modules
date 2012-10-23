@@ -122,11 +122,10 @@ class PortfolioContact extends icms_ipf_Object {
 		$pmObj = new icms_messaging_Handler();
 		$pmObj->setFromUser($uid);
 		$pmObj->setToGroups($group);
-		$pmObj->setBody(_CO_PORTFOLIO_PORTFOLIO_CONTACT_BDY);
-		$pmObj->setSubject(_CO_CAREER_CAREER_MESSAGE_SBJ);
+		$pmObj->setBody(sprintf(_CO_PORTFOLIO_PORTFOLIO_CONTACT_BDY, $this->getItemLink(FALSE)));
+		$pmObj->setSubject(_CO_PORTFOLIO_PORTFOLIO_CONTACT_SBJ);
 		$pmObj->usePM();
 		$pmObj->send();
-		
 		return TRUE;
 	}
 }

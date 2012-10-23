@@ -17,10 +17,6 @@
  *
  */
 
-function addcontact($clean_contact_id = 0){
-	
-}
- 
 include_once 'header.php';
 
 $xoopsOption['template_main'] = 'portfolio_contact.html';
@@ -28,7 +24,7 @@ $xoopsOption['template_main'] = 'portfolio_contact.html';
 include_once ICMS_ROOT_PATH . '/header.php';
 
 if(!$portfolio_isAdmin) {
-	redirect_header(PORTFOLIO_URL . 'index.php', 3, _NO_PERM);
+	redirect_header(PORTFOLIO_URL . 'index.php', 3, _NOPERM);
 } else {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,9 +43,9 @@ if(!$portfolio_isAdmin) {
 	$valid_op = array ('del', 'view','changeNew', '');
 	
 	$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
-	if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
+	$clean_op = (isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : $clean_op;
 	
-	$portfolio_contact_handler = icms_getModuleHandler("contact", basename(dirname(__FILE__)), "portfolio");
+	$portfolio_contact_handler = icms_getModuleHandler("contact", PORTFOLIO_DIRNAME, "portfolio");
 	
 	$clean_contact_id = isset($_GET['contact_id']) ? filter_input(INPUT_GET, 'contact_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 	$clean_contact_id = ($clean_contact_id == 0 && isset($_POST['contact_id'])) ? filter_input(INPUT_POST, 'contact_id', FILTER_SANITIZE_NUMBER_INT) : $clean_contact_id;
@@ -114,6 +110,9 @@ if(!$portfolio_isAdmin) {
 				$objectTable->addColumn(new icms_ipf_view_Column('contact_isnew', 'center', 50, 'contact_isnew_userside'));
 				$objectTable->addColumn( new icms_ipf_view_Column('contact_title', FALSE, 150, 'getPreviewItemLink'));
 				$objectTable->addColumn( new icms_ipf_view_Column('contact_date', 'center', 50, 'getContactDate'));
+				
+				$objectTable->setDefaultOrder("DESC");
+				$objectTable->setDefaultSort("contact_date");
 				
 				$icmsTpl->assign('portfolio_contact_table', $objectTable->fetch());
 				

@@ -55,5 +55,5 @@ if ( in_array( $clean_op, $valid_op, TRUE ) ) {
   		$controller->storeFromDefaultForm( _AM_PORTFOLIO_INDEXPAGE_MODIFIED, _AM_PORTFOLIO_INDEXPAGE_MODIFIED );
   		break;
   }
-  icms_cp_footer();
+  include_once 'admin_footer.php';
 }

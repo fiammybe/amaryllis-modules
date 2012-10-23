@@ -24,6 +24,22 @@
 			</div>
 		<{/foreach}>
 	</div>
+<{elseif $portfolios}>
+	<div class="portfolio_container">
+		<{foreach item=portfolio from=$portfolios}>
+			<div class="portfolio" original-title="<{$portfolio.title}>">
+				<div class="portfolio_title">
+					<{$portfolio.itemLink}><{if $portfolio.customer}>&nbsp;:&nbsp;<span class="portfolio_customer"><{$portfolio.customer}></span><{/if}>
+				</div>
+					<a href="<{$portfolio.index_img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
+						<{resized_image file=$portfolio.index_img width=$display_width height=$display_height fit="inside"}>
+					</a>
+			</div>
+			<div class="popup">
+				<{$portfolio.summary}>
+			</div>
+		<{/foreach}>
+	</div>
 <{/if}>
 
 <!-- display skills -->
@@ -111,7 +127,7 @@
 		<a href="<{$portfolio_url}>category.php" title="<{$smarty.const._MD_PORTFOLIO_VIEW_ALL}>"><{$smarty.const._MD_PORTFOLIO_VIEW_ALL}></a>
 		&nbsp;<{$smarty.const._MD_PORTFOLIO_OR}>&nbsp;
 		<span class="portfolio_contact">
-			<a href="<{$contact_link}>" class="<{if $contact_perm_denied == TRUE}>perm_contact_link<{else}>contact_link<{/if}>" title="<{$smarty.const._MD_PORTFOLIO_CONTACT_ME}>"><{$smarty.const._MD_PORTFOLIO_CONTACT_ME}></a>
+			<a href="<{if $contact_perm_denied == TRUE}><{$contact_link}><{else}>#<{/if}>" class="<{if $contact_perm_denied == TRUE}>perm_contact_link<{else}>contact_link<{/if}>" title="<{$smarty.const._MD_PORTFOLIO_CONTACT_ME}>"><{$smarty.const._MD_PORTFOLIO_CONTACT_ME}></a>
 		</span>
 	</p>
 </div>

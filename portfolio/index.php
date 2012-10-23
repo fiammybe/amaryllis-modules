@@ -16,30 +16,9 @@
  * @package		portfolio
  *
  */
-
-function addcontact($clean_contact_id = 0){
-	global $portfolio_contact_handler, $icmsTpl;
-	
-	$portfolio_contact_handler = icms_getModuleHandler("contact", basename(dirname(__FILE__)), "portfolio");
-	$contactObj = $portfolio_contact_handler->get($clean_contact_id);
-	if ($contactObj->isNew()){
-		if(is_object(icms::$user)) {
-			$uid = icms::$user->getVar("uid");
-		} else {
-			$uid = 0;
-		}
-		$contactObj->setVar("contact_submitter", $uid);
-		$contactObj->setVar("contact_date", time() - 200);
-		$contactObj->setVar("contact_isnew", 0);
-		$contactObj = $contactObj->getSecureForm(_MD_PORTFOLIO_ADD_CONTACT, 'addcontact', PORTFOLIO_URL . "submit.php?op=addcontact", 'OK', TRUE, TRUE);
-		$contactObj->assign($icmsTpl, 'portfolio_contact_form');
-	} else {
-		exit;
-	}
-}
  
 include_once 'header.php';
-
+if(icms::$module->config['default_startpage'] == 1) header("location: category.php");
 $xoopsOption['template_main'] = 'portfolio_index.html';
 
 include_once ICMS_ROOT_PATH . '/header.php';
@@ -60,28 +39,11 @@ $icmsTpl->assign('portfolio_index', $index);
 $portfolio_portfolio_handler = icms_getModuleHandler( "portfolio", icms::$module->getVar('dirname'), "portfolio");
 $columns = $portfolioConfig['show_portfolio_columns'];
 $rows = $portfolioConfig['show_portfolio_rows'];
-$limit = (int)$columns * (int)$rows;
+$limit = ($columns > 0 && $rows > 0) ? (int)$columns * (int)$rows : FALSE;
 $portfolios = $portfolio_portfolio_handler->getPortfolios(TRUE, "weight", "DESC", 0, $limit, FALSE);
-$portfolio_columns = array_chunk($portfolios, $columns);
+$portfolio_columns = ($columns > 0  && $rows > 0) ? array_chunk($portfolios, $columns) : FALSE;
 
 $icmsTpl->assign("portfolio_columns", $portfolio_columns);
-
-/**
- * make contct form avaiable
- */
-if($portfolioConfig['guest_contact'] == 1) {
-	$icmsTpl->assign("contact_link", PORTFOLIO_URL . "submit.php?op=addcontact");
-	$icmsTpl->assign("contact_perm_denied", FALSE);
-	addcontact(0);
-} else {
-	if(is_object(icms::$user)) {
-		addcontact(0);
-		$icmsTpl->assign("contact_link", PORTFOLIO_URL . "submit.php?op=addcontact");
-		$icmsTpl->assign("contact_perm_denied", FALSE);
-	} else {
-		$icmsTpl->assign("contact_link", ICMS_URL . "/user.php");
-		$icmsTpl->assign("contact_perm_denied", TRUE);
-	}
-}
+$icmsTpl->assign("portfolios", $portfolios);
 
 include_once 'footer.php';

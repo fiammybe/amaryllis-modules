@@ -41,3 +41,8 @@ define("_MD_PORTFOLIO_TWITTER", "Twitter");
 
 // constants for contact.php
 define("_MD_PORTFOLIO_CONTACTS_BC", "Message List");
+/**
+ * Added in 1.1
+ */
+define("_MD_PORTFOLIO_ERROR_STORING", "An Error occurs while storing the data.");
+define("_THANKS_SUBMISSION_REV", "Thanks for contacting,we'll reply as soon as possible.");

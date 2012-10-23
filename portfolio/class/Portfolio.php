@@ -18,6 +18,7 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+if(!defined("PORTFOLIO_DIRNAME")) define("PORTFOLIO_DIRNAME",basename(dirname(dirname(__FILE__))));
 
 class PortfolioPortfolio extends icms_ipf_seo_Object {
 	
@@ -41,7 +42,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		$this->quickInitVar("portfolio_submitter", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("portfolio_updater", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("portfolio_active", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
-		$this->initCommonVar("counter", FALSE);
+		$this->initCommonVar("counter", FALSE, 0);
 		$this->initCommonVar("weight", FALSE);
 		$this->initCommonVar("dohtml", FALSE, 1);
 		$this->initCommonVar("doxcode", FALSE, 1);
@@ -51,29 +52,40 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		$this->setControl("portfolio_cid", array("name" => "select", "itemHandler" => "category", "method" => "getCategoryList", "module" => "portfolio"));
 		$this->setControl("portfolio_summary", array("name" => "textarea", "form_editor" => "htmlarea"));
 		$this->setControl("portfolio_description", "dhtmltextarea");
-		$this->setControl("portfolio_img", "image");
+		$this->setControl("portfolio_img", array("name" => "image", "nourl" => TRUE));
+		$this->setControl("portfolio_show_summary", "yesno");
 		$this->setControl("portfolio_active", "yesno");
-		$albumModule = icms_getModuleInfo("album");
-		if($albumModule && icms_get_module_status("album") && $portfolioConfig['use_album'] == 1) {
-			$this->setControl("portfolio_album", array("name" => "select", "itemHandler" => "album", "method" => "getAlbumListForPid", "module" => "album"));
+		if(icms_get_module_status("album") && $portfolioConfig['use_album'] == 1) {
+			$this->setControl("portfolio_album", array("itemHandler" => "album", "method" => "getAlbumListForPid", "module" => "album"));
 		} else {
 			$this->hideFieldFromForm("portfolio_album");
 			$this->hideFieldFromSingleView("portfolio_album");
 		}
-		$this->hideFieldFromForm(array("portfolio_submitter", "portfolio_updater", "portfolio_p_date", "portfolio_u_date"));
-		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley", "weight"));
-		
 		$this->initiateSEO();
+		$this->hideFieldFromForm(array("meta_keywords", "meta_description", "portfolio_submitter", "portfolio_updater", "portfolio_p_date", "portfolio_u_date"));
+		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley", "weight"));
 	}
 	
 	public function portfolio_active() {
 		$active = $this->getVar("portfolio_active", "e");
-		if ($active == FALSE) {
-			return '<a href="' . PORTFOLIO_ADMIN_URL . 'portfolio.php?portfolio_id=' . $this->getVar("portfolio_id") . '&amp;op=visible">
+		if($active == FALSE) {
+			return '<a href="' . PORTFOLIO_ADMIN_URL . 'portfolio.php?portfolio_id=' . $this->id() . '&amp;op=visible">
 				<img src="' . PORTFOLIO_IMAGES_URL . 'hidden.png" alt="Offline" /></a>';
-		} else {
-			return '<a href="' . PORTFOLIO_ADMIN_URL . 'portfolio.php?portfolio_id=' . $this->getVar("portfolio_id") . '&amp;op=visible">
+		}else {
+			return '<a href="' . PORTFOLIO_ADMIN_URL . 'portfolio.php?portfolio_id=' . $this->id() . '&amp;op=visible">
 				<img src="' . PORTFOLIO_IMAGES_URL . 'visible.png" alt="Online" /></a>';
+		}
+	}
+	
+	function needDobr() {
+		global $icmsConfig;
+		$module = icms_getModuleInfo(PORTFOLIO_DIRNAME);
+		$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$path = ICMS_EDITOR_PATH . "/" . $icmsConfig['editor_default'] . "/xoops_version.php";
+		if (file_exists($path) && icms::handler('icms_member_groupperm')->checkRight('use_wysiwygeditor', $module->getVar("mid"), $groups)) {
+			return FALSE;
+		} else {
+			return TRUE;
 		}
 	}
 	
@@ -88,7 +100,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 	 */
 	public function getPortfolioCid($itemlink = FALSE) {
 		$did = $this->getVar("portfolio_cid", "e");
-		$portfolio_department_handler = icms_getModuleHandler("category", basename(dirname(dirname(__FILE__))), "portfolio");
+		$portfolio_department_handler = icms_getModuleHandler("category", PORTFOLIO_DIRNAME, "portfolio");
 		$department = $portfolio_department_handler->get($did);
 		if($itemlink == FALSE) {
 			$ret = $department->getVar("category_title");
@@ -134,7 +146,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 	
 	public function getPortfolioImageTag($singleview = TRUE, $catview = FALSE) {
 		$portfolio_img = $image_tag = '';
-		$directory_name = basename(dirname( dirname( __FILE__ ) ));
+		$directory_name = PORTFOLIO_DIRNAME;
 		$script_name = getenv("SCRIPT_NAME");
 		$portfolio_img = $this->getVar('portfolio_img', 'e');
 		if($singleview) {
@@ -162,11 +174,19 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		return $image_tag;
 	}
 	
-	function getPortfolioSubmitter () {
+	function getPortfolioSubmitter ($link = FALSE) {
+		if(!$link) {
+			$users = $this->handler->loadUsers();
+			return $users[$this->getVar("portfolio_submitter", "e")];
+		}
 		return icms_member_user_Handler::getUserLink($this->getVar("portfolio_submitter", "e"));
 	}
 	
-	function getPortfolioUpdater () {
+	function getPortfolioUpdater ($link = FALSE) {
+		if(!$link) {
+			$users = $this->handler->loadUsers();
+			return $users[$this->getVar("portfolio_updater", "e")];
+		}
 		return icms_member_user_Handler::getUserLink($this->getVar("portfolio_updater", "e"));
 	}
 	
@@ -182,13 +202,13 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		if($date != 0) {
 			return date($portfolioConfig['portfolio_dateformat'], $date);
 		}
+		return FALSE;
 	}
 	
 	function getItemLink($onlyUrl = FALSE) {
-		$seo = $this->handler->makelink($this);
-		$url = PORTFOLIO_URL . 'portfolio.php?portfolio_id=' . $this -> getVar("portfolio_id", "e") . '&amp;portfolio=' . $seo;
-		if ($onlyUrl) return $url;
-		return '<a href="' . $url . '" title="' . $this -> getVar("portfolio_title", "e") . ' ">' . $this -> getVar( "portfolio_title" ) . '</a>';
+		$url = PORTFOLIO_URL . 'portfolio.php?portfolio=' . $this->short_url();
+		if($onlyUrl) return $url;
+		return '<a href="'.$url.'" title="' . $this->title().'">'.$this->title().'</a>';
 	}
 	
 	public function getViewItemLink() {
@@ -197,7 +217,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 	}
 	
 	function getPreviewItemLink() {
-		$ret = '<a href="' . PORTFOLIO_URL . 'portfolio.php?portfolio_id=' . $this->getVar("portfolio_id", "e") . '" title="' . _CO_PORTFOLIO_PREVIEW . '" target="_blank">' . $this->getVar("portfolio_title", "e") . '</a>';
+		$ret = '<a href="' . PORTFOLIO_URL . 'portfolio.php?portfolio='.$this->short_url().'" title="' . _CO_PORTFOLIO_PREVIEW . '" target="_blank">' . $this->title().'</a>';
 		return $ret;
 	}
 	
@@ -208,14 +228,14 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 	
 	public function getImagePath() {
 		$image = $this->getVar("portfolio_img", "e");
-		$url = ICMS_URL . "/uploads/" . basename(dirname(dirname(__FILE__))) . "/portfolio/" . $image;
+		$url = ICMS_URL . "/uploads/" . PORTFOLIO_DIRNAME."/".$this->handler->_itemname."/".$image;
 		return $url;
 	}
 	
 	public function toArray() {
 		$ret = parent::toArray();
-		$ret['id'] = $this->getVar("portfolio_id", "e");
-		$ret['title'] = $this->getVar("portfolio_title", "e");
+		$ret['id'] = $this->id();
+		$ret['title'] = $this->title();
 		$ret['imgpath'] = $this->getImagePath();
 		$ret['img'] = $this->getPortfolioImageTag(TRUE, FALSE);
 		$ret['index_img'] = $this->getPortfolioImageTag(FALSE, FALSE);
@@ -225,8 +245,8 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		$ret['dsc'] = $this->getPortfolioDsc();
 		$ret['customer'] = $this->getVar("portfolio_customer", "e");
 		$ret['demo'] = $this->getDemoLink();
-		$ret['submitter'] = $this->getPortfolioSubmitter();
-		$ret['updater'] = $this->getPortfolioUpdater();
+		$ret['submitter'] = $this->getPortfolioSubmitter(TRUE);
+		$ret['updater'] = $this->getPortfolioUpdater(TRUE);
 		$ret['published_on'] = $this->getPortfolioPublishedDate();
 		$ret['updated_on'] = $this->getPortfolioUpdatedDate();
 		$ret['itemLink'] = $this->getItemLink(FALSE);
@@ -234,5 +254,4 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		$ret['album'] = $this->displayAlbum();
 		return $ret;
 	}
-
 }

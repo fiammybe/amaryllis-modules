@@ -25,18 +25,16 @@ function editcategory($category_id = 0) {
 	if (!$categoryObj->isNew()){
 		$categoryObj->setVar( 'category_u_date', (time() - 100) );
 		$categoryObj->setVar('category_updater', icms::$user->getVar("uid"));
-		
+		$categoryObj->makeFieldReadOnly("short_url");
 		icms::$module->displayAdminMenu( 1, _MI_PORTFOLIO_MENU_CATEGORY . ' > ' . _MI_PORTFOLIO_CATEGORY_EDIT);
 		$sform = $categoryObj->getForm(_MI_PORTFOLIO_CATEGORY_EDIT, 'addcategory');
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$categoryObj->setVar('category_p_date', (time() - 100) );
 		$categoryObj->setVar('category_submitter', icms::$user->getVar("uid"));
-		
 		icms::$module->displayAdminMenu( 1, _MI_PORTFOLIO_MENU_CATEGORY . " > " . _MI_PORTFOLIO_CATEGORY_CREATINGNEW);
 		$sform = $categoryObj->getForm(_MI_PORTFOLIO_CATEGORY_CREATINGNEW, 'addcategory');
 		$sform->assign($icmsAdminTpl);
-
 	}
 	$icmsAdminTpl->display('db:portfolio_admin.html');
 }
@@ -46,12 +44,12 @@ include_once 'admin_header.php';
 $valid_op = array ('mod', 'changedField', 'addcategory', 'del', 'view', 'visible', 'changeWeight', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
-if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
+$clean_op = (isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : $clean_op;
 
 $portfolio_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'portfolio');
 
 $clean_category_id = isset($_GET['category_id']) ? filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_category_id = ($clean_category_id == 0 && isset($_POST['category_id'])) ? filter_input(INPUT_POST, 'category_id', FILTER_SANITIZE_NUMBER_INT) : $clean_category_id;
+$clean_category_id = (isset($_POST['category_id'])) ? filter_input(INPUT_POST, 'category_id', FILTER_SANITIZE_NUMBER_INT) : $clean_category_id;
 
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
@@ -124,7 +122,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn( new icms_ipf_view_Column('category_title', FALSE, FALSE, 'getPreviewItemLink'));
 			$objectTable->addColumn( new icms_ipf_view_Column('counter', 'center', 50));
 			$objectTable->addColumn( new icms_ipf_view_Column('category_p_date', 'center', 100, TRUE));
-			$objectTable->addColumn( new icms_ipf_view_Column('category_submitter', 'center', TRUE, 'category_submitter'));
+			$objectTable->addColumn( new icms_ipf_view_Column('category_submitter', 'center', TRUE, 'getCategorySubmitter'));
 			$objectTable->addColumn( new icms_ipf_view_Column('weight', 'center', TRUE, 'getCategoryWeightControl'));
 			
 			$objectTable->addFilter('category_active', 'category_active_filter');
@@ -138,5 +136,5 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$icmsAdminTpl->display('db:portfolio_admin.html');
 			break;
 	}
-	icms_cp_footer();
+	include_once 'admin_footer.php';
 }

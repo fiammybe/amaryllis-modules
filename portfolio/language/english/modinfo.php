@@ -97,3 +97,11 @@ define("_MI_PORTFOLIO_PORTFOLIO_CREATINGNEW", "Submit new Portfolio");
 define("_MI_PORTFOLIO_CATEGORY_EDIT", "Edit your category");
 define("_MI_PORTFOLIO_CATEGORY_CREATINGNEW", "Create a new category");
 define("_MI_PORTFOLIO_INDEXPAGE_EDIT", "Edit Index page");
+
+/**
+ * added in 1.1
+ */
+define("_MI_PORTFOLIO_DEFAULT_STARTPAGE", "Set the default Start Page");
+define("_MI_PORTFOLIO_DEFAULT_STARTPAGE_DSC", "");
+define("_MI_PORTFOLIO_DEFAULT_STARTPAGE_DEF", "Default");
+define("_MI_PORTFOLIO_DEFAULT_STARTPAGE_CAT", "Category Overview");

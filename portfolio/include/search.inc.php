@@ -19,16 +19,13 @@
 
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
-
+if(!defined("PORTFOLIO_DIRNAME")) define("PORTFOLIO_DIRNAME",basename(dirname(dirname(__FILE__))));
 include_once ICMS_ROOT_PATH . '/modules/' . basename(dirname(dirname(__FILE__))) . '/include/common.php';
 
 function portfolio_search($queryarray, $andor, $limit, $offset, $userid) {
-	$portfolio_portfolio_handler = icms_getModuleHandler('portfolio', basename(dirname(dirname(__FILE__))), 'portfolio');
+	$portfolio_portfolio_handler = icms_getModuleHandler('portfolio', PORTFOLIO_DIRNAME, 'portfolio');
 	$portfoliosArray = $portfolio_portfolio_handler->getPortfolioForSearch($queryarray, $andor, $limit, $offset, $userid);
-
 	$ret = array();
-
 	foreach ($portfoliosArray as $portfolioArray) {
 		$item['image'] = "images/portfolio_icon.png";
 		$item['link'] = $portfolioArray['itemURL'];

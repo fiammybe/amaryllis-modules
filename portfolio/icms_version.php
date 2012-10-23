@@ -17,67 +17,83 @@
  *
  */
 
-
+defined("ICMS_ROOT_PATH") or die("ICMS_ROOT_PATH not defined");
+ 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////// GENERAL INFORMATION ////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**  General Information  */
 $modversion = array(
-					'name'						=> _MI_PORTFOLIO_NAME,
-					'version'					=> 1.0,
-					'description'				=> _MI_PORTFOLIO_DSC,
-					'author'					=> "QM-B &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';",
-					'credits'					=> "",
-					'help'						=> "",
-					'license'					=> "GNU General Public License (GPL)",
-					'official'					=> 0,
-					'dirname'					=> basename( dirname( __FILE__ ) ),
-					'modname'					=> "portfolio",
-
-					/**  Images information  */
-					'iconsmall'					=> "images/portfolio_icon_small.png",
-					'iconbig'					=> "images/portfolio_icon.png",
-					'image'						=> "images/portfolio_icon.png", /* for backward compatibility */
-
-					/**  Development information */
-					'status_version'			=> "1.0",
-					'status'					=> "RC",
-					'date'						=> "Unreleased",
-					'author_word'				=> "",
-					'warning'					=> _CO_ICMS_WARNING_RC,
-
-					/** Contributors */
-					'developer_website_url' 	=> "http://code.google.com/p/amaryllis-modules/",
-					'developer_website_name' 	=> "Amaryllis Modules",
-					'developer_email' 			=> "qm-b@hotmail.de",
-					
-				);
+                        "name"                      => _MI_PORTFOLIO_NAME,
+                        "version"                   => 1.1,
+                        "description"               => _MI_PORTFOLIO_DSC,
+                        "author"                    => "QM-B",
+                        "author_realname"           => "Steffen Flohrer",
+                        "credits"                   => "<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Amaryllis Modules</a>",
+                        "help"                      => "admin/manual.php",
+                        "license"                   => "GNU General Public License (GPL)",
+                        "official"                  => 1,
+                        "dirname"                   => basename(dirname(__FILE__)),
+                        "modname"                   => "portfolio",
+                    
+                    /**  Images information  */
+                        "iconsmall"                 => "images/icon_small.png",
+                        "iconbig"                   => "images/icon_big.png",
+                        "image"                     => "images/icon_big.png", /* for backward compatibility */
+                    
+                    /**  Development information */
+                        "status_version"            => "1.1",
+                        "status"                    => "Beta",
+                        "date"                      => "00:00 XX.XX.2012",
+                        "author_word"               => "",
+                        "warning"                   => _CO_ICMS_WARNING_BETA,
+                    
+                    /** Contributors */
+                        "developer_website_url"     => "http://code.google.com/p/amaryllis-modules/",
+                        "developer_website_name"    => "Amaryllis Modules",
+                        "developer_email"           => "qm-b@hotmail.de",
+                    
+                    /** Administrative information */
+                        "hasAdmin"                  => 1,
+                        "adminindex"                => "admin/portfolio.php",
+                        "adminmenu"                 => "admin/menu.php",
+                    
+                    /** Install and update informations */
+                        "onInstall"                 => "include/onupdate.inc.php",
+                        "onUpdate"                  => "include/onupdate.inc.php",
+                        "onUninstall"               => "include/onupdate.inc.php",
+                    
+                    /** Search information */
+                        "hasSearch"                 => 1,
+                        "search"                    => array("file" => "include/search.inc.php", "func" => "portfolio_search"),
+                    
+                    /** Menu information */
+                        "hasMain"                   => 1,
+                    
+                    /** Notification and comment information */
+                        "hasNotification"           => 0,
+                        "hasComments"               => 1
+                );
 
 $modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';";
 $modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=462' target='_blank'>David</a>";
 
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';";
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=462' target='_blank'>David</a>";
+$modversion['people']['translators'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=243' target='_blank'>optimistdd</a>";
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// ADMINISTRATIVE INFORMATION ////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-$modversion['hasMain'] 		= 1;
-$modversion['hasAdmin'] 	= 1;
-$modversion['adminindex']	= 'admin/portfolio.php';
-$modversion['adminmenu'] 	= 'admin/menu.php';
-	
-
+/** Manual */
+$modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=forms' target='_blank'>English</a>";
+$modversion['manual'][][] = "<a href='manual.php' target='_blank'>Manual</a>";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// SUPPORT //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+$modversion['submit_bug'] = 'http://code.google.com/p/amaryllis-modules/issues/entry?template=Defect%20report%20from%20user';
+$modversion['submit_feature'] = 'http://code.google.com/p/amaryllis-modules/issues/entry?template=Defect%20report%20from%20user';
 $modversion['support_site_url'] = 'http://community.impresscms.org/modules/newbb/viewforum.php?forum=9';
 $modversion['support_site_name']= 'ImpressCMS Community Forum';
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// DATABASE /////////////////////////////////////////////////////
@@ -96,19 +112,9 @@ $modversion['object_items'][$i] = 'indexpage';
 $modversion['tables'] = icms_getTablesArray( $modversion['dirname'], $modversion['object_items'] );
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////// INSTALLATION / UPGRADE //////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// OnUpdate - upgrade DATABASE
-$modversion['onUpdate'] = 'include/onupdate.inc.php';
-
-// OnInstall - Insert Sample Form, create folders
-$modversion['onInstall'] = 'include/onupdate.inc.php';
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// TEMPLATES /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 $i = 0;
 $i++;
 $modversion['templates'][$i] = array(
@@ -150,8 +156,11 @@ $modversion['templates'][$i] = array(
 										'file'			=> 'portfolio_requirements.html',
 										'description'	=> _MI_PORTFOLIO_REQUIREMENTS_TPL
 								);
-
-
+$i++;
+$modversion['templates'][$i] = array(
+										'file'			=> 'portfolio_contactform.html',
+										'description'	=> 'js for contact form'
+								);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// BLOCKS //////////////////////////////////////////////////////
@@ -208,22 +217,11 @@ $modversion['blocks'][$i]['template']		= 'portfolio_block_random_portfolios.html
 $modversion['blocks'][$i]['can_clone']		= TRUE ;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////// SEARCH //////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-/** Search information */
-$modversion['hasSearch'] = 1;
-$modversion['search'] ['file'] = 'include/search.inc.php';
-$modversion['search'] ['func'] = 'portfolio_search';
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Comments
-$modversion['hasComments'] = 1;
 $modversion['comments']['pageName'] = 'portfolio.php';
 $modversion['comments']['itemName'] = 'portfolio_id';
 
@@ -231,7 +229,6 @@ $modversion['comments']['itemName'] = 'portfolio_id';
 $modversion['comments']['callbackFile'] = 'include/comment.inc.php';
 $modversion['comments']['callback']['approve'] = 'portfolio_com_approve';
 $modversion['comments']['callback']['update'] = 'portfolio_com_update';
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// CONFIGURATION ///////////////////////////////////////////////////
@@ -247,7 +244,7 @@ $modversion['config'][$i] = array(
 								'title' 		=> '_MI_PORTFOLIO_DATE_FORMAT',
 								'description' 	=> '_MI_PORTFOLIO_DATE_FORMAT_DSC',
 								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'string',
+								'valuetype' 	=> 'text',
 								'default' 		=> 'j/n/Y'
 							);
 $i++;
@@ -329,7 +326,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_PORTFOLIO_SHOW_PORTFOLIO_COLUMNS_DSC',
 								'formtype' 		=> 'select',
 								'valuetype'		=> 'int',
-								'options'		=> array('2' => 2, '3' => 3),
+								'options'		=> array('-' => 0, '2' => 2, '3' => 3),
 								'default' 		=> 2
 							);
 $i++;
@@ -339,7 +336,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_PORTFOLIO_SHOW_PORTFOLIO_ROWS_DSC',
 								'formtype' 		=> 'select',
 								'valuetype'		=> 'int',
-								'options'		=> array('2' => 2, '3' => 3),
+								'options'		=> array('-' => 0, '2' => 2, '3' => 3),
 								'default' 		=> 2
 							);
 $i++;
@@ -399,11 +396,13 @@ $modversion['config'][$i] = array(
 								'default'		=> 0,
 								'options'		=> array( _NONE => 0, _MI_PORTFOLIO_DEFAULT => 1, _MI_PORTFOLIO_HORIZONTAL => 2, _MI_PORTFOLIO_VERTICAL => 3 ) 
 							);
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-$modversion['hasNotification'] = 0;
+$i++;
+$modversion['config'][$i] = array(
+								'name'			=> 'default_startpage',
+								'title'			=> '_MI_PORTFOLIO_DEFAULT_STARTPAGE',
+								'description'	=> '_MI_PORTFOLIO_DEFAULT_STARTPAGE_DSC',
+								'formtype'		=> 'select',
+								'valuetype'		=> 'int',
+								'default'		=> 0,
+								'options'		=> array( _MI_PORTFOLIO_DEFAULT_STARTPAGE_DEF => 0, _MI_PORTFOLIO_DEFAULT_STARTPAGE_CAT => 1) 
+							);
