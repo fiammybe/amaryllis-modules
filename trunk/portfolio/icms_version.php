@@ -44,10 +44,10 @@ $modversion = array(
                     
                     /**  Development information */
                         "status_version"            => "1.1",
-                        "status"                    => "Beta",
+                        "status"                    => "RC",
                         "date"                      => "00:00 XX.XX.2012",
                         "author_word"               => "",
-                        "warning"                   => _CO_ICMS_WARNING_BETA,
+                        "warning"                   => _CO_ICMS_WARNING_RC,
                     
                     /** Contributors */
                         "developer_website_url"     => "http://code.google.com/p/amaryllis-modules/",
@@ -76,10 +76,11 @@ $modversion = array(
                         "hasComments"               => 1
                 );
 
-$modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';";
+$modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>";
 $modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=462' target='_blank'>David</a>";
+$modversion['people']['testers'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=243' target='_blank'>optimistdd</a>";
 
-$modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';";
+$modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>";
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=462' target='_blank'>David</a>";
 $modversion['people']['translators'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=243' target='_blank'>optimistdd</a>";
 
