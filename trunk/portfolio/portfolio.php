@@ -55,11 +55,11 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 	if($portfolioObj->displayAlbum() && icms_get_module_status("album")) {
 		$albumModule = icms_getModuleInfo("album");
 		$aid = $portfolioObj->getVar("portfolio_album", "e");
-		$album_images_handler = icms_getModuleHandler("images", $albumModule->getVar("dirname", "album"));
+		$album_images_handler = icms_getModuleHandler("images", $albumModule->getVar("dirname"), "album");
 		$directory_name = basename(dirname( __FILE__ ) );
 		$script_name = getenv("SCRIPT_NAME");
 		$document_root = str_replace('modules/' . $directory_name . '/portfolio.php', '', $script_name);
-		$albumConfig = icms_getModuleConfig ($albumModule->getVar('name') );
+		$albumConfig = icms_getModuleConfig ($albumModule->getVar('dirname') );
 		include_once ICMS_ROOT_PATH . '/modules/' . $albumModule->getVar('dirname') . '/include/common.php';
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('img_active', 1));
