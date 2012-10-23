@@ -2,12 +2,10 @@
 <{if $addcontact}>
 	<div class="ui-helper-hidden portfolio_form" id="portfolio_form">
 		<{includeq file='db:system_common_form.html' form=$addcontact}>
-	</div>
-	<{if $contact_perm_denied == FALSE}>
-		<div id="form_message" style="display: none;">&nbsp;</div>
 		<div id="form_error">&nbsp;</div>
-		<{includeq file='db:portfolio_contactform.html'}>
-	<{/if}>
+	</div>
+	<div id="form_message" style="display: none;">&nbsp;</div>
+	<{includeq file='db:portfolio_contactform.html'}>
 <{/if}>
 <div id="dialog-confirm-perm" title="<{$smarty.const._MD_PORTFOLIO_CONTACT_PERM}>" class="ui-helper-hidden" >
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$smarty.const._MD_PORTFOLIO_CONTACT_PERMISSON}></p>

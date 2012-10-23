@@ -32,6 +32,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$contact_handler = icms_getModuleHandler("contact", PORTFOLIO_DIRNAME, "portfolio");
 			$contact_uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;
 			if($portfolioConfig['guest_contact'] == 0 && $contact_uid <= 0) setStatus("error", _NOPERM);
+			$captcha = icms_form_elements_captcha_Object::instance();
+			if(!$captcha->verify(TRUE)) {echo json_encode(array('status' => 'error','message'=> 'Verification failed: '. $captcha->getMessage()));unset($_POST); exit;}
 			$contactObj = $contact_handler->create(TRUE);
 			$contactObj->setVar("contact_title", filter_input(INPUT_POST, "contact_title"));
 			$contactObj->setVar("contact_name", filter_input(INPUT_POST, "contact_name"));
