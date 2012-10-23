@@ -73,6 +73,9 @@ if (is_object($categoryObj) && (!$categoryObj->isNew()) && ($categoryObj->access
 	if ($portfolioConfig['show_breadcrumbs']){
 		$icmsTpl->assign('portfolio_cat_path', $categoryObj->getItemLink());
 	}
+
+	$icms_metagen = new icms_ipf_Metagen($categoryObj->title(), $categoryObj->meta_keywords(), $categoryObj->meta_description());
+	$icms_metagen->createMetaTags();
 /**
  * if there's no valid category, retrieve a list of all primary categories
  */
