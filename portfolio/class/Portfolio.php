@@ -124,7 +124,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 			$body = $dsc;
 		} else {
 			$summary = $this->getPortfolioSummary();
-			$body = $summary;
+			$body = $summary.'<br />';
 			$body .= $dsc;
 		}
 		return $body;
