@@ -19,7 +19,10 @@
 
 function editportfolio($portfolio_id = 0) {
 	global $portfolio_handler, $icmsAdminTpl;
-
+	
+	$category_handler = icms_getModuleHandler('category', PORTFOLIO_DIRNAME, 'portfolio');
+	if(!$category_handler->getCount(FALSE)) redirect_header(PORTFOLIO_ADMIN_URL."category.php?op=mod", 5, _AM_PORTFOLIO_NO_CATEGORY_FOUND);
+	
 	$portfolioObj = $portfolio_handler->get($portfolio_id);
 	$portfolioObj->setVar("dobr", $portfolioObj->needDobr());
 	if (!$portfolioObj->isNew()){

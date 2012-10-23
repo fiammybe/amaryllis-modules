@@ -36,3 +36,8 @@ define("_AM_PORTFOLIO_WEIGHTS_UPDATED", "Weights succesfully updated");
 define("_AM_PORTFOLIO_ADD", "Add Portfolio");
 
 define("_AM_PORTFOLIO_INDEXPAGE_MODIFIED", "Indexpage successfully modified");
+
+/**
+ * added in 1.1
+ */
+define("_AM_PORTFOLIO_NO_CATEGORY_FOUND", "No Category found. Please create Category First");

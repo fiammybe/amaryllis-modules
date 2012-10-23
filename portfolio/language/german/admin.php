@@ -36,7 +36,7 @@ define("_AM_PORTFOLIO_WEIGHTS_UPDATED", "Reihenfolge erfolgreich aktualisiert");
 define("_AM_PORTFOLIO_ADD", "Neues Referenzobjekt");
 define("_AM_PORTFOLIO_INDEXPAGE_MODIFIED", "Indexseite erfolgreich aktualisiert");
 
-
-
-
-
+/**
+ * added in 1.1
+ */
+define("_AM_PORTFOLIO_NO_CATEGORY_FOUND", "Es wurden keine Kategorien gefunden. Bitte erstellen Sie erst eine Kategorie, bevor Sie Referenzen erstellen");

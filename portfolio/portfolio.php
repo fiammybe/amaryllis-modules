@@ -147,5 +147,8 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 	} else{
 		$icmsTpl->assign('portfolio_cat_path',FALSE);
 	}
+
+	$icms_metagen = new icms_ipf_Metagen($portfolioObj->title(), $portfolioObj->meta_keywords(), $portfolioObj->meta_description());
+	$icms_metagen->createMetaTags();
 }
 include_once 'footer.php';
