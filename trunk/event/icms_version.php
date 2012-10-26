@@ -160,7 +160,7 @@ $modversion['blocks'][$i]['show_func']		= 'b_event_select_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_event_select_edit';
 $modversion['blocks'][$i]['options']		= '0|1|1'; //category
 $modversion['blocks'][$i]['template']		= 'event_block_select.html';
-$modversion['blocks'][$i]['can_clone']		= TRUE;
+$modversion['blocks'][$i]['can_clone']		= FALSE;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
