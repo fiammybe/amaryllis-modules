@@ -30,10 +30,20 @@
 		<div class="event_row">
 			<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CITY}></b>:&nbsp;</div>
 				<div class="event_cell">
-					<span id="event_zip">&nbsp;</span> &nbsp;<span id="show_event_city">&nbsp;</span>
+					<span id="show_event_zip">&nbsp;</span> &nbsp;<span id="show_event_city">&nbsp;</span>
 				</div>
 		</div>
+		<div id="event_join_info" class="event_joiner_infos">&nbsp;</div>
+		<div id="event_joining" class="event_row">&nbsp;</div>
+		<div id="joined_friends" class="event_row">&nbsp;</div>
+		<{if $icms_isuser}>
+			<div>
+				<h3><{$smarty.const._MD_EVENT_JOINERS_LIST}></h3>
+				<div id="joiners_list" class="event_row">&nbsp;</div>
+			</div>
+		<{/if}>
 	</div>
 	
+	<div id="event_success" class="">&nbsp;</div>
 	<div id="awaiting_approval" class="awaiting_approval">&nbsp;</div>
 </div>

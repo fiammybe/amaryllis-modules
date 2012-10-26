@@ -47,3 +47,12 @@ define("_MD_EVENT_ACCESS_FAILED", "Sorry, you don't have permissions to update t
 define("_MD_EVENT_SUCCESSFUL_RESIZED", "Event successfully updated");
 define("_MD_EVENT_SUCCESSFUL_DELETED", "Event successfully deleted");
 define("_MD_EVENT_AWAITING_APPROVAL", "Your Event has successfully been submitted and is awaiting approval. Thanks for submitting.");
+define("_MD_EVENT_JOINED_FRIENDS", "Friends also attending this event");
+define("_MD_EVENT_SUCCESSFUL_UNJOINED", "You're successfully discharged");
+define("_MD_EVENT_SUCCESSFUL_JOINED", "you have updated your attendence status successfully");
+define("_MD_EVENT_DISCHARGE", "Not attending");
+define("_MD_EVENT_FREE", "Free");
+define("_MD_EVENT_REGISTERED", "Registred");
+define("_MD_EVENT_PARTICIPATE", "Attending");
+define("_MD_EVENT_PARTICIPATE_EVENT", "You can attend this Event");
+define("_MD_EVENT_JOINERS_LIST", "Other Users you can meet there");

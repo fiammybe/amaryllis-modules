@@ -40,6 +40,7 @@
     				.fullCalendar('gotoDate', date);
 			},
 			eventClick: function(event, jsEvent, view) {
+				$('#calendar').fullCalendar('updateEvent', event);
 				startDate = $.fullCalendar.formatDate(event.start, 'HH:mm');
 				endDate = $.fullCalendar.formatDate(event.end, 'HH:mm');
 				if(event.seo) {
@@ -57,27 +58,105 @@
 				} else {
 					var buttons = "<span class='event_buttonbar'>" + printButton + "</span>";
 				}
+				if(event.has_joint) {
+					var join_link = "<div id='event_unjoin'><p><{$smarty.const._MD_EVENT_DISCHARGE}></p></div>"
+				} else {
+					if(event.can_joint) {
+						var join_link = "<div id='event_join'><p><{$smarty.const._MD_EVENT_PARTICIPATE}></p></div>"
+					} else {
+						var join_link = "";
+					}
+				}
+				//$("div#event_name").text(event.title);
+				$("div#show_event_dsc").html(event.description);
+				$("span#show_event_startdate").text(startDate);
+				$("span#show_event_enddate").text(endDate);
+				if(event.contact != false) {
+					$("div#show_event_contact").html(event.contact);
+					$("div#show_event_contact").parent("div").show();
+				} else {
+					$("div#show_event_contact").parent("div").hide();
+				}
+				if(event.street != "") {
+					$("div#show_event_street").html(event.street);
+					$("div#show_event_street").parent("div").show();
+				} else {
+					$("div#show_event_street").parent("div").hide();
+				}
+				if(event.city != "") {
+					$("span#show_event_city").html(event.city);
+					$("span#show_event_city").parent("div").parent("div").show();
+				} else {
+					$("span#show_event_city").html("");
+					$("span#show_event_city").parent("div").parent("div").hide();
+				}
+				if(event.zip != 0) {
+					$("span#show_event_zip").text(event.zip);
+					$("span#show_event_zip").show();
+				} else {
+					$("span#show_event_zip").html("");
+					$("span#show_event_zip").hide();
+				}
+				$("div#show_event_cid").html(event.cat);
+				if(event.urllink != false) {
+					$("div#show_event_url").html(event.urllink);
+					$("div#show_event_url").parent("div").show();
+				} else {
+					$("div#show_event_url").html("");
+					$("div#show_event_url").parent("div").hide();
+				}
+				if(event.approval) {
+					$("div#awaiting_approval").html(event.approval);
+					$("div#awaiting_approval").show();
+				} else {
+					$("div#awaiting_approval").html("");
+					$("div#awaiting_approval").hide();
+				}
+				if(join_link != "") {
+					$("div#event_joining").html(join_link);
+					$("div#event_joining").show();
+					$("div#event_join_info").html("<h3><{$smarty.const._MD_EVENT_PARTICIPATE_EVENT}></h3>"+ event.joiner_max);
+					$("div#event_join_info").show();
+				} else {
+					$("div#event_joining").html("");
+					$("div#event_joining").hide();
+					$("div#event_join_info").html("");
+					$("div#event_join_info").hide();
+				}
+				$("div#event_success").html("");
+				
+				if(event.joint_friends !== false) {
+					$("div#joined_friends").html("<h3><{$smarty.const._MD_EVENT_JOINED_FRIENDS}></h3>"+ event.joint_friends);
+					$("div#joined_friends").show();
+				} else {
+					$("div#joined_friends").html("");
+					$("div#joined_friends").hide();
+				}
+				<{if $icms_isuser}>
+					if(event.joiners != false) {
+						$("div#joiners_list").html(event.joiners);
+						$("div#joiners_list").parent("div").show();
+					} else {
+						$("div#joiners_list").html("");
+						$("div#joiners_list").parent("div").hide();
+					}
+				<{else}>
+					$("div#joiners_list").parent("div").hide();
+				<{/if}>
+				
 				$("div#cal_event").dialog("open");
 				$("div#cal_event").dialog({
 					title: buttons + event.title,
 					buttons: [
 						{
 							text: "<{$smarty.const._CLOSE}>",
-							click: function() {$(this).dialog("close");}
+							click: function() {
+								$(this).dialog("close");
+								$(this).dialog("empty");
+							}
 						}
 					]
 				});
-				//$("div#event_name").text(event.title);
-				$("div#show_event_dsc").html(event.description);
-				$("span#show_event_startdate").text(startDate);
-				$("span#show_event_enddate").text(endDate);
-				$("div#show_event_contact").html(event.contact);
-				$("div#show_event_street").html(event.street);
-				$("span#show_event_zip").text(event.zip);
-				$("span#show_event_city").text(event.city);
-				$("div#show_event_cid").text(event.cat);
-				$("div#show_event_url").html(event.urllink);
-				$("div#awaiting_approval").html(event.approval);
 				
 				$('#event_delete').click(function(){
 					var button = $(this);
@@ -107,6 +186,60 @@
 					}
 				});
 				
+				$('#event_join').click(function(){
+					var button = $(this);
+					$.ajax({
+						url: "<{$event_url}>submit.php?op=join",
+						type: "POST",
+						data: { event_id: event.id},
+						dataType: "json",
+						success: function(response) {
+									if(response.status === "success") {
+										//$("div#cal_event").dialog("destroy");
+										$('#calendar').fullCalendar('refetchEvents');
+										$("#event_joining").html("");
+										
+										$("#event_success").html(response.message);
+										
+									} else if(response.status === "error") {
+										$("#event_success").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+										return false;
+									} else {
+										$("#event_success").html("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
+										return false;
+									}
+						}
+					});
+				});
+				
+				$('#event_unjoin').click(function(){
+					var button = $(this);
+					$.ajax({
+						url: "<{$event_url}>submit.php?op=unjoin",
+						type: "POST",
+						data: { event_id: event.id},
+						dataType: "json",
+						success: function(response) {
+									if(response.status === "success") {
+										//$("div#cal_event").dialog("destroy");
+										$('#calendar').fullCalendar('refetchEvents');
+										$("#event_joining").html("");
+										
+										$("#event_success").html(response.message);
+										
+									} else if(response.status === "error") {
+										$("#event_success").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+										return false;
+									} else {
+										$("#event_success").html("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
+										return false;
+									}
+						}
+					});
+				});
+				
+				
+				
 				$('#event_edit').click(function(){
 					var button = $(this);
 					start = $.fullCalendar.formatDate( event.start, "MMMM dd, yyyy h:mm:ss tt");
@@ -119,7 +252,7 @@
 					$("#event_cid").val(event.cid);
 					$("#event_dsc_tarea").val(event.description);
 					$("#event_contact").val(event.contact_name);
-					$("#event_cemail").val(event.event_mail);
+					$("#event_cemail").val(event.contact_mail);
 					$("#event_phone").val(event.phone);
 					$("#event_street").val(event.street);
 					$("#event_city").val(event.city);
@@ -130,6 +263,8 @@
 					$("#desc_event_url").val(event.url_dsc);
 					$("#url_event_url").val(event.url_url);
 					$("#target_event_url").val(event.url_tar);
+					$("#event_joiners").val(event.event_joiners);
+					$("#event_can_joint").val(event.event_can_joint);
 					$("div#cal_event").dialog("close");
 					$("#submit_form").dialog("open");
 				});
@@ -251,8 +386,9 @@
 						$("#event_enddate").val(Date.parse(end) / 1000);
 						$("#event_name").val(title);
 						$("#event_allday").val(allDay);
-						$("#event_id, #event_cid, #event_dsc_tarea, #event_phone, #event_street, #event_city, #event_zip").val('');
+						$("#event_id, #event_cid, #event_dsc_tarea, #event_phone, #event_street, #event_city, #event_can_joint").val('');
 						$("#mid_event_url, #caption_event_url, #desc_event_url, #url_event_url, #target_event_url").val('');
+						$("#event_zip, #event_joiners").val();
 						if(title) $("#submit_form").dialog("open");
 						lastView = view.name;
 					} // end of else
@@ -339,7 +475,9 @@
 								event_cid: $("#event_cid").val(), event_dsc: $("#event_dsc_tarea").val(), event_contact: $("#event_contact").val(), event_cemail: $("#event_cemail").val(), 
 								event_phone: $("#event_phone").val(), event_street: $("#event_street").val(), event_city: $("#event_city").val(), event_zip: $("#event_zip").val(),
 								event_public: $('input:radio[name=event_public]:checked').val(), mid_event_url: $("#mid_event_url").val(), caption_event_url: $("#caption_event_url").val(), 
-								desc_event_url: $("#desc_event_url").val(), url_event_url: $("#url_event_url").val(), target_event_url: $("#target_event_url").val() },
+								desc_event_url: $("#desc_event_url").val(), url_event_url: $("#url_event_url").val(), target_event_url: $("#target_event_url").val(),
+								event_can_joint: $('#event_can_joint').val(), event_joiners: $("#event_joiners").val()
+							},
 						dataType: "json",
 						success: function(response) {
 									if(response.status === "success") {
@@ -347,7 +485,7 @@
 										$('#calendar').fullCalendar('refetchEvents');
 										$('#form_message').dialog('open');
 									} else if(response.status === "error") {
-										$("#form_error").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+										$("#form_error").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 									}
 						},
 					});

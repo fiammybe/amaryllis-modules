@@ -23,6 +23,7 @@ if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(_
 class mod_event_Event extends icms_ipf_seo_Object {
 	
 	public $_updating = FALSE;
+	private $_joinerArray;
 	/**
 	 * Constructor
 	 *
@@ -47,7 +48,8 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->quickInitVar("event_enddate", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_public", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
 		$this->quickInitVar("event_tags", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("event_joiner", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, '0');
+		$this->quickInitVar("event_joiner", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
+		$this->quickInitVar("event_can_joint", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("event_submitter", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("event_created_on", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_approve", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
@@ -64,6 +66,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->setControl("event_allday", "yesno");
 		$this->setControl("event_submitter", "user");
 		$this->setControl("event_approve", "yesno");
+		$this->setControl("event_can_joint", array("name" => "select", "itemHandler" => "event", "method" => "getJoinersArray", "module" => "event"));
 		
 		if(!icms_get_module_status("index")) {
 			$this->hideFieldFromForm("event_tags");
@@ -72,7 +75,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		
 		$this->initiateSEO();
 		
-		$this->hideFieldFromForm(array("event_joiner", "short_url", "meta_description", "meta_keywords", "event_submitter", "event_created_on", "event_approve", "event_notif_sent"));
+		$this->hideFieldFromForm(array("short_url", "meta_description", "meta_keywords", "event_submitter", "event_created_on", "event_approve", "event_notif_sent"));
 	}
 
 	public function event_approve() {
@@ -148,10 +151,67 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	}
 
 	public function getValue($value) {
-		return (!$this->getVar("$value", "e") == "0") ? $this->getVar("$value", "e") : ""; 
+		return ($this->getVar("$value", "s") !== "0") ? $this->getVar("$value", "s") : ""; 
+	}
+	
+	public function getMaxJoiners() {
+		$joiners = $this->getVar("event_joiner", "e");
+		$curr_joiners = $this->getJoinersCount();
+		if($joiners > 0) $curr_joiners = $joiners - $curr_joiners;
+		$const = ($joiners > 0) ? _MD_EVENT_FREE : _MD_EVENT_REGISTERED;
+		if($joiners == 0) return _CO_EVENT_EVENT_UNLIMITED.' '._CO_EVENT_EVENT_JOINERS.' ('.$curr_joiners.' '.$const.')';
+		return $joiners.' '._CO_EVENT_EVENT_JOINERS.' ('.$curr_joiners.' '.$const.')';
+	}
+
+	public function getRegistredJoinersCount() {
+		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
+		$joiners = $joiner_handler->getRegistredJoinersCount($this->id());
+		return $joiners;
+	}
+	
+	public function getUnregistredJoinersCount() {
+		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
+		$joiners = $joiner_handler->getUnregistredJoinersCount($this->id());
+		return $joiners;
+	}
+	
+	public function getJoinersCount() {
+		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
+		$joiners = $joiner_handler->getJoinersCount($this->id(), FALSE, FALSE, FALSE);
+		return $joiners;
+	}
+	
+	public function getJoiners() {
+		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
+		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("joiner_eid", $this->id()));
+		$crit->add(new icms_db_criteria_Item("joiner_uid", 0, '!='));
+		$joiners = $joiner_handler->getObjects($crit, FALSE, FALSE);
+		if(!$joiners) return FALSE;
+		unset($crit);
+		$criteria = new icms_db_criteria_Compo();
+		foreach ($joiners as $key => $value) {
+			$criteria->add(new icms_db_criteria_Item("uid", $value['joiner_uid']), 'OR');
+		}
+		$users = icms::handler('icms_member_user')->getObjects($criteria, TRUE);
+		if(!$users) return FALSE;
+		$ret = array();
+		foreach (array_keys($users) as $key) {
+			$ret[$key] = '<span class="event_friend"><img class="icon_middle" width="20px" height="20px" src="'
+									.$users[$key]->gravatar().'" />&nbsp;<a href="'.ICMS_URL .'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'</a></span>';
+		}
+		unset($users, $criteria);
+		return implode("&nbsp;", $ret);
+	}
+	
+	public function hasJoint() {
+		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
+		$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+		$joining = $joiner_handler->getJoinersCount($this->id(), $uid, $_SERVER['REMOTE_ADDR'], $_SESSION['icms_fprint']);
+		return ($joining > 0) ? TRUE : FALSE;
 	}
 	
 	public function getEventUrl($urllink = TRUE) {
+		if($this->getVar("event_url") == 0) return FALSE;
 		$urlObj = $this->getUrlLinkObj("event_url");
 		if($urllink)return $urlObj->render();
 		$urllink['url'] = $urlObj->getVar("url", "e");
@@ -204,12 +264,18 @@ class mod_event_Event extends icms_ipf_seo_Object {
         $ret['contact'] = $this->getContact();
 		$ret['street'] = $this->getValue("event_street");
 		$ret['city'] = $this->getValue("event_city");
-		$ret['zip'] = $this->getValue("event_zip");
+		$ret['zip'] = $this->getVar("event_zip");
 		$ret['phone'] = $this->getValue("event_phone");
 		$ret['cat'] = $this->getCategory();
 		$ret['urllink'] = $this->getEventUrl(TRUE);
 		$ret['urlpart'] = $this->getEventUrl(FALSE);
+		$ret['submitter'] = $this->getSubmitter();
 		$ret['is_approved'] = (!$this->isApproved()) ? "<span class='awaiting_approval'>" . _CO_EVENT_AWAITING_APPROVAL . "</span>" : "" ;
+		$ret['can_joint'] = $this->canJoin();
+		$ret['has_joint'] = $this->hasJoint();
+		$ret['joiner_max'] = $this->getMaxJoiners();
+		$ret['friends'] = $this->getJoinedFriends();
+		$ret['joiners'] = $this->getJoiners();
         return $ret;
 	}
 	
@@ -220,7 +286,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$tags ['EVENT_URL'] = $this->getItemLink(TRUE);
 		$tags ['EVENT_CAT'] = $this->getCategory(TRUE);
 		
-		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'event_published', $tags, array(), $module->getVar('mid'));
+		return icms::handler('icms_data_notification')->triggerEvent('global', 0, 'event_published', $tags, array(), $module->getVar('mid'));
 	}
 	
 	public function sendModNotification() {
@@ -237,7 +303,91 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	
 	public function getSubmitter() {
 		$user = $this->getVar("event_submitter", "e");
-		return icms_member_user_Handler::getUserLink($user);
+		$users = $this->handler->getUsers();
+		return $users[$user];
+	}
+	
+	public function canJoin() {
+		$start = $this->getVar("event_startdate", "e");
+		if($start <= time()) return FALSE;
+		$limit = $this->getVar("event_joiner", "e");
+		$can_joint = $this->getVar("event_can_joint", "e");
+		if($can_joint == 0) return FALSE;
+		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
+		$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+		if($uid == 0 && $can_joint < 2) return FALSE;
+		$fprint = $_SESSION['icms_fprint'];
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$joining = $joiner_handler->getJoinersCount($this->id(), $uid, $ip, $fprint );
+		if($joining) return FALSE;
+		$joiners = $joiner_handler->getJoinersCount($this->id(), FALSE, FALSE, FALSE);
+		if($limit > $joiners) return TRUE;
+		if($limit == 0 && $can_joint >= 1) return TRUE;
+		return FALSE;
+	}
+	
+	public function joinEvent() {
+		if($this->canJoin()) {
+			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+			$fprint = $_SESSION['icms_fprint'];
+			$ip = $_SERVER['REMOTE_ADDR'];
+			$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
+			return $joiner_handler->joinEvent($this->id(), $uid, $ip, $fprint, time());
+		}
+	}
+	
+	public function unjoinEvent() {
+		if($this->hasJoint()) {
+			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+			$fprint = $_SESSION['icms_fprint'];
+			$ip = $_SERVER['REMOTE_ADDR'];
+			$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
+			return $joiner_handler->unjoinEvent($this->id(), $uid, $ip, $fprint);
+		}
+	}
+	
+	public function getJoinedFriends() {
+		$friends = FALSE;
+		if(icms_get_module_status("profile")) {
+			$profile_module = icms_getModuleInfo("profile");
+			$friendship_handler = icms_getModuleHandler("friendship", $profile_module->getVar("dirname"), "profile");
+			$uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : FALSE;
+			if(!$uid) return $friends;
+			
+			$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
+			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("joiner_eid", $this->id()));
+			$crit->add(new icms_db_criteria_Item("joiner_uid", 0, '!='));
+			$joiners = $joiner_handler->getObjects($crit, FALSE, FALSE);
+			if(!$joiners) return $friends;
+			$uids = array();
+			foreach ($joiners as $key => $value) {
+				$uids[] = $value['joiner_uid'];
+			}
+			unset($crit);
+			$friendObjects = $friendship_handler->getFriendships(0, 0, $uid, 0, 0);
+			if(!$friendObjects) return $friends;
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item("uid", $uid, '!='));
+			foreach ($friendObjects as $key => $value) {
+				if(!in_array($value['friend1_uid'], $uids) && !in_array($value['friend2_uid'], $uids)) continue;
+				$crit = new icms_db_criteria_Compo();
+				$crit->add(new icms_db_criteria_Item("uid", $value['friend1_uid']));
+				$crit->add(new icms_db_criteria_Item("uid", $value['friend2_uid']), 'OR');
+				$criteria->add($crit);
+			}
+			unset($profile_module, $friendship_handler, $friendObjects);
+			$member_handler = icms::handler('icms_member_user');
+			$users = $member_handler->getObjects($criteria, TRUE);
+			if(!$users) return $friends;
+			$friends = array();
+			foreach (array_keys($users) as $key) {
+				if($uid !== $key)
+				$friends[$key] = '<span class="event_friend"><img class="icon_middle" width="20px" height="20px" src="'
+									.$users[$key]->gravatar().'" />&nbsp;<a href="'.ICMS_URL .'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'</a></span>';
+			}
+			return implode("&nbsp;", $friends);
+		}
+		return $friends;
 	}
 	
 	public function sendMessageAwaiting() {
@@ -249,7 +399,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$pmObj = $pm_handler->create(TRUE);
 		$pmObj->setVar("subject", _CO_EVENT_NEW_EVENT);
 		$pmObj->setVar("from_userid", 1);
-		$pmObj->setVar("to_userid", 1);
+		$pmObj->setVar("to_userid", $user);
 		$pmObj->setVar("msg_time", time());
 		$pmObj->setVar("msg_text", $message);
 		$pm_handler->insert($pmObj, TRUE);
@@ -279,5 +429,49 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$pmObj->setVar("msg_text", $message);
 		$pm_handler->insert($pmObj, TRUE);
 		return TRUE;
+	}
+
+	public function sendMessageJoined($uid) {
+		$pm_handler = icms::handler('icms_data_privmessage');
+		$user = $this->getVar("event_submitter", "e");
+		if($user <= 0) return FALSE;
+		$uname = ($uid > 0) ? icms::handler('icms_member_user')->get($uid)->getVar("uname") : _GUESTS;
+		$message = sprintf(_CO_EVENT_NEW_EVENT_JOINER_BDY, $uname);
+		$pmObj = $pm_handler->create(TRUE);
+		$pmObj->setVar("subject", _CO_EVENT_NEW_EVENT_JOINER_SBJ);
+		$pmObj->setVar("from_userid", $uid);
+		$pmObj->setVar("to_userid", $user);
+		$pmObj->setVar("msg_time", time());
+		$pmObj->setVar("msg_text", $message);
+		$pm_handler->insert($pmObj, TRUE);
+	}
+	
+	public function sendMessageUnjoined($uid) {
+		$pm_handler = icms::handler('icms_data_privmessage');
+		$user = $this->getVar("event_submitter", "e");
+		if($user <= 0) return FALSE;
+		$uname = ($uid > 0) ? icms::handler('icms_member_user')->get($uid)->getVar("uname") : _GUESTS;
+		$message = sprintf(_CO_EVENT_NEW_EVENT_UNJOINER_BDY, $uname);
+		$pmObj = $pm_handler->create(TRUE);
+		$pmObj->setVar("subject", _CO_EVENT_NEW_EVENT_UNJOINER_SBJ);
+		$pmObj->setVar("from_userid", $uid);
+		$pmObj->setVar("to_userid", $user);
+		$pmObj->setVar("msg_time", time());
+		$pmObj->setVar("msg_text", $message);
+		$pm_handler->insert($pmObj, TRUE);
+	}
+
+	private function loadJoiners() {
+		if(!count($this->_joinerArray)) {
+			$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
+			$all_joiners = $joiner_handler->getJoinersCount($this->id(), FALSE, FALSE, FALSE);
+			$reg_joiners = "";
+			$curr_user = $joiner_handler->getJoinersCount($this->id(), $uid, $ip, $fprint );
+			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+			$fprint = $_SESSION['icms_fprint'];
+			$ip = $_SERVER['REMOTE_ADDR'];
+			$this->_joinerArray['all'] = $all_joiners;
+			$this->_joinerArray['curren_user'] = $curr_user;
+		}
 	}
 }

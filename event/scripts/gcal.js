@@ -102,14 +102,21 @@ function transformOptions(sourceOptions, start, end) {
                         cid: "",
                         contact_name: "",
                         contact_mail: "",
-                        urllink: "",
+                        urllink: false,
                         url_url: "",
                         url_dsc: "",
                         url_cap: "",
                         url_tar: "",
                         url_mid: "",
                         event_public: "",
-						approval: ""
+						approval: false,
+						can_join: false,
+						event_can_joint: 0,
+						event_joiners: "",
+						joiner_max: "",
+						has_joint: false,
+						joint_friends: false,
+						joiners :false
 					});
 				});
 			}

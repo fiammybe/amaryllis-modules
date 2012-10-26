@@ -71,6 +71,8 @@ define("_MI_EVENT_BLOCK_MINICAL", "Minicalendar");
 define("_MI_EVENT_BLOCK_MINICAL_DSC", "Minicalendar for blocks");
 define("_MI_EVENT_BLOCK_LIST", "Events");
 define("_MI_EVENT_BLOCK_LIST_DSC", "List of Events in a time range");
+define("_MI_EVENT_BLOCK_SELECT", "Find Events");
+define("_MI_EVENT_BLOCK_SELECT_DSC", "A Block to select the Timerange to get Events");
 // notifications
 define('_MI_EVENT_GLOBAL_NOTIFY', 'Global');
 define('_MI_EVENT_GLOBAL_NOTIFY_DSC', 'Global Event notification options.');

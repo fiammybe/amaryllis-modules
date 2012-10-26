@@ -76,7 +76,8 @@ define("_CO_EVENT_EVENT_EVENT_ENDDATE_DSC", "");
 define("_CO_EVENT_EVENT_EVENT_PUBLIC", "Event is Public?");
 define("_CO_EVENT_EVENT_EVENT_PUBLIC_DSC", "Select &#039;Yes&#039;, if the event is public and should be displayed in Events Block");
 define("_CO_EVENT_EVENT_EVENT_JOINER", "Maximum Joiners");
-define("_CO_EVENT_EVENT_EVENT_JOINER_DSC", "Enter the maximum amount of joiners for the event. '0' will allow uncountable joiners, 'X' will disable joining the Event");
+define("_CO_EVENT_EVENT_EVENT_JOINER_DSC", "Enter the maximum amount of joiners for the event. '0' will allow uncountable joiners");
+define("_CO_EVENT_EVENT_EVENT_CAN_JOINT", "Event can be joint (by)");
 define("_CO_EVENT_EVENT_EVENT_TAGS", "Tags");
 define("_CO_EVENT_EVENT_EVENT_TAGS_DSC", "You can enter multiple tags by seperating with a comma");
 define("_CO_EVENT_EVENT_EVENT_SUBMITTER", "Submitted By");
@@ -93,6 +94,11 @@ define("_CO_EVENT_CANNOT_BOOK_PASTEND", "The End Date needs to be after the star
 define("_CO_EVENT_AWAITING_APPROVAL", "Your Event still is awaiting approval");
 define("_CO_EVENT_NEW_EVENT_APPROVAL", "%s has submitted a new Event which is awaiting approval");
 define("_CO_EVENT_NEW_EVENT", "New Event is awaiting approval");
+define("_CO_EVENT_NEW_EVENT_JOINER_BDY", "%s will attend your Event");
+define("_CO_EVENT_NEW_EVENT_JOINER_SBJ", "Someone will attend your Event");
+
+define("_CO_EVENT_NEW_EVENT_UNJOINER_BDY", "%s will not attend your Event");
+define("_CO_EVENT_NEW_EVENT_UNJOINER_SBJ", "Someone will not attend your Event");
 //calendar
 define("_CO_EVENT_MONDAY", "Monday");
 define("_CO_EVENT_TUESDAY", "Tuesday");
@@ -148,3 +154,8 @@ define("_CO_EVENT_YEARS", "Years");
 //waiting plugin
 define("_CO_EVENT_CATEGORY_APPROVE", "Waiting categories for approval");
 define("_CO_EVENT_EVENT_APPROVE", "Waiting events for approval");
+define("_CO_EVENT_EVENT_UNLIMITED", "unlimited");
+define("_CO_EVENT_EVENT_JOINERS", "Subscribers");
+define("_CO_EVENT_USERS", "Users");
+define("_CO_EVENT_JOIN", "Join Event");
+define("_CO_EVENT_UNJOIN", "Unjoin Event");

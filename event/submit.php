@@ -34,7 +34,7 @@ include_once ICMS_ROOT_PATH . 'header.php';
 icms::$logger->disableLogger();
 $clean_op = (isset($_GET['op'])) ? filter_input(INPUT_GET, "op") : '';
 
-$valid_op = array("addevent", "resizeevent", "dropevent", "del");
+$valid_op = array("addevent", "resizeevent", "dropevent", "del", "join", "unjoin");
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
@@ -69,13 +69,15 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$event->setVar("event_submitter", $uid);
 			$event->setVar("event_url", $urllink);
 			$event->setVar("event_contact", filter_input(INPUT_POST,'event_contact'));
-			$event->setVar("event_cemail", filter_input(INPUT_POST, 'event_cemail'));
+			$event->setVar("event_cemail", filter_input(INPUT_POST, 'event_cemail', FILTER_VALIDATE_EMAIL));
 			$event->setVar("event_city", filter_input(INPUT_POST, 'event_city'));
 			$event->setVar("event_phone", filter_input(INPUT_POST, 'event_phone'));
 			$event->setVar("event_street", filter_input(INPUT_POST, 'event_street'));
-			$event->setVar("event_zip", filter_input(INPUT_POST, 'event_zip', FILTER_SANITIZE_NUMBER_INT));
+			$event->setVar("event_zip", (int)filter_input(INPUT_POST, 'event_zip'));
 			$event->setVar("event_public", filter_input(INPUT_POST, 'event_public', FILTER_SANITIZE_NUMBER_INT));
 			$event->setVar("event_allday", $allday);
+			$event->setVar("event_joiner", filter_input(INPUT_POST, 'event_joiners', FILTER_SANITIZE_NUMBER_INT));
+			$event->setVar("event_can_joint", filter_input(INPUT_POST, 'event_can_joint', FILTER_SANITIZE_NUMBER_INT));
 			if(!$event_isAdmin) {
 				$event->setVar("event_approve", FALSE);
 			} else {
@@ -88,7 +90,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$success_msg = ($event_isAdmin) ? _MD_EVENT_THANKS_SUBMITTING : _MD_EVENT_AWAITING_APPROVAL;
 			if(!$event_isAdmin) { $event->sendMessageAwaiting(); }
 			echo json_encode(array('status' => 'success','message'=> $success_msg));
-			
 			unset($_POST, $event, $event_handler);
 			exit;
             break;
@@ -107,7 +108,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$event->_updating = TRUE;
 			if(!$event_handler->insert($event)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));exit;}
 			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_RESIZED));
-			
 			exit;
             break;
 		case 'dropevent':
@@ -127,7 +127,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$event->setVar("event_enddate", $new_end);
 			$event->setVar("event_allday", $allday);
 			$event->_updating = TRUE;
-			unset($_POST);
 			if(!$event_handler->insert($event)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));unset($_POST);exit;}
 			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_RESIZED));
 			unset($_POST);
@@ -141,6 +140,28 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_DELETED));
 			unset($_POST);
 			exit;
+			break;
+		case 'join':
+			$event_id = filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT);
+			$event = $event_handler->get($event_id);
+			if($event->hasJoint()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			if(!$event->joinEvent()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+			$event->sendMessageJoined($uid);
+			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_JOINED));
+			unset($_POST); exit;
+			break;
+		
+		case 'unjoin':
+			$event_id = filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT);
+			$event = $event_handler->get($event_id);
+			if(!$event->hasJoint()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			if(!$event->unjoinEvent()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+			$event->sendMessageUnjoined($uid);
+			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_UNJOINED));
+			unset($_POST); exit;
+			break;
     }
     
     
