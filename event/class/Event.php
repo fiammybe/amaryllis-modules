@@ -117,8 +117,8 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	
 	public function getContact() {
 		$ret = FALSE;
-		$con = $this->getVar("event_contact", "e");
-		$email = $this->getVar("event_cemail", "e");
+		$con = $this->getVar("event_contact", "s");
+		$email = $this->getVar("event_cemail", "s");
 		if($con == "" || $con == "0") return FALSE;
 		$member_handler = icms::handler('icms_member_user');
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("uname", trim(strtolower($con))));
@@ -151,7 +151,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	}
 
 	public function getValue($value) {
-		return ($this->getVar("$value", "s") !== "0") ? $this->getVar("$value", "s") : ""; 
+		return ($this->getVar("$value", "s") != "0") ? $this->getVar("$value", "s") : ""; 
 	}
 	
 	public function getMaxJoiners() {
@@ -378,13 +378,15 @@ class mod_event_Event extends icms_ipf_seo_Object {
 			unset($profile_module, $friendship_handler, $friendObjects);
 			$member_handler = icms::handler('icms_member_user');
 			$users = $member_handler->getObjects($criteria, TRUE);
+			unset($member_handler);
 			if(!$users) return $friends;
 			$friends = array();
 			foreach (array_keys($users) as $key) {
-				if($uid !== $key)
+				//if($uid !== $key)
 				$friends[$key] = '<span class="event_friend"><img class="icon_middle" width="20px" height="20px" src="'
 									.$users[$key]->gravatar().'" />&nbsp;<a href="'.ICMS_URL .'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'</a></span>';
 			}
+			unset($users, $friends[$uid]);
 			return implode("&nbsp;", $friends);
 		}
 		return $friends;
