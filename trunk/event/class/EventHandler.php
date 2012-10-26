@@ -23,6 +23,8 @@ if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(_
 class mod_event_EventHandler extends icms_ipf_Handler {
     
     private $_catArray;
+	private $_usersArray;
+	private $_joinersArray;
 	
 	/**
 	 * Constructor
@@ -45,6 +47,15 @@ class mod_event_EventHandler extends icms_ipf_Handler {
         } return $this->_catArray;
     }
     
+    public function getJoinersArray() {
+    	if(!count($this->_joinersArray)) {
+    		$this->_joinersArray[0] = _NO;
+			$this->_joinersArray[1] = _CO_EVENT_USERS;
+			$this->_joinersArray[2] = _ALL;
+    	}
+		return $this->_joinersArray;
+    }
+	
 	/**
 	 * event criterias
 	 * @param $cat_id can be int cid or an array of cids
@@ -96,12 +107,47 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
+	public function getRenderedEvents($cat_id, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE, $zip = FALSE, $city = FALSE) {
+		
+		$criteria = $this->getEventCriterias($cat_id, 0, 0, $uid, $order, $sort, $limit);
+		$criteria->add(new icms_db_criteria_Item("event_startdate", (int)$start, '>='));
+		$criteria->add(new icms_db_criteria_Item("event_startdate", (int)$end, '<='));
+		if($zip) $criteria->add(new icms_db_criteria_Item("event_zip", $zip));
+		if($city) $criteria->add(new icms_db_criteria_Item("event_city", $city));
+		$events =& $this->getObjects($criteria, TRUE, TRUE);
+		if(!$events) return FALSE;
+		$ret = array();
+		foreach (array_keys($events) as $key) {
+			$path = ICMS_MODULES_PATH.'/'.EVENT_DIRNAME.'/templates/blocks/result.tpl';
+			$tpl = file_get_contents($path);
+			$tpl = str_replace("{START_MONTH}", $events[$key]->formatDate($events[$key]->getVar("event_startdate", "e"), "M"), $tpl);
+			$tpl = str_replace("{START_DAY}", $events[$key]->formatDate($events[$key]->getVar("event_startdate", "e"), "d"), $tpl);
+			$tpl = str_replace("{START_TIME}", $events[$key]->formatDate($events[$key]->getVar("event_startdate", "e"), "H:i"), $tpl);
+			$tpl = str_replace("{END_TIME}", $events[$key]->formatDate($events[$key]->getVar("event_enddate", "e"), "H:i"), $tpl);
+			$tpl = str_replace("{EVENT_LINK}", $events[$key]->getItemLink(FALSE), $tpl);
+			$ret[$key] = $tpl;
+			//unset($tpl);
+		}
+		return implode("&nbsp;", $ret);
+	}
+
 	public function getEventBySeo($seo) {
 		$event = FALSE;
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", trim($seo)));
-		$events = $this->getObjects($criteria, FALSE, FALSE);
-		if($events) $event = $this->get($events[0]['event_id']);
+		$events = $this->getObjects($criteria, FALSE, TRUE);
+		if($events) return $events[0];
 		return $event;
+	}
+	
+	public function getUsers() {
+		if(!count($this->_usersArray)) {
+			$users = icms::handler('icms_member')->getUserList();
+			$this->_usersArray[0] = _GUESTS;
+			foreach($users as $key => $value) {
+				$this->_usersArray[$key] = '<a href="'.ICMS_URL .'/userinfo.php?uid='.$key.'">'.$value.'</a>';
+			}
+		}
+		return $this->_usersArray;
 	}
 
 	public function deleteOldEvents($range) {
@@ -151,6 +197,31 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			}
 			return $bids;
 		}
+	}
+	
+	public function filterZip() {
+		$criteria = new icms_db_criteria_Item("event_zip", 0, '!=');
+		$sql = "SELECT DISTINCT event_zip FROM ".$this->table." ".$criteria->renderWhere() ;
+		if(!$result = $this->db->query($sql)) return FALSE;
+		$ret = array();
+		$ret[0] = "------------";
+		while ($myrow = $this->db->fetchArray($result)) {
+			$ret[$myrow['event_zip']] = $myrow['event_zip'];
+		}
+		return $ret;
+	}
+	
+	public function filterCity() {
+		$criteria = new icms_db_criteria_Item("event_city", "", '!=');
+		$sql = "SELECT DISTINCT event_city FROM ".$this->table." ".$criteria->renderWhere() ;
+		if(!$result = $this->db->query($sql)) return FALSE;
+		$ret = array();
+		$ret[0] = "------------";
+		while ($myrow = $this->db->fetchArray($result)) {
+			if(trim($myrow['event_city']) != "")
+			$ret[trim($myrow['event_city'])] = trim($myrow['event_city']);
+		}
+		return $ret;
 	}
 	
 	protected function beforeInsert(&$obj) {

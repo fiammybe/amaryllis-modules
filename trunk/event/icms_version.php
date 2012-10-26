@@ -72,7 +72,7 @@ $modversion = array(
                         "hasMain"                   => 1,
                     
                     /** Notification and comment information */
-                        "hasNotification"           => 0,
+                        "hasNotification"           => 1,
                         "hasComments"               => 1
                 );
 
@@ -80,6 +80,10 @@ $modversion['people']['developers'][] = "<a href='http://community.impresscms.or
 $modversion['people']['documenters'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a>";
 $modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=10' target='_blank'>Sato-San</a>";
 $modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=97' target='_blank'>Debianus</a>";
+$modversion['people']['testers'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=243' target='_blank'>optimistdd</a>";
+
+$modversion['people']['translators'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=243' target='_blank'>optimistdd</a>";
+$modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a>";
 /** Manual */
 $modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=event' target='_blank'>English</a>";
 $modversion['manual'][][] = "<a href='manual.php' target='_blank'>Manual</a>";
@@ -103,6 +107,8 @@ $i++;
 $modversion['object_items'][$i] = 'event';
 $i++;
 $modversion['object_items'][$i] = 'calendar';
+$i++;
+$modversion['object_items'][$i] = 'joiner';
 
 $modversion['tables'] = icms_getTablesArray( $modversion['dirname'], $modversion['object_items'] );
 
@@ -117,9 +123,7 @@ $modversion['templates'] = array(
 	array('file' => 'event_footer.html', 'description' => 'Module Footer'),
 	array('file' => 'event_print.html', 'description' => 'Print Template'),
     array("file" => "event_requirements.html", "description" => "event requirements")
-	);
-	
-
+);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// BLOCKS //////////////////////////////////////////////////////
@@ -145,6 +149,17 @@ $modversion['blocks'][$i]['show_func']		= 'b_event_list_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_event_list_edit';
 $modversion['blocks'][$i]['options']		= '0|1'; //category|Time Range
 $modversion['blocks'][$i]['template']		= 'event_block_list.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE;
+
+// Event list block
+$i++;
+$modversion['blocks'][$i]['file']			= 'event_select.php';
+$modversion['blocks'][$i]['name']			= _MI_EVENT_BLOCK_SELECT;
+$modversion['blocks'][$i]['description']	= _MI_EVENT_BLOCK_SELECT_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_event_select_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_event_select_edit';
+$modversion['blocks'][$i]['options']		= '0|1|1'; //category
+$modversion['blocks'][$i]['template']		= 'event_block_select.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

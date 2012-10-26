@@ -2,9 +2,9 @@
 /**
  * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
- * File: /blocks/event_mincal.php
+ * File: /class/Joiner.php
  * 
- * Block holding the minicalendar for index calendar
+ * Class representing event joiner objects
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -17,19 +17,20 @@
  *
  */
 
+
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 
-function b_event_mincal_show($options) {
-	global $eventConfig, $icmsTheme;
+class mod_event_Joiner extends icms_ipf_Object {
 	
-	$block['event_url'] = ICMS_MODULES_URL . "/" . EVENT_DIRNAME . "/" ;
-	$block['isRTL'] = (defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? 'true' : 'false';
-	return $block;
-}
-
-function b_event_mincal_edit($options) {
-	global $eventConfig, $icmsTheme;
-	$form = "";
-	return $form;
+	public function __construct(&$handler) {
+		parent::__construct($handler);
+		
+		$this->quickInitVar("joiner_id", XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar("joiner_eid", XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar("joiner_uid", XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar("joiner_ip", XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar("joiner_fprint", XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar("joiner_date", XOBJ_DTYPE_LTIME, TRUE);
+	}
 }

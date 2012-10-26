@@ -40,7 +40,9 @@
 div#show_event_dsc {margin: 2em 0; }
 span.event_contact {display: block;}
 span.event_contact img.icon_middle {margin-right: .5em;}
-
+div#event_join, div#event_unjoin {width: 7.5em; height: 2em; text-align: center; background-color: #6699FF; -moz-border-radius: 10px; border-radius: 10px; cursor: pointer; margin: 1em 0;padding-bottom: 1em !important;}
+div#event_unjoin {background-color: #336699 ;}
+div#event_join p, div#event_unjoin p {color: white;}
 .event_buttonbar {float:left; vertical-align: middle;}
 .event_buttonbar:hover {cursor:pointer; }
 .awaiting_approval {font-weight: bold; color: red;}
