@@ -16,26 +16,21 @@
  * @package		portfolio
  *
  */
-
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
-
 function b_portfolio_recent_contacts_show($options) {
 	global $portfolioConfig;
-	
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
 	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	$uid = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
-	$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-	$portfolio_contact_handler = icms_getModuleHandler("contact", basename(dirname(dirname(__FILE__))), "portfolio");
+	$module = icms::handler('icms_module')->getByDirname($moddir);
+	$portfolio_contact_handler = icms_getModuleHandler("contact", $moddir, "portfolio");
 	$block['portfolio_contacts'] = $portfolio_contact_handler->getContacts(0, $options[0]);
 	return $block;
 }
-
 function b_portfolio_recent_contacts_edit($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	
 	$form = '<table width="100%">';
 	$form .= '<tr>';
 	$form .= '<td>' . _MB_PORTFOLIO_PORTFOLIO_RECENT_LIMIT . '</td>';

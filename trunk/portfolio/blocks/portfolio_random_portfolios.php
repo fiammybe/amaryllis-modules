@@ -16,32 +16,25 @@
  * @package		portfolio
  *
  */
-
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
-
 function b_portfolio_random_portfolios_show($options) {
 	global $portfolioConfig;
-	
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$portfolio_portfolio_handler = icms_getModuleHandler('portfolio', basename(dirname(dirname(__FILE__))), 'portfolio');
-
+	$portfolio_portfolio_handler = icms_getModuleHandler('portfolio', $moddir, 'portfolio');
 	$portfolios = $portfolio_portfolio_handler->getPortfolios(TRUE, "RAND()", FALSE, 0, $options[0], $options[1]);
 	$block['portfolio_random'] = $portfolios;
-	
 	return $block;
 }
-
 function b_portfolio_random_portfolios_edit($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$portfolio_portfolio_handler = icms_getModuleHandler('portfolio', basename(dirname(dirname(__FILE__))), 'portfolio');
-	$portfolio_category_handler = icms_getModuleHandler('category', basename(dirname(dirname(__FILE__))), 'portfolio');
+	$portfolio_portfolio_handler = icms_getModuleHandler('portfolio', $moddir, 'portfolio');
+	$portfolio_category_handler = icms_getModuleHandler('category', $moddir, 'portfolio');
 	$setlimit = new icms_form_elements_Text('', 'options[0]', '', '', $options[0]);
 	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	$selcats = new icms_form_elements_Select('', 'options[1]', $options[1]);
 	$selcats->addOptionArray($portfolio_category_handler->getCategoryList(TRUE, TRUE));
-	
 	$form = '<table><tr>';
 	$form .= '<tr><td>' . _MB_PORTFOLIO_PORTFOLIO_RECENT_LIMIT . '</td>';
 	$form .= '<td>' . $setlimit->render() . '</td>';
