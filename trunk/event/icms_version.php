@@ -158,9 +158,9 @@ $modversion['blocks'][$i]['name']			= _MI_EVENT_BLOCK_SELECT;
 $modversion['blocks'][$i]['description']	= _MI_EVENT_BLOCK_SELECT_DSC;
 $modversion['blocks'][$i]['show_func']		= 'b_event_select_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_event_select_edit';
-$modversion['blocks'][$i]['options']		= '0|1|1'; //category
+$modversion['blocks'][$i]['options']		= '0|1|1|0'; //category
 $modversion['blocks'][$i]['template']		= 'event_block_select.html';
-$modversion['blocks'][$i]['can_clone']		= FALSE;
+$modversion['blocks'][$i]['can_clone']		= TRUE;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
