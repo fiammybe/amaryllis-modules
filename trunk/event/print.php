@@ -27,8 +27,8 @@ $clean_print = isset($_GET['print']) ? filter_input(INPUT_GET, 'print') : 'calen
 $valid_print = array("event", "calendar", "month", "day", "week");
 
 if(in_array($clean_print, $valid_print, TRUE)) {
-	$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "icmspoll");
-	$category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "icmspoll");
+	$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
+	$category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 	switch ($clean_print) {
 		case 'event':
 			$eventObj = $event_handler->getEventBySeo($clean_event);
