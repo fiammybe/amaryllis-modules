@@ -22,11 +22,14 @@ icms::$logger->disableLogger();
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 include_once '../include/common.php';
 icms_loadLanguageFile("event", "blocks");
-$clean_start = isset($_POST['range_start']) ? filter_input(INPUT_POST, "range_start") : FALSE;
-$clean_end = isset($_POST['range_end']) ? filter_input(INPUT_POST, "range_end") : FALSE;
-$clean_cat = isset($_POST['range_category']) ? filter_input(INPUT_POST, "range_category", FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_zip = isset($_POST['b_event_zip']) ? filter_input(INPUT_POST, "b_event_zip") : FALSE;
-$clean_city = isset($_POST['b_event_city']) ? filter_input(INPUT_POST, "b_event_city") : FALSE;
+$clean_bid = isset($_POST['event_bid']) ? filter_input(INPUT_POST, "event_bid", FILTER_SANITIZE_NUMBER_INT) : FALSE;
+if(!$clean_bid) exit;
+$clean_start = isset($_POST['range_start_'.$clean_bid]) ? filter_input(INPUT_POST, "range_start_$clean_bid") : FALSE;
+$clean_end = isset($_POST['range_end_'.$clean_bid]) ? filter_input(INPUT_POST, "range_end_$clean_bid") : FALSE;
+$clean_cat = isset($_POST['range_category_'.$clean_bid]) ? filter_input(INPUT_POST, "range_category_$clean_bid", FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_zip = isset($_POST['b_event_zip_'.$clean_bid]) ? filter_input(INPUT_POST, "b_event_zip_$clean_bid") : FALSE;
+$clean_city = isset($_POST['b_event_city_'.$clean_bid]) ? filter_input(INPUT_POST, "b_event_city_$clean_bid") : FALSE;
+
 if(!$clean_cat) {echo json_encode(array("status" => "success", "message" => _NOPERM)); unset($_POST); exit;}
 $uid = is_object(icms::$user) ? icms::$user->getVar("uid") : FALSE;
 if($clean_cat > 0) {

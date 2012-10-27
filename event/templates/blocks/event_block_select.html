@@ -1,40 +1,40 @@
 <link href="<{$block.event_url}>scripts/module_event_blocks.css" type="text/css" />
 <{$block.event_form}>
 
-<div id="events_output">&nbsp;</div>
-<div id="event_error_container" style="display: none;">&nbsp;</div>
+<div id="events_output_<{$block.bid}>">&nbsp;</div>
+<div id="event_error_container_<{$block.bid}>" style="display: none;">&nbsp;</div>
 <script src="<{$block.event_url}>scripts/jquery.form.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		
 		var options = {
-			target:   '#events_output',
+			target:   '#events_output_<{$block.bid}>',
 			dataType: 'json',
 			success: function(response) {
 						if(response.status === "success") {
-								$("#events_output, #event_error_container").html("");
-								$("#events_output").html(response.message);
-								$('#events_output').fadeIn('slow');
+								$("#events_output_<{$block.bid}>, #event_error_container_<{$block.bid}>").html("");
+								$("#events_output_<{$block.bid}>").html(response.message);
+								$('#events_output_<{$block.bid}>').fadeIn('slow');
 						} else if(response.status === "error") {
-							$("div#event_error_container").show();
-							$("#event_error_container").html("<{$smarty.const._MD_FORMS_FAILURE}>: " + response.message);
+							$("div#event_error_container_<{$block.bid}>").show();
+							$("#event_error_container_<{$block.bid}>").html("<{$smarty.const._MD_FORMS_FAILURE}>: " + response.message);
 							return false;
 						} else {
-							$("div#event_error_container").show();
-							$("#event_error_container").html("<{$smarty.const._MD_FORMS_FAILUREWENTWRONG}>: " + response.message);
+							$("div#event_error_container_<{$block.bid}>").show();
+							$("#event_error_container_<{$block.bid}>").html("<{$smarty.const._MD_FORMS_FAILUREWENTWRONG}>: " + response.message);
 							return false;
 						}
 					}
 		};
 		
-		$("#range_category, #b_event_zip, #b_event_city").change(function() {
-			$("#event_select").ajaxSubmit(options);
+		$("#range_category_<{$block.bid}>, #b_event_zip_<{$block.bid}>, #b_event_city_<{$block.bid}>").change(function() {
+			$("#event_select_<{$block.bid}>").ajaxSubmit(options);
 		});
 		
-		$("#range_start, #range_end").datepicker({
+		$("#range_start_<{$block.bid}>, #range_end_<{$block.bid}>").datepicker({
 			dateFormat: "d/mm/yy",
 			onSelect: function(date) {
-				$("#event_select").ajaxSubmit(options);
+				$("#event_select_<{$block.bid}>").ajaxSubmit(options);
 			},
 			changeMonth: true,
 			changeYear: true,
