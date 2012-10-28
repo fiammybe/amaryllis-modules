@@ -11,7 +11,7 @@
  * ----------------------------------------------------------------------------------------------------------
  * 				Portfolio
  * @since		1.00
- * @author		QM-B <qm-b@hotmail.de>
+ * @author		optimistdd
  * @version		$Id$
  * @package		portfolio
  *
