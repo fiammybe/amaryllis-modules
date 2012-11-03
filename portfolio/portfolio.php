@@ -137,18 +137,19 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 	/**
 	 * include the comment rules
 	 */
-	if ($portfolioConfig['com_rule']) {
+	if ($portfolioConfig['com_rule'] > 0) {
 		$icmsTpl->assign('portfolio_portfolio_comment', TRUE);
+		$_GET['portfolio_id'] = $portfolioObj->id();
 		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 	}
 	
 	if ($portfolioConfig['show_breadcrumbs'] == 1){
 		$icmsTpl->assign('portfolio_cat_path', $portfolioObj->getPortfolioCid(TRUE).' : '.$portfolioObj->title());
-	} else{
-		$icmsTpl->assign('portfolio_cat_path',FALSE);
 	}
 
 	$icms_metagen = new icms_ipf_Metagen($portfolioObj->title(), $portfolioObj->meta_keywords(), $portfolioObj->meta_description());
 	$icms_metagen->createMetaTags();
+} else {
+	redirect_header(PORTFOLIO_URL, 5, _NOPERM);
 }
 include_once 'footer.php';
