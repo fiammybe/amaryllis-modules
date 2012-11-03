@@ -46,3 +46,4 @@ define("_MD_PORTFOLIO_CONTACTS_BC", "Nachrichten Liste");
  */
 define("_MD_PORTFOLIO_ERROR_STORING", "Es gab einen Fehler beim Speichern der Daten");
 define("_THANKS_SUBMISSION_REV", "Vielen Dank, dass Sie uns kontaktiert haben. Wir werden uns schnellstmöglich mit Ihnen in Verbindung setzen.");
+define("_MD_PORTFOLIO_USED_TECHNIQUES", "Genutzte Techniken");

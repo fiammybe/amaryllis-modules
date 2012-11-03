@@ -137,3 +137,5 @@ define("_CO_PORTFOLIO_VIEW", "view");
  */
 define("_CO_PORTFOLIO_PORTFOLIO_CONTACT_SBJ", "New message in Portfolios");
 define("_CO_PORTFOLIO_PORTFOLIO_CONTACT_BDY", "You got a new messag in portfolio Module. Go to &raquo; %s &laquo; to view the message");
+define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_TECHNIQUES", "Used techniques, Seperate by '|'");
+define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_TECHNIQUES_DSC", "");

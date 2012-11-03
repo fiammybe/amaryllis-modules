@@ -137,3 +137,5 @@ define("_CO_PORTFOLIO_VIEW", "Ansehen");
  */
 define("_CO_PORTFOLIO_PORTFOLIO_CONTACT_SBJ", "Neue Nachricht in Portfolios");
 define("_CO_PORTFOLIO_PORTFOLIO_CONTACT_BDY", "Sie haben eine neue Nachricht aus dem Portfolio Module. Gehe zu &raquo;%s&laquo; um die Nachricht zu lesen");
+define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_TECHNIQUES", "Genutzte Techniken, Seperate by '|'");
+define("_CO_PORTFOLIO_PORTFOLIO_PORTFOLIO_TECHNIQUES_DSC", "");
