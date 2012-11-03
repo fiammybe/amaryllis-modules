@@ -17,10 +17,9 @@
  *
  */
 
-
 function portfolio_com_update($item_id, $total_num) {
-    $portfolio_portfolio_handler = icms_getModuleHandler("portfolio", basename(dirname(dirname(__FILE__))), "portfolio");
-    $portfolio_portfolio_handler->updateComments($item_id, $total_num);
+    $portfolio_handler = icms_getModuleHandler("portfolio", basename(dirname(dirname(__FILE__))), "portfolio");
+    //$portfolio_handler->updateComments($item_id, $total_num);
 }
 
 function portfolio_com_approve(&$comment) {
