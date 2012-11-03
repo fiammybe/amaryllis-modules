@@ -46,3 +46,4 @@ define("_MD_PORTFOLIO_CONTACTS_BC", "Message List");
  */
 define("_MD_PORTFOLIO_ERROR_STORING", "An Error occurs while storing the data.");
 define("_THANKS_SUBMISSION_REV", "Thanks for contacting,we'll reply as soon as possible.");
+define("_MD_PORTFOLIO_USED_TECHNIQUES", "Used Techniques");

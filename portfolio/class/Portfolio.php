@@ -42,6 +42,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		$this->quickInitVar("portfolio_submitter", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("portfolio_updater", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("portfolio_active", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
+		$this->quickInitVar("portfolio_techniques", XOBJ_DTYPE_TXTAREA, FALSE);
 		$this->initCommonVar("counter", FALSE, 0);
 		$this->initCommonVar("weight", FALSE);
 		$this->initCommonVar("dohtml", FALSE, 1);
@@ -93,6 +94,11 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		$control = new icms_form_elements_Text( '', 'weight[]', 5, 7,$this -> getVar( "weight", "e" ) );
 		$control->setExtra( 'style="text-align:center;"' );
 		return $control->render();
+	}
+
+	public function getTechniques() {
+		$techniques = str_replace("<!-- Input Filtered -->", "", $this->getVar("portfolio_techniques"));
+		return explode("|", $techniques);
 	}
 	
 	/**
@@ -252,6 +258,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['album'] = $this->displayAlbum();
+		$ret['techniques'] = $this->getTechniques();
 		return $ret;
 	}
 }

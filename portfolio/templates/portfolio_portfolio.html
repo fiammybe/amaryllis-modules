@@ -40,6 +40,15 @@
 			<h2><{$smarty.const._MD_PORTFOLIO_VIEW_DEMO}></h2>
 			<{$portfolio.demo}>
 		<{/if}>
+		
+		<{if $portfolio.techniques}>
+			<h2><{$smarty.const._MD_PORTFOLIO_USED_TECHNIQUES}></h2>
+			<ul id="portfolio_techniques">
+				<{foreach item=technique from=$portfolio.techniques}>
+					<li><{$technique}></li>
+				<{/foreach}>
+			</ul>
+		<{/if}>
 	</div>
 	<div class="social">
 		<{if $portfolio_googleplus}>
