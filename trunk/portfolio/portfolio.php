@@ -55,28 +55,14 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 	if($portfolioObj->displayAlbum() && icms_get_module_status("album")) {
 		$albumModule = icms_getModuleInfo("album");
 		$aid = $portfolioObj->getVar("portfolio_album", "e");
-		$album_images_handler = icms_getModuleHandler("images", $albumModule->getVar("dirname"), "album");
-		$directory_name = basename(dirname( __FILE__ ) );
-		$script_name = getenv("SCRIPT_NAME");
-		$document_root = str_replace('modules/' . $directory_name . '/portfolio.php', '', $script_name);
-		$albumConfig = icms_getModuleConfig ($albumModule->getVar('dirname') );
-		include_once ICMS_ROOT_PATH . '/modules/' . $albumModule->getVar('dirname') . '/include/common.php';
+		$images_handler = icms_getModuleHandler("images", $albumModule->getVar("dirname"), "album");
+		$directory_name = basename(dirname(dirname(dirname(__FILE__))));
+		//include_once ICMS_ROOT_PATH . '/modules/' . $albumModule->getVar('dirname') . '/include/common.php';
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->add(new icms_db_criteria_Item('img_active', 1));
 		$criteria->add(new icms_db_criteria_Item('a_id', $aid ));
-		$imagesObjects = $album_images_handler->getObjects($criteria, TRUE, TRUE);
-		$album_images = array();
-		foreach ( $imagesObjects as $imagesObj ) {
-			$image = $imagesObj -> toArray();
-			$image['img_url'] = $document_root . 'uploads/' . $albumModule->getVar('dirname') . '/images/' . $imagesObj->getVar('img_url', 'e');
-			$image['show_images_per_row'] = $albumConfig['show_images_per_row'];
-			$image['thumbnail_width'] = $portfolioConfig['thumbnail_width'];
-			$image['thumbnail_height'] = $portfolioConfig['thumbnail_height'];
-			$album_images[] = $image;
-		}
-		$album_image_rows = array_chunk($album_images, $albumConfig['show_images_per_row']);
-		$icmsTpl->assign('album_images', $album_images);
-		$icmsTpl->assign('album_image_rows', $album_image_rows);
+		$images = $images_handler->getObjects($criteria, TRUE, FALSE);
+		$icmsTpl->assign('album_images', $images);
 	}
 
 	/**

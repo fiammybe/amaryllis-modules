@@ -85,10 +85,9 @@ class PortfolioPortfolioHandler extends icms_ipf_Handler {
 	
 	public function getPortfolioBySeo($seo) {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", trim($seo)));
-		$portfolios = $this->getObjects($criteria, FALSE, FALSE);
+		$portfolios = $this->getObjects($criteria, FALSE, TRUE);
 		if(!$portfolios) return FALSE;
-		$portfolio = $this->get($portfolios[0]['id']);
-		return $portfolio;
+		return $portfolios[0];
 	}	
 	
 	//set category online/offline
@@ -113,7 +112,7 @@ class PortfolioPortfolioHandler extends icms_ipf_Handler {
 	public function getCategoryList() {
 		if(!count($this->_catArray)) {
 			$category_handler = icms_getModuleHandler("category", PORTFOLIO_DIRNAME, "portfolio");
-			$categorys = $portfolio_category_handler->getObjects(FALSE, TRUE);
+			$categorys = $category_handler->getObjects(FALSE, TRUE);
 			foreach ($categorys as $key => $value) {
 				$this->_catArray[$key] = $value['title'];
 			}
