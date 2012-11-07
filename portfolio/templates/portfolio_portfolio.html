@@ -17,17 +17,15 @@
 		<{if $portfolio.album}>
 			<h2><{$smarty.const._MD_PORTFOLIO_VIEW_MORE_IMAGES}></h2>
 			<div class="portfolio_album">
-				<{foreach item=album_row from=$album_image_rows}>
-					<div class="album_images_row">
-						<{foreach item=album_images from=$album_row}>
-							<div class="album_image">
-								<a href="<{$album_images.img_url}>" class="portfolio_image" title="<{$album_images.title}>" rel="lightbox" alt="<{$album_images.dsc}>">
-									<{resized_image file=$album_images.img_url width=$thumbnail_width height=$thumbnail_height fit="inside"}>
-								</a>
-							</div>
-						<{/foreach}>
-					</div>
-				<{/foreach}>
+				<div class="album_images_row">
+					<{foreach item=images from=$album_images}>
+						<div class="album_image">
+							<a href="<{$images.img_url}>" class="portfolio_image" title="<{$images.title}>" rel="lightbox" alt="<{$images.dsc}>">
+								<{resized_image file=$images.img_url width=$thumbnail_width height=$thumbnail_height fit="inside"}>
+							</a>
+						</div>
+					<{/foreach}>
+				</div>
 			</div>
 		<{/if}>
 		

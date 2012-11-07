@@ -62,6 +62,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 			$this->hideFieldFromForm("portfolio_album");
 			$this->hideFieldFromSingleView("portfolio_album");
 		}
+		$this->setImageDir(ICMS_UPLOAD_URL."/".PORTFOLIO_DIRNAME."/".$this->handler->_itemname, ICMS_UPLOAD_PATH."/".PORTFOLIO_DIRNAME."/".$this->handler->_itemname);
 		$this->initiateSEO();
 		$this->hideFieldFromForm(array("meta_keywords", "meta_description", "portfolio_submitter", "portfolio_updater", "portfolio_p_date", "portfolio_u_date"));
 		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley", "weight"));
@@ -138,7 +139,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 	
 	public function displayAlbum() {
 		$album = $this->getVar("portfolio_album", "e");
-		return ($album > 0) ? TRUE : FALSE;
+		return ($album > 0 && icms_get_module_status("album")) ? TRUE : FALSE;
 	}
 	
 	public function getDemoLink() {
@@ -150,34 +151,11 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		}
 	}
 	
-	public function getPortfolioImageTag($singleview = TRUE, $catview = FALSE) {
-		$portfolio_img = $image_tag = '';
-		$directory_name = PORTFOLIO_DIRNAME;
-		$script_name = getenv("SCRIPT_NAME");
+	public function getPortfolioImageTag() {
+		$directory_name = basename(dirname(dirname(dirname(dirname(__FILE__)))));
 		$portfolio_img = $this->getVar('portfolio_img', 'e');
-		if($singleview) {
-			$document_root = str_replace('modules/' . $directory_name . '/portfolio.php', '', $script_name);
-			if (!$portfolio_img == "") {
-				$image_tag = $document_root . 'uploads/' . $directory_name . '/portfolio/' . $portfolio_img;
-			}else {
-				$image_tag = FALSE;
-			}
-		} elseif($catview) {
-			$document_root = str_replace('modules/' . $directory_name . '/category.php', '', $script_name);
-			if (!$portfolio_img == "") {
-				$image_tag = $document_root . 'uploads/' . $directory_name . '/portfolio/' . $portfolio_img;
-			} else {
-				$image_tag = FALSE;
-			}
-		} else {
-			$document_root = str_replace('modules/' . $directory_name . '/index.php', '', $script_name);
-			if (!$portfolio_img == "") {
-				$image_tag = $document_root . 'uploads/' . $directory_name . '/portfolio/' . $portfolio_img;
-			} else {
-				$image_tag = FALSE;
-			}
-		}
-		return $image_tag;
+		if($portfolio_img == "") return FALSE;
+		return "/".$directory_name.'/uploads/'.PORTFOLIO_DIRNAME.'/portfolio/'.$portfolio_img;
 	}
 	
 	function getPortfolioSubmitter ($link = FALSE) {

@@ -21,8 +21,8 @@ include_once 'header.php';
 
 $com_itemid = isset($_GET['com_itemid']) ? filter_input(INPUT_GET, 'com_itemid', FILTER_SANITIZE_NUMBER_INT) : 0;
 if ($com_itemid > 0) {
-	$portfolio_portfolio_handler = icms_getModuleHandler("portfolio", basename(dirname(__FILE__)),"portfolio");
-	$portfolioObj = $portfolio_portfolio_handler->get($com_itemid);
+	$portfolio_handler = icms_getModuleHandler("portfolio", basename(dirname(__FILE__)),"portfolio");
+	$portfolioObj = $portfolio_handler->get($com_itemid);
 	if ($portfolioObj && !$portfolioObj->isNew()) {
 		$com_replytext = "";
 		$bodytext = $portfolioObj->getVar('portfolio_body');

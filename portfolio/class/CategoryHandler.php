@@ -44,12 +44,10 @@ class PortfolioCategoryHandler extends icms_ipf_Handler {
 	}
 	
 	public function getCatBySeo($seo) {
-		$ret = FALSE;
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", trim($seo)));
-		$cats = $this->getObjects($criteria, FALSE, FALSE);
-		if(!$cats) return $ret;
-		$ret = $this->get($cats[0]['id']);
-		return $ret;
+		$cats = $this->getObjects($criteria, FALSE, TRUE);
+		if(!$cats) return FALSE;
+		return $cats[0];
 	}
 
 	public function getCategoryList($active = FALSE, $shownull = FALSE) {
@@ -145,7 +143,6 @@ class PortfolioCategoryHandler extends icms_ipf_Handler {
 			$obj->setVar('index_image', $obj->getVar('category_logo_upl') );
 			$obj->setVar('category_logo_upl', "" );
 		}
-		if($obj->_updating) return TRUE;
 		//check, id seo exists
 		$seo = trim($obj->short_url());
 		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);

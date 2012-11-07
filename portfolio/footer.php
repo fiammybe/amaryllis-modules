@@ -66,9 +66,6 @@ $icmsTpl->assign('portfolio_images_url', PORTFOLIO_IMAGES_URL);
 /**
  * force portfolio.js to header
  */
-/**
- * force portfolio.js to header
- */
 $xoTheme->addScript('/modules/' . PORTFOLIO_DIRNAME . '/scripts/jquery.qtip.min.js', array('type' => 'text/javascript'));
 $xoTheme->addStylesheet('/modules/' . PORTFOLIO_DIRNAME . '/scripts/jquery.qtip.min.css');
 $xoTheme->addScript('/modules/' . PORTFOLIO_DIRNAME . '/scripts/portfolio.js', array('type' => 'text/javascript'));
