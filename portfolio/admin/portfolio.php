@@ -139,7 +139,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 			$icmsAdminTpl->assign('portfolio_portfolio_table', $objectTable->fetch());
 			$icmsAdminTpl->display('db:portfolio_admin.html');
-			icms_core_Debug::message(getenv("SCRIPT_NAME"));
 			break;
 	}
 	include_once 'admin_footer.php';
