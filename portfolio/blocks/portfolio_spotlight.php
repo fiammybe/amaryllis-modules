@@ -16,29 +16,34 @@
  * @package		portfolio
  *
  */
+
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
+if(!defined("PORTFOLIO_DIRNAME")) define("PORTFOLIO_DIRNAME",basename(dirname(dirname(__FILE__))));
+
 function b_portfolio_spotlight_show($options) {
 	global $portfolioConfig, $xoTheme;
-	$moddir = basename(dirname(dirname(__FILE__)));
-	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$portfolio_portfolio_handler = icms_getModuleHandler('portfolio', 'portfolio');
-	$portfolios = $portfolio_portfolio_handler->getPortfolios(TRUE, "portfolio_p_date", "DESC", 0, $options[0], $options[1]);
+	include_once ICMS_ROOT_PATH . '/modules/' . PORTFOLIO_DIRNAME . '/include/common.php';
+	$portfolio_handler = icms_getModuleHandler('portfolio', PORTFOLIO_DIRNAME, 'portfolio');
+	$portfolios = $portfolio_handler->getPortfolios(TRUE, "portfolio_p_date", "DESC", 0, $options[0], $options[1]);
 	$block['thumbnail_width'] = $portfolioConfig['thumbnail_width'];
 	$block['thumbnail_height'] = $portfolioConfig['thumbnail_height'];
 	$block['portfolio_spotlight'] = $portfolios;
 	return $block;
 }
+
 function b_portfolio_spotlight_edit($options) {
-	$moddir = basename(dirname(dirname(__FILE__)));
-	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$portfolio_portfolio_handler = icms_getModuleHandler('portfolio', $moddir, 'portfolio');
-	$portfolio_category_handler = icms_getModuleHandler('category', $moddir, 'portfolio');
-	$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+	include_once ICMS_ROOT_PATH . '/modules/' . PORTFOLIO_DIRNAME . '/include/common.php';
+	$portfolio_handler = icms_getModuleHandler('portfolio', PORTFOLIO_DIRNAME, 'portfolio');
+	$category_handler = icms_getModuleHandler('category', PORTFOLIO_DIRNAME, 'portfolio');
+	$limit = new icms_form_elements_Text("", "options[0]", 7, 10, $options[0]);
+	
+	$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 	$selcats = new icms_form_elements_Select('', 'options[1]', $options[1]);
-	$selcats->addOptionArray($portfolio_category_handler->getCategoryList(TRUE, TRUE));
-	$form = '<table><tr>';
-	$form .= '<tr><td>' . _MB_PORTFOLIO_PORTFOLIO_RECENT_LIMIT . '</td>';
-	$form .= '<td>' . '<input type="text" name="options[0]" value="' . $options[0] . '"/></td>';
+	$selcats->addOptionArray($category_handler->getCategoryList(TRUE, TRUE));
+	$form = '<table>';
+	$form .= '<tr>';
+	$form .= '<td>' . _MB_PORTFOLIO_PORTFOLIO_RECENT_LIMIT . '</td>';
+	$form .= '<td>' . $limit->render() . '</td>';
 	$form .= '</tr>';
 	$form .= '<tr>';
 	$form .= '<td width="30%">' . _MB_PORTFOLIO_CATEGORY_CATSELECT . '</td>';

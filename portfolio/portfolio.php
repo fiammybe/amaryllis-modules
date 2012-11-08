@@ -27,7 +27,7 @@ include_once ICMS_ROOT_PATH . '/header.php';
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$portfolio_indexpage_handler = icms_getModuleHandler( "indexpage", icms::$module -> getVar( 'dirname' ), "portfolio" );
+$portfolio_indexpage_handler = icms_getModuleHandler("indexpage", icms::$module->getVar( 'dirname' ), "portfolio");
 $indexpageObj = $portfolio_indexpage_handler->get(1);
 $index = $indexpageObj->toArray();
 $icmsTpl->assign('portfolio_index', $index);
@@ -37,7 +37,6 @@ $icmsTpl->assign('portfolio_index', $index);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $portfolio_handler = icms_getModuleHandler( "portfolio", icms::$module->getVar('dirname'), "portfolio");
-$clean_portfolio_id = isset($_GET['portfolio_id']) ? filter_input(INPUT_GET, 'portfolio_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_portfolio = isset($_GET['portfolio']) ? filter_input(INPUT_GET, 'portfolio') : FALSE;
 if ($clean_portfolio) {
 	$portfolioObj = $portfolio_handler->getPortfolioBySeo($clean_portfolio);
@@ -51,7 +50,6 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 	$portfolio_handler->updateCounter($portfolioObj->id());
 	$portfolio = $portfolioObj->toArray();
 	$icmsTpl->assign("portfolio", $portfolio);
-	
 	if($portfolioObj->displayAlbum() && icms_get_module_status("album")) {
 		$albumModule = icms_getModuleInfo("album");
 		$aid = $portfolioObj->getVar("portfolio_album", "e");
@@ -64,7 +62,6 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 		$images = $images_handler->getObjects($criteria, TRUE, FALSE);
 		$icmsTpl->assign('album_images', $images);
 	}
-
 	/**
 	 * display social media buttons
 	 */
@@ -85,7 +82,6 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 				<span style="margin-right: 10px;"><a href="https://twitter.com/share" class="twitter-share-button" data-count="' . $counter . '">' . _MD_PORTFOLIO_TWITTER . '</a></span>';
 		$icmsTpl->assign("portfolio_twitter", $tw);
 	}
-	
 	if($portfolioConfig['display_fblike'] > 0) {
 		//Facebook button
 		switch ( $portfolioConfig['display_fblike'] ) {
@@ -99,7 +95,6 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 		$fb = '<div data-href="' . $portfolioObj->getItemLink(TRUE) . '" class="fb-like" data-send="FALSE" data-layout="' . $counter . '" data-show-faces="FALSE"></div>';
 		$icmsTpl->assign("portfolio_facebook", $fb);
 	}
-	
 	//Google +1 button
 	if($portfolioConfig['display_gplus'] > 0) {
 		switch ( $portfolioConfig['display_gplus'] ) {
@@ -119,7 +114,6 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 		$xoTheme->addScript('/modules/' . PORTFOLIO_DIRNAME . '/scripts/jquery.socialshareprivacy.js', array('type' => 'text/javascript'));
 		$xoTheme->addStylesheet('/modules/' . PORTFOLIO_DIRNAME . '/scripts/socialshareprivacy.css');
 	}
-	
 	/**
 	 * include the comment rules
 	 */
@@ -128,11 +122,9 @@ if (is_object($portfolioObj) && (!$portfolioObj->isNew()) && ($portfolioObj->acc
 		$_GET['portfolio_id'] = $portfolioObj->id();
 		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 	}
-	
 	if ($portfolioConfig['show_breadcrumbs'] == 1){
 		$icmsTpl->assign('portfolio_cat_path', $portfolioObj->getPortfolioCid(TRUE).' : '.$portfolioObj->title());
 	}
-
 	$icms_metagen = new icms_ipf_Metagen($portfolioObj->title(), $portfolioObj->meta_keywords(), $portfolioObj->meta_description());
 	$icms_metagen->createMetaTags();
 } else {
