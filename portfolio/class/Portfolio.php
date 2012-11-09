@@ -68,10 +68,8 @@ class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley", "weight"));
 	}
 	
-	public function getVar($key, $format = "s")
-	{
-		if ($format == "s" && in_array($key, array("portfolio_active")))
-		{
+	public function getVar($key, $format = "s")	{
+		if ($format == "s" && in_array($key, array("portfolio_active"))) {
 			return call_user_func(array ($this,	$key));
 		}
 		return parent::getVar($key, $format);
@@ -160,11 +158,34 @@ class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 		}
 	}
 	
-	public function getPortfolioImageTag() {
-		$directory_name = basename(dirname(dirname(dirname(dirname(__FILE__)))));
+	public function getPortfolioImageTag($singleview = TRUE, $catview = FALSE) {
+		$portfolio_img = $image_tag = '';
+		$directory_name = basename(dirname( dirname( __FILE__ ) ));
+		$script_name = getenv("SCRIPT_NAME");
 		$portfolio_img = $this->getVar('portfolio_img', 'e');
-		if($portfolio_img == "") return FALSE;
-		return "/".$directory_name.'/uploads/'.PORTFOLIO_DIRNAME.'/portfolio/'.$portfolio_img;
+		if($singleview) {
+			$document_root = str_replace('modules/' . $directory_name . '/portfolio.php', '', $script_name);
+			if (!$portfolio_img == "") {
+				$image_tag = $document_root . 'uploads/' . $directory_name . '/portfolio/' . $portfolio_img;
+			}else {
+				$image_tag = FALSE;
+			}
+		} elseif($catview) {
+			$document_root = str_replace('modules/' . $directory_name . '/category.php', '', $script_name);
+			if (!$portfolio_img == "") {
+				$image_tag = $document_root . 'uploads/' . $directory_name . '/portfolio/' . $portfolio_img;
+			} else {
+				$image_tag = FALSE;
+			}
+		} else {
+			$document_root = str_replace('modules/' . $directory_name . '/index.php', '', $script_name);
+			if (!$portfolio_img == "") {
+				$image_tag = $document_root . 'uploads/' . $directory_name . '/portfolio/' . $portfolio_img;
+			} else {
+				$image_tag = FALSE;
+			}
+		}
+		return $image_tag;
 	}
 	
 	function getPortfolioSubmitter ($link = FALSE) {
