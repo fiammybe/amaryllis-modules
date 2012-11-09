@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class PortfolioContactHandler extends icms_ipf_Handler {
+class mod_portfolio_ContactHandler extends icms_ipf_Handler {
 	
 	public function __construct(&$db) {
 		global $portfolioConfig;

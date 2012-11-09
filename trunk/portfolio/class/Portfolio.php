@@ -20,7 +20,7 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("PORTFOLIO_DIRNAME")) define("PORTFOLIO_DIRNAME",basename(dirname(dirname(__FILE__))));
 
-class PortfolioPortfolio extends icms_ipf_seo_Object {
+class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 	
 	public function __construct(&$handler) {
 		global $portfolioConfig;
@@ -33,7 +33,7 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 		$this->quickInitVar("portfolio_summary", XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar("portfolio_show_summary", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
 		$this->quickInitVar("portfolio_description", XOBJ_DTYPE_TXTAREA);
-		$this->quickInitVar("portfolio_img", XOBJ_DTYPE_IMAGE);
+		$this->quickInitVar("portfolio_img", XOBJ_DTYPE_IMAGE, FALSE);
 		$this->quickInitVar("portfolio_album", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("portfolio_customer", XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar("portfolio_url", XOBJ_DTYPE_URLLINK);
@@ -62,10 +62,19 @@ class PortfolioPortfolio extends icms_ipf_seo_Object {
 			$this->hideFieldFromForm("portfolio_album");
 			$this->hideFieldFromSingleView("portfolio_album");
 		}
-		$this->setImageDir(ICMS_UPLOAD_URL."/".PORTFOLIO_DIRNAME."/".$this->handler->_itemname, ICMS_UPLOAD_PATH."/".PORTFOLIO_DIRNAME."/".$this->handler->_itemname);
+		$this->setImageDir(ICMS_URL.'/uploads/'.PORTFOLIO_DIRNAME.'/', ICMS_ROOT_PATH.'/uploads/'.PORTFOLIO_DIRNAME.'/');
 		$this->initiateSEO();
 		$this->hideFieldFromForm(array("meta_keywords", "meta_description", "portfolio_submitter", "portfolio_updater", "portfolio_p_date", "portfolio_u_date"));
 		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley", "weight"));
+	}
+	
+	public function getVar($key, $format = "s")
+	{
+		if ($format == "s" && in_array($key, array("portfolio_active")))
+		{
+			return call_user_func(array ($this,	$key));
+		}
+		return parent::getVar($key, $format);
 	}
 	
 	public function portfolio_active() {

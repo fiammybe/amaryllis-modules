@@ -87,7 +87,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 			
 		case "changeWeight":
-			foreach ($_POST['PortfolioCategory_objects'] as $key => $value) {
+			foreach ($_POST['mod_portfolio_Category_objects'] as $key => $value) {
 				$changed = FALSE;
 				$categoryObj = $portfolio_category_handler -> get( $value );
 

@@ -91,7 +91,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 			
 		case "changeWeight":
-			foreach ($_POST['PortfolioPortfolio_objects'] as $key => $value) {
+			foreach ($_POST['mod_portfolio_Portfolio_objects'] as $key => $value) {
 				$changed = FALSE;
 				$portfolioObj = $portfolio_handler->get($value);
 				if ($portfolioObj->getVar('weight', 'e') != $_POST['weight'][$key]) {

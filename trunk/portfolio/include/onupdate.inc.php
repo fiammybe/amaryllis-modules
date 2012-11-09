@@ -128,14 +128,14 @@ function upgrade_v1_1() {
 ////////////////////////////////////// UPDATE PORTFOLIO MODULE //////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function icms_module_update_portfolio($module) {
+function icms_module_update_portfolio(&$module) {
 	upgrade_v1_1();
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 	$icmsDatabaseUpdater -> moduleUpgrade($module);
     return TRUE;
 }
 
-function icms_module_install_portfolio($module) {
+function icms_module_install_portfolio(&$module) {
 	// check if upload directories exist and make them if not
 	portfolio_upload_paths();
 	
