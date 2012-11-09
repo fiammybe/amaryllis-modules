@@ -20,7 +20,7 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("PORTFOLIO_DIRNAME")) define("PORTFOLIO_DIRNAME",basename(dirname(dirname(__FILE__))));
 
-class PortfolioPortfolioHandler extends icms_ipf_Handler {
+class mod_portfolio_PortfolioHandler extends icms_ipf_Handler {
 	
 	private $_portfolioArray;
 	private $_catArray;

@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class PortfolioCategory extends icms_ipf_seo_Object {
+class mod_portfolio_Category extends icms_ipf_seo_Object {
 	
 	public $_updating = FALSE;
 	

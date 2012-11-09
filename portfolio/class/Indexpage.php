@@ -19,11 +19,11 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class PortfolioIndexpage extends icms_ipf_Object {
+class mod_portfolio_Indexpage extends icms_ipf_Object {
 	/**
 	 * Constructor
 	 *
-	 * @param PortfolioIndexpage $handler Object handler
+	 * @param mod_portfolio_Indexpage $handler Object handler
 	 */
 	public function __construct(&$handler) {
 		parent::__construct($handler);

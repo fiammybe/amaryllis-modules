@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class PortfolioContact extends icms_ipf_Object {
+class mod_portfolio_Contact extends icms_ipf_Object {
 	
 	public function __construct(&$handler) {
 		icms_ipf_Object::__construct($handler);

@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class PortfolioCategoryHandler extends icms_ipf_Handler {
+class mod_portfolio_CategoryHandler extends icms_ipf_Handler {
 	
 	public $_moduleName;
 	private $_userArray;
