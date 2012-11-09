@@ -47,8 +47,8 @@
 								<div class="portfolio_title">
 									<{$portfolio.itemLink}><{if $portfolio.customer}>&nbsp;:&nbsp;<span class="portfolio_customer"><{$portfolio.customer}></span><{/if}>
 								</div>
-								<a href="<{$portfolio.index_img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
-									<{resized_image file=$portfolio.index_img width=$display_width height=$display_height fit="inside"}>
+								<a href="<{$portfolio.cat_img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
+									<{resized_image file=$portfolio.cat_img width=$display_width height=$display_height fit="inside"}>
 								</a>
 								<div class="portfolio_read_more">
 									<a href="<{$portfolio.itemURL}>" title="<{$smarty.const._MD_PORTFOLIO_VIEW_DETAIL}>"><{$smarty.const._MD_PORTFOLIO_VIEW_DETAIL}></a>
@@ -69,8 +69,8 @@
 						<div class="portfolio_title">
 							<{$portfolio.itemLink}><{if $portfolio.customer}>&nbsp;:&nbsp;<span class="portfolio_customer"><{$portfolio.customer}></span><{/if}>
 						</div>
-						<a href="<{$portfolio.index_img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
-							<{resized_image file=$portfolio.index_img width=$display_width height=$display_height fit="inside"}>
+						<a href="<{$portfolio.cat_img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
+							<{resized_image file=$portfolio.cat_img width=$display_width height=$display_height fit="inside"}>
 						</a>
 						<div class="portfolio_read_more">
 							<a href="<{$portfolio.itemURL}>" title="<{$smarty.const._MD_PORTFOLIO_VIEW_DETAIL}>"><{$smarty.const._MD_PORTFOLIO_VIEW_DETAIL}></a>

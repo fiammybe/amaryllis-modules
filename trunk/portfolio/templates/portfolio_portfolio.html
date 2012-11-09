@@ -5,8 +5,8 @@
 			<h1><{$portfolio.title}><{if $portfolio.customer}>&nbsp;:&nbsp;<span class="portfolio_customer"><{$portfolio.customer}></span><{/if}></h1>
 		</div>
 		<div class="portfolio_scat_img">
-			<a href="<{$portfolio.portfolio_img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
-				<{resized_image file=$portfolio.portfolio_img width=$display_width height=$display_height fit="inside"}>
+			<a href="<{$portfolio.img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
+				<{resized_image file=$portfolio.img width=$display_width height=$display_height fit="inside"}>
 			</a>
 		</div>
 		<div class="portfolio_dsc">

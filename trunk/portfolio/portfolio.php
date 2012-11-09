@@ -38,11 +38,11 @@ $icmsTpl->assign('portfolio_index', $index);
 
 $portfolio_handler = icms_getModuleHandler( "portfolio", icms::$module->getVar('dirname'), "portfolio");
 $clean_portfolio = isset($_GET['portfolio']) ? filter_input(INPUT_GET, 'portfolio') : FALSE;
-if ($clean_portfolio) {
-	$portfolioObj = $portfolio_handler->getPortfolioBySeo($clean_portfolio);
-} else {
-	$portfolioObj = FALSE;
-}
+
+$portfolioObj = ($clean_portfolio) ? $portfolio_handler->getPortfolioBySeo($clean_portfolio) : FALSE;
+icms_core_Debug::message(getenv("SCRIPT_NAME"));
+
+
 /**
  * retrieve a single category including files of the category and subcategories
  */

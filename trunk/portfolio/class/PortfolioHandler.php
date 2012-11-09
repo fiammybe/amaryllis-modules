@@ -28,8 +28,8 @@ class mod_portfolio_PortfolioHandler extends icms_ipf_Handler {
 	
 	public function __construct(&$db) {
 		global $portfolioConfig;
-		parent::__construct($db, "portfolio", "portfolio_id", "portfolio_title", "portfolio_summary", "portfolio");
-		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
+		parent::__construct($db, "portfolio", "portfolio_id", "portfolio_title", "portfolio_summary", PORTFOLIO_DIRNAME);
+		$mimetypes = array('image/jpeg', 'image/jpg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, $portfolioConfig['logo_file_size'], $portfolioConfig['logo_upload_width'], $portfolioConfig['logo_upload_height']);
 	}
 	

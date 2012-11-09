@@ -31,17 +31,16 @@ define('PORTFOLIO_DB_VERSION', 2);
 
 function portfolio_upload_paths() {
 	//Create folders and set permissions
-	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
-	if(!is_dir($path . '/category')) mkdir($path . '/category', 0777);
+	$path = ICMS_ROOT_PATH . '/uploads/' . PORTFOLIO_DIRNAME;
+	if(!is_dir($path . '/category')) mkdir($path . '/category', 0777, TRUE);
 	$categoryimages = array();
-	$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/' . $moddir .'/images/folders/', '', array('gif', 'jpg', 'png'));
+	$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/' . PORTFOLIO_DIRNAME .'/images/folders/', '', array('gif', 'jpg', 'png'));
 	foreach($categoryimages as $image) {
-		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/category/' . $image);
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . PORTFOLIO_DIRNAME . '/images/folders/' . $image, $path . '/category/' . $image);
 	}
-	if(!is_dir($path . '/indexpage')) mkdir($path . '/indexpage', 0777);
+	if(!is_dir($path . '/indexpage')) mkdir($path . '/indexpage', 0777, TRUE);
 	$image2 = 'portfolio_indeximage.png';
-	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2, $path . '/indexpage/' . $image2);
+	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH.'/modules/'.PORTFOLIO_DIRNAME.'/images/'.$image2, $path.'/indexpage/'.$image2);
 }
 
 function copySitemapPlugin() {
