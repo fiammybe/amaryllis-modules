@@ -136,7 +136,6 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addFilter("item_menu", "filterMenu");
 			
 			$objectTable->addActionButton('changeWeight', FALSE, _SUBMIT);
-			
 			$icmsAdminTpl->assign("menu_item_table", $objectTable->fetch());
 			$icmsAdminTpl->display("db:menu_admin.html");
 			break;
