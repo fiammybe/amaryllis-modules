@@ -1,4 +1,4 @@
 = *Menu* Changelog =
 
-== Version 1.0 => Release Date: 21.08.2012 ==
+== Version 1.0 => Release Date: 10.11.2012 ==
 - First public release of the module.
