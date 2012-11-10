@@ -39,8 +39,8 @@ $modversion = array(
 					
 					/**  Images information  */
 						"iconsmall"					=> "images/icon_small.png",
-						"iconbig"					=> "images/menu_icon.png",
-						"image"						=> "images/menu_icon.png", /* for backward compatibility */
+						"iconbig"					=> "images/icon_big.png",
+						"image"						=> "images/icon_big.png", /* for backward compatibility */
 					
 					/**  Development information */
 						"status_version"			=> "1.0",
