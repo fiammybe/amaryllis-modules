@@ -46,3 +46,4 @@ div#event_join p, div#event_unjoin p {color: white;}
 .event_buttonbar {float:left; vertical-align: middle;}
 .event_buttonbar:hover {cursor:pointer; }
 .awaiting_approval {font-weight: bold; color: red;}
+.timeline {position: absolute;left: 59px;border: none;border-top: 1px solid red;width: 100%;margin: 0;padding: 0;z-index: 999;}

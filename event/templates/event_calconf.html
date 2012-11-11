@@ -364,6 +364,14 @@
 					}
 		        });
     		},
+    		viewDisplay: function(view) {
+    			var timelineInterval;
+				window.clearInterval(timelineInterval);
+				timelineInterval = window.setInterval(setTimeline, 10000);
+				try {
+					setTimeline();
+				} catch(err) { }
+			},
     		<{if $cat_submit}>
 	    		dropAccept: '*',
 				selectable: true,
@@ -529,6 +537,50 @@
 			width: 800,
 			height: "auto"
 		});
+		
+		function setTimeline() {
+			var curTime = new Date();
+			if (curTime.getHours() == 0 && curTime.getMinutes() <= 5) {
+				var todayElem = $(".fc-today");
+				todayElem.removeClass("fc-today");
+				todayElem.removeClass("fc-state-highlight");
+				
+				todayElem.next().addClass("fc-today");
+				todayElem.next().addClass("fc-state-highlight");
+			}
+
+			var parentDiv = $(".fc-agenda-slots:visible").parent();
+			var timeline = parentDiv.children(".timeline");
+			if (timeline.length == 0) { //if timeline isn't there, add it
+				timeline = $("<hr>").addClass("timeline");
+				parentDiv.prepend(timeline);
+			}
+		    
+			var curCalView = calendar.fullCalendar("getView");
+			if (curCalView.visStart < curTime && curCalView.visEnd > curTime) {
+				timeline.show();
+			} else {
+				timeline.hide();
+			}
+
+			var curSeconds = (curTime.getHours() * 60 * 60) + (curTime.getMinutes() * 60) + curTime.getSeconds();
+			var percentOfDay = curSeconds / 86400; //24 * 60 * 60 = 86400, # of seconds in a day
+			var topLoc = Math.floor(parentDiv.height() * percentOfDay);
+
+			timeline.css("top", topLoc + "px");
+		    
+			if (curCalView.name == "agendaWeek") { //week view, don't want the timeline to go the whole way across
+				var dayCol = $(".fc-today:visible");
+				if (dayCol.position() != null) {
+					var left = dayCol.position().left + 1;
+					var width = dayCol.width();
+					timeline.css({
+						left: left + "px",
+						width: width + "px"
+					});
+				}
+			}
+		}
 		
 	});
 </script>
