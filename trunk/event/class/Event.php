@@ -245,6 +245,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$filtered = strpos($dsc, '<!-- input filtered -->');
 		if($filtered) {
 			$dsc = str_replace('<!-- input filtered -->', '', $dsc);
+			$dsc = str_replace('<!-- filtered with htmlpurifier -->', '', $dsc);
 		}
 		return $dsc;
 	}
