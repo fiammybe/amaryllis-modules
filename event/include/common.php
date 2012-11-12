@@ -51,6 +51,8 @@ if (is_object($eventModule)) {
 
 $event_isAdmin = icms_userIsAdmin( EVENT_DIRNAME );
 
+$eventModule->registerClassPath(TRUE);
+
 $eventConfig = icms_getModuleConfig( EVENT_DIRNAME );
 
 if(icms_get_module_status("index")) {

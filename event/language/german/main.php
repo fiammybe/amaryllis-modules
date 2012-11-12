@@ -39,7 +39,7 @@ define("_MD_EVENT_ADDEVENT_URL_URL", "URL");
 define("_MD_EVENT_ADDEVENT_URL_TARGET", "Ziel");
 define("_MD_EVENT_CREATE_EVENT", "Veranstaltung erstellen");
 //constants for submit.php
-define("_MD_EVENT_SUBMITACCESS_FAILED", "Sorry, Sie haben nicht die Berechtigungen eine Kategorie einzureichen");
+define("_MD_EVENT_SUBMITACCESS_FAILED", "Sorry, Sie haben nicht die Berechtigungen in dieser Kategorie Events einzureichen");
 define("_MD_EVENT_NO_TITLE", "Es wurde Kein Titel eingetragen");
 define("_MD_EVENT_STORING_FAILED", "Sorry, ein Fehler, ist w&auml;hrend die Speicherung der Daten aufgetreten. Die folgenden Fehler aufgetreten:");
 define("_MD_EVENT_THANKS_SUBMITTING", "Ihre Veranstaltung wurde erfolgreich &uuml;bermittelt. Dank f&uuml;r die Einreichung");
