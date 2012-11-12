@@ -1,4 +1,12 @@
 = *Event* Changelog =
 
+== Version 1.1 => Release Date: XX.XX.2012 ==
+- switched all operations from "GET" to "POST"
+- removed all "Alert" funcs and switched to ui dialog
+- added timeline to agenda views to see current time
+- made fields for start and end date visible to be able changing the time manually
+- added ui datetimepicker for start and enddate
+- fixed trouble with purifier html comments
+
 == Version 1.0 => Release Date: 10.11.2012 ==
 - First public release of the module.
