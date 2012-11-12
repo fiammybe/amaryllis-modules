@@ -172,16 +172,13 @@
 							Ok: function() {
 								$(this).dialog( "close" );
 								$(this).dialog("empty");
-							}
+							}}
 					});
 					$("#event_alert").dialog("open");
-					//if (!confirm("<{$smarty.const._MD_EVENT_SURE_DELETE}>")) {
-						//return false;
-					//} else {
 						$.ajax({
-							url: "<{$event_url}>submit.php?op=del",
+							url: "<{$event_url}>submit.php",
 							type: "POST",
-							data: { event_id: event.id},
+							data: { event_id: event.id, op: "del"},
 							dataType: "json",
 							success: function(response) {
 										if(response.status === "success") {
@@ -198,15 +195,14 @@
 										}
 							}
 						});
-					//}
 				});
 				
 				$('#event_join').click(function(){
 					var button = $(this);
 					$.ajax({
-						url: "<{$event_url}>submit.php?op=join",
+						url: "<{$event_url}>submit.php",
 						type: "POST",
-						data: { event_id: event.id},
+						data: { event_id: event.id, op: "join"},
 						dataType: "json",
 						success: function(response) {
 									if(response.status === "success") {
@@ -230,9 +226,9 @@
 				$('#event_unjoin').click(function(){
 					var button = $(this);
 					$.ajax({
-						url: "<{$event_url}>submit.php?op=unjoin",
+						url: "<{$event_url}>submit.php",
 						type: "POST",
-						data: { event_id: event.id},
+						data: { event_id: event.id, op: "unjoin"},
 						dataType: "json",
 						success: function(response) {
 									if(response.status === "success") {
@@ -414,8 +410,7 @@
 						$("#event_zip, #event_joiners").val();
 						if(title) $("#submit_form").dialog("open");
 						lastView = view.name;
-					} // end of else
-					//calendar.fullCalendar('unselect');
+					}
 				},
 				eventResizeStart: function () { isResizingEvent = true; },
 				eventResizeStop: function () { isResizingEvent = false; },
@@ -439,9 +434,9 @@
 					});
 					$("#event_alert").dialog("open");
 						$.ajax({
-							url: "<{$event_url}>submit.php?op=resizeevent",
+							url: "<{$event_url}>submit.php",
 							type: "POST",
-							data: { event_cid: event.cid, event_id: event.id, day_diff: dayDelta, min_diff: minuteDelta},
+							data: { event_cid: event.cid, event_id: event.id, day_diff: dayDelta, min_diff: minuteDelta, op: "resizeevent"},
 							dataType: "json",
 							success: function(response) {
 										if(response.status === "success") {
@@ -470,28 +465,24 @@
 							}}
 					});
 					$("#event_alert").dialog("open");
-					//if (!confirm("<{$smarty.const._MD_EVENT_SURE_DROP}>")) {
-					//	revertFunc();
-					//} else {
-						$.ajax({
-							url: "<{$event_url}>submit.php?op=dropevent",
-							type: "POST",
-							data: { event_cid: event.cid, event_id: event.id, day_diff: dayDelta, min_diff: minuteDelta, event_allday: allDay},
-							dataType: "json",
-							success: function(response) {
-										if(response.status === "success") {
-											$('#calendar').fullCalendar('refetchEvents');
-											$("#error_messages").text(response.message);
-										} else if(response.status === "error") {
-											$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
-											revertFunc();
-										} else {
-											$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
-											revertFunc();
-										}
-							}
-						});
-					//}
+					$.ajax({
+						url: "<{$event_url}>submit.php",
+						type: "POST",
+						data: { event_cid: event.cid, event_id: event.id, day_diff: dayDelta, min_diff: minuteDelta, event_allday: allDay, op: "dropevent"},
+						dataType: "json",
+						success: function(response) {
+									if(response.status === "success") {
+										$('#calendar').fullCalendar('refetchEvents');
+										$("#error_messages").text(response.message);
+									} else if(response.status === "error") {
+										$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+										revertFunc();
+									} else {
+										$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
+										revertFunc();
+									}
+						}
+					});
 				}
 			<{else}>
 				selectable: false,
@@ -525,7 +516,7 @@
 								event_phone: $("#event_phone").val(), event_street: $("#event_street").val(), event_city: $("#event_city").val(), event_zip: $("#event_zip").val(),
 								event_public: $('input:radio[name=event_public]:checked').val(), mid_event_url: $("#mid_event_url").val(), caption_event_url: $("#caption_event_url").val(), 
 								desc_event_url: $("#desc_event_url").val(), url_event_url: $("#url_event_url").val(), target_event_url: $("#target_event_url").val(),
-								event_can_joint: $('#event_can_joint').val(), event_joiners: $("#event_joiners").val()
+								event_can_joint: $('#event_can_joint').val(), event_joiners: $("#event_joiners").val(), op: "addevent"
 							},
 						dataType: "json",
 						success: function(response) {
