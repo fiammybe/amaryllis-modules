@@ -2,9 +2,9 @@
 <link href="<{$block.event_url}>scripts/module_event_blocks.css" type="text/css" />
 <script type="text/javascript">
 	$(document).ready(function() {
-		//$('#event_datepicker').datepicker('option', 'onSelect', function() { window.location = "<{$block.event_url}>index.php?date=" + date; });
 		$('#event_datepicker').bind('onSelect', function() { window.location = "<{$block.event_url}>index.php?date=" + date; });
 		$('#event_datepicker').datepicker({
+			// please keep date format to prevent breaking functionality
 			dateFormat: "yy-mm-d",
 			onSelect: function(date) {
 				window.location = "<{$block.event_url}>index.php?date=" + date;
@@ -25,7 +25,6 @@
 			
 			
 		});
-		//$('#event_datepicker').datepicker('option', 'onSelect', function() { window.location = "<{$block.event_url}>index.php?date=" + date; });
 	});
 </script>
 

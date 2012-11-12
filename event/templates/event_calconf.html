@@ -72,7 +72,6 @@
 						var join_link = "";
 					}
 				}
-				//$("div#event_name").text(event.title);
 				$("div#show_event_dsc").html(event.description);
 				$("span#show_event_startdate").text(startDate);
 				$("span#show_event_enddate").text(endDate);
@@ -240,7 +239,6 @@
 						dataType: "json",
 						success: function(response) {
 									if(response.status === "success") {
-										//$("div#cal_event").dialog("destroy");
 										$('#calendar').fullCalendar('refetchEvents');
 										$("#event_joining").html("");
 										
@@ -259,10 +257,6 @@
 				
 				$('#event_edit').click(function(){
 					var button = $(this);
-					//start = $.fullCalendar.formatDate( event.start, "MMMM dd, yyyy h:mm:ss tt");
-					//end = $.fullCalendar.formatDate( event.end, "MMMM dd, yyyy h:mm:ss tt");
-					//$("#event_startdate").val(Date.parse(start) /1000);
-					//$("#event_enddate").val(Date.parse(end) / 1000);
 					start = $.fullCalendar.formatDate( event.start, "yyyy/MM/dd HH:mm");
 					end = $.fullCalendar.formatDate( event.end, "yyyy/MM/dd HH:mm");
 					$("#event_startdate").val(start);
@@ -314,7 +308,6 @@
 				week: '<{$smarty.const._CO_EVENT_WEEK}>',
 				day: '<{$smarty.const._CO_EVENT_DAY}>'
 			},
-			// time formats
 			titleFormat: {
 				month: '<{$default_header_m}>',
 				week: "<{$default_header_w}>",
@@ -412,10 +405,6 @@
 						if(lastView != 'month')
 						var title = prompt('<{$smarty.const._MD_EVENT_TITLE}>');
 						title = title;
-						//start = $.fullCalendar.formatDate( startDate, "MMMM dd, yyyy h:mm:ss tt");
-						//end = $.fullCalendar.formatDate( endDate, "MMMM dd, yyyy h:mm:ss tt");
-						//$("#event_startdate").val(Date.parse(start) /1000);
-						//$("#event_enddate").val(Date.parse(end) / 1000);
 						start = $.fullCalendar.formatDate( startDate, "yyyy/MM/dd HH:mm");
 						end = $.fullCalendar.formatDate( endDate, "yyyy/MM/dd HH:mm");
 						$("#event_startdate").val(start);
@@ -516,45 +505,107 @@
     				.fullCalendar('gotoDate', <{$gotoDate}>);
 		<{/if}>
 		
-		$( "#submit_form" ).dialog({
-			title: "<{$smarty.const._MD_EVENT_ADDEVENT}>",
-        	autoOpen: false,
-        	height: 700,
-        	width: "90%",
-        	modal: true,
-        	buttons: {
-	            "<{$smarty.const._MD_EVENT_CREATE_EVENT}>": function() {
-	            	var dlg = $(this);
-					$.ajax({
-						url: $("#addevent").attr('action'),
-						type: "POST",
-						data: {event_id: $("#event_id").val(), event_name: $("#event_name").val(), event_startdate: $("#event_startdate").val(), event_enddate: $("#event_enddate").val(), event_allday: $("#event_allday").val(),
-								event_cid: $("#event_cid").val(), event_dsc: $("#event_dsc_tarea").val(), event_contact: $("#event_contact").val(), event_cemail: $("#event_cemail").val(), 
-								event_phone: $("#event_phone").val(), event_street: $("#event_street").val(), event_city: $("#event_city").val(), event_zip: $("#event_zip").val(),
-								event_public: $('input:radio[name=event_public]:checked').val(), mid_event_url: $("#mid_event_url").val(), caption_event_url: $("#caption_event_url").val(), 
-								desc_event_url: $("#desc_event_url").val(), url_event_url: $("#url_event_url").val(), target_event_url: $("#target_event_url").val(),
-								event_can_joint: $('#event_can_joint').val(), event_joiners: $("#event_joiners").val(), op: $("#op").val()
+		<{if $cat_submit}>
+			$( "#submit_form" ).dialog({
+				title: "<{$smarty.const._MD_EVENT_ADDEVENT}>",
+	        	autoOpen: false,
+	        	height: 700,
+	        	width: "90%",
+	        	modal: true,
+	        	buttons: {
+		            "<{$smarty.const._MD_EVENT_CREATE_EVENT}>": function() {
+		            	var dlg = $(this);
+						$.ajax({
+							url: $("#addevent").attr('action'),
+							type: "POST",
+							data: {event_id: $("#event_id").val(), event_name: $("#event_name").val(), event_startdate: $("#event_startdate").val(), event_enddate: $("#event_enddate").val(), event_allday: $("#event_allday").val(),
+									event_cid: $("#event_cid").val(), event_dsc: $("#event_dsc_tarea").val(), event_contact: $("#event_contact").val(), event_cemail: $("#event_cemail").val(), 
+									event_phone: $("#event_phone").val(), event_street: $("#event_street").val(), event_city: $("#event_city").val(), event_zip: $("#event_zip").val(),
+									event_public: $('input:radio[name=event_public]:checked').val(), mid_event_url: $("#mid_event_url").val(), caption_event_url: $("#caption_event_url").val(), 
+									desc_event_url: $("#desc_event_url").val(), url_event_url: $("#url_event_url").val(), target_event_url: $("#target_event_url").val(),
+									event_can_joint: $('#event_can_joint').val(), event_joiners: $("#event_joiners").val(), op: $("#op").val()
+								},
+							dataType: "json",
+							success: function(response) {
+										if(response.status === "success") {
+											dlg.dialog("close");
+											$('#calendar').fullCalendar('refetchEvents');
+											$('#form_message').dialog('open');
+										} else if(response.status === "error") {
+											$("#form_error").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+										}
 							},
-						dataType: "json",
-						success: function(response) {
-									if(response.status === "success") {
-										dlg.dialog("close");
-										$('#calendar').fullCalendar('refetchEvents');
-										$('#form_message').dialog('open');
-									} else if(response.status === "error") {
-										$("#form_error").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
-									}
-						},
-					});
+						});
+					},
+					"<{$smarty.const._CANCEL}>" : function() {
+						$(this).dialog("close");
+					}
 				},
-				"<{$smarty.const._CANCEL}>" : function() {
-					$(this).dialog("close");
+				Cancel: function() {
+					$(this).dialog( "close" );
 				}
-			},
-			Cancel: function() {
-				$(this).dialog( "close" );
-			}
-       });
+			});
+	       
+		    $("#event_startdate, #event_enddate").datetimepicker({
+				isRTL: <{$event_rtl}>,
+				monthNames: ['<{$smarty.const._CO_EVENT_JANUARY}>','<{$smarty.const._CO_EVENT_FEBRUARY}>','<{$smarty.const._CO_EVENT_MARCH}>','<{$smarty.const._CO_EVENT_APRIL}>','<{$smarty.const._CO_EVENT_MAY}>',
+								'<{$smarty.const._CO_EVENT_JUNE}>','<{$smarty.const._CO_EVENT_JULY}>','<{$smarty.const._CO_EVENT_AUGUST}>','<{$smarty.const._CO_EVENT_SEPTEMBER}>','<{$smarty.const._CO_EVENT_OCTOBER}>',
+								'<{$smarty.const._CO_EVENT_NOVEMBER}>','<{$smarty.const._CO_EVENT_DECEMBER}>'],
+				monthNamesShort: ['<{$smarty.const._CO_EVENT_JAN}>','<{$smarty.const._CO_EVENT_FEB}>','<{$smarty.const._CO_EVENT_MAR}>','<{$smarty.const._CO_EVENT_APR}>','<{$smarty.const._CO_EVENT_MAI}>','<{$smarty.const._CO_EVENT_JUN}>',
+									 '<{$smarty.const._CO_EVENT_JUL}>','<{$smarty.const._CO_EVENT_AUG}>','<{$smarty.const._CO_EVENT_SEP}>','<{$smarty.const._CO_EVENT_OCT}>','<{$smarty.const._CO_EVENT_NOV}>','<{$smarty.const._CO_EVENT_DEC}>'],
+				dayNames: ['<{$smarty.const._CO_EVENT_SUNDAY}>','<{$smarty.const._CO_EVENT_MONDAY}>','<{$smarty.const._CO_EVENT_TUESDAY}>','<{$smarty.const._CO_EVENT_WEDNESDAY}>','<{$smarty.const._CO_EVENT_THURSDAY}>',
+								 '<{$smarty.const._CO_EVENT_FRIDAY}>','<{$smarty.const._CO_EVENT_SATURDAY}>'],
+				dayNamesMin: ['<{$smarty.const._CO_EVENT_SU}>','<{$smarty.const._CO_EVENT_MO}>','<{$smarty.const._CO_EVENT_TU}>','<{$smarty.const._CO_EVENT_WE}>','<{$smarty.const._CO_EVENT_TH}>',
+									'<{$smarty.const._CO_EVENT_FR}>','<{$smarty.const._CO_EVENT_SA}>'],
+				changeMonth: true,
+				changeYear: true,
+				dateFormat: "yy/mm/dd"
+				//, timeFormat: "HH:mm",
+				
+			})
+			
+			$("#event_startdate").datetimepicker({
+				defaultDate: $("#event_startdate").datetimepicker('getDate'),
+				onClose: function(dateText, inst) {
+					var eventStartDate = $("#event_enddate").datetimepicker('getDate');
+					var eventEndDate = $("#event_enddate").datetimepicker('getDate');
+					if ($("#event_enddate").val() != '') {
+						if (eventStartDate > eventEndDate)
+							$("#event_enddate").datetimepicker('setDate', eventStartDate);
+					} else {
+						$("#event_enddate").val(dateText);
+					}
+				},
+				onSelect: function (selectedDateTime){
+					var eventStartDate = $("#event_startdate").datetimepicker('getDate');
+					var eventEndDate = $("#event_enddate").datetimepicker('getDate');
+					if (eventStartDate > eventEndDate)
+					$("#event_enddate").datetimepicker('option', 'minDateTime', $("#event_startdate").datetimepicker('getDate') );
+				}
+			});
+			
+			$("#event_enddate").datetimepicker({
+				defaultDate: $("#event_enddate").datetimepicker('getDate'),
+				onClose: function(dateText, inst) {
+					var eventStartDate = $("#event_startdate").datetimepicker('getDate');
+					var eventEndDate = $("#event_enddate").datetimepicker('getDate');
+					if ($("#event_startdate").val() != '') {
+						if (eventStartDate > eventEndDate)
+							$("#event_startdate").datetimepicker('setDate', eventEndDate);
+					} else {
+						$("#event_startdate").val(dateText);
+					}
+				},
+				onSelect: function (selectedDateTime){
+					var eventStartDate = $("#event_startdate").datetimepicker('getDate');
+					var eventEndDate = $("#event_enddate").datetimepicker('getDate');
+					if (eventStartDate > eventEndDate)
+					$("#event_startdate").datetimepicker('option', 'maxDateTime', $("#event_enddate").datetimepicker('getDate') );
+				}
+			});
+	    
+	    <{/if}>
+	    
 		$("#form_message").dialog({
 			title: "<{$smarty.const._MD_EVENT_THANKS}>",
 			autoOpen: false,
@@ -634,7 +685,7 @@
 
 			timeline.css("top", topLoc + "px");
 		    
-			if (curCalView.name == "agendaWeek") { //week view, don't want the timeline to go the whole way across
+			if (curCalView.name == "agendaWeek") {
 				var dayCol = $(".fc-today:visible");
 				if (dayCol.position() != null) {
 					var left = dayCol.position().left + 1;
@@ -646,53 +697,6 @@
 				}
 			}
 		};
-		
-		$("#event_startdate").datetimepicker({
-			defaultDate: $("#event_startdate").datetimepicker('getDate'),
-			dateFormat: "yy/mm/dd",
-			//timeFormat: "HH:mm",
-			changeMonth: true,
-			
-			onClose: function(dateText, inst) {
-				var eventStartDate = $("#event_enddate").datetimepicker('getDate');
-				var eventEndDate = $("#event_enddate").datetimepicker('getDate');
-				if ($("#event_enddate").val() != '') {
-					if (eventStartDate > eventEndDate)
-						$("#event_enddate").datetimepicker('setDate', eventStartDate);
-				} else {
-					$("#event_enddate").val(dateText);
-				}
-			},
-			onSelect: function (selectedDateTime){
-				var eventStartDate = $("#event_startdate").datetimepicker('getDate');
-				var eventEndDate = $("#event_enddate").datetimepicker('getDate');
-				if (eventStartDate > eventEndDate)
-				$("#event_enddate").datetimepicker('option', 'minDateTime', $("#event_startdate").datetimepicker('getDate') );
-			}
-		});
-		
-		$("#event_enddate").datetimepicker({
-			defaultDate: $("#event_enddate").datetimepicker('getDate'),
-			dateFormat: "yy/mm/dd",
-			//timeFormat: "HH:mm",
-			changeMonth: true,
-			onClose: function(dateText, inst) {
-				var eventStartDate = $("#event_startdate").datetimepicker('getDate');
-				var eventEndDate = $("#event_enddate").datetimepicker('getDate');
-				if ($("#event_startdate").val() != '') {
-					if (eventStartDate > eventEndDate)
-						$("#event_startdate").datetimepicker('setDate', eventEndDate);
-				} else {
-					$("#event_startdate").val(dateText);
-				}
-			},
-			onSelect: function (selectedDateTime){
-				var eventStartDate = $("#event_startdate").datetimepicker('getDate');
-				var eventEndDate = $("#event_enddate").datetimepicker('getDate');
-				if (eventStartDate > eventEndDate)
-				$("#event_startdate").datetimepicker('option', 'maxDateTime', $("#event_enddate").datetimepicker('getDate') );
-			}
-		});
 		
 		$('.legend_item').each(function(){
 			$(this).qtip({
