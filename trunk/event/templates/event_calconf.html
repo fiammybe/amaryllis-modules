@@ -238,8 +238,6 @@
 					});
 				});
 				
-				
-				
 				$('#event_edit').click(function(){
 					var button = $(this);
 					start = $.fullCalendar.formatDate( event.start, "MMMM dd, yyyy h:mm:ss tt");
@@ -381,8 +379,10 @@
 					var view = $('#calendar').fullCalendar('getView');
 					if(view.name != "agendaWeek" && view.name != "agendaDay" )
 						return;
-					if(startDate < date) {
-						alert('<{$smarty.const._CO_EVENT_CANNOT_BOOK_PAST}>');
+					if(startDate < date && lastView != 'month') {
+						$("#event_alert").html("<{$smarty.const._CO_EVENT_CANNOT_BOOK_PAST}>");
+						$("#event_alert").dialog("open");
+						//alert('<{$smarty.const._CO_EVENT_CANNOT_BOOK_PAST}>');
 						calendar.fullCalendar( 'unselect' );
 					} else {
 						if(lastView != 'month')
@@ -419,9 +419,9 @@
 							success: function(response) {
 										if(response.status === "success") {
 											$('#calendar').fullCalendar('refetchEvents');
-											$("#error_messages").text(response.message);
+											$("#error_messages").html(response.message);
 										} else if(response.status === "error") {
-											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+											$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 											revertFunc();
 										}
 							}
@@ -442,10 +442,10 @@
 											$('#calendar').fullCalendar('refetchEvents');
 											$("#error_messages").text(response.message);
 										} else if(response.status === "error") {
-											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+											$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 											revertFunc();
 										} else {
-											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
+											$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
 											revertFunc();
 										}
 							}
@@ -538,6 +538,22 @@
 			height: "auto"
 		});
 		
+		$("#event_alert").dialog({
+			autoOpen: false,
+			modal: true,
+			hide: "clip",
+			show: "clip",
+			resizable: false,
+			width: 800,
+			height: "auto",
+			buttons: {
+				Ok: function() {
+					$(this).dialog( "close" );
+					$(this).dialog("empty");
+				}
+			}
+		});
+		
 		function setTimeline() {
 			var curTime = new Date();
 			if (curTime.getHours() == 0 && curTime.getMinutes() <= 5) {
@@ -580,7 +596,30 @@
 					});
 				}
 			}
-		}
+		};
+		
+		$('.legend_item').each(function(){
+			$(this).qtip({
+				content: {
+					text: $(this).next('div.event_popup').html(),
+					title: $(this).attr('original-title')
+				},
+				style: {
+					width:500,
+					viewport: $(window), // Keep it on-screen at all times if possible
+					textAlign:'left',
+					tip:'bottomLeft',
+					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
+				},
+				position:   {
+					target: 'mouse',
+					my:'bottomLeft',
+					adjust: {
+						x: 0,  y: -5
+					}
+				},
+			});
+		});
 		
 	});
 </script>

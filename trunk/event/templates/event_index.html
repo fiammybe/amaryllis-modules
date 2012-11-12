@@ -29,6 +29,8 @@
 	</fieldset>
 </div>
 
+<div id="event_alert">&nbsp;</div>
+
 <{if $cat_submit}>
 	<div id="submit_form" class="ui-helper-hidden event_form" >
 		<{if $addevent}>
@@ -42,31 +44,4 @@
 
 <{includeq file='db:event_event.html'}>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		//initiate qtip for category description
-		$('.legend_item').each(function(){
-			$(this).qtip({
-				content: {
-					text: $(this).next('div.event_popup').html(),
-					title: $(this).attr('original-title')
-				},
-				style: {
-					width:500,
-					viewport: $(window), // Keep it on-screen at all times if possible
-					textAlign:'left',
-					tip:'bottomLeft',
-					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
-				},
-				position:   {
-					target: 'mouse',
-					my:'bottomLeft',
-					adjust: {
-						x: 0,  y: -5
-					}
-				},
-			});
-		});
-	});
-</script>
 <{includeq file='db:event_footer.html'}>
