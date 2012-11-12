@@ -33,8 +33,7 @@ include_once 'header.php';
 include_once ICMS_ROOT_PATH . 'header.php';
 icms::$logger->disableLogger();
 $clean_op = (isset($_GET['op'])) ? filter_input(INPUT_GET, "op") : '';
-$clean_op = (isset($_POST['op'])) ? filter_input(INPUT_POST. "op") : "";
-
+$clean_op = (isset($_POST['op'])) ? filter_input(INPUT_POST, "op") : "";
 $valid_op = array("addevent", "resizeevent", "dropevent", "del", "join", "unjoin");
 
 if(in_array($clean_op, $valid_op, TRUE)) {
@@ -46,7 +45,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$clean_event_id = filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT);
 			$event = $event_handler->get($clean_event_id);
 			if($clean_event_id > 0 && $event->isNew())  { echo json_encode(array('status' => 'error','message'=> _NOPERM));unset($_POST); exit;}
-            $clean_category = filter_input(INPUT_POST, "event_cid");
+            $clean_category = filter_input(INPUT_POST, "event_cid", FILTER_SANITIZE_NUMBER_INT);
             if(!$clean_category) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
             $cat = $category_handler->get($clean_category);
             if(!$cat->submitAccessGranted()) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_SUBMITACCESS_FAILED));unset($_POST); exit;}
@@ -62,10 +61,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$allday = ($_POST['event_allday'] == "false") ? FALSE : TRUE;
 			
             $event->setVar("event_name", $eventname);
-			$event->setVar("event_cid", (int)$_POST['event_cid']);
+			$event->setVar("event_cid", filter_input(INPUT_POST, "event_cid", FILTER_SANITIZE_NUMBER_INT));
 			$event->setVar("event_dsc", $_POST['event_dsc']);
-			$event->setVar("event_startdate", (int)$_POST['event_startdate']);
-			$event->setVar("event_enddate", (int)$_POST['event_enddate']);
+			$event->setVar("event_startdate", strtotime(filter_input(INPUT_POST, "event_startdate")));
+			$event->setVar("event_enddate", strtotime(filter_input(INPUT_POST, "event_enddate")));
 			$event->setVar("event_created_on", time());
 			$event->setVar("event_submitter", $uid);
 			$event->setVar("event_url", $urllink);
@@ -99,7 +98,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$allday = $dayDelta = $minDelta = $end = $new_end = $clean_event = $event = "" ;
 			$clean_event = isset($_POST['event_id']) ? filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT) : 0;
             $event = $event_handler->get($clean_event);
-			if(!$event->userCanEditAndDelete()) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_ACCESS_FAILED)); exit;}
+			if(!$event->userCanEditAndDelete()) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_ACCESS_FAILED)); unset($_POST); exit;}
 			$allday = $dayDelta = $minDelta = $end = $new_end = "";
 			$dayDelta = filter_input(INPUT_POST, 'day_diff', FILTER_SANITIZE_NUMBER_INT);
 			$minDelta = filter_input(INPUT_POST, 'min_diff', FILTER_SANITIZE_NUMBER_INT);
@@ -167,5 +166,5 @@ if(in_array($clean_op, $valid_op, TRUE)) {
     
     
 } else {
-	redirect_header(EVENT_URL, 3, _NOPERM);
+	echo json_encode(array('status' => 'error','message'=> _MD_EVENT_ACCESS_FAILED)); exit;
 }

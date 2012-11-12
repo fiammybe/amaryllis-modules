@@ -4,12 +4,17 @@
 <script type='text/javascript' src='<{$event_script_url}>gcal.js'></script>
 <{/if}>
 <script type='text/javascript' src='<{$event_script_url}>jquery.qtip.min.js'></script>
+<{if $cat_submit}>
+<script type='text/javascript' src='<{$event_script_url}>jquery-ui-timepicker-addon.js'></script>
+<{/if}>
 <script type='text/javascript'>
 	$(document).ready(function() {
 		var date = new Date();
 		var d = date.getDate();
 		var m = date.getMonth();
 		var y = date.getFullYear();
+		var h = date.getHours();
+		var i = date.getMinutes();
 		var lastView;
 		var isResizingEvent = false;
 		var calendar = $('#calendar').fullCalendar({
@@ -170,31 +175,34 @@
 									return false;
 								},
 							Ok: function() {
+								$.ajax({
+									url: "<{$event_url}>submit.php",
+									type: "POST",
+									data: { event_id: event.id, op: "del"},
+									dataType: "json",
+									success: function(response) {
+												if(response.status === "success") {
+													$("div#cal_event").dialog("destroy");
+													$('#calendar').fullCalendar('refetchEvents');
+													$("#error_messages").text(response.message);
+													
+												} else if(response.status === "error") {
+													$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+													return false;
+												} else {
+													$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
+													return false;
+												}
+									}
+								});
+								
 								$(this).dialog( "close" );
 								$(this).dialog("empty");
+								
 							}}
 					});
 					$("#event_alert").dialog("open");
-						$.ajax({
-							url: "<{$event_url}>submit.php",
-							type: "POST",
-							data: { event_id: event.id, op: "del"},
-							dataType: "json",
-							success: function(response) {
-										if(response.status === "success") {
-											$("div#cal_event").dialog("destroy");
-											$('#calendar').fullCalendar('refetchEvents');
-											$("#error_messages").text(response.message);
-											
-										} else if(response.status === "error") {
-											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
-											return false;
-										} else {
-											$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
-											return false;
-										}
-							}
-						});
+					
 				});
 				
 				$('#event_join').click(function(){
@@ -251,12 +259,17 @@
 				
 				$('#event_edit').click(function(){
 					var button = $(this);
-					start = $.fullCalendar.formatDate( event.start, "MMMM dd, yyyy h:mm:ss tt");
-					end = $.fullCalendar.formatDate( event.end, "MMMM dd, yyyy h:mm:ss tt");
+					//start = $.fullCalendar.formatDate( event.start, "MMMM dd, yyyy h:mm:ss tt");
+					//end = $.fullCalendar.formatDate( event.end, "MMMM dd, yyyy h:mm:ss tt");
+					//$("#event_startdate").val(Date.parse(start) /1000);
+					//$("#event_enddate").val(Date.parse(end) / 1000);
+					start = $.fullCalendar.formatDate( event.start, "yyyy/MM/dd HH:mm");
+					end = $.fullCalendar.formatDate( event.end, "yyyy/MM/dd HH:mm");
+					$("#event_startdate").val(start);
+					$("#event_enddate").val(end);
 					$("#event_id").val(event.id);
 					$("#event_name").val(event.title);
-					$("#event_startdate").val(Date.parse(start) /1000);
-					$("#event_enddate").val(Date.parse(end) / 1000);
+					
 					$("#event_allday").val(event.allDay);
 					$("#event_cid").val(event.cid);
 					$("#event_dsc_tarea").val(event.description);
@@ -399,10 +412,14 @@
 						if(lastView != 'month')
 						var title = prompt('<{$smarty.const._MD_EVENT_TITLE}>');
 						title = title;
-						start = $.fullCalendar.formatDate( startDate, "MMMM dd, yyyy h:mm:ss tt");
-						end = $.fullCalendar.formatDate( endDate, "MMMM dd, yyyy h:mm:ss tt");
-						$("#event_startdate").val(Date.parse(start) /1000);
-						$("#event_enddate").val(Date.parse(end) / 1000);
+						//start = $.fullCalendar.formatDate( startDate, "MMMM dd, yyyy h:mm:ss tt");
+						//end = $.fullCalendar.formatDate( endDate, "MMMM dd, yyyy h:mm:ss tt");
+						//$("#event_startdate").val(Date.parse(start) /1000);
+						//$("#event_enddate").val(Date.parse(end) / 1000);
+						start = $.fullCalendar.formatDate( startDate, "yyyy/MM/dd HH:mm");
+						end = $.fullCalendar.formatDate( endDate, "yyyy/MM/dd HH:mm");
+						$("#event_startdate").val(start);
+						$("#event_enddate").val(end);
 						$("#event_name").val(title);
 						$("#event_allday").val(allDay);
 						$("#event_id, #event_cid, #event_dsc_tarea, #event_phone, #event_street, #event_city, #event_can_joint").val('');
@@ -428,26 +445,26 @@
 									revertFunc();
 								},
 							Ok: function() {
+								$.ajax({
+									url: "<{$event_url}>submit.php",
+									type: "POST",
+									data: { event_cid: event.cid, event_id: event.id, day_diff: dayDelta, min_diff: minuteDelta, op: "resizeevent"},
+									dataType: "json",
+									success: function(response) {
+												if(response.status === "success") {
+													$('#calendar').fullCalendar('refetchEvents');
+													$("#error_messages").html(response.message);
+												} else if(response.status === "error") {
+													$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+													revertFunc();
+												}
+									}
+								});
 								$(this).dialog( "close" );
 								$(this).dialog("empty");
 							}}
 					});
 					$("#event_alert").dialog("open");
-						$.ajax({
-							url: "<{$event_url}>submit.php",
-							type: "POST",
-							data: { event_cid: event.cid, event_id: event.id, day_diff: dayDelta, min_diff: minuteDelta, op: "resizeevent"},
-							dataType: "json",
-							success: function(response) {
-										if(response.status === "success") {
-											$('#calendar').fullCalendar('refetchEvents');
-											$("#error_messages").html(response.message);
-										} else if(response.status === "error") {
-											$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
-											revertFunc();
-										}
-							}
-						});
 				},
 				eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
 					$("#event_alert").html("<{$smarty.const._MD_EVENT_SURE_DROP}>");
@@ -460,29 +477,29 @@
 									revertFunc();
 								},
 							Ok: function() {
+								$.ajax({
+									url: "<{$event_url}>submit.php",
+									type: "POST",
+									data: { event_cid: event.cid, event_id: event.id, day_diff: dayDelta, min_diff: minuteDelta, event_allday: allDay, op: "dropevent"},
+									dataType: "json",
+									success: function(response) {
+												if(response.status === "success") {
+													$('#calendar').fullCalendar('refetchEvents');
+													$("#error_messages").text(response.message);
+												} else if(response.status === "error") {
+													$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+													revertFunc();
+												} else {
+													$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
+													revertFunc();
+												}
+									}
+								});
 								$(this).dialog( "close" );
 								$(this).dialog("empty");
 							}}
 					});
 					$("#event_alert").dialog("open");
-					$.ajax({
-						url: "<{$event_url}>submit.php",
-						type: "POST",
-						data: { event_cid: event.cid, event_id: event.id, day_diff: dayDelta, min_diff: minuteDelta, event_allday: allDay, op: "dropevent"},
-						dataType: "json",
-						success: function(response) {
-									if(response.status === "success") {
-										$('#calendar').fullCalendar('refetchEvents');
-										$("#error_messages").text(response.message);
-									} else if(response.status === "error") {
-										$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
-										revertFunc();
-									} else {
-										$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILUREWENTWRONG}>: " + response.message);
-										revertFunc();
-									}
-						}
-					});
 				}
 			<{else}>
 				selectable: false,
@@ -516,7 +533,7 @@
 								event_phone: $("#event_phone").val(), event_street: $("#event_street").val(), event_city: $("#event_city").val(), event_zip: $("#event_zip").val(),
 								event_public: $('input:radio[name=event_public]:checked').val(), mid_event_url: $("#mid_event_url").val(), caption_event_url: $("#caption_event_url").val(), 
 								desc_event_url: $("#desc_event_url").val(), url_event_url: $("#url_event_url").val(), target_event_url: $("#target_event_url").val(),
-								event_can_joint: $('#event_can_joint').val(), event_joiners: $("#event_joiners").val(), op: "addevent"
+								event_can_joint: $('#event_can_joint').val(), event_joiners: $("#event_joiners").val(), op: $("#op").val()
 							},
 						dataType: "json",
 						success: function(response) {
@@ -630,6 +647,53 @@
 			}
 		};
 		
+		$("#event_startdate").datetimepicker({
+			defaultDate: $("#event_startdate").datetimepicker('getDate'),
+			dateFormat: "yy/mm/dd",
+			//timeFormat: "HH:mm",
+			changeMonth: true,
+			
+			onClose: function(dateText, inst) {
+				var eventStartDate = $("#event_enddate").datetimepicker('getDate');
+				var eventEndDate = $("#event_enddate").datetimepicker('getDate');
+				if ($("#event_enddate").val() != '') {
+					if (eventStartDate > eventEndDate)
+						$("#event_enddate").datetimepicker('setDate', eventStartDate);
+				} else {
+					$("#event_enddate").val(dateText);
+				}
+			},
+			onSelect: function (selectedDateTime){
+				var eventStartDate = $("#event_startdate").datetimepicker('getDate');
+				var eventEndDate = $("#event_enddate").datetimepicker('getDate');
+				if (eventStartDate > eventEndDate)
+				$("#event_enddate").datetimepicker('option', 'minDateTime', $("#event_startdate").datetimepicker('getDate') );
+			}
+		});
+		
+		$("#event_enddate").datetimepicker({
+			defaultDate: $("#event_enddate").datetimepicker('getDate'),
+			dateFormat: "yy/mm/dd",
+			//timeFormat: "HH:mm",
+			changeMonth: true,
+			onClose: function(dateText, inst) {
+				var eventStartDate = $("#event_startdate").datetimepicker('getDate');
+				var eventEndDate = $("#event_enddate").datetimepicker('getDate');
+				if ($("#event_startdate").val() != '') {
+					if (eventStartDate > eventEndDate)
+						$("#event_startdate").datetimepicker('setDate', eventEndDate);
+				} else {
+					$("#event_startdate").val(dateText);
+				}
+			},
+			onSelect: function (selectedDateTime){
+				var eventStartDate = $("#event_startdate").datetimepicker('getDate');
+				var eventEndDate = $("#event_enddate").datetimepicker('getDate');
+				if (eventStartDate > eventEndDate)
+				$("#event_startdate").datetimepicker('option', 'maxDateTime', $("#event_enddate").datetimepicker('getDate') );
+			}
+		});
+		
 		$('.legend_item').each(function(){
 			$(this).qtip({
 				content: {
@@ -638,7 +702,7 @@
 				},
 				style: {
 					width:500,
-					viewport: $(window), // Keep it on-screen at all times if possible
+					viewport: $(window),
 					textAlign:'left',
 					tip:'bottomLeft',
 					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
