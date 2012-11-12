@@ -160,9 +160,24 @@
 				
 				$('#event_delete').click(function(){
 					var button = $(this);
-					if (!confirm("<{$smarty.const._MD_EVENT_SURE_DELETE}>")) {
-						return false;
-					} else {
+					$("#event_alert").html("<{$smarty.const._MD_EVENT_SURE_DELETE}>");
+					$("#event_alert").dialog({
+						buttons:
+							{
+								"<{$smarty.const._CLOSE}>": function() {
+									$(this).dialog("close");
+									$(this).dialog("empty");
+									return false;
+								},
+							Ok: function() {
+								$(this).dialog( "close" );
+								$(this).dialog("empty");
+							}
+					});
+					$("#event_alert").dialog("open");
+					//if (!confirm("<{$smarty.const._MD_EVENT_SURE_DELETE}>")) {
+						//return false;
+					//} else {
 						$.ajax({
 							url: "<{$event_url}>submit.php?op=del",
 							type: "POST",
@@ -183,7 +198,7 @@
 										}
 							}
 						});
-					}
+					//}
 				});
 				
 				$('#event_join').click(function(){
@@ -408,9 +423,21 @@
 					if(view.name == "month") {
 						revertFunc();
 					}
-					if (!confirm("<{$smarty.const._MD_EVENT_SURE_RESIZE}>")) {
-						revertFunc();
-					} else {
+					$("#event_alert").html("<{$smarty.const._MD_EVENT_SURE_RESIZE}>");
+					$("#event_alert").dialog({
+						buttons:
+							{
+								"<{$smarty.const._CLOSE}>": function() {
+									$(this).dialog("close");
+									$(this).dialog("empty");
+									revertFunc();
+								},
+							Ok: function() {
+								$(this).dialog( "close" );
+								$(this).dialog("empty");
+							}}
+					});
+					$("#event_alert").dialog("open");
 						$.ajax({
 							url: "<{$event_url}>submit.php?op=resizeevent",
 							type: "POST",
@@ -426,12 +453,26 @@
 										}
 							}
 						});
-					}
 				},
 				eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
-					if (!confirm("<{$smarty.const._MD_EVENT_SURE_DROP}>")) {
-						revertFunc();
-					} else {
+					$("#event_alert").html("<{$smarty.const._MD_EVENT_SURE_DROP}>");
+					$("#event_alert").dialog({
+						buttons:
+							{
+								"<{$smarty.const._CLOSE}>": function() {
+									$(this).dialog("close");
+									$(this).dialog("empty");
+									revertFunc();
+								},
+							Ok: function() {
+								$(this).dialog( "close" );
+								$(this).dialog("empty");
+							}}
+					});
+					$("#event_alert").dialog("open");
+					//if (!confirm("<{$smarty.const._MD_EVENT_SURE_DROP}>")) {
+					//	revertFunc();
+					//} else {
 						$.ajax({
 							url: "<{$event_url}>submit.php?op=dropevent",
 							type: "POST",
@@ -450,7 +491,7 @@
 										}
 							}
 						});
-					}
+					//}
 				}
 			<{else}>
 				selectable: false,
