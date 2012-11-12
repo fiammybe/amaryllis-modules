@@ -32,7 +32,6 @@ function addUrlLink() {
 include_once 'header.php';
 include_once ICMS_ROOT_PATH . 'header.php';
 icms::$logger->disableLogger();
-$clean_op = (isset($_GET['op'])) ? filter_input(INPUT_GET, "op") : '';
 $clean_op = (isset($_POST['op'])) ? filter_input(INPUT_POST, "op") : "";
 $valid_op = array("addevent", "resizeevent", "dropevent", "del", "join", "unjoin");
 
