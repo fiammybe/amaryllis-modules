@@ -52,6 +52,7 @@ $icmsTpl->assign("default_column_d", $eventConfig['default_column_d']);
 
 $icmsTpl->assign("default_time_a", $eventConfig['default_time_a']);
 $icmsTpl->assign("default_time", $eventConfig['default_time']);
+$icmsTpl->assign("default_timezone", $eventConfig['default_timezone']);
 
 $icmsTpl->assign("use_theme", ($eventConfig['use_theme'] == 1) ? 'true' : 'false' );
 

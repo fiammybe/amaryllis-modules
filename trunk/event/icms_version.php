@@ -326,6 +326,15 @@ $modversion['config'][$i] = array(
                             );
 $i++;
 $modversion['config'][$i] = array(
+                                'name'          => 'default_zone',
+                                'title'         => '_MI_EVENT_CONFIG_DEFAULT_TIMEZONE',
+                                'description'   => '_MI_EVENT_CONFIG_DEFAULT_TIMEZONE_DSC',
+                                'formtype'      => 'text',
+                                'valuetype'     => 'text',
+                                'default'       => 'Europe/Berlin'
+                            );
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'use_theme',
 								'title' 		=> '_MI_EVENT_CONFIG_USE_THEME',
 								'description' 	=> '_MI_EVENT_CONFIG_USE_THEME_DSC',
