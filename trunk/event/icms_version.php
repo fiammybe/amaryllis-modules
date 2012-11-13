@@ -326,7 +326,7 @@ $modversion['config'][$i] = array(
                             );
 $i++;
 $modversion['config'][$i] = array(
-                                'name'          => 'default_zone',
+                                'name'          => 'default_timezone',
                                 'title'         => '_MI_EVENT_CONFIG_DEFAULT_TIMEZONE',
                                 'description'   => '_MI_EVENT_CONFIG_DEFAULT_TIMEZONE_DSC',
                                 'formtype'      => 'text',
