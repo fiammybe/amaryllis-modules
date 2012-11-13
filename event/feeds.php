@@ -27,9 +27,15 @@ $clean_catsel = isset($_POST['event_cats']) ? $_POST['event_cats'] : FALSE;
 $cats = ($clean_catsel) ? unserialize($clean_catsel) : FALSE;
 if($clean_catsel) {
 	$ret = array();
+	$category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
+	$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
 	foreach ($clean_catsel as $key => $value) {
-		$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
-		$ret[] = EVENT_URL."feeds.php?cat=".$value['value']."&uid=".$uid; 
+		$catObj = $category_handler->get($value['value']);
+		if(!is_object($catObj) || $catObj->isNew() || !$catObj->accessGranted($uid)) continue;
+		$ret[]['feed'] = EVENT_URL."feeds.php?cat=".$value['value']."&uid=".$uid;
+		$ret[]['color'] = $catObj->getColor();
+		$ret[]['txtcolor'] = $catObj->getTextColor();
+		$ret[]['classname'] = "event_cal_".$catObj->id();
 	}
 	echo json_encode(array("status" => "success", "message" => $ret)); unset($_POST);exit;
 }
