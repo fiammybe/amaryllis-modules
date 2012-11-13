@@ -3,30 +3,37 @@
 <div id='calendar'></div>
 
 <div id="calendar_legend">
-	<fieldset style="border: #e8e8e8 1px solid;">
-		<legend><{$smarty.const._MD_EVENT_LEGEND}></legend>
-		<{foreach item=cat from=$categories name=category}>
-			<div class="legend_item" original-title="<{$cal.name}>">
-				<span class="legend_color" style="background-color: <{$cat.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cat.txtcolor}>;"><{$cat.name}></span>
-			</div>
-			<{if $cat.dsc}>
-				<div class="event_popup">
-					<{$cat.dsc}>
+	<form id="event_catselect" name="event_catselect" action="feeds.php" method="POST">
+	
+		<fieldset style="border: #e8e8e8 1px solid;">
+			<legend><{$smarty.const._MD_EVENT_LEGEND}></legend>
+			<{foreach item=cat from=$categories name=category}>
+				<div class="legend_item" original-title="<{$cat.name}>">
+					<input type="checkbox" name="event_cats[]" checked="checked" value="<{$cat.id}>"  />
+					<span class="legend_color" style="background-color: <{$cat.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cat.txtcolor}>;"><{$cat.name}></span>
 				</div>
-			<{/if}>
-		<{/foreach}>
-		
-		<{foreach item=cal from=$calendars name=calendar}>
-			<div class="legend_item" original-title="<{$cal.name}>">
-				<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cal.txtcolor}>;"><{$cal.name}></span>
-			</div>
-			<{if $cal.dsc}>
-				<div class="event_popup">
-					<{$cal.dsc}>
+				<{if $cat.dsc}>
+					<div class="event_popup">
+						<{$cat.dsc}>
+					</div>
+				<{/if}>
+			<{/foreach}>
+			
+			<{foreach item=cal from=$calendars name=calendar}>
+				<div class="legend_item" original-title="<{$cal.name}>">
+					<input type="checkbox" name="event_cal[]" checked="checked" value="<{$cal.id}>" />
+					<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cal.txtcolor}>;"><{$cal.name}></span>
 				</div>
-			<{/if}>
-		<{/foreach}>
-	</fieldset>
+				<{if $cal.dsc}>
+					<div class="event_popup">
+						<{$cal.dsc}>
+					</div>
+				<{/if}>
+			<{/foreach}>
+			
+		</fieldset>
+	
+	</form>
 </div>
 
 <div id="event_alert">&nbsp;</div>

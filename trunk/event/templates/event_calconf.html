@@ -729,5 +729,28 @@
 			});
 		});
 		
+		$("#event_catselect").submit(function() {
+			var form = $(this);
+			$.ajax({
+				url: form.attr('action'),
+				type: "POST",
+				//data: {},
+				dataType: "json",
+				success: function(response) {
+							if(response.status === "success") {
+								$('#Calendar').fullCalendar( 'removeEvents').fullCalendar('removeEventSources');
+								return false;
+							} else if(response.status === "error") {
+								return false;
+							}
+				},
+			});
+		});
+		
+		$('form input:checkbox').change(function(){
+			$('#event_catselect').submit();
+			return false;
+		});
+		
 	});
 </script>
