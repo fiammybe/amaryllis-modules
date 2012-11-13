@@ -23,7 +23,7 @@ function addUrlLink() {
 	$urlObj->setVar("mid", filter_input(INPUT_POST, 'mid_event_url', FILTER_SANITIZE_NUMBER_INT));
 	$urlObj->setVar("caption", filter_input(INPUT_POST, 'caption_event_url'));
 	$urlObj->setVar("description", filter_input(INPUT_POST, 'desc_event_url'));
-	$urlObj->setVar("url", filter_input(INPUT_POST, 'url_event_url'));
+	$urlObj->setVar("url", filter_input(INPUT_POST, 'url_event_url', FILTER_VALIDATE_URL));
 	$urlObj->setVar("target", filter_input(INPUT_POST, 'target_event_url'));
 	$urllink_handler->insert($urlObj, TRUE);
 	return $urlObj->id();

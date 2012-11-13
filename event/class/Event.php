@@ -41,7 +41,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->quickInitVar("event_url", XOBJ_DTYPE_URLLINK, FALSE);
 		$this->quickInitVar("event_phone", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("event_street", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("event_zip", XOBJ_DTYPE_INT, FALSE);
+		$this->quickInitVar("event_zip", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("event_city", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("event_allday", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->quickInitVar("event_startdate", XOBJ_DTYPE_LTIME, TRUE);
