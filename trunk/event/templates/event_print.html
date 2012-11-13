@@ -65,6 +65,15 @@
 							<span id="event_zip"><{$event.zip}></span> &nbsp;<span id="show_event_city"><{$event.city}></span>
 						</div>
 				</div>
+				<{if $event.phone}>
+					<div class="event_row">
+					<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_PHONE}></b>:&nbsp;</div>
+						<div class="event_cell">
+							<span id="event_zip"><{$event.zip}></span> &nbsp;<span id="show_event_phone"><{$event.phone}></span>
+						</div>
+					</div>
+				<{/if}>
+				
 			</div>
 			
 		<{/if}>
