@@ -41,7 +41,7 @@
 				<div class="event_row">
 					<div class="event_cell"><b><{$smarty.const._MD_EVENT_FROMTO}></b>:&nbsp;</div>
 						<div class="event_cell">
-							<span id="show_event_startdate"><{$event.start}></span> &nbsp;-&nbsp;<span id="show_event_enddate"><{$event.end}></span>
+							<span id="show_event_startdate"><{$event.start|date_format:"%m/%d/%y %H:%M"}></span> &nbsp;-&nbsp;<span id="show_event_enddate"><{$event.end|date_format:"%m/%d/%y %H:%M"}></span>
 						</div>
 				</div>
 				
