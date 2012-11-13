@@ -31,7 +31,7 @@ function addEvent($event_id = 0) {
 	$catArray = $event_handler->getCategoryList();
 	$catid = array_pop($catArray);
 	$catselect = new icms_form_elements_Select(_CO_EVENT_EVENT_EVENT_CID, "event_cid", $catid);
-	$catselect->addOptionArray($catArray);
+	$catselect->addOptionArray($event_handler->getCategoryList());
 	$form->addElement($catselect);
 	
 	$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_STARTDATE, "event_startdate", 20, 200));
