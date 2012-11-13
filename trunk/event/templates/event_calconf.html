@@ -279,7 +279,7 @@
 					$("#event_street").val(event.street);
 					$("#event_city").val(event.city);
 					$("#event_zip").val(event.zip);
-					$("#'input:radio[name=event_public]:checked'").val(event.event_public);
+					$("input:radio[name=event_public]:checked").val(event.event_public);
 					$("#mid_event_url").val(event.url_mid);
 					$("#caption_event_url").val(event.url_cap);
 					$("#desc_event_url").val(event.url_dsc);
@@ -729,25 +729,27 @@
 			});
 		});
 		
-		$("#event_catselect").submit(function() {
+		$("#event_catselect").submit(function(e) {
 			var form = $(this);
+			e.preventDefault();
 			$.ajax({
 				url: form.attr('action'),
 				type: "POST",
-				//data: {},
+				data: {event_cats: $("input:checkbox[name=event_cats[]]").serializeArray()},
 				dataType: "json",
 				success: function(response) {
-							if(response.status === "success") {
-								$('#Calendar').fullCalendar( 'removeEvents').fullCalendar('removeEventSources');
-								return false;
-							} else if(response.status === "error") {
-								return false;
-							}
-				},
+					if(response.status == "success") {
+						$('#calendar').fullCalendar('removeEvents').fullCalendar('removeEventSources');
+						$.each(response.message, function(index, value) {
+							$('#calendar').fullCalendar('addEventSource', value);
+						});
+					}
+				}
 			});
+			return false;
 		});
 		
-		$('form input:checkbox').change(function(){
+		$('form#event_catselect input:checkbox').change(function(){
 			$('#event_catselect').submit();
 			return false;
 		});
