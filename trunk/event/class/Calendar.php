@@ -83,6 +83,4 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 		$ret['default_tz'] = $this->getVar("calendar_tz", "e");
 		return $ret;
 	}
-
-	
 }
