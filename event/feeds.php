@@ -23,13 +23,20 @@ $clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZ
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start") : 0;
 $clean_end = isset($_GET['end']) ? filter_input(INPUT_GET, "end") : 0;
 $clean_cat = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat", FILTER_SANITIZE_NUMBER_INT) : FALSE;
-$clean_catsel = isset($_POST['event_cats']) ? filter_input(INPUT_POST, "event_cats") : FALSE;
-icms_core_Debug::vardump($clean_catsel);
-if($clean_catsel) {echo json_encode(array("status" => "success", "message" => "success"));exit;}
+$clean_catsel = isset($_POST['event_cats']) ? $_POST['event_cats'] : FALSE;
+$cats = ($clean_catsel) ? unserialize($clean_catsel) : FALSE;
+if($clean_catsel) {
+	$ret = array();
+	foreach ($clean_catsel as $key => $value) {
+		$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+		$ret[] = EVENT_URL."feeds.php?cat=".$value['value']."&uid=".$uid; 
+	}
+	echo json_encode(array("status" => "success", "message" => $ret)); unset($_POST);exit;
+}
 if($clean_catsel) unset($clean_cat);
 if(!$clean_cat == FALSE || $clean_catsel !== FALSE ){
 	$category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
-	$catObj = ($clean_cat) ? $category_handler->get($clean_cat) : $category_handler->get($clean_catsel);
+	$catObj = $category_handler->get($clean_cat);
 	if(is_object($catObj) && !$catObj->isNew() && $catObj->accessGranted($clean_uid)) {
 		$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 		$events = $event_handler->getEvents($catObj->id(), $clean_start, $clean_end, $clean_uid);
@@ -73,6 +80,9 @@ if(!$clean_cat == FALSE || $clean_catsel !== FALSE ){
 				'joiners'			=> $event['joiners']
 			);
 		}
-		echo json_encode($feeds);
+		echo json_encode($feeds);exit;
 	}
+} elseif (!$clean_catsel && !$clean_cat) {
+	echo json_encode(array("status" => "success", "message" => "nothing to return"));unset($_POST); exit;
 }
+exit;
