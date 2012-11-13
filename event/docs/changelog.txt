@@ -7,6 +7,9 @@
 - made fields for start and end date visible to be able changing the time manually
 - added ui datetimepicker for start and enddate
 - fixed trouble with purifier html comments
+- fixed trouble on print template
+- added phone number to output.. Seems to be forgotten
+
 
 == Version 1.0 => Release Date: 10.11.2012 ==
 - First public release of the module.
