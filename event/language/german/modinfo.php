@@ -60,6 +60,8 @@ define("_MI_EVENT_CONFIG_DEFAULT_TIME_A", "Uhrzeitformat Agenda (Woche und Tag)"
 define("_MI_EVENT_CONFIG_DEFAULT_TIME_A_DSC", "Uhrzeitformat f&uuml;r Kalender Agenda Ansicht. <b>Bitte &uuml;berpr&uuml;fen Handbuch f&uuml;r Datumsformatierung!</b>");
 define("_MI_EVENT_CONFIG_DEFAULT_TIME", "Uhrzeitformat (Monat, alle au&szlig;erhalb der Agenda-Ansicht)");
 define("_MI_EVENT_CONFIG_DEFAULT_TIME_DSC", "Uhrzeitformat f&uuml;r Kalender-Ansicht au&szlig;erhalb der Agenda Aussicht. <b>Bitte &uuml;berpr&uuml;fen Handbuch f&uuml;r Datumsformatierung!</b>");
+define("_MI_EVENT_CONFIG_DEFAULT_TIMEZONE", "Standard Zeitzone");
+define("_MI_EVENT_CONFIG_DEFAULT_TIMEZONE_DSC", "");
 define("_MI_EVENT_CONFIG_USE_THEME", "Verwenden Sie die jQuery UI in Ihrem Thema?");
 define("_MI_EVENT_CONFIG_USE_THEME_DSC", "Standardm&auml;&szlig;ig verwendet der Kalender den jQuery UI in Ihrem Theme. Vielleicht m&ouml;chten Sie ein anderes Theme (google jquery ui theme roller) installieren Sie ein Neues Thema oder stellen Sie einfach ui aus, um Ihr eigenes Design f&uuml;r den Kalender zu entwerfen");
 define("_MI_EVENT_CONFIG_PRINT_FOOTER", "Fusszeile drucken");
