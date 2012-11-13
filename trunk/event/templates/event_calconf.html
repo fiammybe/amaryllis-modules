@@ -741,8 +741,17 @@
 					if(response.status == "success") {
 						$('#calendar').fullCalendar('removeEvents').fullCalendar('removeEventSources');
 						$.each(response.message, function(index, value) {
-							$('#calendar').fullCalendar('addEventSource', value);
+							$('#calendar').fullCalendar('addEventSource', {
+								url: value.feed,
+								className: value.classname,
+								color: value['color'],
+								textColor: value.txtcolor,
+								ignoreTimezone: false,
+								currentTimezone: '<{$default_timezone}>'
+								
+							});
 						});
+						$('#calendar').fullCalendar('rerenderEvents');
 					}
 				}
 			});
