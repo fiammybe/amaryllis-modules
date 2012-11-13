@@ -60,6 +60,8 @@ define("_MI_EVENT_CONFIG_DEFAULT_TIME_A", "Time Format Agenda (Week and Day)");
 define("_MI_EVENT_CONFIG_DEFAULT_TIME_A_DSC", "The Time format for Calendar Agenda view. <b>Please check Manual for Time formatting!</b>");
 define("_MI_EVENT_CONFIG_DEFAULT_TIME", "Time Format (Month, all outside Agenda View)");
 define("_MI_EVENT_CONFIG_DEFAULT_TIME_DSC", "The Time format for Calendar view outside the Agenda views. <b>Please check Manual for Time formatting!</b>");
+define("_MI_EVENT_CONFIG_DEFAULT_TIMEZONE", "Default Timezone");
+define("_MI_EVENT_CONFIG_DEFAULT_TIMEZONE_DSC", "");
 define("_MI_EVENT_CONFIG_USE_THEME", "Use the jquery ui theme?");
 define("_MI_EVENT_CONFIG_USE_THEME_DSC", "As default, the calendar uses the jQuery UI Theme. You might like to install another theme (google jquery ui theme roller) or just turn ui off to design your own theme");
 define("_MI_EVENT_CONFIG_PRINT_FOOTER", "Print Footer");
