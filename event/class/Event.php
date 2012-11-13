@@ -316,7 +316,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		if($can_joint == 0) return FALSE;
 		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
 		$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
-		if($uid == 0 && $can_joint < 2) return FALSE;
+		if($uid == 0 && $can_joint <= 1) return FALSE;
 		$fprint = $_SESSION['icms_fprint'];
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$joining = $joiner_handler->getJoinersCount($this->id(), $uid, $ip, $fprint );

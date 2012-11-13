@@ -31,10 +31,11 @@ class mod_event_JoinerHandler extends icms_ipf_Handler {
 		if($eid) $criteria->add(new icms_db_criteria_Item("joiner_eid", $eid));
 		if($uid) $criteria->add(new icms_db_criteria_Item("joiner_uid", $uid));
 		if($fprint && !$uid) {
-			$crit = new icms_db_criteria_Compo();
-			$crit->add(new icms_db_criteria_Item("joiner_ip", $ip), 'OR');
-			$crit->add(new icms_db_criteria_Item("joiner_fprint", $fprint), 'OR');
-			$criteria->add($crit);
+			//$crit = new icms_db_criteria_Compo();
+			//$crit->add(new icms_db_criteria_Item("joiner_ip", $ip), 'OR');
+			//$crit->add(new icms_db_criteria_Item("joiner_fprint", $fprint), 'OR');
+			//$criteria->add($crit);
+			$criteria->add(new icms_db_criteria_Item("joiner_fprint", $fprint));
 		}
 		return $criteria;
 	}
