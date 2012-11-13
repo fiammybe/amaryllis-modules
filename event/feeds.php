@@ -23,10 +23,13 @@ $clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_SANITIZ
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start") : 0;
 $clean_end = isset($_GET['end']) ? filter_input(INPUT_GET, "end") : 0;
 $clean_cat = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat", FILTER_SANITIZE_NUMBER_INT) : FALSE;
-
-if(!$clean_cat == FALSE ){
+$clean_catsel = isset($_POST['event_cats']) ? filter_input(INPUT_POST, "event_cats") : FALSE;
+icms_core_Debug::vardump($clean_catsel);
+if($clean_catsel) {echo json_encode(array("status" => "success", "message" => "success"));exit;}
+if($clean_catsel) unset($clean_cat);
+if(!$clean_cat == FALSE || $clean_catsel !== FALSE ){
 	$category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
-	$catObj = $category_handler->get($clean_cat);
+	$catObj = ($clean_cat) ? $category_handler->get($clean_cat) : $category_handler->get($clean_catsel);
 	if(is_object($catObj) && !$catObj->isNew() && $catObj->accessGranted($clean_uid)) {
 		$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 		$events = $event_handler->getEvents($catObj->id(), $clean_start, $clean_end, $clean_uid);
