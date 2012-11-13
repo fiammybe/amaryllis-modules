@@ -9,7 +9,7 @@
 - fixed trouble with purifier html comments
 - fixed trouble on print template
 - added phone number to output.. Seems to be forgotten
-
+- added new config for default timezone to prevent different times
 
 == Version 1.0 => Release Date: 10.11.2012 ==
 - First public release of the module.
