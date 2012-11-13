@@ -101,6 +101,12 @@
 					$("span#show_event_zip").html("");
 					$("span#show_event_zip").hide();
 				}
+				if(event.phone != false) {
+					$("div#show_event_phone").html(event.phone);
+					$("div#show_event_phone").parent("div").show();
+				} else {
+					$("div#show_event_phone").parent("div").hide();
+				}
 				$("div#show_event_cid").html(event.cat);
 				if(event.urllink != false) {
 					$("div#show_event_url").html(event.urllink);
