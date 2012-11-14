@@ -741,10 +741,12 @@
 					if(response.status == "success") {
 						$('#calendar').fullCalendar('removeEvents').fullCalendar('removeEventSources');
 						$.each(response.message, function(index, value) {
+							//alert(value['color']);
+							//var obj = $.parseJSON(value);
 							$('#calendar').fullCalendar('addEventSource', {
 								url: value.feed,
 								className: value.classname,
-								color: value['color'],
+								color: value.color,
 								textColor: value.txtcolor,
 								ignoreTimezone: false,
 								currentTimezone: '<{$default_timezone}>'
