@@ -21,7 +21,7 @@
 			
 			<{foreach item=cal from=$calendars name=calendar}>
 				<div class="legend_item" original-title="<{$cal.name}>">
-					<input type="checkbox" name="event_cal[]" checked="checked" value="<{$cal.id}>" />
+					<!-- <input type="checkbox" name="event_cal[]" checked="checked" value="<{$cal.id}>" />-->
 					<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cal.txtcolor}>;"><{$cal.name}></span>
 				</div>
 				<{if $cal.dsc}>

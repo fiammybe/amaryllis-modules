@@ -32,10 +32,12 @@ if($clean_catsel) {
 	foreach ($clean_catsel as $key => $value) {
 		$catObj = $category_handler->get($value['value']);
 		if(!is_object($catObj) || $catObj->isNew() || !$catObj->accessGranted($uid)) continue;
-		$ret[]['feed'] = EVENT_URL."feeds.php?cat=".$value['value']."&uid=".$uid;
-		$ret[]['color'] = $catObj->getColor();
-		$ret[]['txtcolor'] = $catObj->getTextColor();
-		$ret[]['classname'] = "event_cal_".$catObj->id();
+		$cat = array();
+		$cat['feed'] = EVENT_URL."feeds.php?cat=".$value['value']."&uid=".$uid;
+		$cat['color'] = $catObj->getColor();
+		$cat['txtcolor'] = $catObj->getTextColor();
+		$cat['classname'] = "event_cal_".$catObj->id();
+		$ret[] = $cat;
 	}
 	echo json_encode(array("status" => "success", "message" => $ret)); unset($_POST);exit;
 }
