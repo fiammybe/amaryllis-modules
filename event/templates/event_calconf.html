@@ -17,6 +17,7 @@
 		var i = date.getMinutes();
 		var lastView;
 		var isResizingEvent = false;
+		document.forms.event_catselect.reset();
 		var calendar = $('#calendar').fullCalendar({
 			defaultView: '<{$default_view}>',
 			aspectRatio: 1.35,
@@ -747,21 +748,11 @@
 								color: value.color,
 								textColor: value.txtcolor,
 								ignoreTimezone: false,
-								currentTimezone: '<{$default_timezone}>'
+								currentTimezone: (value.timezone != "undefined") ? value.timezone : '<{$default_timezone}>'
 							});
 						});
-						<{if $calendars}>
-							<{foreach item=cal from=$calendars name=calendar}>
-								$('#calendar').fullCalendar('addEventSource', {
-									url: "<{$cal.url}>",
-									className: 'google_cal_<{$cal.id}>',
-									color: "<{$cal.color}>",
-									textColor: '<{$cal.txtcolor}>',
-									currentTimezone: '<{$cal.default_tz}>'
-								});
-							<{/foreach}>
-						<{/if}>
 						$('#calendar').fullCalendar('rerenderEvents');
+						return false;
 					}
 				}
 			});
