@@ -741,8 +741,6 @@
 					if(response.status == "success") {
 						$('#calendar').fullCalendar('removeEvents').fullCalendar('removeEventSources');
 						$.each(response.message, function(index, value) {
-							//alert(value['color']);
-							//var obj = $.parseJSON(value);
 							$('#calendar').fullCalendar('addEventSource', {
 								url: value.feed,
 								className: value.classname,
@@ -750,9 +748,19 @@
 								textColor: value.txtcolor,
 								ignoreTimezone: false,
 								currentTimezone: '<{$default_timezone}>'
-								
 							});
 						});
+						<{if $calendars}>
+							<{foreach item=cal from=$calendars name=calendar}>
+								$('#calendar').fullCalendar('addEventSource', {
+									url: "<{$cal.url}>",
+									className: 'google_cal_<{$cal.id}>',
+									color: "<{$cal.color}>",
+									textColor: '<{$cal.txtcolor}>',
+									currentTimezone: '<{$cal.default_tz}>'
+								});
+							<{/foreach}>
+						<{/if}>
 						$('#calendar').fullCalendar('rerenderEvents');
 					}
 				}
