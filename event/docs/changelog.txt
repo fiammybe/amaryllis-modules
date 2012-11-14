@@ -11,6 +11,7 @@
 - added phone number to output.. Seems to be forgotten
 - added new config for default timezone to prevent different times
 - added possibility to add/remove calendars on click
+- make it possible to clone events
 
 == Version 1.0 => Release Date: 10.11.2012 ==
 - First public release of the module.

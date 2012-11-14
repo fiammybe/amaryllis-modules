@@ -59,6 +59,7 @@
 					var buttons = "<span class='event_buttonbar'>" + 
 										"<img id='event_delete' src='<{$event_images_url}>delete.png' alt='delete' />" +
 										"<img id='event_edit' src='<{$event_images_url}>edit.png' alt='edit' />" +
+										"<img id='event_clone' src='<{$event_images_url}>clone.png' alt='edit' />" +
 										printButton +
 									"</span>";
 				} else {
@@ -271,6 +272,36 @@
 					$("#event_id").val(event.id);
 					$("#event_name").val(event.title);
 					
+					$("#event_allday").val(event.allDay);
+					$("#event_cid").val(event.cid);
+					$("#event_dsc_tarea").val(event.description);
+					$("#event_contact").val(event.contact_name);
+					$("#event_cemail").val(event.contact_mail);
+					$("#event_phone").val(event.phone);
+					$("#event_street").val(event.street);
+					$("#event_city").val(event.city);
+					$("#event_zip").val(event.zip);
+					$("input:radio[name=event_public]:checked").val(event.event_public);
+					$("#mid_event_url").val(event.url_mid);
+					$("#caption_event_url").val(event.url_cap);
+					$("#desc_event_url").val(event.url_dsc);
+					$("#url_event_url").val(event.url_url);
+					$("#target_event_url").val(event.url_tar);
+					$("#event_joiners").val(event.event_joiners);
+					$("#event_can_joint").val(event.event_can_joint);
+					$("div#cal_event").dialog("close");
+					$("#submit_form").dialog("open");
+				});
+				
+				$('#event_clone').click(function(){
+					var button = $(this);
+					start = $.fullCalendar.formatDate( event.start, "yyyy/MM/dd HH:mm");
+					end = $.fullCalendar.formatDate( event.end, "yyyy/MM/dd HH:mm");
+					$("#event_startdate").val(start);
+					$("#event_enddate").val(end);
+					
+					$("#event_id").val("0");
+					$("#event_name").val(event.title);
 					$("#event_allday").val(event.allDay);
 					$("#event_cid").val(event.cid);
 					$("#event_dsc_tarea").val(event.description);
