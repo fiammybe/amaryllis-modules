@@ -26,7 +26,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
                         "name"                      => _MI_EVENT_MD_NAME,
-                        "version"                   => 1.0,
+                        "version"                   => 1.1,
                         "description"               => _MI_EVENT_MD_DESC,
                         "author"                    => "QM-B",
                         "author_realname"           => "Steffen Flohrer",
