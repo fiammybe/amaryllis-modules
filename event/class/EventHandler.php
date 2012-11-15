@@ -171,23 +171,40 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			$profile_handler = icms_getModuleHandler("profile", $profileModule->getVar("dirname"), "profile");
 			$member_handler = icms::handler("icms_member_user");
 			$users = $member_handler->getObjects(FALSE, TRUE);
+			$profiles = $profile_handler->getObjects(NULL, TRUE, TRUE);
 			$time = time();
 			$year = date("Y", $time);
 			foreach (array_keys($users) as $key) {
-				$profile = $profile_handler->get($key);
-				$bday = $profile->getVar("$bday_field", "e");
+				$bday = $profiles[$key]->getVar("$bday_field", "e");
 				unset($profile);
 				if($bday == 0) continue;
 				$month = date("m", $bday);
 				$day = date("d", $bday);
 				$nbday = mktime(0,0,0,$month, $day, $year);
+				$nbday2 = mktime(0,0,0,$month, $day, $year+1);
 				$criteria = $this->getEventCriterias($bday_cal, $nbday, FALSE, $key, FALSE, FALSE, FALSE);
-				if($this->getCount($criteria)) continue;
+				if(!$this->getCount($criteria)) {
+					unset($criteria);
+					$event = $this->create(TRUE);
+					$event->setVar("event_name", sprintf(_CO_EVENT_BIRTHDAY_OF, $users[$key]->getVar("uname")));
+					$event->setVar("event_dsc", '<a class="ulink" href="'.ICMS_URL .'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'s</a>'._CO_EVENT_BIRTHDAY);
+					$event->setVar("event_startdate", $nbday);
+					$event->setVar("event_enddate", $nbday + 200);
+					$event->setVar("event_allday", TRUE);
+					$event->setVar("event_submitter", $key);
+					$event->setVar("event_created_on", time());
+					$event->setVar("event_cid", $bday_cal);
+					$event->_updatingBdays = TRUE;
+					$this->insert($event, true);
+				}
+				$criteria2 = $this->getEventCriterias($bday_cal, $nbday2, FALSE, $key, FALSE, FALSE, FALSE);
+				if($this->getCount($criteria2)) continue;
+				unset($criteria2);
 				$event = $this->create(TRUE);
 				$event->setVar("event_name", sprintf(_CO_EVENT_BIRTHDAY_OF, $users[$key]->getVar("uname")));
 				$event->setVar("event_dsc", '<a class="ulink" href="'.ICMS_URL .'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'s</a>'._CO_EVENT_BIRTHDAY);
-				$event->setVar("event_startdate", $nbday);
-				$event->setVar("event_enddate", $nbday + 200);
+				$event->setVar("event_startdate", $nbday2);
+				$event->setVar("event_enddate", $nbday2 + 200);
 				$event->setVar("event_allday", TRUE);
 				$event->setVar("event_submitter", $key);
 				$event->setVar("event_created_on", time());
