@@ -3,8 +3,7 @@
 <div id='calendar'></div>
 
 <div id="calendar_legend">
-	<form id="event_catselect" name="event_catselect" action="feeds.php" method="POST">
-	
+	<{if $use_checkboxes}><form id="event_catselect" name="event_catselect" action="feeds.php" method="POST"><{/if}>
 		<fieldset style="border: #e8e8e8 1px solid;">
 			<legend><{$smarty.const._MD_EVENT_LEGEND}></legend>
 			<{if $category}>
@@ -53,7 +52,7 @@
 			
 		</fieldset>
 	
-	</form>
+	<{if $use_checkboxes}></form><{/if}>
 </div>
 
 <div id="event_alert">&nbsp;</div>
