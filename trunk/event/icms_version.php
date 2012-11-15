@@ -354,6 +354,15 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'use_checkboxes',
+								'title' 		=> '_MI_EVENT_CONFIG_USE_CHECKBOXES',
+								'description' 	=> '_MI_EVENT_CONFIG_USE_CHECKBOXES_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 0
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'print_footer',
 								'title' 		=> '_MI_EVENT_CONFIG_PRINT_FOOTER',
 								'description' 	=> '_MI_EVENT_CONFIG_PRINT_FOOTER_DSC',

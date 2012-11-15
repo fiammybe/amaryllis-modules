@@ -59,5 +59,6 @@ $icmsTpl->assign("use_theme", ($eventConfig['use_theme'] == 1) ? 'true' : 'false
 $icmsTpl->assign("agenda_slot", $eventConfig['agenda_slot']);
 $icmsTpl->assign("agenda_min", $eventConfig['agenda_min']);
 $icmsTpl->assign("agenda_max", $eventConfig['agenda_max']);
+$icmsTpl->assign("use_checkboxes", ($eventConfig['use_checkboxes'] == 1) ? TRUE : FALSE);
 
 include_once ICMS_ROOT_PATH . '/footer.php';
