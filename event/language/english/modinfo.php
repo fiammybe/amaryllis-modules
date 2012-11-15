@@ -88,3 +88,13 @@ define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY', 'Event Modified');
 define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_CAP', 'Notify me when an event has been modified.');
 define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_DSC', 'Receive notification when an event has been modified.');
 define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Event Modified');
+/**
+ * added in 1.1
+ */
+//config
+define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY", "Field name of the birthday field");
+define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_DSC", "The Birthday Field needs to be a date Field and 'Profile' module is required!");
+define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_CAL", "Select the Calendar for User Birthdays");
+define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_CAL_DSC", "");
+// autotasks
+define("_MI_EVENT_AUTOTASK_PROFILE_BIRTHDAYS", "Profile Birthdays import for Event Module");

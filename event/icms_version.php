@@ -179,6 +179,7 @@ $modversion['comments']['callback']['update'] = 'event_com_update';
 //////////////////////////////////////////// CONFIGURATION ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 icms_loadLanguageFile("event", "common");
+$category_handler = icms_getModuleHandler("category", $modversion['dirname'], "event");
 $i = 0;
 $i++;
 $modversion['config'][$i] = array(
@@ -360,7 +361,26 @@ $modversion['config'][$i] = array(
 								'valuetype' 	=> 'text',
 								'default' 		=> 'themes/iTheme/img/logo.png'
 							);
-
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'profile_birthday',
+								'title' 		=> '_MI_EVENT_CONFIG_PROFILE_BIRTHDAY',
+								'description' 	=> '_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'text',
+								'default' 		=> ''
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'profile_birthday_cal',
+								'title' 		=> '_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_CAL',
+								'description' 	=> '_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_CAL_DSC',
+								'formtype' 		=> 'select',
+								'valuetype' 	=> 'int',
+								'default' 		=> 0,
+								'options'       => $category_handler->getCategoryListForConfig()
+							);
+							
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,3 +414,16 @@ $modversion['notification']['event'][] = array(
 													'mail_subject'		=> _MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_SBJ
 													//'mail_template_dir' => ICMS_MODULES_PATH.'/'.$modversion['dirname'].'/language/'.$icmsConfig['language'].'/mail_template/'
 												);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// AUTOTASK //////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$modversion['autotasks'][] = array(
+								'enabled'	=> '1',
+								'repeat'	=> '0',
+								'interval'	=> '360',
+								'onfinish'	=> '0',
+								'name'		=> _MI_EVENT_AUTOTASK_PROFILE_BIRTHDAYS,
+								'code'		=> 'include/autotasks/autotask_profile_bday.php'
+							);

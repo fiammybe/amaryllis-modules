@@ -23,6 +23,8 @@ if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(_
 class mod_event_Event extends icms_ipf_seo_Object {
 	
 	public $_updating = FALSE;
+	public $_updatingBdays = FALSE;
+	
 	private $_joinerArray;
 	/**
 	 * Constructor
