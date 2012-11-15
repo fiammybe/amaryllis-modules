@@ -1,39 +1,29 @@
 <div class="bubble">
-	<div id="entry_<{$entry.id}>" class="guestbook_entry">
+	<div id="entry_{ENTRY_ID}" class="guestbook_entry">
 		<!-- title -->
-		<div class="block-title"><{$entry.title}></div>
+		<div class="block-title">{ENTRY_TITLE}</div>
 		
 		<div class="guestbook_row">
 			<div class="guestbook_message">
 				<span class="guestbook_message">
-					<{$entry.message}>
+					{ENTRY_ENTRY}
 				</span>
 			</div> <!-- E N D .GUESTBOOK_message -->
-			<{if $guestbook_is_admin}>
+			
 				<div class="entry_info">
-					<span class="guestbook_ip">
-						<{$entry.ip}> <{$smarty.const._MD_GUESTBOOK_PUBLISHED_BY}>: <{$entry.published_by}>
-					</span>
+					{ENTRY_IP}
 				</div> <!-- E N D .GUESTBOOK_info -->
-			<{/if}>
-			<{if $entry.email}>
-				<div class="guestbook_email">
-					<span><{$entry.email}></span>
-				</div> <!-- E N D .GUESTBOOK_email -->
-			<{/if}>
-			<{if $entry.img}>
-				<div class="guestbook_image">
-					<span><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></span>
-				</div> <!-- E N D .GUESTBOOK_image -->
-			<{/if}>
+			{ENTRY_MAIL}
+			
+			
+				{ENTRY_IMG}
+			</div> <!-- E N D .GUESTBOOK_image -->
 		</div> <!-- E N D .GUESTBOOK_row -->
 	</div> <!-- E N D .GUESTBOOK_entry -->
 </div>
 <p>
-	<{if $entry.avatar}>
-		<span class="guestbook_avatar">
-			<img src="<{$entry.avatar}>" width="32px" height="32px" alt="avatar" />
-		</span>
-	<{/if}>
-	<strong><{$entry.name}> |<{if $entry.homepage}> <a href="<{$entry.homepage}>?&campaign=impresscms_guestbook" title="<{$entry.homepage}>"><{$entry.homepage}></a> |<{/if}> <{$entry.published_on}></strong>
+<span class="guestbook_avatar">
+	<img src="{ENTRY_AVATAR}" width="32px" height="32px" alt="avatar" />
+</span>
+<strong>{ENTRY_NAME} | <a href="{ENTRY_URL}?&campaign=impresscms_guestbook" title="{ENTRY_URL}">{ENTRY_URL}</a> | {ENTRY_PDATE}</strong>
 </p>

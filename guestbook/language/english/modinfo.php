@@ -66,3 +66,13 @@ define("_MI_GUESTBOOK_MENU_GUESTBOOK", "Guestbook");
 define("_MI_GUESTBOOK_MENU_INDEXPAGE", "Edit Indexpage");
 define("_MI_GUESTBOOK_MENU_TEMPLATES", "Templates");
 define("_MI_GUESTBOOK_MENU_IMPORT", "Import");
+/**
+ * added in 1.1
+ */
+// config
+define("_MI_GUESTBOOK_CAN_MODERATE", "Select the groups, which can moderate entries");
+define("_MI_GUESTBOOK_CAN_MODERATE_DSC", "");
+define("_MI_GUESTBOOK_DISPLAY_WIDTH", "Image Display Width");
+define("_MI_GUESTBOOK_DISPLAY_WIDTH_DSC", "");
+define("_MI_GUESTBOOK_DISPLAY_HEIGHT", "Image Display height");
+define("_MI_GUESTBOOK_DISPLAY_HEIGHT_DSC", "");

@@ -20,6 +20,14 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 class GuestbookGuestbook extends icms_ipf_Object {
+	
+	public $_guestbook_thumbs;
+	
+	public $_guestbook_images;
+	
+	public $_guestbook_images_url;
+	
+	public $_guestbook_thumbs_url;
 	/**
 	 * Constructor
 	 *
@@ -42,6 +50,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$this->quickInitVar("guestbook_ip", XOBJ_DTYPE_OTHER, FALSE);
 		$this->quickInitVar("guestbook_approve", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("guestbook_published_date", XOBJ_DTYPE_LTIME);
+		$this->quickInitVar("guestbook_fprint", XOBJ_DTYPE_OTHER, FALSE, FALSE, FALSE, FALSE);
 		$this->initCommonVar("dohtml", FALSE, 1);
 		$this->initCommonVar("doxcode", FALSE, 1);
 		$this->initCommonVar("doimage", FALSE, 1);
@@ -54,10 +63,14 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		} else {
 			$this->setControl("guestbook_image", "imageupload");
 		}
-		$this->hideFieldFromForm(array("guestbook_approve", "guestbook_pid", "guestbook_ip", "guestbook_uid", "guestbook_published_date"));
+		$this->hideFieldFromForm(array("guestbook_approve", "guestbook_fprint", "guestbook_pid", "guestbook_ip", "guestbook_uid", "guestbook_published_date"));
 		if($guestbookConfig['needs_approval'] == 0) {
 			$this->hideFieldFromSingleView("guestbook_approve");
 		}
+		$this->_guestbook_thumbs = $this->handler->getGuestbookThumbsPath();
+		$this->_guestbook_images = $this->handler->getGuestbookImagesPath();
+		$this->_guestbook_images_url = ICMS_URL . "/cache/" . $this->handler->_moduleName . "/" . $this->handler->_itemname . "/images/";
+		$this->_guestbook_thumbs_url = ICMS_URL . "/cache/" . $this->handler->_moduleName . "/" . $this->handler->_itemname . "/thumbs/";
 	}
 
 	public function getVar($key, $format = "s") {
@@ -78,23 +91,28 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		}
 	}
 	
-	public function getGuestbookAvatar() {
+	public function getGuestbookImage($thumb = FALSE) {
 		global $guestbookConfig;
-		if($guestbookConfig['show_avatar'] == 1) {
-			$review_uid = $this->getVar("guestbook_uid", "e");
-			$user = icms::handler("icms_member")->getUser($review_uid);
-			if((int)($review_uid > 0) && is_object($user)) {
-				$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
-				$avatar_image = $avatar;
-				return $avatar_image;
-			} else {
-				$review_avatar = "blank_gravatar.png";
-				$avatar_image = GUESTBOOK_IMAGES_URL . "/" . $review_avatar;
-				return $avatar_image;
+		$guestbook_img = $cached_img = $cached_image_url = $srcpath = $image = "";
+		$guestbook_img = $this->getVar('guestbook_image', 'e');
+		if(!$guestbook_img == "" && !$guestbook_img == "0") {
+			$cached_img = ($thumb == FALSE) ? $this->_guestbook_images . $guestbook_img : $this->_guestbook_thumbs . $guestbook_img;
+			$cached_image_url = ($thumb == FALSE) ? $this->_guestbook_images_url . $guestbook_img : $this->_guestbook_thumbs_url . $guestbook_img;
+			if(!is_file($cached_img)) {
+			    require_once ICMS_MODULES_PATH.'/'.GUESTBOOK_DIRNAME.'/class/Image.php';
+				$srcpath = GUESTBOOK_UPLOAD_ROOT . $this->handler->_itemname . "/";
+				$image = new mod_guestbook_Image($guestbook_img, $srcpath);
+				$resized = $image->resizeImage( ($thumb == FALSE) ? $guestbookConfig['display_width'] : $guestbookConfig['thumbnail_width'], 
+										($thumb == FALSE) ? $guestbookConfig['display_height'] : $guestbookConfig['thumbnail_height'],
+										($thumb == FALSE) ? $this->_guestbook_images : $this->_guestbook_thumbs, "100");
+				unset($srcpath, $image, $resized);
 			}
+			unset($cached_img, $guestbook_img, $thumb);
+			return $cached_image_url;
 		}
+		return FALSE;
 	}
-	
+
 	public function getMessageTeaser() {
 		$ret = $this->getVar("guestbook_entry", "s");
 		$ret = icms_core_DataFilter::icms_substr(icms_cleanTags($ret, array()), 0, 120);
@@ -115,8 +133,14 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		return $image_tag;
 	}
 	
+	public function getIP() {
+		global $guestbook_isAdmin;
+		return ($guestbook_isAdmin) ? $this->getVar("guestbook_ip") : FALSE;
+	}
+	
 	public function getGuestbookEmail() {
-		global $guestbookConfig;
+		global $guestbookConfig, $guestbook_isAdmin;
+		if($guestbookConfig['show_email'] == 0 && !$guestbook_isAdmin) return FALSE;
 		$email = $this->getVar("guestbook_email", "s");
 		if($guestbookConfig['display_email'] == 1 && $email != "") {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
@@ -131,24 +155,16 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	}
 	
 	// get publisher for frontend
-	function getPublisher($link = FALSE) {
-			$publisher_uid = $this->getVar('guestbook_uid', 'e');
-			$userinfo = array();
-			$userObj = icms::handler('icms_member')->getuser($publisher_uid);
-			if (is_object($userObj)) {
-				$userinfo['uid'] = $publisher_uid;
-				$userinfo['uname'] = $userObj->getVar('uname');
-				$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
-			} else {
-				global $icmsConfig;
-				$userinfo['uid'] = 0;
-				$userinfo['uname'] = $icmsConfig['anonymous'];
-			}
-		if ($link && $userinfo['uid']) {
-			return $userinfo['link'];
-		} else {
-			return $userinfo['uname'];
-		}
+	function getPublisher() {
+		$uid = $this->getVar('guestbook_uid', 'e');
+		$users = $this->handler->loadUsers();
+		$user = (array_key_exists($uid, $users) && $uid > 0 ) ? $users[$uid] : FALSE;
+		if($user) return $user;
+		$userinfo = array();
+		$userinfo['link'] = ucwords($this->getVar("guestbook_name"));
+		$email = ($this->getVar("guestbook_email") !== "") ? $this->getVar("guestbook_email") : FALSE;
+		$userinfo['avatar'] = ($email) ? "http://www.gravatar.com/avatar/" . md5(strtolower($email)) . "?d=identicon" : GUESTBOOK_URL."images/blank_gravatar.png";
+		return $userinfo;
 	}
 	
 	public function getPublishedDate() {
@@ -157,28 +173,25 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		return date($guestbookConfig['guestbook_dateformat'], $date);
 	}
 	
+	public function isApproved() {
+		return ($this->getVar("guestbook_approve") == 1) ? TRUE : FALSE;
+	}
+	
+	public function getApproved() {
+		return ($this->isApproved()) ? "guestbook_approval" : "";
+	}
+	
 	public function getSubEntries($toArray = FALSE) {
 		global $guestbookConfig;
 		if($guestbookConfig['use_moderation'] == 1) {
-			$pid = $this->getVar("guestbook_id", "e");
+			$pid = $this->id();
 			return $this->handler->getSubEntries(TRUE, $pid, $toArray);
 		}
 	}
-
-	public function getReplyLink() {
-		global $guestbookConfig;
-		if($guestbookConfig['use_moderation'] == 1) {
-			$pid = $this->getVar("guestbook_id", "e");
-			$link = GUESTBOOK_URL . 'submit.php?op=addreply&guestbook_pid=' . $this->getVar("guestbook_id");
-		} else {
-			$link = FALSE;
-		}
-		return $link;
-	}
 	
 	public function getItemLink($urlonly = FALSE) {
-		$id = $this->getVar("guestbook_id", "e");
-		$title = $this->getVar("guestbook_title", "e");
+		$id = $this->id();
+		$title = $this->title();
 		if($urlonly) {
 			$link = GUESTBOOK_URL . '#entry_' . $id;
 		} else {
@@ -187,29 +200,34 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		return $link;
 	}
 
+	public function hasImage() {
+		return (($this->getVar("guestbook_image") !== "") && ($this->getVar("guestbook_image") !== "0")) ? TRUE : FALSE;
+	}
+
 	public function toArray() {
 		global $guestbookConfig;
 		$ret = parent::toArray();
-		$ret['id'] = $this->getVar("guestbook_id", "e");
+		$ret['id'] = $this->id();
 		$ret['published_on'] = $this->getPublishedDate();
-		$ret['published_by'] = $this->getPublisher(TRUE);
-		$ret['img'] = $this->getImageTag();
-		$ret['name'] = $this->getVar("guestbook_name");
+		$ret['published_by'] = $this->getPublisher();
+		$ret['img'] = $this->getGuestbookImage();
+		$ret['thumb'] = $this->getGuestbookImage(TRUE);
 		$ret['homepage'] = $this->getVar("guestbook_url");
 		$ret['email'] = $this->getGuestbookEmail();
-		$ret['ip'] = $this->getVar("guestbook_ip");
-		$ret['title'] = $this->getVar("guestbook_title");
+		$ret['ip'] = $this->getIP();
+		$ret['title'] = $this->title();
 		$ret['message'] = $this->getMessage();
 		$ret['teaser'] = $this->getMessageTeaser();
-		$ret['avatar'] = $this->getGuestbookAvatar();
+		$ret['avatar'] = ($guestbookConfig['show_avatar'] == 1) ? TRUE : FALSE;
 		$ret['parent'] = $this->getVar("guestbook_pid", "e");
 		if($guestbookConfig['use_moderation'] == 1){
 			$ret['sub'] = $this->getSubEntries(TRUE);
 			$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
 		}
-		$ret['reply'] = $this->getReplyLink();
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
+		$ret['approved'] = $this->getApproved();
+		$ret['has_image'] = $this->hasImage();
 		return $ret;
 	}
 }
