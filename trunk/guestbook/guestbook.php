@@ -16,43 +16,6 @@
  * @package		guestbook
  *
  */
- 
-function editmessage($clean_guestbook_id = 0, $guestbook_pid = FALSE) {
-	global $icmsConfig, $guestbook_guestbook_handler, $icmsTpl, $guestbookConfig;
-	$guestbook_guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(dirname(__FILE__))), "guestbook");
-	$guestbookObj = $guestbook_guestbook_handler->get($clean_guestbook_id);
-	if(is_object(icms::$user)){
-		$guestbook_uid = icms::$user->getVar("uid");
-	} else {
-		$guestbook_uid = 0;
-	}
-	if ($guestbookObj->isNew()) {
-		$guestbookObj->setVar("guestbook_uid", $guestbook_uid);
-		$guestbookObj->setVar("guestbook_published_date", time() - 200);
-		$guestbookObj->setVar("guestbook_ip", xoops_getenv('REMOTE_ADDR'));
-		if($guestbookConfig["needs_approval"] == 1) {
-			if(icms_userIsAdmin(GUESTBOOK_DIRNAME)){
-				$guestbookObj->setVar("guestbook_approve", TRUE);
-			} else {
-				$guestbookObj->setVar("guestbook_approve", FALSE);
-			}
-		} else {
-			$guestbookObj->setVar("guestbook_approve", TRUE);
-		}
-		if($guestbook_pid) {
-			$guestbookObj->setVar("guestbook_pid", $guestbook_pid);
-		}
-		$sform = $guestbookObj->getSecureForm(_MD_GUESTBOOK_CREATE, 'addentry', 'submit.php?op=addentry&guestbook_id=' . $clean_guestbook_id, FALSE, TRUE);
-		//$sform->addElement();
-		if($guestbook_pid) {
-			$sform->assign($icmsTpl, 'guestbook_reply_form');
-		} else {
-			$sform->assign($icmsTpl, 'guestbook_form');
-		}
-	} else {
-		exit;
-	}
-}
 
 include_once "../../mainfile.php";
 include_once dirname(__FILE__) . '/include/common.php';
@@ -63,12 +26,9 @@ include_once ICMS_ROOT_PATH . "/header.php";
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
 $guestbook_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'guestbook' );
-
-$indexpageObj = $guestbook_indexpage_handler->get($clean_index_key);
-$index = $indexpageObj->toArray();
-$icmsTpl->assign('guestbook_index', $index);
+$indexpageObj = $guestbook_indexpage_handler->get(1);
+$icmsTpl->assign('guestbook_index', $indexpageObj->toArray());
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
@@ -77,24 +37,37 @@ $icmsTpl->assign('guestbook_index', $index);
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start') : 0;
 $guestbook_guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(__FILE__)), "guestbook");
 $clean_guestbook_id = isset($_GET['guestbook_id']) ? filter_input(INPUT_GET, 'guestbook_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$entries = $guestbook_guestbook_handler -> getEntries(TRUE ,$clean_guestbook_id, $clean_start, $guestbookConfig["show_entries"], 'guestbook_published_date', 'DESC');
+$entries = $guestbook_guestbook_handler->getEntries(TRUE ,$clean_guestbook_id, $clean_start, $guestbookConfig["show_entries"], 'guestbook_published_date', 'DESC');
 $icmsTpl->assign("entries", $entries);
-if($guestbookConfig['use_moderation'] == 1) {
-	$icmsTpl->assign("reply_link", TRUE);
-}
+
+$name = (is_object(icms::$user)) ? icms::$user->getVar("name") : "";
+$email = (is_object(icms::$user)) ? icms::$user->getVar("email") : "";
+
+$form = new icms_form_Theme("", "addentry", "submit.php");
+$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_TITLE, "guestbook_title", 75, 255));
+$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_NAME, "guestbook_name", 75, 255, $name, TRUE));
+$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_EMAIL, "guestbook_email", 75, 255, $email, TRUE));
+$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_URL, "guestbook_url", 75, 255));
+$form->addElement(new icms_form_elements_Textarea(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_ENTRY, "guestbook_entry", "", 5, 50));
+$form->addElement(new icms_form_elements_File(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_IMAGE, "guestbook_image", $guestbookConfig['image_file_size']));
+$form->addElement(new icms_form_elements_Hidden("guestbook_pid", 0));
+$form->addElement(new icms_form_elements_Captcha());
+$form->addElement(new icms_form_elements_Hidden("op", "addentry"));
+
 if($guestbookConfig["guest_entry"] == 1) {
+	$form->assign($icmsTpl);
 	$icmsTpl->assign("link_class", TRUE);
-	$icmsTpl->assign("submit_link", GUESTBOOK_URL . "submit.php?op=addentry");
+	$icmsTpl->assign("submit_link", GUESTBOOK_URL . "submit.php");
 } else {
 	if(is_object(icms::$user)) {
+		$form->assign($icmsTpl);
 		$icmsTpl->assign("link_class", TRUE);
-		$icmsTpl->assign("submit_link", GUESTBOOK_URL . "submit.php?op=addentry");
+		$icmsTpl->assign("submit_link", GUESTBOOK_URL . "submit.php");
 	} else {
 		$icmsTpl->assign("link_class", FALSE);
 		$icmsTpl->assign("submit_link", ICMS_URL . "/user.php");
 	}
 }
-editmessage($clean_guestbook_id);
 
 /**
  * pagination

@@ -1,8 +1,3 @@
-<script type="text/javascript">
-//<![CDATA[
-SetSpeechBubble();
-//]]>
-</script>
 
 <link href="<{$guestbook_url}>module_guestbook.css" rel="stylesheet" type="text/css" />
 
@@ -46,23 +41,7 @@ SetSpeechBubble();
 			<{if $pagenav}>
 				<{$pagenav}>
 			<{/if}>
-			<{foreach item=entry from=$entries}>
-				<{includeq file="db:guestbook_singleentry.html"}>
-				<{if $entry.reply && $guestbook_is_admin}>
-						<div style="padding: 10px 0 25px 15px;">
-							<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_GUESTBOOK_REPLY}></a>
-						</div>
-				<{/if}>
-				
-				<{if $entry.hassub}>
-					<div class="guestbook_replies">
-						<{foreach item=entry from=$entry.sub}>
-							<{includeq file="db:guestbook_singleentry.html"}>
-						<{/foreach}>
-					</div>
-				<{/if}>
-			
-			<{/foreach}>
+			<div id="entries"></div>
 			<{if $pagenav}>
 				<{$pagenav}>
 			<{/if}>
@@ -76,11 +55,14 @@ SetSpeechBubble();
 		</span>
 	</div>
 <{/if}>
-<div class="ui-helper-hidden guestbook_form">
-	<{if $guestbook_form}>
-		<{includeq file='db:system_common_form.html' form=$guestbook_form}>
+<div class="ui-helper-hidden" id="guestbook_form">
+	<{if $addentry}>
+		<{includeq file='db:system_common_form.html' form=$addentry}>
+		<div id="guestbook_error" style="display: none;">&nbsp;</div>
 	<{/if}>
 </div>
+
+<div id="guestbook_message" style="display: none;">&nbsp;</div>
 
 <div id="dialog-confirm-perm" title="<{$smarty.const._MD_GUESTBOOK_PERM}>" class="ui-helper-hidden" >
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$smarty.const._MD_GUESTBOOK_PERMISSION}></p>
@@ -92,6 +74,113 @@ SetSpeechBubble();
 
 <{$guestbook_index.footer}>
 
-<{if $guestbook_reply_form}>
-	<{includeq file='db:system_common_form.html' form=$guestbook_reply_form}>
-<{/if}>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+			url: "entries.php",
+			dataType: "json",
+			data: {
+				start: "<{$smarty.get.start}>",
+				limit: "<{$smarty.get.limit}>"
+			},
+			type: "POST",
+			success: function(response) {
+				$("#entries").html(response);
+			}
+		});
+		$("#guestbook_form").dialog({
+			title: "<span class='form_title' style='text-align: center;'><{$smarty.const._MD_GUESTBOOK_ADD}></span>",
+			autoOpen: false,
+			height: 375,
+			width: "90%",
+			modal: true,
+			show: "clip",
+			hide: "clip",
+			buttons: {
+				"<{$smarty.const._SUBMIT}>": function() {
+					var dlg = $(this);
+					$.ajax({
+						url: $("#addentry").attr('action'),
+						type: "POST",
+						data: {guestbook_title: $("#guestbook_title").val(),
+								guestbook_name: $("#guestbook_name").val(),
+								guestbook_email: $("#guestbook_email").val(),
+								guestbook_url: $("#guestbook_url").val(),
+								guestbook_entry: $("#guestbook_entry").val(),
+								guestbook_pid: $("#guestbook_pid").val(),
+								icmscaptcha: $("#icmscaptcha").val(),
+								op: $("#op").val()},
+						dataType: "json",
+						success: function(response) {
+									if(response.status === "success") {
+										dlg.dialog("close");
+										$('#guestbook_message').html(response.message);
+										$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
+										$("#guestbook_pid").val("0");
+										$("#op").val("addentry");
+										document.getElementById("addentry").reset();
+										$('#guestbook_message').dialog('open');
+									} else if(response.status === "error") {
+										$("#guestbook_error").html("<{$smarty.const._MD_GUESTBOOK_FAILURE}>: " + response.message);
+									}
+						},
+					});
+				},
+				"<{$smarty.const._CANCEL}>" : function() {
+					document.getElementById("addentry").reset();
+					$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
+					$("#guestbook_pid").val("0");
+					$("#op").val("addentry");
+					$(this).dialog("close");
+				}
+			},
+			Cancel: function() {
+				$(this).dialog( "close" );
+				$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
+				$("#guestbook_pid").val("0");
+				$("#op").val("addentry");
+				document.getElementById("addentry").reset();
+			}
+		});
+       
+		$(".submit_link").click(function(e) {
+			e.preventDefault();
+			$("#guestbook_pid").val("0");
+			$("#guestbook_form").dialog("open");
+		});
+		
+		$(".reply_link").click(function(e) {
+			var $link = $(this);
+			e.preventDefault();
+			$("#guestbook_pid").val($link.attr("original-id"));
+			$("#guestbook_form").dialog("open");
+		});
+		
+		$("#guestbook_message").dialog({
+			autoOpen: false,
+        	height: 200,
+        	width: "90%",
+        	modal: true,
+        	show: "clip",
+        	hide: "clip",
+        	buttons: {
+        		"OK": function() {
+        			$.ajax({
+        				url: "entries.php",
+        				dataType: "json",
+						data: {
+							start: "<{$smarty.get.start}>",
+							limit: "<{$smarty.get.limit}>"
+        				},
+        				type: "post",
+        				success: function(response) {
+        					$("#entries").html(response);
+        				}
+        			});
+					$(this).dialog("close");
+					//window.location.reload();
+				}
+        	}
+		});
+	});
+</script>

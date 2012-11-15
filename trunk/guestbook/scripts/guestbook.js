@@ -14,7 +14,7 @@
  * @package		guestbook
  *
  */
- 
+ /**
 	function SetSpeechBubble()
 	{
 		$(function()
@@ -33,25 +33,18 @@
 			$('div.bubble').corner(settings);
 		});
 	}
-
-// guestbook submit form
+	**/
 	$(document).ready(function(){
-		$(".guestbook_form").dialog({
-			modal: true,
-			width: 700,
-			height: 400,
-			autoOpen: false,
-			resizable: true,
-			draggable: true
-		});
-		$(".submit_link").click(function(e) {
-			e.preventDefault();
-			$(".guestbook_form").dialog("open");
-		});
-		
-	});
-	
-	$(document).ready(function(){
+		var settings = {
+				tl:{ radius:10 },
+				tr:{ radius:10 },
+				bl:{ radius:10 },
+				br:{ radius:10 },
+				antiAlias:true,
+				autoPad:true,
+				validTags:["div"]
+			}
+		$('div.bubble').corner(settings);
 		$('a.entry_img').colorbox({
 			transition:'fade',
 			speed:500,
