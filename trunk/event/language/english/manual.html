@@ -48,6 +48,7 @@
 	        	</li>
 	        	<li><a href="#blocks">Module Blocks</a></li>
 	        	<li><a href="#templates">Templates</a></li>
+	        	<li><a href="#profile">"Event" Module playing together with "profile" Module</a></li>
 	        	<li><a href="#event_footer">Conclusion</a></li>
 	        </ul>
 	        <h2 id="keyfeatures">Keyfeatures</h2>
@@ -111,6 +112,31 @@
 		        					<li>Turn UI Theme here off and design your custom design. This can also be done while ui-theme is enabled but it isn't that easies to design with ui theme in background</li>
 		        				</ul>
 		        			</li>
+		        		</ul>
+		        	</li>
+		        	<li>Use a checkbox-Form to select, which Categories/Calendars should be loaded?
+		        		<ul>
+		        			<li>The module supports a checkbox form, to select, which calendars currently should be displayed. Just check/uncheck all calendars to be loaded. Currently this does not properly work in other browsers than FF..!</li>
+		        		</ul>
+		        	</li>
+		        	<li>Print footer
+		        		<ul>
+		        			<li>Add a custom footer to print layout</li>
+		        		</ul>
+		        	</li>
+		        	<li>Print logo
+		        		<ul>
+		        			<li>Add a custom logo to print layout. The path needs to be as default. 'themes/iTheme/img/logo.png'. From root path of your ImpressCMS Install to the logo.</li>
+		        		</ul>
+		        	</li>
+		        	<li>Profile Module Settings
+		        		<ul>
+		        			<li>The following both fields require profile module to be installed. If Profile Module is available, you can add a "birthday" field to your user profiles. Let's call it "birthday" here in example, but
+		        			 you can call it however you like. So, go to profile module and add a new field with type "date" and give a field name "birthday" and Caption "Your Birthday". If you like, set as required and a step for registration or even 
+		        			 let it not required. Doesn't matter. If the user has added his birthday, event module can add the birthdays itself to events. Just enter the given name (NOT Caption!) here in Birthday Field and select the Category. 
+		        			 If your added category is not present in the list, please make an update of the module. ImpressCMS does not catch the full list of categories without updating the module!
+		        			 If the profile Module is installed and available, the module checks (using Auto Tasks) in a given frequenzy for new user birthdays. As default I set up all 6 hours. If you don't need or just need once per day go to autotasks and disable 
+		        			 or change the frequency as needed. All done? Well, now the module checks all time for birthday events in the current and the following year.</li>
 		        		</ul>
 		        	</li>
 		        </ul>
@@ -190,7 +216,7 @@
 					</dl>
 			
 			<h2 id="blocks">Module Blocks</h2>
-				<p>Currently the module comes up with 3 Blocks:</p>
+				<p>Currently the module comes up with 4 Blocks:</p>
 				<ul>
 					<li>Mini Calendar Block
 						<ul>
@@ -230,6 +256,11 @@
 							</li>
 						</ul>
 					</li>
+					<li>Category/Calendar List
+						<ul>
+							<li>This Block just returns the legend of calendars/categories with a link to the requested category/calendar. Clicking the link, just this category will be displayed.</li>
+						</ul>
+					</li>
 				</ul>
         	<h2 id="templates">Templates</h2>
         	<p>There're just a few templates available:</p>
@@ -265,6 +296,10 @@
         			</ul>
         		</li>
         	</ul>
+        	<h2 id="profile">"Event" Module playing together with "profile" Module</h2>
+        	<p>The module can/will play together with profile Module. As you have recognized in <a href="#preferences">Preferences</a> the module can feth users birthdays from User Profiles and add them as an Event into your calendar. 
+        		This can be done for the current year and the next year.</p>
+        	<p>But it will do some more. If you allow users to join Events, they can see, which of their Friends are joining, too. This is using the profile friendship handler to get the frieds of the current user.</p>
         	
         	<div id="event_footer">
 				<h2>Conclusion</h2>
