@@ -37,8 +37,8 @@ $icmsTpl->assign('guestbook_index', $indexpageObj->toArray());
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start') : 0;
 $guestbook_guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(__FILE__)), "guestbook");
 $clean_guestbook_id = isset($_GET['guestbook_id']) ? filter_input(INPUT_GET, 'guestbook_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$entries = $guestbook_guestbook_handler->getEntries(TRUE ,$clean_guestbook_id, $clean_start, $guestbookConfig["show_entries"], 'guestbook_published_date', 'DESC');
-$icmsTpl->assign("entries", $entries);
+//$entries = $guestbook_guestbook_handler->getEntries(TRUE ,$clean_guestbook_id, $clean_start, $guestbookConfig["show_entries"], 'guestbook_published_date', 'DESC');
+$icmsTpl->assign("entries", TRUE);
 
 $name = (is_object(icms::$user)) ? icms::$user->getVar("name") : "";
 $email = (is_object(icms::$user)) ? icms::$user->getVar("email") : "";

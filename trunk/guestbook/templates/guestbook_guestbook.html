@@ -106,7 +106,7 @@
 								guestbook_name: $("#guestbook_name").val(),
 								guestbook_email: $("#guestbook_email").val(),
 								guestbook_url: $("#guestbook_url").val(),
-								guestbook_entry: $("#guestbook_entry").val(),
+								guestbook_entry: $("#guestbook_entry_tarea").val(),
 								guestbook_pid: $("#guestbook_pid").val(),
 								icmscaptcha: $("#icmscaptcha").val(),
 								op: $("#op").val()},
@@ -115,45 +115,52 @@
 									if(response.status === "success") {
 										dlg.dialog("close");
 										$('#guestbook_message').html(response.message);
-										$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
-										$("#guestbook_pid").val("0");
-										$("#op").val("addentry");
+										//$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
+										//$("#guestbook_pid").val("0");
+										//$("#op").val("addentry");
 										document.getElementById("addentry").reset();
 										$('#guestbook_message').dialog('open');
 									} else if(response.status === "error") {
 										$("#guestbook_error").html("<{$smarty.const._MD_GUESTBOOK_FAILURE}>: " + response.message);
+										$("#guestbook_error").show();
 									}
 						},
 					});
 				},
 				"<{$smarty.const._CANCEL}>" : function() {
 					document.getElementById("addentry").reset();
-					$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
-					$("#guestbook_pid").val("0");
-					$("#op").val("addentry");
+					//$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
+					//$("#guestbook_pid").val("0");
+					//$("#op").val("addentry");
+					$("#guestbook_error").html("");
+					$("#guestbook_error").hide();
 					$(this).dialog("close");
 				}
 			},
 			Cancel: function() {
-				$(this).dialog( "close" );
-				$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
-				$("#guestbook_pid").val("0");
-				$("#op").val("addentry");
+				
+				//$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
+				//$("#guestbook_pid").val("0");
+				//$("#op").val("addentry");
 				document.getElementById("addentry").reset();
+				$("#guestbook_error").html("");
+				$("#guestbook_error").hide();
+				$(this).dialog( "close" );
 			}
 		});
        
 		$(".submit_link").click(function(e) {
 			e.preventDefault();
-			$("#guestbook_pid").val("0");
+			$("#guestbook_pid").val(0);
 			$("#guestbook_form").dialog("open");
-		});
+		})
 		
 		$(".reply_link").click(function(e) {
-			var $link = $(this);
 			e.preventDefault();
-			$("#guestbook_pid").val($link.attr("original-id"));
+			var $id = $(this).attr("original-id");
+			$("#guestbook_pid").val($id);
 			$("#guestbook_form").dialog("open");
+			return false;
 		});
 		
 		$("#guestbook_message").dialog({

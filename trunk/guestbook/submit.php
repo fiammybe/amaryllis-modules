@@ -38,7 +38,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$guestbookObj->setVar("guestbook_title", filter_input(INPUT_POST, "guestbook_title"));
 			$guestbookObj->setVar("guestbook_name", filter_input(INPUT_POST, "guestbook_name"));
 			$guestbookObj->setVar("guestbook_email", filter_input(INPUT_POST, "guestbook_email", FILTER_VALIDATE_EMAIL));
-			$guestbookObj->setVar("guestbook_url", filter_input(INPUT_POST, "guestbook_url", FILTER_VALIDATE_URL));
+			$guestbookObj->setVar("guestbook_url", filter_input(INPUT_POST, "guestbook_url"));
 			$guestbookObj->setVar("guestbook_entry", filter_input(INPUT_POST, "guestbook_entry"));
 			$guestbookObj->setVar("guestbook_pid", $guestbook_pid);
 			$guestbookObj->setVar("guestbook_ip", $_SERVER['REMOTE_ADDR']);
