@@ -32,7 +32,7 @@ function b_event_calendars_show($options) {
 		$block['calendars'] = $calendar_handler->getObjects(FALSE, TRUE, FALSE);
 	}
 	$block['event_url'] = ICMS_URL.'/modules/'.EVENT_DIRNAME.'/';
-	$xoTheme->addScript('/modules/' . EVENT_DIRNAME . '/scripts/jquery.qtip.min.js', array('type' => 'text/javascript'));
+	//$xoTheme->addScript('/modules/' . EVENT_DIRNAME . '/scripts/jquery.qtip.min.js', array('type' => 'text/javascript'));
 	$xoTheme->addStylesheet(ICMS_MODULES_URL . '/' . EVENT_DIRNAME . '/scripts/module_event_blocks.css');
 	$xoTheme->addStylesheet(ICMS_MODULES_URL . '/' . EVENT_DIRNAME . '/scripts/jquery.qtip.min.css');
 	return $block;
