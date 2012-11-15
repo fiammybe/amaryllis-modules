@@ -48,6 +48,7 @@
 	        	</li>
 	        	<li><a href="#blocks">Module Blöcke</a></li>
 	        	<li><a href="#templates">Templates</a></li>
+	        	<li><a href="#profile">"Event" Module playing together with "profile" Module</a></li>
 	        	<li><a href="#event_footer">Fazit</a></li>
 	        </ul>
 	        <h2 id="keyfeatures">Funktionen</h2>
@@ -110,6 +111,31 @@ So wird der Kalender bei der vorgegebenen Stunde in der Tagesansicht beginnen.</
 		        					<li>Schalten Sie das UI Theme aus und gestalten Sie Ihren individuellen Stil. Dies kann auch geschehen, während ui-Thema ist aktiviert ist, es ist aber nicht so einfach ,mit ui Thema im Hintergrund Ihren Kalender zu gestalten</li>
 		        				</ul>
 		        			</li>
+		        		</ul>
+		        	</li>
+		        	<li>Use a checkbox-Form to select, which Categories/Calendars should be loaded?
+		        		<ul>
+		        			<li>The module supports a checkbox form, to select, which calendars currently should be displayed. Just check/uncheck all calendars to be loaded. Currently this does not properly work in other browsers than FF..!</li>
+		        		</ul>
+		        	</li>
+		        	<li>Print footer
+		        		<ul>
+		        			<li>Add a custom footer to print layout</li>
+		        		</ul>
+		        	</li>
+		        	<li>Print logo
+		        		<ul>
+		        			<li>Add a custom logo to print layout. The path needs to be as default. 'themes/iTheme/img/logo.png'. From root path of your ImpressCMS Install to the logo.</li>
+		        		</ul>
+		        	</li>
+		        	<li>Profile Module Settings
+		        		<ul>
+		        			<li>The following both fields require profile module to be installed. If Profile Module is available, you can add a "birthday" field to your user profiles. Let's call it "birthday" here in example, but
+		        			 you can call it however you like. So, go to profile module and add a new field with type "date" and give a field name "birthday" and Caption "Your Birthday". If you like, set as required and a step for registration or even 
+		        			 let it not required. Doesn't matter. If the user has added his birthday, event module can add the birthdays itself to events. Just enter the given name (NOT Caption!) here in Birthday Field and select the Category. 
+		        			 If your added category is not present in the list, please make an update of the module. ImpressCMS does not catch the full list of categories without updating the module!
+		        			 If the profile Module is installed and available, the module checks (using Auto Tasks) in a given frequenzy for new user birthdays. As default I set up all 6 hours. If you don't need or just need once per day go to autotasks and disable 
+		        			 or change the frequency as needed. All done? Well, now the module checks all time for birthday events in the current and the following year.</li>
 		        		</ul>
 		        	</li>
 		        </ul>
@@ -188,7 +214,7 @@ So wird der Kalender bei der vorgegebenen Stunde in der Tagesansicht beginnen.</
 					</dl>
 			
 			<h2 id="blocks">Module Blöcke</h2>
-				<p>Derzeit hat das Modul 2 Blöcke:</p>
+				<p>Derzeit hat das Modul 4 Blöcke:</p>
 				<ul>
 					<li>Mini Kalender Block
 						<ul>
@@ -211,6 +237,26 @@ dann werden nur Veranstaltungen des aktuellen Monats in der Liste angezeigt. Die
 									<li><strong>Monat:</strong> Anzeige aller Events für einen Monat </li>
 								</ul>
 							</li>
+						</ul>
+					</li>
+					<li>Event Filter
+						<ul>
+							<li>This block shows just a simple Event List, the same as "Event List" . You can select the category to be displayed and check some additional filters. So for examle select no category and apply 
+								the other filters. Now you should see in the block on front end a form inside the block. If a category is selected, there's no category filter. Otherwise you get a select box for categories, too. 
+								If you change the start or end-range or select inside any other filter, the block will be updated automatically. Current Filters:
+								<ul>
+									<li><strong>Start:</strong> Display all Events which are starting on this day or later.</li>
+									<li><strong>End:</strong> Display all Events which are starting on this day or earlier.</li>
+									<li><strong>Category:</strong>If no category has been selected, you get a select box. otherwise the block is searching only in the pre-selected category</li>
+									<li><strong>Postal Code:</strong> Display all Events for this postal code</li>
+									<li><strong>City:</strong> Display all Events for this city</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>Category/Calendar List
+						<ul>
+							<li>This Block just returns the legend of calendars/categories with a link to the requested category/calendar. Clicking the link, just this category will be displayed.</li>
 						</ul>
 					</li>
 				</ul>
@@ -248,6 +294,10 @@ dann werden nur Veranstaltungen des aktuellen Monats in der Liste angezeigt. Die
         			</ul>
         		</li>
         	</ul>
+        	<h2 id="profile">"Event" Module playing together with "profile" Module</h2>
+        	<p>The module can/will play together with profile Module. As you have recognized in <a href="#preferences">Preferences</a> the module can feth users birthdays from User Profiles and add them as an Event into your calendar. 
+        		This can be done for the current year and the next year.</p>
+        	<p>But it will do some more. If you allow users to join Events, they can see, which of their Friends are joining, too. This is using the profile friendship handler to get the frieds of the current user.</p>
         	
         	<div id="event_footer">
 				<h2>Schlussbemerkungen</h2>

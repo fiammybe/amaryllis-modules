@@ -107,12 +107,13 @@ $clean_cat = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat") : FALSE;
 $clean_cal = isset($_GET['cal']) ? filter_input(INPUT_GET, "cal") : FALSE;
 $clean_date = isset($_GET['date']) ? filter_input(INPUT_GET, "date") : FALSE;
 $clean_time = isset($_GET['time']) ? filter_input(INPUT_GET, "time", FILTER_SANITIZE_NUMBER_INT) : $eventConfig['agenda_start'];
-
+$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
 $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 $calendar_handler = icms_getModuleHandler("calendar", EVENT_DIRNAME, "event");
 
 if($clean_cat) {
 	$category = $category_handler->getCategoryBySeo($clean_cat);
+	if($category->accessGranted($uid))
 	$icmsTpl->assign("category", $category->toArray());
 	$icmsTpl->assign("event_cat_path", $category->title());
 } elseif ($clean_cal) {
