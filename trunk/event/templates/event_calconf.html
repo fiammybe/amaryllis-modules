@@ -367,27 +367,46 @@
 				next: 'circle-triangle-e'
 			},
 			eventSources: [
-				<{foreach item=cat from=$categories name=category}>
+				<{if $category}>
 					{
-						url: "<{$event_url}>feeds.php?cat=<{$cat.id}><{if $icms_userid}>&uid=<{$icms_userid}><{/if}>",
-						className: 'event_cal_<{$cat.id}>',
-						color: "<{$cat.color}>",
-						textColor: '<{$cat.txtcolor}>',
+						url: "<{$event_url}>feeds.php?cat=<{$category.id}><{if $icms_userid}>&uid=<{$icms_userid}><{/if}>",
+						className: 'event_cal_<{$category.id}>',
+						color: "<{$category.color}>",
+						textColor: '<{$category.txtcolor}>',
 						ignoreTimezone: false,
 						currentTimezone: '<{$default_timezone}>'
-					}<{if !$smarty.foreach.category.last}>,<{/if}>
-				<{/foreach}>
-				<{if $categories && $calendars}>,<{/if}>
-				<{if $calendars}>
-					<{foreach item=cal from=$calendars name=calendar}>
+					}
+				<{elseif $calendar}>
 					{
-						url: "<{$cal.url}>",
-						className: 'google_cal_<{$cal.id}>',
-						color: "<{$cal.color}>",
-						textColor: '<{$cal.txtcolor}>',
-						currentTimezone: '<{$cal.default_tz}>'
-					}<{if !$smarty.foreach.calendar.last}>,<{/if}>
+						url: "<{$calendar.url}>",
+						className: 'google_cal_<{$calendar.id}>',
+						color: "<{$calendar.color}>",
+						textColor: '<{$calendar.txtcolor}>',
+						currentTimezone: '<{$calendar.default_tz}>'
+					}
+				<{else}>
+					<{foreach item=cat from=$categories name=category}>
+						{
+							url: "<{$event_url}>feeds.php?cat=<{$cat.id}><{if $icms_userid}>&uid=<{$icms_userid}><{/if}>",
+							className: 'event_cal_<{$cat.id}>',
+							color: "<{$cat.color}>",
+							textColor: '<{$cat.txtcolor}>',
+							ignoreTimezone: false,
+							currentTimezone: '<{$default_timezone}>'
+						}<{if !$smarty.foreach.category.last}>,<{/if}>
 					<{/foreach}>
+					<{if ($categories || $category) && $calendars}>,<{/if}>
+					<{if $calendars}>
+						<{foreach item=cal from=$calendars name=calendar}>
+						{
+							url: "<{$cal.url}>",
+							className: 'google_cal_<{$cal.id}>',
+							color: "<{$cal.color}>",
+							textColor: '<{$cal.txtcolor}>',
+							currentTimezone: '<{$cal.default_tz}>'
+						}<{if !$smarty.foreach.calendar.last}>,<{/if}>
+						<{/foreach}>
+					<{/if}>
 				<{/if}>
 			],
 			ignoreTimezone: false,

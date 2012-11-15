@@ -72,6 +72,13 @@ class mod_event_CategoryHandler extends icms_ipf_Handler {
 		return $count;
 	}
 	
+	public function getCategoryBySeo($seo) {
+		$criteria = new icms_db_criteria_Item("short_url", trim($seo));
+		$cats = $this->getObjects($criteria, FALSE, TRUE);
+		if(!$cats) return FALSE;
+		return $cats[0];
+	}
+	
 	public function userSubmit() {
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$perms = icms::handler('icms_member_groupperm')->getItemIds("cat_submit", $groups, icms::$module->getVar("mid"));

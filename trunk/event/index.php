@@ -104,14 +104,27 @@ if(icms_get_module_status("index")) {
 
 $clean_view = isset($_GET['view']) ? filter_input(INPUT_GET, "view") : $eventConfig['default_view'];
 $clean_cat = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat") : FALSE;
+$clean_cal = isset($_GET['cal']) ? filter_input(INPUT_GET, "cal") : FALSE;
 $clean_date = isset($_GET['date']) ? filter_input(INPUT_GET, "date") : FALSE;
 $clean_time = isset($_GET['time']) ? filter_input(INPUT_GET, "time", FILTER_SANITIZE_NUMBER_INT) : $eventConfig['agenda_start'];
 
 $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 $calendar_handler = icms_getModuleHandler("calendar", EVENT_DIRNAME, "event");
 
-$categories = $category_handler->getCategories("cat_view");
-$icmsTpl->assign("categories", $categories);
+if($clean_cat) {
+	$category = $category_handler->getCategoryBySeo($clean_cat);
+	$icmsTpl->assign("category", $category->toArray());
+	$icmsTpl->assign("event_cat_path", $category->title());
+} elseif ($clean_cal) {
+	$calendar = $calendar_handler->getCalendarBySeo($clean_cal);
+	$icmsTpl->assign("calendar", $calendar->toArray());
+	$icmsTpl->assign("event_cat_path", $calendar->title());
+} else {
+	$categories = $category_handler->getCategories("cat_view");
+	$icmsTpl->assign("categories", $categories);
+	$calendars = $calendar_handler->getObjects(FALSE, TRUE, FALSE);
+	$icmsTpl->assign("calendars", $calendars);
+}
 
 // default view 
 $icmsTpl->assign("default_view", $clean_view);
@@ -127,7 +140,5 @@ if($category_handler->userSubmit()) {
 	$icmsTpl->assign("cat_submit", TRUE);
 	addEvent(0);
 }
-// fetch the calendars for legend and event sources
-$calendars = $calendar_handler->getObjects(FALSE, TRUE, FALSE);
-$icmsTpl->assign("calendars", $calendars);
+
 include_once 'footer.php';

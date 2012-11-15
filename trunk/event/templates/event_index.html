@@ -7,29 +7,50 @@
 	
 		<fieldset style="border: #e8e8e8 1px solid;">
 			<legend><{$smarty.const._MD_EVENT_LEGEND}></legend>
-			<{foreach item=cat from=$categories name=category}>
-				<div class="legend_item" original-title="<{$cat.name}>">
-					<input type="checkbox" name="event_cats[]" data-group='1' checked="checked" value="<{$cat.id}>"  />
-					<span class="legend_color" style="background-color: <{$cat.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cat.txtcolor}>;"><{$cat.name}></span>
+			<{if $category}>
+				<div class="legend_item" original-title="<{$category.name}>">
+					<span class="legend_color" style="background-color: <{$category.color}>">&nbsp;</span><span class="legend_title" style="color: <{$category.txtcolor}>;"><{$category.name}></span>
 				</div>
-				<{if $cat.dsc}>
+				<{if $category.dsc}>
 					<div class="event_popup">
-						<{$cat.dsc}>
+						<{$category.dsc}>
 					</div>
 				<{/if}>
-			<{/foreach}>
-			
-			<{foreach item=cal from=$calendars name=calendar}>
-				<div class="legend_item" original-title="<{$cal.name}>">
-					<input type="checkbox" name="event_cal[]" data-group='2' checked="checked" value="<{$cal.id}>" />
-					<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cal.txtcolor}>;"><{$cal.name}></span>
+			<{elseif $calendar}>
+				<div class="legend_item" original-title="<{$calendar.name}>">
+					<input type="checkbox" name="event_cal[]" data-group='2' checked="checked" value="<{$calendar.id}>" />
+					<span class="legend_color" style="background-color: <{$calendar.color}>">&nbsp;</span><span class="legend_title" style="color: <{$calendar.txtcolor}>;"><{$calendar.name}></span>
 				</div>
-				<{if $cal.dsc}>
+				<{if $calendar.dsc}>
 					<div class="event_popup">
-						<{$cal.dsc}>
+						<{$calendar.dsc}>
 					</div>
 				<{/if}>
-			<{/foreach}>
+			<{else}>
+				<{foreach item=cat from=$categories name=category}>
+					<div class="legend_item" original-title="<{$cat.name}>">
+						<input type="checkbox" name="event_cats[]" data-group='1' checked="checked" value="<{$cat.id}>"  />
+						<span class="legend_color" style="background-color: <{$cat.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cat.txtcolor}>;"><{$cat.itemLink}></span>
+					</div>
+					<{if $cat.dsc}>
+						<div class="event_popup">
+							<{$cat.dsc}>
+						</div>
+					<{/if}>
+				<{/foreach}>
+				
+				<{foreach item=cal from=$calendars name=calendar}>
+					<div class="legend_item" original-title="<{$cal.name}>">
+						<input type="checkbox" name="event_cal[]" data-group='2' checked="checked" value="<{$cal.id}>" />
+						<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cal.txtcolor}>;"><{$cal.itemLink}></span>
+					</div>
+					<{if $cal.dsc}>
+						<div class="event_popup">
+							<{$cal.dsc}>
+						</div>
+					<{/if}>
+				<{/foreach}>
+			<{/if}>
 			
 		</fieldset>
 	
