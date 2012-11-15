@@ -514,7 +514,7 @@
 									success: function(response) {
 												if(response.status === "success") {
 													$('#calendar').fullCalendar('refetchEvents');
-													$("#error_messages").text(response.message);
+													$("#error_messages").html(response.message);
 												} else if(response.status === "error") {
 													$("#error_messages").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 													revertFunc();
@@ -772,6 +772,7 @@
 				success: function(response) {
 					if(response.status == "success") {
 						$('#calendar').fullCalendar('removeEvents').fullCalendar('removeEventSources');
+						$('#calendar').fullCalendar('lazyFetching', false);
 						$.each(response.message, function(index, value) {
 							$('#calendar').fullCalendar('addEventSource', {
 								url: value.feed,
@@ -781,8 +782,8 @@
 								ignoreTimezone: false,
 								currentTimezone: (value.timezone != "undefined") ? value.timezone : '<{$default_timezone}>'
 							});
+							$('#calendar').fullCalendar('rerenderEvents');
 						});
-						$('#calendar').fullCalendar('rerenderEvents');
 						return false;
 					}
 				}

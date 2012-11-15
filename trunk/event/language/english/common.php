@@ -159,3 +159,8 @@ define("_CO_EVENT_EVENT_JOINERS", "Subscribers");
 define("_CO_EVENT_USERS", "Users");
 define("_CO_EVENT_JOIN", "Join Event");
 define("_CO_EVENT_UNJOIN", "Unjoin Event");
+/**
+ * added in 1.1
+ */
+define("_CO_EVENT_BIRTHDAY", "Birthday");
+define("_CO_EVENT_BIRTHDAY_OF", "Birthday of %s");

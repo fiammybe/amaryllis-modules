@@ -21,6 +21,8 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 icms_loadLanguageFile("event", "common");
 class mod_event_CategoryHandler extends icms_ipf_Handler {
+	
+	private $_calArray;
 	/**
 	 * Constructor
 	 *
@@ -32,6 +34,16 @@ class mod_event_CategoryHandler extends icms_ipf_Handler {
         $this->addPermission("cat_submit", _CO_EVENT_CATEGORY_CAT_SUBMIT, _CO_EVENT_CATEGORY_CAT_SUBMIT_DSC);
 	}
     
+	public function getCategoryListForConfig() {
+		if(!count($this->_calArray)) {
+			$cals = $this->getObjects(NULL, TRUE, FALSE);
+			foreach($cals as $key => $value) {
+				$this->_calArray[$value['name']] = $key;
+			}
+		}
+		return $this->_calArray;
+	}
+	
     public function getCategoryCriterias($perm = "cat_submit", $approve = TRUE) {
         $criteria = new icms_db_criteria_Compo();
 		if($approve) {
