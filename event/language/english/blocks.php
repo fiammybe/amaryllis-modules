@@ -31,3 +31,9 @@ define("_MB_EVENT_CITY", "City");
 define("_MB_EVENT_PLZ", "Postal Code");
 define("_MB_EVENT_DISPLAY_CITY", "Display City-Filter?");
 define("_MB_EVENT_DISPLAY_PLZ", "Display Zip-Code-Filter?");
+/**
+ * added in 1.1
+ */
+define("_MB_EVENT_BOTH", "Both");
+define("_MB_EVENT_CALENDAR", "Google-Calendar");
+define("_MB_EVENT_DISPLAY", "Display");

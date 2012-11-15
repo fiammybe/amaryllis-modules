@@ -1,0 +1,26 @@
+<script src="<{$block.event_url}>scripts/jquery.qtip.min.js" type="text/javascript"></script>
+<{if $block.categories}>
+	<{foreach item=cat from=$block.categories name=categories}>
+		<div class="legend_item" original-title="<{$cat.name}>">
+			<span class="legend_color" style="background-color: <{$cat.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cat.txtcolor}>;"><{$cat.itemLink}></span>
+		</div>
+		<{if $cat.dsc}>
+			<div class="event_popup">
+				<{$cat.dsc}>
+			</div>
+		<{/if}>
+	<{/foreach}>
+<{/if}>
+
+<{if $block.calendars}>
+	<{foreach item=cal from=$block.calendars name=calendar}>
+		<div class="legend_item" original-title="<{$cal.name}>">
+			<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cal.txtcolor}>;"><{$cal.itemLink}></span>
+		</div>
+		<{if $cal.dsc}>
+			<div class="event_popup">
+				<{$cal.dsc}>
+			</div>
+		<{/if}>
+	<{/foreach}>
+<{/if}>

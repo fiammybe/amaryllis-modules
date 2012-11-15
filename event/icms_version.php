@@ -150,8 +150,7 @@ $modversion['blocks'][$i]['edit_func']		= 'b_event_list_edit';
 $modversion['blocks'][$i]['options']		= '0|1'; //category|Time Range
 $modversion['blocks'][$i]['template']		= 'event_block_list.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
-
-// Event list block
+// Event filter block
 $i++;
 $modversion['blocks'][$i]['file']			= 'event_select.php';
 $modversion['blocks'][$i]['name']			= _MI_EVENT_BLOCK_SELECT;
@@ -160,6 +159,16 @@ $modversion['blocks'][$i]['show_func']		= 'b_event_select_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_event_select_edit';
 $modversion['blocks'][$i]['options']		= '0|1|1|0'; //category
 $modversion['blocks'][$i]['template']		= 'event_block_select.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE;
+// Calendar/Category block
+$i++;
+$modversion['blocks'][$i]['file']			= 'event_calendars.php';
+$modversion['blocks'][$i]['name']			= _MI_EVENT_BLOCK_CALENDARS;
+$modversion['blocks'][$i]['description']	= _MI_EVENT_BLOCK_CALENDARS_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_event_calendars_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_event_calendars_edit';
+$modversion['blocks'][$i]['options']		= '0'; //category
+$modversion['blocks'][$i]['template']		= 'event_block_calendars.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

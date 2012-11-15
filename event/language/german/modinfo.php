@@ -98,3 +98,6 @@ define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_CAL", "Select the Calendar for User Bi
 define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_CAL_DSC", "");
 // autotasks
 define("_MI_EVENT_AUTOTASK_PROFILE_BIRTHDAYS", "Profile Birthdays import for Event Module");
+// blocks
+define("_MI_EVENT_BLOCK_CALENDARS", "Calendars");
+define("_MI_EVENT_BLOCK_CALENDARS_DSC", "Display Categories/Calendars in a Block");

@@ -31,3 +31,6 @@ define("_MB_EVENT_CITY", "Stadt");
 define("_MB_EVENT_PLZ", "Postleitzahl");
 define("_MB_EVENT_DISPLAY_CITY", "Suche nach Stadt?");
 define("_MB_EVENT_DISPLAY_PLZ", "Suche nach  Postleitzahl?");
+define("_MB_EVENT_BOTH", "Beide");
+define("_MB_EVENT_CALENDAR", "Google-Kalender");
+define("_MB_EVENT_DISPLAY", "Zeige");

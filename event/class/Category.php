@@ -19,6 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
+if(!defined("EVENT_URL")) define("EVENT_URL", ICMS_MODULES_URL.'/'.EVENT_DIRNAME.'/');
 
 class mod_event_Category extends icms_ipf_seo_Object {
 	/**
