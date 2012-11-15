@@ -216,7 +216,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$ret['email'] = $this->getGuestbookEmail();
 		$ret['ip'] = $this->getIP();
 		$ret['title'] = $this->title();
-		$ret['message'] = $this->getMessage();
+		$ret['message'] = $this->summary();
 		$ret['teaser'] = $this->getMessageTeaser();
 		$ret['avatar'] = ($guestbookConfig['show_avatar'] == 1) ? TRUE : FALSE;
 		$ret['parent'] = $this->getVar("guestbook_pid", "e");
