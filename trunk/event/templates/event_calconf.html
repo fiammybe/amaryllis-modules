@@ -1,6 +1,6 @@
 <!-- scripts for initializing and cofiguring the calendar -->
 <script type='text/javascript' src='<{$event_script_url}>fullcalendar.min.js'></script>
-<{if $calendars}>
+<{if $calendars || $calendar}>
 <script type='text/javascript' src='<{$event_script_url}>gcal.js'></script>
 <{/if}>
 <script type='text/javascript' src='<{$event_script_url}>jquery.qtip.min.js'></script>
@@ -17,7 +17,9 @@
 		var i = date.getMinutes();
 		var lastView;
 		var isResizingEvent = false;
-		document.forms.event_catselect.reset();
+		<{if $use_checkboxes}>
+			document.forms.event_catselect.reset();
+		<{/if}>
 		var calendar = $('#calendar').fullCalendar({
 			defaultView: '<{$default_view}>',
 			aspectRatio: 1.35,
