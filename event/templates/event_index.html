@@ -18,7 +18,6 @@
 				<{/if}>
 			<{elseif $calendar}>
 				<div class="legend_item" original-title="<{$calendar.name}>">
-					<input type="checkbox" name="event_cal[]" data-group='2' checked="checked" value="<{$calendar.id}>" />
 					<span class="legend_color" style="background-color: <{$calendar.color}>">&nbsp;</span><span class="legend_title" style="color: <{$calendar.txtcolor}>;"><{$calendar.name}></span>
 				</div>
 				<{if $calendar.dsc}>
@@ -29,7 +28,7 @@
 			<{else}>
 				<{foreach item=cat from=$categories name=category}>
 					<div class="legend_item" original-title="<{$cat.name}>">
-						<input type="checkbox" name="event_cats[]" data-group='1' checked="checked" value="<{$cat.id}>"  />
+						<{if $use_checkboxes}><input type="checkbox" name="event_cats[]" data-group='1' checked="checked" value="<{$cat.id}>"  /><{/if}>
 						<span class="legend_color" style="background-color: <{$cat.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cat.txtcolor}>;"><{$cat.itemLink}></span>
 					</div>
 					<{if $cat.dsc}>
@@ -41,7 +40,7 @@
 				
 				<{foreach item=cal from=$calendars name=calendar}>
 					<div class="legend_item" original-title="<{$cal.name}>">
-						<input type="checkbox" name="event_cal[]" data-group='2' checked="checked" value="<{$cal.id}>" />
+						<{if $use_checkboxes}><input type="checkbox" name="event_cal[]" data-group='2' checked="checked" value="<{$cal.id}>" /><{/if}>
 						<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cal.txtcolor}>;"><{$cal.itemLink}></span>
 					</div>
 					<{if $cal.dsc}>

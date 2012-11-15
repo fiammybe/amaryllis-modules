@@ -96,6 +96,8 @@ define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY", "Field name of the birthday field");
 define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_DSC", "The Birthday Field needs to be a date Field and 'Profile' module is required!");
 define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_CAL", "Select the Calendar for User Birthdays");
 define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_CAL_DSC", "");
+define("_MI_EVENT_CONFIG_USE_CHECKBOXES", "Use a checkbox-Form to select, which Categories/Calendars should be loaded?");
+define("_MI_EVENT_CONFIG_USE_CHECKBOXES_DSC", "Sorry, currently only works in Firefox..");
 // autotasks
 define("_MI_EVENT_AUTOTASK_PROFILE_BIRTHDAYS", "Profile Birthdays import for Event Module");
 // blocks
