@@ -72,6 +72,12 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
         return $this->getVar("calendar_txtcolor");
     }
 	
+	public function getItemLink($urlOnly = FALSE) {
+		$url = EVENT_URL.'index.php?cal='.$this->short_url();
+		if($urlOnly) return $url;
+		return '<a href="'.$url.'"title="'.$this->title().'">'.$this->title().'</a>';
+	}
+	
 	public function toArray() {
 		$ret = parent::toArray();
 		$ret['id'] = $this->id();
@@ -81,6 +87,7 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 		$ret['color'] = $this->getColor();
 		$ret['txtcolor'] = $this->getTextColor();
 		$ret['default_tz'] = $this->getVar("calendar_tz", "e");
+		$ret['itemLink'] = $this->getItemLink();
 		return $ret;
 	}
 }

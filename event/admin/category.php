@@ -92,7 +92,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$icmsModule->displayAdminMenu(1, _AM_EVENT_CATEGORYS);
 			$objectTable = new icms_ipf_view_Table($category_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("category_approve", "center", 50, "category_approve"));
-			$objectTable->addColumn(new icms_ipf_view_Column("category_name", FALSE, FALSE, "title"));
+			$objectTable->addColumn(new icms_ipf_view_Column("category_name", FALSE, FALSE, "getItemLink"));
 			$objectTable->addColumn(new icms_ipf_view_Column("category_color", "center", 150, "category_color" ));
 			$objectTable->addColumn(new icms_ipf_view_Column("category_txtcolor", "center", 150, "category_txtcolor"));
 			$objectTable->addIntroButton("addcategory", "category.php?op=mod", _AM_EVENT_CATEGORY_CREATE);

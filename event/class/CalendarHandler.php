@@ -30,6 +30,13 @@ class mod_event_CalendarHandler extends icms_ipf_Handler {
 
 	}
 
+	public function getCalendarBySeo($seo) {
+		$criteria = new icms_db_criteria_Item("short_url", trim($seo));
+		$cals = $this->getObjects($criteria, FALSE, TRUE);
+		if(!$cals) return FALSE;
+		return $cals[0];
+	}
+
 	protected function beforeInsert(&$obj) {
 		if($obj->_updating)
 		return TRUE;
