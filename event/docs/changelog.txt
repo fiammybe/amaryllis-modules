@@ -11,8 +11,11 @@
 - added phone number to output.. Seems to be forgotten
 - added new config for default timezone to prevent different times
 - added possibility to add/remove calendars on click
+- added config option to enable/disable form for add/remove Events on click
 - make it possible to clone events
 - profile birthdays can be added by the module in autotask
+- made calendars and categories clickable to display only single calendars
+- added new block to display a list of categories/calendars linked to the calendar module
 
 == Version 1.0 => Release Date: 10.11.2012 ==
 - First public release of the module.
