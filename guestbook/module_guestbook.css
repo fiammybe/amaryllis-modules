@@ -52,3 +52,4 @@ a.reply_link:after, .register_link:after, .submit_link:after {content: "";displa
 	border-left: 4px solid transparent;border-right: 4px solid transparent;margin: 0 0 0 4px;position: relative;top: -1px;}
 a.reply_link:hover:after, .register_link:hover:after, .submit_link:hover:after {border-top-color: black;text-decoration:none;}
 .gb_reply_link {padding: 10px 0 25px 15px;}
+div.guestbook_approval {color: #FC8383;}

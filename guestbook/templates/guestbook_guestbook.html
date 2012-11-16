@@ -99,6 +99,8 @@
 			buttons: {
 				"<{$smarty.const._SUBMIT}>": function() {
 					var dlg = $(this);
+					var photo = document.getElementById("guestbook_image"); 
+					var file  = photo.files[0];
 					$.ajax({
 						url: $("#addentry").attr('action'),
 						type: "POST",
@@ -109,15 +111,15 @@
 								guestbook_entry: $("#guestbook_entry_tarea").val(),
 								guestbook_pid: $("#guestbook_pid").val(),
 								icmscaptcha: $("#icmscaptcha").val(),
+								guestbook_image: file.getAsDataURL(),
+								xoops_upload_file: $("#xoops_upload_file[]").val(),
 								op: $("#op").val()},
+								
 						dataType: "json",
 						success: function(response) {
 									if(response.status === "success") {
 										dlg.dialog("close");
 										$('#guestbook_message').html(response.message);
-										//$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
-										//$("#guestbook_pid").val("0");
-										//$("#op").val("addentry");
 										document.getElementById("addentry").reset();
 										$('#guestbook_message').dialog('open');
 									} else if(response.status === "error") {
@@ -129,19 +131,12 @@
 				},
 				"<{$smarty.const._CANCEL}>" : function() {
 					document.getElementById("addentry").reset();
-					//$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
-					//$("#guestbook_pid").val("0");
-					//$("#op").val("addentry");
 					$("#guestbook_error").html("");
 					$("#guestbook_error").hide();
 					$(this).dialog("close");
 				}
 			},
 			Cancel: function() {
-				
-				//$("#guestbook_title, #guestbook_name, #guestbook_email, #guestbook_url, #guestbook_entry, #icmscaptcha").val("");
-				//$("#guestbook_pid").val("0");
-				//$("#op").val("addentry");
 				document.getElementById("addentry").reset();
 				$("#guestbook_error").html("");
 				$("#guestbook_error").hide();
@@ -155,7 +150,7 @@
 			$("#guestbook_form").dialog("open");
 		})
 		
-		$(".reply_link").click(function(e) {
+		$(".reply_link").live('click', function(e) {
 			e.preventDefault();
 			var $id = $(this).attr("original-id");
 			$("#guestbook_pid").val($id);
@@ -185,9 +180,9 @@
         				}
         			});
 					$(this).dialog("close");
-					//window.location.reload();
 				}
         	}
 		});
+		
 	});
 </script>

@@ -95,11 +95,6 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 		return $this->_usersArray;
 	}
 	
-	public function loadEntries($approve = FALSE, $guestbook_pid = 0, $start = 0, $limit = 0, $order = 'guestbook_published_date', $sort = 'DESC') {
-		$criteria = $this->getEntryCriterias($approve, $guestbook_pid, $start, $limit, $order, $sort);
-		return $this->getObjects($criteria, TRUE, TRUE);
-	}
-	
 	public function getEntryCriterias($approve = FALSE, $guestbook_pid = 0, $start = 0, $limit = 0, $order = 'guestbook_published_date', $sort = 'DESC') {
 		global $guestbook_isAdmin;
 		$criteria = new icms_db_criteria_Compo();
@@ -117,8 +112,10 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 					$criteria->add($crit);
 				}
 			} else {
-				
-				$criteria->add(new icms_db_criteria_Item('guestbook_approve', TRUE));
+				$crit = new icms_db_criteria_Compo();
+				$crit->add(new icms_db_criteria_Item("guestbook_fprint", $_SESSION['icms_fprint']));
+				$crit->add(new icms_db_criteria_Item('guestbook_approve', TRUE), 'OR');
+				$criteria->add($crit);
 			}
 		}
 		$criteria->add(new icms_db_criteria_Item('guestbook_pid', $guestbook_pid));

@@ -21,3 +21,4 @@ define("_MD_GUESTBOOK_PUBLISHED_BY", "Published by");
 define("_MD_GUESTBOOK_PUBLISHED_ON", "Published on");
 define("_MD_GUESTBOOK_PERM", "Sorry, no permissions");
 define("_MD_GUESTBOOK_PERMISSION", "You currently have no permissions. Please login or register to submit an entry.");
+define("_MD_GUESTBOOK_AWAITING_APPROVAL", "Your entry is awaiting approval. Thanks for submit.");
