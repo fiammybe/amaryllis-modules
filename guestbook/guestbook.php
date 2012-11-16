@@ -34,7 +34,8 @@ $icmsTpl->assign('guestbook_index', $indexpageObj->toArray());
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start') : 0;
+$clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_start = isset($_GET['end']) ? filter_input(INPUT_GET, 'end', FILTER_SANITIZE_NUMBER_INT) : $guestbookConfig['show_entries'];
 $guestbook_guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(__FILE__)), "guestbook");
 $clean_guestbook_id = isset($_GET['guestbook_id']) ? filter_input(INPUT_GET, 'guestbook_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 //$entries = $guestbook_guestbook_handler->getEntries(TRUE ,$clean_guestbook_id, $clean_start, $guestbookConfig["show_entries"], 'guestbook_published_date', 'DESC');
@@ -74,7 +75,7 @@ if($guestbookConfig["guest_entry"] == 1) {
 /**
  * pagination
  */
-$criteria = new icms_db_criteria_Item("guestbook_approve", TRUE);
+$criteria = $guestbook_guestbook_handler->getEntryCriterias(TRUE, 0, $clean_start, $clean_limit, 'guestbook_published_date', 'DESC');
 $count = $guestbook_guestbook_handler->getCount($criteria);
 $pagenav = new icms_view_PageNav($count, $guestbookConfig['show_entries'], $clean_start, 'start', FALSE);
 $icmsTpl->assign('pagenav', $pagenav->renderNav());

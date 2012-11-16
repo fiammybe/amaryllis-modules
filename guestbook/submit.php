@@ -16,7 +16,8 @@
  * @package		guestbook
  *
  */
-
+header("Content-Type: multipart/form-data");
+header("Content-Disposition: form-data");
 $moddir = basename(dirname(__FILE__));
 include_once "../../mainfile.php";
 include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
