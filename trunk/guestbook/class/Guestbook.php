@@ -178,7 +178,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	}
 	
 	public function getApproved() {
-		return ($this->isApproved()) ? "guestbook_approval" : "";
+		return (!$this->isApproved()) ? "guestbook_approval" : "";
 	}
 	
 	public function getSubEntries($toArray = FALSE) {

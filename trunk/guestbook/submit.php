@@ -31,9 +31,27 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(__FILE__)), "guestbook");
 			$guestbook_pid = isset($_POST['guestbook_pid']) ? filter_input(INPUT_POST, 'guestbook_pid', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
-			if(!$guestbook_handler->canModerate() && $guestbook_pid <> 0) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
+			if($guestbook_pid != 0 && !$guestbook_handler->canModerate()) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
 			$captcha = icms_form_elements_captcha_Object::instance();
-			if(!$captcha->verify(TRUE)) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
+			if(!$captcha->verify(TRUE)) {echo json_encode(array("status" => "error", "message" => "Verification Failed"));unset($_POST); exit;}
+			
+			$val = "";
+			if(!empty($_POST['guestbook_image']) && $guestbookConfig['allow_imageupload'] == 1) {
+				$path = ICMS_UPLOAD_PATH.'/'.GUESTBOOK_DIRNAME.'/'.$guestbook_handler->_itemname;
+				$mimetypes = array("image/jpg", "image/jpeg", "image/gif", "image/png");
+				$uploader = new icms_file_MediaUploadHandler($path,$mimetypes, $guestbookConfig['image_file_size'],$guestbookConfig['image_upload_width'], $guestbookConfig['image_upload_height']);
+					if ($uploader->fetchMedia($_POST['guestbook_image'])) {
+						$uploader->setPrefix('img_'.time());
+						if ($uploader->upload()) {
+							$val = $uploader->getSavedFileName();
+						} else {
+							echo $uploader->getErrors();
+						}
+					} else {
+						echo $uploader->getErrors();
+					}
+			}
+			
 			$guestbookObj = $guestbook_handler->create(TRUE);
 			$guestbookObj->setVar("guestbook_title", filter_input(INPUT_POST, "guestbook_title"));
 			$guestbookObj->setVar("guestbook_name", filter_input(INPUT_POST, "guestbook_name"));
@@ -41,9 +59,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$guestbookObj->setVar("guestbook_url", filter_input(INPUT_POST, "guestbook_url"));
 			$guestbookObj->setVar("guestbook_entry", filter_input(INPUT_POST, "guestbook_entry"));
 			$guestbookObj->setVar("guestbook_pid", $guestbook_pid);
-			$guestbookObj->setVar("guestbook_ip", $_SERVER['REMOTE_ADDR']);
+			$guestbookObj->setVar("guestbook_ip", getenv('REMOTE_ADDR'));
 			$guestbookObj->setVar("guestbook_fprint", $_SESSION['icms_fprint']);
 			$guestbookObj->setVar("guestbook_published_date", time());
+			$guestbookObj->setVar("guestbook_image", $val);
 			$guestbookObj->setVar("guestbook_uid", $uid);
 			if($guestbookConfig["needs_approval"] == 1) {
 				$guestbookObj->setVar("guestbook_approve", icms_userIsAdmin(GUESTBOOK_DIRNAME) ? TRUE : FALSE);
