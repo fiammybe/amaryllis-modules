@@ -23,7 +23,7 @@ icms::$logger->disableLogger();
 
 $clean_uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
 $clean_start = isset($_POST['start']) ? filter_input(INPUT_POST, "start", FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_limit = isset($_POST['limit']) ? filter_input(INPUT_POST, "limit", FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_limit = isset($_GET['limit']) ? filter_input(INPUT_GET, "limit", FILTER_SANITIZE_NUMBER_INT) : $guestbookConfig['show_entries'];
 
 $guestbook_handler = icms_getModuleHandler("guestbook", GUESTBOOK_DIRNAME, "guestbook");
 

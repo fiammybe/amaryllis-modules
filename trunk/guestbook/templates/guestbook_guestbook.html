@@ -1,4 +1,4 @@
-
+<script src="<{$guestbook_url}>/scripts/jquery.form.js" language="JavaScript"></script>
 <link href="<{$guestbook_url}>module_guestbook.css" rel="stylesheet" type="text/css" />
 
 <{if $guestbook_show_breadcrumb}>
@@ -99,35 +99,7 @@
 			buttons: {
 				"<{$smarty.const._SUBMIT}>": function() {
 					var dlg = $(this);
-					var photo = document.getElementById("guestbook_image"); 
-					var file  = photo.files[0];
-					$.ajax({
-						url: $("#addentry").attr('action'),
-						type: "POST",
-						data: {guestbook_title: $("#guestbook_title").val(),
-								guestbook_name: $("#guestbook_name").val(),
-								guestbook_email: $("#guestbook_email").val(),
-								guestbook_url: $("#guestbook_url").val(),
-								guestbook_entry: $("#guestbook_entry_tarea").val(),
-								guestbook_pid: $("#guestbook_pid").val(),
-								icmscaptcha: $("#icmscaptcha").val(),
-								guestbook_image: file.getAsDataURL(),
-								xoops_upload_file: $("#xoops_upload_file[]").val(),
-								op: $("#op").val()},
-								
-						dataType: "json",
-						success: function(response) {
-									if(response.status === "success") {
-										dlg.dialog("close");
-										$('#guestbook_message').html(response.message);
-										document.getElementById("addentry").reset();
-										$('#guestbook_message').dialog('open');
-									} else if(response.status === "error") {
-										$("#guestbook_error").html("<{$smarty.const._MD_GUESTBOOK_FAILURE}>: " + response.message);
-										$("#guestbook_error").show();
-									}
-						},
-					});
+					$("#addentry").submit();
 				},
 				"<{$smarty.const._CANCEL}>" : function() {
 					document.getElementById("addentry").reset();
@@ -172,7 +144,6 @@
         				dataType: "json",
 						data: {
 							start: "<{$smarty.get.start}>",
-							limit: "<{$smarty.get.limit}>"
         				},
         				type: "post",
         				success: function(response) {
@@ -182,6 +153,28 @@
 					$(this).dialog("close");
 				}
         	}
+		});
+		
+		var options = {
+			url: $("#addentry").attr('action'),
+			type: "POST",
+			dataType: "json",
+			success: function(response) {
+						if(response.status === "success") {
+							$("#guestbook_form").dialog("close");
+							$('#guestbook_message').html(response.message);
+							document.forms.addentry.reset();
+							$('#guestbook_message').dialog('open');
+						} else if(response.status === "error") {
+							$("#guestbook_error").html("<{$smarty.const._MD_GUESTBOOK_FAILURE}>: " + response.message);
+							$("#guestbook_error").show();
+						}
+			},
+		};
+		
+		$('#addentry').submit(function() {
+			$(this).ajaxSubmit(options);
+			return false;
 		});
 		
 	});
