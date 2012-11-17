@@ -176,7 +176,6 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			$year = date("Y", $time);
 			foreach (array_keys($users) as $key) {
 				$bday = $profiles[$key]->getVar("$bday_field", "e");
-				unset($profile);
 				if($bday == 0) continue;
 				$month = date("m", $bday);
 				$day = date("d", $bday);
@@ -194,6 +193,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 					$event->setVar("event_submitter", $key);
 					$event->setVar("event_created_on", time());
 					$event->setVar("event_cid", $bday_cal);
+					$event->setVar("event_isbirthday", TRUE);
 					$event->_updatingBdays = TRUE;
 					$this->insert($event, true);
 				}
@@ -214,6 +214,24 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			}
 			unset($users, $member_handler, $profileModule, $profile_handler);
 		}
+	}
+
+	public function removeProfileBirthdays() {
+		$eventConfig = icms_getModuleConfig(EVENT_DIRNAME);
+		$bday_field = $eventConfig['profile_birthday'];
+		$bday_cal = $eventConfig['profile_birthday_cal'];
+		if(icms_get_module_status("profile") && ($bday_field !== "") && ($bday_cal > 0)) {
+			$member_handler = icms::handler("icms_member_user");
+			$users = $member_handler->getObjects(NULL, TRUE);
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_isbirthday", TRUE));
+			$events = $this->getObjects($criteria, TRUE, TRUE);
+			if(!$events) return TRUE;
+			foreach (array_keys($events) as $key) {
+				$uid = $events[$key]->getVar("event_submitter", "e");
+				if(!array_key_exists($uid, $users)) $this->delete($events[$key]);
+			}
+		}
+		return TRUE;
 	}
 
 	/**
