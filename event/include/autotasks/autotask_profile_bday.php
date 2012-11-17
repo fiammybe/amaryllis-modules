@@ -21,4 +21,5 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(dirname(__FILE__)))));
 icms_loadLanguageFile("event", "common");
 $event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
+$event_handler->removeProfileBirthdays();
 $event_handler->getProfileBirthdays();

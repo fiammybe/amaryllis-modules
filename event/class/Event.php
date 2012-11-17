@@ -55,6 +55,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->quickInitVar("event_submitter", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("event_created_on", XOBJ_DTYPE_LTIME, TRUE);
 		$this->quickInitVar("event_approve", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
+		$this->quickInitVar("event_isbirthday", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
         $this->quickInitVar("event_notif_sent", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
 		$this->initCommonVar("counter", FALSE, 0);
 		$this->initCommonVar("dohtml", FALSE, TRUE);
@@ -69,15 +70,13 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->setControl("event_submitter", "user");
 		$this->setControl("event_approve", "yesno");
 		$this->setControl("event_can_joint", array("name" => "select", "itemHandler" => "event", "method" => "getJoinersArray", "module" => "event"));
-		
+		$this->setControl("event_isbirthday", "yesno");
 		if(!icms_get_module_status("index")) {
 			$this->hideFieldFromForm("event_tags");
 			$this->hideFieldFromSingleView("event_tags");
 		}
-		
 		$this->initiateSEO();
-		
-		$this->hideFieldFromForm(array("short_url", "meta_description", "meta_keywords", "event_submitter", "event_created_on", "event_approve", "event_notif_sent"));
+		$this->hideFieldFromForm(array("event_isbirthday", "short_url", "meta_description", "meta_keywords", "event_submitter", "event_created_on", "event_approve", "event_notif_sent"));
 	}
 
 	public function event_approve() {
