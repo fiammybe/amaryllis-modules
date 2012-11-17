@@ -188,7 +188,12 @@ $modversion['comments']['callback']['update'] = 'event_com_update';
 //////////////////////////////////////////// CONFIGURATION ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 icms_loadLanguageFile("event", "common");
-$category_handler = icms_getModuleHandler("category", $modversion['dirname'], "event");
+if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'event') {
+	$category_handler = icms_getModuleHandler("category", $modversion['dirname'], "event");
+	$cat_list = $category_handler->getCategoryListForConfig();
+} else {
+	$cat_list = "";
+}
 $i = 0;
 $i++;
 $modversion['config'][$i] = array(
@@ -396,7 +401,7 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'select',
 								'valuetype' 	=> 'int',
 								'default' 		=> 0,
-								'options'       => $category_handler->getCategoryListForConfig()
+								'options'       => $cat_list
 							);
 							
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
