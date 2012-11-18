@@ -1,31 +1,29 @@
-<div class="bubble">
-	<div id="entry_{ENTRY_ID}" class="guestbook_entry">
-		<!-- title -->
-		<div class="block-title">{ENTRY_TITLE}</div>
-		
-		<div class="guestbook_row">
-			<div class="guestbook_message">
-				<span class="guestbook_message">
-					{ENTRY_ENTRY}
-				</span>
-			</div> <!-- E N D .GUESTBOOK_message -->
+<div class="guestbook_single_entry">
+	<div class="bubble">
+		<div id="entry_{ENTRY_ID}" class="guestbook_entry">
+			<!-- title -->
+			<div class="block-title">{ENTRY_TITLE}</div>
 			
+			<div class="guestbook_row">
+				<div class="guestbook_message">
+					<span class="guestbook_message">
+						{ENTRY_ENTRY}
+					</span>
+				</div> <!-- E N D .GUESTBOOK_message -->
 				<div class="entry_info">
 					{ENTRY_IP}
-					
 				</div> <!-- E N D .GUESTBOOK_info -->
-			{ENTRY_MAIL}
-			
-			
+				{ENTRY_MAIL}
 				{ENTRY_IMG}
-			</div> <!-- E N D .GUESTBOOK_image -->
-			{ENTRY_APPROVED}
-		</div> <!-- E N D .GUESTBOOK_row -->
-	</div> <!-- E N D .GUESTBOOK_entry -->
+				</div> <!-- E N D .GUESTBOOK_image -->
+				{ENTRY_APPROVED}
+			</div> <!-- E N D .GUESTBOOK_row -->
+		</div> <!-- E N D .GUESTBOOK_entry -->
+	</div>
+	<p>
+	<span class="guestbook_avatar">
+		{ENTRY_AVATAR}
+	</span>
+	<strong>{ENTRY_NAME} | {ENTRY_URL} {ENTRY_PDATE}</strong>
+	</p>
 </div>
-<p>
-<span class="guestbook_avatar">
-	{ENTRY_AVATAR}
-</span>
-<strong>{ENTRY_NAME} | {ENTRY_URL} {ENTRY_PDATE}</strong>
-</p>
