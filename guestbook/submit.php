@@ -37,19 +37,19 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if(!$captcha->verify(TRUE)) {echo json_encode(array("status" => "error", "message" => "Verification Failed"));unset($_POST); exit;}
 			
 			$val = "";
-			if(!empty($_POST['guestbook_image']) && $guestbookConfig['allow_imageupload'] == 1) {
+			if(isset($_POST['xoops_upload_file']) && !empty($_POST['xoops_upload_file']) && $guestbookConfig['allow_imageupload'] == 1) {
 				$path = ICMS_UPLOAD_PATH.'/'.GUESTBOOK_DIRNAME.'/'.$guestbook_handler->_itemname;
 				$mimetypes = array("image/jpg", "image/jpeg", "image/gif", "image/png");
 				$uploader = new icms_file_MediaUploadHandler($path,$mimetypes, $guestbookConfig['image_file_size'],$guestbookConfig['image_upload_width'], $guestbookConfig['image_upload_height']);
-					if ($uploader->fetchMedia($_POST['guestbook_image'])) {
+					if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 						$uploader->setPrefix('img_'.time());
 						if ($uploader->upload()) {
 							$val = $uploader->getSavedFileName();
 						} else {
-							echo $uploader->getErrors();
+							echo json_encode(array("status" => "error", "message" => $uploader->getErrors())); unset($_POST); exit;
 						}
 					} else {
-						echo $uploader->getErrors();
+						echo json_encode(array("status" => "error", "message" => $uploader->getErrors())); unset($_POST); exit;
 					}
 			}
 			

@@ -32,15 +32,22 @@ if(!$entries) echo json_encode("");
 $reply = array();
 foreach($entries as $key => $value) {
 	$userinfo = $value['published_by'];
-	//echo json_encode(icms_core_Debug::vardump($userinfo));
 	$file = GUESTBOOK_ROOT_PATH.'templates/guestbook_singleentry.html';
 	$content = file_get_contents($file);
 	$content = str_replace("{ENTRY_TITLE}", $value['title'], $content);
 	$content = str_replace("{ENTRY_NAME}", $value['guestbook_name'], $content);
-	$content = str_replace("{ENTRY_URL}", '<a class="guestbook_url" href="'.$value['homepage'].'?&campaign=impresscms_guestbook" title="'.$value['homepage'].'">'.$value['homepage'].'</a> |', $content);
-	$content = str_replace("{ENTRY_AVATAR}", $userinfo["avatar"], $content);
+	if($guestbookConfig['show_avatar']) {
+		$content = str_replace("{ENTRY_AVATAR}", $userinfo["avatar"], $content);
+	} else {
+		$content = str_replace("{ENTRY_AVATAR}", "", $content);
+	}
 	$content = str_replace("{ENTRY_ULINK}", $userinfo["link"], $content);
 	$content = str_replace("{ENTRY_ENTRY}", $value['message'], $content);
+	if($value['homepage'] !== "") {
+		$content = str_replace("{ENTRY_URL}", '<a class="guestbook_url" href="'.$value['homepage'].'?&campaign=impresscms_guestbook" title="'.$value['homepage'].'">'.$value['homepage'].'</a> |', $content);
+	} else {
+		$content = str_replace("{ENTRY_URL}", '', $content);
+	}
 	if($value['approved'] !== "") {
 		$content = str_replace("{ENTRY_APPROVED}", '<div class="'.$value['approved'].'"><p>'._MD_GUESTBOOK_AWAITING_APPROVAL.'</p></div>' , $content);
 	} else {

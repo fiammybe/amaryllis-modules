@@ -81,7 +81,6 @@
 			dataType: "json",
 			data: {
 				start: "<{$smarty.get.start}>",
-				limit: "<{$smarty.get.limit}>"
 			},
 			type: "POST",
 			success: function(response) {
@@ -175,6 +174,18 @@
 		$('#addentry').submit(function() {
 			$(this).ajaxSubmit(options);
 			return false;
+		});
+		
+		$("body").delegate(".entry_img", "click", function(e) {
+			e.preventDefault();
+			$.colorbox({
+				href: $(this).attr("href"),
+				transition:'fade',
+				speed:500,
+				opacity: 0.9,
+				slideshow: true,
+				slideshowAuto: false
+			});
 		});
 		
 	});

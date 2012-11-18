@@ -43,13 +43,13 @@ $icmsTpl->assign("entries", TRUE);
 
 $name = (is_object(icms::$user)) ? icms::$user->getVar("name") : "";
 $email = (is_object(icms::$user)) ? icms::$user->getVar("email") : "";
-
+$url = (is_object(icms::$user)) ? icms::$user->getVar("url") : "http://";
 $form = new icms_form_Theme("", "addentry", "submit.php");
-$form->setExtra('enctype="multipart/form-data"');
+if($guestbookConfig['allow_imageupload']) $form->setExtra('enctype="multipart/form-data"');
 $form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_TITLE, "guestbook_title", 75, 255));
 $form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_NAME, "guestbook_name", 75, 255, $name, TRUE));
 $form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_EMAIL, "guestbook_email", 75, 255, $email, TRUE));
-$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_URL, "guestbook_url", 75, 255));
+$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_URL, "guestbook_url", 75, 255, $url));
 $form->addElement(new icms_form_elements_Textarea(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_ENTRY, "guestbook_entry", "", 5, 50));
 if($guestbookConfig['allow_imageupload'])
 $form->addElement(new icms_form_elements_File(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_IMAGE, "guestbook_image", $guestbookConfig['image_file_size']));
