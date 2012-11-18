@@ -39,7 +39,7 @@ $clean_limit = isset($_GET['end']) ? filter_input(INPUT_GET, 'end', FILTER_SANIT
 $guestbook_guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(__FILE__)), "guestbook");
 $clean_guestbook_id = isset($_GET['guestbook_id']) ? filter_input(INPUT_GET, 'guestbook_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
-$name = (is_object(icms::$user)) ? icms::$user->getVar("name") : "";
+$name = (is_object(icms::$user)) ? icms::$user->getVar("uname") : "";
 $email = (is_object(icms::$user)) ? icms::$user->getVar("email") : "";
 $url = (is_object(icms::$user)) ? icms::$user->getVar("url") : "http://";
 $form = new icms_form_Theme("", "addentry", "submit.php");

@@ -21,13 +21,12 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 class GuestbookGuestbook extends icms_ipf_Object {
 	
+	public $_updating = FALSE;
 	public $_guestbook_thumbs;
-	
 	public $_guestbook_images;
-	
 	public $_guestbook_images_url;
-	
 	public $_guestbook_thumbs_url;
+	
 	/**
 	 * Constructor
 	 *
@@ -184,7 +183,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	
 	public function getSubEntries($toArray = FALSE) {
 		global $guestbookConfig;
-		if($guestbookConfig['use_moderation'] == 1) {
+		if(($guestbookConfig['use_moderation'] == 1) && $this->getVar("guestbook_hassub" == 1)) {
 			$pid = $this->id();
 			return $this->handler->getSubEntries(TRUE, $pid, $toArray);
 		}

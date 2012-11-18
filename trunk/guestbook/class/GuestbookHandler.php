@@ -69,6 +69,7 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 			$guestbookObj->setVar('guestbook_approve', 1);
 			$approve = 1;
 		}
+		$guestbookObj->_updating = TRUE;
 		$this->insert($guestbookObj, TRUE);
 		return $approve;
 	}
@@ -87,7 +88,7 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 			foreach (array_keys($users) as $key) {
 				$arr = array();
 				$arr['uid'] = $users[$key]->getVar("uid");
-				$arr['link'] = '<a href="'. ICMS_URL.'/userinfo.php?uid='.$users[$key]->getVar("uid").'">'.$users[$key]->getVar("uname").'</a>';
+				$arr['link'] = ICMS_URL.'/userinfo.php?uid='.$key;
 				$arr['avatar'] = $users[$key]->gravatar();
 				$arr['user_sig'] = $users[$key]->getVar("user_sig", "N");
 				$this->_usersArray[$key] = $arr;
@@ -164,8 +165,11 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 	}
 	
 	protected function beforeInsert(& $obj) {
+		if($obj->_updating) return TRUE;
 		global $guestbookConfig;
-		$user_sig = (is_object(icms::$user)) ? icms::$user->getVar("user_sig", "N") : FALSE;
+		$member_handler = icms::handler("icms_member_user");
+		$user_sig = ($obj->getVar("guestbook_uid", "e") > 0) ? $member_handler->get($obj->getVar("guestbook_uid", "e"))->getVar("user_sig", "N") : FALSE;
+		unset($member_handler);
 		// filter and store entry
 		$message = $obj->getVar("guestbook_entry", "e");
 		$smessage = strip_tags($message,'<b><i><a><br>');
@@ -184,6 +188,18 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 		$url = $obj->getVar("guestbook_url", "e");
 		$url = icms_core_DataFilter::checkVar($url, "url");
 		$obj->setVar("guestbook_url", $url);
+		return TRUE;
+	}
+
+	protected function afterSave(&$obj) {
+		if($obj->_updating) return TRUE;
+		$pid = $obj->getVar("guestbook_pid", "e");
+		if($pid) {
+			$entry = $this->get($pid);
+			$entry->setVar("guestbook_hassub", TRUE);
+			$entry->_updating = TRUE;
+			$this->insert($entry);
+		}
 		return TRUE;
 	}
 }
