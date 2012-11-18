@@ -37,7 +37,12 @@ foreach($entries as $key => $value) {
 	$content = str_replace("{ENTRY_TITLE}", $value['title'], $content);
 	$content = str_replace("{ENTRY_NAME}", $value['guestbook_name'], $content);
 	if($guestbookConfig['show_avatar']) {
-		$content = str_replace("{ENTRY_AVATAR}", $userinfo["avatar"], $content);
+		if($value['guestbook_uid'] > 0) {
+			$string = '<a class="guestbook_ulink" href="'.$userinfo["link"].'"><img src="'.$userinfo["avatar"].'" width="'.$guestbookConfig['avatar_dimensions'].'px" height="'.$guestbookConfig['avatar_dimensions'].'px" alt="avatar" /></a>';
+		} else {
+			$string = '<img src="'.$userinfo["avatar"].'" width="'.$guestbookConfig['avatar_dimensions'].'px" height="'.$guestbookConfig['avatar_dimensions'].'px" alt="avatar" />';
+		}
+		$content = str_replace("{ENTRY_AVATAR}", $string, $content);
 	} else {
 		$content = str_replace("{ENTRY_AVATAR}", "", $content);
 	}
@@ -79,9 +84,8 @@ foreach($entries as $key => $value) {
 			$file = GUESTBOOK_ROOT_PATH.'templates/guestbook_singleentry.html';
 			$content_rep = file_get_contents($file);
 			$content_rep = str_replace("{ENTRY_TITLE}", $value['title'], $content_rep);
-			$content_rep = str_replace("{ENTRY_NAME}", $value['guestbook_name'], $content_rep);
+			$content_rep = str_replace("{ENTRY_NAME}", '<a class="guestbook_ulink" href="'.$userinfo["link"].'">'.$value['guestbook_name'].'</a>', $content_rep);
 			$content_rep = str_replace("{ENTRY_URL}", $value['homepage'], $content_rep);
-			$content_rep = str_replace("{ENTRY_AVATAR}", $userinfo["avatar"], $content_rep);
 			$content_rep = str_replace("{ENTRY_ULINK}", $userinfo["link"], $content_rep);
 			$content_rep = str_replace("{ENTRY_ENTRY}", $value['message'], $content_rep);
 			if($guestbook_isAdmin) {
@@ -104,6 +108,16 @@ foreach($entries as $key => $value) {
 				$content_rep = str_replace("{ENTRY_APPROVED}", '<div class="'.$value['approved'].'"><p>'._MD_GUESTBOOK_AWAITING_APPROVAL.'</p></div>' , $content_rep);
 			} else {
 				$content_rep = str_replace("{ENTRY_APPROVED}", '' , $content_rep);
+			}
+			if($guestbookConfig['show_avatar']) {
+				if($value['guestbook_uid'] > 0) {
+					$string = '<a class="guestbook_ulink" href="'.$userinfo["link"].'"><img src="'.$userinfo["avatar"].'" width="'.$guestbookConfig['avatar_dimensions'].'px" height="'.$guestbookConfig['avatar_dimensions'].'px" alt="avatar" /></a>';
+				} else {
+					$string = '<img src="'.$userinfo["avatar"].'" width="'.$guestbookConfig['avatar_dimensions'].'px" height="'.$guestbookConfig['avatar_dimensions'].'px" alt="avatar" />';
+				}
+				$content = str_replace("{ENTRY_AVATAR}", $string, $content);
+			} else {
+				$content = str_replace("{ENTRY_AVATAR}", "", $content);
 			}
 			$content_rep = str_replace("{ENTRY_ID}", $value['id'], $content_rep);
 			$content_rep = str_replace("{ENTRY_PDATE}", $value['published_on'], $content_rep);

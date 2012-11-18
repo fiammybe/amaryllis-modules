@@ -212,6 +212,15 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'avatar_dimensions',
+								'title' 		=> '_MI_GUESTBOOK_AVATAR_DIMENSIONS',
+								'description' 	=> '_MI_GUESTBOOK_AVATAR_DIMENSIONS_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> '32'
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'needs_approval',
 								'title' 		=> '_MI_GUESTBOOK_NEEDS_APPROVAL',
 								'description' 	=> '_MI_GUESTBOOK_NEEDS_APPROVAL_DSC',

@@ -76,3 +76,5 @@ define("_MI_GUESTBOOK_DISPLAY_WIDTH", "Image Display Width");
 define("_MI_GUESTBOOK_DISPLAY_WIDTH_DSC", "");
 define("_MI_GUESTBOOK_DISPLAY_HEIGHT", "Image Display height");
 define("_MI_GUESTBOOK_DISPLAY_HEIGHT_DSC", "");
+define("_MI_GUESTBOOK_AVATAR_DIMENSIONS", "Avatar Dimensions");
+define("_MI_GUESTBOOK_AVATAR_DIMENSIONS_DSC", "Avatar Dimensions in px");
