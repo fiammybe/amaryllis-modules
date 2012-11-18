@@ -103,6 +103,7 @@
 			buttons: {
 				"<{$smarty.const._SUBMIT}>": function() {
 					var dlg = $(this);
+					$("#guestbook_loading").show();
 					$("#addentry").submit();
 				},
 				"<{$smarty.const._CANCEL}>" : function() {

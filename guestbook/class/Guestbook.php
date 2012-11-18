@@ -63,6 +63,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		} else {
 			$this->setControl("guestbook_image", "imageupload");
 		}
+		$this->setControl("guestbook_hassub", "yesno");
 		$this->hideFieldFromForm(array("guestbook_approve", "guestbook_fprint", "guestbook_hassub", "guestbook_pid", "guestbook_ip", "guestbook_uid", "guestbook_published_date"));
 		if($guestbookConfig['needs_approval'] == 0) {
 			$this->hideFieldFromSingleView("guestbook_approve");
@@ -181,9 +182,13 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		return (!$this->isApproved()) ? "guestbook_approval" : "";
 	}
 	
+	public function hasSubs() {
+		return ($this->getVar("guestbook_hassub")) ? TRUE : FALSE;
+	}
+	
 	public function getSubEntries($toArray = FALSE) {
 		global $guestbookConfig;
-		if(($guestbookConfig['use_moderation'] == 1) && $this->getVar("guestbook_hassub" == 1)) {
+		if(($guestbookConfig['use_moderation'] == 1) && $this->hasSubs()) {
 			$pid = $this->id();
 			return $this->handler->getSubEntries(TRUE, $pid, $toArray);
 		}
@@ -222,7 +227,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$ret['parent'] = $this->getVar("guestbook_pid", "e");
 		if($guestbookConfig['use_moderation'] == 1){
 			$ret['sub'] = $this->getSubEntries(TRUE);
-			$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
+			$ret['hassub'] = $this->hasSubs();
 		}
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);

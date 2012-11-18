@@ -35,7 +35,12 @@ foreach($entries as $key => $value) {
 	$file = GUESTBOOK_ROOT_PATH.'templates/guestbook_singleentry.html';
 	$content = file_get_contents($file);
 	$content = str_replace("{ENTRY_TITLE}", $value['title'], $content);
-	$content = str_replace("{ENTRY_NAME}", $value['guestbook_name'], $content);
+	if($value['guestbook_uid'] > 0) {
+		$string1 = '<a class="guestbook_ulink" href="'.$userinfo["link"].'">'.$value['guestbook_name'].'</a>';
+	} else {
+		$string1 = $value['guestbook_name'];
+	}
+	$content = str_replace("{ENTRY_NAME}", $string1, $content);
 	if($guestbookConfig['show_avatar']) {
 		if($value['guestbook_uid'] > 0) {
 			$string = '<a class="guestbook_ulink" href="'.$userinfo["link"].'"><img src="'.$userinfo["avatar"].'" width="'.$guestbookConfig['avatar_dimensions'].'px" height="'.$guestbookConfig['avatar_dimensions'].'px" alt="avatar" /></a>';
@@ -84,7 +89,12 @@ foreach($entries as $key => $value) {
 			$file = GUESTBOOK_ROOT_PATH.'templates/guestbook_singleentry.html';
 			$content_rep = file_get_contents($file);
 			$content_rep = str_replace("{ENTRY_TITLE}", $value['title'], $content_rep);
-			$content_rep = str_replace("{ENTRY_NAME}", '<a class="guestbook_ulink" href="'.$userinfo["link"].'">'.$value['guestbook_name'].'</a>', $content_rep);
+			if($value['guestbook_uid'] > 0) {
+				$string1 = '<a class="guestbook_ulink" href="'.$userinfo["link"].'">'.$value['guestbook_name'].'</a>';
+			} else {
+				$string1 = $value['guestbook_name'];
+			}
+			$content_rep = str_replace("{ENTRY_NAME}", $string1, $content_rep);
 			$content_rep = str_replace("{ENTRY_URL}", $value['homepage'], $content_rep);
 			$content_rep = str_replace("{ENTRY_ULINK}", $userinfo["link"], $content_rep);
 			$content_rep = str_replace("{ENTRY_ENTRY}", $value['message'], $content_rep);
@@ -115,9 +125,9 @@ foreach($entries as $key => $value) {
 				} else {
 					$string = '<img src="'.$userinfo["avatar"].'" width="'.$guestbookConfig['avatar_dimensions'].'px" height="'.$guestbookConfig['avatar_dimensions'].'px" alt="avatar" />';
 				}
-				$content = str_replace("{ENTRY_AVATAR}", $string, $content);
+				$content_rep = str_replace("{ENTRY_AVATAR}", $string, $content_rep);
 			} else {
-				$content = str_replace("{ENTRY_AVATAR}", "", $content);
+				$content_rep = str_replace("{ENTRY_AVATAR}", "", $content_rep);
 			}
 			$content_rep = str_replace("{ENTRY_ID}", $value['id'], $content_rep);
 			$content_rep = str_replace("{ENTRY_PDATE}", $value['published_on'], $content_rep);
