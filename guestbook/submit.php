@@ -20,9 +20,9 @@ header("Content-Type: multipart/form-data");
 header("Content-Disposition: form-data");
 $moddir = basename(dirname(__FILE__));
 include_once "../../mainfile.php";
-include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
+include_once ICMS_ROOT_PATH.'/modules/'.$moddir.'/include/common.php';
 icms::$logger->disableLogger();
-$valid_op = array ('addentry', 'addreply', );
+$valid_op = array ('addentry', 'addreply');
 $clean_op = (isset($_POST['op'])) ? filter_input(INPUT_POST, "op") : FALSE;
 if(!$clean_op) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
 if(in_array($clean_op, $valid_op, TRUE)) {
@@ -37,7 +37,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if(!$captcha->verify(TRUE)) {echo json_encode(array("status" => "error", "message" => "Verification Failed"));unset($_POST); exit;}
 			
 			$val = "";
-			if(isset($_POST['xoops_upload_file']) && !empty($_POST['xoops_upload_file']) && $guestbookConfig['allow_imageupload'] == 1) {
+			if(isset($_POST['xoops_upload_file']) && !empty($_FILES) && $guestbookConfig['allow_imageupload'] == 1) {
 				$path = ICMS_UPLOAD_PATH.'/'.GUESTBOOK_DIRNAME.'/'.$guestbook_handler->_itemname;
 				$mimetypes = array("image/jpg", "image/jpeg", "image/gif", "image/png");
 				$uploader = new icms_file_MediaUploadHandler($path,$mimetypes, $guestbookConfig['image_file_size'],$guestbookConfig['image_upload_width'], $guestbookConfig['image_upload_height']);
@@ -72,9 +72,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			}
 			if(!$guestbook_handler->insert($guestbookObj)) {echo json_encode(array("status" => "error", "message" => $guestbookObj->getHtmlErrors())); unset($_POST); exit;}
 			echo json_encode(array("status" => "success", "message" => _THANKS_SUBMISSION)); unset($_POST); exit;
-			break;
-		case 'addreply':
-			
 			break;
 	}
 } else {

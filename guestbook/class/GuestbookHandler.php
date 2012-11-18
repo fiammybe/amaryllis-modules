@@ -89,6 +89,7 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 				$arr['uid'] = $users[$key]->getVar("uid");
 				$arr['link'] = '<a href="'. ICMS_URL.'/userinfo.php?uid='.$users[$key]->getVar("uid").'">'.$users[$key]->getVar("uname").'</a>';
 				$arr['avatar'] = $users[$key]->gravatar();
+				$arr['user_sig'] = $users[$key]->getVar("user_sig", "N");
 				$this->_usersArray[$key] = $arr;
 			}
 		}
@@ -164,10 +165,12 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 	
 	protected function beforeInsert(& $obj) {
 		global $guestbookConfig;
+		$user_sig = (is_object(icms::$user)) ? icms::$user->getVar("user_sig", "N") : FALSE;
 		// filter and store entry
 		$message = $obj->getVar("guestbook_entry", "e");
 		$smessage = strip_tags($message,'<b><i><a><br>');
 		$smessage = icms_core_DataFilter::checkVar($smessage, "html", "input");
+		if($user_sig) $smessage = $smessage.'<br />'.$user_sig;
 		$obj->setVar("guestbook", $smessage);
 		// filter and store e-mail
 		$email = $obj->getVar("guestbook_email", "e");

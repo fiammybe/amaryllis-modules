@@ -51,6 +51,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$this->quickInitVar("guestbook_approve", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("guestbook_published_date", XOBJ_DTYPE_LTIME);
 		$this->quickInitVar("guestbook_fprint", XOBJ_DTYPE_OTHER, FALSE, FALSE, FALSE, FALSE);
+		$this->quickInitVar("guestbook_hassub", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, FALSE);
 		$this->initCommonVar("dohtml", FALSE, 1);
 		$this->initCommonVar("doxcode", FALSE, 1);
 		$this->initCommonVar("doimage", FALSE, 1);
@@ -63,7 +64,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		} else {
 			$this->setControl("guestbook_image", "imageupload");
 		}
-		$this->hideFieldFromForm(array("guestbook_approve", "guestbook_fprint", "guestbook_pid", "guestbook_ip", "guestbook_uid", "guestbook_published_date"));
+		$this->hideFieldFromForm(array("guestbook_approve", "guestbook_fprint", "guestbook_hassub", "guestbook_pid", "guestbook_ip", "guestbook_uid", "guestbook_published_date"));
 		if($guestbookConfig['needs_approval'] == 0) {
 			$this->hideFieldFromSingleView("guestbook_approve");
 		}

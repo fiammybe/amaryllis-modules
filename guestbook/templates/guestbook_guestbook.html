@@ -30,24 +30,27 @@
 
 <{$guestbook_index.heading}>
 
-<{if $entries}>
-	<div class="guestbook_submit">
-		<span class="guestbook_link">
-			<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" id="add1" href="<{$submit_link}>"><{$smarty.const._MD_GUESTBOOK_ADD_ENTRY}></a>
-		</span>
-	</div>
-	<div class="speech_bubble">
-		<div class="guestbook_entries">
-			<{if $pagenav}>
-				<{$pagenav}>
-			<{/if}>
-			<div id="entries"></div>
-			<{if $pagenav}>
-				<{$pagenav}>
-			<{/if}>
+
+<div class="guestbook_submit">
+	<span class="guestbook_link">
+		<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" id="add1" href="<{$submit_link}>"><{$smarty.const._MD_GUESTBOOK_ADD_ENTRY}></a>
+	</span>
+</div>
+<div class="speech_bubble">
+	<div class="guestbook_entries">
+		<{if $pagenav}>
+			<{$pagenav}>
+		<{/if}>
+		<div id="guestbook_loading">
+			<img class="guestbook_loading" src="<{$guestbook_images_url}>loading.gif" alt="loading..." />
 		</div>
+		<div id="entries" class="ui-helper-hidden"></div>
+		<{if $pagenav}>
+			<{$pagenav}>
+		<{/if}>
 	</div>
-<{/if}>
+</div>
+
 <{if !$smarty.get.op == addreply}>
 	<div class="guestbook_submit">
 		<span class="guestbook_link">
@@ -80,11 +83,13 @@
 			url: "entries.php",
 			dataType: "json",
 			data: {
-				start: "<{$smarty.get.start}>",
+				start: "<{$smarty.get.start}>"
 			},
 			type: "POST",
 			success: function(response) {
+				$("#guestbook_loading").hide();
 				$("#entries").html(response);
+				$("#entries").show();
 			}
 		});
 		$("#guestbook_form").dialog({
@@ -146,6 +151,7 @@
         				},
         				type: "post",
         				success: function(response) {
+        					$("#guestbook_loading").hide();
         					$("#entries").html(response);
         				}
         			});
