@@ -164,3 +164,4 @@ define("_CO_EVENT_UNJOIN", "Unjoin Event");
  */
 define("_CO_EVENT_BIRTHDAY", "Birthday");
 define("_CO_EVENT_BIRTHDAY_OF", "Birthday of %s");
+define("_CO_EVENT_SUBMIT", "Submit Event");
