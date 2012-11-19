@@ -33,8 +33,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$guestbook_pid = isset($_POST['guestbook_pid']) ? filter_input(INPUT_POST, 'guestbook_pid', FILTER_SANITIZE_NUMBER_INT) : 0;
 			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
 			if($guestbook_pid != 0 && !$guestbook_handler->canModerate()) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
-			$captcha = icms_form_elements_captcha_Object::instance();
-			if(!$captcha->verify(TRUE)) {echo json_encode(array("status" => "error", "message" => "Verification Failed"));unset($_POST); exit;}
+			//$captcha = icms_form_elements_captcha_Object::instance();
+			//if(!$captcha->verify(TRUE)) {echo json_encode(array("status" => "error", "message" => "Verification Failed"));unset($_POST); exit;}
 			
 			$val = "";
 			if(isset($_POST['xoops_upload_file']) && !empty($_FILES) && $guestbookConfig['allow_imageupload'] == 1) {

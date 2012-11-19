@@ -52,7 +52,7 @@ $form->addElement(new icms_form_elements_Textarea(_CO_GUESTBOOK_GUESTBOOK_GUESTB
 if($guestbookConfig['allow_imageupload'])
 $form->addElement(new icms_form_elements_File(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_IMAGE, "guestbook_image", $guestbookConfig['image_file_size']));
 $form->addElement(new icms_form_elements_Hidden("guestbook_pid", 0));
-$form->addElement(new icms_form_elements_Captcha());
+//$form->addElement(new icms_form_elements_Captcha());
 $form->addElement(new icms_form_elements_Hidden("op", "addentry"));
 
 if($guestbookConfig["guest_entry"] == 1) {
