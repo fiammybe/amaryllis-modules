@@ -22,8 +22,8 @@ function addEvent($event_id = 0) {
 	$eventObj = $event_handler->create(TRUE);
 	$uname = (is_object(icms::$user)) ? icms::$user->getVar("uname") : "";
 	$mail = (is_object(icms::$user)) ? icms::$user->getVar("email") : "";
-	$startdate = date("Y/m/d H:i", time()+120);
-	$enddate = date("Y/m/d H:i", time() + 240);
+	$startdate = date("Y/m/d H:i", time()+120*60);
+	$enddate = date("Y/m/d H:i", time() + 240*60);
 	$form = new icms_form_Theme(_MD_EVENT_ADDEVENT, "addevent", "submit.php?op=addevent", "post");
 	$form->addElement(new icms_form_elements_Hidden("event_id", $event_id));
 	$form->addElement(new icms_form_elements_Hidden("event_name", ""));
