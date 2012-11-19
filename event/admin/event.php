@@ -32,7 +32,8 @@ function editevent($event_id = 0) {
 		$sform = $eventObj->getForm(_AM_EVENT_EVENT_EDIT, "addevent");
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$eventObj->setVar("event_enddate", time()+120*60);
+		$eventObj->setVar("event_startdate", time()+120*60);
+		$eventObj->setVar("event_enddate", time()+240*60);
 		$eventObj->setVar("event_submitter", icms::$user->getVar("uid"));
 		$eventObj->setVar("event_created_on", time() - 100);
 		$eventObj->setVar("event_contact", icms::$user->getVar("uname"));
