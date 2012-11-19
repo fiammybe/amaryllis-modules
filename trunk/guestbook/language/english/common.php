@@ -40,3 +40,8 @@ define("_CO_GUESTBOOK_INDEXPAGE_INDEX_IMAGE", "Indeximage");
 define("_CO_GUESTBOOK_INDEXPAGE_INDEX_IMAGE_DSC", " Set indeximage ");
 define("_CO_GUESTBOOK_INDEXPAGE_INDEX_FOOTER", "footer on indexpage");
 define("_CO_GUESTBOOK_INDEXPAGE_INDEX_FOOTER_DSC", " Set the footer displayed on Indexpage ");
+
+/**
+ * added in 1.1
+ */
+define("_CO_ENTRY_HAS_APPROVED", "Your entry has been approved. Thanks for submit.");

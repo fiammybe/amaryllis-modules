@@ -235,4 +235,29 @@ class GuestbookGuestbook extends icms_ipf_Object {
 		$ret['has_image'] = $this->hasImage();
 		return $ret;
 	}
+
+	public function sendMessageApproved() {
+		$user = $this->getVar("guestbook_uid", "e");
+		if($user <= 0) return TRUE;
+		$pm_handler = icms::handler('icms_data_privmessage');
+		$file = "guestbook_approved.tpl";
+		$lang = "language/" . $icmsConfig['language'] . "/mail_template";
+		$tpl = GUESTBOOK_ROOT_PATH . "$lang/$file";
+		if (!file_exists($tpl)) {
+			$lang = 'language/english/mail_template';
+			$tpl = GUESTBOOK_ROOT_PATH . "$lang/$file";
+		}
+		$message = file_get_contents($tpl);
+		$message = str_replace("{ENTRY_LINK}", $this->title(), $message);
+		$uname = icms::handler('icms_member_user')->get($user)->getVar("uname");
+		$message = str_replace("{X_UNAME}", $uname, $message);
+		$pmObj = $pm_handler->create(TRUE);
+		$pmObj->setVar("subject", _CO_ENTRY_HAS_APPROVED);
+		$pmObj->setVar("from_userid", 1);
+		$pmObj->setVar("to_userid", (int)$user);
+		$pmObj->setVar("msg_time", time());
+		$pmObj->setVar("msg_text", $message);
+		$pm_handler->insert($pmObj, TRUE);
+		return TRUE;
+	}
 }

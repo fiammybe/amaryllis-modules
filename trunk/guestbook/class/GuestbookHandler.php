@@ -71,6 +71,7 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 		}
 		$guestbookObj->_updating = TRUE;
 		$this->insert($guestbookObj, TRUE);
+		if($approve == 1) $guestbookObj->sendMessageApproved();
 		return $approve;
 	}
 	
@@ -159,6 +160,7 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 	
 	public function canModerate() {
 		global $guestbook_isAdmin, $guestbookConfig;
+		if($guestbookConfig['use_moderation'] == 0) return FALSE;
 		if($guestbook_isAdmin) return TRUE;
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		return count(array_intersect_key($guestbookConfig, $groups));
@@ -171,8 +173,8 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 		$user_sig = ($obj->getVar("guestbook_uid", "e") > 0) ? $member_handler->get($obj->getVar("guestbook_uid", "e"))->getVar("user_sig", "N") : FALSE;
 		unset($member_handler);
 		// filter and store entry
-		$message = $obj->getVar("guestbook_entry", "e");
-		$smessage = strip_tags($message,'<b><i><a><br>');
+		$message = $obj->getVar("guestbook_entry", "s");
+		$smessage = strip_tags(icms_core_DataFilter::undoHtmlSpecialChars($message),'<b><i><a><br>');
 		$smessage = icms_core_DataFilter::checkVar($smessage, "html", "input");
 		if($user_sig) $smessage = $smessage.'<br />'.$user_sig;
 		$obj->setVar("guestbook", $smessage);

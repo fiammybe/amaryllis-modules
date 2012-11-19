@@ -88,12 +88,12 @@
 			type: "POST",
 			success: function(response) {
 				$("#guestbook_loading").hide();
-				$("#entries").html(response);
+				$("#entries").html(response.entries);
 				$("#entries").show();
 			}
 		});
 		$("#guestbook_form").dialog({
-			title: "<span class='form_title' style='text-align: center;'><{$smarty.const._MD_GUESTBOOK_ADD}></span>",
+			title: "<{$smarty.const._MD_GUESTBOOK_CREATE}>",
 			autoOpen: false,
 			height: 375,
 			width: "90%",
@@ -125,13 +125,33 @@
 			e.preventDefault();
 			$("#guestbook_pid").val(0);
 			$("#guestbook_form").dialog("open");
-		})
+		});
 		
-		$(".reply_link").live('click', function(e) {
+		$("body").delegate(".reply_link", "click", function(e) {
 			e.preventDefault();
 			var $id = $(this).attr("original-id");
 			$("#guestbook_pid").val($id);
 			$("#guestbook_form").dialog("open");
+			return false;
+		});
+		
+		$("body").delegate(".approve_link", "click", function(e) {
+			e.preventDefault();
+			
+			var $id = $(this).attr("original-id");
+			$.ajax({
+				url: "submit.php",
+				dataType: "json",
+				data: {
+					guestbook_id: $id,
+					op: "approve"
+				},
+				type: "POST",
+				success: function(response) {
+					$("#guestbook_loading").show();
+					loadEntries();
+				}
+			});
 			return false;
 		});
 		
@@ -144,18 +164,7 @@
         	hide: "clip",
         	buttons: {
         		"OK": function() {
-        			$.ajax({
-        				url: "entries.php",
-        				dataType: "json",
-						data: {
-							start: "<{$smarty.get.start}>",
-        				},
-        				type: "post",
-        				success: function(response) {
-        					$("#guestbook_loading").hide();
-        					$("#entries").html(response);
-        				}
-        			});
+        			loadEntries();
 					$(this).dialog("close");
 				}
         	}
@@ -195,5 +204,22 @@
 			});
 		});
 		
+		function loadEntries() {
+			$.ajax({
+				url: "entries.php",
+				dataType: "json",
+				data: {
+					start: "<{$smarty.get.start}>",
+				},
+				type: "post",
+				success: function(response) {
+					if(response.reload === true){
+						window.location.reload();
+					}
+					$("#guestbook_loading").hide();
+					$("#entries").html(response.entries);
+				}
+			});
+		}
 	});
 </script>
