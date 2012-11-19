@@ -164,4 +164,4 @@ define("_CO_EVENT_UNJOIN", "Nicht registrierte Veranstaltung");
  */
 define("_CO_EVENT_BIRTHDAY", "Geburtstag");
 define("_CO_EVENT_BIRTHDAY_OF", "Geburtstag von %s");
-define("_CO_EVENT_SUBMIT", "Submit Event");
+define("_CO_EVENT_SUBMIT", "Übermittle Veranstaltung");
