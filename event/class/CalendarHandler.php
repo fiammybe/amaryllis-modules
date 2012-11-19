@@ -37,6 +37,28 @@ class mod_event_CalendarHandler extends icms_ipf_Handler {
 		return $cals[0];
 	}
 
+	public function filterActive() {
+		return array(0 => 'Inactive', 1 => 'Active');
+	}
+	
+	/**
+	 * handling some functions to easily switch some fields
+	 */
+	public function changeField($calendar_id, $field) {
+		$calObj = $this->get($calendar_id);
+		if ($calObj->getVar("$field", 'e') == TRUE) {
+			$calObj->setVar("$field", 0);
+			$value = 0;
+		} else {
+			$calObj->setVar("$field", 1);
+			$value = 1;
+		}
+		$calObj->_updating = TRUE;
+		$this->insert($calObj, TRUE);
+		return $value;
+	}
+	
+
 	protected function beforeInsert(&$obj) {
 		if($obj->_updating)
 		return TRUE;

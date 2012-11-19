@@ -78,13 +78,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 			
 		case 'changeApprove':
-			$approve = $event_handler->changeField($clean_event_id, "event_approve");
-			if($approve == 1) {
-				$eventObj = $event_handler->get($clean_event_id);
-				$eventObj->sendMessageApproved();
-			}
+			$approve = $category_handler->changeField($clean_category_id, "category_approve");
 			$red_message = ($approve == 0) ? _AM_EVENT_EVENT_DENIED : _AM_EVENT_EVENT_APPROVED;
-			redirect_header(EVENT_ADMIN_URL . 'event.php', 2, $red_message);
+			redirect_header(EVENT_ADMIN_URL . 'category.php', 2, $red_message);
 			break;
 			
 		default:

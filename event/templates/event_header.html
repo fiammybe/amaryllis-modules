@@ -36,10 +36,19 @@
 		</div>
 	<{/if}>
 <{else}>
+	<!-- module breadcrumb -->
+	<div class="index_headertable">
+		<{if $module_home}><span class="modulename"><{$module_home}></span><{/if}>
+		<{if $event_cat_path}>
+			<span class="index_breadcrumb">
+				<{if $module_home}>&nbsp;:&nbsp;<{/if}><{$event_cat_path}>
+			</span>
+		<{/if}>
+	</div>
 	<div class="event_rss">
 		<a href="<{$event_url}>rss.php?uid=<{$icms_userid}>" title="RSS-Feeds" rel="external">
 			<img src="<{$event_images_url}>rss.png" alt="RSS-Feeds" />
 		</a>
 	</div>
-	<div class="event_clear_right">&nbsp;</div>
+	<div class="event_clear_both">&nbsp;</div>
 <{/if}>
