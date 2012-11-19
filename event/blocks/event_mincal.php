@@ -22,7 +22,7 @@ if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(_
 
 function b_event_mincal_show($options) {
 	global $eventConfig, $icmsTheme;
-	
+	icms_loadCommonLanguageFile("event");
 	$block['event_url'] = ICMS_MODULES_URL . "/" . EVENT_DIRNAME . "/" ;
 	$block['isRTL'] = (defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? 'true' : 'false';
 	return $block;
