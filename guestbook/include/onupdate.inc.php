@@ -21,16 +21,30 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 // this needs to be the latest db version
-define('GUESTBOOK_DB_VERSION', 1);
+define('GUESTBOOK_DB_VERSION', 2);
+if(!defined("GUESTBOOK_DIRNAME")) define("GUESTBOOK_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 function guestbook_upload_paths() {
-	
-	//Create folders and set permissions
-	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
-	if(!is_dir($path . '/indexpage')) icms_core_Filesystem::mkdir($path . '/indexpage');
+	$path = ICMS_ROOT_PATH . '/uploads/' . GUESTBOOK_DIRNAME;
+	if(!is_dir($path . '/indexpage')) mkdir($path . '/indexpage', 0777, TRUE);
 	$image = 'guestbook_indeximage.png';
-	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indexpage/' . $image);
+	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . GUESTBOOK_DIRNAME . '/images/' . $image, $path . '/indexpage/' . $image);
+	return TRUE;
+}
+
+function guestbook_db_upgrade_2() {
+	$guestbook_handler = icms_getModuleHandler("guestbook", GUESTBOOK_DIRNAME, "guestbook");
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("guestbook_pid", 0));
+	$entries = $guestbook_handler->getObjects($criteria, TRUE, TRUE);
+	foreach (array_keys($entries) as $key) {
+		$crit = new icms_db_criteria_Item("guestbook_pid", $key);
+		if($guestbook_handler->getCount($crit)) {
+			$entries[$key]->setVar("guestbook_hassub", TRUE);
+			$entries[$key]->_updating = TRUE;
+			$guestbook_handler->insert($entries[$key]);
+		}
+		unset($crit);
+	}
 	return TRUE;
 }
 
@@ -48,6 +62,9 @@ function guestbook_indexpage() {
 }
 
 function icms_module_update_guestbook($module) {
+	$path = ICMS_ROOT_PATH.'/modules/'.GUESTBOOK_DIRNAME.'/images/';
+	if(file_exists($path.'guestbook.png')) icms_core_Filesystem::deleteFile($path.'guestbook.png');
+	if(file_exists($path.'guestbook_icon_small.png')) icms_core_Filesystem::deleteFile($path.'guestbook_icon_small.png');
     return TRUE;
 }
 

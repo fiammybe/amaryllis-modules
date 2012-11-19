@@ -18,7 +18,7 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
+if(!defined("GUESTBOOK_DIRNAME")) define("GUESTBOOK_DIRNAME", basename(dirname(dirname(__FILE__))));
 class GuestbookGuestbookHandler extends icms_ipf_Handler {
 	
 	private $_usersArray;
