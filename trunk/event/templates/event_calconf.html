@@ -9,6 +9,13 @@
 <{/if}>
 <script type='text/javascript'>
 	$(document).ready(function() {
+		
+		function addCalButton(where, text, id) {
+			var my_button = '<span class="fc-header-space"></span>' +
+							'<span id="' + id + '" class="cal-button">' + text +'</span>';
+			$("td.fc-header-" + where).append(my_button);
+			$("#" + id).button();
+		}
 		var date = new Date();
 		var d = date.getDate();
 		var m = date.getMonth();
@@ -566,6 +573,7 @@
     				.fullCalendar('gotoDate', <{$gotoDate}>);
 		<{/if}>
 		
+		addCalButton("left", "<{$smarty.const._CO_EVENT_SUBMIT}>", "submit_button");
 		<{if $cat_submit}>
 			$( "#submit_form" ).dialog({
 				title: "<{$smarty.const._MD_EVENT_ADDEVENT}>",
@@ -663,7 +671,27 @@
 					$("#event_startdate").datetimepicker('option', 'maxDateTime', $("#event_enddate").datetimepicker('getDate') );
 				}
 			});
-	    
+	    	$("#submit_button").click(function () { $("#submit_form").dialog("open") });
+	    <{elseif !$icms_isUser}>
+	    	$("#submit_button").click(function () {
+	    		$("#event_alert").html("<{$smarty.const._MD_EVENT_REGISTER}>");
+	    		$("#event_alert").dialog({
+	    			buttons:
+							{
+								"<{$smarty.const._CLOSE}>": function() {
+									$(this).dialog("close");
+									$(this).dialog("empty");
+									return false;
+								},
+							"<{$smarty.const._REGISTER}>": function() {
+								window.location.href = "<{$icms_url}>/user.php";
+							}}
+				});
+	    		$("#event_alert").dialog("open");
+	    	});
+	    <{else}>
+	    	$("#event_alert").html("<{$smarty.const._NOPERM}>");
+	    	$("#event_alert").dialog("open");
 	    <{/if}>
 	    
 		$("#form_message").dialog({

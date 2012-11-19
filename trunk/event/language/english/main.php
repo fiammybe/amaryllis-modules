@@ -39,7 +39,7 @@ define("_MD_EVENT_ADDEVENT_URL_URL", "URL");
 define("_MD_EVENT_ADDEVENT_URL_TARGET", "Target");
 define("_MD_EVENT_CREATE_EVENT", "Create Event");
 //constants for submit.php
-define("_MD_EVENT_SUBMITACCESS_FAILED", "Sorr, you don't have permissions to submit in this category");
+define("_MD_EVENT_SUBMITACCESS_FAILED", "Sorry, you don't have permissions to submit in this category");
 define("_MD_EVENT_NO_TITLE", "No title submitted");
 define("_MD_EVENT_STORING_FAILED", "Sorry, an accident while storing the Data. The Following errors occured:");
 define("_MD_EVENT_THANKS_SUBMITTING", "Your Event has successfully been submitted. Thanks for submitting");
@@ -56,3 +56,7 @@ define("_MD_EVENT_REGISTERED", "Registred");
 define("_MD_EVENT_PARTICIPATE", "Attending");
 define("_MD_EVENT_PARTICIPATE_EVENT", "You can attend this Event");
 define("_MD_EVENT_JOINERS_LIST", "Other Users you can meet there");
+/**
+ * added in 1.1
+ */
+define("_MD_EVENT_REGISTER", "Sorry, you don't have permissions to submit Events. Please register or login first.");
