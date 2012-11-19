@@ -64,3 +64,8 @@ define("_AM_EVENT_CALENDAR_MODIFIED", "Der Kalender wurde erfolgreich ge&auml;en
 define("_AM_EVENT_CALENDAR_CREATED", "Der Kalender wurde erfolgreich erstellt.");
 define("_AM_EVENT_CALENDAR_VIEW", "Kalender Informationen");
 define("_AM_EVENT_CALENDAR_VIEW_DSC", "Hier sind die Information &uuml;ber diesen Kalender.");
+/**
+ * added in 1.1
+ */
+define("_AM_EVENT_EVENT_DENIED", "Denied");
+define("_AM_EVENT_EVENT_APPROVED", "Approved");

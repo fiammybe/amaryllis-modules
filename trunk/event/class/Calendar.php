@@ -20,6 +20,7 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 class mod_event_Calendar extends icms_ipf_seo_Object {
+	public $_updating = FALSE;
 	/**
 	 * Constructor
 	 *
@@ -35,6 +36,7 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 		$this->quickInitVar("calendar_color", XOBJ_DTYPE_OTHER, TRUE);
 		$this->quickInitVar("calendar_txtcolor", XOBJ_DTYPE_OTHER, TRUE, FALSE, FALSE, "#00000");
 		$this->quickInitVar("calendar_tz", XOBJ_DTYPE_TXTBOX, TRUE, FALSE, FALSE);
+		$this->quickInitVar("calendar_active", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, TRUE);
 		$this->initCommonVar("dohtml", FALSE, TRUE);
 		$this->initCommonVar("dobr", FALSE, TRUE);
 		$this->setControl("calendar_color", "color");
@@ -43,6 +45,17 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 		$this->initiateSEO();
 		
 		$this->hideFieldFromForm(array("short_url", "meta_description", "meta_keywords"));
+	}
+	
+	public function calendar_active() {
+		$active = $this->getVar('calendar_active', 'e');
+		if ($active == FALSE) {
+			return '<a href="' . EVENT_ADMIN_URL . 'calendar.php?calendar_id=' . $this->id() . '&amp;op=changeApprove">
+				<img src="' . EVENT_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
+		} else {
+			return '<a href="' . EVENT_ADMIN_URL . 'calendar.php?calendar_id=' . $this->id() . '&amp;op=changeApprove">
+				<img src="' . EVENT_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
+		}
 	}
 	
 	function calendar_color() {
@@ -76,6 +89,10 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 		$url = EVENT_URL.'index.php?cal='.$this->short_url();
 		if($urlOnly) return $url;
 		return '<a href="'.$url.'"title="'.$this->title().'">'.$this->title().'</a>';
+	}
+	
+	public function isActive() {
+		return ($this->getVar("calendar_active", "e") == 1) ? TRUE : FALSE;
 	}
 	
 	public function toArray() {

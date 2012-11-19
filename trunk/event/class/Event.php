@@ -10,7 +10,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
- * @since		1.00
+ * @since		1.2.0
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
  * @package		event
@@ -278,6 +278,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$ret['joiner_max'] = $this->getMaxJoiners();
 		$ret['friends'] = $this->getJoinedFriends();
 		$ret['joiners'] = $this->getJoiners();
+		$ret['comments'] = $this->getEventComments();
         return $ret;
 	}
 	
@@ -301,6 +302,16 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	
 	public function formatDate($timestamp, $format) {
 		return date("$format", $timestamp);
+	}
+	
+	public function getEventComments() {
+		global $eventConfig;
+		if($eventConfig['user_can_comment'] == 1) {
+			$comment_handler = icms_getModuleHandler("comment", EVENT_DIRNAME, "event");
+			$comments = $comment_handler->getComments(TRUE, $this->id(), FALSE);
+			return $comments;
+		}
+		return FALSE;
 	}
 	
 	public function getSubmitter() {

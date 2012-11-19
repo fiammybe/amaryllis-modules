@@ -124,7 +124,8 @@ if($clean_cat) {
 } else {
 	$categories = $category_handler->getCategories("cat_view");
 	$icmsTpl->assign("categories", $categories);
-	$calendars = $calendar_handler->getObjects(FALSE, TRUE, FALSE);
+	$criteria = new icms_db_criteria_Item("calendar_active", TRUE);
+	$calendars = $calendar_handler->getObjects($criteria, TRUE, FALSE);
 	$icmsTpl->assign("calendars", $calendars);
 }
 

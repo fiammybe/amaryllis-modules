@@ -45,7 +45,7 @@ include_once "admin_header.php";
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
 
-$valid_op = array ("mod", "changedField", "addcalendar", "del", "view", "");
+$valid_op = array ("mod", "changedField", "addcalendar", "del", "view", "changeApprove", "");
 
 $calendar_handler = icms_getModuleHandler("calendar", basename(dirname(dirname(__FILE__))), "event");
 
@@ -74,11 +74,18 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			icms_cp_header();
 			$calendarObj->displaySingleObject();
 			break;
-
+			
+		case 'changeApprove':
+			$approve = $calendar_handler->changeField($clean_calendar_id, "calendar_active");
+			$red_message = ($approve == 0) ? _AM_EVENT_EVENT_DENIED : _AM_EVENT_EVENT_APPROVED;
+			redirect_header(EVENT_ADMIN_URL . 'calendar.php', 2, $red_message);
+			break;
+			
 		default:
 			icms_cp_header();
 			$icmsModule->displayAdminMenu(2, _AM_EVENT_CALENDARS);
 			$objectTable = new icms_ipf_view_Table($calendar_handler);
+			$objectTable->addColumn(new icms_ipf_view_Column("calendar_active", "center", 50,"calendar_active"));
 			$objectTable->addColumn(new icms_ipf_view_Column("calendar_name", FALSE, FALSE,"getItemLink"));
 			$objectTable->addColumn(new icms_ipf_view_Column("calendar_url", FALSE, FALSE,''));
 			$objectTable->addColumn(new icms_ipf_view_Column("calendar_tz", FALSE, FALSE,''));

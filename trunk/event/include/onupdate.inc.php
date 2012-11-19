@@ -21,7 +21,16 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 // this needs to be the latest db version
-define('EVENT_DB_VERSION', 1);
+define('EVENT_DB_VERSION', 2);
+
+function event_db_upgrade_2() {
+	$cal_handler = icms_getModuleHandler("calendar", EVENT_DIRNAME, "event");
+	$cals = $cal_handler->getObjects(NULL, TRUE, TRUE);
+	foreach(array_keys($cals) as $key) {
+		$cals[$key]->setVar("calendar_active", TRUE);
+		$cal_handler->insert($cals[$key]);
+	}
+}
 
 function icms_module_update_event(&$module) {
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
