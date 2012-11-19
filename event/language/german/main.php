@@ -56,3 +56,7 @@ define("_MD_EVENT_REGISTERED", "registriert");
 define("_MD_EVENT_PARTICIPATE", "Teilnahme");
 define("_MD_EVENT_PARTICIPATE_EVENT", "Sie k&ouml;nnen an dieser Veranstaltung teilnehmen");
 define("_MD_EVENT_JOINERS_LIST", "Andere Benutzer, die Sie dort treffen k&ouml;nnen");
+/**
+ * added in 1.1
+ */
+define("_MD_EVENT_REGISTER", "Sorry, Sie haben keine Berechtigung zum Übermitteln von Veranstaltungen. Bitte registrieren sie sich erst oder loggen sie sich ein.");
