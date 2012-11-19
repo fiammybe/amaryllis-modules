@@ -56,3 +56,4 @@ div.guestbook_approval {color: #FC8383;}
 #guestbook_error {color: red;}
 #guestbook_loading {width: 100%; text-align: center;}
 #guestbook_loading img {vertical-align: middle;}
+.ui-dialog-title {width: 100%; text-align: center;}

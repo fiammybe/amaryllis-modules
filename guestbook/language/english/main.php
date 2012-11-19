@@ -21,4 +21,12 @@ define("_MD_GUESTBOOK_PUBLISHED_BY", "Published by");
 define("_MD_GUESTBOOK_PUBLISHED_ON", "Published on");
 define("_MD_GUESTBOOK_PERM", "Sorry, no permissions");
 define("_MD_GUESTBOOK_PERMISSION", "You currently have no permissions. Please login or register to submit an entry.");
+/**
+ * added in 1.1
+ */
 define("_MD_GUESTBOOK_AWAITING_APPROVAL", "Your entry is awaiting approval. Thanks for submit.");
+define("_THANKS_SUBMISSION", "Your Entry has successfully been submitted. Thanks for submit.");
+define("_THANKS_SUBMISSION_APPROVAL", "Your Entry has successfully been submitted and is awaiting approval. Thanks for submit.");
+define("_MD_GUESTBOOK_FAILURE", "An error occured while submitting your entry");
+define("_MD_GUESTBOOK_NO_ENTRIES", "There are currently no entries. Be the first Person using our Guestbook!");
+define("_MD_GUESTBOOK_APPROVE_NOW", "Approve Now!");

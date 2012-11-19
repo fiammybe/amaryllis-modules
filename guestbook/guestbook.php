@@ -94,6 +94,7 @@ $icmsTpl->assign("guestbook_adminpage", '<a href="' . GUESTBOOK_ADMIN_URL . 'gue
 $icmsTpl->assign("guestbook_is_admin", icms_userIsAdmin(GUESTBOOK_DIRNAME));
 $icmsTpl->assign('guestbook_url', GUESTBOOK_URL);
 $icmsTpl->assign('guestbook_images_url', GUESTBOOK_IMAGES_URL);
+$icmsTpl->assign('show_entries', $guestbookConfig['show_entries']);
 $xoTheme->addScript('/modules/' . GUESTBOOK_DIRNAME . '/scripts/guestbook.js', array('type' => 'text/javascript'));
 $xoTheme->addScript('/modules/' . GUESTBOOK_DIRNAME . '/scripts/jquery.curvycorners.packed.js', array('type' => 'text/javascript'));
 

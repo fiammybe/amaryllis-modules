@@ -23,12 +23,14 @@ icms::$logger->disableLogger();
 
 $clean_uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
 $clean_start = isset($_POST['start']) ? filter_input(INPUT_POST, "start", FILTER_SANITIZE_NUMBER_INT) : 0;
-$clean_limit = isset($_GET['limit']) ? filter_input(INPUT_GET, "limit", FILTER_SANITIZE_NUMBER_INT) : $guestbookConfig['show_entries'];
+$clean_limit = $guestbookConfig['show_entries'];
 
 $guestbook_handler = icms_getModuleHandler("guestbook", GUESTBOOK_DIRNAME, "guestbook");
 
 $entries = $guestbook_handler->getEntries(TRUE, 0, $clean_start, $clean_limit, 'guestbook_published_date', 'DESC');
-if(!$entries) echo json_encode("");
+$count = count($entries);
+$need_reload = (($count-1) % $guestbookConfig['show_entries'] === 0) ? "true" : "false"; 
+if(!$entries) echo json_encode(array("reload" => $need_reload, "entries" => '<p>'._MD_GUESTBOOK_NO_ENTRIES.'</p>'));
 $reply = array();
 foreach($entries as $key => $value) {
 	$userinfo = $value['published_by'];
@@ -59,7 +61,9 @@ foreach($entries as $key => $value) {
 		$content = str_replace("{ENTRY_URL}", '', $content);
 	}
 	if($value['approved'] !== "") {
-		$content = str_replace("{ENTRY_APPROVED}", '<div class="'.$value['approved'].'"><p>'._MD_GUESTBOOK_AWAITING_APPROVAL.'</p></div>' , $content);
+		$admin_string = ($guestbook_isAdmin) ? '<a class="approve_link" original-id="'.$value['id'].'" title="'._MD_GUESTBOOK_APPROVE_NOW.'" href="'.GUESTBOOK_URL.'submit.php"><img class="icon_middle" src="'
+						.GUESTBOOK_IMAGES_URL.'approved.png" alt="approve" /></a>' : '';
+		$content = str_replace("{ENTRY_APPROVED}", '<div class="'.$value['approved'].'">'._MD_GUESTBOOK_AWAITING_APPROVAL.$admin_string.'</div>' , $content);
 	} else {
 		$content = str_replace("{ENTRY_APPROVED}", '' , $content);
 	}
@@ -81,6 +85,7 @@ foreach($entries as $key => $value) {
 	}
 	$content = str_replace("{ENTRY_ID}", $value['id'], $content);
 	$content = str_replace("{ENTRY_PDATE}", $value['published_on'], $content);
+	$content = str_replace("{ENTRY_CLASS}", "parent_class", $content);
 	
 	if($value['hassub']) {
 		$content .= '<div class="guestbook_replies">' ;
@@ -131,6 +136,7 @@ foreach($entries as $key => $value) {
 			}
 			$content_rep = str_replace("{ENTRY_ID}", $value['id'], $content_rep);
 			$content_rep = str_replace("{ENTRY_PDATE}", $value['published_on'], $content_rep);
+			$content_rep = str_replace("{ENTRY_CLASS}", "sub_class", $content_rep);
 			$content .= $content_rep;
 		}
 		$content .= '</div>';
@@ -140,4 +146,4 @@ foreach($entries as $key => $value) {
 	}
 	$reply[$key] = $content;
 }
-echo json_encode(implode("&nbsp;", $reply));
+echo json_encode(array("reload" => $need_reload, "entries" => implode("&nbsp;", $reply)));
