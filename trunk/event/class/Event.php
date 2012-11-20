@@ -234,8 +234,8 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	public function getItemLink($urlOnly = FALSE) {
 		$start = $this->getVar("event_startdate", "e");
 		$date = $this->formatDate($start, "Y-m-j");
-		$time = $this->formatDate($start, "G");
-		$url = ICMS_MODULES_URL . "/" . EVENT_DIRNAME . '/index.php?date=' . $date . "&time=" . $time;
+		$time = $this->formatDate($start, "H");
+		$url = ICMS_MODULES_URL . "/" . EVENT_DIRNAME . '/index.php?date=' . $date . "&time=" . $time.'&event='.$this->short_url();
 		if($urlOnly) return $url;
 		return '<a href="' . $url . '" title="' . $this->title() . '">' . $this->title() . '</a>';
 	}
@@ -278,7 +278,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$ret['joiner_max'] = $this->getMaxJoiners();
 		$ret['friends'] = $this->getJoinedFriends();
 		$ret['joiners'] = $this->getJoiners();
-		$ret['comments'] = $this->getEventComments();
+		//$ret['comments'] = $this->getEventComments();
         return $ret;
 	}
 	

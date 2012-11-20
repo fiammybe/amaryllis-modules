@@ -106,6 +106,7 @@ if(icms_get_module_status("index")) {
 $clean_view = isset($_GET['view']) ? filter_input(INPUT_GET, "view") : $eventConfig['default_view'];
 $clean_cat = isset($_GET['cat']) ? filter_input(INPUT_GET, "cat") : FALSE;
 $clean_cal = isset($_GET['cal']) ? filter_input(INPUT_GET, "cal") : FALSE;
+$clean_event = isset($_GET['event_id']) ? filter_input(INPUT_GET, "event_id") : FALSE;
 $clean_date = isset($_GET['date']) ? filter_input(INPUT_GET, "date") : FALSE;
 $clean_time = isset($_GET['time']) ? filter_input(INPUT_GET, "time", FILTER_SANITIZE_NUMBER_INT) : $eventConfig['agenda_start'];
 $uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
