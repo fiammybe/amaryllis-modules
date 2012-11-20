@@ -572,6 +572,9 @@
 			$('#calendar').fullCalendar('changeView', 'agendaDay')
     				.fullCalendar('gotoDate', <{$gotoDate}>);
 		<{/if}>
+		<{if $smarty.get.event}>
+			$('#calendar').fullCalendar( "loading", function(isLoading,view, jsevent){ if(isLoading) openEvent(jsevent, view);});
+		<{/if}>
 		
 		addCalButton("left", "<{$smarty.const._CO_EVENT_SUBMIT}>", "submit_button");
 		<{if $cat_submit}>
@@ -843,5 +846,12 @@
 			$('#event_catselect').submit();
 			return false;
 		});
+		
+		function openEvent(jsevent, view) {
+			var eventSeo = "<{$smarty.get.event}>";
+			var events = $('#calendar').fullCalendar('clientEvents',function(event) {return event.seo == eventSeo;});
+			console.log(events.length);
+			$("#calendar").fullCalendar('eventClick', events[0], jsevent, view);
+		}
 	});
 </script>
