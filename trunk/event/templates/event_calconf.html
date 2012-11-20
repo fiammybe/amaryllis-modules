@@ -337,6 +337,7 @@
 											dlg.dialog("close");
 											$('#calendar').fullCalendar('refetchEvents');
 											$('#form_message').dialog('open');
+											document.forms.addevent.reset();
 										} else if(response.status === "error") {
 											$("#form_error").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 										}
@@ -408,7 +409,12 @@
 					$("#event_startdate").datetimepicker('option', 'maxDateTime', $("#event_enddate").datetimepicker('getDate') );
 				}
 			});
-	    	$("#submit_button").click(function () { $("#submit_form").dialog("open") });
+	    	$("#submit_button").click(function () {
+	    		var title = prompt('<{$smarty.const._MD_EVENT_TITLE}>');
+				title = title;
+				$("#event_name").val(title);
+	    		$("#submit_form").dialog("open") 
+	    	});
 	    <{elseif !$icms_isUser}>
 	    	$("#submit_button").click(function () {
 	    		$("#event_alert").html("<{$smarty.const._MD_EVENT_REGISTER}>");
