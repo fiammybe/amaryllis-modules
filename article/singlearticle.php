@@ -48,13 +48,9 @@ include_once ICMS_ROOT_PATH . "/header.php";
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_index_key = $indexpageObj = $article_indexpage_handler = $indexpageObj = '';
-$clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
-$article_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'article' );
-
-$indexpageObj = $article_indexpage_handler->get($clean_index_key);
-$index = $indexpageObj->toArray();
-$icmsTpl->assign('article_index', $index);
+$article_indexpage_handler = icms_getModuleHandler('indexpage', icms::$module->getVar('dirname'), 'article');
+$indexpageObj = $article_indexpage_handler->get(1);
+$icmsTpl->assign('article_index', $indexpageObj->toArray());
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
@@ -169,6 +165,7 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	 */
 	if ($articleConfig['com_rule'] && $articleObj->userCanComment()) {
 		$icmsTpl->assign('article_article_comment', TRUE);
+		$_GET['article_id'] = $articleObj->id();
 		include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 	}
 	
@@ -192,13 +189,15 @@ if($articleObj && !$articleObj->isNew() && $articleObj->accessGranted()) {
 	/**
 	 * get the meta informations
 	 */
-	$icms_metagen = new icms_ipf_Metagen($articleObj->getVar("article_title"), $articleObj->getVar("meta_keywords", "n"), $articleObj->getVar("meta_description", "n"));
+	$icms_metagen = new icms_ipf_Metagen($articleObj->title(), $articleObj->meta_keywords(), $articleObj->meta_description());
 	$icms_metagen->createMetaTags();
-} else {
-	redirect_header (ARTICLE_URL, 3, _NOPERM);
-}
-if(isset($gplus) OR isset($fb) OR isset($tw)) {
+	
+	if(isset($gplus) OR isset($fb) OR isset($tw)) {
 	$xoTheme->addScript('/modules/' . ARTICLE_DIRNAME . '/scripts/jquery.socialshareprivacy.js', array('type' => 'text/javascript'));
 	$xoTheme->addStylesheet('/modules/' . ARTICLE_DIRNAME . '/scripts/socialshareprivacy.css');
 }
+} else {
+	redirect_header (ARTICLE_URL, 3, _NOPERM);
+}
+
 include_once "footer.php";
