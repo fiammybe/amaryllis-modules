@@ -76,7 +76,7 @@ function addEvent($event_id = 0) {
 		$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_TAGS, "event_tags", 75, 255));
 	}
 	
-	$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_JOINER, "event_joiners", 10, 10));
+	$form->addElement(new icms_form_elements_Text(_CO_EVENT_EVENT_EVENT_JOINER, "event_joiners", 10, 10, 0));
 	$can_joint = new icms_form_elements_Select(_CO_EVENT_EVENT_EVENT_CAN_JOINT, "event_can_joint", 0);
 	$can_joint->addOptionArray($event_handler->getJoinersArray());
 	$form->addElement($can_joint);
