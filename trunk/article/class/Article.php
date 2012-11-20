@@ -449,15 +449,10 @@ class ArticleArticle extends icms_ipf_seo_Object {
 	function accessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
-		$viewperm = $gperm_handler->checkRight('article_grpperm', $this->getVar('article_id', 'e'), $groups, $module->getVar("mid"));
-		if ($this->userCanEditAndDelete()) {
-			return TRUE;
-		}
-		if ($viewperm && ($this->getVar("article_active", "e") == TRUE) && ($this->getVar("article_approve", "e") == TRUE) ) {
-			return TRUE;
-		}
-		
+		$module = icms::handler('icms_module')->getByDirname(ARTICLE_DIRNAME);
+		$viewperm = $gperm_handler->checkRight('article_grpperm', $this->id(), $groups, $module->getVar("mid"));
+		if ($this->userCanEditAndDelete()) {return TRUE;}
+		if ($viewperm && $this->isActive() && $this->isApproved() ) {return TRUE;}
 		return FALSE;
 	}
 	

@@ -141,11 +141,10 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 	}
 	
 	public function getArticleBySeo($seo) {
-		$article = FALSE;
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", trim($seo)));
-		$articles = $this->getObjects($criteria, FALSE, FALSE);
-		if($articles) $article = $this->get($articles[0]['article_id']);
-		return $article;
+		$articles = $this->getObjects($criteria, FALSE, TRUE);
+		if($articles) return $articles[0];
+		return FALSE;
 	}
 	
 	public function getArticlesForBlocks($start = 0, $limit = 0, $article_cid = FALSE,$updated = FALSE,$popular = FALSE, $order = 'article_published_date', $sort = 'DESC', $img_req = FALSE) {
