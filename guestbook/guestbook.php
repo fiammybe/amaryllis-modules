@@ -36,7 +36,7 @@ $icmsTpl->assign('guestbook_index', $indexpageObj->toArray());
 
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_limit = isset($_GET['end']) ? filter_input(INPUT_GET, 'end', FILTER_SANITIZE_NUMBER_INT) : $guestbookConfig['show_entries'];
-$guestbook_guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(__FILE__)), "guestbook");
+$guestbook_handler = icms_getModuleHandler("guestbook", basename(dirname(__FILE__)), "guestbook");
 $clean_guestbook_id = isset($_GET['guestbook_id']) ? filter_input(INPUT_GET, 'guestbook_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 
 $name = (is_object(icms::$user)) ? icms::$user->getVar("uname") : "";
@@ -44,12 +44,12 @@ $email = (is_object(icms::$user)) ? icms::$user->getVar("email") : "";
 $url = (is_object(icms::$user)) ? icms::$user->getVar("url") : "http://";
 $form = new icms_form_Theme("", "addentry", "submit.php");
 if($guestbookConfig['allow_imageupload']) $form->setExtra('enctype="multipart/form-data"');
-$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_TITLE, "guestbook_title", 75, 255));
-$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_NAME, "guestbook_name", 75, 255, $name, TRUE));
-$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_EMAIL, "guestbook_email", 75, 255, $email, TRUE));
+$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_TITLE, "guestbook_title", 75, 255), TRUE);
+$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_NAME, "guestbook_name", 75, 255, $name, TRUE), TRUE);
+$form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_EMAIL, "guestbook_email", 75, 255, $email, TRUE), TRUE);
 $form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_URL, "guestbook_url", 75, 255, $url));
-$form->addElement(new icms_form_elements_Textarea(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_ENTRY, "guestbook_entry", "", 5, 50));
-if($guestbookConfig['allow_imageupload'])
+$form->addElement(new icms_form_elements_Textarea(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_ENTRY, "guestbook_entry", "", 5, 50), TRUE);
+if($guestbook_handler->canUpload())
 $form->addElement(new icms_form_elements_File(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_IMAGE, "guestbook_image", $guestbookConfig['image_file_size']));
 $form->addElement(new icms_form_elements_Hidden("guestbook_pid", 0));
 //$form->addElement(new icms_form_elements_Captcha());
@@ -73,8 +73,8 @@ if($guestbookConfig["guest_entry"] == 1) {
 /**
  * pagination
  */
-$criteria = $guestbook_guestbook_handler->getEntryCriterias(TRUE, 0, $clean_start, $clean_limit, 'guestbook_published_date', 'DESC');
-$count = $guestbook_guestbook_handler->getCount($criteria);
+$criteria = $guestbook_handler->getEntryCriterias(TRUE, 0, $clean_start, $clean_limit, 'guestbook_published_date', 'DESC');
+$count = $guestbook_handler->getCount($criteria);
 $pagenav = new icms_view_PageNav($count, $guestbookConfig['show_entries'], $clean_start, 'start', FALSE);
 $icmsTpl->assign('pagenav', $pagenav->renderNav());
 /**

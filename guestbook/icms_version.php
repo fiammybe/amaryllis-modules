@@ -239,6 +239,15 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'can_upload',
+								'title' 		=> '_MI_GUESTBOOK_CAN_UPLOAD',
+								'description' 	=> '_MI_GUESTBOOK_CAN_UPLOAD_DSC',
+								'formtype'		=> 'group_multi',
+								'valuetype'		=> 'array',
+								'default'		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'image_upload_width',
 								'title' 		=> '_MI_GUESTBOOK_IMAGE_UPLOAD_WIDTH',
 								'description' 	=> '_MI_GUESTBOOK_IMAGE_UPLOAD_WIDTH_DSC',

@@ -78,3 +78,5 @@ define("_MI_GUESTBOOK_DISPLAY_HEIGHT", "Image Display height");
 define("_MI_GUESTBOOK_DISPLAY_HEIGHT_DSC", "");
 define("_MI_GUESTBOOK_AVATAR_DIMENSIONS", "Avatar Dimensions");
 define("_MI_GUESTBOOK_AVATAR_DIMENSIONS_DSC", "Avatar Dimensions in px");
+define("_MI_GUESTBOOK_CAN_UPLOAD", "Groups to be allowed uploading images");
+define("_MI_GUESTBOOK_CAN_UPLOAD_DSC", "");

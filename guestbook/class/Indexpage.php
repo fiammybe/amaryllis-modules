@@ -53,11 +53,11 @@ class GuestbookIndexpage extends icms_ipf_Object {
 	}
 	
 	public function getIndexHeader() {
-		$indexheader = '';
-		$indexheader = $this->getVar('index_header', 'e');
+		$indexheader = $this->getVar('index_header', 's');
 		if($indexheader != "") {
-			return '<div class="guestbook_indexheader">' . $indexheader . '</div>';
+			return '<div class="guestbook_indexheader">' . icms_core_DataFilter::undoHtmlSpecialChars($indexheader) . '</div>';
 		}
+		return false;
 	}
 
 	public function getIndexHeading() {
@@ -65,7 +65,7 @@ class GuestbookIndexpage extends icms_ipf_Object {
 		$indexheading = $this->getVar('index_heading', 's');
 		if($indexheading != "") {
 			$indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
-			return '<div class="guestbook_indexheading">' . $indexheading . '</div>';
+			return '<div class="guestbook_indexheading">' . icms_core_DataFilter::undoHtmlSpecialChars($indexheading) . '</div>';
 		}
 	}
 	
@@ -74,7 +74,7 @@ class GuestbookIndexpage extends icms_ipf_Object {
 		$indexfooter = $this->getVar('index_footer', 's');
 		if($indexfooter != "") {
 			$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
-			return '<div class="guestbook_indexfooter">' . $indexfooter . '</div>';
+			return '<div class="guestbook_indexfooter">' . icms_core_DataFilter::undoHtmlSpecialChars($indexfooter) . '</div>';
 		}
 	}
 

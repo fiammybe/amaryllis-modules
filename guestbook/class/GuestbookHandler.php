@@ -163,7 +163,14 @@ class GuestbookGuestbookHandler extends icms_ipf_Handler {
 		if($guestbookConfig['use_moderation'] == 0) return FALSE;
 		if($guestbook_isAdmin) return TRUE;
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-		return count(array_intersect_key($guestbookConfig, $groups));
+		return count(array_intersect($guestbookConfig['can_moderate'], $groups));
+	}
+	
+	public function canUpload() {
+		global $guestbook_isAdmin, $guestbookConfig;
+		if($guestbookConfig['allow_imageupload'] == 0) return FALSE;
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		return count(array_intersect($guestbookConfig['can_upload'], $groups));
 	}
 	
 	protected function beforeInsert(& $obj) {
