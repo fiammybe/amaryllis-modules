@@ -43,7 +43,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 				$arr['avatar'] = $users[$key]->gravatar();
 				$arr['user_sig'] = icms_core_DataFilter::checkVar($users[$key]->getVar("user_sig", "n"), "html", "output");
 				$arr['uname'] = $users[$key]->getVar("uname");
-				$arr['online'] = $users[$key]->isOnline();
+				//$arr['online'] = $users[$key]->isOnline();
 				$this->_usersArray[$key] = $arr;
 			}
 		}

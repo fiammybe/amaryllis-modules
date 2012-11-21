@@ -121,7 +121,7 @@ class mod_event_Comment extends icms_ipf_Object {
 		} else {
 			$content = str_replace("{COMMENT_PDATE}", $this->comment_pdate(), $content);
 		}
-		$content = str_replace("{COMMENT_ID}", $this->id(), $content);
+		$content = str_replace("{COMMENT_ID}", (!$block) ? $this->id() : "block_".$this->id(), $content);
 		$content = str_replace("{COMMENT_UNAME}", $uinfo['uname'], $content);
 		$content = str_replace("{COMMENT_AVATAR}", $uinfo['avatar'], $content);
 		//$content = str_replace("{COMMENT_AVATAR_DIM}", $eventConfig['avatar_dimensions'], $content);
