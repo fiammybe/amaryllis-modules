@@ -51,3 +51,8 @@ div#event_join p, div#event_unjoin p {color: white;}
 #event_loading img {vertical-align: middle;}
 #event_comment_tarea {display: block; width: 100%;}
 .highlighted {background-color: #c9d1fe;}
+div.single_comment {position: relative; display:block; background-color: #d9dbf7; margin: 0 0 .750em;}
+div.comment_user{float: left; border: 1px solid black;}
+div.comment_body {float: left; margin-left: 1em;}
+div#event_comment_container {margin: 2em 0;}
+div.comment_approve {background-color: #FC8383 !important;}
