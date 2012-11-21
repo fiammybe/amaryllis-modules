@@ -24,6 +24,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 	
 	private $_usersArray;
 	private $_eventsArray;
+	private $_eventsObjArray;
 	
 	public function __construct(&$db) {
 		parent::__construct($db, "comment", "comment_id", "comment_fprint", "comment_body", EVENT_DIRNAME);
@@ -60,15 +61,15 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo();
 		if($order) $criteria->setSort($order);
 		if($sort) $criteria->setOrder($sort);
-		if($start) $criteria->setStart($start);
-		if($limit) $criteria->setLimit((int)$limit);
+		//if($start) $criteria->setStart($start);
+		//if($limit) $criteria->setLimit((int)$limit);
 		if($approve) {
 			if(!$event_isAdmin) {
 				$crit = new icms_db_criteria_Compo();
 				if(is_object(icms::$user)) {
-					$crit->add(new icms_db_criteria_Item("comment_uid", icms::$user->getVar("uid")));
+					$crit->add(new icms_db_criteria_Item("comment_uid", icms::$user->getVar("uid")), 'OR');
 				} else {
-					$crit->add(new icms_db_criteria_Item("comment_fprint", $_SESSION['icms_fprint']));
+					$crit->add(new icms_db_criteria_Item("comment_fprint", $_SESSION['icms_fprint']), 'OR');
 				}
 				$crit->add(new icms_db_criteria_Item("comment_approve", TRUE), 'OR');
 				$criteria->add($crit);
@@ -92,13 +93,30 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 		return $this->_eventsArray;
 	}
 	
+	private function loadEventObjects() {
+		if(!count($this->_eventsObjArray)) {
+			$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
+			$events = $event_handler->getObjects(NULL, TRUE, TRUE);
+			foreach (array_keys($events) as $key) {
+				$this->_eventsObjArray[$key] = $events[$key];
+			}
+		}
+		return $this->_eventsObjArray;
+	}
+	
 	public function getComments($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start = 0, $limit = 0, $order = "comment_pdate", $sort = "DESC", $admin_approve = FALSE, $forBlock = FALSE) {
 		$criteria = $this->getCommentCriterias($approve, $event_id, $uid, $puid, $start, $limit, $order, $sort, $admin_approve);
-		$comments = $this->getObjects($criteria, TRUE, FALSE);
+		$comments = $this->getObjects($criteria, TRUE, TRUE);
+		$events = $this->loadEventObjects();
 		$ret = array();
-		foreach ($comments as $key => $value) {
-			$ret[$key] = (!$forBlock) ? $value['comment'] : $value['comment_block'];
+		foreach (array_keys($comments) as $key) {
+			if($limit > 0 && count($ret) == $limit) continue;
+			$eid = $comments[$key]->getVar("comment_eid", "e");
+			if($events[$eid]->accessGranted())
+			$ret[$key] = (!$forBlock) ? $comments[$key]->renderComment(FALSE) : $comments[$key]->renderComment(TRUE);
+			unset($comments[$key]);
 		}
+		unset($events, $criteria, $comments);
 		return $ret;
 	}
 	
