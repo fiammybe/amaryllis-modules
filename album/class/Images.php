@@ -148,10 +148,25 @@ class AlbumImages extends icms_ipf_Object {
 	}
 	
 	public function getImageTag($indexview = TRUE) {
-		$directory_name = basename(dirname(dirname(dirname(dirname(__FILE__)))));
+		$img = $image_tag = '';
+		$directory_name = basename(dirname( dirname( __FILE__ ) ));
+		$script_name = getenv("SCRIPT_NAME");
 		$img = $this->getVar('img_url', 'e');
-		if($img == "") return FALSE;
-		return "/".$directory_name.'/uploads/'.ALBUM_DIRNAME.'/'.$this->handler->_itemname.'/'.$img;
+		$document_root = str_replace('modules/' . $directory_name . '/index.php', '', $script_name);
+		if($indexview) {
+			if (!$img == "") {
+				$image_tag = $document_root . 'uploads/' . $directory_name . '/images/' . $img;
+			} else {
+				$image_tag = FALSE;
+			}
+		} else {
+			if (!$img == "") {
+				$image_tag = ICMS_URL . '/uploads/album/images/' . $img;
+			} else {
+				$image_tag = FALSE;
+			}
+		}
+		return $image_tag;
 	}
 	
 	public function getImagePath() {
