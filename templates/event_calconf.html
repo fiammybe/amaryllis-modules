@@ -728,6 +728,11 @@
 						$("#event_comment_container").show();
 					}
 				<{/if}>
+				if(event.comments !== "") {
+					$("div#event_comment_container").html(event.comments);
+				} else {
+					$("div#event_comment_container").html("");
+				}
 				if(event.contact != false) {
 					$("div#show_event_contact").html(event.contact);
 					$("div#show_event_contact").parent("div").show();
@@ -792,9 +797,7 @@
 					$("div#event_join_info").html("");
 					$("div#event_join_info").hide();
 				}
-				if(event.comments) {
-					$("div#event_comment_container").html(event.comments);
-				}
+				
 				$("div#event_success").html("");
 				
 				if(event.joint_friends !== false) {
@@ -816,7 +819,7 @@
 					$("div#joiners_list").parent("div").hide();
 				<{/if}>
 				
-				$("div#cal_event").dialog("open");
+				
 				$("div#cal_event").dialog({
 					title: buttons + event.title,
 					buttons: [
@@ -829,6 +832,7 @@
 						}
 					]
 				});
+				$("div#cal_event").dialog("open");
 				
 				$('#event_delete').click(function(){
 					var button = $(this);
@@ -1020,9 +1024,10 @@
 			};
 			
 			function changeColorScheme(text){
-				var hash = window.location.hash;
-				setTimeout(function(){$(hash).addClass(text);},500);
-				setTimeout(function(){$(hash).removeClass(text);},10000);
+				var hash = window.location.hash.slice(1);
+				setTimeout(function(){$('#'+hash).addClass(text);},500);
+				setTimeout(function(){$('#'+hash).removeClass(text);},5000);
+				var hash = location.hash.replace('#','');
 };
 	});
 </script>
