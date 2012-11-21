@@ -110,3 +110,5 @@ define("_MI_EVENT_CONFIG_DATE_FORMAT", "Date Format");
 define("_MI_EVENT_CONFIG_DATE_FORMAT_DSC", "PHP Date Format, used in comments");
 define("_MI_EVENT_CONFIG_USER_CAN_COMMENT", "Use the comment system for Events?");
 define("_MI_EVENT_CONFIG_USER_CAN_COMMENT_DSC", "");
+define("_MI_EVENT_CONFIG_COMMENTS_NEED_APPROVAL", "Comments Needs to be approved first?");
+define("_MI_EVENT_CONFIG_COMMENTS_NEED_APPROVAL_DSC", "");

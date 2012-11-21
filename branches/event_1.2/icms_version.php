@@ -414,7 +414,15 @@ $modversion['config'][$i] = array(
                                 'valuetype'     => 'int',
                                 'default'       => 1
                             );
-
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'comments_need_approval',
+                                'title'         => '_MI_EVENT_CONFIG_COMMENTS_NEED_APPROVAL',
+                                'description'   => '_MI_EVENT_CONFIG_COMMENTS_NEED_APPROVAL_DSC',
+                                'formtype'      => 'yesno',
+                                'valuetype'     => 'int',
+                                'default'       => 1
+                            );
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
