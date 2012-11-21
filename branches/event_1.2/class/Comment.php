@@ -103,13 +103,24 @@ class mod_event_Comment extends icms_ipf_Object {
 		return ($this->getVar("comment_approve", "") == 1) ? "" : "comment_approve";
 	}
 	
-	public function renderComment() {
+	public function getLink() {
+		$eid = $this->getVar("comment_eid", "e");
+		$events = $this->handler->loadEventLinks();
+		if(array_key_exists($eid, $events)) return $events[$eid].'#event_comment_'.$this->id();
+		return FALSE;
+	}
+	
+	public function renderComment($block = false) {
 		global $eventConfig;
 		$uinfo = $this->getPublisher();
 		$path = EVENT_ROOT_PATH.'templates/event_singlecomment.html';
 		$content = file_get_contents($path);
 		$content = str_replace("{COMMENT_BODY}", $this->summary(), $content);
-		$content = str_replace("{COMMENT_PDATE}", $this->comment_pdate(), $content);
+		if($block && $this->getLink()) {
+			$content = str_replace("{COMMENT_PDATE}", '<a href="'.$this->getLink().'" title="Goto..">'.$this->comment_pdate().'</a>', $content);
+		} else {
+			$content = str_replace("{COMMENT_PDATE}", $this->comment_pdate(), $content);
+		}
 		$content = str_replace("{COMMENT_ID}", $this->id(), $content);
 		$content = str_replace("{COMMENT_UNAME}", $uinfo['uname'], $content);
 		$content = str_replace("{COMMENT_AVATAR}", $uinfo['avatar'], $content);
@@ -128,6 +139,7 @@ class mod_event_Comment extends icms_ipf_Object {
 		$ret['user'] = $this->getPublisher();
 		$ret['body'] = $this->summary();
 		$ret['comment'] = $this->renderComment();
+		$ret['comment_block'] = $this->renderComment(TRUE);
 		return $ret;
 	}
 

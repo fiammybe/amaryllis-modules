@@ -23,6 +23,7 @@ if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(_
 class mod_event_CommentHandler extends icms_ipf_Handler {
 	
 	private $_usersArray;
+	private $_eventsArray;
 	
 	public function __construct(&$db) {
 		parent::__construct($db, "comment", "comment_id", "comment_fprint", "comment_body", EVENT_DIRNAME);
@@ -79,13 +80,24 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 		if($puid) $criteria->add(new icms_db_criteria_Item("comment_eid_uid", $puid));
 		return $criteria;
 	}
+
+	public function loadEventLinks() {
+		if(!count($this->_eventsArray)) {
+			$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
+			$events = $event_handler->getObjects(NULL, TRUE, TRUE);
+			foreach (array_keys($events) as $key) {
+				$this->_eventsArray[$key] = $events[$key]->getItemLink(TRUE);
+			}
+		}
+		return $this->_eventsArray;
+	}
 	
-	public function getComments($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start = 0, $limit = 0, $order = "comment_pdate", $sort = "DESC", $admin_approve = FALSE) {
+	public function getComments($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start = 0, $limit = 0, $order = "comment_pdate", $sort = "DESC", $admin_approve = FALSE, $forBlock = FALSE) {
 		$criteria = $this->getCommentCriterias($approve, $event_id, $uid, $puid, $start, $limit, $order, $sort, $admin_approve);
 		$comments = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($comments as $key => $value) {
-			$ret[$key] = $value['comment'];
+			$ret[$key] = (!$forBlock) ? $value['comment'] : $value['comment_block'];
 		}
 		return $ret;
 	}
