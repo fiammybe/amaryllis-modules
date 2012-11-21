@@ -50,3 +50,4 @@ div#event_join p, div#event_unjoin p {color: white;}
 #event_loading {width: 100%; text-align: center;}
 #event_loading img {vertical-align: middle;}
 #event_comment_tarea {display: block; width: 100%;}
+.highlighted {background-color: #c9d1fe;}

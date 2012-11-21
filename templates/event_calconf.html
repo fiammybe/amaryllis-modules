@@ -953,7 +953,11 @@
 						
 					});
 				<{/if}>
-				
+				var hash = window.location.hash;
+				if(hash != "") {
+					//$(hash).css('background-color', '#c9d1fe');
+					changeColorScheme("highlighted");
+				}
 				$('#event_edit').click(function(){
 					var button = $(this);
 					start = $.fullCalendar.formatDate( event.start, "yyyy/MM/dd HH:mm");
@@ -1014,5 +1018,11 @@
 					$("#submit_form").dialog("open");
 				});
 			};
+			
+			function changeColorScheme(text){
+				var hash = window.location.hash;
+				setTimeout(function(){$(hash).addClass(text);},500);
+				setTimeout(function(){$(hash).removeClass(text);},10000);
+};
 	});
 </script>
