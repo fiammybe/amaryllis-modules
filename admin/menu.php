@@ -30,6 +30,10 @@ $i++;
 $adminmenu[$i]['title'] = _MI_EVENT_MENU_CALENDAR;
 $adminmenu[$i]['link'] = 'admin/calendar.php';
 
+$i++;
+$adminmenu[$i]['title'] = _MI_EVENT_MENU_COMMENTS;
+$adminmenu[$i]['link'] = 'admin/comment.php';
+
 global $icmsConfig;
 $moddir = basename(dirname(dirname( __FILE__)));
 $eventModule = icms_getModuleInfo($moddir);

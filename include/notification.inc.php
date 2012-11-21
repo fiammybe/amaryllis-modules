@@ -19,7 +19,7 @@
 defined("ICMS_ROOT_PATH") or die("ICMS Root Path not defined");
 
 function event_notify_iteminfo($category, $item_id){
-    global $icmsModule, $icmsModuleConfig, $icmsConfig;
+    global $icmsModuleConfig, $icmsConfig;
 
     if ($category == 'global') {
         $item['name'] = '';

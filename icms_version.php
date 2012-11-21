@@ -173,6 +173,16 @@ $modversion['blocks'][$i]['edit_func']		= 'b_event_calendars_edit';
 $modversion['blocks'][$i]['options']		= '0'; //category
 $modversion['blocks'][$i]['template']		= 'event_block_calendars.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
+// Comment block
+$i++;
+$modversion['blocks'][$i]['file']			= 'event_comments.php';
+$modversion['blocks'][$i]['name']			= _MI_EVENT_BLOCK_COMMENTS;
+$modversion['blocks'][$i]['description']	= _MI_EVENT_BLOCK_COMMENTS_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_event_comments_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_event_comments_edit';
+$modversion['blocks'][$i]['options']		= '10'; //limit
+$modversion['blocks'][$i]['template']		= 'event_block_comments.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// CONFIGURATION ///////////////////////////////////////////////////

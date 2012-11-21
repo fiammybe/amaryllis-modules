@@ -22,6 +22,8 @@ if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(_
 
 class mod_event_Comment extends icms_ipf_Object {
 	
+	public $_updating = FALSE;
+	
 	/**
 	 * Constructor
 	 *
@@ -67,6 +69,17 @@ class mod_event_Comment extends icms_ipf_Object {
 		return date($eventConfig['date_format'], $this->getVar("comment_pdate", "e"));
 	}
 	
+	public function comment_approve() {
+		$active = $this->getVar('comment_approve', 'e');
+		if ($active == FALSE) {
+			return '<a href="' . EVENT_ADMIN_URL . 'comment.php?comment_id=' . $this->id() . '&amp;op=changeApprove">
+				<img src="' . EVENT_IMAGES_URL . 'denied.png" alt="Denied" /></a>';
+		} else {
+			return '<a href="' . EVENT_ADMIN_URL . 'comment.php?comment_id=' . $this->id() . '&amp;op=changeApprove">
+				<img src="' . EVENT_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
+		}
+	}
+	
 	function getPublisher() {
 		global $icmsConfig;
 		$uid = $this->getVar('comment_uid', 'e');
@@ -100,7 +113,7 @@ class mod_event_Comment extends icms_ipf_Object {
 		$content = str_replace("{COMMENT_ID}", $this->id(), $content);
 		$content = str_replace("{COMMENT_UNAME}", $uinfo['uname'], $content);
 		$content = str_replace("{COMMENT_AVATAR}", $uinfo['avatar'], $content);
-		$content = str_replace("{COMMENT_AVATAR_DIM}", $eventConfig['avatar_dimensions'], $content);
+		//$content = str_replace("{COMMENT_AVATAR_DIM}", $eventConfig['avatar_dimensions'], $content);
 		$content = str_replace("{COMMENT_ULINK}", $uinfo['link'], $content);
 		$content = str_replace("{COMMENT_USIG}", $uinfo['user_sig'], $content);
 		$content = str_replace("{COMMENT_UID}", $uinfo['uid'], $content);

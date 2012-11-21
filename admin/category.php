@@ -23,18 +23,18 @@
  * @param int $category_id Categoryid to be edited
 */
 function editcategory($category_id = 0) {
-	global $category_handler, $icmsModule, $icmsAdminTpl;
+	global $category_handler, $icmsAdminTpl;
 
 	$categoryObj = $category_handler->get($category_id);
 
 	if (!$categoryObj->isNew()){
-		$icmsModule->displayAdminMenu(1, _AM_EVENT_CATEGORYS . " > " . _CO_ICMS_EDITING);
+		icms::$module->displayAdminMenu(1, _AM_EVENT_CATEGORYS . " > " . _CO_ICMS_EDITING);
 		$sform = $categoryObj->getForm(_AM_EVENT_CATEGORY_EDIT, "addcategory");
 		$sform->assign($icmsAdminTpl);
 	} else {
 		$categoryObj->setVar("category_created_on", time() - 100);
 		$categoryObj->setVar("category_submitter", icms::$user->getVar("uid"));
-		$icmsModule->displayAdminMenu(1, _AM_EVENT_CATEGORYS . " > " . _CO_ICMS_CREATINGNEW);
+		icms::$module->displayAdminMenu(1, _AM_EVENT_CATEGORYS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $categoryObj->getForm(_AM_EVENT_CATEGORY_CREATE, "addcategory");
 		$sform->assign($icmsAdminTpl);
 
@@ -85,7 +85,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 		default:
 			icms_cp_header();
-			$icmsModule->displayAdminMenu(1, _AM_EVENT_CATEGORYS);
+			icms::$module->displayAdminMenu(1, _AM_EVENT_CATEGORYS);
 			$objectTable = new icms_ipf_view_Table($category_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("category_approve", "center", 50, "category_approve"));
 			$objectTable->addColumn(new icms_ipf_view_Column("category_name", FALSE, FALSE, "getItemLink"));
