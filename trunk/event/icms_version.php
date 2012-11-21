@@ -33,7 +33,7 @@ $modversion = array(
                         "credits"                   => "<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Amaryllis Modules</a>",
                         "help"                      => "admin/manual.php",
                         "license"                   => "GNU General Public License (GPL)",
-                        "official"                  => 0,
+                        "official"                  => 1,
                         "dirname"                   => basename(dirname(__FILE__)),
                         "modname"                   => "event",
                     
@@ -44,10 +44,10 @@ $modversion = array(
                     
                     /**  Development information */
                         "status_version"            => "1.1",
-                        "status"                    => "RC",
-                        "date"                      => "00:00 XX.XX.2012",
+                        "status"                    => "final",
+                        "date"                      => "01:13 21.11.2012",
                         "author_word"               => "",
-                        "warning"                   => _CO_ICMS_WARNING_RC,
+                        "warning"                   => _CO_ICMS_WARNING_FINAL,
                     
                     /** Contributors */
                         "developer_website_url"     => "http://code.google.com/p/amaryllis-modules/",
@@ -73,7 +73,7 @@ $modversion = array(
                     
                     /** Notification and comment information */
                         "hasNotification"           => 1,
-                        "hasComments"               => 1
+                        "hasComments"               => 0
                 );
 
 $modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>";
@@ -170,19 +170,6 @@ $modversion['blocks'][$i]['edit_func']		= 'b_event_calendars_edit';
 $modversion['blocks'][$i]['options']		= '0'; //category
 $modversion['blocks'][$i]['template']		= 'event_block_calendars.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////// COMMENTS /////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Comments
-$modversion['comments']['pageName'] = 'event.php';
-$modversion['comments']['itemName'] = 'event_id';
-
-// Comment callback functions
-$modversion['comments']['callbackFile'] = 'include/comment.inc.php';
-$modversion['comments']['callback']['approve'] = 'event_com_approve';
-$modversion['comments']['callback']['update'] = 'event_com_update';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// CONFIGURATION ///////////////////////////////////////////////////
