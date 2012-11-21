@@ -8,8 +8,7 @@
 -- added several new attributes in event rendering
 - updated all lang files
 
-
-== Version 1.1 => Release Date: XX.XX.2012 ==
+== Version 1.1 => Release Date: 21.11.2012 ==
 - switched all operations from "GET" to "POST"
 - removed all "Alert" funcs and switched to ui dialog
 - added timeline to agenda views to see current time
