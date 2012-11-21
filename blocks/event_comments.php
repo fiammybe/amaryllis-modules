@@ -29,8 +29,8 @@ function b_event_comments_show($options) {
 	$uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;
 	
 	$block['recent_comments'] = implode(" ", $comment_handler->getComments(TRUE, FALSE, FALSE, FALSE, 0, $options[0]));
-	$block['my_recent_comments'] = implode(" ", $comment_handler->getComments(TRUE, FALSE, FALSE, $uid, 0, $options[0]));
-	$block['admin_comments'] = implode(" ", $comment_handler->getComments(FALSE, FALSE, FALSE, FALSE, 0, $options[0], "comment_pdate", "DESC", TRUE));
+	$block['my_recent_comments'] = (is_object(icms::$user)) ? implode(" ", $comment_handler->getComments(TRUE, FALSE, FALSE, $uid, 0, $options[0])) : FALSE;
+	$block['admin_comments'] = (icms_userIsAdmin( EVENT_DIRNAME )) ? implode(" ", $comment_handler->getComments(FALSE, FALSE, FALSE, FALSE, 0, $options[0], "comment_pdate", "DESC", TRUE)) : FALSE;
 	$block['event_url'] = ICMS_MODULES_URL . "/" . EVENT_DIRNAME . "/" ;
 	$block['isRTL'] = (defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? 'true' : 'false';
 	
