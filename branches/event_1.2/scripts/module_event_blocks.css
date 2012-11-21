@@ -28,9 +28,9 @@
 .legend_title {margin-left: 1em;}
 .event_popup {display: none;}
 /** optimizing ui datepicker calendar*/
-.ui-datepicker {width: 11em !important;height: 13em !important;}
-.ui-datepicker td span, .ui-datepicker td a {padding:0.1em !important;}
-.ui-datepicker table {font-size: .7em;}
-.ui-datepicker .ui-datepicker-title select {font-size:0.7em !important;}
-table.ui-datepicker-calendar thead tr th {height: 18px !important;padding: 0.2em 0.1em !important;}
-table.ui-datepicker-calendar {width: 9em !important;}
+#event_datepicker .ui-datepicker {width: 11em !important;height: 13em !important;}
+#event_datepicker .ui-datepicker td span, .ui-datepicker td a {padding:0.1em !important;}
+#event_datepicker .ui-datepicker table {font-size: .7em;}
+#event_datepicker .ui-datepicker .ui-datepicker-title select {font-size:0.7em !important;}
+#event_datepicker table.ui-datepicker-calendar thead tr th {height: 18px !important;padding: 0.2em 0.2em !important;}
+#event_datepicker table.ui-datepicker-calendar {width: 10.5em !important;}
