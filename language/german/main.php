@@ -60,3 +60,8 @@ define("_MD_EVENT_JOINERS_LIST", "Andere Benutzer, die Sie dort treffen k&ouml;n
  * added in 1.1
  */
 define("_MD_EVENT_REGISTER", "Sorry, Sie haben keine Berechtigung zum Übermitteln von Veranstaltungen. Bitte registrieren sie sich erst oder loggen sie sich ein.");
+/**
+ * added in 1.2
+ */
+define("_MD_EVENT_SUCCESSFUL_COMMENTED", "Thanks for submit comment.");
+define("_MD_EVENT_SUCCESSFUL_COMMENTED_APPROVAL", "Thanks for submit comment. Your Comment is currently awaiting approval.");

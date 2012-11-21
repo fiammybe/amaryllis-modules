@@ -162,6 +162,10 @@ define("_CO_EVENT_UNJOIN", "Nicht registrierte Veranstaltung");
 /**
  * added in 1.1
  */
-define("_CO_EVENT_BIRTHDAY", "Geburtstag");
-define("_CO_EVENT_BIRTHDAY_OF", "Geburtstag von %s");
-define("_CO_EVENT_SUBMIT", "Übermittle Veranstaltung");
+define("_CO_EVENT_BIRTHDAY", "Birthday");
+define("_CO_EVENT_BIRTHDAY_OF", "Birthday of %s");
+define("_CO_EVENT_SUBMIT", "Submit Event");
+/**
+ * added in 1.2
+ */
+define("_CO_EVENT_SUCCESSFUL_COMMENTED_APPROVAL", "Thanks for submit comment. Your Comment is currently awaiting approval.");
