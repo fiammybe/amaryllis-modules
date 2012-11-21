@@ -23,12 +23,12 @@
  * @param int $event_id Eventid to be edited
 */
 function editevent($event_id = 0) {
-	global $event_handler, $icmsModule, $icmsAdminTpl;
+	global $event_handler,$icmsAdminTpl;
 
 	$eventObj = $event_handler->get($event_id);
 
 	if (!$eventObj->isNew()){
-		$icmsModule->displayAdminMenu(0, _AM_EVENT_EVENTS . " > " . _CO_ICMS_EDITING);
+		icms::$module->displayAdminMenu(0, _AM_EVENT_EVENTS . " > " . _CO_ICMS_EDITING);
 		$sform = $eventObj->getForm(_AM_EVENT_EVENT_EDIT, "addevent");
 		$sform->assign($icmsAdminTpl);
 	} else {
@@ -38,7 +38,7 @@ function editevent($event_id = 0) {
 		$eventObj->setVar("event_created_on", time() - 100);
 		$eventObj->setVar("event_contact", icms::$user->getVar("uname"));
 		$eventObj->setVar("event_cemail", icms::$user->getVar("email"));
-		$icmsModule->displayAdminMenu(0, _AM_EVENT_EVENTS . " > " . _CO_ICMS_CREATINGNEW);
+		icms::$module->displayAdminMenu(0, _AM_EVENT_EVENTS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $eventObj->getForm(_AM_EVENT_EVENT_CREATE, "addevent");
 		$sform->assign($icmsAdminTpl);
 
@@ -60,12 +60,6 @@ $event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 
 $clean_event_id = isset($_GET["event_id"]) ? filter_input(INPUT_GET, "event_id", FILTER_SANITIZE_NUMBER_INT) : 0;
 
-/**
- * in_array() is a native PHP function that will determine if the value of the
- * first argument is found in the array listed in the second argument. Strings
- * are case sensitive and the 3rd argument determines whether type matching is
- * required
-*/
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case "mod":
@@ -103,7 +97,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		case 'delete_range':
 		default:
 			icms_cp_header();
-			$icmsModule->displayAdminMenu(0, _AM_EVENT_EVENTS);
+			icms::$module->displayAdminMenu(0, _AM_EVENT_EVENTS);
 			
 			if($clean_op === "delete_range") {
 				$clean_range = isset($_POST['del_range']) ? filter_input(INPUT_POST, "del_range", FILTER_SANITIZE_NUMBER_INT) : FALSE;

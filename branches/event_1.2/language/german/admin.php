@@ -69,3 +69,7 @@ define("_AM_EVENT_CALENDAR_VIEW_DSC", "Hier sind die Information &uuml;ber diese
  */
 define("_AM_EVENT_EVENT_DENIED", "Denied");
 define("_AM_EVENT_EVENT_APPROVED", "Approved");
+/**
+ * added in 1.2
+ */
+define("_AM_EVENT_EVENT_COMMENT", "Comments");

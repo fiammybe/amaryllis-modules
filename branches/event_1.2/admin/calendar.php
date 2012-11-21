@@ -23,16 +23,16 @@
  * @param int $calendar_id Calendarid to be edited
 */
 function editcalendar($calendar_id = 0) {
-	global $calendar_handler, $icmsModule, $icmsAdminTpl;
+	global $calendar_handler, $icmsAdminTpl;
 
 	$calendarObj = $calendar_handler->get($calendar_id);
 
 	if (!$calendarObj->isNew()){
-		$icmsModule->displayAdminMenu(2, _AM_EVENT_CALENDARS . " > " . _CO_ICMS_EDITING);
+		icms::$module->displayAdminMenu(2, _AM_EVENT_CALENDARS . " > " . _CO_ICMS_EDITING);
 		$sform = $calendarObj->getForm(_AM_EVENT_CALENDAR_EDIT, "addcalendar");
 		$sform->assign($icmsAdminTpl);
 	} else {
-		$icmsModule->displayAdminMenu(2, _AM_EVENT_CALENDARS . " > " . _CO_ICMS_CREATINGNEW);
+		icms::$module->displayAdminMenu(2, _AM_EVENT_CALENDARS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $calendarObj->getForm(_AM_EVENT_CALENDAR_CREATE, "addcalendar");
 		$sform->assign($icmsAdminTpl);
 
@@ -83,7 +83,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			
 		default:
 			icms_cp_header();
-			$icmsModule->displayAdminMenu(2, _AM_EVENT_CALENDARS);
+			icms::$module->displayAdminMenu(2, _AM_EVENT_CALENDARS);
 			$objectTable = new icms_ipf_view_Table($calendar_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("calendar_active", "center", 50,"calendar_active"));
 			$objectTable->addColumn(new icms_ipf_view_Column("calendar_name", FALSE, FALSE,"getItemLink"));

@@ -25,7 +25,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 	private $_usersArray;
 	
 	public function __construct(&$db) {
-		parent::__construct($db, "comment", "comment_id", "comment_eid", "comment_body", EVENT_DIRNAME);
+		parent::__construct($db, "comment", "comment_id", "comment_fprint", "comment_body", EVENT_DIRNAME);
 	}
 	
 	public function loadUsers() {
@@ -54,11 +54,13 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 		return (is_object(icms::$user) && $eventConfig['user_can_comment'] == 1) ? TRUE : FALSE;
 	}
 	
-	public function getCommentCriterias($approve = FALSE, $event_id = FALSE, $uid = FALSE, $order = "comment_pdate", $sort = "ASC") {
+	public function getCommentCriterias($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start=0, $limit = 0, $order = "comment_pdate", $sort = "DESC", $admin_approve = FALSE) {
 		global $event_isAdmin;
 		$criteria = new icms_db_criteria_Compo();
 		if($order) $criteria->setSort($order);
 		if($sort) $criteria->setOrder($sort);
+		if($start) $criteria->setStart($start);
+		if($limit) $criteria->setLimit((int)$limit);
 		if($approve) {
 			if(!$event_isAdmin) {
 				$crit = new icms_db_criteria_Compo();
@@ -71,13 +73,15 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 				$criteria->add($crit);
 			}
 		}
+		if($admin_approve) $criteria->add(new icms_db_criteria_Item("comment_approve", 0));
 		if($event_id) $criteria->add(new icms_db_criteria_Item("comment_eid", $event_id));
 		if($uid) $criteria->add(new icms_db_criteria_Item("comment_uid", $uid));
+		if($puid) $criteria->add(new icms_db_criteria_Item("comment_eid_uid", $puid));
 		return $criteria;
 	}
 	
-	public function getComments($approve = FALSE, $event_id = FALSE, $uid = FALSE, $order = "comment_pdate", $sort = "ASC") {
-		$criteria = $this->getCommentCriterias($approve, $event_id, $uid, $order, $sort);
+	public function getComments($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start = 0, $limit = 0, $order = "comment_pdate", $sort = "DESC", $admin_approve = FALSE) {
+		$criteria = $this->getCommentCriterias($approve, $event_id, $uid, $puid, $start, $limit, $order, $sort, $admin_approve);
 		$comments = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($comments as $key => $value) {
@@ -86,10 +90,49 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	public function getCommentsCount($approve = FALSE, $event_id = FALSE, $uid = FALSE, $order = "comment_pdate", $sort = "ASC") {
-		$criteria = $this->getCommentCriterias($approve, $event_id, $uid, $order, $sort);
+	public function getCommentsCount($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start = 0, $limit = 0, $order = FALSE, $sort = FALSE, $admin_approve = FALSE) {
+		$criteria = $this->getCommentCriterias($approve, $event_id, $uid, $puid, $start, $limit, $order, $sort, $admin_approve);
 		return $this->getCount($criteria);
 	}
+	
+	/**
+	 * handling some functions to easily switch some fields
+	 */
+	public function changeField($comment_id, $field) {
+		$commentObj = $this->get($comment_id);
+		if ($commentObj->getVar("$field", 'e') == TRUE) {
+			$commentObj->setVar("$field", 0);
+			$value = 0;
+		} else {
+			$commentObj->setVar("$field", 1);
+			$value = 1;
+		}
+		$commentObj->_updating = TRUE;
+		$this->insert($commentObj, TRUE);
+		return $value;
+	}
+
+	public function filterApprove() {
+		return array(0 => 'Denied', 1 => 'Approved');
+	}
+	
+	public function filterEid() {
+		$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
+		return $event_handler->getList();
+	}
+	
+	public function filterUser(){
+		$sql = "SELECT DISTINCT comment_uid FROM " . $this->table;
+		if ($result = icms::$xoopsDB->query($sql)) {
+			$bids = array();
+			if($showNull) $bids[0] = '--------------';
+			while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+				$bids[$myrow['comment_uid']] = icms_member_user_Object::getUnameFromId((int)$myrow['comment_uid']);
+			}
+			return $bids;
+		}
+	}
+	
 	
 	protected function beforeInsert(&$obj) {
 		$ip = $obj->getVar("comment_ip", "e");
