@@ -1,0 +1,53 @@
+<link href="<{$block.event_url}>scripts/module_event_blocks.css" type="text/css" />
+<{$block.event_form}>
+
+<div id="events_output_<{$block.bid}>">&nbsp;</div>
+<div id="event_error_container_<{$block.bid}>" style="display: none;">&nbsp;</div>
+<script src="<{$block.event_url}>scripts/jquery.form.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var options = {
+			target:   '#events_output_<{$block.bid}>',
+			dataType: 'json',
+			success: function(response) {
+						if(response.status === "success") {
+								$("#events_output_<{$block.bid}>, #event_error_container_<{$block.bid}>").html("");
+								$("#events_output_<{$block.bid}>").html(response.message);
+								$('#events_output_<{$block.bid}>').fadeIn('slow');
+						} else if(response.status === "error") {
+							$("div#event_error_container_<{$block.bid}>").show();
+							$("#event_error_container_<{$block.bid}>").html("<{$smarty.const._MD_FORMS_FAILURE}>: " + response.message);
+							return false;
+						} else {
+							$("div#event_error_container_<{$block.bid}>").show();
+							$("#event_error_container_<{$block.bid}>").html("<{$smarty.const._MD_FORMS_FAILUREWENTWRONG}>: " + response.message);
+							return false;
+						}
+					}
+		};
+		
+		$("#range_category_<{$block.bid}>, #b_event_zip_<{$block.bid}>, #b_event_city_<{$block.bid}>").change(function() {
+			$("#event_select_<{$block.bid}>").ajaxSubmit(options);
+		});
+		
+		$("#range_start_<{$block.bid}>, #range_end_<{$block.bid}>").datepicker({
+			dateFormat: "d/mm/yy",
+			onSelect: function(date) {
+				$("#event_select_<{$block.bid}>").ajaxSubmit(options);
+			},
+			changeMonth: true,
+			changeYear: true,
+			inline: true,
+			isRTL: <{$block.isRTL}>,
+			monthNames: ['<{$smarty.const._CO_EVENT_JANUARY}>','<{$smarty.const._CO_EVENT_FEBRUARY}>','<{$smarty.const._CO_EVENT_MARCH}>','<{$smarty.const._CO_EVENT_APRIL}>','<{$smarty.const._CO_EVENT_MAY}>',
+							'<{$smarty.const._CO_EVENT_JUNE}>','<{$smarty.const._CO_EVENT_JULY}>','<{$smarty.const._CO_EVENT_AUGUST}>','<{$smarty.const._CO_EVENT_SEPTEMBER}>','<{$smarty.const._CO_EVENT_OCTOBER}>',
+							'<{$smarty.const._CO_EVENT_NOVEMBER}>','<{$smarty.const._CO_EVENT_DECEMBER}>'],
+			monthNamesShort: ['<{$smarty.const._CO_EVENT_JAN}>','<{$smarty.const._CO_EVENT_FEB}>','<{$smarty.const._CO_EVENT_MAR}>','<{$smarty.const._CO_EVENT_APR}>','<{$smarty.const._CO_EVENT_MAI}>','<{$smarty.const._CO_EVENT_JUN}>',
+								 '<{$smarty.const._CO_EVENT_JUL}>','<{$smarty.const._CO_EVENT_AUG}>','<{$smarty.const._CO_EVENT_SEP}>','<{$smarty.const._CO_EVENT_OCT}>','<{$smarty.const._CO_EVENT_NOV}>','<{$smarty.const._CO_EVENT_DEC}>'],
+			dayNames: ['<{$smarty.const._CO_EVENT_SUNDAY}>','<{$smarty.const._CO_EVENT_MONDAY}>','<{$smarty.const._CO_EVENT_TUESDAY}>','<{$smarty.const._CO_EVENT_WEDNESDAY}>','<{$smarty.const._CO_EVENT_THURSDAY}>',
+							 '<{$smarty.const._CO_EVENT_FRIDAY}>','<{$smarty.const._CO_EVENT_SATURDAY}>'],
+			dayNamesMin: ['<{$smarty.const._CO_EVENT_SU}>','<{$smarty.const._CO_EVENT_MO}>','<{$smarty.const._CO_EVENT_TU}>','<{$smarty.const._CO_EVENT_WE}>','<{$smarty.const._CO_EVENT_TH}>',
+								'<{$smarty.const._CO_EVENT_FR}>','<{$smarty.const._CO_EVENT_SA}>']
+		});
+	});
+</script>

@@ -1,0 +1,91 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=<{$icms_charset}>" />
+		<meta http-equiv="content-language" content="<{$icms_langcode}>" />
+		<meta name="robots" content="<{$icms_meta_robots}>" />
+		<meta name="keywords" content="<{$icms_meta_keywords}>" />
+		<meta name="description" content="<{$icms_meta_description}>" />
+		<meta name="rating" content="<{$icms_meta_rating}>" />
+		<meta name="author" content="<{$icms_meta_author}>" />
+		<meta name="copyright" content="<{$icms_meta_copyright}>" />
+		<meta name="generator" content="ImpressCMS" />
+		<title><{$printtitle}></title>
+		<link rel="stylesheet" type="text/css" media="all" href="<{$icms_url}>/modules/event/scripts/fullcalendar.css" />
+		<link rel="stylesheet" type="text/css" media="print" href="<{$icms_url}>/modules/event/scripts/fullcalendar.print.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="<{$icms_url}>/modules/event/scripts/module_event.css" />
+		<{if $content}>
+			<style type="text/css">
+				@PAGE landscape {size: LANDSCAPE;} 
+				TABLE {PAGE: landscape;}
+			</style>
+		<{/if}>
+	</head>
+
+	<body>
+		<div id="pagetitle">
+			<div style="text-align: center;"><img src="<{$printlogourl}>" border="0" alt="logo" /></div>
+		   	<div style="text-align: right; margin-top: 10px; border: 1px solid; padding: 2px;"><{$printtitle}></div>
+		</div>
+		
+		<{if $event}>
+			<h1><{$event.title}></h1>
+			<div id="event_dsc">
+				<p><{$event.dsc}></p>
+			</div>
+			
+			<div id="event_infos" class="event_table">
+				<div class="event_row">
+					<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CID}></b>:&nbsp;</div><div id="show_event_cid" class="event_cell"><{$event.cat}></div>
+				</div>
+				
+				<div class="event_row">
+					<div class="event_cell"><b><{$smarty.const._MD_EVENT_FROMTO}></b>:&nbsp;</div>
+						<div class="event_cell">
+							<span id="show_event_startdate"><{$event.start|date_format:"%m/%d/%y %H:%M"}></span> &nbsp;-&nbsp;<span id="show_event_enddate"><{$event.end|date_format:"%m/%d/%y %H:%M"}></span>
+						</div>
+				</div>
+				
+				<div class="event_row">
+					<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_URL}></b>:&nbsp;</div>
+						<div id="show_event_url" class="event_cell"><{$event.url}></div>
+				</div>
+			</div>
+			
+			<div id="event_contact_info" class="event_table">
+				<div class="event_row">
+					<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CONTACT}></b>:&nbsp;</div><div id="show_event_contact" class="event_cell"><{$event.contact}></div>
+				</div>
+				
+				<div class="event_row">
+					<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_STREET}></b>:&nbsp;</div><div id="show_event_street" class="event_cell"><{$event.street}></div>
+				</div>
+				<div class="event_row">
+					<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_CITY}></b>:&nbsp;</div>
+						<div class="event_cell">
+							<span id="event_zip"><{$event.zip}></span> &nbsp;<span id="show_event_city"><{$event.city}></span>
+						</div>
+				</div>
+				<{if $event.phone}>
+					<div class="event_row">
+					<div class="event_cell"><b><{$smarty.const._CO_EVENT_EVENT_EVENT_PHONE}></b>:&nbsp;</div>
+						<div class="event_cell">
+							<span id="show_event_phone"><{$event.phone}></span>
+						</div>
+					</div>
+				<{/if}>
+				
+			</div>
+			
+		<{/if}>
+		
+		<{if $printfooter}>
+			<div id="event_footer"><{$printfooter}></div>
+		<{/if}>
+		  
+		<script for=window event=onload type="text/javascript">
+			if (window.print)
+		    window.print();
+		</script>
+		  
+	</body>
+</html>

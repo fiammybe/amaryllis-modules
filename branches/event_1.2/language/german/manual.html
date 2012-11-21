@@ -1,0 +1,370 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Event Manual</title>
+        <style>
+        	#event_manual {margin: 2em;}
+        	#event_manual h1, h2, h3 {font-family: Georgia, "Times New Roman", Times, serif; padding-bottom: 1em; padding-top: 1em; line-height: 1.7em; font-weight: bold;}
+        	#event_manual h1 {text-align: center; font-size: 1.5em; font-variant: small caps; color: #336699;}
+        	#event_manual h2 {font-size: 1.250em; color: #6699CC;}
+        	#event_manual h3 {font-size: 1.1em; color: #6699FF;}
+        	#event_manual p {font-size: .9em; margin: 0; padding: 5px;}
+        	#event_manual ul li {list-style-type: square; margin-left: 20px; line-height: 1.5em; font-weight: bolder; }
+        	#event_manual ul li ul li {list-style-type: disc; margin-left: 30px; font-weight: normal; }
+        	#event_footer {border: 1px dotted; margin: 2em auto; padding: 0 1em 2em; --moz-border-radius: 1.5em; -webkit-border-radius: 1.5em; border-radius: 1.5em;}
+        	#event_footer h2 {padding: .5em 0 0;}
+        	#event_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
+        	#event_manual a, #event_manual a:visited {color: #336699}
+        	#event_manual a:hover {color: #336699; text-decoration: underline;}
+        	#icms-uptopmessage a {display: block; display: none; z-index: 999; opacity: .9; position: fixed; top: 100%; margin-top: -80px; left: 50%; margin-left: -160px;
+							border-radius: 24px; -moz-border-radius: 24px; -webkit-border-radius: 24px; -o-border-radius: 24px; -khtml-border-radius:24px; -icab-border-radius:24px; -ms-border-radius:24px;
+							width: 300px; line-height: 48px; height: 48px; padding: 10px; background-color: #000; font-size: 24px; text-align: center; color: #fff;}
+			#credit {font-weight: bold;color: #336699;}
+			div.icmsCode, div.xoopsCode, div.tip, div.icmsCodeHtml {position: relative; margin-bottom: 1.5em; border: none; padding: 1em 1em 0.25em 58px; margin: 1em auto 1.5em auto; width: 75%; border-radius: 10px;
+							-moz-border-radius: 10px;-o-border-radius: 10px; -webkit-border-radius: 10px; -khtml-border-radius: 10px; -ms-border-radius: 10px;}
+			div.icmsCode, div.xoopsCode p, div.tip p, .icmsCodePhp p {margin-bottom: 1em;}
+			div.tip { background: #d5e9f6 url(../images/alert.png) no-repeat 10px 10px;}
+			div.icmsCode, div.xoopsCode,  div.icmsCodeHtml { background: #d5e9f6 url(../images/code.png) no-repeat 10px 10px; display: block; overflow : auto; text-align : left;
+							font : 500 1em/1.5em "Lucida Console", "Courier New", monospace; border : 1px solid #EEE8E1;}
+        </style>
+    </head>
+    <body>
+    	<div id="top">&nbsp;</div>
+    	<div id="event_manual">
+	        <h1>Event Modul Anleitung</h1>
+	        	<p>Das Event Modul ist ein einfaches Veranstaltungs Modul für ImpressCMS. Es kann auch in dem öffentliche rss Feed Kalender angezeigen.</p>
+	        <h2 id="index">Index</h2>
+	        <ul>
+	        	<li><a href="#keyfeatures"> Die wichtigsten Funktionen</a></li>
+	        	<li><a href="#firsstart">Modul 1. Start</a>
+	        		<ul>
+	        			<li><a href="#preferences">Einstellungen</a></li>
+	        			<li><a href="#fillup">Füllen Sie Ihren Kalender</a></li>
+	        			<li><a href="#gcal">Google Kalender in Event</a></li>
+	        			<li><a href="#date_format">Datumsformat im Veranstaltungs Modul</a></li>
+	        		</ul>
+	        	</li>
+	        	<li><a href="#blocks">Module Blöcke</a></li>
+	        	<li><a href="#templates">Templates</a></li>
+	        	<li><a href="#profile">"Event" Module playing together with "profile" Module</a></li>
+	        	<li><a href="#event_footer">Fazit</a></li>
+	        </ul>
+	        <h2 id="keyfeatures">Funktionen</h2>
+				<ul>
+					<li>Erstellen Sie schnell und einfach ein Veranstaltungen und kategorisieren sie diese mit verschiedenen Farben für die Kategorien</li>
+					<li>Mit Hilfe der Gruppenberechtigungen von ImpressCMS können Sie festlegen welcher Kalender für welche Gruppe sichtbar ist.</li>
+					<li>Ebenfalls können Sie festlegen Welche Benutzergruppe je Kalenderkategorie die Berechtigung haben neue Veranstaltungen einzureichen.</li>
+					<li>Importieren von öffentlichen Kalendern einfach unter Mithilfe der RSS-Feeds (zB. Ihre öffentlichen Google Kalender)</li>
+				</ul>
+	        <h2 id="firsstart">Erster Start</h2>
+	        <h3 id="preferences">Einstellungen</h3>
+		        <p>Die Modul Einstellungen kurz und knapp in der übersicht:</p>
+		        <ul>
+		        	<li>Standard Ansicht
+		        		<ul>
+		        			<li>Die Standard-Ansicht definiert, welche der verfügbaren Ansichten aktiv sind, wenn Sie das Modul aufrufen. "Monat" zeigt den aktuellen Monat, "Woche" zeigt die aktuelle Woche und "Tag" der aktuelle Tag</li>
+		        		</ul>
+		        	</li>
+		        	<li>Der erste Tag in der Woche angezeigt
+		        		<ul>
+		        			<li>Wählen Sie, welcher Wochentag als erster Tag in der Ansicht erscheinen soll Montag oder Sonntag?</li>
+		        		</ul>
+		        	</li>
+		        	<li>Wochenend Ansicht
+		        		<ul>
+		        			<li>Wählen Sie, ob das Wochenende im Kalender angezeigt werden soll?</li>
+		        		</ul>
+		        	</li>
+		        	<li>Startzeit des Kalenders
+		        		<ul>
+		        			<li>Die Startzeit ist die Zeit,die in der Tagesansicht um zuerst zu sehen sein soll. Wenn der Kalender skaliert wird (abhängig vom Thema was Sie verwenden) werden alle Stunden davor nicht angezeigt.
+So wird der Kalender bei der vorgegebenen Stunde in der Tagesansicht beginnen.</li>
+		        		</ul>
+		        	</li>
+		        	<li>Min. Zeit für Woche / Tag Ansicht.
+		        		<ul>
+		        			<li>Hier können Sie die minimale sichtbare Stunde. Z.B. auf 6 Uhr, alle Stunden davor sind nicht sichtbar im Kalender. Wenn Sie ein Ereignis festlegen, bevor dieser Zeit, kann man es in der Monatsansicht sehen</li>
+		        		</ul>
+		        	</li>
+		        	<li>Max Zeit für Woche / Tag Ansicht.
+		        		<ul>
+		        			<li>Die letzte sichtbare Stunde.</li>
+		        		</ul>
+		        	</li>
+		        	<li>Zeiteinteilung in der Minuten in Agenda-Ansicht
+		        		<ul>
+		        			<li>Die Zeiteinteilung Minuten, definiert wie die Stunde aufgeteilt werden soll in Tagesansicht (z.B. 30 Minuten Takt )</li>
+		        		</ul>
+		        	</li>
+		        	<li>Die folgenden Datumsformate gemeinsam abgewickelt werden kann:
+		        		<ul>
+		        			<li>Behandeln Sie Datum und Uhrzeit Formatierung für Kalender ausgegeben. Bilden weitere Informationen zu überprüfen <a href="#date_format" title="Date Format">Datumsformat in Event Module</a> </li>
+		        		</ul>
+		        	</li>
+		        	<li>Verwenden Sie die UI Theme
+		        		<ul>
+		        			<li>Standardmäßig im Kalender ist das ui Thema enthalten. Um den Stil zu ändern, haben Sie zwei Möglichkeiten:
+		        				<ul>
+		        					<li>Suche nach einem anderen Thema auf jQuery UI Homepage (dadurch werden sich alle ui Stile auf der Website zu ändern oder besuchen Sie ui Thema roller)</li>
+		        					<li>Schalten Sie das UI Theme aus und gestalten Sie Ihren individuellen Stil. Dies kann auch geschehen, während ui-Thema ist aktiviert ist, es ist aber nicht so einfach ,mit ui Thema im Hintergrund Ihren Kalender zu gestalten</li>
+		        				</ul>
+		        			</li>
+		        		</ul>
+		        	</li>
+		        	<li>Use a checkbox-Form to select, which Categories/Calendars should be loaded?
+		        		<ul>
+		        			<li>The module supports a checkbox form, to select, which calendars currently should be displayed. Just check/uncheck all calendars to be loaded. Currently this does not properly work in other browsers than FF..!</li>
+		        		</ul>
+		        	</li>
+		        	<li>Print footer
+		        		<ul>
+		        			<li>Add a custom footer to print layout</li>
+		        		</ul>
+		        	</li>
+		        	<li>Print logo
+		        		<ul>
+		        			<li>Add a custom logo to print layout. The path needs to be as default. 'themes/iTheme/img/logo.png'. From root path of your ImpressCMS Install to the logo.</li>
+		        		</ul>
+		        	</li>
+		        	<li>Profile Module Settings
+		        		<ul>
+		        			<li>The following both fields require profile module to be installed. If Profile Module is available, you can add a "birthday" field to your user profiles. Let's call it "birthday" here in example, but
+		        			 you can call it however you like. So, go to profile module and add a new field with type "date" and give a field name (Identifier) "birthday" and Caption "Your Birthday". If you like, set as required and a step for registration or even 
+		        			 let it not required. Doesn't matter. If the user has added his birthday, event module can add the birthdays itself to events. Just enter the given name (Identifier, NOT Caption!) here in Birthday Field and select the Category. 
+		        			 If your added category is not present in the list, please make an update of the module. ImpressCMS does not catch the full list of categories without updating the module!
+		        			 If the profile Module is installed and available, the module checks (using Auto Tasks) in a given frequenzy for new user birthdays. As default I set up all 6 hours. If you don't need or just need once per day go to autotasks and disable 
+		        			 or change the frequency as needed. All done? Well, now the module checks all time for birthday events in the current and the following year.</li>
+		        		</ul>
+		        	</li>
+		        </ul>
+	        <h3 id="fillup">Füllen Sie Ihren Kalender</h3>
+		        <p>Die Formen des Event-Modul alle sollten klein und einfach genug. Nur ein paar Worte um, bevor Sie starten:</p>
+		        <ul>
+		        	<li>Der Kalender Tab ist <b>nur</b> erforderlich, wenn Sie Kalender über JSON-Feed, wie Google Kalender machen möchten.
+		        		Um mehr über Howto Hinzufügen von Google Kalender lesen Sie unter <a href="#gcal" title="Google Kalender in Event"> Google Kalender in Event</a> </li>
+		        	<li>Die Kategorien werden verwendet, um verschiedene Farben / Text Farben für Events zu erleichtern, um die gesuchte Art von Element zu finden definieren. Google Kalender werden mit der gleichen Funktion.
+		        		Für Kategorien ist es möglich, sich zu unterwerfen und zu sehen Berechtigungen festzulegen. Alles erlaubt "view"-Gruppen können die Ereignisse innerhalb der Kategorie. Die "Eintragen" - Gruppen können Ereignisse an der Kategorie einreichen</li>
+		        	<li>Die Ereignisse haben ein Feld für Ansprechpartner. Als Standard werden Sie Ihren Account-Namen und E-Mail in ihren Bereichen zu finden. Wenn der Kontakt Name ist ein anderer Benutzer, und Sie geben Sie den Benutzernamen, Sie werden die Benutzer mit avatar bekommen. Ansonsten in der Name und die E-Mail eingeben. Wenn die E-Mail an gravatar angemeldet ist, sollten Sie den Avatar für diese E-Mail. E-Mail Adressen sind für registrierte Nutzer, nicht für die Gäste.
+		        		 </li>
+		        </ul>
+	
+        	<h3 id="gcal">Google Kalender im Veranstaltungmodul</h3>
+	        	<p>Mit dem Event-Modul haben Sie die Möglichkeit, den öffentlichen Google Kalender in Ihren kalender auf der Webseite einzubinden. Vor der Einbindung des Google Kalenders, überprüfen Sie Folgendes:</p>
+	        	<ul>
+	        		<li>Sie müssen zuerst Ihren Google Kalender öffentlich freigeben machen. Oder einen neuen Kalender erstellen und dann öffentlich freigeben.
+	        			<ul>
+	        				<li>Melden Sie sich in Ihren Google Account an. Dann werden Sie in Ihrem Kalender auf der linken Seite zu finden</li>
+	        				<li>Klicken Sie auf den Pfeil auf der rechten Seite neben dem Kalender, den Sie freigeben möchten, danach klicken Sie auf "Share-Kalender"</li>
+	        				<li>Stellen Sie sicher, "Share nur meine Frei / Gebucht-Informationen" aktiviert ist. Der Kalender muss nur Daten zeigen. Changings durch Event-Modul oder das Hinzufügen von Ereignissen ist derzeit nicht möglich.</li>
+	        				<li>Klicken Sie als nächstes auf Kalender Einstellungen (des freigegebenen Kalenders) und überprüfen Sie die URL. In der aktuell geöffneten Feld Einstellung finden Sie die Adresse des Kalenders</li>
+	        				<li>Klicken Sie auf die<img src="../images/xml.gif" alt="XML" /> Taste, um die URL, die Sie brauchen, um den Kalender in Ihrem "Kalender" Tab hinzufügen in Event-Modul bekommen. </li>
+	        				<li>Schauen Sie sich die Time-Zone-Einstellungen auf der gleichen Seite. Die Zeitzone müssen Sie in Ihrem Kalender eingestellt werden, wenn Sie das Hinzufügen Ihrer Google Kalender verwenden. Beispiele für Zeit-Zonen sind:
+"Europa / Berlin", "Amerika / Chicago", "America / Santo_Domingo", "Europa / London" und viele mehr.
+	        					 überprüfen<a href="http://php.net/manual/en/timezones.php" rel="external" target="_blank" title="PHP.net">PHP.net Zeitzone</a>Wenn Sie nicht wissen, die benötigte Zeitzone</li>
+	        				<div class="tip">
+	        					Es gibt eine Menge von nützlichen öffentlichen Kalendern Google Gruppen die Sie nutzen können. Zum Beispiel können Sie gerne Wochennummern oder Feiertage hinzuzufügen.
+	        					<div class="icmsCode">
+	        						<p>https://www.google.com/calendar/feeds/de.german%23holiday%40group.v.calendar.google.com/public/basic for (german) holidays</p>
+	        						<p>https://www.google.com/calendar/feeds/e_2_de%23weeknum%40group.v.calendar.google.com/public/basic for week numbers</p>
+	        					</div>
+	        				</div>
+	        			</ul>
+	        		</li>
+	        	</ul>
+        	<h3 id="date_format">Datumsformate im Veranstaltungs Modul</h3>
+        		<p>Nun lassen Sie uns die seit Einstellungen für Kopf-und Column. Auf den ersten lasst uns sicher, wir sprechen die gleiche reden:</p>
+        		<p><a class'img_link' href="../images/manual_header.png" title="Header and Column" rel="lightbox"><img class="manual_img" src="../images/manual_header.png" width="330px" height="50px" alt="manual_header" /></a> </p>
+				In beiden Fällen verwenden Sie die folgenden Möglichkeiten, um die Kopfzeile oder die Spalte einzustellen wie Sie es gerne möchten:
+				<ul>
+					<li><strong>s</strong> - Sekunden</li>
+					<li><strong>ss</strong> - seconds, 2-stellig</li>
+					<li><strong>m</strong> - Minuten</li>
+					<li><strong>mm</strong> - Minuten, 2-stellig</li>
+					<li><strong>h</strong> - Uhrzeit, 12-Stunden Format</li>
+					<li><strong>hh</strong> - Stunden, 12-Stunden Format, 2-stellig</li>
+					<li><strong>H</strong> - Stunden, 24-Stunden Format</li>
+					<li><strong>HH</strong> - Stunden, 24-Stunden Format, 2-stellig</li>
+					<li><strong>d</strong> - Datum</li>
+					<li><strong>dd</strong> - Datum, 2-stellig</li>
+					<li><strong>ddd</strong> - Datum , kurz</li>
+					<li><strong>dddd</strong> - Datum, vollständig</li>
+					<li><strong>M</strong> - Monat number</li>
+					<li><strong>MM</strong> - Monat number, 2-stellig</li>
+					<li><strong>MMM</strong> - Monatname, Kurz</li>
+					<li><strong>MMMM</strong> - Monatsname, vollständig</li>
+					<li><strong>yy</strong> - Jahr, 2-stellig</li>
+					<li><strong>yyyy</strong> - Jahr, 4-stellig</li>
+					<li><strong>t</strong> - 'a' or 'p'</li>
+					<li><strong>tt</strong> - 'am' or 'pm'</li>
+					<li><strong>T</strong> - 'A' or 'P'</li>
+					<li><strong>TT</strong> - 'AM' or 'PM'</li>
+					<li><strong>u</strong> - ISO8601 format</li>
+					<li><strong>S</strong> - 'st', 'nd', 'rd', 'th' for the date</li>
+				</ul>
+				<p>Und einige Sonderzeichen:</p>
+					<dl>
+						<dt><code>'...'</code></dt>
+						<dd>wörtlichen Text</dd>
+						<dt><code>''</code></dt>
+						<dd>Apostroph (vertreten durch zwei einfache Anführungszeichen)</dd>
+						<dt><code>(...)</code></dt>
+						<dd>zeigt nur Format, wenn eine der eingeschlossenen Variablen nicht null</dd>
+					</dl>
+			
+			<h2 id="blocks">Module Blöcke</h2>
+				<p>Derzeit hat das Modul 4 Blöcke:</p>
+				<ul>
+					<li>Mini Kalender Block
+						<ul>
+							<li>Der Block zeigt nur einen kleinen Monatskalender. Alle Tage sind mit der Tagesübersicht Ansicht verknüpft, damit ist einfach von überall aus zu einem bestimmten Tag im Veranstaltungskalender zu gelangen.
+								 Der Kalender hat keine weiteren Optionen, um (noch) nicht und wenn man es einstellen mögen: Der Mini-Kalender wverwendet
+								 <a href="http://jqueryui.com/demos/datepicker/#default" title="jQuery UI Datepicker" rel="external" target="_blank">jQuery UI Datepicker</a> Script,
+Wenn Sie dem Link folgen, erfahren Sie mehr wie Sie den Kalender anpassen können</li>
+						</ul>
+					</li>
+					<li>Veranstaltungsliste
+						<ul>
+							<li>Dieser Block zeigt nur eine einfache Veranstaltungs-Liste, welche im Kalender eingetragen ist. Sie haben die Möglichkeit bestimmte Kategorien auszuwählen, die angezeigt werden sollen. Auch können Sie den Zeitbereich skalieren.Beispiel wählen Sie keine Kategorie und aber den Zeitbereich "aktueller Monat"
+dann werden nur Veranstaltungen des aktuellen Monats in der Liste angezeigt. Die nachstehenden Zeitbereiche sind vorhanden:
+								<ul>
+									<li><strong>Aktueller Tag:</strong> Anzeige aller Veranstaltungen des laufenden Tages</li>
+									<li><strong>Tag:</strong> Anzeige aller Veranstaltungen der nächsten 24 Stunden</li>
+									<li><strong>Aktuelle Woche:</strong> Anzeige aller Veranstaltungen der laufenden Woche </li>
+									<li><strong>Woche:</strong> Anzeige aller Veranstaltungen für eine Woche</li>
+									<li><strong>Aktueller Monat:</strong> Anzeige aller Veranstaltungen des laufenden Monats</li>
+									<li><strong>Monat:</strong> Anzeige aller Events für einen Monat </li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>Event Filter
+						<ul>
+							<li>This block shows just a simple Event List, the same as "Event List" . You can select the category to be displayed and check some additional filters. So for examle select no category and apply 
+								the other filters. Now you should see in the block on front end a form inside the block. If a category is selected, there's no category filter. Otherwise you get a select box for categories, too. 
+								If you change the start or end-range or select inside any other filter, the block will be updated automatically. Current Filters:
+								<ul>
+									<li><strong>Start:</strong> Display all Events which are starting on this day or later.</li>
+									<li><strong>End:</strong> Display all Events which are starting on this day or earlier.</li>
+									<li><strong>Category:</strong>If no category has been selected, you get a select box. otherwise the block is searching only in the pre-selected category</li>
+									<li><strong>Postal Code:</strong> Display all Events for this postal code</li>
+									<li><strong>City:</strong> Display all Events for this city</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>Category/Calendar List
+						<ul>
+							<li>This Block just returns the legend of calendars/categories with a link to the requested category/calendar. Clicking the link, just this category will be displayed.</li>
+						</ul>
+					</li>
+				</ul>
+        	<h2 id="templates">Templates</h2>
+        	<p>Folgende Vorlagen stehen zur Verfügung:</p>
+        	<ul>
+        		<li>/event_admin.html
+        			<ul>
+        				<li>enthält alle notwendigen Variablen um die admin-Seite anzuzeigen. Weniger Informationen genug, und ich denke, die meisten Leute nie benutzen Sie diese Vorlage für Veränderungen ;-)</li>
+        			</ul>
+        		</li>
+        		<li>/event_requirements.html
+        			<ul>
+        				<li>Das gleiche: nur eine Admin-Vorlage die nur verwendet wird, um die Voraussetzungen bei der Installation zu überprüfen.</li>
+        			</ul>
+        		</li>
+        		<li>/event_header.html &amp; /event_footer.html
+        			<ul>
+        				<li>Kopf-und Fußzeilen  Hier können zusätzlichee Informationen wie RSS-Feeds, Header-Informationen, Kommentar Schleife Meldungen</li>
+        			</ul>
+        		</li>
+        		<li>/event_index.html
+        			<ul>
+        				<li>Derzeit zeigt den Kalender und was notwendig für die</li>
+        			</ul>
+        		</li>
+        		<li>/event_event.html
+        			<ul>
+        				<li>Ansicht des vollständige Veranstaltungsprogramms und Informationen zu einzelnen Veranstaltung</li>
+        			</ul>
+        		</li>
+        		<li>/event_calconf.html
+        			<ul>
+        				<li>Enthält jquery Konfiguration des Kalenders</li>
+        			</ul>
+        		</li>
+        	</ul>
+        	<h2 id="profile">"Event" Module playing together with "profile" Module</h2>
+        	<p>The module can/will play together with profile Module. As you have recognized in <a href="#preferences">Preferences</a> the module can feth users birthdays from User Profiles and add them as an Event into your calendar. 
+        		This can be done for the current year and the next year.</p>
+        	<p>But it will do some more. If you allow users to join Events, they can see, which of their Friends are joining, too. This is using the profile friendship handler to get the frieds of the current user.</p>
+        	
+        	<div id="event_footer">
+				<h2>Schlussbemerkungen</h2>
+				<p>Vielen Dank für die Nutzung des 'Event' Moduls. Wenn Sie Probleme bei der Verwendung des Event Modul haben, besuchen Sie bitte
+					<a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">
+						ImpressCMS Community Forum
+					</a>
+					. Sie haben Wünsche und Anregungen zum Veranstaltungsmodul Modul oder anderen Modulen? Kein Problem! Treten Sie mit uns in Kontakt.
+					<a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">
+						ImpressCMS Community Forum
+					</a> </p>
+				<p>Die Aktuellen Änderungen des 'Event' Module können Sie auch auf
+					<a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/menu/trunk/" title="'Event' SVN on Assembla" rel="external">
+						'Event' SVN on Assembla verfolgen.
+					</a>
+					Oder auf meiner Entwicklerseite <a href="http://code.google.com/p/amaryllis-modules/" title="Event" rel="external">der Projekt Heimat</a> von einigen ImpressCMS Modulen.
+					
+				</p>
+			</div>
+        </div>
+
+        <div id="icms-uptopmessage"><a href="#top">back top</a></div>
+
+        <div id="credit">
+			<p class="copyright">
+				<script type="text/javascript" language="JavaScript">
+					DatumAktuell = new Date(); JahrAktuell = DatumAktuell.getFullYear();
+					document.write("| &copy; 2011-"+ JahrAktuell + " ");
+				</script>
+				<a href="http://code.google.com/p/amaryllis-modules/" title="Amaryllis Modules" target="_blank" rel="external">Amaryllis Modules</a> |
+				<a href="print.php?print=manual" target="_blank" rel="external"><img src="../images/print.png" alt="print" /></a>
+			</p>
+		</div>
+
+        <!-- script for uptop-link -->
+		<script type="text/javascript">
+			$(function () { // run this code on page load (AKA DOM load)
+	
+				/* set variables locally for increased performance */
+				var scroll_timer;
+				var displayed = false;
+				var $message = $('#icms-uptopmessage a');
+				var $window = $(window);
+				var top = $(document.body).children(0).position().top;
+	
+				/* react to scroll event on window */
+				$window.scroll(function () {
+					window.clearTimeout(scroll_timer);
+					scroll_timer = window.setTimeout(function () { // use a timer for performance
+						if($window.scrollTop() <= top) // hide if at the top of the page
+							{
+							displayed = false;
+							$message.fadeOut(500);
+							}
+						else if(displayed == false) // show if scrolling down
+							{
+							displayed = true;
+							$message.stop(true, true).show().click(function () { $message.fadeOut(500); });
+							}
+					}, 100);
+				});
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+

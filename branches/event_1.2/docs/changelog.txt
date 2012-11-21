@@ -1,0 +1,28 @@
+= *Event* Changelog =
+
+== Version 1.1 => Release Date: XX.XX.2012 ==
+- switched all operations from "GET" to "POST"
+- removed all "Alert" funcs and switched to ui dialog
+- added timeline to agenda views to see current time
+- made fields for start and end date visible to be able changing the time manually
+- added ui datetimepicker for start and enddate
+- fixed trouble with purifier html comments
+- fixed trouble on print template
+- added phone number to output.. Seems to be forgotten
+- added new config for default timezone to prevent different times
+- added possibility to add/remove calendars on click
+- added config option to enable/disable form for add/remove Events on click
+- make it possible to clone events
+- profile birthdays can be added by the module in autotask
+- made calendars and categories clickable to display only single calendars
+- added new block to display a list of categories/calendars linked to the calendar module
+- solved language issue for mincal block, if main menu is disabled
+- added new button for submitting events to calendar header
+- fixed trouble with icons for approve/deny in backend
+- added the same icons for calendars
+- breadcrumb now visible without index
+- Event Box now opening, if an event is called from block
+- Ajax loading gif will be visible, while calendar is loading events
+
+== Version 1.0 => Release Date: 10.11.2012 ==
+- First public release of the module.

@@ -1,0 +1,54 @@
+<{if $index_index}>
+	<{if $index_show_breadcrumb}>
+		<!-- module breadcrumb -->
+		<div class="index_headertable">
+			<{if $index_module_home}><span class="index_modulename"><{$index_module_home}></span><{/if}>
+			<{if $module_home}><span class="modulename">&nbsp;:&nbsp;<{$module_home}></span><{/if}>
+			<{if $event_cat_path}>
+				<span class="index_breadcrumb">
+					<{if $module_home}>&nbsp;:&nbsp;<{/if}><{$event_cat_path}>
+				</span>
+			<{/if}>
+		</div>
+	<{/if}>
+	
+	<{if $index_show_rss}> <!-- display rss fedd link -->
+		<div class="index_rss">
+			<a href="<{$index_url}>rss.php" title="RSS-Feeds" rel="external">
+				<img src="<{$index_images_url}>rss.png" alt="RSS-Feeds" />
+			</a>
+		</div>
+		<div class="index_clear_both">&nbsp;</div>
+	<{elseif $index_show_breadcrumb}>
+		<div class="index_clear_left">&nbsp;</div>
+	<{/if}>
+	
+	<{if $index_index.image}>
+		<!-- display index_image -->
+		<div class="index_indeximage">
+			<img src="<{$index_index.image}>" alt="indeximage" />
+		</div>
+	<{/if}>
+	<{if $index_index.header}>
+		<!-- display index header -->
+		<div class="index_indexheader">
+			<{$index_index.header}>
+		</div>
+	<{/if}>
+<{else}>
+	<!-- module breadcrumb -->
+	<div class="index_headertable">
+		<{if $module_home}><span class="modulename"><{$module_home}></span><{/if}>
+		<{if $event_cat_path}>
+			<span class="index_breadcrumb">
+				<{if $module_home}>&nbsp;:&nbsp;<{/if}><{$event_cat_path}>
+			</span>
+		<{/if}>
+	</div>
+	<div class="event_rss">
+		<a href="<{$event_url}>rss.php?uid=<{$icms_userid}>" title="RSS-Feeds" rel="external">
+			<img src="<{$event_images_url}>rss.png" alt="RSS-Feeds" />
+		</a>
+	</div>
+	<div class="event_clear_both">&nbsp;</div>
+<{/if}>

@@ -1,0 +1,36 @@
+<link href="<{$block.event_url}>scripts/fullcalendar.css" type="text/css" />
+<link href="<{$block.event_url}>scripts/module_event_blocks.css" type="text/css" />
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#event_datepicker').bind('onSelect', function() { window.location = "<{$block.event_url}>index.php?date=" + date; });
+		$('#event_datepicker').datepicker({
+			// please keep date format to prevent breaking functionality
+			dateFormat: "yy-mm-d",
+			onSelect: function(date) {
+				window.location = "<{$block.event_url}>index.php?date=" + date;
+			},
+			changeMonth: true,
+			changeYear: true,
+			inline: true,
+			isRTL: <{$block.isRTL}>,
+			monthNames: ['<{$smarty.const._CO_EVENT_JANUARY}>','<{$smarty.const._CO_EVENT_FEBRUARY}>','<{$smarty.const._CO_EVENT_MARCH}>','<{$smarty.const._CO_EVENT_APRIL}>','<{$smarty.const._CO_EVENT_MAY}>',
+							'<{$smarty.const._CO_EVENT_JUNE}>','<{$smarty.const._CO_EVENT_JULY}>','<{$smarty.const._CO_EVENT_AUGUST}>','<{$smarty.const._CO_EVENT_SEPTEMBER}>','<{$smarty.const._CO_EVENT_OCTOBER}>',
+							'<{$smarty.const._CO_EVENT_NOVEMBER}>','<{$smarty.const._CO_EVENT_DECEMBER}>'],
+			monthNamesShort: ['<{$smarty.const._CO_EVENT_JAN}>','<{$smarty.const._CO_EVENT_FEB}>','<{$smarty.const._CO_EVENT_MAR}>','<{$smarty.const._CO_EVENT_APR}>','<{$smarty.const._CO_EVENT_MAI}>','<{$smarty.const._CO_EVENT_JUN}>',
+								 '<{$smarty.const._CO_EVENT_JUL}>','<{$smarty.const._CO_EVENT_AUG}>','<{$smarty.const._CO_EVENT_SEP}>','<{$smarty.const._CO_EVENT_OCT}>','<{$smarty.const._CO_EVENT_NOV}>','<{$smarty.const._CO_EVENT_DEC}>'],
+			dayNames: ['<{$smarty.const._CO_EVENT_SUNDAY}>','<{$smarty.const._CO_EVENT_MONDAY}>','<{$smarty.const._CO_EVENT_TUESDAY}>','<{$smarty.const._CO_EVENT_WEDNESDAY}>','<{$smarty.const._CO_EVENT_THURSDAY}>',
+							 '<{$smarty.const._CO_EVENT_FRIDAY}>','<{$smarty.const._CO_EVENT_SATURDAY}>'],
+			dayNamesMin: ['<{$smarty.const._CO_EVENT_SU}>','<{$smarty.const._CO_EVENT_MO}>','<{$smarty.const._CO_EVENT_TU}>','<{$smarty.const._CO_EVENT_WE}>','<{$smarty.const._CO_EVENT_TH}>',
+								'<{$smarty.const._CO_EVENT_FR}>','<{$smarty.const._CO_EVENT_SA}>'],
+			
+			
+		});
+	});
+</script>
+
+<div id="event_datepicker">&nbsp;</div>
+
+
+<style type="text/css">
+	#event_datepicker { width: 95%; display: block;}
+</style>

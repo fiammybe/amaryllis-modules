@@ -1,0 +1,74 @@
+<{includeq file='db:event_header.html'}>
+<{includeq file='db:event_calconf.html'}>
+<div id="event_loading">Loading... <img src="<{$event_images_url}>loading.gif" alt="loading" /></div>
+<div id='calendar'></div>
+
+<div id="calendar_legend">
+	<{if $use_checkboxes}><form id="event_catselect" name="event_catselect" action="feeds.php" method="POST"><{/if}>
+		<fieldset style="border: #e8e8e8 1px solid;">
+			<legend><{$smarty.const._MD_EVENT_LEGEND}></legend>
+			<{if $category}>
+				<div class="legend_item" original-title="<{$category.name}>">
+					<span class="legend_color" style="background-color: <{$category.color}>">&nbsp;</span><span class="legend_title" style="color: <{$category.txtcolor}>;"><{$category.name}></span>
+				</div>
+				<{if $category.dsc}>
+					<div class="event_popup">
+						<{$category.dsc}>
+					</div>
+				<{/if}>
+			<{elseif $calendar}>
+				<div class="legend_item" original-title="<{$calendar.name}>">
+					<span class="legend_color" style="background-color: <{$calendar.color}>">&nbsp;</span><span class="legend_title" style="color: <{$calendar.txtcolor}>;"><{$calendar.name}></span>
+				</div>
+				<{if $calendar.dsc}>
+					<div class="event_popup">
+						<{$calendar.dsc}>
+					</div>
+				<{/if}>
+			<{else}>
+				<{foreach item=cat from=$categories name=category}>
+					<div class="legend_item" original-title="<{$cat.name}>">
+						<{if $use_checkboxes}><input type="checkbox" name="event_cats[]" data-group='1' checked="checked" value="<{$cat.id}>"  /><{/if}>
+						<span class="legend_color" style="background-color: <{$cat.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cat.txtcolor}>;"><{$cat.itemLink}></span>
+					</div>
+					<{if $cat.dsc}>
+						<div class="event_popup">
+							<{$cat.dsc}>
+						</div>
+					<{/if}>
+				<{/foreach}>
+				
+				<{foreach item=cal from=$calendars name=calendar}>
+					<div class="legend_item" original-title="<{$cal.name}>">
+						<{if $use_checkboxes}><input type="checkbox" name="event_cal[]" data-group='2' checked="checked" value="<{$cal.id}>" /><{/if}>
+						<span class="legend_color" style="background-color: <{$cal.color}>">&nbsp;</span><span class="legend_title" style="color: <{$cal.txtcolor}>;"><{$cal.itemLink}></span>
+					</div>
+					<{if $cal.dsc}>
+						<div class="event_popup">
+							<{$cal.dsc}>
+						</div>
+					<{/if}>
+				<{/foreach}>
+			<{/if}>
+			
+		</fieldset>
+	
+	<{if $use_checkboxes}></form><{/if}>
+</div>
+
+<div id="event_alert">&nbsp;</div>
+
+<{if $cat_submit}>
+	<div id="submit_form" class="ui-helper-hidden event_form" >
+		<{if $addevent}>
+			<{includeq file='db:system_common_form.html' form=$addevent}>
+		<{/if}>
+	<div id="form_error">&nbsp;</div>
+	</div>
+	<div id="form_message" class="ui-helper-hidden"><{$smarty.const._MD_EVENT_THANKS_SUBMITTING}></div>
+	<div id="error_messages" class="">&nbsp;</div>
+<{/if}>
+
+<{includeq file='db:event_event.html'}>
+
+<{includeq file='db:event_footer.html'}>

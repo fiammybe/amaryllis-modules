@@ -1,0 +1,29 @@
+/**
+ * 'Event' is an event/category module for ImpressCMS, which can display google categorys, too
+ *
+ * File: /scripts/module_event_blocks.css
+ * 
+ * some related styles for event module
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Event
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		event
+ *
+ */
+
+.event_clear_both { clear: both; height: 1px;}
+.event_clear_left { clear: left; height: 1px;}
+.event_clear_right { clear: right; height: 1px;}
+.event_date{float:left; margin:0 12px 10px 0;}
+.event_date .month{background:#000000 url(../images/month.gif) no-repeat scroll 0 0; color: #FFF; display:block; font-size:80%;height:17px;line-height:17px;margin:0;text-align:center;width:32px;}
+.event_date .day{background:#42A4DC url(../images/day.gif) no-repeat scroll 0 0; color: #000; display:block; font-size:110%;height:20px;line-height:17px;margin:0 auto;text-align:center;width:32px;}
+#calendar_legend { width: 100%; margin: 2em auto;}
+.legend_color {float: left; min-width: 30px; min-height: 16px; border: 1px solid black}
+.legend_item {margin: 1em 1em 0 0; float: left; width: 150px; overflow: hidden;}
+.legend_title {margin-left: 1em;}
+.event_popup {display: none;}
