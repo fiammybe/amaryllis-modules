@@ -1,1 +1,0 @@
-Before updating from 1.0 to 1.2 read changelog first. After updating check module preferences first!

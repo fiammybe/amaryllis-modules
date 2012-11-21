@@ -1,4 +1,0 @@
-Theme: Lotus 2012
-Version 1.0:
-This is the Base-Revison
-Visit https://www.assembla.com/code/lotus23/subversion/node/logs/themes/trunk/lotus2012?rev=23 for all recent updates!
