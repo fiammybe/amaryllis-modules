@@ -500,7 +500,7 @@
 			}
 		});
 		
-		$('body').contents().find('.comment_user').each(function(){
+		$('body').delegate('.comment_user', 'hover', function(){
 			$(this).qtip({
 				content: {
 					text: $(this).next('div.event_popup').html(),
@@ -718,13 +718,14 @@
 					if(event.cat === "google") {
 						$("#event_commentform").hide();
 						$("#event_comment_tarea").attr("disabled", "disabled");
-						$("#submit_commet").attr("disabled", "disabled");
-						$("#event_comments").hide();
+						$("#submit_comment").attr("disabled", "disabled");
+						$("#event_comment_container").hide();
+						$("#event_comment_container").html("");
 					} else {
 						$("#event_commentform").show();
 						$("#event_comment_tarea").removeAttr("disabled");
-						$("#submit_commet").removeAttr("disabled");
-						$("#event_comments").show();
+						$("#submit_comment").removeAttr("disabled");
+						$("#event_comment_container").show();
 					}
 				<{/if}>
 				if(event.contact != false) {
