@@ -6,7 +6,7 @@
 		</div>
 		<div class="portfolio_scat_img">
 			<a href="<{$portfolio.img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
-				<{resized_image file=$portfolio.img width=$display_width height=$display_height fit="inside"}>
+				<img class="portfolio_thumb" src="<{$portfolio.thumb}>" />
 			</a>
 		</div>
 		<div class="portfolio_dsc">
@@ -20,7 +20,7 @@
 					<{foreach item=images from=$album_images}>
 						<div class="album_image">
 							<a href="<{$images.img_url}>" class="portfolio_image" title="<{$images.title}>" rel="lightbox" alt="<{$images.dsc}>">
-								<{resized_image file=$images.img_url width=$thumbnail_width height=$thumbnail_height fit="inside"}>
+								<img class="portfolio_thumb" src="<{$portfolio.album.thumb}>" />
 							</a>
 						</div>
 					<{/foreach}>

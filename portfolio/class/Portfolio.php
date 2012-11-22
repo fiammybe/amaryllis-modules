@@ -116,12 +116,7 @@ class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 		$did = $this->getVar("portfolio_cid", "e");
 		$portfolio_department_handler = icms_getModuleHandler("category", PORTFOLIO_DIRNAME, "portfolio");
 		$department = $portfolio_department_handler->get($did);
-		if($itemlink == FALSE) {
-			$ret = $department->getVar("category_title");
-		} else {
-			$ret = $department->getItemLink(FALSE);
-		}
-		return $ret;
+		return ($itemlink == FALSE) ? $department->title() : $department->getItemLink(FALSE);
 	}
 	
 	public function getPortfolioSummary() {
@@ -158,34 +153,26 @@ class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 		}
 	}
 	
-	public function getPortfolioImageTag($singleview = TRUE, $catview = FALSE) {
-		$portfolio_img = $image_tag = '';
-		$directory_name = basename(dirname( dirname( __FILE__ ) ));
-		$script_name = getenv("SCRIPT_NAME");
+	public function getPortfolioImage($thumb = FALSE) {
+		global $portfolioConfig;
+		$portfolio_img = $cached_img = $cached_image_url = $srcpath = $image = "";
 		$portfolio_img = $this->getVar('portfolio_img', 'e');
-		if($singleview) {
-			$document_root = str_replace('modules/' . $directory_name . '/portfolio.php', '', $script_name);
-			if (!$portfolio_img == "") {
-				$image_tag = $document_root . 'uploads/' . $directory_name . '/portfolio/' . $portfolio_img;
-			}else {
-				$image_tag = FALSE;
+		if(!$portfolio_img == "" && !$portfolio_img == "0") {
+			$cached_img = ($thumb == FALSE) ? $this->_portfolio_images . $portfolio_img : $this->_portfolio_thumbs . $portfolio_img;
+			$cached_image_url = ($thumb == FALSE) ? $this->_portfolio_images_url . $portfolio_img : $this->_portfolio_thumbs_url . $portfolio_img;
+			if(!is_file($cached_img)) {
+			    require_once ICMS_MODULES_PATH.'/'.PORTFOLIO_DIRNAME.'/class/Image.php';
+				$srcpath = PORTFOLIO_UPLOAD_ROOT . $this->handler->_itemname . "/";
+				$image = new mod_portfolio_Image($portfolio_img, $srcpath);
+				$resized = $image->resizeImage( ($thumb == FALSE) ? $portfolioConfig['display_width'] : $portfolioConfig['thumbnail_width'], 
+										($thumb == FALSE) ? $portfolioConfig['display_height'] : $portfolioConfig['thumbnail_height'],
+										($thumb == FALSE) ? $this->_portfolio_images : $this->_portfolio_thumbs, "100");
+				unset($srcpath, $image, $resized);
 			}
-		} elseif($catview) {
-			$document_root = str_replace('modules/' . $directory_name . '/category.php', '', $script_name);
-			if (!$portfolio_img == "") {
-				$image_tag = $document_root . 'uploads/' . $directory_name . '/portfolio/' . $portfolio_img;
-			} else {
-				$image_tag = FALSE;
-			}
-		} else {
-			$document_root = str_replace('modules/' . $directory_name . '/index.php', '', $script_name);
-			if (!$portfolio_img == "") {
-				$image_tag = $document_root . 'uploads/' . $directory_name . '/portfolio/' . $portfolio_img;
-			} else {
-				$image_tag = FALSE;
-			}
+			unset($cached_img, $portfolio_img, $thumb);
+			return $cached_image_url;
 		}
-		return $image_tag;
+		return FALSE;
 	}
 	
 	function getPortfolioSubmitter ($link = FALSE) {
@@ -251,9 +238,8 @@ class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 		$ret['id'] = $this->id();
 		$ret['title'] = $this->title();
 		$ret['imgpath'] = $this->getImagePath();
-		$ret['img'] = $this->getPortfolioImageTag(TRUE, FALSE);
-		$ret['index_img'] = $this->getPortfolioImageTag(FALSE, FALSE);
-		$ret['cat_img'] = $this->getPortfolioImageTag(FALSE, TRUE);
+		$ret['img'] = $this->getPortfolioImage(FALSE);
+		$ret['thumb'] = $this->getPortfolioImage(TRUE);
 		$ret['cat'] = $this->getPortfolioCid(TRUE);
 		$ret['summary'] = $this->getPortfolioSummary();
 		$ret['dsc'] = $this->getPortfolioDsc();

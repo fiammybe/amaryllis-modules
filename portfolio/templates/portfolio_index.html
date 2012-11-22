@@ -13,8 +13,8 @@
 						<div class="portfolio_title">
 							<{$portfolio.itemLink}><{if $portfolio.customer}>&nbsp;:&nbsp;<span class="portfolio_customer"><{$portfolio.customer}></span><{/if}>
 						</div>
-							<a href="<{$portfolio.index_img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
-								<{resized_image file=$portfolio.index_img width=$display_width height=$display_height fit="inside"}>
+							<a href="<{$portfolio.img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
+								<img class="portfolio_thumb" src="<{$portfolio.thumb}>" />
 							</a>
 					</div>
 					<div class="popup">
@@ -31,8 +31,8 @@
 				<div class="portfolio_title">
 					<{$portfolio.itemLink}><{if $portfolio.customer}>&nbsp;:&nbsp;<span class="portfolio_customer"><{$portfolio.customer}></span><{/if}>
 				</div>
-					<a href="<{$portfolio.index_img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
-						<{resized_image file=$portfolio.index_img width=$display_width height=$display_height fit="inside"}>
+					<a href="<{$portfolio.img}>" title="<{$portfolio.title}>" class="portfolio_image" rel="lightbox">
+						<img class="portfolio_thumb" src="<{$portfolio.thumb}>" />
 					</a>
 			</div>
 			<div class="popup">
