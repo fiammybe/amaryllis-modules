@@ -107,16 +107,18 @@
 					$("#addentry").submit();
 				},
 				"<{$smarty.const._CANCEL}>" : function() {
-					document.getElementById("addentry").reset();
+					document.forms.addentry.reset();
 					$("#guestbook_error").html("");
 					$("#guestbook_error").hide();
+					$("#guestbook_loading").hide();
 					$(this).dialog("close");
 				}
 			},
 			Cancel: function() {
-				document.getElementById("addentry").reset();
+				document.forms.addentry.reset();
 				$("#guestbook_error").html("");
 				$("#guestbook_error").hide();
+				$("#guestbook_loading").hide();
 				$(this).dialog( "close" );
 			}
 		});
@@ -188,6 +190,7 @@
 		};
 		
 		$('#addentry').submit(function() {
+			if(xoopsFormValidate_addentry())
 			$(this).ajaxSubmit(options);
 			return false;
 		});
