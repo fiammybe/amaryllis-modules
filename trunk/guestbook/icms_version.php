@@ -162,7 +162,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '_MI_GUESTBOOK_DATE_FORMAT_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'text',
-								'default' 		=> 'j/n/Y'
+								'default' 		=> 'd/m/Y H:i'
 							);
 
 $i++;
