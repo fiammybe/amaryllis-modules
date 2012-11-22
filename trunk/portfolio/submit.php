@@ -22,8 +22,7 @@ function setStatus($status, $message) {
 include_once "header.php";
 icms::$logger->disableLogger();
 $valid_op = array ('addcontact');
-$clean_op = (isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '');
-$clean_op = (isset($_POST['op']) ? filter_input(INPUT_POST, 'op') : $clean_op);
+$clean_op = (isset($_POST['op']) ? filter_input(INPUT_POST, 'op') : '');
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
@@ -34,6 +33,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if($portfolioConfig['guest_contact'] == 0 && $contact_uid <= 0) setStatus("error", _NOPERM);
 			$captcha = icms_form_elements_captcha_Object::instance();
 			if(!$captcha->verify(TRUE)) {echo json_encode(array('status' => 'error','message'=> 'Verification failed: '. $captcha->getMessage()));unset($_POST); exit;}
+			
 			$contactObj = $contact_handler->create(TRUE);
 			$contactObj->setVar("contact_title", filter_input(INPUT_POST, "contact_title"));
 			$contactObj->setVar("contact_name", filter_input(INPUT_POST, "contact_name"));

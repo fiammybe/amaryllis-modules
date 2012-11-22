@@ -25,12 +25,34 @@ class mod_portfolio_PortfolioHandler extends icms_ipf_Handler {
 	private $_portfolioArray;
 	private $_catArray;
 	private $_userArray;
+	public $_portfolio_cache_path;
+	public $_portfolio_thumbs_path;
+	public $_portfolio_images_path;
 	
 	public function __construct(&$db) {
 		global $portfolioConfig;
 		parent::__construct($db, "portfolio", "portfolio_id", "portfolio_title", "portfolio_summary", PORTFOLIO_DIRNAME);
 		$mimetypes = array('image/jpeg', 'image/jpg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, $portfolioConfig['logo_file_size'], $portfolioConfig['logo_upload_width'], $portfolioConfig['logo_upload_height']);
+		$this->_portfolio_cache_path = ICMS_CACHE_PATH . "/" . $this->_moduleName . "/" . $this->_itemname;
+		$this->_portfolio_thumbs_path = $this->_portfolio_cache_path . "/thumbs";
+		$this->_portfolio_images_path = $this->_portfolio_cache_path . "/images";
+	}
+	
+	public function getPortfolioThumbsPath() {
+		$dir = $this->_portfolio_thumbs_path;
+		if (!file_exists($dir)) {
+			icms_core_Filesystem::mkdir($dir);
+		}
+		return $dir . "/";
+	}
+	
+	public function getPortfolioImagesPath() {
+		$dir = $this->_portfolio_images_path;
+		if (!file_exists($dir)) {
+			icms_core_Filesystem::mkdir($dir);
+		}
+		return $dir . "/";
 	}
 	
 	public function loadUsers() {

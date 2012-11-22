@@ -67,20 +67,19 @@ class mod_portfolio_Indexpage extends icms_ipf_Object {
 	}
 	
 	public function getIndexHeader() {
-		$indexheader = '';
-		$indexheader = $this->title();
+		$indexheader = $this->getVar('index_header', 's');
 		if($indexheader != "") {
-			return '<div class="portfolio_indexheader">' . $indexheader . '</div>';
+			return '<div class="portfolio_indexheader">' . icms_core_DataFilter::undoHtmlSpecialChars($indexheader) . '</div>';
 		}
+		return false;
 	}
 
 	public function getIndexHeading() {
 		$indexheading = '';
-		$indexheading = $this->summary();
+		$indexheading = $this->getVar('index_heading', 's');
 		if($indexheading != "") {
 			$indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
-			$indexheading = icms_core_DataFilter::undoHtmlSpecialChars($indexheading);
-			return '<div class="portfolio_indexheading">' . $indexheading . '</div>';
+			return '<div class="portfolio_indexheading">' . icms_core_DataFilter::undoHtmlSpecialChars($indexheading) . '</div>';
 		}
 	}
 	
@@ -89,8 +88,7 @@ class mod_portfolio_Indexpage extends icms_ipf_Object {
 		$indexfooter = $this->getVar('index_footer', 's');
 		if($indexfooter != "") {
 			$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
-			$indexfooter = icms_core_DataFilter::undoHtmlSpecialChars($indexfooter);
-			return '<div class="portfolio_indexfooter">' . $indexfooter . '</div>';
+			return '<div class="portfolio_indexfooter">' . icms_core_DataFilter::undoHtmlSpecialChars($indexfooter) . '</div>';
 		}
 	}
 	
