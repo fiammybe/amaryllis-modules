@@ -18,7 +18,6 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-if(!defined("INDEX_DIRNAME")) define("INDEX_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 /**
  * 

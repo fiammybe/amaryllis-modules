@@ -48,5 +48,3 @@ if (is_object($guestbookModule)) {
 $guestbook_isAdmin = icms_userIsAdmin( GUESTBOOK_DIRNAME );
 
 $guestbookConfig = icms_getModuleConfig( GUESTBOOK_DIRNAME );
-
-$icmsPersistableRegistry = icms_ipf_registry_Handler::getInstance();

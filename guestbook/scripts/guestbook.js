@@ -14,26 +14,7 @@
  * @package		guestbook
  *
  */
- /**
-	function SetSpeechBubble()
-	{
-		$(function()
-		{
-			settings=
-			{
-				tl:{ radius:10 },
-				tr:{ radius:10 },
-				bl:{ radius:10 },
-				br:{ radius:10 },
-				antiAlias:true,
-				autoPad:true,
-				validTags:["div"]
-			}
-			
-			$('div.bubble').corner(settings);
-		});
-	}
-	**/
+
 	$(document).ready(function(){
 		var settings = {
 				tl:{ radius:10 },
@@ -52,10 +33,6 @@
 			slideshow: true,
 			slideshowAuto: false
 		});
-	});
-	
-	//guestbook permission denied
-	$(document).ready(function(){
 		$("#dialog-confirm-perm").dialog({
 			modal: true,
 			width: 500,
