@@ -18,8 +18,15 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
+if(!defined("VISITORVOICE_DIRNAME")) define("VISITORVOICE_DIRNAME", basename(dirname(dirname(__FILE__))));
 class VisitorvoiceVisitorvoice extends icms_ipf_Object {
+	
+	public $_updating = FALSE;
+	public $_visitorvoice_thumbs;
+	public $_visitorvoice_images;
+	public $_visitorvoice_images_url;
+	public $_visitorvoice_thumbs_url;
+	
 	/**
 	 * Constructor
 	 *
@@ -42,7 +49,10 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$this->quickInitVar("visitorvoice_ip", XOBJ_DTYPE_OTHER, FALSE);
 		$this->quickInitVar("visitorvoice_approve", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("visitorvoice_published_date", XOBJ_DTYPE_LTIME);
+		$this->quickInitVar("visitorvoice_fprint", XOBJ_DTYPE_OTHER, FALSE, FALSE, FALSE, FALSE);
+		$this->quickInitVar("visitorvoice_hassub", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, FALSE);
 		$this->initCommonVar("dohtml", FALSE, 1);
+		$this->initCommonVar("doxcode", FALSE, 1);
 		$this->initCommonVar("doimage", FALSE, 1);
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		
@@ -53,12 +63,24 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		} else {
 			$this->setControl("visitorvoice_image", "imageupload");
 		}
-		$this->hideFieldFromForm(array("visitorvoice_approve", "visitorvoice_pid", "visitorvoice_ip", "visitorvoice_uid", "visitorvoice_published_date"));
+		$this->setControl("visitorvoice_hassub", "yesno");
+		$this->hideFieldFromForm(array("visitorvoice_approve", "visitorvoice_fprint", "visitorvoice_hassub", "visitorvoice_pid", "visitorvoice_ip", "visitorvoice_uid", "visitorvoice_published_date"));
 		if($visitorvoiceConfig['needs_approval'] == 0) {
 			$this->hideFieldFromSingleView("visitorvoice_approve");
 		}
+		$this->_visitorvoice_thumbs = $this->handler->getVisitorvoiceThumbsPath();
+		$this->_visitorvoice_images = $this->handler->getVisitorvoiceImagesPath();
+		$this->_visitorvoice_images_url = ICMS_URL . "/cache/" . $this->handler->_moduleName . "/" . $this->handler->_itemname . "/images/";
+		$this->_visitorvoice_thumbs_url = ICMS_URL . "/cache/" . $this->handler->_moduleName . "/" . $this->handler->_itemname . "/thumbs/";
 	}
 
+	public function getVar($key, $format = "s") {
+		if ($format == "s" && in_array($key, array())) {
+			return call_user_func(array ($this,	$key));
+		}
+		return parent::getVar($key, $format);
+	}
+	
 	public function visitorvoice_approve() {
 		$active = $this->getVar('visitorvoice_approve', 'e');
 		if ($active == FALSE) {
@@ -70,32 +92,37 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		}
 	}
 	
-	public function getVisitorvoiceAvatar() {
+	public function getVisitorvoiceImage($thumb = FALSE) {
 		global $visitorvoiceConfig;
-		if($visitorvoiceConfig['show_avatar'] == 1) {
-			$review_uid = $this->getVar("visitorvoice_uid", "e");
-			$user = icms::handler("icms_member")->getUser($review_uid);
-			if((int)($review_uid > 0) && is_object($user)) {
-				$avatar = icms::handler("icms_member")->getUser($review_uid)->gravatar();
-				$avatar_image = $avatar;
-				return $avatar_image;
-			} else {
-				$review_avatar = "blank_gravatar.png";
-				$avatar_image = VISITORVOICE_IMAGES_URL . "/" . $review_avatar;
-				return $avatar_image;
+		$visitorvoice_img = $cached_img = $cached_image_url = $srcpath = $image = "";
+		$visitorvoice_img = $this->getVar('visitorvoice_image', 'e');
+		if(!$visitorvoice_img == "" && !$visitorvoice_img == "0") {
+			$cached_img = ($thumb == FALSE) ? $this->_visitorvoice_images . $visitorvoice_img : $this->_visitorvoice_thumbs . $visitorvoice_img;
+			$cached_image_url = ($thumb == FALSE) ? $this->_visitorvoice_images_url . $visitorvoice_img : $this->_visitorvoice_thumbs_url . $visitorvoice_img;
+			if(!is_file($cached_img)) {
+			    require_once ICMS_MODULES_PATH.'/'.VISITORVOICE_DIRNAME.'/class/Image.php';
+				$srcpath = VISITORVOICE_UPLOAD_ROOT . $this->handler->_itemname . "/";
+				$image = new mod_visitorvoice_Image($visitorvoice_img, $srcpath);
+				$resized = $image->resizeImage( ($thumb == FALSE) ? $visitorvoiceConfig['display_width'] : $visitorvoiceConfig['thumbnail_width'], 
+										($thumb == FALSE) ? $visitorvoiceConfig['display_height'] : $visitorvoiceConfig['thumbnail_height'],
+										($thumb == FALSE) ? $this->_visitorvoice_images : $this->_visitorvoice_thumbs, "100");
+				unset($srcpath, $image, $resized);
 			}
+			unset($cached_img, $visitorvoice_img, $thumb);
+			return $cached_image_url;
 		}
+		return FALSE;
+	}
+
+	public function getMessageTeaser() {
+		$ret = $this->getVar("visitorvoice_entry", "s");
+		$ret = icms_core_DataFilter::icms_substr(icms_cleanTags($ret, array()), 0, 120);
+		return $ret;
 	}
 	
 	public function getMessage() {
 		$message = icms_core_DataFilter::checkVar($this->getVar("visitorvoice_entry"), 'html', 'output');
 		return $message;
-	}
-	
-	public function getMessageTeaser() {
-		$ret = $this->getVar("visitorvoice_entry", "s");
-		$ret = icms_core_DataFilter::icms_substr(icms_cleanTags($ret, array()), 0, 120);
-		return $ret;
 	}
 	
 	public function getImageTag() {
@@ -107,8 +134,14 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		return $image_tag;
 	}
 	
+	public function getIP() {
+		global $visitorvoice_isAdmin;
+		return ($visitorvoice_isAdmin) ? $this->getVar("visitorvoice_ip") : FALSE;
+	}
+	
 	public function getVisitorvoiceEmail() {
-		global $visitorvoiceConfig;
+		global $visitorvoiceConfig, $visitorvoice_isAdmin;
+		if($visitorvoiceConfig['show_email'] == 0 && !$visitorvoice_isAdmin) return FALSE;
 		$email = $this->getVar("visitorvoice_email", "s");
 		if($visitorvoiceConfig['display_email'] == 1 && $email != "") {
 			$email = icms_core_DataFilter::checkVar($email, 'email', 1, 0);
@@ -123,56 +156,47 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 	}
 	
 	// get publisher for frontend
-	public function getPublisher($link = FALSE) {
-			$publisher_uid = $this->getVar('visitorvoice_uid', 'e');
-			$userinfo = array();
-			$userObj = icms::handler('icms_member')->getuser($publisher_uid);
-			if (is_object($userObj)) {
-				$userinfo['uid'] = $publisher_uid;
-				$userinfo['uname'] = $userObj->getVar('uname');
-				$userinfo['link'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $userinfo['uid'] . '">' . $userinfo['uname'] . '</a>';
-			} else {
-				global $icmsConfig;
-				$userinfo['uid'] = 0;
-				$userinfo['uname'] = $icmsConfig['anonymous'];
-			}
-		if ($link && $userinfo['uid']) {
-			return $userinfo['link'];
-		} else {
-			return $userinfo['uname'];
-		}
+	function getPublisher() {
+		$uid = $this->getVar('visitorvoice_uid', 'e');
+		$users = $this->handler->loadUsers();
+		$user = (array_key_exists($uid, $users) && $uid > 0 ) ? $users[$uid] : FALSE;
+		if($user) return $user;
+		$userinfo = array();
+		$userinfo['link'] = ucwords($this->getVar("visitorvoice_name"));
+		$email = ($this->getVar("visitorvoice_email") !== "") ? $this->getVar("visitorvoice_email") : FALSE;
+		$userinfo['avatar'] = ($email) ? "http://www.gravatar.com/avatar/" . md5(strtolower($email)) . "?d=identicon" : VISITORVOICE_URL."images/blank_gravatar.png";
+		return $userinfo;
 	}
 	
 	public function getPublishedDate() {
 		global $visitorvoiceConfig;
-		$date = '';
 		$date = $this->getVar('visitorvoice_published_date', 'e');
-		
 		return date($visitorvoiceConfig['visitorvoice_dateformat'], $date);
+	}
+	
+	public function isApproved() {
+		return ($this->getVar("visitorvoice_approve") == 1) ? TRUE : FALSE;
+	}
+	
+	public function getApproved() {
+		return (!$this->isApproved()) ? "visitorvoice_approval" : "";
+	}
+	
+	public function hasSubs() {
+		return ($this->getVar("visitorvoice_hassub")) ? TRUE : FALSE;
 	}
 	
 	public function getSubEntries($toArray = FALSE) {
 		global $visitorvoiceConfig;
-		if($visitorvoiceConfig['use_moderation'] == 1) {
-			$pid = $this->getVar("visitorvoice_id", "e");
+		if(($visitorvoiceConfig['use_moderation'] == 1) && $this->hasSubs()) {
+			$pid = $this->id();
 			return $this->handler->getSubEntries(TRUE, $pid, $toArray);
 		}
 	}
-
-	public function getReplyLink() {
-		global $visitorvoiceConfig;
-		if($visitorvoiceConfig['use_moderation'] == 1) {
-			$pid = $this->getVar("visitorvoice_id", "e");
-			$link = VISITORVOICE_URL . 'submit.php?op=addreply&visitorvoice_pid=' . $this->getVar("visitorvoice_id");
-		} else {
-			$link = FALSE;
-		}
-		return $link;
-	}
 	
 	public function getItemLink($urlonly = FALSE) {
-		$id = $this->getVar("visitorvoice_id", "e");
-		$title = $this->getVar("visitorvoice_title", "e");
+		$id = $this->id();
+		$title = $this->title();
 		if($urlonly) {
 			$link = VISITORVOICE_URL . '#entry_' . $id;
 		} else {
@@ -180,30 +204,60 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		}
 		return $link;
 	}
-	
+
+	public function hasImage() {
+		return (($this->getVar("visitorvoice_image") !== "") && ($this->getVar("visitorvoice_image") !== "0")) ? TRUE : FALSE;
+	}
+
 	public function toArray() {
 		global $visitorvoiceConfig;
 		$ret = parent::toArray();
-		$ret['id'] = $this->getVar("visitorvoice_id");
+		$ret['id'] = $this->id();
 		$ret['published_on'] = $this->getPublishedDate();
-		$ret['published_by'] = $this->getPublisher(TRUE);
-		$ret['img'] = $this->getImageTag();
-		$ret['name'] = $this->getVar("visitorvoice_name");
+		$ret['published_by'] = $this->getPublisher();
+		$ret['img'] = $this->getVisitorvoiceImage();
+		$ret['thumb'] = $this->getVisitorvoiceImage(TRUE);
 		$ret['homepage'] = $this->getVar("visitorvoice_url");
 		$ret['email'] = $this->getVisitorvoiceEmail();
-		$ret['ip'] = $this->getVar("visitorvoice_ip");
-		$ret['title'] = $this->getVar("visitorvoice_title");
-		$ret['message'] = $this->getMessage();
+		$ret['ip'] = $this->getIP();
+		$ret['title'] = $this->title();
+		$ret['message'] = $this->summary();
 		$ret['teaser'] = $this->getMessageTeaser();
-		$ret['avatar'] = $this->getVisitorvoiceAvatar();
+		$ret['avatar'] = ($visitorvoiceConfig['show_avatar'] == 1) ? TRUE : FALSE;
 		$ret['parent'] = $this->getVar("visitorvoice_pid", "e");
 		if($visitorvoiceConfig['use_moderation'] == 1){
 			$ret['sub'] = $this->getSubEntries(TRUE);
-			$ret['hassub'] = (count($ret['sub']) > 0) ? TRUE : FALSE;
+			$ret['hassub'] = $this->hasSubs();
 		}
-		$ret['reply'] = $this->getReplyLink();
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
+		$ret['approved'] = $this->getApproved();
+		$ret['has_image'] = $this->hasImage();
 		return $ret;
+	}
+
+	public function sendMessageApproved() {
+		$user = $this->getVar("visitorvoice_uid", "e");
+		if($user <= 0) return TRUE;
+		$pm_handler = icms::handler('icms_data_privmessage');
+		$file = "visitorvoice_approved.tpl";
+		$lang = "language/" . $icmsConfig['language'] . "/mail_template";
+		$tpl = VISITORVOICE_ROOT_PATH . "$lang/$file";
+		if (!file_exists($tpl)) {
+			$lang = 'language/english/mail_template';
+			$tpl = VISITORVOICE_ROOT_PATH . "$lang/$file";
+		}
+		$message = file_get_contents($tpl);
+		$message = str_replace("{ENTRY_LINK}", $this->title(), $message);
+		$uname = icms::handler('icms_member_user')->get($user)->getVar("uname");
+		$message = str_replace("{X_UNAME}", $uname, $message);
+		$pmObj = $pm_handler->create(TRUE);
+		$pmObj->setVar("subject", _CO_ENTRY_HAS_APPROVED);
+		$pmObj->setVar("from_userid", 1);
+		$pmObj->setVar("to_userid", (int)$user);
+		$pmObj->setVar("msg_time", time());
+		$pmObj->setVar("msg_text", $message);
+		$pm_handler->insert($pmObj, TRUE);
+		return TRUE;
 	}
 }

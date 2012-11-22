@@ -16,36 +16,6 @@
  * @package		visitorvoice
  *
  */
- 
-function editmessage($clean_visitorvoice_id = 0) {
-	global $icmsConfig, $visitorvoice_visitorvoice_handler, $icmsTpl, $visitorvoiceConfig;
-	$visitorvoice_visitorvoice_handler = icms_getModuleHandler("visitorvoice", basename(dirname(dirname(__FILE__))), "visitorvoice");
-	$visitorvoiceObj = $visitorvoice_visitorvoice_handler->get($clean_visitorvoice_id);
-	if(is_object(icms::$user)){
-		$visitorvoice_uid = icms::$user->getVar("uid");
-	} else {
-		$visitorvoice_uid = 0;
-	}
-	if ($visitorvoiceObj->isNew()) {
-		$visitorvoiceObj->setVar("visitorvoice_uid", $visitorvoice_uid);
-		$visitorvoiceObj->setVar("visitorvoice_published_date", time() - 200);
-		$visitorvoiceObj->setVar("visitorvoice_ip", xoops_getenv('REMOTE_ADDR'));
-		if($visitorvoiceConfig["needs_approval"] == 1) {
-			if(icms_userIsAdmin(VISITORVOICE_DIRNAME)){
-				$visitorvoiceObj->setVar("visitorvoice_approve", TRUE);
-			} else {
-				$visitorvoiceObj->setVar("visitorvoice_approve", FALSE);
-			}
-		} else {
-			$visitorvoiceObj->setVar("visitorvoice_approve", TRUE);
-		}
-		$sform = $visitorvoiceObj->getSecureForm(_MD_VISITORVOICE_CREATE, 'addentry', 'submit.php?op=addentry&visitorvoice_id=' . $clean_visitorvoice_id, FALSE, TRUE);
-		//$sform->addElement();
-		$sform->assign($icmsTpl, 'visitorvoice_form');
-	} else {
-		exit;
-	}
-}
 
 include_once "../../mainfile.php";
 include_once dirname(__FILE__) . '/include/common.php';
@@ -56,44 +26,56 @@ include_once ICMS_ROOT_PATH . "/header.php";
 //////////////////////////////////////////// MAIN HEADINGS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_index_key = isset($_GET['index_key']) ? filter_input(INPUT_GET, 'index_key', FILTER_SANITIZE_NUMBER_INT) : 1;
 $visitorvoice_indexpage_handler = icms_getModuleHandler( 'indexpage', icms::$module -> getVar( 'dirname' ), 'visitorvoice' );
-
-$indexpageObj = $visitorvoice_indexpage_handler->get($clean_index_key);
-$index = $indexpageObj->toArray();
-$icmsTpl->assign('visitorvoice_index', $index);
+$indexpageObj = $visitorvoice_indexpage_handler->get(1);
+$icmsTpl->assign('visitorvoice_index', $indexpageObj->toArray());
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// MAIN PART /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start') : 0;
-$visitorvoice_visitorvoice_handler = icms_getModuleHandler("visitorvoice", basename(dirname(__FILE__)), "visitorvoice");
+$clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, 'start', FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_limit = isset($_GET['end']) ? filter_input(INPUT_GET, 'end', FILTER_SANITIZE_NUMBER_INT) : $visitorvoiceConfig['show_entries'];
+$visitorvoice_handler = icms_getModuleHandler("visitorvoice", basename(dirname(__FILE__)), "visitorvoice");
 $clean_visitorvoice_id = isset($_GET['visitorvoice_id']) ? filter_input(INPUT_GET, 'visitorvoice_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-$entries = $visitorvoice_visitorvoice_handler -> getEntries(TRUE ,$clean_visitorvoice_id, $clean_start, $visitorvoiceConfig["show_entries"], 'visitorvoice_published_date', 'DESC');
-$icmsTpl->assign("entries", $entries);
-if($visitorvoiceConfig['use_moderation'] == 1) {
-	$icmsTpl->assign("reply_link", TRUE);
-}
+
+$name = (is_object(icms::$user)) ? icms::$user->getVar("uname") : "";
+$email = (is_object(icms::$user)) ? icms::$user->getVar("email") : "";
+$url = (is_object(icms::$user)) ? icms::$user->getVar("url") : "http://";
+$form = new icms_form_Theme("", "addentry", VISITORVOICE_URL."submit.php");
+$form->setExtra('name="addentry"');
+if($visitorvoiceConfig['allow_imageupload']) $form->setExtra('enctype="multipart/form-data"');
+$form->addElement(new icms_form_elements_Text(_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_TITLE, "visitorvoice_title", 75, 255), TRUE);
+$form->addElement(new icms_form_elements_Text(_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_NAME, "visitorvoice_name", 75, 255, $name, TRUE), TRUE);
+$form->addElement(new icms_form_elements_Text(_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_EMAIL, "visitorvoice_email", 75, 255, $email, TRUE), TRUE);
+$form->addElement(new icms_form_elements_Text(_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_URL, "visitorvoice_url", 75, 255, $url));
+$form->addElement(new icms_form_elements_Textarea(_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_ENTRY, "visitorvoice_entry", "", 5, 50), TRUE);
+if($visitorvoice_handler->canUpload())
+$form->addElement(new icms_form_elements_File(_CO_VISITORVOICE_VISITORVOICE_VISITORVOICE_IMAGE, "visitorvoice_image", $visitorvoiceConfig['image_file_size']));
+$form->addElement(new icms_form_elements_Hidden("visitorvoice_pid", 0));
+//$form->addElement(new icms_form_elements_Captcha());
+$form->addElement(new icms_form_elements_Hidden("op", "addentry"));
+
 if($visitorvoiceConfig["guest_entry"] == 1) {
+	$form->assign($icmsTpl);
 	$icmsTpl->assign("link_class", TRUE);
-	$icmsTpl->assign("submit_link", VISITORVOICE_URL . "submit.php?op=addentry");
+	$icmsTpl->assign("submit_link", VISITORVOICE_URL . "submit.php");
 } else {
 	if(is_object(icms::$user)) {
+		$form->assign($icmsTpl);
 		$icmsTpl->assign("link_class", TRUE);
-		$icmsTpl->assign("submit_link", VISITORVOICE_URL . "submit.php?op=addentry");
+		$icmsTpl->assign("submit_link", VISITORVOICE_URL . "submit.php");
 	} else {
 		$icmsTpl->assign("link_class", FALSE);
 		$icmsTpl->assign("submit_link", ICMS_URL . "/user.php");
 	}
 }
-editmessage();
 
 /**
  * pagination
  */
-$criteria = new icms_db_criteria_Item("visitorvoice_approve", TRUE);
-$count = $visitorvoice_visitorvoice_handler->getCount($criteria);
+$criteria = $visitorvoice_handler->getEntryCriterias(TRUE, 0, $clean_start, $clean_limit, 'visitorvoice_published_date', 'DESC');
+$count = $visitorvoice_handler->getCount($criteria);
 $pagenav = new icms_view_PageNav($count, $visitorvoiceConfig['show_entries'], $clean_start, 'start', FALSE);
 $icmsTpl->assign('pagenav', $pagenav->renderNav());
 /**
@@ -113,6 +95,7 @@ $icmsTpl->assign("visitorvoice_adminpage", '<a href="' . VISITORVOICE_ADMIN_URL 
 $icmsTpl->assign("visitorvoice_is_admin", icms_userIsAdmin(VISITORVOICE_DIRNAME));
 $icmsTpl->assign('visitorvoice_url', VISITORVOICE_URL);
 $icmsTpl->assign('visitorvoice_images_url', VISITORVOICE_IMAGES_URL);
+$icmsTpl->assign('show_entries', $visitorvoiceConfig['show_entries']);
 $xoTheme->addScript('/modules/' . VISITORVOICE_DIRNAME . '/scripts/visitorvoice.js', array('type' => 'text/javascript'));
 $xoTheme->addScript('/modules/' . VISITORVOICE_DIRNAME . '/scripts/jquery.curvycorners.packed.js', array('type' => 'text/javascript'));
 

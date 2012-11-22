@@ -20,8 +20,9 @@
 define("_MOD_VISITORVOIVE_VISITORVOIVE_APPROVE", "Waiting entries for approval");
 
 function b_waiting_visitorvoice() {
-	$module_handler = icms::handler('icms_module')->getByDirname("visitorvoice");
-	$visitorvoice_visitorvoice_handler = icms_getModuleHandler("visitorvoice", "visitorvoice");
+	$moduleInfo = icms_getModuleInfo("visitorvoice");
+	$module_handler = icms::handler('icms_module')->getByDirname($moduleInfo->getVar("dirname"));
+	$visitorvoice_visitorvoice_handler = icms_getModuleHandler("visitorvoice", $moduleInfo->getVar("dirname"), "visitorvoice");
 	
 	$ret = array();
 	
@@ -31,7 +32,7 @@ function b_waiting_visitorvoice() {
 	$approved->add(new icms_db_criteria_Item("visitorvoice_approve", 0));
 	$result = $visitorvoice_visitorvoice_handler->getCount($approved);
 	if ($result > 0) {
-		$block['adminlink'] = ICMS_URL."/modules/visitorvoice/admin/visitorvoice.php";
+		$block['adminlink'] = ICMS_URL."/modules/".$moduleInfo->getVar("dirname") ."/admin/visitorvoice.php";
 		list($block['pendingnum']) = $result;
 		$block['lang_linkname'] = _MOD_VISITORVOIVE_VISITORVOIVE_APPROVE ;
 		$ret[] = $block;

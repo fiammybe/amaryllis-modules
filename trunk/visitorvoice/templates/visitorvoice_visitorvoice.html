@@ -1,9 +1,4 @@
-<script type="text/javascript">
-//<![CDATA[
-SetSpeechBubble();
-//]]>
-</script>
-
+<script src="<{$visitorvoice_url}>/scripts/jquery.form.js" language="JavaScript"></script>
 <link href="<{$visitorvoice_url}>module_visitorvoice.css" rel="stylesheet" type="text/css" />
 
 <{if $visitorvoice_show_breadcrumb}>
@@ -35,53 +30,42 @@ SetSpeechBubble();
 
 <{$visitorvoice_index.heading}>
 
-<{if $entries}>
-	<div class="visitorvoice_submit">
-		<span class="visitorvoice_link">
-			<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" href="<{$submit_link}>"><{$smarty.const._MD_VISITORVOICE_ADD_ENTRY}></a>
-		</span>
-	</div>
-	<div class="speech_bubble">
-		<div class="visitorvoice_entries">
-			<{if $pagenav}>
-				<{$pagenav}>
-			<{/if}>
-			<{foreach item=entry from=$entries}>
-				<{includeq file="db:visitorvoice_singleentry.html"}>
-				<{if $entry.reply && $visitorvoice_is_admin}>
-						<div style="padding: 10px 0 25px 15px;">
-							<a class="<{if $reply_link}>reply_link<{/if}>" href="<{$entry.reply}>"><{$smarty.const._MD_VISITORVOICE_REPLY}></a>
-						</div>
-				<{/if}>
-				
-				<{if $entry.hassub}>
-					<div class="visitorvoice_replies">
-						<{foreach item=entry from=$entry.sub}>
-							<{includeq file="db:visitorvoice_singleentry.html"}>
-						<{/foreach}>
-					</div>
-				<{/if}>
-			
-			<{/foreach}>
-			<{if $pagenav}>
-				<{$pagenav}>
-			<{/if}>
+
+<div class="visitorvoice_submit">
+	<span class="visitorvoice_link">
+		<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" id="add1" href="<{$submit_link}>"><{$smarty.const._MD_VISITORVOICE_ADD_ENTRY}></a>
+	</span>
+</div>
+<div class="speech_bubble">
+	<div class="visitorvoice_entries">
+		<{if $pagenav}>
+			<{$pagenav}>
+		<{/if}>
+		<div id="visitorvoice_loading">
+			<img class="visitorvoice_loading" src="<{$visitorvoice_images_url}>loading.gif" alt="loading..." />
 		</div>
+		<div id="entries" class="ui-helper-hidden"></div>
+		<{if $pagenav}>
+			<{$pagenav}>
+		<{/if}>
 	</div>
-<{/if}>
+</div>
 
 <{if !$smarty.get.op == addreply}>
 	<div class="visitorvoice_submit">
 		<span class="visitorvoice_link">
-			<a class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" href="<{$submit_link}>"><{$smarty.const._MD_VISITORVOICE_ADD_ENTRY}></a>
+			<a id="add2" class="<{if $link_class}>submit_link<{else}>register_link<{/if}>" href="<{$submit_link}>"><{$smarty.const._MD_VISITORVOICE_ADD_ENTRY}></a>
 		</span>
 	</div>
 <{/if}>
-<div class="ui-helper-hidden visitorvoice_form">
-	<{if $visitorvoice_form}>
-		<{includeq file='db:system_common_form.html' form=$visitorvoice_form}>
+<div class="ui-helper-hidden" id="visitorvoice_form">
+	<{if $addentry}>
+		<{includeq file='db:system_common_form.html' form=$addentry}>
+		<div id="visitorvoice_error" style="display: none;">&nbsp;</div>
 	<{/if}>
 </div>
+
+<div id="visitorvoice_message" style="display: none;">&nbsp;</div>
 
 <div id="dialog-confirm-perm" title="<{$smarty.const._MD_VISITORVOICE_PERM}>" class="ui-helper-hidden" >
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><{$smarty.const._MD_VISITORVOICE_PERMISSION}></p>
@@ -93,6 +77,152 @@ SetSpeechBubble();
 
 <{$visitorvoice_index.footer}>
 
-<{if $visitorvoice_reply_form}>
-	<{includeq file='db:system_common_form.html' form=$visitorvoice_reply_form}>
-<{/if}>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+			url: "entries.php",
+			dataType: "json",
+			data: {
+				start: "<{$smarty.get.start}>"
+			},
+			type: "POST",
+			success: function(response) {
+				$("#visitorvoice_loading").hide();
+				$("#entries").html(response.entries);
+				$("#entries").show();
+			}
+		});
+		$("#visitorvoice_form").dialog({
+			title: "<{$smarty.const._MD_VISITORVOICE_CREATE}>",
+			autoOpen: false,
+			height: 375,
+			width: "90%",
+			modal: true,
+			show: "clip",
+			hide: "clip",
+			buttons: {
+				"<{$smarty.const._SUBMIT}>": function() {
+					var dlg = $(this);
+					$("#visitorvoice_loading").show();
+					$("#addentry").submit();
+				},
+				"<{$smarty.const._CANCEL}>" : function() {
+					document.forms.addentry.reset();
+					$("#visitorvoice_error").html("");
+					$("#visitorvoice_error").hide();
+					$("#visitorvoice_loading").hide();
+					$(this).dialog("close");
+				}
+			},
+			Cancel: function() {
+				document.forms.addentry.reset();
+				$("#visitorvoice_error").html("");
+				$("#visitorvoice_error").hide();
+				$("#visitorvoice_loading").hide();
+				$(this).dialog( "close" );
+			}
+		});
+       
+		$(".submit_link").click(function(e) {
+			e.preventDefault();
+			$("#visitorvoice_pid").val(0);
+			$("#visitorvoice_form").dialog("open");
+		});
+		
+		$("body").delegate(".reply_link", "click", function(e) {
+			e.preventDefault();
+			var $id = $(this).attr("original-id");
+			$("#visitorvoice_pid").val($id);
+			$("#visitorvoice_form").dialog("open");
+			return false;
+		});
+		
+		$("body").delegate(".approve_link", "click", function(e) {
+			e.preventDefault();
+			
+			var $id = $(this).attr("original-id");
+			$.ajax({
+				url: "submit.php",
+				dataType: "json",
+				data: {
+					visitorvoice_id: $id,
+					op: "approve"
+				},
+				type: "POST",
+				success: function(response) {
+					$("#visitorvoice_loading").show();
+					loadEntries();
+				}
+			});
+			return false;
+		});
+		
+		$("#visitorvoice_message").dialog({
+			autoOpen: false,
+        	height: 200,
+        	width: "90%",
+        	modal: true,
+        	show: "clip",
+        	hide: "clip",
+        	buttons: {
+        		"OK": function() {
+        			loadEntries();
+					$(this).dialog("close");
+				}
+        	}
+		});
+		
+		var options = {
+			url: $("#addentry").attr('action'),
+			type: "POST",
+			dataType: "json",
+			success: function(response) {
+						if(response.status === "success") {
+							$("#visitorvoice_form").dialog("close");
+							$('#visitorvoice_message').html(response.message);
+							document.forms.addentry.reset();
+							$('#visitorvoice_message').dialog('open');
+						} else if(response.status === "error") {
+							$("#visitorvoice_error").html("<{$smarty.const._MD_VISITORVOICE_FAILURE}>: " + response.message);
+							$("#visitorvoice_error").show();
+						}
+			},
+		};
+		
+		$('#addentry').submit(function() {
+			if(xoopsFormValidate_addentry())
+			$(this).ajaxSubmit(options);
+			return false;
+		});
+		
+		$("body").delegate(".entry_img", "click", function(e) {
+			e.preventDefault();
+			$.colorbox({
+				href: $(this).attr("href"),
+				transition:'fade',
+				speed:500,
+				opacity: 0.9,
+				slideshow: true,
+				slideshowAuto: false
+			});
+		});
+		
+		function loadEntries() {
+			$.ajax({
+				url: "entries.php",
+				dataType: "json",
+				data: {
+					start: "<{$smarty.get.start}>",
+				},
+				type: "post",
+				success: function(response) {
+					if(response.reload === true){
+						window.location.reload();
+					}
+					$("#visitorvoice_loading").hide();
+					$("#entries").html(response.entries);
+				}
+			});
+		}
+	});
+</script>

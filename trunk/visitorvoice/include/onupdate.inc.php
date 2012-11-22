@@ -21,19 +21,32 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 // this needs to be the latest db version
-define('VISITORVOICE_DB_VERSION', 1);
+define('VISITORVOICE_DB_VERSION', 2);
+if(!defined("VISITORVOICE_DIRNAME")) define("VISITORVOICE_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 function visitorvoice_upload_paths() {
-	
-	//Create folders and set permissions
-	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$path = ICMS_ROOT_PATH . '/uploads/' . $moddir;
-	if(!is_dir($path . '/indexpage')) icms_core_Filesystem::mkdir($path . '/indexpage');
+	$path = ICMS_ROOT_PATH . '/uploads/' . VISITORVOICE_DIRNAME;
+	if(!is_dir($path . '/indexpage')) mkdir($path . '/indexpage', 0777, TRUE);
 	$image = 'visitorvoice_indeximage.png';
-	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indexpage/' . $image);
+	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . VISITORVOICE_DIRNAME . '/images/' . $image, $path . '/indexpage/' . $image);
 	return TRUE;
 }
 
+function visitorvoice_db_upgrade_2() {
+	$visitorvoice_handler = icms_getModuleHandler("visitorvoice", VISITORVOICE_DIRNAME, "visitorvoice");
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("visitorvoice_pid", 0));
+	$entries = $visitorvoice_handler->getObjects($criteria, TRUE, TRUE);
+	foreach (array_keys($entries) as $key) {
+		$crit = new icms_db_criteria_Item("visitorvoice_pid", $key);
+		if($visitorvoice_handler->getCount($crit)) {
+			$entries[$key]->setVar("visitorvoice_hassub", TRUE);
+			$entries[$key]->_updating = TRUE;
+			$visitorvoice_handler->insert($entries[$key]);
+		}
+		unset($crit);
+	}
+	return TRUE;
+}
 
 function visitorvoice_indexpage() {
 	$visitorvoice_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'visitorvoice' );
@@ -49,6 +62,9 @@ function visitorvoice_indexpage() {
 }
 
 function icms_module_update_visitorvoice($module) {
+	$path = ICMS_ROOT_PATH.'/modules/'.VISITORVOICE_DIRNAME.'/images/';
+	if(file_exists($path.'visitorvoice.png')) icms_core_Filesystem::deleteFile($path.'visitorvoice.png');
+	if(file_exists($path.'visitorvoice_icon_small.png')) icms_core_Filesystem::deleteFile($path.'visitorvoice_icon_small.png');
     return TRUE;
 }
 
