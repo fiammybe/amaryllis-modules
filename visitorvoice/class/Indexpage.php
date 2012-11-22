@@ -38,7 +38,7 @@ class VisitorvoiceIndexpage extends icms_ipf_Object {
 
 		$this->setControl('index_img_upload', 'imageupload');
 		$this->setControl('index_heading','dhtmltextarea');
-		$this->setControl('index_footer', 'textarea');
+		$this->setControl('index_footer', array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl('index_image', array( 'name' => 'select', 'itemHandler' => 'indexpage', 'method' => 'getImageList', 'module' => 'visitorvoice'));
 		
 	}
@@ -53,11 +53,11 @@ class VisitorvoiceIndexpage extends icms_ipf_Object {
 	}
 	
 	public function getIndexHeader() {
-		$indexheader = '';
-		$indexheader = $this->getVar('index_header', 'e');
+		$indexheader = $this->getVar('index_header', 's');
 		if($indexheader != "") {
-			return '<div class="visitorvoice_indexheader">' . $indexheader . '</div>';
+			return '<div class="visitorvoice_indexheader">' . icms_core_DataFilter::undoHtmlSpecialChars($indexheader) . '</div>';
 		}
+		return false;
 	}
 
 	public function getIndexHeading() {
@@ -65,7 +65,7 @@ class VisitorvoiceIndexpage extends icms_ipf_Object {
 		$indexheading = $this->getVar('index_heading', 's');
 		if($indexheading != "") {
 			$indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
-			return '<div class="visitorvoice_indexheading">' . $indexheading . '</div>';
+			return '<div class="visitorvoice_indexheading">' . icms_core_DataFilter::undoHtmlSpecialChars($indexheading) . '</div>';
 		}
 	}
 	
@@ -74,7 +74,7 @@ class VisitorvoiceIndexpage extends icms_ipf_Object {
 		$indexfooter = $this->getVar('index_footer', 's');
 		if($indexfooter != "") {
 			$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
-			return '<div class="visitorvoice_indexfooter">' . $indexfooter . '</div>';
+			return '<div class="visitorvoice_indexfooter">' . icms_core_DataFilter::undoHtmlSpecialChars($indexfooter) . '</div>';
 		}
 	}
 
@@ -86,6 +86,4 @@ class VisitorvoiceIndexpage extends icms_ipf_Object {
 		$ret['footer'] = $this->getIndexFooter();
 		return $ret;
 	}
-	
 }
-	

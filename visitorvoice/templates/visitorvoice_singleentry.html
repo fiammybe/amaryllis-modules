@@ -1,37 +1,28 @@
-<div class="bubble">
-	<div id="entry_<{$entry.id}>" class="visitorvoice_entry">
-		<!-- title -->
-		<div class="block-title"><{$entry.title}></div>
-		
-		<div class="visitorvoice_row">
-			<div class="entry_message">
-				<span class="visitorvoice_message">
-					<{if $entry.img}>
-						<div class="visitorvoice_image">
-							<span><a href="<{$entry.img}>" class="entry_img" rel="lightbox" title="<{$entry.homepage}>"><{resized_image file=$entry.img width=$logo_display_width height="150" fit="inside"}></a></span>
-						</div> <!-- E N D .VISITORVOICE_image -->
-					<{/if}>
-					<{$entry.message}>
-					<{if $entry.email}>
-							<br /><br /><span><{$smarty.const._MD_VISITORVOICE_MAIL_CONTACT}>: <{$entry.email}></span>
-					<{/if}>
-				</span>
-			</div> <!-- E N D .VISITORVOICE_message -->
-			<{if $visitorvoice_is_admin}>
-				<div class="entry_info">
-					<span class="visitorvoice_ip">
-						<{$entry.ip}> <{$smarty.const._MD_VISITORVOICE_PUBLISHED_BY}>: <{$entry.published_by}>
+<div class="visitorvoice_single_entry {ENTRY_CLASS}">
+	<div class="bubble">
+		<div id="entry_{ENTRY_ID}" class="visitorvoice_entry">
+			<!-- title -->
+			<div class="block-title">{ENTRY_TITLE}</div>
+			
+			<div class="visitorvoice_row">
+				<div class="visitorvoice_message">
+					<span class="visitorvoice_message">
+						{ENTRY_ENTRY}
 					</span>
-				</div> <!-- E N D .VISITORVOICE_info -->
-			<{/if}>
-		</div> <!-- E N D .VISITORVOICE_row -->
-	</div> <!-- E N D .VISITORVOICE_entry -->
+				</div> <!-- E N D .Visitorvoice_message -->
+				<div class="entry_info">
+					{ENTRY_IP}
+				</div> <!-- E N D .Visitorvoice_info -->
+				{ENTRY_MAIL}
+				{ENTRY_IMG}
+				{ENTRY_APPROVED}
+			</div> <!-- E N D .Visitorvoice_row -->
+		</div> <!-- E N D .Visitorvoice_entry -->
+	</div>
+	<p>
+	<span class="visitorvoice_avatar">
+		{ENTRY_AVATAR}
+	</span>
+	<strong>{ENTRY_NAME} | {ENTRY_URL} {ENTRY_PDATE}</strong>
+	</p>
 </div>
-<p>
-	<{if $entry.avatar}>
-		<span>
-			<img src="<{$entry.avatar}>" width="32px" height="32px" alt="avatar" />
-		</span>
-	<{/if}>
-	<strong><{$entry.name}> |<{if $entry.homepage}> <a href="<{$entry.homepage}>?&campaign=impresscms_visitorvoice" title="<{$entry.homepage}>"><{$entry.homepage}></a> |<{/if}> <{$entry.published_on}></strong>
-</p>

@@ -15,12 +15,8 @@
  *
  */
 
-	function SetSpeechBubble()
-	{
-		$(function()
-		{
-			settings=
-			{
+	$(document).ready(function(){
+		var settings = {
 				tl:{ radius:10 },
 				tr:{ radius:10 },
 				bl:{ radius:10 },
@@ -29,38 +25,7 @@
 				autoPad:true,
 				validTags:["div"]
 			}
-			
-			$('div.bubble').corner(settings);
-		});
-	}
-	
-// visitorvoice submit form
-	$(document).ready(function(){
-		$(".visitorvoice_form").dialog({
-			modal: true,
-			width: 700,
-			height: 400,
-			autoOpen: false,
-			resizable: true,
-			draggable: true
-		});
-		$(".submit_link").click(function(e) {
-			e.preventDefault();
-			$(".visitorvoice_form").dialog("open");
-		});
-		
-		$(".visitorvoice_reply_form").dialog({
-			modal: true,
-			width: 700,
-			height: 600,
-			autoOpen: false,
-			resizable: true,
-			draggable: true,
-		});
-	});
-	
-	
-	$(document).ready(function(){
+		$('div.bubble').corner(settings);
 		$('a.entry_img').colorbox({
 			transition:'fade',
 			speed:500,
@@ -68,10 +33,7 @@
 			slideshow: true,
 			slideshowAuto: false
 		});
-	});
 
-	//visitorvoice permission denied
-	$(document).ready(function(){
 		$("#dialog-confirm-perm").dialog({
 			modal: true,
 			width: 500,

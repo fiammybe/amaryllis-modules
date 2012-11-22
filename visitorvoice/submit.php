@@ -16,81 +16,80 @@
  * @package		visitorvoice
  *
  */
-
-function editmessage($clean_visitorvoice_id = 0, $visitorvoice_pid = FALSE) {
-	global $icmsConfig, $visitorvoice_visitorvoice_handler, $icmsTpl, $visitorvoiceConfig;
-	$visitorvoice_visitorvoice_handler = icms_getModuleHandler("visitorvoice", basename(dirname(dirname(__FILE__))), "visitorvoice");
-	$visitorvoiceObj = $visitorvoice_visitorvoice_handler->get($clean_visitorvoice_id);
-	if(is_object(icms::$user)){
-		$visitorvoice_uid = icms::$user->getVar("uid");
-	} else {
-		$visitorvoice_uid = 0;
-	}
-	if ($visitorvoiceObj->isNew()) {
-		$visitorvoiceObj->setVar("visitorvoice_uid", $visitorvoice_uid);
-		$visitorvoiceObj->setVar("visitorvoice_published_date", time() - 200);
-		$visitorvoiceObj->setVar("visitorvoice_ip", xoops_getenv('REMOTE_ADDR'));
-		if($visitorvoiceConfig["needs_approval"] == 1) {
-			if(icms_userIsAdmin(VISITORVOICE_DIRNAME)){
-				$visitorvoiceObj->setVar("visitorvoice_approve", TRUE);
-			} else {
-				$visitorvoiceObj->setVar("visitorvoice_approve", FALSE);
-			}
-		} else {
-			$visitorvoiceObj->setVar("visitorvoice_approve", TRUE);
-		}
-		if($visitorvoice_pid) {
-			$visitorvoiceObj->setVar("visitorvoice_pid", $visitorvoice_pid);
-		}
-		$sform = $visitorvoiceObj->getSecureForm(_MD_VISITORVOICE_CREATE, 'addentry', 'submit.php?op=addentry&visitorvoice_id=' . $clean_visitorvoice_id, FALSE, TRUE);
-		//$sform->addElement();
-		if($visitorvoice_pid) {
-			$sform->assign($icmsTpl, 'visitorvoice_reply_form');
-		} else {
-			$sform->assign($icmsTpl, 'visitorvoice_form');
-		}
-	} else {
-		exit;
-	}
-}
-
+header("Content-Type: multipart/form-data");
+header("Content-Disposition: form-data");
 $moddir = basename(dirname(__FILE__));
 include_once "../../mainfile.php";
-include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-
-$valid_op = array ('addentry', 'addreply', );
-$clean_op = (isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '');
+include_once ICMS_ROOT_PATH.'/modules/'.$moddir.'/include/common.php';
+icms::$logger->disableLogger();
+$valid_op = array ('addentry', 'approve');
+$clean_op = (isset($_POST['op'])) ? filter_input(INPUT_POST, "op") : FALSE;
+if(!$clean_op) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
 if(in_array($clean_op, $valid_op, TRUE)) {
+	$visitorvoice_handler = icms_getModuleHandler("visitorvoice", basename(dirname(__FILE__)), "visitorvoice");
 	switch ($clean_op) {
 		case 'addentry':
 			global $visitorvoiceConfig;
 			$visitorvoice_pid = isset($_POST['visitorvoice_pid']) ? filter_input(INPUT_POST, 'visitorvoice_pid', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$visitorvoice_id = isset($_GET['visitorvoice_id']) ? filter_input(INPUT_GET, 'visitorvoice_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$visitorvoice_visitorvoice_handler = icms_getModuleHandler("visitorvoice", basename(dirname(__FILE__)), "visitorvoice");
-			$visitorvoiceObj = $visitorvoice_visitorvoice_handler->get($visitorvoice_id);
-			if($visitorvoiceObj->isNew() ) {
-				if (!icms::$security->check()) {
-					redirect_header(VISITORVOICE_URL, 3, _MD_VISITORVOICE_SECURITY_CHECK_FAILED . implode('<br />', icms::$security->getErrors()));
-				}
-				$visitorvoiceObj->setVar("visitorvoice_pid", $visitorvoice_pid);
-				$controller = new icms_ipf_Controller($visitorvoice_visitorvoice_handler);
-				$controller->storeFromDefaultForm(_MD_VISITORVOICE_CREATED, _MD_VISITORVOICE_MODIFIED, VISITORVOICE_URL);
-				return redirect_header(VISITORVOICE_URL, 3, _THANKS_SUBMISSION);
-			} else {
-				redirect_header(VISITORVOICE_URL, 3, _NO_PERM);
+			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+			if($visitorvoice_pid != 0 && !$visitorvoice_handler->canModerate()) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
+			//$captcha = icms_form_elements_captcha_Object::instance();
+			//if(!$captcha->verify(TRUE)) {echo json_encode(array("status" => "error", "message" => "Verification Failed"));unset($_POST); exit;}
+			
+			$val = "";
+			if(isset($_POST['xoops_upload_file']) && !empty($_FILES) && $visitorvoiceConfig['allow_imageupload'] == 1) {
+				$path = ICMS_UPLOAD_PATH.'/'.VISITORVOICE_DIRNAME.'/'.$visitorvoice_handler->_itemname;
+				$mimetypes = array("image/jpg", "image/jpeg", "image/gif", "image/png");
+				$uploader = new icms_file_MediaUploadHandler($path,$mimetypes, $visitorvoiceConfig['image_file_size'],$visitorvoiceConfig['image_upload_width'], $visitorvoiceConfig['image_upload_height']);
+					if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
+						$uploader->setPrefix('img_'.time());
+						if ($uploader->upload()) {
+							$val = $uploader->getSavedFileName();
+						} else {
+							echo json_encode(array("status" => "error", "message" => $uploader->getErrors())); unset($_POST); exit;
+						}
+					} else {
+						echo json_encode(array("status" => "error", "message" => $uploader->getErrors())); unset($_POST); exit;
+					}
 			}
+			
+			$entry = filter_input(INPUT_POST, "visitorvoice_entry");
+			$entry = strip_tags(icms_core_DataFilter::undoHtmlSpecialChars($entry),'<b><i><a><br>');
+			
+			$visitorvoiceObj = $visitorvoice_handler->create(TRUE);
+			$visitorvoiceObj->setVar("visitorvoice_title", filter_input(INPUT_POST, "visitorvoice_title"));
+			$visitorvoiceObj->setVar("visitorvoice_name", filter_input(INPUT_POST, "visitorvoice_name"));
+			$visitorvoiceObj->setVar("visitorvoice_email", filter_input(INPUT_POST, "visitorvoice_email", FILTER_VALIDATE_EMAIL));
+			$visitorvoiceObj->setVar("visitorvoice_url", filter_input(INPUT_POST, "visitorvoice_url"));
+			$visitorvoiceObj->setVar("visitorvoice_entry", $entry);
+			$visitorvoiceObj->setVar("visitorvoice_pid", $visitorvoice_pid);
+			$visitorvoiceObj->setVar("visitorvoice_ip", getenv('REMOTE_ADDR'));
+			$visitorvoiceObj->setVar("visitorvoice_fprint", $_SESSION['icms_fprint']);
+			$visitorvoiceObj->setVar("visitorvoice_published_date", time());
+			$visitorvoiceObj->setVar("visitorvoice_image", $val);
+			$visitorvoiceObj->setVar("visitorvoice_uid", $uid);
+			if($visitorvoiceConfig["needs_approval"] == 1) {
+				$visitorvoiceObj->setVar("visitorvoice_approve", icms_userIsAdmin(VISITORVOICE_DIRNAME) ? TRUE : FALSE);
+			} else {
+				$visitorvoiceObj->setVar("visitorvoice_approve", TRUE);
+			}
+			if(!$visitorvoice_handler->insert($visitorvoiceObj)) {echo json_encode(array("status" => "error", "message" => $visitorvoiceObj->getHtmlErrors())); unset($_POST); exit;}
+			$message = ($visitorvoiceConfig["needs_approval"] && !$visitorvoice_isAdmin) ? _THANKS_SUBMISSION_APPROVAL : _THANKS_SUBMISSION;
+			echo json_encode(array("status" => "success", "message" => '<p>'.$message.'</p>')); unset($_POST); exit;
 			break;
-		
-		case 'addreply':
-			$xoopsOption["template_main"] = "visitorvoice_visitorvoice.html";
-			include_once ICMS_ROOT_PATH . '/header.php';
-			$visitorvoice_id = isset($_GET['visitorvoice_id']) ? filter_input(INPUT_GET, 'visitorvoice_id', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$visitorvoice_pid = isset($_GET['visitorvoice_pid']) ? filter_input(INPUT_GET, 'visitorvoice_pid', FILTER_SANITIZE_NUMBER_INT) : 0;
-			$visitorvoice_visitorvoice_handler = icms_getModuleHandler("visitorvoice", basename(dirname(__FILE__)), "visitorvoice");
-			editmessage($visitorvoice_id, $visitorvoice_pid);
-			include_once ICMS_ROOT_PATH . '/footer.php';
+		case 'approve':
+			if(!$visitorvoice_isAdmin) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
+			$visitorvoice_id = isset($_POST['visitorvoice_id']) ? filter_input(INPUT_POST, 'visitorvoice_id', FILTER_SANITIZE_NUMBER_INT) : 0;
+			if($visitorvoice_id == 0) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
+			$obj = $visitorvoice_handler->get($visitorvoice_id);
+			if(!is_object($obj) || $obj->isNew()) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
+			$obj->setVar("visitorvoice_approve", TRUE);
+			$obj->_updating = TRUE;
+			$visitorvoice_handler->insert($obj);
+			$obj->sendMessageApproved();
+			echo json_encode(array("status" => "success", "message" => '<p>'._CO_ENTRY_HAS_APPROVED.'</p>')); unset($_POST); exit;
 			break;
 	}
 } else {
-	redirect_header(VISITORVOICE_URL, 3, _NO_PERM);
+	echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;
 }

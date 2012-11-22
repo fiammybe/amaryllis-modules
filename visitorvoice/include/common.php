@@ -48,5 +48,3 @@ if (is_object($visitorvoiceModule)) {
 $visitorvoice_isAdmin = icms_userIsAdmin( VISITORVOICE_DIRNAME );
 
 $visitorvoiceConfig = icms_getModuleConfig( VISITORVOICE_DIRNAME );
-
-$icmsPersistableRegistry = icms_ipf_registry_Handler::getInstance();

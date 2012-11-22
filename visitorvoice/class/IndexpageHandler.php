@@ -36,10 +36,10 @@ class VisitorvoiceIndexpageHandler extends icms_ipf_Handler {
 		$this->enableUpload($mimetypes, 2000000, 900, 900);
 		
 	}
-
+	
 	static public function getImageList() {
 		$indeximages = array();
-		$indeximages = icms_core_Filesystem::getFileList(VISITORVOICE_UPLOAD_ROOT . 'indeximages/', '', array('gif', 'jpg', 'png'));
+		$indeximages = icms_core_Filesystem::getFileList(VISITORVOICE_UPLOAD_ROOT . 'indexpage/', '', array('gif', 'jpg', 'png'));
 		$ret = array();
 		$ret[0] = '-----------------------';
 		foreach(array_keys($indeximages) as $i ) {
@@ -49,14 +49,29 @@ class VisitorvoiceIndexpageHandler extends icms_ipf_Handler {
 	}
 	
 	protected function beforeInsert(&$obj) {
-		$heading = $obj->getVar("index_heading", "s");
+		$heading = $obj->getVar("index_heading", "e");
 		$heading = icms_core_DataFilter::checkVar($heading, "html", "input");
 		$obj->setVar("index_heading", $heading);
-		$footer = $obj->getVar("index_footer", "s");
+		$footer = $obj->getVar("index_footer", "e");
 		$footer = icms_core_DataFilter::checkVar($footer, "html", "input");
 		$obj->setVar("index_footer", $footer);
 		if ($obj->getVar('index_img_upload') != '') {
 			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
+			$obj->setVar('index_img_upload', "" );
+		}
+		return TRUE;
+	}
+
+	protected function beforeUpdate(&$obj) {
+		$heading = $obj->getVar("index_heading", "e");
+		$heading = icms_core_DataFilter::checkVar($heading, "html", "input");
+		$obj->setVar("index_heading", $heading);
+		$footer = $obj->getVar("index_footer", "e");
+		$footer = icms_core_DataFilter::checkVar($footer, "html", "input");
+		$obj->setVar("index_footer", $footer);
+		if ($obj->getVar('index_img_upload') != '') {
+			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
+			$obj->setVar('index_img_upload', "" );
 		}
 		return TRUE;
 	}

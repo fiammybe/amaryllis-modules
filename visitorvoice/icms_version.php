@@ -25,7 +25,7 @@
 
 $modversion = array(
 					'name'						=> _MI_VISITORVOICE_NAME,
-					'version'					=> 1.0,
+					'version'					=> 1.1,
 					'description'				=> _MI_VISITORVOICE_DSC,
 					'author'					=> "QM-B &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';",
 					'credits'					=> "",
@@ -36,14 +36,14 @@ $modversion = array(
 					'modname'					=> "visitorvoice",
 
 					/**  Images information  */
-					'iconsmall'					=> "images/visitorvoice_icon_small.png",
-					'iconbig'					=> "images/visitorvoice.png",
-					'image'						=> "images/visitorvoice.png", /* for backward compatibility */
+					'iconsmall'					=> "images/icon_small.png",
+					'iconbig'					=> "images/icon_big.png",
+					'image'						=> "images/icon_big.png", /* for backward compatibility */
 
 					/**  Development information */
-					'status_version'			=> "1.0",
+					'status_version'			=> "1.1",
 					'status'					=> "RC",
-					'date'						=> "Unreleased",
+					'date'						=> "XX.XX.2012",
 					'author_word'				=> "",
 					'warning'					=> _CO_ICMS_WARNING_RC,
 
@@ -60,6 +60,10 @@ $modversion = array(
 					
 					/* notifications */
 					'hasNotification'			=> 0,
+					/* update/install/uninstall */
+					'onUpdate'					=> 'include/onupdate.inc.php',
+					'onInstall'					=> 'include/onupdate.inc.php',
+					'onUninstall'				=> 'include/onupdate.inc.php'
 				);
 
 $modversion['people']['developers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>';";
@@ -101,17 +105,6 @@ $modversion['object_items'][$i] = 'indexpage';
 $modversion['tables'] = icms_getTablesArray( $modversion['dirname'], $modversion['object_items'] );
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////// INSTALLATION / UPGRADE //////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// OnUpdate - upgrade DATABASE
-$modversion['onUpdate'] = 'include/onupdate.inc.php';
-
-// OnInstall - Insert Sample Form, create folders
-$modversion['onInstall'] = 'include/onupdate.inc.php';
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// TEMPLATES /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $i = 0;
@@ -150,7 +143,7 @@ $modversion['blocks'][$i]['name']			= _MI_VISITORVOICE_BLOCK_RECENT_ENTRIES;
 $modversion['blocks'][$i]['description']	= _MI_VISITORVOICE_BLOCK_RECENT_ENTRIES_DSC;
 $modversion['blocks'][$i]['show_func']		= 'b_visitorvoice_recent_entries_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_visitorvoice_recent_entries_edit';
-$modversion['blocks'][$i]['options']		= '10|0';
+$modversion['blocks'][$i]['options']		= '10|1';
 $modversion['blocks'][$i]['template']		= 'visitorvoice_block_recent_entries.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE ;
 
@@ -168,7 +161,7 @@ $modversion['config'][$i] = array(
 								'title' 		=> '_MI_VISITORVOICE_DATE_FORMAT',
 								'description' 	=> '_MI_VISITORVOICE_DATE_FORMAT_DSC',
 								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'string',
+								'valuetype' 	=> 'text',
 								'default' 		=> 'j/n/Y'
 							);
 
@@ -201,12 +194,30 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'can_moderate',
+								'title' 		=> '_MI_VISITORVOICE_CAN_MODERATE',
+								'description' 	=> '_MI_VISITORVOICE_CAN_MODERATE_DSC',
+								'formtype'		=> 'group_multi',
+								'valuetype'		=> 'array',
+								'default'		=> 1
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'show_avatar',
 								'title' 		=> '_MI_VISITORVOICE_SHOW_AVATAR',
 								'description' 	=> '_MI_VISITORVOICE_SHOW_AVATAR_DSC',
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=>  1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'avatar_dimensions',
+								'title' 		=> '_MI_VISITORVOICE_AVATAR_DIMENSIONS',
+								'description' 	=> '_MI_VISITORVOICE_AVATAR_DIMENSIONS_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> '32'
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -225,6 +236,15 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'yesno',
 								'valuetype' 	=> 'int',
 								'default' 		=>  1
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'can_upload',
+								'title' 		=> '_MI_VISITORVOICE_CAN_UPLOAD',
+								'description' 	=> '_MI_VISITORVOICE_CAN_UPLOAD_DSC',
+								'formtype'		=> 'group_multi',
+								'valuetype'		=> 'array',
+								'default'		=> 1
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -270,6 +290,24 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> '150'
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'display_width',
+								'title' 		=> '_MI_VISITORVOICE_DISPLAY_WIDTH',
+								'description' 	=> '_MI_VISITORVOICE_DISPLAY_WIDTH_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> '850'
+							);
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'display_height',
+								'title' 		=> '_MI_VISITORVOICE_DISPLAY_HEIGHT',
+								'description'	=> '_MI_VISITORVOICE_DISPLAY_HEIGHT_DSC',
+								'formtype' 		=> 'textbox',
+								'valuetype' 	=> 'int',
+								'default' 		=> '750'
 							);
 $i++;
 $modversion['config'][$i] = array(
