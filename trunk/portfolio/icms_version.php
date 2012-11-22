@@ -376,7 +376,7 @@ $modversion['config'][$i] = array(
 								'valuetype'		=> 'text',
 								'default'		=> 0,
 								'options'		=> array( _NONE => 0, _MI_PORTFOLIO_DEFAULT => 1, _MI_PORTFOLIO_HORIZONTAL => 2, _MI_PORTFOLIO_VERTICAL => 3 )
-							);	
+							);
 $i++;
 $modversion['config'][$i] = array(
 								'name'			=> 'display_fblike',
