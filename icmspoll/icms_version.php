@@ -22,7 +22,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 						"name"						=> _MI_ICMSPOLL_MD_NAME,
-						"version"					=> 2.0,
+						"version"					=> 2.1,
 						"description"				=> _MI_ICMSPOLL_MD_DSC,
 						"author"					=> "QM-B",
 						"author_realname"			=> "Steffen Flohrer",
@@ -39,11 +39,11 @@ $modversion = array(
 						"image"						=> "images/icmspoll_icon_big.png", /* for backward compatibility */
 					
 					/**  Development information */
-						"status_version"			=> "2.0",
-						"status"					=> "final",
+						"status_version"			=> "2.1",
+						"status"					=> "beta",
 						"date"						=> "11:57:22 22.11.2012",
 						"author_word"				=> "",
-						"warning"					=> _CO_ICMS_WARNING_FINAL,
+						"warning"					=> _CO_ICMS_WARNING_BETA,
 					
 					/** Contributors */
 						"developer_website_url"		=> "http://code.google.com/p/amaryllis-modules/",
