@@ -65,3 +65,17 @@ define("_MI_VISITORVOICE_MENU_VISITORVOICE", "VisitorVoice");
 define("_MI_VISITORVOICE_MENU_INDEXPAGE", "Edit Indexpage");
 define("_MI_VISITORVOICE_MENU_TEMPLATES", "Templates");
 define("_MI_VISITORVOIVE_MENU_IMPORT", "Import");
+/**
+ * added in 1.1
+ */
+// config
+define("_MI_VISITORVOICE_CAN_MODERATE", "Select the groups, which can moderate entries");
+define("_MI_VISITORVOICE_CAN_MODERATE_DSC", "");
+define("_MI_VISITORVOICE_DISPLAY_WIDTH", "Image Display Width");
+define("_MI_VISITORVOICE_DISPLAY_WIDTH_DSC", "");
+define("_MI_VISITORVOICE_DISPLAY_HEIGHT", "Image Display height");
+define("_MI_VISITORVOICE_DISPLAY_HEIGHT_DSC", "");
+define("_MI_VISITORVOICE_AVATAR_DIMENSIONS", "Avatar Dimensions");
+define("_MI_VISITORVOICE_AVATAR_DIMENSIONS_DSC", "Avatar Dimensions in px");
+define("_MI_VISITORVOICE_CAN_UPLOAD", "Groups to be allowed uploading images");
+define("_MI_VISITORVOICE_CAN_UPLOAD_DSC", "");
