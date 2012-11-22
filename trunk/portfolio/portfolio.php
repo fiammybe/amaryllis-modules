@@ -40,8 +40,6 @@ $portfolio_handler = icms_getModuleHandler( "portfolio", icms::$module->getVar('
 $clean_portfolio = isset($_GET['portfolio']) ? filter_input(INPUT_GET, 'portfolio') : FALSE;
 
 $portfolioObj = ($clean_portfolio) ? $portfolio_handler->getPortfolioBySeo($clean_portfolio) : FALSE;
-icms_core_Debug::message(getenv("SCRIPT_NAME"));
-
 
 /**
  * retrieve a single category including files of the category and subcategories
