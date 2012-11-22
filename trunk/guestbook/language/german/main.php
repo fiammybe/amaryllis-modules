@@ -21,9 +21,14 @@ define("_MD_GUESTBOOK_PUBLISHED_BY", "Ver&ouml;ffentlicht von");
 define("_MD_GUESTBOOK_PUBLISHED_ON", "Ver&ouml;ffentlicht am");
 define("_MD_GUESTBOOK_PERM", "Sorry, sie haben keine Berechtigungen");
 define("_MD_GUESTBOOK_PERMISSION", "Sie haben keine Berechtigungen. Bitte einloggen Sie sich ein  oder registrieren Sie sich, um einen neuen Beitrag einzureichen.");
-define("_MD_GUESTBOOK_CREATED", "G&auml;stebucheintrag Eintrag erstellt, danke.");
-define("_MD_GUESTBOOK_MODIFIED", "G&auml;stebucheintrag Eintrag, modifiziert.");
 define("_MD_GUESTBOOK_MAIL_CONTACT", "Kontakt");
 
-
-
+/**
+ * added in 1.1
+ */
+define("_MD_GUESTBOOK_AWAITING_APPROVAL", "Your entry is awaiting approval. Thanks for submit.");
+define("_THANKS_SUBMISSION", "Your Entry has successfully been submitted. Thanks for submit.");
+define("_THANKS_SUBMISSION_APPROVAL", "Your Entry has successfully been submitted and is awaiting approval. Thanks for submit.");
+define("_MD_GUESTBOOK_FAILURE", "An error occured while submitting your entry");
+define("_MD_GUESTBOOK_NO_ENTRIES", "There are currently no entries. Be the first Person using our Guestbook!");
+define("_MD_GUESTBOOK_APPROVE_NOW", "Approve Now!");

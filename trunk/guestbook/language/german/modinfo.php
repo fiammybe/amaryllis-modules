@@ -56,6 +56,10 @@ define("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT", "ext Spam ohne &uuml;berpr&uuml;fu
 define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT", "gewohnten E-Mail ohne Pr&uuml;fung Sperrlst");
 define("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT_BANNED", "Text-Spam mit der &uuml;berpr&uuml;fung Liste der verbotenen gesch&uuml;tzt");
 define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT_BANNED", "gewohnten E-Mail mit der &uuml;berpr&uuml;fung Liste der verbotenen");
+define("_MI_GUESTBOOK_USE_RSS", "Use RSS feeds?");
+define("_MI_GUESTBOOK_USE_RSS_DSC", "Enable/disable RSS feeds for guestbook");
+define("_MI_GUESTBOOK_RSSLIMIT", "RSS Limit");
+define("_MI_GUESTBOOK_RSSLIMIT_DSC", "Set limit of Entries for RSS feeds");
 // ACP menu
 define("_MI_GUESTBOOK_MENU_GUESTBOOK", "G&auml;stebuch");
 define("_MI_GUESTBOOK_MENU_INDEXPAGE", "Edit Indexpage");

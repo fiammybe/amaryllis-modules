@@ -39,7 +39,9 @@ define("_CO_GUESTBOOK_INDEXPAGE_INDEX_HEADING_DSC", "  ");
 define("_CO_GUESTBOOK_INDEXPAGE_INDEX_IMAGE", "Indeximage");
 define("_CO_GUESTBOOK_INDEXPAGE_INDEX_IMAGE_DSC", " Stellen Sie bitte ein ob die Index-Image auf Indexseite angezeigt werden soll");
 define("_CO_GUESTBOOK_INDEXPAGE_INDEX_FOOTER", "Fusszeile der Indexpage");
-define("_CO_GUESTBOOK_INDEXPAGE_INDEX_FOOTER_DSC", " Stellen Sie bitte ein ob die Fußzeile auf Indexseite angezeigt werden soll");
+define("_CO_GUESTBOOK_INDEXPAGE_INDEX_FOOTER_DSC", " Stellen Sie bitte ein ob die Fuï¿½zeile auf Indexseite angezeigt werden soll");
 
-
-
+/**
+ * added in 1.1
+ */
+define("_CO_ENTRY_HAS_APPROVED", "Your entry has been approved. Thanks for submit.");
