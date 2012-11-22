@@ -103,8 +103,8 @@ class IcmspollOptionsHandler extends icms_ipf_Handler {
 	/**
 	 * related for storing
 	 */
-	protected function beforeSave(&$obj) {
-		$option_text = $obj->getVar("option_text", "s");
+	protected function beforeInsert(&$obj) {
+		$option_text = $obj->getVar("option_text", "e");
 		$option_text = icms_core_DataFilter::checkVar($option_text, "html", "input");
 		$obj->setVar("option_text", $option_text);
 		return TRUE;

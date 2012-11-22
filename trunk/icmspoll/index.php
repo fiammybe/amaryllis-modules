@@ -45,7 +45,7 @@ $icmsTpl->assign('icmspoll_index', $index);
 $valid_op = array('getPollsByCreator', '');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
-$clean_poll_id = isset($_GET['poll_id']) ? filter_input(INPUT_GET, "poll_id", FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_poll = isset($_GET['poll']) ? filter_input(INPUT_GET, "poll") : FALSE;
 $clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, "uid", FILTER_SANITIZE_NUMBER_INT) : FALSE; 
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start", FILTER_SANITIZE_NUMBER_INT) : 0;
 
@@ -69,11 +69,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			/**
 			 * check, if a single poll is requested and retrieve Object, if so
 			 */
-			if($clean_poll_id != 0) {
-				$pollObj = $polls_handler->get($clean_poll_id);
-			} else {
-				$pollObj = FALSE;
-			}
+			$pollObj = ($clean_poll) ? $polls_handler->getPollBySeo($clean_poll) : FALSE;
 			/**
 			 * check, if it's a valid Object and if view permissions are granted
 			 */
@@ -81,14 +77,14 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$poll = $pollObj->toArray();
 				$pollObj->hasStarted();
 				$icmsTpl->assign("poll", $poll);
-				$options = $options_handler->getAllByPollId($clean_poll_id, "weight", "ASC");
+				$options = $options_handler->getAllByPollId($clean_poll, "weight", "ASC");
 				$icmsTpl->assign("options", $options);
 				$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
 				$icmsTpl->assign("user_id", $user_id);
 			/**
 			 * if not a single poll is requested, display poll list
 			 */
-			} elseif ($clean_poll_id == 0) {
+			} elseif (!$clean_poll) {
 				$polls_handler->checkStarted();
 				$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], $clean_uid, FALSE, FALSE);
 				if($polls) {

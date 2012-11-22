@@ -38,11 +38,11 @@ $icmsTpl->assign('icmspoll_index', $index);
 
 
 $valid_op = array("getPollsByCreator", "");
-$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, "op", FILTER_SANITIZE_SPECIAL_CHARS) : "";
+$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, "op") : "";
 
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start", FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, "uid", FILTER_SANITIZE_NUMBER_INT) : FALSE;
-$clean_poll_id = isset($_GET['poll_id']) ? filter_input(INPUT_GET, "poll_id", FILTER_SANITIZE_NUMBER_INT) : 0;
+$clean_poll = isset($_GET['poll']) ? filter_input(INPUT_GET, "poll") : FALSE;
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 
@@ -78,24 +78,20 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			/**
 			 * check, if a single poll is requested and retrieve Object, if so
 			 */
-			if($clean_poll_id != 0) {
-				$pollObj = $polls_handler->get($clean_poll_id);
-			} else {
-				$pollObj = FALSE;
-			}
+			$pollObj = ($clean_poll) ? $polls_handler->getPollBySeo($clean_poll) : FALSE;
 			if(is_object($pollObj) && !$pollObj->isNew() && $pollObj->viewAccessGranted()) {
 				$poll = $pollObj->toArray();
-				$totalVotes = $log_handler->getTotalVotesByPollId($clean_poll_id);
-				$totalVoters = $log_handler->getTotalVotersByPollId($clean_poll_id);
-				$totalAnons = $log_handler->getTotalAnonymousVoters($clean_poll_id);
-				$totalUserVotes = $log_handler->getTotalRegistredVoters($clean_poll_id);
+				$totalVotes = $log_handler->getTotalVotesByPollId($clean_poll);
+				$totalVoters = $log_handler->getTotalVotersByPollId($clean_poll);
+				$totalAnons = $log_handler->getTotalAnonymousVoters($clean_poll);
+				$totalUserVotes = $log_handler->getTotalRegistredVoters($clean_poll);
 				$icmsTpl->assign("poll", $poll);
 				$icmsTpl->assign("total_votes", $totalVotes);
 				$icmsTpl->assign("total_voters", $totalVoters);
 				$icmsTpl->assign("total_anonymous", $totalAnons);
 				$icmsTpl->assign("total_registred", $totalUserVotes);
 				
-				$options = $options_handler->getAllByPollId($clean_poll_id, "weight", "ASC");
+				$options = $options_handler->getAllByPollId($clean_poll, "weight", "ASC");
 				$icmsTpl->assign("options", $options);
 				
 				$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
@@ -109,10 +105,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				 */
 				if ($icmspollConfig['com_rule']) {
 					$icmsTpl->assign('icmspoll_result_comment', TRUE);
+					$_GET['poll_id'] = $pollObj->id();
 					include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 				}
 				
-			} elseif ($clean_poll_id == 0) {
+			} elseif (!$clean_poll) {
 				$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], FALSE, TRUE, FALSE);
 				$icmsTpl->assign('resultlist', $polls);
 				/**
