@@ -22,6 +22,11 @@ if(!defined("PORTFOLIO_DIRNAME")) define("PORTFOLIO_DIRNAME",basename(dirname(di
 
 class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 	
+	public $_portfolio_thumbs;
+	public $_portfolio_images;
+	public $_portfolio_images_url;
+	public $_portfolio_thumbs_url;
+	
 	public function __construct(&$handler) {
 		global $portfolioConfig;
 		icms_ipf_Object::__construct($handler);
@@ -66,6 +71,11 @@ class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 		$this->initiateSEO();
 		$this->hideFieldFromForm(array("meta_keywords", "meta_description", "portfolio_submitter", "portfolio_updater", "portfolio_p_date", "portfolio_u_date"));
 		$this->hideFieldFromSingleView(array("dohtml", "doxcode", "doimage", "dosmiley", "weight"));
+		
+		$this->_portfolio_thumbs = $this->handler->getPortfolioThumbsPath();
+		$this->_portfolio_images = $this->handler->getPortfolioImagesPath();
+		$this->_portfolio_images_url = ICMS_URL . "/cache/" . $this->handler->_moduleName . "/" . $this->handler->_itemname . "/images/";
+		$this->_portfolio_thumbs_url = ICMS_URL . "/cache/" . $this->handler->_moduleName . "/" . $this->handler->_itemname . "/thumbs/";
 	}
 	
 	public function getVar($key, $format = "s")	{
@@ -142,6 +152,32 @@ class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 	public function displayAlbum() {
 		$album = $this->getVar("portfolio_album", "e");
 		return ($album > 0 && icms_get_module_status("album")) ? TRUE : FALSE;
+	}
+	
+	public function getAlbumImages() {
+		if(!$this->displayAlbum()) return FALSE;
+		if(icms_get_module_status("album")) {
+			$albumModule = icms_getModuleInfo("album");
+			$aid = $this->getVar("portfolio_album", "e");
+			$images_handler = icms_getModuleHandler("images", $albumModule->getVar("dirname"), "album");
+			include_once ICMS_ROOT_PATH . '/modules/' . $albumModule->getVar('dirname') . '/include/common.php';
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item('img_active', 1));
+			$criteria->add(new icms_db_criteria_Item('a_id', $aid ));
+			$images = $images_handler->getObjects($criteria, TRUE, TRUE);
+			if(!$images) return FALSE;
+			$ret = array();
+			foreach (array_keys($images) as $key) {
+				$arr = array();
+				$img = $images[$key]->getVar("img_url", "e");
+				$arr['img_url'] = $this->getAlbumImage(FALSE, $img);
+				$arr['thumb_url'] = $this->getAlbumImage(TRUE, $img);
+				$arr['title'] = $images[$key]->title();
+				$arr['dsc'] = $images[$key]->summary();
+				$ret[$key] = $arr;
+			}
+			return $ret;
+		}
 	}
 	
 	public function getDemoLink() {
@@ -252,7 +288,29 @@ class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['album'] = $this->displayAlbum();
+		$ret['album_images'] = $this->getAlbumImages();
 		$ret['techniques'] = $this->getTechniques();
 		return $ret;
+	}
+	
+	private function getAlbumImage($thumb = FALSE, $img = FALSE) {
+		global $portfolioConfig;
+		if($img !== "" && $img !== "0") {
+			$albumModule = icms_getModuleInfo("album");
+			$cached_img = ($thumb == FALSE) ? $this->_portfolio_images . $img : $this->_portfolio_thumbs . $img;
+			$cached_image_url = ($thumb == FALSE) ? $this->_portfolio_images_url . $img : $this->_portfolio_thumbs_url . $img;
+			if(!is_file($cached_img)) {
+			    require_once ICMS_MODULES_PATH.'/'.PORTFOLIO_DIRNAME.'/class/Image.php';
+				include_once ICMS_MODULES_PATH.'/'.$albumModule->getVar("dirname").'/include/common.php';
+				$srcpath = ALBUM_UPLOAD_ROOT . "images/";
+				$image = new mod_portfolio_Image($img, $srcpath);
+				$resized = $image->resizeImage( ($thumb == FALSE) ? $portfolioConfig['display_width'] : $portfolioConfig['thumbnail_width'], 
+										($thumb == FALSE) ? $portfolioConfig['display_height'] : $portfolioConfig['thumbnail_height'],
+										($thumb == FALSE) ? $this->_portfolio_images : $this->_portfolio_thumbs, "100");
+				unset($srcpath, $image, $resized);
+			}
+			unset($cached_img, $portfolio_img, $thumb);
+			return $cached_image_url;
+		}
 	}
 }

@@ -13,14 +13,14 @@
 			<{$portfolio.dsc}>
 		</div>
 		<div class="portfolio_clear_both">&nbsp;</div>
-		<{if $portfolio.album}>
+		<{if $portfolio.album && $portfolio.album_images}>
 			<h2><{$smarty.const._MD_PORTFOLIO_VIEW_MORE_IMAGES}></h2>
 			<div class="portfolio_album">
 				<div class="album_images_row">
-					<{foreach item=images from=$album_images}>
+					<{foreach item=images from=$portfolio.album_images}>
 						<div class="album_image">
 							<a href="<{$images.img_url}>" class="portfolio_image" title="<{$images.title}>" rel="lightbox" alt="<{$images.dsc}>">
-								<img class="portfolio_thumb" src="<{$portfolio.album.thumb}>" />
+								<img class="portfolio_thumb" src="<{$images.thumb_url}>" />
 							</a>
 						</div>
 					<{/foreach}>
