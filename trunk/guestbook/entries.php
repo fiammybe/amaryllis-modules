@@ -28,9 +28,9 @@ $clean_limit = $guestbookConfig['show_entries'];
 $guestbook_handler = icms_getModuleHandler("guestbook", GUESTBOOK_DIRNAME, "guestbook");
 
 $entries = $guestbook_handler->getEntries(TRUE, 0, $clean_start, $clean_limit, 'guestbook_published_date', 'DESC');
+if(!$entries) {echo json_encode(array("reload" => FALSE, "entries" => '<p>'._MD_GUESTBOOK_NO_ENTRIES.'</p>'));unset($_POST); exit;}
 $count = count($entries);
 $need_reload = (($count-1) % $guestbookConfig['show_entries'] === 0) ? "true" : "false"; 
-if(!$entries) echo json_encode(array("reload" => $need_reload, "entries" => '<p>'._MD_GUESTBOOK_NO_ENTRIES.'</p>'));
 $reply = array();
 foreach($entries as $key => $value) {
 	$userinfo = $value['published_by'];
@@ -146,4 +146,4 @@ foreach($entries as $key => $value) {
 	}
 	$reply[$key] = $content;
 }
-echo json_encode(array("reload" => $need_reload, "entries" => implode("&nbsp;", $reply)));
+echo json_encode(array("reload" => $need_reload, "entries" => implode("&nbsp;", $reply)));unset($_POST); exit;
