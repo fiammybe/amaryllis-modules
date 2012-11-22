@@ -17,7 +17,7 @@ define("_AM_GUESTBOOK_MODIFIED", "Modifizieren");
 
 // Requirements
 define("_AM_GUESTBOOK_REQUIREMENTS", "G&auml;stebuch Richtlinien");
-define("_AM_GUESTBOOK_REQUIREMENTS_INFO", "Wir haben Ihr System überpr&uuml;ft, leider erf&uuml;llt es nicht alle Anforderungen die G&auml;stebuch Modul ben&ouml;tigt. Hier sind die Anforderungen die das Modul ben&ouml;tigt.");
+define("_AM_GUESTBOOK_REQUIREMENTS_INFO", "Wir haben Ihr System ï¿½berpr&uuml;ft, leider erf&uuml;llt es nicht alle Anforderungen die G&auml;stebuch Modul ben&ouml;tigt. Hier sind die Anforderungen die das Modul ben&ouml;tigt.");
 define("_AM_GUESTBOOK_REQUIREMENTS_ICMS_BUILD", "GUESTBOOK ben&ouml;tigt ImpressCMS 1.3");
 define("_AM_GUESTBOOK_REQUIREMENTS_SUPPORT", "Sollten Sie irgendwelche Fragen haben oder Anregungen, besuchen Sie bitte unsere Foren auf<a href='http://community.impresscms.org'>http://community.impresscms.org</a>.");
 
@@ -32,12 +32,6 @@ define("_AM_GUESTBOOK_GUESTBOOK_EDIT_INFO", "Bitte f&uuml;llen Sie das Formular 
 define("_AM_GUESTBOOK_GUESTBOOK_MODIFIED", "Der G&auml;stebucheintrag wurde erfolgreich ge&uuml;ndert.");
 define("_AM_GUESTBOOK_GUESTBOOK_CREATED", "Der G&auml;stebucheintrag wurde erfolgreich erstellt.");
 define("_AM_GUESTBOOK_GUESTBOOK_VIEW", "G&auml;stebuch Info");
-define("_AM_GUESTBOOK_GUESTBOOK_VIEW_DSC", "Alle Information über das G&auml;stebuch.");
+define("_AM_GUESTBOOK_GUESTBOOK_VIEW_DSC", "Alle Information ï¿½ber das G&auml;stebuch.");
 define("_AM_GUESTBOOK_APPROVE_FALSE", "Genehmigt");
 define("_AM_GUESTBOOK_APPROVE_TRUE", "Verweigert");
-
-
-
-
-
-
