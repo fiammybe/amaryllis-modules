@@ -29,8 +29,8 @@ $visitorvoice_handler = icms_getModuleHandler("visitorvoice", VISITORVOICE_DIRNA
 
 $entries = $visitorvoice_handler->getEntries(TRUE, 0, $clean_start, $clean_limit, 'visitorvoice_published_date', 'DESC');
 $count = count($entries);
+if(!$entries) {echo json_encode(array("reload" => FALSE, "entries" => '<p>'._MD_VISITORVOICE_NO_ENTRIES.'</p>'));unset($_POST); exit;}
 $need_reload = (($count-1) % $visitorvoiceConfig['show_entries'] === 0) ? "true" : "false"; 
-if(!$entries) echo json_encode(array("reload" => $need_reload, "entries" => '<p>'._MD_VISITORVOICE_NO_ENTRIES.'</p>'));
 $reply = array();
 foreach($entries as $key => $value) {
 	$userinfo = $value['published_by'];
@@ -146,4 +146,4 @@ foreach($entries as $key => $value) {
 	}
 	$reply[$key] = $content;
 }
-echo json_encode(array("reload" => $need_reload, "entries" => implode("&nbsp;", $reply)));
+echo json_encode(array("reload" => $need_reload, "entries" => implode("&nbsp;", $reply)));unset($_POST); exit;
