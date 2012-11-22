@@ -42,7 +42,8 @@ $clean_guestbook_id = isset($_GET['guestbook_id']) ? filter_input(INPUT_GET, 'gu
 $name = (is_object(icms::$user)) ? icms::$user->getVar("uname") : "";
 $email = (is_object(icms::$user)) ? icms::$user->getVar("email") : "";
 $url = (is_object(icms::$user)) ? icms::$user->getVar("url") : "http://";
-$form = new icms_form_Theme("", "addentry", "submit.php");
+$form = new icms_form_Theme("", "addentry", GUESTBOOK_URL."submit.php");
+$form->setExtra('name="addentry"');
 if($guestbookConfig['allow_imageupload']) $form->setExtra('enctype="multipart/form-data"');
 $form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_TITLE, "guestbook_title", 75, 255), TRUE);
 $form->addElement(new icms_form_elements_Text(_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_NAME, "guestbook_name", 75, 255, $name, TRUE), TRUE);
