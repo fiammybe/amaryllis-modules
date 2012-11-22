@@ -53,3 +53,4 @@
 .contact_date, .contact_mail, .contact_phone, .contact_submitter {display: block;margin: 0.5em 0em;}
 .contact_message {margin: 2em 0em;}
 #portfolio_techniques li {list-style-type: none; list-style-image: url("images/check.png");}
+.ui-dialog-title{text-align: center;width: 100%;}

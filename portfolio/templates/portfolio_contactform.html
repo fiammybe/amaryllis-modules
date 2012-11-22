@@ -1,7 +1,7 @@
 <script type="text/javascript" language="JavaScript">
 	$(document).ready(function() {
 		$( "#portfolio_form" ).dialog({
-			title: "<span class='form_title' style='text-align: center;'><{$smarty.const._MD_PORTFOLIO_ADD_CONTACT}></span>",
+			title: "<{$smarty.const._MD_PORTFOLIO_ADD_CONTACT}>",
         	autoOpen: false,
         	height: 400,
         	width: "90%",
@@ -11,6 +11,7 @@
         	buttons: {
 	            "<{$smarty.const._SUBMIT}>": function() {
 	            	var dlg = $(this);
+	            	if(!xoopsFormValidate_addcontact()) return false;
 					$.ajax({
 						url: $("#addcontact").attr('action'),
 						type: "POST",
@@ -24,10 +25,10 @@
 						dataType: "json",
 						success: function(response) {
 									if(response.status === "success") {
+										document.forms.addcontact.reset();
 										dlg.dialog("close");
 										$('#form_message').html(response.message);
 										$('#form_message').dialog('open');
-										document.getElementById("addcontact").reset();
 									} else if(response.status === "error") {
 										$("#form_error").html("<{$smarty.const._MD_PORTFOLIO_FAILURE}>: " + response.message);
 									}
@@ -35,11 +36,12 @@
 					});
 				},
 				"<{$smarty.const._CANCEL}>" : function() {
-					document.getElementById("addcontact").reset();
+					document.forms.addcontact.reset();
 					$(this).dialog("close");
 				}
 			},
 			Cancel: function() {
+				document.forms.addcontact.reset();
 				$(this).dialog( "close" );
 			}
        });
