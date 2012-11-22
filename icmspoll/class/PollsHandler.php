@@ -70,7 +70,7 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("expired", 0));
 		$criteria->add(new icms_db_criteria_Item("started", 0));
 		$polls = $this->getObjects($criteria, TRUE);
-		$ret = array();
+		
 		foreach(array_keys($polls) as $i) {
 			$ret[$i] = $polls[$i]->hasStarted();
 		}
@@ -91,6 +91,12 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		return $count;
 	}
 	
+	public function getPollBySeo($seo) {
+		$criteria = new icms_db_criteria_Item("short_url", trim($seo));
+		$polls = $this->getObjects($criteria, FALSE, TRUE);
+		if(!$polls) return FALSE;
+		return $polls[0];
+	}
 	/**
 	 * reset poll
 	 */
@@ -116,6 +122,22 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 			return TRUE;
 		}
 	}
+	
+	public function sendMessageExpired() {
+        $subject = _CO_ICMSPOLL_POLLS_MESSAGE_SUBJECT;
+        $itemLink = $this->getItemLink();
+        $message = sprintf(_CO_ICMSPOLL_POLLS_MESSAGE_BDY, $itemLink);
+        $pm_handler = icms::handler("icms_data_privmessage");
+        $pmObj = $pm_handler->create(TRUE);
+        $pmObj->setVar("subject", $subject);
+        $pmObj->setVar("from_userid", 1);
+        $pmObj->setVar("to_userid", $this->getVar("user_id", "e"));
+        $pmObj->setVar("msg_time", time());
+        $pmObj->setVar("msg_text", $message);
+        $pm_handler->insert($pmObj, TRUE);
+		unset($itemLink, $message, $pm_handler, $pmObj);
+        return TRUE;
+    }
 	
 	/**
 	 * set a poll as expired
@@ -162,14 +184,14 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 	/**
 	 * some filters for ACP Table
 	 */
-	 public function filterExpired() {
+	public function filterExpired() {
 		return array(0 => _CO_ICMSPOLL_POLLS_FILTER_ACTIVE, 1 => _CO_ICMSPOLL_POLLS_FILTER_EXPIRED);
 	 }
-	 
-	 public function filterStarted() {
+
+	public function filterStarted() {
 		return array(0 => _CO_ICMSPOLL_POLLS_INACTIVE, 1 => _CO_ICMSPOLL_POLLS_FILTER_STARTED);
 	 }
-	 
+	
 	public function filterUsers($showNull = FALSE) {
 		$sql = "SELECT DISTINCT (user_id) FROM " . icms::$xoopsDB->prefix("icmspoll_polls");
 		if ($result = icms::$xoopsDB->query($sql)) {
@@ -236,6 +258,16 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		return $this->getObjects($criteria, TRUE, FALSE);
 	}
 	
+	
+	protected function beforeInsert(&$obj) {
+		$dsc = $obj->getVar("description", "e");
+		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
+		$obj->setVar("description", $dsc);
+		$question = $obj->getVar("question", "e");
+		$question = icms_core_DataFilter::checkVar($question, "html", "input");
+		$obj->setVar("question", $question);
+		return TRUE;
+	}
 	/**
 	 * related for storing/deleting objects
 	 */
@@ -257,13 +289,6 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		if(($start_time > $time) && ($started == 1)) {
 			$obj->setVar("started", 0);
 		}
-		$question = $obj->getVar("question", "s");
-		$question = icms_core_DataFilter::checkVar($question, "html", "input");
-		$obj->setVar("question", $question);
-		
-		$dsc = $obj->getVar("description", "s");
-		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
-		$obj->setVar("description", $dsc);
 		return TRUE;
 	}
 	

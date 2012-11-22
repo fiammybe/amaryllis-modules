@@ -20,7 +20,7 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dirname(__FILE__))));
 
-class IcmspollPolls extends icms_ipf_Object {
+class IcmspollPolls extends icms_ipf_seo_Object {
 	
 	public $updating_expired = FALSE;
 	
@@ -52,10 +52,10 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->quickInitVar("notification_sent", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("message_sent", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("total_init_value", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
-		//$this->initCommonVar("dohtml", FALSE, 1);
-		//$this->initCommonVar("dobr", FALSE);
-		//$this->initCommonVar("doimage", FALSE, 1);
-		//$this->initCommonVar("dosmiley", FALSE, 1);
+		$this->initCommonVar("dohtml", FALSE, 1);
+		$this->initCommonVar("dobr", FALSE);
+		$this->initCommonVar("doimage", FALSE, 1);
+		$this->initCommonVar("dosmiley", FALSE, 1);
 		$this->initCommonVar("docxode", FALSE, 1);
 		
 		$this->setControl("description", array('name' => 'textarea', 'form_editor' => 'htmlarea'));
@@ -67,7 +67,10 @@ class IcmspollPolls extends icms_ipf_Object {
 		$this->setControl("expired", "yesno");
 		$this->setControl("started", "yesno");
 		
-		$this->hideFieldFromForm(array("total_init_value", "message_sent", "notification_sent", "started", "expired", "created_on", "poll_comments", "user_id", "votes", "voters"));
+		$this->initiateSEO();
+		
+		$this->hideFieldFromForm(array("total_init_value", "message_sent", "notification_sent", "started", "expired", "created_on", "poll_comments", "user_id", "votes", "voters", "short_url",
+										"meta_description", "meta_keywords"));
 		$this->hideFieldFromSingleView(array("started", "expired"));
 
 	}
@@ -161,22 +164,6 @@ class IcmspollPolls extends icms_ipf_Object {
 			return '<img src="' . ICMSPOLL_IMAGES_URL . 'visible.png" alt="Active" />';
 		}
 	}
-	
-	public function sendMessageExpired() {
-        $subject = _CO_ICMSPOLL_POLLS_MESSAGE_SUBJECT;
-        $itemLink = $this->getItemLink();
-        $message = sprintf(_CO_ICMSPOLL_POLLS_MESSAGE_BDY, $itemLink);
-        $pm_handler = icms::handler("icms_data_privmessage");
-        $pmObj = $pm_handler->create(TRUE);
-        $pmObj->setVar("subject", $subject);
-        $pmObj->setVar("from_userid", 1);
-        $pmObj->setVar("to_userid", $this->getVar("user_id", "e"));
-        $pmObj->setVar("msg_time", time());
-        $pmObj->setVar("msg_text", $message);
-        $pm_handler->insert($pmObj, TRUE);
-		unset($itemLink, $message, $pm_handler, $pmObj);
-        return TRUE;
-    }
 
 	public function viewAccessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
@@ -249,7 +236,7 @@ class IcmspollPolls extends icms_ipf_Object {
 	 * returns URL or link to a poll
 	 */
 	function getItemLink($onlyUrl = FALSE) {
-		$url = ICMSPOLL_URL . 'index.php?poll_id=' . $this->id();
+		$url = ICMSPOLL_URL . 'index.php?poll=' . $this->short_url().'&poll_id='.$this->id();
 		if ($onlyUrl) return $url;
 		$question = $this->getQuestion();
 		return '<a href="' . $url . '" title="' . $question . ' ">' . $question . '</a>';
