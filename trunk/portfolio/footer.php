@@ -56,7 +56,7 @@ $icmsTpl->assign('thumbnail_height', $portfolioConfig['thumbnail_height']);
 $icmsTpl->assign('display_width', $portfolioConfig['display_width']);
 $icmsTpl->assign('display_height', $portfolioConfig['display_height']);
 
-$icmsTpl->assign("portfolio_adminpage", "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/admin/index.php'>" ._MD_PORTFOLIO_ADMIN_PAGE . "</a>");
+$icmsTpl->assign("portfolio_adminpage", "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/admin/portfolio.php'>" ._MD_PORTFOLIO_ADMIN_PAGE . "</a>");
 $icmsTpl->assign("portfolio_contacts", "<a href='" . ICMS_URL . "/modules/" . icms::$module->getVar("dirname") . "/contact.php'>" ._MD_PORTFOLIO_CONTACT_LINK . "</a>");
 $icmsTpl->assign("portfolio_is_admin", icms_userIsAdmin(PORTFOLIO_DIRNAME));
 $icmsTpl->assign('portfolio_url', PORTFOLIO_URL);
