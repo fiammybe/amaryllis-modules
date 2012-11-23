@@ -92,6 +92,7 @@
 		</div>
 	</div>
 <{/if}>
+<div id="icmspoll_alert" style="display: none;">&nbsp;</div>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#submit_poll_<{$poll.id}>").click(function(e) {
@@ -114,15 +115,34 @@
 				success: function(response) {
 					var pollform = "pollform_<{$poll.id}>";
 					if(response.status === "success") {
-						alert(response.message);
 						document.forms.pollform_<{$poll.id}>.reset();
+						$("#icmspoll_alert").html(response.message);
+						$("#icmspoll_alert").dialog("open");
 					} else if(response.status === "error") {
-						alert(response.message);
 						document.forms.pollform_<{$poll.id}>.reset();
+						$("#icmspoll_alert").html(response.message);
+						$("#icmspoll_alert").dialog("open");
 					}
 				}
 				
 			})
+		});
+		
+		$("#icmspoll_alert").dialog({
+			autoOpen: false,
+			modal: true,
+			hide: "clip",
+			show: "clip",
+			resizable: false,
+			width: 800,
+			height: "auto",
+			buttons: {
+				Ok: function() {
+					$(this).dialog("empty");
+					$(this).dialog( "close" );
+					window.location.reload();
+				}
+			}
 		});
 	});
 </script>
