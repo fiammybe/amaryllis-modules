@@ -18,29 +18,28 @@
  */
 
 include_once 'header.php';
-
-include_once ICMS_ROOT_PATH . '/header.php';
-
+icms::$logger->disableLogger();
 $valid_op = array('vote', 'voteblock' );
-
-$clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
+$clean_op = isset($_POST['op']) ? filter_input(INPUT_POST, 'op') : '';
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'vote':
-			$clean_poll_id = isset($_GET['poll_id']) ? filter_input(INPUT_GET, "poll_id", FILTER_SANITIZE_NUMBER_INT) : 0;
+			$clean_poll_id = isset($_POST['poll_id']) ? filter_input(INPUT_POST, "poll_id", FILTER_SANITIZE_NUMBER_INT) : 0;
+			if(!$clean_poll_id) {echo json_encode(array("status" => "error", "message" => _NOPERM)); unset($_POST); exit;}
 			$polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
 			$clean_uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;
 			$pollObj = $polls_handler->get($clean_poll_id);
 			if(is_object($pollObj) && !$pollObj->isNew() && $pollObj->viewAccessGranted() && $pollObj->voteAccessGranted()) {
-				$vote = $pollObj->vote($_POST['poll_option'], $_SERVER['REMOTE_ADDR'], $clean_uid, $_SESSION["icms_fprint"]);
-				if($vote) redirect_header(icms_getPreviousPage(), 4, _MD_ICMSPOLL_POLLS_THANKS_VOTING);
-				redirect_header(icms_getPreviousPage(), 4, _MD_ICMSPOLL_POLLS_NOTVOTED);
+				$poll_option = ($pollObj->isMultiple()) ? explode(",", $_POST['poll_option']) : $_POST['poll_option'];
+				$vote = $pollObj->vote($poll_option, $_SERVER['REMOTE_ADDR'], $clean_uid, $_SESSION["icms_fprint"]);
+				if($vote) {echo json_encode(array("status" => "success", "message" => _MD_ICMSPOLL_POLLS_THANKS_VOTING)); unset($_POST); exit;}
+				echo json_encode(array("status" => "error", "message" => _MD_ICMSPOLL_POLLS_NOTVOTED)); unset($_POST); exit;
 			} else {
-				redirect_header(icms_getPreviousPage(), 4, _NOPERM);
+				echo json_encode(array("status" => "error", "message" => _NOPERM)); unset($_POST); exit;
 			}
 			break;
 	}
 } else {
-	redirect_header(icms_getPreviousPage(), 4, _NOPERM);
+	echo json_encode(array("status" => "error", "message" => _NOPERM)); unset($_POST); exit;
 }

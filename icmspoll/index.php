@@ -77,7 +77,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$poll = $pollObj->toArray();
 				$pollObj->hasStarted();
 				$icmsTpl->assign("poll", $poll);
-				$options = $options_handler->getAllByPollId($clean_poll, "weight", "ASC");
+				$options = $options_handler->getAllByPollId($pollObj->id(), "weight", "ASC");
 				$icmsTpl->assign("options", $options);
 				$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
 				$icmsTpl->assign("user_id", $user_id);
