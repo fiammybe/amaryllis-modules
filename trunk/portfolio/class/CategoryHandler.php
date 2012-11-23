@@ -76,6 +76,7 @@ class mod_portfolio_CategoryHandler extends icms_ipf_Handler {
 	public function getCategories($active = FALSE, $order = "weight", $sort = "ASC", $start = 0, $limit = 0) {
 		$criteria = $this->getCategoriesCriterias($active, $order, $sort, $start, $limit);
 		$categorys = $this->getObjects($criteria, TRUE, FALSE);
+		$ret = array();
 		foreach ($categorys as $key => $category) {
 			$ret[$key] = $category;
 		}
