@@ -100,12 +100,14 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 	public function getQuestion() {
 		$question = $this->getVar("question", "s");
 		$question = icms_core_DataFilter::checkVar($question, "html", "output");
+		$question = icms_core_DataFilter::undoHtmlSpecialChars($question);
 		return $question;
 	}
 	
 	public function getDescription() {
 		$description = $this->getVar("description", "s");
 		$description = icms_core_DataFilter::checkVar($description, "html", "output");
+		$description = icms_core_DataFilter::undoHtmlSpecialChars($description);
 		return $description;
 	}
 	
@@ -179,7 +181,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$module = icms::handler('icms_module')->getByDirname(ICMSPOLL_DIRNAME);
-		$voteperm = $gperm_handler->checkRight('polls_vote', $this->getVar('poll_id', 'e'), $groups, $module->getVar("mid"));
+		$voteperm = $gperm_handler->checkRight('polls_vote', $this->id(), $groups, $module->getVar("mid"));
 		if ($voteperm && !$this->hasVoted() && !$this->hasExpired() && $this->hasStarted()) return TRUE;
 		return FALSE;
 	}
@@ -236,7 +238,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 	 * returns URL or link to a poll
 	 */
 	function getItemLink($onlyUrl = FALSE) {
-		$url = ICMSPOLL_URL . 'index.php?poll=' . $this->short_url().'&poll_id='.$this->id();
+		$url = ICMSPOLL_URL . 'index.php?poll=' . $this->short_url();
 		if ($onlyUrl) return $url;
 		$question = $this->getQuestion();
 		return '<a href="' . $url . '" title="' . $question . ' ">' . $question . '</a>';
@@ -272,7 +274,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 	}
 	
 	public function isMultiple() {
-		return ($this->getVar("multiple", "e") == 1) ? TRUE : FALSE;
+		return ($this->getVar("multiple")) ? TRUE : FALSE;
 	}
 	
 	public function getInputType() {

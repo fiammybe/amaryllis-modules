@@ -16,11 +16,11 @@
 		    <span class="more_polls_by">(<{$poll.more_polls_by_user}>)</span>
 		</div>
 		<div class="singlepoll_form">
-			<form class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php?op=vote&poll_id=<{$poll.id}>" method="post">
+			<form id="pollform_<{$poll.id}>" name="pollform_<{$poll.id}>" class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php" method="post">
 				    <div class="option_set">
     					<{foreach item=option from=$options name=options}>
     						<div class="icmspoll_option_<{$option.color}>">
-    							<input class="icmspoll_option_<{$option.inputtype}>" type="<{$poll.inputtype}>" name="poll_option<{if $poll.isMultiple}>[]<{/if}>" value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
+    							<input id="poll_option_<{$option.id}>" class="icmspoll_option_<{$option.inputtype}>" type="<{$poll.inputtype}>" name="poll_option<{if $poll.isMultiple}>[]<{/if}>" value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
     							<{$option.text}>
 	    						<{if $option.userCanEditAndDelete}>
 									<span class="options_buttonbar">
@@ -38,7 +38,7 @@
 					</div>
 				<{elseif !$poll.hasVoted && $poll.voteAccessGranted}>
 					<div class="box">
-						<input type="submit" class="btn icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" /><span class="helper"></span>
+						<input id="submit_poll_<{$poll.id}>" name="submit_poll_<{$poll.id}>" type="submit" class="btn icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" /><span class="helper"></span>
 					</div>
 				<{else}>
 				<{/if}>
@@ -86,9 +86,43 @@
     		<div class="icmspoll_clear_left">&nbsp;</div>
 			<{if $poll.hasVoted && !$poll.hasExpired}>
 				<div class="box">
-					<input type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+					<input id="submit_poll_<{$poll.id}>" type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 				</div>
 			<{/if}>
 		</div>
 	</div>
 <{/if}>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#submit_poll_<{$poll.id}>").click(function(e) {
+			e.preventDefault();
+			$("#pollform_<{$poll.id}>").submit();
+			return false;
+		});
+		
+		$("#pollform_<{$poll.id}>").submit(function(e) {
+			e.preventDefault();
+			$.ajax({
+				url: $("#pollform_<{$poll.id}>").attr("action"),
+				type: "POST",
+				dataType: "json",
+				data: {
+					poll_id: '<{$poll.id}>',
+					op: 'vote',
+					poll_option: $("input:<{$poll.inputtype}>[name=poll_option<{if $poll.isMultiple}>[]<{/if}>]:checked").map(function(){return this.value;}).get().join(",")
+				},
+				success: function(response) {
+					var pollform = "pollform_<{$poll.id}>";
+					if(response.status === "success") {
+						alert(response.message);
+						document.forms.pollform_<{$poll.id}>.reset();
+					} else if(response.status === "error") {
+						alert(response.message);
+						document.forms.pollform_<{$poll.id}>.reset();
+					}
+				}
+				
+			})
+		});
+	});
+</script>

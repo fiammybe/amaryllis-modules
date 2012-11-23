@@ -64,6 +64,7 @@ class IcmspollOptions extends icms_ipf_Object {
 	public function getOptionText() {
 		$optionText = $this->getVar("option_text", "s");
 		$optionText = icms_core_DataFilter::checkVar($optionText, "html", "output");
+		$optionText = icms_core_DataFilter::undoHtmlSpecialChars($optionText);
 		return $optionText;
 	}
 	

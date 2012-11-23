@@ -253,7 +253,7 @@ $modversion['config'][$i] = array(
 								'title' 		=> '_MI_ICMSPOLL_CONFIG_DATE_FORMAT',
 								'description' 	=> '_MI_ICMSPOLL_CONFIG_DATE_FORMAT_DSC',
 								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'string',
+								'valuetype' 	=> 'text',
 								'default' 		=> 'd/m/Y H:i:s'
 							);
 
@@ -340,7 +340,7 @@ $modversion['config'][$i] = array(
 								'title' 		=> '_MI_ICMSPOLL_CONFIG_PRINT_FOOTER',
 								'description' 	=> '_MI_ICMSPOLL_CONFIG_PRINT_FOOTER_DSC',
 								'formtype' 		=> 'textarea',
-								'valuetype' 	=> 'txt',
+								'valuetype' 	=> 'text',
 								'default' 		=> ''
 							);
 $i++;
@@ -349,7 +349,7 @@ $modversion['config'][$i] = array(
 								'title' 		=> '_MI_ICMSPOLL_CONFIG_PRINT_LOGO',
 								'description' 	=> '_MI_ICMSPOLL_CONFIG_PRINT_LOGO_DSC',
 								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'txt',
+								'valuetype' 	=> 'text',
 								'default' 		=> 'themes/iTheme/img/logo.png'
 							);
 $i++;
