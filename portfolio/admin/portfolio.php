@@ -109,18 +109,9 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 		default:
 			icms_cp_header();
 			icms::$module->displayAdminMenu( 0, _MI_PORTFOLIO_MENU_PORTFOLIO );
-			$criteria = '';
-			if ($clean_portfolio_id) {
-				$portfolioObj = $portfolio_handler->get($clean_portfolio_id);
-				if ($portfolioObj->id()) {
-					$portfolioObj->displaySingleObject();
-				}
-			}
-			if (empty($criteria)) {
-				$criteria = null;
-			}
+			
 			// create portfolio table
-			$objectTable = new icms_ipf_view_Table($portfolio_handler, $criteria);
+			$objectTable = new icms_ipf_view_Table($portfolio_handler);
 			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_active','center', 50, 'portfolio_active'));
 			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_title', FALSE, FALSE, 'getPreviewItemLink'));
 			$objectTable->addColumn( new icms_ipf_view_Column('portfolio_cid', FALSE, FALSE, 'getPortfolioCid'));

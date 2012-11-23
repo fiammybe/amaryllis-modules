@@ -8,6 +8,7 @@
 * Added possibility to switch modules startpage from default to category overview
 * Added new field for used techniques per portfolio
 * small CSS Adjustments
+* removed smarty image resizer
 
 == First Release: Version 1.0 => Release Date: 2012-06-28 ==
 
