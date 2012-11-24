@@ -26,7 +26,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
                         "name"                      => _MI_EVENT_MD_NAME,
-                        "version"                   => 1.1,
+                        "version"                   => 1.2,
                         "description"               => _MI_EVENT_MD_DESC,
                         "author"                    => "QM-B",
                         "author_realname"           => "Steffen Flohrer",
@@ -43,11 +43,11 @@ $modversion = array(
                         "image"                     => "images/icon_big.png", /* for backward compatibility */
                     
                     /**  Development information */
-                        "status_version"            => "1.1",
-                        "status"                    => "final",
+                        "status_version"            => "1.2",
+                        "status"                    => "beta",
                         "date"                      => "01:13 21.11.2012",
                         "author_word"               => "",
-                        "warning"                   => _CO_ICMS_WARNING_FINAL,
+                        "warning"                   => _CO_ICMS_WARNING_BETA,
                     
                     /** Contributors */
                         "developer_website_url"     => "http://code.google.com/p/amaryllis-modules/",
@@ -81,6 +81,7 @@ $modversion['people']['documenters'][] = "<a href='http://community.impresscms.o
 $modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=10' target='_blank'>Sato-San</a>";
 $modversion['people']['testers'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=97' target='_blank'>Debianus</a>";
 $modversion['people']['testers'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=243' target='_blank'>optimistdd</a>";
+$modversion['people']['testers'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=147' target='_blank'>cubase</a>";
 
 $modversion['people']['translators'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=243' target='_blank'>optimistdd</a>";
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a>";
@@ -109,6 +110,8 @@ $i++;
 $modversion['object_items'][$i] = 'calendar';
 $i++;
 $modversion['object_items'][$i] = 'joiner';
+$i++;
+$modversion['object_items'][$i] = 'comment';
 
 $modversion['tables'] = icms_getTablesArray( $modversion['dirname'], $modversion['object_items'] );
 
@@ -169,6 +172,16 @@ $modversion['blocks'][$i]['show_func']		= 'b_event_calendars_show';
 $modversion['blocks'][$i]['edit_func']		= 'b_event_calendars_edit';
 $modversion['blocks'][$i]['options']		= '0'; //category
 $modversion['blocks'][$i]['template']		= 'event_block_calendars.html';
+$modversion['blocks'][$i]['can_clone']		= TRUE;
+// Comment block
+$i++;
+$modversion['blocks'][$i]['file']			= 'event_comments.php';
+$modversion['blocks'][$i]['name']			= _MI_EVENT_BLOCK_COMMENTS;
+$modversion['blocks'][$i]['description']	= _MI_EVENT_BLOCK_COMMENTS_DSC;
+$modversion['blocks'][$i]['show_func']		= 'b_event_comments_show';
+$modversion['blocks'][$i]['edit_func']		= 'b_event_comments_edit';
+$modversion['blocks'][$i]['options']		= '10'; //limit
+$modversion['blocks'][$i]['template']		= 'event_block_comments.html';
 $modversion['blocks'][$i]['can_clone']		= TRUE;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -390,7 +403,38 @@ $modversion['config'][$i] = array(
 								'default' 		=> 0,
 								'options'       => $cat_list
 							);
-							
+/**
+ * added in 1.2
+ */
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'date_format',
+                                'title'         => '_MI_EVENT_CONFIG_DATE_FORMAT',
+                                'description'   => '_MI_EVENT_CONFIG_DATE_FORMAT_DSC',
+                                'formtype'      => 'text',
+                                'valuetype'     => 'text',
+                                'default'       => 'd/m/Y H:i'
+                            );
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'user_can_comment',
+                                'title'         => '_MI_EVENT_CONFIG_USER_CAN_COMMENT',
+                                'description'   => '_MI_EVENT_CONFIG_USER_CAN_COMMENT_DSC',
+                                'formtype'      => 'yesno',
+                                'valuetype'     => 'int',
+                                'default'       => 1
+                            );
+$i++;
+$modversion['config'][$i] = array(
+                                'name'          => 'comments_need_approval',
+                                'title'         => '_MI_EVENT_CONFIG_COMMENTS_NEED_APPROVAL',
+                                'description'   => '_MI_EVENT_CONFIG_COMMENTS_NEED_APPROVAL_DSC',
+                                'formtype'      => 'yesno',
+                                'valuetype'     => 'int',
+                                'default'       => 1
+                            );
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// NOTIFICATIONS ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -60,3 +60,8 @@ define("_MD_EVENT_JOINERS_LIST", "Other Users you can meet there");
  * added in 1.1
  */
 define("_MD_EVENT_REGISTER", "Sorry, you don't have permissions to submit Events. Please register or login first.");
+/**
+ * added in 1.2
+ */
+define("_MD_EVENT_SUCCESSFUL_COMMENTED", "Thanks for submit comment.");
+define("_MD_EVENT_SUCCESSFUL_COMMENTED_APPROVAL", "Thanks for submit comment. Your Comment is currently awaiting approval.");

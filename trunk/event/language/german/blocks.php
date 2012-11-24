@@ -31,6 +31,16 @@ define("_MB_EVENT_CITY", "Stadt");
 define("_MB_EVENT_PLZ", "Postleitzahl");
 define("_MB_EVENT_DISPLAY_CITY", "Suche nach Stadt?");
 define("_MB_EVENT_DISPLAY_PLZ", "Suche nach  Postleitzahl?");
+/**
+ * added in 1.1
+ */
 define("_MB_EVENT_BOTH", "Beide");
 define("_MB_EVENT_CALENDAR", "Google-Kalender");
 define("_MB_EVENT_DISPLAY", "Zeige");
+/**
+ * added in 1.2
+ */
+define("_MB_EVENT_LIMIT", "Limit");
+define("_MB_EVENT_RECENT_COMMENTS", "Recently submitted comments on Events");
+define("_MB_EVENT_MY_RECENT_COMMENTS", "Recently submitted comments on my Events");
+define("_MB_EVENT_ADMIN_COMMENTS", "Recently submitted comments awaiting approval");

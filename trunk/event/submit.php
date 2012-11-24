@@ -33,7 +33,7 @@ include_once 'header.php';
 include_once ICMS_ROOT_PATH . 'header.php';
 icms::$logger->disableLogger();
 $clean_op = (isset($_POST['op'])) ? filter_input(INPUT_POST, "op") : "";
-$valid_op = array("addevent", "resizeevent", "dropevent", "del", "join", "unjoin");
+$valid_op = array("addevent", "resizeevent", "dropevent", "del", "join", "unjoin", "addcomment");
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
@@ -97,6 +97,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$allday = $dayDelta = $minDelta = $end = $new_end = $clean_event = $event = "" ;
 			$clean_event = isset($_POST['event_id']) ? filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT) : 0;
             $event = $event_handler->get($clean_event);
+			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
 			if(!$event->userCanEditAndDelete()) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_ACCESS_FAILED)); unset($_POST); exit;}
 			$allday = $dayDelta = $minDelta = $end = $new_end = "";
 			$dayDelta = filter_input(INPUT_POST, 'day_diff', FILTER_SANITIZE_NUMBER_INT);
@@ -113,6 +114,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$allday = $dayDelta = $minDelta = $end = $new_end = $new_start = $clean_event = $event = "" ;
 			$clean_event = isset($_POST['event_id']) ? filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT) : 0;
             $event = $event_handler->get($clean_event);
+			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
 			if(!$event->userCanEditAndDelete()) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_ACCESS_FAILED));unset($_POST); exit;}
 			$allday = $dayDelta = $minDelta = $end = $new_end = "";
 			$allday = ($_POST['event_allday'] == "false") ? FALSE : TRUE;
@@ -142,7 +144,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			break;
 		case 'join':
 			$event_id = filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT);
+			if($event_id == 0){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
 			$event = $event_handler->get($event_id);
+			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
 			if($event->hasJoint()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
 			if(!$event->joinEvent()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
 			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
@@ -153,12 +157,42 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		
 		case 'unjoin':
 			$event_id = filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT);
+			if($event_id == 0){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
 			$event = $event_handler->get($event_id);
+			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
 			if(!$event->hasJoint()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
 			if(!$event->unjoinEvent()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
 			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
 			$event->sendMessageUnjoined($uid);
 			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_UNJOINED));
+			unset($_POST); exit;
+			break;
+		case 'addcomment':
+			$event_id = filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT);
+			if($event_id == 0){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			$event = $event_handler->get($event_id);
+			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
+			if(!$uid) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			$comment_handler = icms_getModuleHandler("comment", EVENT_DIRNAME, "event");
+			if(!$comment_handler->userCanComment()){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			$body = filter_input(INPUT_POST, "comment_body");
+			$body = strip_tags($body, "<a><b><strong><i><br>");
+			$body = icms_core_DataFilter::checkVar($body, "html", "input");
+			if($body == ""){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			$approve = ($eventConfig['comments_need_approval'] && !$event_isAdmin) ? FALSE : TRUE;
+			$comment = $comment_handler->create(TRUE);
+			$comment->setVar("comment_uid", $uid);
+			$comment->setVar("comment_eid", $event->id());
+			$comment->setVar("comment_eid_uid", $event->getVar("event_submitter", "e"));
+			$comment->setVar("comment_ip", getenv("REMOTE_ADDR"));
+			$comment->setVar("comment_fprint", $_SESSION['icms_fprint']);
+			$comment->setVar("comment_pdate", time());
+			$comment->setVar("comment_body", $body);
+			$comment->setVar("comment_approve", $approve);
+			if(!$comment_handler->insert($comment)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));unset($_POST);exit;}
+			$message = ($approve) ? _MD_EVENT_SUCCESSFUL_COMMENTED : _MD_EVENT_SUCCESSFUL_COMMENTED_APPROVAL;
+			echo json_encode(array('status' => 'success','message'=> $message, 'comments' => $event->getEventComments()));
 			unset($_POST); exit;
 			break;
     }

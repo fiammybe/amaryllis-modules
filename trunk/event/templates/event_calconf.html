@@ -9,13 +9,6 @@
 <{/if}>
 <script type='text/javascript'>
 	$(document).ready(function() {
-		
-		function addCalButton(where, text, id) {
-			var my_button = '<span class="fc-header-space"></span>' +
-							'<span id="' + id + '" class="cal-button">' + text +'</span>';
-			$("td.fc-header-" + where).append(my_button);
-			$("#" + id).button();
-		}
 		var date = new Date();
 		var d = date.getDate();
 		var m = date.getMonth();
@@ -146,10 +139,11 @@
         		element.qtip({
 		            content: {
 		                title: { text: event.title },
-		                text: '<span class="start">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'HH:mm')) + 
+		                text: (!event.allDay) ? '<span class="start">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'HH:mm')) + 
 		                		'<br /><span class="End">End: </span>' + ($.fullCalendar.formatDate(event.end, 'HH:mm')) + 
-		                		'<br /><span class="dsc">Description: </span>' + event.description +
-		                		'<br />' + event.approval
+		                		'<br /><span class="dsc">Description: </span><p>' + event.description +
+		                		'</p><br />' + event.approval : '<span class="start">Start: </span><{$smarty.const._CO_EVENT_ALLDAY}><br /><span class="dsc">Description: </span><p>' + event.description +
+		                		'</p><br />' + event.approval 
 					},
 					show: { solo: true },
 		            style: { 
@@ -202,7 +196,6 @@
 					if(startDate < date && lastView != 'month') {
 						$("#event_alert").html("<{$smarty.const._CO_EVENT_CANNOT_BOOK_PAST}>");
 						$("#event_alert").dialog("open");
-						//alert('<{$smarty.const._CO_EVENT_CANNOT_BOOK_PAST}>');
 						calendar.fullCalendar( 'unselect' );
 					} else {
 						if(lastView != 'month')
@@ -304,14 +297,22 @@
 		});
 		
 		<{if $gotoDate }>
+			/**
+			 * jump to a submitted date
+			 */
 			$('#calendar').fullCalendar('changeView', 'agendaDay')
     				.fullCalendar('gotoDate', <{$gotoDate}>);
-    		//$('#<{$smarty.get.event}>').click();
 		<{/if}>
 		
-		
+		/**
+		 * adding new calendar button to submit events
+		 */
 		addCalButton("left", "<{$smarty.const._CO_EVENT_SUBMIT}>", "submit_button");
+		
 		<{if $cat_submit}>
+			/**
+			 * ui dialog for submitting events
+			 */
 			$( "#submit_form" ).dialog({
 				title: "<{$smarty.const._MD_EVENT_ADDEVENT}>",
 	        	autoOpen: false,
@@ -409,13 +410,16 @@
 					$("#event_startdate").datetimepicker('option', 'maxDateTime', $("#event_enddate").datetimepicker('getDate') );
 				}
 			});
+			/**
+			 * initializing submit button for submitting events
+			 */
 	    	$("#submit_button").click(function () {
 	    		var title = prompt('<{$smarty.const._MD_EVENT_TITLE}>');
 				title = title;
 				$("#event_name").val(title);
 	    		$("#submit_form").dialog("open") 
 	    	});
-	    <{elseif !$icms_isUser}>
+	    <{elseif !$cat_submit && !$icms_isUser}>
 	    	$("#submit_button").click(function () {
 	    		$("#event_alert").html("<{$smarty.const._MD_EVENT_REGISTER}>");
 	    		$("#event_alert").dialog({
@@ -437,6 +441,9 @@
 	    	$("#event_alert").dialog("open");
 	    <{/if}>
 	    
+	    /**
+	     * initializing dialog on form success/redirect messages
+	     */
 		$("#form_message").dialog({
 			title: "<{$smarty.const._MD_EVENT_THANKS}>",
 			autoOpen: false,
@@ -453,12 +460,17 @@
 			}
 		});
 		
+		/**
+		 * helps resizing calendars content in small themes
+		 */
 		$(window).resize(function() {
 			if (isResizingEvent) { return; }
 			var viewportHeight =  $(window).height()
 			$('#calendar').fullCalendar('option', 'contentHeight',  $(window).height());
 		});
-		
+		/**
+		 * introducing dialog for cal events - basic
+		 */
 		$("#cal_event").dialog({
 			autoOpen: false,
 			modal: true,
@@ -469,6 +481,9 @@
 			height: "auto"
 		});
 		
+		/**
+		 * replacement for old alert - makes div#event_alert a dialog box to return html content
+		 */
 		$("#event_alert").dialog({
 			autoOpen: false,
 			modal: true,
@@ -485,6 +500,103 @@
 			}
 		});
 		
+		$('body').delegate('.comment_user', 'hover', function(){
+			$(this).qtip({
+				content: {
+					text: $(this).next('div.event_popup').html(),
+					title: $(this).attr('original-title')
+				},
+				style: {
+					width:500,
+					viewport: $(window),
+					textAlign:'left',
+					tip:'bottomLeft',
+					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
+				},
+				position:   {
+					target: 'mouse',
+					my:'bottomLeft',
+					adjust: {
+						x: 0,  y: -5
+					}
+				},
+			});
+		});
+		
+		/**
+		 * make use of qtip for legend description
+		 */
+		$('.legend_item, .comment_user').each(function(){
+			$(this).qtip({
+				content: {
+					text: $(this).next('div.event_popup').html(),
+					title: $(this).attr('original-title')
+				},
+				style: {
+					width:500,
+					viewport: $(window),
+					textAlign:'left',
+					tip:'bottomLeft',
+					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
+				},
+				position:   {
+					target: 'mouse',
+					my:'bottomLeft',
+					adjust: {
+						x: 0,  y: -5
+					}
+				},
+			});
+		});
+		/**
+		 * submit function for cat legend
+		 */
+		$("#event_catselect").submit(function(e) {
+			var form = $(this);
+			e.preventDefault();
+			$.ajax({
+				url: form.attr('action'),
+				type: "POST",
+				data: {event_cats: $("input:checkbox[name=event_cats[]]").serializeArray()},
+				dataType: "json",
+				success: function(response) {
+					if(response.status == "success") {
+						$('#calendar').fullCalendar('removeEvents').fullCalendar('removeEventSources');
+						$('#calendar').fullCalendar('lazyFetching', false);
+						$.each(response.message, function(index, value) {
+							$('#calendar').fullCalendar('addEventSource', {
+								url: value.feed,
+								className: value.classname,
+								color: value.color,
+								textColor: value.txtcolor,
+								ignoreTimezone: false,
+								currentTimezone: (value.timezone != "undefined") ? value.timezone : '<{$default_timezone}>'
+							});
+							$('#calendar').fullCalendar('rerenderEvents');
+						});
+						return false;
+					}
+				}
+			});
+			return false;
+		});
+		
+		/**
+		 * submitting  legend onChange checkboxes
+		 */
+		$('form#event_catselect input:checkbox').change(function(){
+			$('#event_catselect').submit();
+			return false;
+		});
+		
+		/**
+		 * additional functions
+		 */
+		/**
+		 * adding a time line to agenda views (agendaDay and agendaWeek)
+		 * @param curTime -> date object of the current time
+		 * @return returns and refreshes a small time line in the current time slot all 5 minutes
+		 */
 		function setTimeline() {
 			var curTime = new Date();
 			if (curTime.getHours() == 0 && curTime.getMinutes() <= 5) {
@@ -528,72 +640,34 @@
 				}
 			}
 		};
+		/**
+		 * adding new Buttons to cal header
+		 */
+		function addCalButton(where, text, id) {
+			var my_button = '<span class="fc-header-space"></span>' +
+							'<span id="' + id + '" class="cal-button">' + text +'</span>';
+			$("td.fc-header-" + where).append(my_button);
+			$("#" + id).button();
+		}
 		
-		$('.legend_item').each(function(){
-			$(this).qtip({
-				content: {
-					text: $(this).next('div.event_popup').html(),
-					title: $(this).attr('original-title')
-				},
-				style: {
-					width:500,
-					viewport: $(window),
-					textAlign:'left',
-					tip:'bottomLeft',
-					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
-				},
-				position:   {
-					target: 'mouse',
-					my:'bottomLeft',
-					adjust: {
-						x: 0,  y: -5
-					}
-				},
-			});
-		});
-		
-		$("#event_catselect").submit(function(e) {
-			var form = $(this);
-			e.preventDefault();
-			$.ajax({
-				url: form.attr('action'),
-				type: "POST",
-				data: {event_cats: $("input:checkbox[name=event_cats[]]").serializeArray()},
-				dataType: "json",
-				success: function(response) {
-					if(response.status == "success") {
-						$('#calendar').fullCalendar('removeEvents').fullCalendar('removeEventSources');
-						$('#calendar').fullCalendar('lazyFetching', false);
-						$.each(response.message, function(index, value) {
-							$('#calendar').fullCalendar('addEventSource', {
-								url: value.feed,
-								className: value.classname,
-								color: value.color,
-								textColor: value.txtcolor,
-								ignoreTimezone: false,
-								currentTimezone: (value.timezone != "undefined") ? value.timezone : '<{$default_timezone}>'
-							});
-							$('#calendar').fullCalendar('rerenderEvents');
-						});
-						return false;
-					}
-				}
-			});
-			return false;
-		});
-		
-		$('form#event_catselect input:checkbox').change(function(){
-			$('#event_catselect').submit();
-			return false;
-		});
-		
+		/**
+		 * checks for seo input for opening an event
+		 * @param seo - check if corrent seo is in available events
+		 * @return return cklickEvent @ event seo Object
+		 */
 		function openEvent() {
 			var eventSeo = "<{$smarty.get.event}>";
 			var events = $('#calendar').fullCalendar('clientEvents',function(event) {return event.seo == eventSeo;});
-			console.log(events.length);
 			clickEvent(events[0]);
 		};
 		
+		/**
+		 * clickEvent fires a clicked event to dialog and opens dialog box for single Event view
+		 * @param event -> single js-event Object to be opened
+		 * @param jsEvent -> current jsEvent
+		 * @param view -> contains the view object
+		 * @return opening ui dialog and appends all event data to the template
+		 */
 		function clickEvent(event, jsEvent, view) {
 				$('#calendar').fullCalendar('updateEvent', event);
 				startDate = $.fullCalendar.formatDate(event.start, 'HH:mm');
@@ -624,8 +698,41 @@
 					}
 				}
 				$("div#show_event_dsc").html(event.description);
-				$("span#show_event_startdate").text(startDate);
-				$("span#show_event_enddate").text(endDate);
+				$("div#cal_event").attr("original-id", event.id);
+				
+				var divClone = $("#event_date").clone();
+				if(!event.allDay) {
+					$("span#show_event_startdate").html(startDate);
+					$("span#show_event_enddate").html(endDate);
+					$("#event_date").show();
+					$("#event_alldayevent").html("");
+					$("#event_alldayevent").hide();
+					
+				} else {
+					$("div#event_alldayevent").html("<{$smarty.const._CO_EVENT_ALLDAY}>");
+					$("#event_alldayevent").show();
+					$("#event_date").hide();
+					$("span#show_event_startdate, span#show_event_enddate").html("");
+				}
+				<{if $can_comment}>
+					if(event.cat === "google") {
+						$("#event_commentform").hide();
+						$("#event_comment_tarea").attr("disabled", "disabled");
+						$("#submit_comment").attr("disabled", "disabled");
+						$("#event_comment_container").hide();
+						$("#event_comment_container").html("");
+					} else {
+						$("#event_commentform").show();
+						$("#event_comment_tarea").removeAttr("disabled");
+						$("#submit_comment").removeAttr("disabled");
+						$("#event_comment_container").show();
+					}
+				<{/if}>
+				if(event.comments !== "") {
+					$("div#event_comment_container").html(event.comments);
+				} else {
+					$("div#event_comment_container").html("");
+				}
 				if(event.contact != false) {
 					$("div#show_event_contact").html(event.contact);
 					$("div#show_event_contact").parent("div").show();
@@ -658,7 +765,13 @@
 				} else {
 					$("div#show_event_phone").parent("div").hide();
 				}
-				$("div#show_event_cid").html(event.cat);
+				if(event.cat !== "google") {
+					$("div#show_event_cid").html(event.cat);
+					$("div#show_event_cid").parent("div").show();
+				} else {
+					$("div#show_event_cid").html("");
+					$("div#show_event_cid").parent("div").hide();
+				}
 				if(event.urllink != false) {
 					$("div#show_event_url").html(event.urllink);
 					$("div#show_event_url").parent("div").show();
@@ -684,6 +797,7 @@
 					$("div#event_join_info").html("");
 					$("div#event_join_info").hide();
 				}
+				
 				$("div#event_success").html("");
 				
 				if(event.joint_friends !== false) {
@@ -705,7 +819,7 @@
 					$("div#joiners_list").parent("div").hide();
 				<{/if}>
 				
-				$("div#cal_event").dialog("open");
+				
 				$("div#cal_event").dialog({
 					title: buttons + event.title,
 					buttons: [
@@ -718,6 +832,7 @@
 						}
 					]
 				});
+				$("div#cal_event").dialog("open");
 				
 				$('#event_delete').click(function(){
 					var button = $(this);
@@ -812,6 +927,41 @@
 					});
 				});
 				
+				<{if $can_comment}>
+					/**
+					 * comment functions
+					 */
+					$("#submit_comment").click(function(e, event){
+						e.preventDefault();
+						$("#event_comment_form").submit();
+						return false;
+					});
+					$("#event_comment_form").submit(function(e) {
+						e.preventDefault();
+						$.ajax({
+							url: "<{$event_url}>submit.php",
+							type: "POST",
+							data: {op: "addcomment", comment_body: $("#event_comment_tarea").val(), event_id: $("div#cal_event").attr("original-id")},
+							dataType: "json",
+							success: function(response) {
+								if(response.status === "success") {
+									document.forms.event_comment_form.reset();
+									$('#calendar').fullCalendar('refetchEvents');
+									$("#event_success").html(response.message);
+									$("#event_comment_container").html(response.comments);
+								} else if(response.status == "error") {
+									$("#event_success").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
+								}
+							}
+						})
+						
+					});
+				<{/if}>
+				var hash = window.location.hash;
+				if(hash != "") {
+					//$(hash).css('background-color', '#c9d1fe');
+					changeColorScheme("highlighted");
+				}
 				$('#event_edit').click(function(){
 					var button = $(this);
 					start = $.fullCalendar.formatDate( event.start, "yyyy/MM/dd HH:mm");
@@ -871,7 +1021,13 @@
 					$("div#cal_event").dialog("close");
 					$("#submit_form").dialog("open");
 				});
-				
 			};
+			
+			function changeColorScheme(text){
+				var hash = window.location.hash.slice(1);
+				setTimeout(function(){$('#'+hash).addClass(text);},500);
+				setTimeout(function(){$('#'+hash).removeClass(text);},5000);
+				var hash = location.hash.replace('#','');
+};
 	});
 </script>

@@ -278,7 +278,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$ret['joiner_max'] = $this->getMaxJoiners();
 		$ret['friends'] = $this->getJoinedFriends();
 		$ret['joiners'] = $this->getJoiners();
-		//$ret['comments'] = $this->getEventComments();
+		$ret['comments'] = $this->getEventComments();
         return $ret;
 	}
 	
@@ -309,7 +309,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		if($eventConfig['user_can_comment'] == 1) {
 			$comment_handler = icms_getModuleHandler("comment", EVENT_DIRNAME, "event");
 			$comments = $comment_handler->getComments(TRUE, $this->id(), FALSE);
-			return $comments;
+			return implode(" ", $comments);
 		}
 		return FALSE;
 	}
