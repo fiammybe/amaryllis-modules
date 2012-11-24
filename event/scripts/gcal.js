@@ -88,7 +88,7 @@ function transformOptions(sourceOptions, start, end) {
 						allDay: allDay,
 						location: entry['gd$where'][0]['valueString'],
 						description: entry['content']['$t'],
-						cat: "",
+						cat: "google",
                         contact: "",
                         street: "",
                         zip: "",
@@ -109,14 +109,15 @@ function transformOptions(sourceOptions, start, end) {
                         url_tar: "",
                         url_mid: "",
                         event_public: "",
-						approval: false,
+						approval: "",
 						can_join: false,
 						event_can_joint: 0,
 						event_joiners: "",
 						joiner_max: "",
 						has_joint: false,
 						joint_friends: false,
-						joiners :false
+						joiners :false,
+						comments: ''
 					});
 				});
 			}

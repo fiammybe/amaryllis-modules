@@ -1,6 +1,14 @@
 = *Event* Changelog =
 
-== Version 1.1 => Release Date: XX.XX.2012 ==
+== Version 1.2 => Release Date: XX.XX.2012 ==
+- added comments to single events
+- updates for displaying events:
+-- removing start/endtime if the event is an allDay-Event
+-- Moving the "Loading..." on page load into img alt attribut
+-- added several new attributes in event rendering
+- updated all lang files
+
+== Version 1.1 => Release Date: 21.11.2012 ==
 - switched all operations from "GET" to "POST"
 - removed all "Alert" funcs and switched to ui dialog
 - added timeline to agenda views to see current time
@@ -23,6 +31,7 @@
 - breadcrumb now visible without index
 - Event Box now opening, if an event is called from block
 - Ajax loading gif will be visible, while calendar is loading events
+- updated all lang files
 
 == Version 1.0 => Release Date: 10.11.2012 ==
 - First public release of the module.

@@ -8,9 +8,10 @@
 		
 		<div class="event_row">
 			<div class="event_cell"><b><{$smarty.const._MD_EVENT_FROMTO}></b>:&nbsp;</div>
-				<div class="event_cell">
+				<div class="event_cell" id="event_date">
 					<span id="show_event_startdate">&nbsp;</span> &nbsp;-&nbsp;<span id="show_event_enddate">&nbsp;</span>
 				</div>
+				<div class="event_cell" id="event_alldayevent">&nbsp;</div>
 		</div>
 		
 		<div class="event_row">
@@ -49,4 +50,16 @@
 	
 	<div id="event_success" class="">&nbsp;</div>
 	<div id="awaiting_approval" class="awaiting_approval">&nbsp;</div>
+	
+	<{if $can_comment}>
+		<div id="event_commentform">
+			<form id="event_comment_form" name="event_comment_form" action="#" original-id>
+				<textarea id="event_comment_tarea" name="event_comment_tarea" placeholder="... Add your comment here ..."></textarea>
+				<input type="submit" value="<{$smarty.const._SUBMIT}>" id="submit_comment" class="formButton" />
+			</form>
+		</div>
+	<{/if}>
+	<{if $use_comments}>
+		<div id="event_comment_container">&nbsp;</div>
+	<{/if}>
 </div>

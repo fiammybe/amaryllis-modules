@@ -54,6 +54,8 @@ $icmsTpl->assign("default_time", $eventConfig['default_time']);
 $icmsTpl->assign("default_timezone", $eventConfig['default_timezone']);
 
 $icmsTpl->assign("use_theme", ($eventConfig['use_theme'] == 1) ? 'true' : 'false' );
+$icmsTpl->assign("use_comments", $eventConfig['user_can_comment'] == 1 ? TRUE : FALSE);
+$icmsTpl->assign("can_comment", is_object(icms::$user) ? TRUE : FALSE);
 
 $icmsTpl->assign("agenda_slot", $eventConfig['agenda_slot']);
 $icmsTpl->assign("agenda_min", $eventConfig['agenda_min']);

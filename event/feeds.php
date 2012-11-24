@@ -97,7 +97,8 @@ if(!$clean_cat == FALSE){
 				'joiner_max'		=> $event['joiner_max'],
 				'has_joint'			=> $event['has_joint'],
 				'joint_friends'		=> $event['friends'],
-				'joiners'			=> $event['joiners']
+				'joiners'			=> $event['joiners'],
+				'comments'			=> $event['comments']
 			);
 		}
 		echo json_encode($feeds);exit;
