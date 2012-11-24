@@ -60,12 +60,12 @@ define("_MI_GUESTBOOK_GUEST_CAN_SUBMIT", "G&auml;ste k&ouml;nnen Einträge schre
 define("_MI_GUESTBOOK_GUEST_CAN_SUBMIT_DSC", "");
 define("_MI_GUESTBOOK_SHOW_EMAIL", "Anzeige der E-Mail Adresse im Frontend?");
 define("_MI_GUESTBOOK_SHOW_EMAIL_DSC", "zeigen/ausblenden der E-Mail Adresse im Fronted");
-define("_MI_GUESTBOOK_DISPLAY_EMAIL", "E-Mail-Pr&uuml;fung");
-define("_MI_GUESTBOOK_DISPLAY_EMAIL_DSC", "");
-define("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT", "ext Spam ohne &uuml;berpr&uuml;fung Liste der verbotenen gesch&uuml;tzt");
-define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT", "E-Mail ohne Pr&uuml;fung der Sperrliste");
-define("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT_BANNED", "Text-Spam mit der &uuml;berpr&uuml;fung Liste der verbotenen gesch&uuml;tzt");
-define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT_BANNED", "gewohnten E-Mail mit der &uuml;berpr&uuml;fung Liste der verbotenen");
+define("_MI_GUESTBOOK_DISPLAY_EMAIL", "E-Mail Spamschutz");
+define("_MI_GUESTBOOK_DISPLAY_EMAIL_DSC", "Die Pr&uuml;fung gegen die Sperrliste wird nicht empfohlen.. filtert fast alles raus.");
+define("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT", "E-Mail direkt - keine Pr&uuml;fung der Blacklist");
+define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT", "E-Mail direkt - mit Pr&uuml;fung der Sperrliste");
+define("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT_BANNED", "E-Mail als example at e-mail dot com - keine Pr&uuml;fung der Sperrliste");
+define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT_BANNED", "E-Mail als example at e-mail dot com - mit Pr&uuml;fung der Sperrliste");
 define("_MI_GUESTBOOK_USE_RSS", "RSS Feeds");
 define("_MI_GUESTBOOK_USE_RSS_DSC", "ein/ausschalten RSS Feeds für das G&auml;stebuch");
 define("_MI_GUESTBOOK_RSSLIMIT", "RSS Limit");
@@ -75,7 +75,3 @@ define("_MI_GUESTBOOK_MENU_GUESTBOOK", "G&auml;stebuch");
 define("_MI_GUESTBOOK_MENU_INDEXPAGE", "Edit Indexpage");
 define("_MI_GUESTBOOK_MENU_TEMPLATES", "Templates");
 define("_MI_VISITORVOIVE_MENU_IMPORT", "Import");
-
-
-
-
