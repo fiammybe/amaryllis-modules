@@ -203,6 +203,23 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
+								'name' 			=> 'guest_entry',
+								'title' 		=> '_MI_GUESTBOOK_GUEST_CAN_SUBMIT',
+								'description' 	=> '_MI_GUESTBOOK_GUEST_CAN_SUBMIT_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 0
+							);$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'guest_entry',
+								'title' 		=> '_MI_GUESTBOOK_GUEST_CAN_SUBMIT',
+								'description' 	=> '_MI_GUESTBOOK_GUEST_CAN_SUBMIT_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 0
+							);
+$i++;
+$modversion['config'][$i] = array(
 								'name' 			=> 'show_avatar',
 								'title' 		=> '_MI_GUESTBOOK_SHOW_AVATAR',
 								'description' 	=> '_MI_GUESTBOOK_SHOW_AVATAR_DSC',
@@ -308,15 +325,6 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> '750'
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'guest_entry',
-								'title' 		=> '_MI_GUESTBOOK_GUEST_CAN_SUBMIT',
-								'description' 	=> '_MI_GUESTBOOK_GUEST_CAN_SUBMIT_DSC',
-								'formtype' 		=> 'yesno',
-								'valuetype' 	=> 'int',
-								'default' 		=> 0
 							);
 $i++;
 $modversion['config'][$i] = array(
