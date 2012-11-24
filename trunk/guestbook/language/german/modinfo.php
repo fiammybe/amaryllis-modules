@@ -23,59 +23,59 @@ define("_MI_GUESTBOOK_BLOCK_RECENT_ENTRIES", "Letzte Eintr&auml;ge");
 define("_MI_GUESTBOOK_BLOCK_RECENT_ENTRIES_DSC", "Letzte Eintr&auml;ge im Block anzeigen");
 // Config
 define("_MI_GUESTBOOK_DATE_FORMAT", "Datumsformat");
-define("_MI_GUESTBOOK_DATE_FORMAT_DSC", "Sie k&ouml;nnen das Datumsformat einstellen wie Sie es w&uuml;nschen");
-define("_MI_GUESTBOOK_SHOW_BREADCRUMBS", "Zeige die Breadcrumb Navigation");
-define("_MI_GUESTBOOK_SHOW_BREADCRUMBS_DSC", "zeigen/ausblenden der Breadcrumb Navigation in der Useransicht");
-define("_MI_GUESTBOOK_SHOW_ENTRIES", "Wie viele Eintr&auml;ge sollten in Useransicht angezeigt werden?");
-define("_MI_GUESTBOOK_SHOW_ENTRIES_DSC", "");
-define("_MI_GUESTBOOK_USE_MODERATION", "Verwenden Moderation?");
-define("_MI_GUESTBOOK_USE_MODERATION_DSC", "M&ouml;chten Sie die Eintr&auml;ge moderieren?");
+define("_MI_GUESTBOOK_DATE_FORMAT_DSC", "Sie k&ouml;nnen das Datumsformat einstellen wie Sie es w&uuml;nschen. z.B. d/m/Y H:i");
+define("_MI_GUESTBOOK_SHOW_BREADCRUMBS", "Zeige Breadcrumb Navigation");
+define("_MI_GUESTBOOK_SHOW_BREADCRUMBS_DSC", "zeigen/ausblenden der Breadcrumb Navigation im Frontend");
+define("_MI_GUESTBOOK_SHOW_ENTRIES", "Anzahl der Eintr&auml;ge im Frontend");
+define("_MI_GUESTBOOK_SHOW_ENTRIES_DSC", "Wie viele Eintr&auml;ge sollen im Frontend angezeicgt werden?");
+define("_MI_GUESTBOOK_USE_MODERATION", "Eintr&auml;ge kommentieren");
+define("_MI_GUESTBOOK_USE_MODERATION_DSC", "M&ouml;chten Sie Eintr&auml;ge kommentieren?");
+define("_MI_GUESTBOOK_CAN_MODERATE", "Welche Grupppen d&uuml;rfen kommentieren?");
+define("_MI_GUESTBOOK_CAN_MODERATE_DSC", "");
+define("_MI_GUESTBOOK_AVATAR_DIMENSIONS", "Bildgr&ouml;sse Avatar in px");
+define("_MI_GUESTBOOK_AVATAR_DIMENSIONS_DSC", "");
 define("_MI_GUESTBOOK_SHOW_AVATAR", "Zeige Avatar in Frontend");
-define("_MI_GUESTBOOK_SHOW_AVATAR_DSC", "Dadurch werden die Benutzer Avatare");
-define("_MI_GUESTBOOK_NEEDS_APPROVAL", "Genehmigen Eintr&auml;ge, bevor sie ver&ouml;ffentlicht sind?");
-define("_MI_GUESTBOOK_NEEDS_APPROVAL_DSC", "");
-define("_MI_GUESTBOOK_ALLOW_IMAGEUPLOAD", "M&ouml;chten Sie erm&ouml;glichen Bild hochladen?");
+define("_MI_GUESTBOOK_SHOW_AVATAR_DSC", "");
+define("_MI_GUESTBOOK_NEEDS_APPROVAL", "G&auml;stebuch moderieren?");
+define("_MI_GUESTBOOK_NEEDS_APPROVAL_DSC", "Eintr&auml;ge vor dem Ver&ouml;ffentlichen freischalten");
+define("_MI_GUESTBOOK_ALLOW_IMAGEUPLOAD", "Bilderupload erlauben?");
 define("_MI_GUESTBOOK_ALLOW_IMAGEUPLOAD_DSC", "");
-define("_MI_GUESTBOOK_IMAGE_UPLOAD_WIDTH", "Max Image Upload Breite");
+define("_MI_GUESTBOOK_CAN_UPLOAD", "Welche Gruppen d&uuml;rfen Bilder hochladen?");
+define("_MI_GUESTBOOK_CAN_UPLOAD_DSC", "");
+define("_MI_GUESTBOOK_IMAGE_UPLOAD_WIDTH", "Maximale zul&auml;ssige Bildbreite f&uuml;r Upload");
 define("_MI_GUESTBOOK_IMAGE_UPLOAD_WIDTH_DSC", "");
-define("_MI_GUESTBOOK_IMAGE_UPLOAD_HEIGHT", "Max Image Upload H&ouml;he");
+define("_MI_GUESTBOOK_IMAGE_UPLOAD_HEIGHT", "Maximale zul&auml;ssige Bildh&ouml;he f&uuml;r Upload");
 define("_MI_GUESTBOOK_IMAGE_UPLOAD_HEIGHT_DSC", "");
-define("_MI_GUESTBOOK_IMAGE_FILE_SIZE", "Maximal zul&auml;ssige Upload Gr&ouml;�e");
+define("_MI_GUESTBOOK_IMAGE_FILE_SIZE", "Maximal zul&auml;ssige Dateigr&ouml;sse");
 define("_MI_GUESTBOOK_IMAGE_FILE_SIZE_DSC", "");
-define("_MI_GUESTBOOK_THUMBNAIL_WIDTH", "Miniaturbild Breite");
-define("_MI_GUESTBOOK_THUMBNAIL_WIDTH_DSC", "Breite des Miniaturbild zur Anzeige hochgeladenen Bilder");
-define("_MI_GUESTBOOK_THUMBNAIL_HEIGHT", "Miniaturbild H&ouml;he");
-define("_MI_GUESTBOOK_THUMBNAIL_HEIGHT_DSC", "H&ouml;he des Miniaturbild zur Anzeige hochgeladenen Bilder");
-define("_MI_GUESTBOOK_GUEST_CAN_SUBMIT", "Die G&auml;ste k&ouml;nnen einzureichen neue Eintr&auml;ge?");
-define("_MI_GUESTBOOK_GUEST_CAN_SUBMIT_DSC", "M&ouml;gen Sie, damit die G&auml;ste, um neue Eintr&auml;ge einreichen, set'YES '");
-define("_MI_GUESTBOOK_SHOW_EMAIL", "Anzeigen der E-Mail Adresse im Frontend?");
-define("_MI_GUESTBOOK_SHOW_EMAIL_DSC", "zeigen/ausblenden der E-Mail Adresse im fronted");
-define("_MI_GUESTBOOK_DISPLAY_EMAIL", "Wie die E-Mail-Adresse im Frontend angezeigt werden?");
+define("_MI_GUESTBOOK_THUMBNAIL_WIDTH", "Breite des Vorschaubildes");
+define("_MI_GUESTBOOK_THUMBNAIL_WIDTH_DSC", "");
+define("_MI_GUESTBOOK_THUMBNAIL_HEIGHT", "H&ouml;he des Vorschaubildes");
+define("_MI_GUESTBOOK_THUMBNAIL_HEIGHT_DSC", "");
+define("_MI_GUESTBOOK_DISPLAY_WIDTH", "Breite der Lightbox");
+define("_MI_GUESTBOOK_DISPLAY_WIDTH_DSC", "");
+define("_MI_GUESTBOOK_DISPLAY_HEIGHT", "H&ouml;he der Lightbox");
+define("_MI_GUESTBOOK_DISPLAY_HEIGHT_DSC", "");
+define("_MI_GUESTBOOK_GUEST_CAN_SUBMIT", "G&auml;ste k&ouml;nnen Einträge schreiben");
+define("_MI_GUESTBOOK_GUEST_CAN_SUBMIT_DSC", "");
+define("_MI_GUESTBOOK_SHOW_EMAIL", "Anzeige der E-Mail Adresse im Frontend?");
+define("_MI_GUESTBOOK_SHOW_EMAIL_DSC", "zeigen/ausblenden der E-Mail Adresse im Fronted");
+define("_MI_GUESTBOOK_DISPLAY_EMAIL", "E-Mail-Pr&uuml;fung");
 define("_MI_GUESTBOOK_DISPLAY_EMAIL_DSC", "");
 define("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT", "ext Spam ohne &uuml;berpr&uuml;fung Liste der verbotenen gesch&uuml;tzt");
-define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT", "gewohnten E-Mail ohne Pr&uuml;fung Sperrlst");
+define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT", "E-Mail ohne Pr&uuml;fung der Sperrliste");
 define("_MI_GUESTBOOK_DISPLAY_MAIL_SPAMPROT_BANNED", "Text-Spam mit der &uuml;berpr&uuml;fung Liste der verbotenen gesch&uuml;tzt");
 define("_MI_GUESTBOOK_DISPLAY_MAIL_IMGPROT_BANNED", "gewohnten E-Mail mit der &uuml;berpr&uuml;fung Liste der verbotenen");
-define("_MI_GUESTBOOK_USE_RSS", "Use RSS feeds?");
-define("_MI_GUESTBOOK_USE_RSS_DSC", "Enable/disable RSS feeds for guestbook");
+define("_MI_GUESTBOOK_USE_RSS", "RSS Feeds");
+define("_MI_GUESTBOOK_USE_RSS_DSC", "ein/ausschalten RSS Feeds für das G&auml;stebuch");
 define("_MI_GUESTBOOK_RSSLIMIT", "RSS Limit");
-define("_MI_GUESTBOOK_RSSLIMIT_DSC", "Set limit of Entries for RSS feeds");
+define("_MI_GUESTBOOK_RSSLIMIT_DSC", "Limit für RSS Eintr&auml;ge");
 // ACP menu
 define("_MI_GUESTBOOK_MENU_GUESTBOOK", "G&auml;stebuch");
 define("_MI_GUESTBOOK_MENU_INDEXPAGE", "Edit Indexpage");
 define("_MI_GUESTBOOK_MENU_TEMPLATES", "Templates");
 define("_MI_VISITORVOIVE_MENU_IMPORT", "Import");
-/**
- * added in 1.1
- */
-// config
-define("_MI_GUESTBOOK_CAN_MODERATE", "Select the groups, which can moderate entries");
-define("_MI_GUESTBOOK_CAN_MODERATE_DSC", "");
-define("_MI_GUESTBOOK_DISPLAY_WIDTH", "Image Display Width");
-define("_MI_GUESTBOOK_DISPLAY_WIDTH_DSC", "");
-define("_MI_GUESTBOOK_DISPLAY_HEIGHT", "Image Display height");
-define("_MI_GUESTBOOK_DISPLAY_HEIGHT_DSC", "");
-define("_MI_GUESTBOOK_AVATAR_DIMENSIONS", "Avatar Dimensions");
-define("_MI_GUESTBOOK_AVATAR_DIMENSIONS_DSC", "Avatar Dimensions in px");
-define("_MI_GUESTBOOK_CAN_UPLOAD", "Groups to be allowed uploading images");
-define("_MI_GUESTBOOK_CAN_UPLOAD_DSC", "");
+
+
+
+
