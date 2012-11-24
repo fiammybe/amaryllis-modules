@@ -44,7 +44,11 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 				$arr['avatar'] = $users[$key]->gravatar();
 				$arr['user_sig'] = icms_core_DataFilter::checkVar($users[$key]->getVar("user_sig", "n"), "html", "output");
 				$arr['uname'] = $users[$key]->getVar("uname");
-				//$arr['online'] = $users[$key]->isOnline();
+				$arr['online'] = $users[$key]->isOnline() ? '<img class="user_online icon_middle" src="'.EVENT_IMAGES_URL.'/green.png" alt="online" />' : '';
+				$arr['icq'] = $users[$key]->getVar("user_icq");
+				$arr['msn'] = $users[$key]->getVar("user_msnm");
+				$arr['yim'] = $users[$key]->getVar("user_yim");
+				$arr['regdate'] = date("d/m/Y", $users[$key]->getVar("user_regdate", "e")); 
 				$this->_usersArray[$key] = $arr;
 			}
 		}

@@ -500,33 +500,10 @@
 			}
 		});
 		
-		$('body').delegate('.comment_user', 'hover', function(){
-			$(this).qtip({
-				content: {
-					text: $(this).next('div.event_popup').html(),
-					title: $(this).attr('original-title')
-				},
-				style: {
-					width:500,
-					viewport: $(window),
-					textAlign:'left',
-					tip:'bottomLeft',
-					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
-				},
-				position:   {
-					target: 'mouse',
-					my:'bottomLeft',
-					adjust: {
-						x: 0,  y: -5
-					}
-				},
-			});
-		});
-		
 		/**
 		 * make use of qtip for legend description
 		 */
-		$('.legend_item, .comment_user').each(function(){
+		$('.legend_item').each(function(){
 			$(this).qtip({
 				content: {
 					text: $(this).next('div.event_popup').html(),
@@ -936,7 +913,7 @@
 						$("#event_comment_form").submit();
 						return false;
 					});
-					$("#event_comment_form").submit(function(e) {
+					$("#event_comment_form").unbind("submit").bind("submit", function(e) {
 						e.preventDefault();
 						$.ajax({
 							url: "<{$event_url}>submit.php",
@@ -953,8 +930,33 @@
 									$("#event_success").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 								}
 							}
-						})
+						});
 						
+					});
+					
+					$(".comment_user").live("mouseover", function() {
+						$(this).qtip({
+							content: {
+								text: $(this).next('div.event_popup').html(),
+								title: $(this).attr('original-title')
+							},
+							show: {ready: true},
+							style: {
+								width:500,
+								viewport: $(window),
+								textAlign:'left',
+								tip:'bottomLeft',
+								classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
+							},
+							position:   {
+								target: 'mouse',
+								my:'bottomLeft',
+								adjust: {
+									x: 0,  y: -5
+								}
+							},
+							
+						});
 					});
 				<{/if}>
 				var hash = window.location.hash;
