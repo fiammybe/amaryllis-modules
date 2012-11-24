@@ -1,8 +1,14 @@
 <div id="event_comment_{COMMENT_ID}" class="single_comment {COMMENT_APPROVE}">
 	<div class="comment_user" original-title="{COMMENT_UNAME}"><img class="icon_middle" src="{COMMENT_AVATAR}" width="22px" height="22px" title="{COMMENT_UNAME}" /></div>
 	<div class="event_popup">
-		{COMMENT_ULINK}
+		<img class="icon_middle" src="{COMMENT_AVATAR}" width="22px" height="22px" title="{COMMENT_UNAME}" style="margin: 0 20px 0 0" />
+		{COMMENT_ULINK}	{COMMENT_UONLINE}<br>
+		{COMMENT_REGDATE}<br>
+		{COMMENT_UICQ}<br>
+		{COMMENT_UMSN}<br>
+		{COMMENT_UYIM}
 	</div>
 	<div class="comment_body">{COMMENT_BODY} <br /><span class="published_on">({COMMENT_PDATE})</span> </div>
+	<div class="awaiting_approval">{COMMENT_APPROVAL}</div>
 	<div class="event_clear_left">&nbsp;</div>
 </div>
