@@ -60,12 +60,12 @@ if (is_object($categoryObj) && (!$categoryObj->isNew()) && ($categoryObj->access
 	$rows = (int)$portfolioConfig['show_portfolio_rows'];
 	$limit = ($columns > 0 && $rows > 0) ? $columns * (int)$rows : FALSE;
 	
-	$portfolios = $portfolio_handler->getPortfolios(TRUE, "weight", "DESC", $clean_start, $limit, FALSE);
+	$portfolios = $portfolio_handler->getPortfolios(TRUE, "weight", "DESC", $clean_start, $limit, $categoryObj->id());
 	$portfolio_columns = ($columns > 0  && $rows > 0) ? array_chunk($portfolios, $columns) : FALSE;
 	$icmsTpl->assign("portfolio_columns", $portfolio_columns);
 	if(!$portfolio_columns) $icmsTpl->assign("portfolios", $portfolios);
 	
-	$count = $portfolio_handler->getPortfoliosCount(TRUE, "weight", "DESC", $clean_start, $limit, FALSE);
+	$count = $portfolio_handler->getPortfoliosCount(TRUE, "weight", "DESC", $clean_start, $limit, $categoryObj->id());
 	$extra_arg = ($clean_category) ? 'category='.$clean_category : FALSE;
 	$pagenav = new icms_view_PageNav($count, $limit, $clean_start, 'start', $extra_arg);
 	$icmsTpl->assign('pagenav', $pagenav->renderNav());
