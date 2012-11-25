@@ -32,7 +32,6 @@
 .legend_title {margin-left: 1em;}
 .event_popup {display: none;}
 #form_error {color: red; font-weight:bold; font-size: 1.5em; }
-
 .event_table {display: table; width: 80%;}
 .event_row {display: table-row; padding: .250em; line-height: 3em;}
 .event_cell { display: table-cell;}
@@ -52,7 +51,7 @@ div#event_join p, div#event_unjoin p {color: white;}
 #event_comment_tarea {display: block; width: 100%;}
 .highlighted {background-color: #c9d1fe;}
 div.single_comment {position: relative; display:block; background-color: #d9dbf7; margin: 0 0 .750em;}
-div.comment_user{float: left; border: 1px solid black;width: 30px; height: 100%;}
+div.comment_user{float: left; width: 30px; height: 100%;}
 div.comment_body {float: left; margin-left: 1em; height: auto;}
 div#event_comment_container {margin: 2em 0;}
 div.comment_approve {background-color: #FC8383 !important;}
