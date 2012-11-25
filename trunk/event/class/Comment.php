@@ -84,7 +84,7 @@ class mod_event_Comment extends icms_ipf_Object {
 		global $icmsConfig;
 		$uid = $this->getVar('comment_uid', 'e');
 		$users = $this->handler->loadUsers();
-		$user = (array_key_exists($uid, $users) && $uid > 0 ) ? $users[$uid] : FALSE;
+		$user = (count(array_intersect_key(array($uid), $users) > 0) && $uid > 0 ) ? $users[$uid] : FALSE;
 		if($user) return $user;
 		$userinfo = array();
 		$userinfo['uid'] = 0;
@@ -106,7 +106,7 @@ class mod_event_Comment extends icms_ipf_Object {
 	public function getLink() {
 		$eid = $this->getVar("comment_eid", "e");
 		$events = $this->handler->loadEventLinks();
-		if(array_key_exists($eid, $events)) return $events[$eid].'#event_comment_'.$this->id();
+		if(count(array_intersect_key(array($eid), $events) > 0)) return $events[$eid].'#event_comment_'.$this->id();
 		return FALSE;
 	}
 	
@@ -135,7 +135,8 @@ class mod_event_Comment extends icms_ipf_Object {
 		$content = str_replace("{COMMENT_UYIM}", (is_object(icms::$user) && $uinfo['yim'] !== "") ? _US_YIM.': '.$uinfo['yim'] : "", $content);
 		$content = str_replace("{COMMENT_APPROVAL}", $this->isApproved() ? "" : _CO_EVENT_SUCCESSFUL_COMMENTED_APPROVAL, $content);
 		$content = str_replace("{COMMENT_APPROVE}", $this->getApproved(), $content);
-		$content = str_replace("{COMMENT_APPROVAL_LINK}", (!$this->isApproved() && !$block && icms_userIsAdmin(EVENT_DIRNAME)) ? '<img class="comment_approval_link icon_middle" original-id="'.$this->id().'" src="'.EVENT_IMAGES_URL.'approved.png" />' : "", $content);
+		$content = str_replace("{COMMENT_APPROVAL_LINK}", (!$this->isApproved() && !$block && icms_userIsAdmin(EVENT_DIRNAME)) ? 
+															'<img class="comment_approval_link icon_middle" original-id="'.$this->id().'" src="'.EVENT_IMAGES_URL.'approved.png" />' : "", $content);
 		$content = str_replace("{COMMENT_REGDATE}", _US_MEMBERSINCE .": ".$uinfo['regdate'], $content);
 		return $content;
 	}
