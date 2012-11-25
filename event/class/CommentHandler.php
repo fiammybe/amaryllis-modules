@@ -126,14 +126,14 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 	public function getComments($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start = 0, $limit = 0, $order = "comment_pdate", $sort = "DESC", $admin_approve = FALSE, $forBlock = FALSE) {
 		$criteria = $this->getCommentCriterias($approve, $event_id, $uid, $puid, $start, $limit, $order, $sort, $admin_approve);
 		$comments = $this->getObjects($criteria, TRUE, TRUE);
-		$events = $this->loadEventObjects();
+		$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
+		$events = $event_handler->getObjects(NULL, TRUE, TRUE);
 		$ret = array();
 		foreach (array_keys($comments) as $key) {
 			if($limit > 0 && count($ret) == $limit) continue;
 			$eid = $comments[$key]->getVar("comment_eid", "e");
-			if($events[$eid]->accessGranted())
+			if(count(array_intersect_key(array($eid), $events) > 0) && $events[$eid]->accessGranted())
 			$ret[$key] = (!$forBlock) ? $comments[$key]->renderComment(FALSE) : $comments[$key]->renderComment(TRUE);
-			unset($comments[$key]);
 		}
 		unset($events, $criteria, $comments);
 		return $ret;
