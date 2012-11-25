@@ -958,6 +958,23 @@
 							
 						});
 					});
+					
+					$("body").delegate(".comment_approval_link", "click", function(e) {
+						e.preventDefault();
+						$.ajax({
+							url: "<{$event_url}>submit.php"
+							type: "POST",
+							dataType: "jsom",
+							data: {event_id: $("div#cal_event").attr("original-id"), op: "approve_comment"},
+							success: function(response) {
+								if(response.status === "success") {
+									
+								} else if(response.status === "error") {
+									
+								}
+							}
+						});
+					});
 				<{/if}>
 				var hash = window.location.hash;
 				if(hash != "") {
