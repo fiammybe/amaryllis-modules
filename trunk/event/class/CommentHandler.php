@@ -33,18 +33,20 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 	public function loadUsers() {
 		global $icmsConfig;
 		if(!count($this->_usersArray)) {
+			$onlineUsers = $this->loadOnlineUsers();
 			$member_handler = icms::handler("icms_member_user");
 			$criteria = new icms_db_criteria_Item("level", 0, '>=');
 			$users = $member_handler->getObjects($criteria, TRUE);
 			$this->_usersArray[0] = $icmsConfig['anonymous'];
 			foreach (array_keys($users) as $key) {
+				$isOnline = (array_key_exists($key, $onlineUsers)) ? TRUE : FALSE;
 				$arr = array();
 				$arr['uid'] = $key;
 				$arr['link'] = '<a class="user_link" href="'.ICMS_URL.'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'</a>';
 				$arr['avatar'] = $users[$key]->gravatar();
 				$arr['user_sig'] = icms_core_DataFilter::checkVar($users[$key]->getVar("user_sig", "n"), "html", "output");
 				$arr['uname'] = $users[$key]->getVar("uname");
-				$arr['online'] = $users[$key]->isOnline() ? '<img class="user_online icon_middle" src="'.EVENT_IMAGES_URL.'/green.png" alt="online" />' : '';
+				$arr['online'] = $isOnline ? '<img class="user_online icon_middle" src="'.EVENT_IMAGES_URL.'/green.png" alt="online" />' : '';
 				$arr['icq'] = $users[$key]->getVar("user_icq");
 				$arr['msn'] = $users[$key]->getVar("user_msnm");
 				$arr['yim'] = $users[$key]->getVar("user_yim");
@@ -53,6 +55,18 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 			}
 		}
 		return $this->_usersArray;
+	}
+	
+	private function loadOnlineUsers() {
+		if(!count($this->_onlineUsers)) {
+			$online_handler = icms::handler('icms_core_online');
+			$users = $online_handler->getObjects(NULL, TRUE);
+			foreach (array_keys($users) as $key) {
+				$uid = $users[$key]->getVar("online_uid");
+				$this->_onlineUsers[$uid] = $uid;
+			}
+		}
+		return $this->_onlineUsers;
 	}
 	
 	public function userCanComment() {
