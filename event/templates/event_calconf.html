@@ -961,16 +961,20 @@
 					
 					$("body").delegate(".comment_approval_link", "click", function(e) {
 						e.preventDefault();
+						var link = $(this);
 						$.ajax({
-							url: "<{$event_url}>submit.php"
+							url: "<{$event_url}>submit.php",
 							type: "POST",
-							dataType: "jsom",
-							data: {event_id: $("div#cal_event").attr("original-id"), op: "approve_comment"},
+							dataType: "json",
+							data: {event_id: $("div#cal_event").attr("original-id"), op: "approve_comment", comment_id: link.attr("original-id")},
 							success: function(response) {
 								if(response.status === "success") {
-									
+									$('#calendar').fullCalendar('refetchEvents');
+									$("#event_success").html(response.message);
+									$("#event_comment_container").html("");
+									$("#event_comment_container").html(response.comments);
 								} else if(response.status === "error") {
-									
+									$("#event_success").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 								}
 							}
 						});
