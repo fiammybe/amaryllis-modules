@@ -56,3 +56,4 @@ div.comment_user{float: left; border: 1px solid black;width: 30px; height: 100%;
 div.comment_body {float: left; margin-left: 1em; height: auto;}
 div#event_comment_container {margin: 2em 0;}
 div.comment_approve {background-color: #FC8383 !important;}
+.comment_approval_link {cursor: pointer; float: right; position: relative; top:0; right:0;}

@@ -25,6 +25,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 	private $_usersArray;
 	private $_eventsArray;
 	private $_eventsObjArray;
+	private $_onlineUsers;
 	
 	public function __construct(&$db) {
 		parent::__construct($db, "comment", "comment_id", "comment_fprint", "comment_body", EVENT_DIRNAME);
@@ -39,7 +40,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 			$users = $member_handler->getObjects($criteria, TRUE);
 			$this->_usersArray[0] = $icmsConfig['anonymous'];
 			foreach (array_keys($users) as $key) {
-				$isOnline = (array_key_exists($key, $onlineUsers)) ? TRUE : FALSE;
+				$isOnline = (!empty($onlineUsers) && array_key_exists($key, $onlineUsers)) ? TRUE : FALSE;
 				$arr = array();
 				$arr['uid'] = $key;
 				$arr['link'] = '<a class="user_link" href="'.ICMS_URL.'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'</a>';
@@ -60,9 +61,9 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 	private function loadOnlineUsers() {
 		if(!count($this->_onlineUsers)) {
 			$online_handler = icms::handler('icms_core_online');
-			$users = $online_handler->getObjects(NULL, TRUE);
+			$users = $online_handler->getAll(NULL);
 			foreach (array_keys($users) as $key) {
-				$uid = $users[$key]->getVar("online_uid");
+				$uid = $users["online_uid"];
 				$this->_onlineUsers[$uid] = $uid;
 			}
 		}
