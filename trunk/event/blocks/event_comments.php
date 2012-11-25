@@ -12,7 +12,7 @@
  * 				Event
  * @since		1.2
  * @author		QM-B <qm-b@hotmail.de>
- * @version		$Id: event_comments.php 941 2012-11-22 05:43:45Z st.flohrer $
+ * @version		$Id$
  * @package		event
  *
  */
