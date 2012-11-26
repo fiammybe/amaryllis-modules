@@ -20,15 +20,18 @@
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(__FILE__))));
 
-class AlbumImagesHandler extends icms_ipf_Handler {
+class mod_album_ImagesHandler extends icms_ipf_Handler {
 	
 	public $_watermarkPosition;
 	public $_watermarkColors;
 	public $_watermarkFontsize;
 	public $_watermarkFont;
 	
+	public $_images_cache_path;
+	public $_images_thumbs_path;
+	public $_images_images_path;
+	
 	private $_albumsForImages;
-	private $_usersArray;
 	
 	/**
 	 * Constructor
@@ -40,21 +43,44 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 		global $albumConfig;
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes,	$albumConfig['image_file_size'], $albumConfig['image_upload_width'], $albumConfig['image_upload_height']);
+		$this->_images_cache_path = ICMS_CACHE_PATH . '/' . ALBUM_DIRNAME . '/' . $this->_itemname;
+		$this->_images_thumbs_path = $this->_images_cache_path . '/thumbs';
+		$this->_images_images_path = $this->_images_cache_path . '/images';
 	}
 	
-	public function getUsersArray() {
-		if(!count($this->_usersArray)) {
-			$member_handler = icms::handler('icms_member_user');
-			$usersArray = $member_handler->getObjects(FALSE, TRUE);
-			foreach(array_keys($usersArray) as $i) {
-				$this->_usersArray[$i] = $usersArray[$i]->getVar("uname");
-			}
+	
+	/**
+	 * gives a list of all images in batch upload folder
+	 * /uploads/album/batch
+	 */
+	public function getImagesFromBatch() {
+		$images = array();
+		$images = icms_core_Filesystem::getFileList(ALBUM_UPLOAD_ROOT . 'batch/', '', array('gif', 'jpg', 'png'));
+		$ret = array();
+		foreach(array_keys($images) as $i ) {
+			$ret[$i] = $images[$i];
 		}
-		return $this->_usersArray;
+		return $ret;
+	}
+	
+	public function getImagesThumbsPath() {
+		$dir = $this->_images_thumbs_path;
+		if (!file_exists($dir)) {
+			icms_core_Filesystem::mkdir($dir);
+		}
+		return $dir . "/";
+	}
+	
+	public function getImagesImagesPath() {
+		$dir = $this->_images_images_path;
+		if (!file_exists($dir)) {
+			icms_core_Filesystem::mkdir($dir);
+		}
+		return $dir . "/";
 	}
 	
 	public function getWatermarkPositions() {
-		if(!$this->_watermarkPosition) {
+		if(!count($this->_watermarkPosition)) {
 			$this->_watermarkPosition['TL'] = _CO_ALBUM_IMAGES_WATERMARKPOS_TL;
 			$this->_watermarkPosition['TR'] = _CO_ALBUM_IMAGES_WATERMARKPOS_TR;
 			$this->_watermarkPosition['TC'] = _CO_ALBUM_IMAGES_WATERMARKPOS_TC;
@@ -69,7 +95,7 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	}
 	
 	public function getWatermarkColors() {
-		if(!$this->_watermarkColors) {
+		if(!count($this->_watermarkColors)) {
 			$this->_watermarkColors['black'] = _CO_ALBUM_IMAGES_WATERMARKCOLOR_BLACK;
 			$this->_watermarkColors['blue'] = _CO_ALBUM_IMAGES_WATERMARKCOLOR_BLUE;
 			$this->_watermarkColors['green'] = _CO_ALBUM_IMAGES_WATERMARKCOLOR_GREEN;
@@ -99,25 +125,56 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	
 	public function getWatermarkFont() {
 		if(!count($this->_watermarkFont)) {
-			$fonts = icms_core_Filesystem::getFileList(ICMS_MODULES_PATH . '/'. ALBUM_DIRNAME . '/extras/fonts/', '', array('ttf'));
+			$fonts = icms_core_Filesystem::getFileList(ICMS_MODULES_PATH . '/index/extras/fonts/', '', array('ttf'));
 			foreach(array_keys($fonts) as $i ) {
 				$this->_watermarkFont[$i] = $fonts[$i];
 			}
 		} return $this->_watermarkFont;
 	}
 	
-	// retrieve a list of Images
-	public function getList($img_active = null, $img_approve = null) {
+	public function getAlbumList() {
+		if (!count($this->_albumsForImages)) {
+			$albums = $this->getAlbumArray();
+			foreach ($albums as $key => $value) {
+				$this->_albumsForImages[$key] = $value;
+			}
+		}
+		return $this->_albumsForImages;
+	}
+	
+	public function getAlbumArray() {
+		$album_handler = icms_getModuleHandler("album", ALBUM_DIRNAME, "album");
+		return $album_handler->getAlbumListForPid();
+	}
+	
+	public function getImagesCriterias($active = FALSE, $approve = FALSE, $a_id = FALSE, $tag = FALSE, $publisher = FALSE, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC') {
 		$criteria = new icms_db_criteria_Compo();
-		if (isset($img_active)) {
-			$criteria->add(new icms_db_criteria_Item('img_active', TRUE));
+		if($start)$criteria->setStart($start);
+		if($limit) $criteria->setLimit((int)$limit);
+		if($sort) $criteria->setOrder($sort);
+		if($order) $criteria->setSort($order);
+		if($active) $criteria->add(new icms_db_criteria_Item('img_active', TRUE));
+		if($approve) $criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
+		if($a_id)$criteria->add(new icms_db_criteria_Item('a_id', $a_id));
+		if($tag) {
+			$critTray = new icms_db_criteria_Compo();
+			$critTray->add(new icms_db_criteria_Item("img_tags", $tag . ',%', "LIKE"), 'OR');
+			$critTray->add(new icms_db_criteria_Item("img_tags", '%,' . $tag . ',%', "LIKE"), 'OR');
+			$critTray->add(new icms_db_criteria_Item("img_tags", '%,' . $tag, "LIKE"), 'OR');
+			$criteria->add($critTray);
 		}
-		if (isset($img_approve)) {
-			$criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
-		}
+		if($publisher) $criteria->add(new icms_db_criteria_Item("img_publisher", $publisher));
+		return $criteria;
+	}
+	
+	// retrieve a list of Images
+	public function getList($img_active = FALSE, $img_approve = FALSE) {
+		$criteria = new icms_db_criteria_Compo();
+		if($active) $criteria->add(new icms_db_criteria_Item('img_active', TRUE));
+		if($approve) $criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
 		$images = & $this->getObjects($criteria, TRUE);
 		foreach(array_keys($images) as $i) {
-			$ret[$images[$i]->getVar('img_id')] = $images[$i]->getVar('img_title');
+			$ret[$images[$i]->id()] = $images[$i]->title();
 		}
 		return $ret;
 	}
@@ -135,74 +192,33 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	 * @param $tag_id - to get only with tag_id
 	 * @param $publisher - published by
 	 */
-	public function getImages($active = FALSE, $approve = FALSE, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC', $a_id = FALSE, $tag_id = FALSE, $publisher = FALSE) {
-		$criteria = new icms_db_criteria_Compo();
-		if($start) $criteria->setStart($start);
-		if($limit) $criteria->setLimit($limit);
-		$criteria->setOrder($sort);
-		$criteria->setSort($order);
-		if($active) $criteria->add(new icms_db_criteria_Item('img_active', TRUE));
-		if($approve) $criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
-		if($tag_id) {
-			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("img_tags", '%:"' . $tag_id . '";%', "LIKE"));
-			$criteria->add($critTray);
-		}
-		if($publisher) {
-			$criteria->add(new icms_db_criteria_Item("img_publisher", $publisher));
-		}
-		if($a_id)$criteria->add(new icms_db_criteria_Item('a_id', $a_id));
+	public function getImages($active = FALSE, $approve = FALSE, $a_id = FALSE, $tag = FALSE, $publisher = FALSE, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC') {
+		$criteria = $this->getImagesCriterias($active, $approve, $a_id, $tag, $publisher, $start, $limit, $order, $sort);
 		$images = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($images as $image) {
-			$ret[$image['img_id']] = $image;
+			$ret[$image['id']] = $image;
 		}
 		return $ret;
 	}
 	
-	public function getImagesCount ($active = FALSE, $approve = FALSE, $a_id = NULL, $tag_id = FALSE, $publisher = FALSE) {
-		$criteria = new icms_db_criteria_Compo();
-		if(isset($active))	$criteria->add(new icms_db_criteria_Item('img_active', TRUE));
-		if(isset($approve)) $criteria->add(new icms_db_criteria_Item('img_approve', TRUE));
-		if($tag_id) {
-			$critTray = new icms_db_criteria_Compo();
-			$critTray->add(new icms_db_criteria_Item("img_tags", '%:"' . $tag_id . '";%', "LIKE"));
-			$criteria->add($critTray);
-		}
-		if($publisher) {
-			$criteria->add(new icms_db_criteria_Item("img_publisher", $publisher));
-		}
-		if (is_null($a_id)) $a_id == 0;
-		if($a_id) $criteria->add(new icms_db_criteria_Item('a_id', $a_id));
+	public function getImagesCount($active = FALSE, $approve = FALSE, $a_id = FALSE, $tag = FALSE, $publisher = FALSE, $start = 0, $limit = 0, $order = 'weight', $sort = 'ASC') {
+		$criteria = $this->getImagesCriterias($active, $approve, $a_id, $tag, $publisher, $start, $limit, $order, $sort);
 		return $this->getCount($criteria);
 	}
 	
-	public function changeVisible($img_id) {
-		$visibility = '';
+	public function changeField($img_id, $field) {
 		$imagesObj = $this->get($img_id);
-		if ($imagesObj->getVar('img_active', 'e') == TRUE) {
-			$imagesObj->setVar('img_active', 0);
-			$visibility = 0;
+		if ($imagesObj->getVar("$field", "e") == TRUE) {
+			$imagesObj->setVar("$field", 0);
+			$value = 0;
 		} else {
-			$imagesObj->setVar('img_active', 1);
-			$visibility = 1;
+			$imagesObj->setVar("$field", 1);
+			$value = 1;
 		}
+		$imagesObj->_updating = TRUE;
 		$this->insert($imagesObj, TRUE);
-		return $visibility;
-	}
-	
-	public function changeApprove($img_id) {
-		$approve = '';
-		$imagesObj = $this->get($img_id);
-		if ($imagesObj->getVar('img_approve', 'e') == TRUE) {
-			$imagesObj->setVar('img_approve', 0);
-			$approve = 0;
-		} else {
-			$imagesObj->setVar('img_approve', 1);
-			$approve = 1;
-		}
-		$this->insert($imagesObj, TRUE);
-		return $approve;
+		return $value;
 	}
 	
 	public function img_active_filter() {
@@ -212,17 +228,29 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	public function img_approve_filter() {
 		return array(0 => 'Offline', 1 => 'Online');
 	}
-	
+	/**
 	public function getAlbumList() {
-		$album_album_handler = icms_getModuleHandler("album", "album");
-		$albums = $album_album_handler->getList();
+		$album_handler = icms_getModuleHandler("album", ALBUM_DIRNAME, "album");
+		$albums = $album_handler->getList();
 		return $albums;
+	}
+	*/
+	public function filterUsers($showNull = FALSE) {
+		$sql = "SELECT DISTINCT (img_publisher) FROM " . $this->table;
+		if ($result = icms::$xoopsDB->query($sql)) {
+			$bids = array();
+			if($showNull) $bids[0] = '--------------';
+			while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+				$bids[$myrow['img_publisher']] = icms_member_user_Object::getUnameFromId((int)$myrow['img_publisher']);
+			}
+			return $bids;
+		}
 	}
 	
 	public function getImagesTags() {
 		global $albumConfig;
 		$sprocketsModule = icms_getModuleInfo("sprockets");
-		if(icms_get_module_status("sprockets") && $albumConfig['use_sprockets'] == 1) {
+		if(icms_get_module_status("sprockets") && !icms_get_module_status("index")) {
 			$sprockets_tag_handler = icms_getModuleHandler("tag", $sprocketsModule->getVar("dirname") , "sprockets");
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->add(new icms_db_criteria_Item("label_type", 0));
@@ -236,143 +264,10 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 			return $ret;
 		}
 	}
-	
-	public function filterUsers($showNull = FALSE) {
-		$sql = "SELECT DISTINCT (img_publisher) FROM " . icms::$xoopsDB->prefix("album_images");
-		if ($result = icms::$xoopsDB->query($sql)) {
-			if($showNull) $bids[0] = '--------------';
-			while ($myrow = icms::$xoopsDB->fetchArray($result)) {
-				$bids[$myrow['img_publisher']] = icms_member_user_Object::getUnameFromId((int)$myrow['img_publisher']);
-				return $bids;
-			}
-		}
-	}
-	
-	/**
-	 * gives a list of all images in batch upload folder
-	 * /uploads/album/batch
-	 */
-	public function getImagesFromBatch() {
-		$images = array();
-		$images = icms_core_Filesystem::getFileList(ALBUM_UPLOAD_ROOT . 'batch/', '', array('gif', 'jpg', 'png'));
-		$ret = array();
-		foreach(array_keys($images) as $i ) {
-			$ret[$i] = $images[$i];
-		}
-		return $ret;
-	}
-	
-	/**
-	 * watermarking with image
-	 * 
-	 * @param $SourceFile - is source of the image file to be watermarked
-	 * @param $WatermarkText - is the text of the watermark
-	 * @param $DestinationFile - is the destination location where the watermarked images will be placed
-	 */
-	function watermarkImage ($source, $watermark, $dest, $color, $pos, $font = "arial.ttf", $font_size = 20) { 
-		list($img_width, $img_height, $img_type) = getimagesize($source);
-		$image_p = imagecreatetruecolor($img_width, $img_height);
-		switch ($img_type) {
-			case 1:
-				$image = imagecreatefromgif($source);
-				break;
-			case 2:
-				$image = imagecreatefromjpeg($source);
-				break;
-			case 3:
-				$image = imagecreatefrompng($source);
-				break;
-		}
-		imagecopyresampled($image_p, $image, 0, 0, 0, 0, $img_width, $img_height, $img_width, $img_height); 
-		switch ($color) {
-			case 'black':
-				$font_color = imagecolorallocate($image_p, 0, 0, 0);
-				break;
-			case 'blue':
-				$font_color = imagecolorallocate($image_p, 0, 0, 255);
-				break;
-			case 'red':
-				$font_color = imagecolorallocate($image_p, 255, 0, 0);
-				break;
-			case 'white':
-				$font_color = imagecolorallocate($image_p, 255, 255, 255);
-				break;
-			case 'green':
-				$font_color = imagecolorallocate($image_p, 0, 255, 0);
-				break;
-		}
-		$font = ICMS_MODULES_PATH.'/'.ALBUM_DIRNAME.'/extras/fonts/' . $font;
-		$font_shadow = imagecolorallocate($image_p, 128, 128, 128);
-		
-		$box = @ImageTTFBBox($font_size,0,$font,$watermark);
-		$t_width = abs($box[4] - $box[0]) + 10;
-		$t_height = abs($box[5] - $box[1]) + 10;
-		
-		if($pos == "TL") {
-	    	$dest_x = 0;
-	    	$dest_y = 0 + $t_height;
-		} elseif ($pos == "TC") {
-		    $dest_x = ($img_width - $t_width)/2;
-		    $dest_y = 0 + $t_height;
-		} elseif ($pos == "TR") {
-		    $dest_x = $img_width - $t_width;
-		    $dest_y = 0 + $t_height;
-		} elseif ($pos == "CL") {
-		    $dest_x = 0;
-		    $dest_y = ($img_height - $t_height)/2;
-		} elseif ($pos == "C") {
-		    $dest_x = ($img_width - $t_width)/2;
-		    $dest_y = ($img_height - $t_height)/2;
-		} elseif ($pos == "CR") {
-		    $dest_x = $img_width - $t_width;
-		    $dest_y = ($img_height - $t_height)/2;
-		} elseif ($pos == "BL") {
-		    $dest_x = 0;
-		    $dest_y = $img_height - $t_height;
-		} elseif ($pos == "BC") {
-		    $dest_x = ($img_width - $t_width)/2;
-		    $dest_y = $img_height - $t_height;
-		} elseif ($pos == "BR") {
-		    $dest_x = $img_width - $t_width;
-		    $dest_y = $img_height - $t_height;
-		}
-		
-		imagettftext($image_p,$font_size,0,$dest_x+4,$dest_y+4,$font_shadow,$font,$watermark);
-		imagettftext($image_p, $font_size, 0, $dest_x, $dest_y, $font_color, $font, $watermark);
-		if ($dest<>'') {
-			switch ($img_type) {
-				case 1:
-					header ('content-type: image/gif');
-					imagegif ($image_p, $dest, 100);
-					break;
-			    case 2:
-			    	header ('content-type: image/jpeg');
-			    	imagejpeg ($image_p, $dest, 100);
-			    	break;
-			    case 3:
-			    	header ('content-type: image/png');
-			    	imagepng ($image_p, $dest, 100);
-			}
-		} else {
-			switch ($img_type) {
-				case 1:
-					header ('content-type: image/gif');
-					imagegif ($image_p, NULL, 100);
-					break;
-			    case 2:
-			    	header ('content-type: image/jpeg');
-			    	imagejpeg ($image_p, NULL, 100);
-			    	break;
-			    case 3:
-			    	header ('content-type: image/png');
-			    	imagepng ($image_p, NULL, 100);
-			}
-		}
-		imagedestroy($image); 
-		imagedestroy($image_p);
-	}
-	
+
 	protected function beforeInsert(&$obj) {
+		if($obj->_updating)
+		return TRUE;
 		$dsc = $obj->getVar("img_description", "e");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
 		$obj->setVar("img_description", $dsc);
@@ -381,9 +276,12 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 	
 	protected function beforeSave(&$obj) {
 		global $albumConfig;
+		if($obj->_updating)
+		return TRUE;
 		if($albumConfig['img_use_copyright'] == 1 && $obj->isNew()) {
-			$source = ICMS_UPLOAD_PATH . '/album/images/';
 			$img = $obj->getVar("img_url", "e");
+			require_once ICMS_MODULES_PATH . "/album/class/Image.php";
+			$srcpath = ALBUM_UPLOAD_ROOT . $this->_itemname . "/";
 			$watermark = $obj->getVar("img_copyright", "e");
 			$color = $obj->getVar("img_copy_color", "e");
 			$pos = $obj->getVar("img_copy_pos", "e");
@@ -391,9 +289,59 @@ class AlbumImagesHandler extends icms_ipf_Handler {
 			$fontsize = $obj->getVar("img_copy_fontsize", "e");
 			$timestamp = $obj->getVar("img_published_date", "e");
 			$new_img = $timestamp . "_" . array_pop(explode("_", $img));
-			$this->watermarkImage($source . $img, $watermark, $source . $new_img, $color, $pos, $font, $fontsize);
+			$image = new mod_album_Image($img, $srcpath);
+			$image->watermarkImage($watermark, $srcpath, $new_img, $color, $pos, $font, $fontsize);
+			unset($image);
 			icms_core_Filesystem::deleteFile(ALBUM_UPLOAD_ROOT . "images/" . $img);
 			$obj->setVar("img_url", $new_img);
+		}
+		if($obj->_updating_table)
+		return TRUE;
+		$tags = $obj->getVar("img_tags", "e");
+		if($tags != "" && $tags != "0" && icms_get_module_status("index")) {
+			$indexModule = icms_getModuleInfo("index");
+			$tag_handler = icms_getModuleHandler("tag", $indexModule->getVar("dirname"), "index");
+			$tagarray = explode(",", $tags);
+			$tagarray = array_map('strtolower', $tagarray);
+			$newArray = array();
+			foreach ($tagarray as $key => $tag) {
+				$intersection = array_intersect($tagarray, array($tag));
+				$count = count($intersection);
+				if($count > 1) {
+					unset($tagarray[$key]);
+				} else {
+					$tag_id = $tag_handler->addTag($tag, FALSE, $obj, $obj->getVar("img_published_date", "e"), $obj->getVar("img_publisher", "e"), "img_description", $obj->getVar("img_url", "e"));
+					$newArray[] = $tag_id;
+				}
+				unset($intersection, $count);
+			}
+			$obj->setVar("img_tags", implode(",", $newArray));
+			unset($tags, $tag_handler, $tags, $tagarray);
+		}
+		return TRUE;
+	}
+
+	public function afterSave(&$obj) {
+		global $albumConfig;
+		if($obj->_updating)
+		return TRUE;
+		$img = $obj->getVar('img_url', 'e');
+		if($img != "0" && $img != "") {
+		    require_once ICMS_MODULES_PATH . "/album/class/Image.php";
+			$cached_img = $obj->_images_images . $img;
+			$cached_image_url = $obj->_images_images_url . $img;
+			if(!file_exists($cached_img)) {
+				$srcpath = ALBUM_UPLOAD_ROOT . $this->_itemname . "/";
+				$image = new mod_album_Image($img, $srcpath);
+				$image->resizeImage($albumConfig['image_display_width'], $albumConfig['image_display_height'], $obj->_images_images, "100");
+			}
+			$cached_thumb = $obj->_images_thumbs . $images_img;
+			$cached_url = $obj->_images_thumbs_url . $images_img;
+			if(!is_file($cached_thumb)) {
+				$srcpath = ALBUM_UPLOAD_ROOT . $this->_itemname . "/";
+				$thumb = new mod_album_Image($images_img, $srcpath);
+				$thumb->resizeImage($albumConfig['thumbnail_width'], $albumConfig['thumbnail_height'], $obj->_images_thumbs, "90");
+			}
 		}
 		return TRUE;
 	}

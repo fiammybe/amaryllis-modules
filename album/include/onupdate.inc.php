@@ -25,23 +25,6 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
 if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(__FILE__))));
 
-if(!defined("ALBUM_URL")) define("ALBUM_URL", ICMS_URL . '/modules/' . ALBUM_DIRNAME . '/');
-
-if(!defined("ALBUM_ROOT_PATH")) define("ALBUM_ROOT_PATH", ICMS_ROOT_PATH.'/modules/' . ALBUM_DIRNAME . '/');
-
-if(!defined("ALBUM_IMAGES_URL")) define("ALBUM_IMAGES_URL", ALBUM_URL . 'images/');
-
-if(!defined("ALBUM_ADMIN_URL")) define("ALBUM_ADMIN_URL", ALBUM_URL . 'admin/');
-
-if(!defined("ALBUM_TEMPLATES_URL")) define("ALBUM_TEMPLATES_URL", ALBUM_URL . 'templates/');
-
-if(!defined("ALBUM_IMAGES_ROOT")) define("ALBUM_IMAGES_ROOT", ALBUM_ROOT_PATH . 'images/');
-
-if(!defined("ALBUM_UPLOAD_ROOT")) define("ALBUM_UPLOAD_ROOT", ICMS_ROOT_PATH . '/uploads/' . ALBUM_DIRNAME . '/');
-
-if(!defined("ALBUM_UPLOAD_URL")) define("ALBUM_UPLOAD_URL", ICMS_URL . '/uploads/' . ALBUM_DIRNAME . '/');
-
-
 
 // this needs to be the latest db version
 define('ALBUM_DB_VERSION',2);
@@ -54,39 +37,68 @@ define('ALBUM_DB_VERSION',2);
 
 function album_upload_paths() {
 	
-	//Create folders and set permissions
-	$moddir = basename( dirname( dirname( __FILE__ ) ) );
-	$path = ICMS_UPLOAD_PATH . '/album';
-	if(!is_dir($path . '/album')) mkdir($path . '/album', 0777);
+	$path = ICMS_UPLOAD_PATH . '/'.ALBUM_DIRNAME;
+	if(!is_dir($path . '/album')) mkdir($path . '/album', 0777, TRUE);
 	$categoryimages = array();
-	$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/album/images/folders/', '', array('gif', 'jpg', 'png'));
+	$categoryimages = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . '/modules/'.ALBUM_DIRNAME.'/images/folders/', '', array('gif', 'jpg', 'png'));
 	foreach($categoryimages as $image) {
-		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/folders/' . $image, $path . '/album/' . $image);
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . ALBUM_DIRNAME . '/images/folders/' . $image, $path . '/'.ALBUM_DIRNAME.'/' . $image);
 	}
-	if(!is_dir($path . '/indexpage')) mkdir($path . '/indexpage', 0777);
-	$image = 'album_indeximage.png';
-	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image, $path . '/indexpage/' . $image);
-	if(!is_dir($path . '/batch')) icms_core_Filesystem::mkdir($path . '/batch');
+	if(!is_dir($path . '/batch')) mkdir($path . '/batch', '0777', TRUE);
 	return TRUE;
 }
 
 function album_indexpage() {
-	$album_indexpage_handler = icms_getModuleHandler( 'indexpage', basename( dirname( dirname( __FILE__ ) ) ), 'album' );
-	$indexpageObj = $album_indexpage_handler -> create(TRUE);
-	echo '<code>';
-	$indexpageObj->setVar( 'index_header', 'My Photo Albums' );
-	$indexpageObj->setVar( 'index_heading', 'Here you can see my photo Albums' );
-	$indexpageObj->setVar( 'index_footer', '&copy; 2012 | Album module footer');
-	$indexpageObj->setVar( 'index_image', 'album_indeximage.png');
-	$indexpageObj->setVar('dohtml', 1);
-	$indexpageObj->setVar('dobr', 1);
-	$indexpageObj->setVar('doimage', 1);
-	$indexpageObj->setVar('dosmiley', 1);
-	$indexpageObj->setVar('doxcode', 1);
-	$album_indexpage_handler -> insert( $indexpageObj, TRUE );
-	echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
-	echo '</code>';
+	if(icms_get_module_status("index")) {
+		$mid = icms::handler('icms_module')->getByDirname(ALBUM_DIRNAME)->getVar('mid');
 	
+		$indexModule = icms_getModuleInfo("index");
+		$indexpage_handler = icms_getModuleHandler( 'indexpage', $indexModule->getVar("dirname"), 'index' );
+		
+		$index_path = ICMS_UPLOAD_PATH . '/' . $indexModule->getVar("dirname") . '/' . $indexpage_handler->_itemname;
+		$image = 'album_indeximage.png';
+		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . ALBUM_DIRNAME . '/images/' . $image, $index_path . '/' . $image);
+		
+		$indexpageObj = $indexpage_handler->create(TRUE);
+		$indexpageObj->setVar('index_header', 'My Photo Albums' );
+		$indexpageObj->setVar('index_heading', 'Here you can see my photo Albums' );
+		$indexpageObj->setVar('index_footer', '&copy; 2012 | Album module footer');
+		$indexpageObj->setVar('index_image', 'album_indeximage.png');
+		$indexpageObj->setVar('index_mid', $mid);
+		$indexpage_handler -> insert($indexpageObj, TRUE);
+		echo '<code>';
+		echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully created!<br />';
+		echo '&nbsp;&nbsp;-- <b> Indeximage </b> successfully moved!<br />';
+		echo '</code>';
+	} else {
+		$album_indexpage_handler = icms_getModuleHandler( 'indexpage', ALBUM_DIRNAME, 'album' );
+		$indexpageObj = $album_indexpage_handler -> create(TRUE);
+		echo '<code>';
+		$indexpageObj->setVar('index_header', 'My Photo Albums');
+		$indexpageObj->setVar('index_heading', 'Here you can see my photo Albums');
+		$indexpageObj->setVar('index_footer', '&copy; 2012 | Album module footer');
+		$indexpageObj->setVar('index_image', 'album_indeximage.png');
+		$indexpageObj->setVar('dohtml', 1);
+		$indexpageObj->setVar('dobr', 1);
+		$indexpageObj->setVar('doimage', 1);
+		$indexpageObj->setVar('dosmiley', 1);
+		$indexpageObj->setVar('doxcode', 1);
+		$album_indexpage_handler->insert( $indexpageObj, TRUE);
+		echo '&nbsp;&nbsp;-- <b> Indexpage </b> successfully imported!<br />';
+		echo '</code>';
+	}
+}
+
+function deleteLinkedModuleItems() {
+	$module_handler = icms::handler('icms_module');
+	$module = $module_handler->getByDirname(ALBUM_DIRNAME);
+	$module_id = $module->getVar('mid');
+	$link_handler = icms_getModuleHandler("link", "index");
+	$link_handler->deleteAllByMId($module_id);
+	unset($link_handler);
+	$indexpage_handler = icms_getModuleHandler("indexpage", "index");
+	$indexpage_handler->deleteByMid($module_id);
+	unset($indexpage_handler);
 }
 
 function copySitemapPlugin() {
@@ -123,12 +135,13 @@ function icms_module_install_album($module) {
 	album_indexpage();
 	
 	// copy sitemap plugin, if sitemap is installed
-	copySitemapPlugin();
+	//copySitemapPlugin();
 
 	return TRUE;
 }
 
 function icms_module_uninstall_album($module) {
+	deleteLinkedModuleItems();
 	
 	return TRUE;
 }

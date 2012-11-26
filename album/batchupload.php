@@ -84,10 +84,10 @@ if($clean_op == 'addimages' && !$album_isAdmin) redirect_header(icms_getPrevious
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0 ;
 if($clean_album_id == 0 && !$album_isAdmin) redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 
-$album_album_handler = icms_getModuleHandler('album', ALBUM_DIRNAME, 'album');
+$album_handler = icms_getModuleHandler('album', ALBUM_DIRNAME, 'album');
 $images_handler = icms_getModuleHandler('images', ALBUM_DIRNAME, 'album');
 
-$albumObj = $album_album_handler->get($clean_album_id);
+$albumObj = $album_handler->get($clean_album_id);
 if(!$album_isAdmin) {
 if((!is_object($albumObj) && !$albumObj->submitAccessGranted())) redirect_header(icms_getPreviousPage(), 3, _NOPERM);
 }
@@ -182,7 +182,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$form = new icms_form_Theme(_MD_ALBUM_BATCHUPLOAD_ADD . " - " . $case, "op", $submit_op, "post", TRUE);
 			
 			$selalbum = new icms_form_elements_Select(_CO_ALBUM_IMAGES_A_ID, "a_id", $clean_album_id);
-			$selalbum->addOptionArray($album_album_handler->getAlbumListForPid());
+			$selalbum->addOptionArray($album_handler->getAlbumListForPid());
 			$selalbum->setRequired();
 			if(!$album_isAdmin) $selalbum->setHidden();
 			$form->addElement($selalbum);
@@ -203,7 +203,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			
 			$form->addElement(new icms_form_elements_Radioyn(_CO_ALBUM_IMAGES_IMG_ACTIVE, "img_active", 1));
 			
-			if($albumConfig['use_sprockets'] == 1 && icms_get_module_status("sprockets")) {
+			if(icms_get_module_status("index")) {
+				$tags = new icms_form_elements_Text(_CO_ALBUM_IMAGES_IMG_TAGS, "img_tags", 75, 255);
+				$form->addElement($tags);
+			} elseif(icms_get_module_status("sprockets")) {
 				$seltags = new icms_form_elements_Select(_CO_ALBUM_IMAGES_IMG_TAGS, "img_tags", 0, 10, TRUE);
 				$seltags->addOptionArray($images_handler->getImagesTags());
 				$form->addElement($seltags);

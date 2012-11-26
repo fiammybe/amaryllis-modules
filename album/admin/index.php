@@ -61,7 +61,7 @@ $batchfiles = ($batchfiles > 0) ? '<span style="font-weight: bold; color: red;">
 $sitemapModule = icms_get_module_status("sitemap");
 if($sitemapModule) {
 	$sitemap_module = _AM_ALBUM_SITEMAP_INSTALLED;
-	$file = 'icmspoll.php';
+	$file = 'album.php';
 	$plugin_folder = ICMS_ROOT_PATH . '/modules/sitemap/plugins/';
 	if(!is_file($plugin_folder . $file)) {
 		$sitemap_plugin = _AM_ALBUM_SITEMAP_PLUGIN_NOTFOUND;

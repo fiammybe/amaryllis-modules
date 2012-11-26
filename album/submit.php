@@ -47,12 +47,15 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 				$messageObj->setVar("message_item",$clean_img_id);
 				$messageObj->setVar("message_body", $body);
 				$messageObj->setVar("message_date", time());
-				if($albumConfig['message_needs_approval'] == 1) {
+				if($albumConfig['message_needs_approval'] == 1 && !$album_isAdmin) {
 					$messageObj->setVar("message_approve", 0);
 				} else {
 					$messageObj->setVar("message_approve", 1);
 				}
-				$album_message_handler->insert($messageObj, TRUE);
+				$album_message_handler->insert($messageObj);
+				$imagesObj->setVar("img_hasmsg", 1);
+				$imagesObj->_updating = TRUE;
+				$album_images_handler->insert($imagesObj, TRUE);
 				if($albumConfig['message_needs_approval'] == 0) {
 					$retm = _MD_ALBUM_MESSAGE_THANKS;
 				} else {

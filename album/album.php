@@ -28,7 +28,7 @@ function editalbum($albumObj = 0, $clean_album_pid = 0) {
 		if (!$albumObj->userCanEditAndDelete()) {
 			redirect_header($albumObj->getItemLink(TRUE), 3, _NOPERM);
 		}
-		$albumObj->hideFieldFromForm(array('album_pid', 'album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve', 'short_url'));
+		$albumObj->hideFieldFromForm(array('album_pid', 'album_updated', 'meta_description', 'meta_keywords', 'album_uid','album_active', 'album_approve'));
 		$albumObj->setVar( 'album_updated_date', (time() - 100) );
 		$albumObj->setVar('album_updated', TRUE );
 		if($albumConfig['album_needs_approval'] == 1 && !$album_isAdmin) {

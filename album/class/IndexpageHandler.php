@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-class AlbumIndexpageHandler extends icms_ipf_Handler {
+class mod_album_IndexpageHandler extends icms_ipf_Handler {
 
 	public $_moduleName;
 	
@@ -48,21 +48,30 @@ class AlbumIndexpageHandler extends icms_ipf_Handler {
 		return $ret;
 	}
 	
-	// some related functions for storing
 	protected function beforeInsert(&$obj) {
-		
+		$heading = $obj->getVar("index_heading", "e");
+		$heading = icms_core_DataFilter::checkVar($heading, "html", "input");
+		$obj->setVar("index_heading", $heading);
+		$footer = $obj->getVar("index_footer", "e");
+		$footer = icms_core_DataFilter::checkVar($footer, "html", "input");
+		$obj->setVar("index_footer", $footer);
 		if ($obj->getVar('index_img_upload') != '') {
 			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
-			$obj->setVar("index_img_upload", "");
+			$obj->setVar('index_img_upload', "" );
 		}
 		return TRUE;
 	}
-	
+
 	protected function beforeUpdate(&$obj) {
-		
+		$heading = $obj->getVar("index_heading", "e");
+		$heading = icms_core_DataFilter::checkVar($heading, "html", "input");
+		$obj->setVar("index_heading", $heading);
+		$footer = $obj->getVar("index_footer", "e");
+		$footer = icms_core_DataFilter::checkVar($footer, "html", "input");
+		$obj->setVar("index_footer", $footer);
 		if ($obj->getVar('index_img_upload') != '') {
 			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
-			$obj->setVar("index_img_upload", "");
+			$obj->setVar('index_img_upload', "" );
 		}
 		return TRUE;
 	}

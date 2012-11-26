@@ -1,21 +1,21 @@
 <?php
 /**
- * 'Album' is a light weight gallery module
+ * 'Shop' is a php shop module for ImpressCMS
  *
- * File: /admin/admin_header.php
- *
+ * File: /admin/admin_footer.php
  * 
- * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * Footer-file included in all admin pages
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
- * 				album
+ * 				Shop
  * @since		1.00
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
- * @package		album
+ * @package		shop
  *
  */
-
 $version = number_format(icms::$module->getVar('version')/100, 2);
 $version = !substr($version, -1, 1) ? substr($version, 0, 3) : $version;
 

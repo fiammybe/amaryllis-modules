@@ -43,17 +43,19 @@ icms_loadLanguageFile('album', 'common');
 
 include_once ALBUM_ROOT_PATH . '/include/functions.php';
 
-$albumModule = icms_getModuleInfo( basename(dirname(dirname(__FILE__))) );
+$albumModule = icms_getModuleInfo(ALBUM_DIRNAME);
 if (is_object($albumModule)) {
 	$album_moduleName = $albumModule->getVar('name');
 }
 
-$album_isAdmin = icms_userIsAdmin( ALBUM_DIRNAME );
+$album_isAdmin = icms_userIsAdmin(ALBUM_DIRNAME);
 
-$albumConfig = icms_getModuleConfig( ALBUM_DIRNAME );
+$albumConfig = icms_getModuleConfig(ALBUM_DIRNAME);
 
-if($albumConfig['use_sprockets'] == 1) {
-	icms_loadLanguageFile('sprockets', 'common');
+if(icms_get_module_status("index")) {
+	icms_loadLanguageFile('index', 'common');
+	$indexModule = icms_getModuleInfo("index");
+	include_once ICMS_MODULES_PATH . "/" . $indexModule->getVar("dirname") . "/include/common.php";
 }
 
 $icmsPersistableRegistry = icms_ipf_registry_Handler::getInstance();

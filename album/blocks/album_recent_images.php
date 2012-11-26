@@ -21,24 +21,25 @@
 
 function b_album_recent_images_show($options) {
 	global $albumConfig;
-	
 	$moddir = basename(dirname(dirname(__FILE__)));
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$album_images_handler = icms_getModuleHandler('images', basename(dirname(dirname(__FILE__))), 'album');
+	$album_images_handler = icms_getModuleHandler('images', $moddir, 'album');
 
-	$block['album_images'] = $album_images_handler->getImages(TRUE, TRUE, 0, $options[0], $options[3], $options[4], $options[1], FALSE, $options[2]);
-	$block['display_width'] = $options[5];
-	$block['display_height'] = $options[6];
-	$block['horizontal'] = $options[7];
-	$block['autoscroll'] = $options[8];
-	$block['img_dsc'] = $options[9];
+	$block['album_images'] = $album_images_handler->getImages(TRUE, TRUE, $options[1], FALSE, $options[2], 0, $options[0], $options[3], $options[4]);
+	$block['display_width'] = $albumConfig['image_display_width'];
+	$block['display_height'] = $albumConfig['image_display_height'];
+	$block['horizontal'] = $options[5];
+	$block['autoscroll'] = $options[6];
+	$block['img_dsc'] = $options[7];
+    $block['block_id'] = $options[8];
 	return $block;
 }
 
 function b_album_recent_images_edit($options) {
 	$moddir = basename(dirname(dirname(__FILE__)));
+    $bid = isset($_GET['bid']) ? filter_input(INPUT_GET, "bid", FILTER_SANITIZE_NUMBER_INT) : 0;
 	include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/include/common.php';
-	$album_album_handler = icms_getModuleHandler('album', basename(dirname(dirname(__FILE__))), 'album');
+	$album_album_handler = icms_getModuleHandler('album', $moddir, 'album');
 	$limit = new icms_form_elements_Text('', 'options[0]', 60, 255, $options[0]);
 	$selcats = new icms_form_elements_Select('', 'options[1]', $options[1]);
 	$selcats->addOptionArray($album_album_handler->getAlbumListForPid());
@@ -49,15 +50,15 @@ function b_album_recent_images_edit($options) {
 	$order = array('ASC' => 'ASC' , 'DESC' => 'DESC');
 	$selorder = new icms_form_elements_Select('', 'options[4]', $options[4]);
 	$selorder->addOptionArray($order);
-	$display_size = new icms_form_elements_Text('', 'options[5]', 60, 255, $options[5]);
-	$display_height = new icms_form_elements_Text('', 'options[6]', 60, 255, $options[6]);
 	$display_block = array('1' => _MB_ALBUM_DISPLAY_SINGLE_HORIZONTAL, "2" => _MB_ALBUM_DISPLAY_GALLERY_HORIZONTAL, "3" => _MB_ALBUM_DISPLAY_SINGLE_VERTICAL,
 							'4' => _MB_ALBUM_DISPLAY_GALLERY_VERTICAL, '5' => _MB_ALBUM_DISPLAY_CAROUSEL);
-	$horizontal = new icms_form_elements_Select('', 'options[7]', $options[7]);
+	$horizontal = new icms_form_elements_Select('', 'options[5]', $options[5]);
 	$horizontal->addOptionArray($display_block);
-	$autoscroll = new icms_form_elements_Radioyn('', 'options[8]', $options[8]);
-	$display_dsc = new icms_form_elements_Radioyn('', 'options[9]', $options[9]);
-	
+	$autoscroll = new icms_form_elements_Radioyn('', 'options[6]', $options[6]);
+	$display_dsc = new icms_form_elements_Radioyn('', 'options[7]', $options[7]);
+    
+    $hidden = new icms_form_elements_Hidden("options[8]", $bid);
+    
 	$form = '<table>';
 	$form .= '<tr>';
 	$form .= '<td>' . _MB_ALBUM_ALBUM_RECENT_LIMIT . '</td>';
@@ -72,21 +73,12 @@ function b_album_recent_images_edit($options) {
 	$form .= '<td>' . $publisher->render() . '</td>';
 	$form .= '</tr>';
 	$form .= '<tr>';
-	$form .= '<tr>';
 	$form .= '<td>' . _MB_ALBUM_SORT . '</td>';
 	$form .= '<td>' . $selsort->render() . '</td>';
 	$form .= '</tr>';
 	$form .= '<tr>';
 	$form .= '<td>' . _MB_ALBUM_ORDER . '</td>';
 	$form .= '<td>' . $selorder->render() . '</td>';
-	$form .= '</tr>';
-	$form .= '<tr>';
-	$form .= '<td>' . _MB_ALBUM_DISPLAY_SIZE . '</td>';
-	$form .= '<td>' . $display_size->render() . '</td>';
-	$form .= '</tr>';
-	$form .= '<tr>';
-	$form .= '<td>' . _MB_ALBUM_DISPLAY_HEIGHT . '</td>';
-	$form .= '<td>' . $display_height->render() . '</td>';
 	$form .= '</tr>';
 	$form .= '<tr>';
 	$form .= '<td>' . _MB_ALBUM_HORIZONTAL . '</td>';
@@ -100,6 +92,9 @@ function b_album_recent_images_edit($options) {
 	$form .= '<td>' . _MB_ALBUM_DISPLAY_DSC . '</td>';
 	$form .= '<td>' . $display_dsc->render() . '</td>';
 	$form .= '</tr>';
+    $form .= '<tr>';
+    $form .= '<td>' . $hidden->render() . '</td>';
+    $form .= '</tr>';
 	$form .= '</table>';
 	return $form;
 }
