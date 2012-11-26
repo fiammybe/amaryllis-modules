@@ -41,32 +41,47 @@
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
 			<{$block.icmspoll_singlepoll.question}>
+			<{if $block.icmspoll_singlepoll.userCanEditAndDelete}>
+				(<{$block.icmspoll_singlepoll.editItemLink}>
+				<{$block.icmspoll_singlepoll.deleteItemLink}>)
+			<{/if}>
 		</div>
 		<div class="singlepoll_description">
 			<{$block.icmspoll_singlepoll.dsc}>
 		</div>
+		
 		<div class="icmspoll_morelink">
-			<{$smarty.const._MB_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
+			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
 		    <span class="more_polls_by">(<{$block.icmspoll_singlepoll.more_polls_by_user}>)</span>
 		</div>
+		
 		<div class="singlepoll_form">
-			<{foreach item=option from=$block.options}>
-				<div class="result_option">
-				   <div class="icmspoll_option_<{$option.color}>" style="width:<{$option.result}>%" >
-				       <{$option.result}>%
-				   </div>
-                </div>
-				<div class="poll_option_txt">
-					<{$option.text}>
+		    <div class="poll_result">
+		    	<div class="icmspoll_result_options">
+	    			<{foreach item=option from=$options name=options}>
+	    				<div class="result_option">
+	    				   <div class="icmspoll_option_<{$option.color}> icmspoll_option_color" style="width:<{$option.result}>" >
+	    				       &nbsp;
+	    				   </div>
+	    				   <div class="option_result_value">
+	    				   		<{$option.result}>
+	    				   </div>
+	                    </div>
+	                    <div class="icmspoll_clear_left">&nbsp;</div>
+	    				<div class="poll_option_txt">
+	    					<{$option.text}>
+	    				</div>
+	    				<{$block.icmspoll_singlepoll.delimeter}>
+	    			<{/foreach}>
+    			</div>
+    		</div>
+    		<div class="icmspoll_clear_left">&nbsp;</div>
+			<{if $block.icmspoll_singlepoll.hasVoted && !$block.icmspoll_singlepoll.hasExpired}>
+				<div class="box">
+					<input id="submit_poll_<{$block.icmspoll_singlepoll.id}>" type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 				</div>
-				<{$block.icmspoll_singlepoll.delimeter}>
-			<{/foreach}>
+			<{/if}>
 		</div>
-		<{if $block.icmspoll_singlepoll.hasVoted && !$block.icmspoll_singlepoll.hasExpired}>
-			<div class="box">
-				<input type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
-			</div>
-		<{/if}>
 	</div>
 <{/if}>
 <div id="icmspoll_balert" style="display: none;">&nbsp;</div>
