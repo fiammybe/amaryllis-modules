@@ -17,26 +17,26 @@
  */
 
 
-if($albumConfig['show_breadcrumbs'] == 1) {
-	$icmsTpl->assign('album_show_breadcrumb', TRUE);
+if($indexConfig['show_breadcrumbs'] == 1) {
+	$icmsTpl->assign('index_show_breadcrumb', TRUE);
+	$icmsTpl->assign('index_images_url', INDEX_ICONS_URL);
+	$icmsTpl->assign('index_url', INDEX_URL);
+	$icmsTpl->assign('index_module_home', '<a href="' . INDEX_URL . 'index.php" title="' . $index_moduleName . '">' . $index_moduleName . '</a>');
 }
-$icmsTpl->assign('thumbnail_width', $albumConfig['thumbnail_width']);
-$icmsTpl->assign('thumbnail_height', $albumConfig['thumbnail_height']);
-$icmsTpl->assign('image_display_width', $albumConfig['image_display_width']);
-$icmsTpl->assign('image_display_height', $albumConfig['image_display_height']);
+
 $icmsTpl->assign('album_adminpage', '<a href="' . ALBUM_ADMIN_URL . 'index.php" title="admin-link" class="album_admin_link" >' . _MD_ALBUM_ADMIN_PAGE . '</a>' );
 $icmsTpl->assign('album_is_admin', icms_userIsAdmin(ALBUM_DIRNAME));
 $icmsTpl->assign('album_url', ALBUM_URL);
-$icmsTpl->assign('album_module_home', '<a href="' . ALBUM_URL . '" title="' . icms::$module->getVar("name") . '">' . icms::$module->getVar("name") . '</a>');
+$icmsTpl->assign('module_home', '<a href="' . ALBUM_URL . 'index.php" title="' . $album_moduleName . '">' . $album_moduleName . '</a>');
 $icmsTpl->assign('album_images_url', ALBUM_IMAGES_URL);
 $icmsTpl->assign('dirname', icms::$module -> getVar( 'dirname' ) );
 $icmsTpl->assign('use_image_comments', $albumConfig['use_messages']);
 /**
  * force js-files to header
  */
-
 $xoTheme->addScript('/modules/' . ALBUM_DIRNAME . '/scripts/jquery.qtip.min.js', array('type' => 'text/javascript'));
 $xoTheme->addStylesheet('/modules/' . ALBUM_DIRNAME . '/scripts/jquery.qtip.min.css');
 $xoTheme->addScript('/modules/' . ALBUM_DIRNAME . '/scripts/album.js', array('type' => 'text/javascript'));
-
+$xoTheme->addStylesheet('/modules/' . INDEX_DIRNAME . '/scripts/module_index.css');
+$xoTheme->addStylesheet('/modules/' . ALBUM_DIRNAME . '/scripts/module_album.css');
 include_once ICMS_ROOT_PATH . '/footer.php';

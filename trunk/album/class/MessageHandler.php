@@ -18,8 +18,9 @@
  */
 
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
+if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(__FILE__))));
 
-class AlbumMessageHandler extends icms_ipf_Handler {
+class mod_album_MessageHandler extends icms_ipf_Handler {
 	
 	function __construct(&$db) {
 		parent::__construct($db, "message", "message_id", "message_item", "message_body", "album");
@@ -57,7 +58,7 @@ class AlbumMessageHandler extends icms_ipf_Handler {
 	}
 	
 	public function getImageFilter() {
-		$album_images_handler = icms_getModuleHandler("images", basename(dirname(dirname(__FILE__))), "album");
+		$album_images_handler = icms_getModuleHandler("images", ALBUM_DIRNAME, "album");
 		$images = $album_images_handler->getList();
 		return $images;
 	}
@@ -65,7 +66,9 @@ class AlbumMessageHandler extends icms_ipf_Handler {
 	// some related functions for storing
 	protected function beforeInsert(&$obj) {
 		$body = $obj->getVar("message_body", "s");
-		$body = icms_core_DataFilter::checkVar($body, "html", "input");
+		$message = strip_tags($body,'<br>');
+		$body = icms_core_DataFilter::checkVar($message, "html", "input");
+		$obj->setVar("message_body", $body);
 		return TRUE;
 	}
 }

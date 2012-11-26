@@ -72,7 +72,7 @@ $clean_images_id = isset($_GET['img_id']) ? filter_input(INPUT_GET, 'img_id', FI
 $clean_album_id = isset($_GET['album_id']) ? filter_input(INPUT_GET, 'album_id', FILTER_SANITIZE_NUMBER_INT) : 0;
 $clean_start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
 
-$valid_op = array ('mod', 'addimages', 'del');
+$valid_op = array ('mod', 'addimages', 'del', '');
 
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 if (isset($_POST['op'])) $clean_op = filter_input(INPUT_POST, 'op');
@@ -107,15 +107,44 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$controller = new icms_ipf_Controller($album_images_handler);
 			$controller->handleObjectDeletionFromUserSide();
 			break;
+		default:
+			if(!$albumObj->submitAccessGranted() || !$album_isAdmin) {redirect_header(ALBUM_URL, 3, _NOPERM);}
+			if(!$album_isAdmin) {
+				$criteria = new icms_db_criteria_Compo();
+				$criteria->add(new icms_db_criteria_Item("img_publisher", icms::$user->getVar("uid")));
+			} else {
+				$criteria = FALSE;
+			}
+			$objectTable = new icms_ipf_view_Table($album_images_handler, $criteria, array('edit', 'delete'), TRUE);
+			$objectTable->addColumn(new icms_ipf_view_Column('img_url', 'center', 60, 'getImgPreview'));
+			$objectTable->addColumn( new icms_ipf_view_Column( 'img_title', FALSE, 60, 'getTitleControl' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'a_id', FALSE, 60, 'getAlbumControl' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'img_description', FALSE, 150, 'getDscControl' ) );
+			if($album_isAdmin) {
+				//$objectTable->addColumn( new icms_ipf_view_Column( 'img_approve', 'center', TRUE, 'img_approve' ) );
+			}
+			//$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', 15, 'getWeightControl'));
+			//$objectTable->addColumn( new icms_ipf_view_Column( 'img_published_date', 'center', 70, 'getPublishedDate'));
+			$objectTable->setDefaultOrder("DESC");
+			$objectTable->setDefaultSort("img_published_date");
+			$objectTable->addFilter( 'img_active', 'img_active_filter' );
+			$objectTable->addFilter( 'img_approve', 'img_approve_filter' );
+			$objectTable->addFilter( 'a_id', 'getAlbumList' );
+	  		
+			$objectTable->addIntroButton( 'addform', 'images.php?op=mod&aid=' . $albumObj->id(), _ADD );
+			$objectTable->addActionButton( 'changeFields', FALSE, _SUBMIT );
+			
+			$icmsTpl->assign("album_images_table", $objectTable->fetch());
+			break;
 	}
 } else {
 	redirect_header(ALBUM_URL, 3, _NOPERM);
 }
 
-if( $albumConfig['show_breadcrumbs'] == TRUE ) {
-	$icmsTpl->assign('album_show_breadcrumb', TRUE);
+if( $indexConfig['show_breadcrumbs'] == TRUE ) {
+	$icmsTpl->assign('index_show_breadcrumb', TRUE);
 } else {
-	$icmsTpl->assign('album_show_breadcrumb', FALSE);
+	$icmsTpl->assign('index_show_breadcrumb', FALSE);
 }
 
 include_once "footer.php";

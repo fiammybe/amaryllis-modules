@@ -1,0 +1,46 @@
+/**
+ * album is a light weight album module
+ * 
+ * File: /module_album.css
+ * 
+ * contains some module specific styles
+ * 
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @package		album
+ * @version		$Id$
+ * 
+ */
+
+.album_clear_both {clear: both;height: 1px;}
+.album_clear_left {clear: left;height: 1px;}
+.album_clear_right {clear: right;height: 1px;}
+.album_indeximage {text-align: center;}
+.album_indexheader {text-align: center;font-size: 2em;margin: 2em auto;}
+.album_indexheading, .album_indexfooter {margin: 1em auto;}
+.album_album {margin: 1.5em auto;padding: 5px;}
+/**.table_cell {display: table-cell;padding-left: 1em;} */
+.album_album_info {font-size: .8em;font-weight: normal;margin: .5em 0;}
+.album_album_dsc {font-size: .9em;margin: 1em 0;}
+.album_album_desc {font-size: 1em;margin: 1em .9375em;}
+.album_headertable {}
+.album_album_title {font-size: 1.5em;margin: 2em 0;text-align: center;}
+.album_images {margin: 1.5em auto;display: table;width: 95%;padding: 5px;}
+.popup  {display: none;}
+.popup_tag  {display: none;}
+.album_adminlinks {text-align: center;}
+.album_row {height: auto;}
+.img_info {margin: 2em auto;}
+.img_desc{margin: 1em 0;}
+.img_comment {display: block;margin: .5em auto;padding: 1em .5em;background-color: #ECF7FD;}
+.img_comment_waiting {display: block;margin: .5em auto;padding: 1em .5em;background-color: #FCA9B4;}
+.message_waiting { font-family: Georgia, "Times New Roman", Times, serif; text-align: center; color: #336699; line-height: 2em; vertical-align: middle; }
+.img_avatar {float: left;margin-right: 1em;}
+.message_date {font-size: .8em;}
+.album_tags {display: inline;}
+.comment {display: block;}

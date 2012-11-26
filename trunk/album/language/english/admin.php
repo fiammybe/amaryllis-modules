@@ -27,7 +27,7 @@ define("_AM_ALBUM_REQUIREMENTS", "'Album' Requirements");
 define("_AM_ALBUM_REQUIREMENTS_INFO", "We've reviewed your system, unfortunately it doesn't meet all the requirements needed for 'Album' to function. Below are the requirements needed.");
 define("_AM_ALBUM_REQUIREMENTS_ICMS_BUILD", "'Album' requires at least ImpressCMS 1.3 final.");
 define("_AM_ALBUM_REQUIREMENTS_SUPPORT", "Should you have any question or concerns, please visit our forums at <a href='http://community.impresscms.org/modules/newbb/viewforum.php?forum=9'>ImpressCMS Community</a>.");
-
+define("_AM_ALBUM_REQUIREMENTS_INDEXMOD", "Please install index module first");
 // constants used in ACP
 define("_AM_ALBUM_ALBUM_ADD", "Add album");
 define("_AM_ALBUM_ALBUM_CREATE", "New album");
@@ -98,7 +98,7 @@ define("_AM_ALBUM_SITEMAP_MODULE", "Sitemap Module");
 define("_AM_ALBUM_SITEMAP_INSTALLED", "Sitemap Module installed");
 define("_AM_ALBUM_SITEMAP_NOTINSTALLED", "Sitemap Module not installed");
 define("_AM_ALBUM_SITEMAP_PLUGIN_FOUND", "and album plugin found");
-define("_AM_ALBUM_SITEMAP_PLUGIN_NOTFOUND", "and album plugin not found. Please update module or copy manually from '/modules/icmspoll/extras/modules/sitemap/' to '/modules/sitemap/plugins'");
+define("_AM_ALBUM_SITEMAP_PLUGIN_NOTFOUND", "and album plugin not found. Please update module or copy manually from '/modules/album/extras/modules/sitemap/' to '/modules/sitemap/plugins'");
 define("_AM_ALBUM_INDEX_GDLIB", "GD-Library");
 define("_AM_ALBUM_INDEX_GDLIB_FOUND", "It looks like GD lib is installed");
 define("_AM_ALBUM_INDEX_GDLIB_NOT_FOUND", "It looks like GD is not installed. Please check this before using the module");

@@ -22,18 +22,19 @@ function editalbum($album_id = 0) {
 	global $album_handler, $icmsAdminTpl;
 
 	$albumObj = $album_handler->get($album_id);
-	if(is_object(icms::$user)) {
-		$album_uid = icms::$user->getVar("uid");
-	} else {
-		$album_uid = 0;
-	}
+	$album_uid = icms::$user->getVar("uid");
+	
 	if (!$albumObj->isNew()){
+		$albumObj->hideFieldFromForm(array("album_approve", "meta_keywords", "meta_description", "album_updated"));
 		$albumObj->makeFieldReadOnly("short_url");
 		$albumObj->setVar( 'album_updated_date', (time() - 100) );
+		$albumObj->setVar('album_updated', TRUE);
+		$albumObj->setVar('album_tags', $albumObj->getAlbumTags(TRUE));
 		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_ALBUM . ' > ' . _MI_ALBUM_ALBUM_EDITING . ' &raquo;' . $albumObj->getVar("album_title", "e") . "&laquo;");
 		$sform = $albumObj->getForm(_AM_ALBUM_ALBUM_EDIT, 'addalbum');
 		$sform->assign($icmsAdminTpl);
 	} else {
+		$albumObj->hideFieldFromForm(array("album_approve", "meta_keywords", "meta_description", "album_updated"));
 		$albumObj->setVar("album_uid", $album_uid);
 		$albumObj->setVar( 'album_published_date', (time() - 100) );
 		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_ALBUM . " > " . _MI_ALBUM_ALBUM_CREATINGNEW);
@@ -109,16 +110,16 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 			
 		case "changeWeight":
-			foreach ($_POST['AlbumAlbum_objects'] as $key => $value) {
+			foreach ($_POST['mod_album_Album_objects'] as $key => $value) {
 				$changed = FALSE;
 				$albumObj = $album_handler -> get( $value );
-
 				if ($albumObj->getVar('weight', 'e') != $_POST['weight'][$key]) {
 					$albumObj->setVar('weight', (int)($_POST['weight'][$key]));
 					$changed = TRUE;
 				}
 				if ($changed) {
-					$album_handler -> insert($albumObj);
+					$albumObj->updating_counter = TRUE;
+					$album_handler->insert($albumObj);
 				}
 			}
 			$ret = 'album.php';
@@ -140,7 +141,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			}
 			// create album table
 			$objectTable = new icms_ipf_view_Table($album_handler, $criteria);
-			$objectTable->addColumn( new icms_ipf_view_Column( 'album_active', 'center', 50, 'album_active' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'album_active', 'center', FALSE, 'album_active' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_title', FALSE, FALSE, 'getPreviewItemLink' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_pid', FALSE, FALSE, 'getAlbumParent' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'counter', 'center', 100));
