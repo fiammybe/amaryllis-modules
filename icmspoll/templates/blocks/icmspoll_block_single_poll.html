@@ -11,11 +11,12 @@
 		    <span class="more_polls_by">(<{$block.icmspoll_singlepoll.more_polls_by_user}>)</span>
 		</div>
 		<div class="singlepoll_form">
-			<form class="icmspoll_pollform" action="<{$block.icmspoll_url}>submitpoll.php?op=vote&amp;poll_id=<{$block.icmspoll_singlepoll.id}>" method="post">
+			<form id="pollform_block_<{$block.icmspoll_singlepoll.id}>" name="pollform_block_<{$block.icmspoll_singlepoll.id}>" class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php" method="post">
 				<fieldset>
 					<{foreach item=option from=$block.options name=options}>
 						<div class="icmspoll_option_<{$option.color}>">
-							<input class="icmspoll_option_<{$option.color}>" type="<{$block.icmspoll_singlepoll.inputtype}>" name="poll_option" value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
+							<input id="poll_option_block_<{$option.id}>" class="icmspoll_option_<{$option.inputtype}>" type="<{$block.icmspoll_singlepoll.inputtype}>" name="poll_option_block<{if $block.icmspoll_singlepoll.isMultiple}>[]<{/if}>" 
+									value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
 							<{$option.text}>
 						</div>
 						<{$block.icmspoll_singlepoll.delimeter}>
@@ -28,7 +29,8 @@
 					</div>
 				<{elseif !$block.icmspoll_singlepoll.hasVoted && $block.icmspoll_singlepoll.voteAccessGranted}>
 					<div class="box">
-						<input type="submit" class="btn icmspoll" value="<{$smarty.const._MB_ICMSPOLL_POLLS_SUBMIT}>" /><span class="helper"></span>
+						<input id="submit_poll_block_<{$block.icmspoll_singlepoll.id}>" name="submit_poll_block_<{$block.icmspoll_singlepoll.id}>" type="submit" class="btn icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" />
+						<span class="helper"></span>
 					</div>
 				<{else}>
 				<{/if}>
@@ -67,3 +69,56 @@
 		<{/if}>
 	</div>
 <{/if}>
+<div id="icmspoll_balert" style="display: none;">&nbsp;</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#submit_poll_block_<{$block.icmspoll_singlepoll.id}>").click(function(e) {
+			e.preventDefault();
+			$("#pollform_block_<{$block.icmspoll_singlepoll.id}>").submit();
+			return false;
+		});
+		
+		$("#pollform_block_<{$block.icmspoll_singlepoll.id}>").submit(function(e) {
+			e.preventDefault();
+			$.ajax({
+				url: $("#submit_poll_block_<{$block.icmspoll_singlepoll.id}>").attr("action"),
+				type: "POST",
+				dataType: "json",
+				data: {
+					poll_id: '<{$block.icmspoll_singlepoll.id}>',
+					op: 'vote',
+					poll_option: $("input:<{$block.icmspoll_singlepoll.inputtype}>[name=poll_option_block<{if $block.icmspoll_singlepoll.isMultiple}>[]<{/if}>]:checked").map(function(){return this.value;}).get().join(",")
+				},
+				success: function(response) {
+					if(response.status === "success") {
+						document.forms.pollform_block_<{$block.icmspoll_singlepoll.id}>.reset();
+						$("#icmspoll_balert").html(response.message);
+						$("#icmspoll_balert").dialog("open");
+					} else if(response.status === "error") {
+						document.forms.pollform_block_<{$block.icmspoll_singlepoll.id}>.reset();
+						$("#icmspoll_balert").html(response.message);
+						$("#icmspoll_balert").dialog("open");
+					}
+				}
+				
+			})
+		});
+		
+		$("#icmspoll_balert").dialog({
+			autoOpen: false,
+			modal: true,
+			hide: "clip",
+			show: "clip",
+			resizable: false,
+			width: 800,
+			height: "auto",
+			buttons: {
+				Ok: function() {
+					$(this).dialog("empty");
+					$(this).dialog( "close" );
+					window.location.reload();
+				}
+			}
+		});
+	});
+</script>
