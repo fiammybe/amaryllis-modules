@@ -222,6 +222,7 @@ if(in_array($clean_op, $valid_op)) {
 				 */
 				if ($albumConfig['com_rule'] && $images_count > 0) {
 					$icmsTpl->assign('album_album_comment', TRUE);
+					$_GET['album_id'] = $albumObj->id();
 					include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 				}
 			/**

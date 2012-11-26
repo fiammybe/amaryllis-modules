@@ -51,15 +51,17 @@ define("_MD_ALBUM_IMAGES_EDIT", "Bearbeiten");
  */
 // admin/batchupload.php
 define("_MD_ALBUM_BATCHUPLOAD", "Stapelverarbeitung");
-define("_AM_ALBUM_BATCHUPLOAD_ADD", "Stapelverarbeitung");
-define("_AM_ALBUM_BATCHUPLOAD_SEL_IMAGES", "Wähle die hinzuzufügenden Bilder");
-define("_AM_ALBUM_BATCHUPLOAD_IMG_DSC", "Setze eine allgemeine Beschreibung der gewählten Bilder");
-define("_AM_ALBUM_BATCHUPLOAD_NOALBUM", "Kein Album ausgewählt. Bitte wählen Sie ein Album als Ziel");
-define("_AM_ALBUM_BATCHUPLOAD_URL_CAP", "Beschriftung");
-define("_AM_ALBUM_BATCHUPLOAD_URL_URL", "URL");
-define("_AM_ALBUM_BATCHUPLOAD_URL_DSC", "Beschreibung");
-define("_AM_ALBUM_BATCHUPLOAD_URL_TARGET", "Ziel");
-define("_AM_ALBUM_BATCHUPLOAD_IMAGES", "Bilder aus dem Ordner 'batch'");
-define("_AM_ALBUM_BATCHUPLOAD_SELECT_SOURCE", "Wählen Sie die quelle der Stapelverarbeitung");
-define("_AM_ALBUM_BATCHUPLOAD_ZIPUPL", "Füge Bilder von einem Zip hinzu");
-define("_AM_ALBUM_BATCHUPLOAD_UPLOAD_ZIP", "Wählen Sie das Zip");
+define("_MD_ALBUM_BATCHUPLOAD_ADD", "Batchupload");
+define("_MD_ALBUM_BATCHUPLOAD_SEL_IMAGES", "Select images to add to the selected Album");
+define("_MD_ALBUM_BATCHUPLOAD_IMG_DSC", "Set an image description for all images of the selected set.");
+define("_MD_ALBUM_BATCHUPLOAD_NOALBUM", "No Album selected. Please select Album first.");
+define("_MD_ALBUM_BATCHUPLOAD_URL_CAP", "Caption");
+define("_MD_ALBUM_BATCHUPLOAD_URL_URL", "URL");
+define("_MD_ALBUM_BATCHUPLOAD_URL_DSC", "Description");
+define("_MD_ALBUM_BATCHUPLOAD_URL_TARGET", "Target");
+define("_MD_ALBUM_BATCHUPLOAD_IMAGES", "Add images from batch folder");
+define("_MD_ALBUM_BATCHUPLOAD_SELECT_SOURCE", "Select the source of your batchupload");
+define("_MD_ALBUM_BATCHUPLOAD_ZIPUPL", "Add images from an zipfile to upload");
+define("_MD_ALBUM_BATCHUPLOAD_UPLOAD_ZIP", "Upload a new zip file");
+
+define("_MD_IMG_WAITING_APPROVAL", "Your message has been submitted ans is awaiting approval. Thanks for submitting.");
