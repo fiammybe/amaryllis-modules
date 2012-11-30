@@ -28,7 +28,7 @@ define("_MD_PORTFOLIO_CONTACT_PERMISSON", "Sorry, Sie haben nicht die erforderli
 define("_MD_PORTFOLIO_MY_SKILLS", "Meine Fähigkeiten");
 define("_MD_PORTFOLIO_VIEW_ALL", "Alle meine Referenzobjekte");
 define("_MD_PORTFOLIO_OR", " oder ");
-define("_MD_PORTFOLIO_CONTACT_ME", "über das Formular körnnen Sie mit mir in Kontakt treten");
+define("_MD_PORTFOLIO_CONTACT_ME", "über das Formular können Sie mit mir in Kontakt treten");
 define("_MD_PORTFOLIO_ADD_CONTACT", "Kontakt");
 
 // constants on cat view
