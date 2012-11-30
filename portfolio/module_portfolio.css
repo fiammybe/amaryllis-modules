@@ -45,11 +45,13 @@
 #portfolio_viewall p {color: #A8A5A4;font: 18px Georgia,Arial,sans-serif;font-style: italic;}
 .popup {display: none;}
 .portfolio_catlist {text-align: center;}
-.portfolio_cat {display: inline-block; margin: 2px;}
-.album_image {display: inline-block; margin: 2px; width: 30%; height: 183px;}
+.portfolio_cat {display: inline-block; margin: 2px;width: 207px;height:183px;background:url(images/cat_img.png);background-repeat:no-repeat;}
+.album_image {display: inline-block; margin: 2px;width: 207px;height:183px;}
 .portfolio_scat_title {margin: 2em 0em 0em 0em;}
 .portfolio_scat_img {float: left;margin-right: 1em;margin-bottom: .5em;}
-.portfolio_cat_title{margin-top: 17px; font-weight: bold;}
+.portfolio_cat_title{padding-top: 10px; font-weight: bold;line-height:20px}
+.portfolio_cat_img{float: left; margin:2px 40px;text-align:center;}
+.portfolio_cat_img a img {text-align:center}
 .single_portfolio {margin: 2em 0em;}
 .portfolio_customer {font-size: smaller;}
 .contact_date, .contact_mail, .contact_phone, .contact_submitter {display: block;margin: 0.5em 0em;}
