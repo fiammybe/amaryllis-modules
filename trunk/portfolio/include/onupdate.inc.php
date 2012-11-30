@@ -94,8 +94,9 @@ function upgrade_v1_1() {
 	if($portfolios) {
 		foreach (array_keys($portfolios) as $key) {
 			$seo = icms_ipf_Metagen::generateSeoTitle(trim($portfolios[$key]->title()), FALSE);
-			$umlaute = array("/ä/","/ö/","/ü/","/Ä/","/Ö/","/Ü/","/ß/"); 
-			$replace = array("ae","oe","ue","Ae","Oe","Ue","ss");
+			$seo = urldecode($seo);
+			$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß", "%C3%84", "%C3%96", "%C3%9C");
+			$replace = array("ae","oe","ue","Ae","Oe","Ue","ss", "Ae", "Oe", "Ue");
 			$seo = preg_replace($umlaute, $replace, $seo);
 			$portfolios[$key]->setVar("short_url", $seo);
 			$portfolios[$key]->_updating = TRUE;
@@ -107,10 +108,11 @@ function upgrade_v1_1() {
 	$cats = $category_handler->getObjects(FALSE, TRUE);
 	if($cats) {
 		foreach (array_keys($cats) as $key) {
-			$seo = icms_ipf_Metagen::generateSeoTitle(trim($cats[$key]->title()), FALSE);
-			$umlaute = array("/ä/","/ö/","/ü/","/Ä/","/Ö/","/Ü/","/ß/"); 
-			$replace = array("ae","oe","ue","Ae","Oe","Ue","ss");
-			$seo = preg_replace($umlaute, $replace, $seo);
+			$seo = ($cats[$key]->short_url() == "") ? icms_ipf_Metagen::generateSeoTitle(trim($cats[$key]->title()), FALSE) : $cats[$key]->short_url();
+			$seo = urldecode($seo);
+			$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß", "%C3%84", "%C3%96", "%C3%9C");
+			$replace = array("ae","oe","ue","Ae","Oe","Ue","ss", "Ae", "Oe", "Ue");
+			$seo = str_replace($umlaute, $replace, $seo);
 			$cats[$key]->setVar("short_url", $seo);
 			$cats[$key]->_updating = TRUE;
 			$category_handler->insert($cats[$key]);

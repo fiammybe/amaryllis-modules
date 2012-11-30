@@ -142,11 +142,12 @@ class mod_portfolio_CategoryHandler extends icms_ipf_Handler {
 			$obj->setVar('category_logo_upl', "" );
 		}
 		//check, id seo exists
-		$seo = trim($obj->short_url());
+		$seo = trim($obj->getVar("short_url", "e"));
 		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);
-		$umlaute = array("/ä/","/ö/","/ü/","/Ä/","/Ö/","/Ü/","/ß/"); 
-		$replace = array("ae","oe","ue","Ae","Oe","Ue","ss");
-		$seo = preg_replace($umlaute, $replace, $seo);
+		$seo = urldecode($seo);
+		$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß", "%C3%84", "%C3%96", "%C3%9C");
+		$replace = array("ae","oe","ue","Ae","Oe","Ue","ss", "Ae", "Oe", "Ue");
+		$seo = str_ireplace($umlaute, $replace, $seo);
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
 		if($this->getCount($criteria)) {
 			$seo = $seo . '_' . time();
@@ -167,6 +168,13 @@ class mod_portfolio_CategoryHandler extends icms_ipf_Handler {
 			$obj->setVar('index_image', $obj->getVar('category_logo_upl') );
 			$obj->setVar('category_logo_upl', "" );
 		}
+		$seo = trim($obj->getVar("short_url", "e"));
+		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);
+		$seo = urldecode($seo);
+		$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß", "%C3%84", "%C3%96", "%C3%9C");
+		$replace = array("ae","oe","ue","Ae","Oe","Ue","ss", "Ae", "Oe", "Ue");
+		$seo = str_ireplace($umlaute, $replace, $seo);
+		$obj->setVar("short_url", $seo);
 		return TRUE;
 	}
 	
