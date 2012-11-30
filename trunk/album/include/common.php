@@ -57,5 +57,3 @@ if(icms_get_module_status("index")) {
 	$indexModule = icms_getModuleInfo("index");
 	include_once ICMS_MODULES_PATH . "/" . $indexModule->getVar("dirname") . "/include/common.php";
 }
-
-$icmsPersistableRegistry = icms_ipf_registry_Handler::getInstance();

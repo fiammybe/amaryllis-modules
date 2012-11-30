@@ -3,14 +3,14 @@
 <{if $album_show_breadcrumb}>
 	<!-- module breadcrumb -->
 	<div class="album_headertable">
-		<{if $album_module_home}><span class="album_modulename"><{$album_module_home}></span><{/if}>
+		<{if $module_home}><span class="album_modulename"><{$module_home}></span><{/if}>
 		<{if $album_cat_path}>
 			<span class="album_breadcrumb">
-				<{if $album_module_home}>&nbsp;:&nbsp;<{/if}><{$album_cat_path}>
+				<{if $module_home}>&nbsp;:&nbsp;<{/if}><{$album_cat_path}>
 			</span>
 		<{/if}>
 	</div>
 <{/if}>
-<{if $album_index.image}>
-	<{$album_index.image}>
-<{/if}>
+<div class="index_indeximage">
+	<img src="<{$index_index.image}>" alt="indeximage" />
+</div>

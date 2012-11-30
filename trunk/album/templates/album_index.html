@@ -1,5 +1,8 @@
-<{includeq file='db:index_header.html'}>
-
+<{if $index_module}>
+	<{includeq file='db:index_header.html'}>
+<{else}>
+	<{includeq file='db:album_header.html'}>
+<{/if}>
 <{if $byTags}>
 	<!-- display index header -->
 	<{$index_index.header}>
