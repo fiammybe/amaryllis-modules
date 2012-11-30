@@ -330,4 +330,31 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$tags ['POLL_URL'] = $this->getItemLink(TRUE);
 		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'poll_published', $tags, array(), $module->getVar('mid'));
 	}
+	
+	public function sendMessageExpired() {
+		global $icmsConfig;
+		$user = $this->getVar("user_id", "e");
+		if($user == 0) return TRUE;
+		$pm_handler = icms::handler('icms_data_privmessage');
+		$file = "poll_expired.tpl";
+		$lang = "language/" . $icmsConfig['language'] . "/mail_template";
+		$tpl = ICMSPOLL_ROOT_PATH . "$lang/$file";
+		if (!file_exists($tpl)) {
+			$lang = 'language/english/mail_template';
+			$tpl = ICMSPOLL_ROOT_PATH . "$lang/$file";
+		}
+		
+		$uname = icms::handler('icms_member_user')->get($user)->getVar("uname");
+		$message = file_get_contents($tpl);
+		$message = str_replace("{X_UNAME}", $uname, $message);
+		$message = str_replace("{POLL_TITLE}", $this->getItemLink(FALSE), $message);
+		$pmObj = $pm_handler->create(TRUE);
+		$pmObj->setVar("subject", _CO_ICMSPOLL_POLL_HAS_EXPIRED);
+		$pmObj->setVar("from_userid", 1);
+		$pmObj->setVar("to_userid", (int)$user);
+		$pmObj->setVar("msg_time", time());
+		$pmObj->setVar("msg_text", $message);
+		$pm_handler->insert($pmObj, TRUE);
+		return TRUE;
+	}
 }
