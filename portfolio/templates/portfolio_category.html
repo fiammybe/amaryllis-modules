@@ -14,7 +14,11 @@
 				</div>
 				<div class="portfolio_cat_img">
 					<a href="<{$category.itemURL}>" title="<{$category.title}>">
-						<img src="<{$category.logo}>" title="<{$category.title}>" alt="<{$category.title}>" />
+						<{if $category.logo}></{if>
+							<img src="<{$category.logo}>" title="<{$category.title}>" alt="<{$category.title}>" />
+						<{else}>
+							<{$category.title}>
+						<{/if}>
 					</a>
 				</div>
 			</div>
