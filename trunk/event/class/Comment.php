@@ -49,21 +49,6 @@ class mod_event_Comment extends icms_ipf_Object {
 		$this->setControl("comment_approve", "yesno");
 	}
 	
-	/**
-	 * Overriding the icms_ipf_Object::getVar method to assign a custom method on some
-	 * specific fields to handle the value before returning it
-	 *
-	 * @param str $key key of the field
-	 * @param str $format format that is requested
-	 * @return mixed value of the field that is requested
-	 */
-	public function getVar($key, $format = "s") {
-		if ($format == "s" && in_array($key, array("comment_pdate"))) {
-			return call_user_func(array ($this,	$key));
-		}
-		return parent::getVar($key, $format);
-	}
-	
 	public function comment_pdate()	{
 		global $eventConfig;
 		return date($eventConfig['date_format'], $this->getVar("comment_pdate", "e"));
@@ -92,6 +77,9 @@ class mod_event_Comment extends icms_ipf_Object {
 		$userinfo['avatar'] = ICMS_UPLOAD_URL."/blank.gif";
 		$userinfo['user_sig'] = "";
 		$userinfo['uname'] = $icmsConfig['anonymous'];
+		$userinfo['icq'] = "";
+		$userinfo['yim'] = "";
+		$userinfo['msn'] = "";
 		return $userinfo;
 	}
 	
@@ -114,9 +102,10 @@ class mod_event_Comment extends icms_ipf_Object {
 		global $eventConfig;
 		icms_loadLanguageFile("core", "user");
 		$uinfo = $this->getPublisher();
+		$approval_link = (!$this->isApproved() && !$block && icms_userIsAdmin(EVENT_DIRNAME)) ? '<img class="comment_approval_link icon_middle" original-id="'.$this->id().'" src="'.EVENT_IMAGES_URL.'approved.png" />' : ""; 
 		$path = EVENT_ROOT_PATH.'templates/event_singlecomment.html';
 		$content = file_get_contents($path);
-		$content = str_replace("{COMMENT_BODY}", $this->summary(), $content);
+		$content = str_replace("{COMMENT_BODY}", $this->getVar("comment_body"), $content);
 		if($block && $this->getLink()) {
 			$content = str_replace("{COMMENT_PDATE}", '<a href="'.$this->getLink().'" title="Goto..">'.$this->comment_pdate().'</a>', $content);
 		} else {
@@ -135,8 +124,7 @@ class mod_event_Comment extends icms_ipf_Object {
 		$content = str_replace("{COMMENT_UYIM}", (is_object(icms::$user) && $uinfo['yim'] !== "") ? _US_YIM.': '.$uinfo['yim'] : "", $content);
 		$content = str_replace("{COMMENT_APPROVAL}", $this->isApproved() ? "" : _CO_EVENT_SUCCESSFUL_COMMENTED_APPROVAL, $content);
 		$content = str_replace("{COMMENT_APPROVE}", $this->getApproved(), $content);
-		$content = str_replace("{COMMENT_APPROVAL_LINK}", (!$this->isApproved() && !$block && icms_userIsAdmin(EVENT_DIRNAME)) ? 
-															'<img class="comment_approval_link icon_middle" original-id="'.$this->id().'" src="'.EVENT_IMAGES_URL.'approved.png" />' : "", $content);
+		$content = str_replace("{COMMENT_APPROVAL_LINK}", $approval_link, $content);
 		$content = str_replace("{COMMENT_REGDATE}", _US_MEMBERSINCE .": ".$uinfo['regdate'], $content);
 		return $content;
 	}
