@@ -40,7 +40,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 			$users = $member_handler->getObjects($criteria, TRUE);
 			$this->_usersArray[0] = $icmsConfig['anonymous'];
 			foreach (array_keys($users) as $key) {
-				$isOnline = (!empty($onlineUsers) && array_key_exists($key, $onlineUsers)) ? TRUE : FALSE;
+				$isOnline = ($onlineUsers && count(array_intersect_key(array($key => $key), $onlineUsers))) ? TRUE : FALSE;
 				$arr = array();
 				$arr['uid'] = $key;
 				$arr['link'] = '<a class="user_link" href="'.ICMS_URL.'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'</a>';
