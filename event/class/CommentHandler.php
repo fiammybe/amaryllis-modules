@@ -126,8 +126,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 	public function getComments($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start = 0, $limit = 0, $order = "comment_pdate", $sort = "DESC", $admin_approve = FALSE, $forBlock = FALSE) {
 		$criteria = $this->getCommentCriterias($approve, $event_id, $uid, $puid, $start, $limit, $order, $sort, $admin_approve);
 		$comments = $this->getObjects($criteria, TRUE, TRUE);
-		//$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
-		$events = $this->loadEventObjects(); //$event_handler->getObjects(NULL, TRUE, TRUE);
+		$events = $this->loadEventObjects();
 		$ret = array();
 		foreach (array_keys($comments) as $key) {
 			if($limit > 0 && count($ret) == $limit) continue;
@@ -181,7 +180,6 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 			return $bids;
 		}
 	}
-	
 	
 	protected function beforeInsert(&$obj) {
 		$ip = $obj->getVar("comment_ip", "e");

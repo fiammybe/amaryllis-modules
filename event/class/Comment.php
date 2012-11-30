@@ -80,6 +80,7 @@ class mod_event_Comment extends icms_ipf_Object {
 		$userinfo['icq'] = "";
 		$userinfo['yim'] = "";
 		$userinfo['msn'] = "";
+		$userinfo['regdate'] = "";
 		return $userinfo;
 	}
 	
@@ -119,7 +120,6 @@ class mod_event_Comment extends icms_ipf_Object {
 		$content = str_replace("{COMMENT_ID}", $id, $content);
 		$content = str_replace("{COMMENT_UNAME}", $uinfo['uname'], $content);
 		$content = str_replace("{COMMENT_AVATAR}", $uinfo['avatar'], $content);
-		//$content = str_replace("{COMMENT_AVATAR_DIM}", $eventConfig['avatar_dimensions'], $content);
 		$content = str_replace("{COMMENT_ULINK}", $uinfo['link'], $content);
 		$content = str_replace("{COMMENT_USIG}", $uinfo['user_sig'], $content);
 		$content = str_replace("{COMMENT_UID}", $uinfo['uid'], $content);
