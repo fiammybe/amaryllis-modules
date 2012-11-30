@@ -47,7 +47,16 @@ class IcmspollIndexpageHandler extends icms_ipf_Handler {
 	// some related functions for storing
 	protected function beforeInsert(&$obj) {
 		if ($obj->getVar('index_img_upload') != '') {
-			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
+			$obj->setVar('index_image', $obj->getVar('index_img_upload'));
+			$obj->setVar("index_img_upload", "");
+		}
+		return TRUE;
+	}
+	
+	protected function beforeUpdate(&$obj) {
+		if ($obj->getVar('index_img_upload') != '') {
+			$obj->setVar('index_image', $obj->getVar('index_img_upload'));
+			$obj->setVar("index_img_upload", "");
 		}
 		return TRUE;
 	}

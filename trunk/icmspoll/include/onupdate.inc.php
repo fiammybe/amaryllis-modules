@@ -30,7 +30,7 @@ function icmspoll_upload_paths() {
 	//Create folders and set permissions
 	$moddir = basename( dirname( dirname( __FILE__ ) ) );
 	$path = ICMS_UPLOAD_PATH . '/' . $moddir;
-	if(!is_dir($path . "/indexpage")) icms_core_Filesystem::mkdir($path . '/indexpage');
+	if(!is_dir($path . "/indexpage")) icms_core_Filesystem::mkdir($path . '/indexpage', 0777, TRUE);
 	$image2 = 'icmspoll_indeximage.png';
 	icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . $moddir . '/images/' . $image2, $path . '/indexpage/' . $image2);
 }

@@ -123,22 +123,6 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		}
 	}
 	
-	public function sendMessageExpired() {
-        $subject = _CO_ICMSPOLL_POLLS_MESSAGE_SUBJECT;
-        $itemLink = $this->getItemLink();
-        $message = sprintf(_CO_ICMSPOLL_POLLS_MESSAGE_BDY, $itemLink);
-        $pm_handler = icms::handler("icms_data_privmessage");
-        $pmObj = $pm_handler->create(TRUE);
-        $pmObj->setVar("subject", $subject);
-        $pmObj->setVar("from_userid", 1);
-        $pmObj->setVar("to_userid", $this->getVar("user_id", "e"));
-        $pmObj->setVar("msg_time", time());
-        $pmObj->setVar("msg_text", $message);
-        $pm_handler->insert($pmObj, TRUE);
-		unset($itemLink, $message, $pm_handler, $pmObj);
-        return TRUE;
-    }
-	
 	/**
 	 * set a poll as expired
 	 */
@@ -266,6 +250,17 @@ class IcmspollPollsHandler extends icms_ipf_Handler {
 		$question = $obj->getVar("question", "e");
 		$question = icms_core_DataFilter::checkVar($question, "html", "input");
 		$obj->setVar("question", $question);
+		$seo = trim($obj->getVar("short_url", "e"));
+		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);
+		$seo = urldecode($seo);
+		$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß", "%C3%84", "%C3%96", "%C3%9C");
+		$replace = array("ae","oe","ue","Ae","Oe","Ue","ss", "Ae", "Oe", "Ue");
+		$seo = str_ireplace($umlaute, $replace, $seo);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
+		if($this->getCount($criteria)) {
+			$seo = $seo . '_' . time();
+		}
+		$obj->setVar("short_url", $seo);
 		return TRUE;
 	}
 	/**
