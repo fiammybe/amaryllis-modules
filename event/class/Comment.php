@@ -102,7 +102,12 @@ class mod_event_Comment extends icms_ipf_Object {
 		global $eventConfig;
 		icms_loadLanguageFile("core", "user");
 		$uinfo = $this->getPublisher();
-		$approval_link = (!$this->isApproved() && !$block && icms_userIsAdmin(EVENT_DIRNAME)) ? '<img class="comment_approval_link icon_middle" original-id="'.$this->id().'" src="'.EVENT_IMAGES_URL.'approved.png" />' : ""; 
+		$approval_link = (!$this->isApproved() && !$block && icms_userIsAdmin(EVENT_DIRNAME)) ? '<img class="comment_approval_link icon_middle" original-id="'.$this->id().'" src="'.EVENT_IMAGES_URL.'approved.png" />' : "";
+		$approval = $this->isApproved() ? "" : _CO_EVENT_SUCCESSFUL_COMMENTED_APPROVAL;
+		$icq = (is_object(icms::$user) && $uinfo['icq'] !== "") ? _US_ICQ.': '.$uinfo['icq'] : "";
+		$msn = (is_object(icms::$user) && $uinfo['icq'] !== "") ? _US_ICQ.': '.$uinfo['icq'] : "";
+		$yim = (is_object(icms::$user) && $uinfo['yim'] !== "") ? _US_YIM.': '.$uinfo['yim'] : "";
+		$id = (!$block) ? $this->id() : "block_".$this->id();
 		$path = EVENT_ROOT_PATH.'templates/event_singlecomment.html';
 		$content = file_get_contents($path);
 		$content = str_replace("{COMMENT_BODY}", $this->getVar("comment_body"), $content);
@@ -111,7 +116,7 @@ class mod_event_Comment extends icms_ipf_Object {
 		} else {
 			$content = str_replace("{COMMENT_PDATE}", $this->comment_pdate(), $content);
 		}
-		$content = str_replace("{COMMENT_ID}", (!$block) ? $this->id() : "block_".$this->id(), $content);
+		$content = str_replace("{COMMENT_ID}", $id, $content);
 		$content = str_replace("{COMMENT_UNAME}", $uinfo['uname'], $content);
 		$content = str_replace("{COMMENT_AVATAR}", $uinfo['avatar'], $content);
 		//$content = str_replace("{COMMENT_AVATAR_DIM}", $eventConfig['avatar_dimensions'], $content);
@@ -119,10 +124,10 @@ class mod_event_Comment extends icms_ipf_Object {
 		$content = str_replace("{COMMENT_USIG}", $uinfo['user_sig'], $content);
 		$content = str_replace("{COMMENT_UID}", $uinfo['uid'], $content);
 		$content = str_replace("{COMMENT_UONLINE}", $uinfo['online'], $content);
-		$content = str_replace("{COMMENT_UICQ}", (is_object(icms::$user) && $uinfo['icq'] !== "") ? _US_ICQ.': '.$uinfo['icq'] : "", $content);
-		$content = str_replace("{COMMENT_UMSN}", (is_object(icms::$user) && $uinfo['msn'] !== "") ? _US_MSNM.': '.$uinfo['msn'] : "", $content);
-		$content = str_replace("{COMMENT_UYIM}", (is_object(icms::$user) && $uinfo['yim'] !== "") ? _US_YIM.': '.$uinfo['yim'] : "", $content);
-		$content = str_replace("{COMMENT_APPROVAL}", $this->isApproved() ? "" : _CO_EVENT_SUCCESSFUL_COMMENTED_APPROVAL, $content);
+		$content = str_replace("{COMMENT_UICQ}", $icq, $content);
+		$content = str_replace("{COMMENT_UMSN}", $msn, $content);
+		$content = str_replace("{COMMENT_UYIM}", $yim, $content);
+		$content = str_replace("{COMMENT_APPROVAL}", $approval, $content);
 		$content = str_replace("{COMMENT_APPROVE}", $this->getApproved(), $content);
 		$content = str_replace("{COMMENT_APPROVAL_LINK}", $approval_link, $content);
 		$content = str_replace("{COMMENT_REGDATE}", _US_MEMBERSINCE .": ".$uinfo['regdate'], $content);
