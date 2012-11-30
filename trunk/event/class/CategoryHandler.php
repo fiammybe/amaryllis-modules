@@ -115,13 +115,17 @@ class mod_event_CategoryHandler extends icms_ipf_Handler {
 	protected function beforeInsert(&$obj) {
 		if($obj->_updating)
 		return TRUE;
-		$seo = $obj->short_url();
-		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle($obj->title(), FALSE);
+		$seo = trim($obj->getVar("short_url", "e"));
+		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);
+		$seo = urldecode($seo);
+		$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß", "%C3%84", "%C3%96", "%C3%9C");
+		$replace = array("ae","oe","ue","Ae","Oe","Ue","ss", "Ae", "Oe", "Ue");
+		$seo = str_ireplace($umlaute, $replace, $seo);
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
 		if($this->getCount($criteria)) {
 			$seo = $seo . '_' . time();
-			$obj->setVar("short_url", $seo);
 		}
+		$obj->setVar("short_url", $seo);
 		$dsc = $obj->getVar("category_dsc", "e");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
 		$dsc = str_replace("'",'"', $dsc);
