@@ -82,6 +82,7 @@ class mod_portfolio_Category extends icms_ipf_seo_Object {
 			$image_tag = PORTFOLIO_UPLOAD_URL . 'category/' . $logo;
 			return $image_tag;
 		}
+		return FALSE;
 	}
 	
 	public function getCategoryDsc() {
