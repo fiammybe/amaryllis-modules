@@ -84,7 +84,7 @@ class mod_event_Comment extends icms_ipf_Object {
 		global $icmsConfig;
 		$uid = $this->getVar('comment_uid', 'e');
 		$users = $this->handler->loadUsers();
-		$user = (count(array_intersect_key(array($uid), $users) > 0) && $uid > 0 ) ? $users[$uid] : FALSE;
+		$user = (count(array_intersect(array($uid), $users) > 0) && $uid > 0 ) ? $users[$uid] : FALSE;
 		if($user) return $user;
 		$userinfo = array();
 		$userinfo['uid'] = 0;

@@ -145,9 +145,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$event_id = filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT);
 			if($event_id == 0){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			$event = $event_handler->get($event_id);
-			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
-			if($event->hasJoint()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
-			if(!$event->joinEvent()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
+			if($event->hasJoint()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
+			if(!$event->joinEvent()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
 			$event->sendMessageJoined($uid);
 			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_JOINED));
@@ -160,7 +160,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$event = $event_handler->get($event_id);
 			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			if(!$event->hasJoint()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
-			if(!$event->unjoinEvent()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			if(!$event->unjoinEvent()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
 			$event->sendMessageUnjoined($uid);
 			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_UNJOINED));
@@ -170,11 +170,11 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$event_id = filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT);
 			if($event_id == 0){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			$event = $event_handler->get($event_id);
-			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
-			if(!$uid) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			if(!$uid) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			$comment_handler = icms_getModuleHandler("comment", EVENT_DIRNAME, "event");
-			if(!$comment_handler->userCanComment()){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			if(!$comment_handler->userCanComment()){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			$body = filter_input(INPUT_POST, "comment_body");
 			$body = strip_tags($body, "<a><b><strong><i><br>");
 			$body = icms_core_DataFilter::checkVar($body, "html", "input");
@@ -189,7 +189,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$comment->setVar("comment_pdate", time());
 			$comment->setVar("comment_body", $body);
 			$comment->setVar("comment_approve", $approve);
-			if(!$comment_handler->insert($comment)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $event->getErrors())));unset($_POST);exit;}
+			if(!$comment_handler->insert($comment)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $comment->getErrors())));unset($_POST);exit;}
 			$message = ($approve) ? _MD_EVENT_SUCCESSFUL_COMMENTED : _MD_EVENT_SUCCESSFUL_COMMENTED_APPROVAL;
 			echo json_encode(array('status' => 'success','message'=> $message, 'comments' => $event->getEventComments()));
 			unset($_POST); exit;
@@ -201,7 +201,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if($comment_id == 0){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			if($event_id == 0){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			$event = $event_handler->get($event_id);
-			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM,));unset($_POST); exit; }
+			if(!is_object($event) || $event->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
 			$comment_handler = icms_getModuleHandler("comment", EVENT_DIRNAME, "event");
 			$comment = $comment_handler->get($comment_id);
 			if(!is_object($comment) || $comment->isNew()) { echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
