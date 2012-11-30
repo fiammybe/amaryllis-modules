@@ -45,7 +45,8 @@
 #portfolio_viewall p {color: #A8A5A4;font: 18px Georgia,Arial,sans-serif;font-style: italic;}
 .popup {display: none;}
 .portfolio_catlist {text-align: center;}
-.portfolio_cat, .album_image {display: inline-block; margin: 15px;}
+.portfolio_cat {display: inline-block; margin: 2px;}
+.album_image {display: inline-block; margin: 2px; width: 30%; height: 183px;}
 .portfolio_scat_title {margin: 2em 0em 0em 0em;}
 .portfolio_scat_img {float: left;margin-right: 1em;margin-bottom: .5em;}
 .single_portfolio {margin: 2em 0em;}
