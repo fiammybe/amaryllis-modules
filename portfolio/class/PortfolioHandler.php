@@ -180,10 +180,6 @@ class mod_portfolio_PortfolioHandler extends icms_ipf_Handler {
 	
 	protected function beforeInsert(&$obj) {
 		if($obj->_updating) return TRUE;
-		// check summary for valid html input
-		$summary = $obj->getVar("portfolio_summary", "e");
-		$summary = icms_core_DataFilter::checkVar($summary, "html", "input");
-		$obj->setVar("portfolio_summary", $summary);
 		// check, if email is valid
 		$mail = $obj->getVar("portfolio_cemail", "e");
 		$mail = icms_core_DataFilter::checkVar($mail, "email", 0, 0);
@@ -191,6 +187,9 @@ class mod_portfolio_PortfolioHandler extends icms_ipf_Handler {
 		//check, id seo exists
 		$seo = trim($obj->short_url());
 		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);
+		$umlaute = array("/ä/","/ö/","/ü/","/Ä/","/Ö/","/Ü/","/ß/"); 
+		$replace = array("ae","oe","ue","Ae","Oe","Ue","ss");
+		$seo = preg_replace($umlaute, $replace, $seo);
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
 		if($this->getCount($criteria)) {
 			$seo = $seo . '_' . time();

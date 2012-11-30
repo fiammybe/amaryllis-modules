@@ -137,9 +137,6 @@ class mod_portfolio_CategoryHandler extends icms_ipf_Handler {
 		$mail = $obj->getVar("category_mail", "e");
 		$mail = icms_core_DataFilter::checkVar($mail, "email", 0, 0);
 		$obj->setVar("category_mail", $mail);
-		$summary = $obj->getVar("category_summary", "e");
-		$summary = icms_core_DataFilter::checkVar($summary, "html", "input");
-		$obj->setVar("category_summary", $summary);
 		if ($obj->getVar('category_logo_upl') != '') {
 			$obj->setVar('index_image', $obj->getVar('category_logo_upl') );
 			$obj->setVar('category_logo_upl', "" );
@@ -147,6 +144,9 @@ class mod_portfolio_CategoryHandler extends icms_ipf_Handler {
 		//check, id seo exists
 		$seo = trim($obj->short_url());
 		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);
+		$umlaute = array("/ä/","/ö/","/ü/","/Ä/","/Ö/","/Ü/","/ß/"); 
+		$replace = array("ae","oe","ue","Ae","Oe","Ue","ss");
+		$seo = preg_replace($umlaute, $replace, $seo);
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
 		if($this->getCount($criteria)) {
 			$seo = $seo . '_' . time();
