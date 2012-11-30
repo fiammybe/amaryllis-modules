@@ -151,8 +151,8 @@ class mod_portfolio_CategoryHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
 		if($this->getCount($criteria)) {
 			$seo = $seo . '_' . time();
-			$obj->setVar("short_url", $seo);
 		}
+		$obj->setVar("short_url", $seo);
 		return TRUE;
 	}
 	
@@ -161,9 +161,6 @@ class mod_portfolio_CategoryHandler extends icms_ipf_Handler {
 		$mail = $obj->getVar("category_mail", "e");
 		$mail = icms_core_DataFilter::checkVar($mail, "email", 0, 0);
 		$obj->setVar("category_mail", $mail);
-		$summary = $obj->getVar("category_summary", "e");
-		$summary = icms_core_DataFilter::checkVar($summary, "html", "input");
-		$obj->setVar("category_summary", $summary);
 		if ($obj->getVar('category_logo_upl') != '') {
 			$obj->setVar('index_image', $obj->getVar('category_logo_upl') );
 			$obj->setVar('category_logo_upl', "" );

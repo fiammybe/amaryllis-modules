@@ -194,8 +194,8 @@ class mod_portfolio_PortfolioHandler extends icms_ipf_Handler {
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
 		if($this->getCount($criteria)) {
 			$seo = $seo . '_' . time();
-			$obj->setVar("short_url", $seo);
 		}
+		$obj->setVar("short_url", $seo);
 		return TRUE;
 	}
 	
