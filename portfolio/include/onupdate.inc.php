@@ -93,7 +93,7 @@ function upgrade_v1_1() {
 	$portfolios = $portfolio_handler->getObjects(FALSE, TRUE);
 	if($portfolios) {
 		foreach (array_keys($portfolios) as $key) {
-			$seo = icms_ipf_Metagen::generateSeoTitle(trim($portfolios[$key]->title()), FALSE);
+			$seo = ($portfolios[$key]->short_url() == "") ? icms_ipf_Metagen::generateSeoTitle(trim($portfolios[$key]->title()), FALSE) : $portfolios[$key]->short_url();
 			$seo = urldecode($seo);
 			$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß", "%C3%84", "%C3%96", "%C3%9C");
 			$replace = array("ae","oe","ue","Ae","Oe","Ue","ss", "Ae", "Oe", "Ue");
