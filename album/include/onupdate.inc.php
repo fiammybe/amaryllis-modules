@@ -58,8 +58,6 @@ function album_indexpage() {
 		$index_path = ICMS_UPLOAD_PATH . '/' . $indexModule->getVar("dirname") . '/' . $indexpage_handler->_itemname;
 		$image = 'album_indeximage.png';
 		icms_core_Filesystem::copyRecursive(ICMS_ROOT_PATH . '/modules/' . ALBUM_DIRNAME . '/images/' . $image, $index_path . '/' . $image);
-		
-		$indexpageObj = $indexpage_handler->create(TRUE);
 		$indexpageObj->setVar('index_header', 'My Photo Albums' );
 		$indexpageObj->setVar('index_heading', 'Here you can see my photo Albums' );
 		$indexpageObj->setVar('index_footer', '&copy; 2012 | Album module footer');
@@ -72,7 +70,8 @@ function album_indexpage() {
 		echo '</code>';
 	} else {
 		$album_indexpage_handler = icms_getModuleHandler( 'indexpage', ALBUM_DIRNAME, 'album' );
-		$indexpageObj = $album_indexpage_handler -> create(TRUE);
+		$indexpageObj = $album_indexpage_handler -> get(1);
+		if(is_object($indexpageObj) && !$indexpageObj->isNew()) return;
 		echo '<code>';
 		$indexpageObj->setVar('index_header', 'My Photo Albums');
 		$indexpageObj->setVar('index_heading', 'Here you can see my photo Albums');
@@ -121,7 +120,7 @@ function icms_module_update_album($module) {
 	
 	// copy sitemap plugin, if sitemap is installed
 	copySitemapPlugin();
-	
+	album_indexpage();
 	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
 	$icmsDatabaseUpdater -> moduleUpgrade($module);
     return TRUE;

@@ -172,7 +172,9 @@ if(in_array($clean_op, $valid_op)) {
 				/**
 				 * assign breadcrumb
 				 */
-				if ($indexConfig['show_breadcrumbs']){
+				if (icms_get_module_status("index") && $indexConfig['show_breadcrumbs']){
+					$icmsTpl->assign('album_cat_path', $album_handler->getBreadcrumbForPid($albumObj->getVar('album_id', 'e'), 1));
+				} elseif (!icms_get_module_status("index")) {
 					$icmsTpl->assign('album_cat_path', $album_handler->getBreadcrumbForPid($albumObj->getVar('album_id', 'e'), 1));
 				}
 				/**

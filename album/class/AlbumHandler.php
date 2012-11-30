@@ -284,20 +284,17 @@ class mod_album_AlbumHandler extends icms_ipf_Handler {
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
 		$obj->setVar("album_description", $dsc);
 		// check seo and check, if the seo doesn't exist twice
-		$seo = $obj->short_url();
-		$title = $obj->title();
-		if($seo == "") {
-			$seotitle = icms_ipf_Metagen::generateSeoTitle($title, FALSE);
-			$obj->setVar("short_url", $seotitle);
-			$seo = $seotitle;
-		} else {
-			$seotitle = icms_ipf_Metagen::generateSeoTitle($seo, FALSE);
+		$seo = trim($obj->getVar("short_url", "e"));
+		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);
+		$seo = urldecode($seo);
+		$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß", "%C3%84", "%C3%96", "%C3%9C");
+		$replace = array("ae","oe","ue","Ae","Oe","Ue","ss", "Ae", "Oe", "Ue");
+		$seo = str_ireplace($umlaute, $replace, $seo);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
+		if($this->getCount($criteria)) {
+			$seo = $seo . '_' . time();
 		}
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seotitle));
-		if($this->getCount($criteria) > 0) {
-			$obj->setErrors(_CO_INDEX_ERRORS_TAG_SEO_EXISTS);
-			return FALSE;
-		}
+		$obj->setVar("short_url", $seo);
 		return TRUE;
 	}
 	

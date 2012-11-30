@@ -16,7 +16,39 @@
  * @version		$Id$
  * 
  */
+.index_headertable { margin-bottom: 2em; float: left;}
+.index_rss { float: right;}
+.index_clear_both { clear: both; height: 1px;}
+.index_clear_left { clear: left; height: 1px;}
+.index_clear_right { clear: right; height: 1px;}
+.index_indeximage { text-align: center;}    
+.index_indexheader { text-align: center; font-size: 2em; margin: 2em auto;}    
+.index_indexheading, .index_indexfooter { margin: 1em auto;}
+.index_no_items { font-size: 1.2em; margin: 1.5em 0; color: red;}
+.index_adminlinks { text-align: center;}
 
+.index_table {display: table; width: 100%;}
+.table_row {display: table-row; padding: .250em; line-height: 3em;}
+.table_row span{border-top:1px solid #FFFFFF; border-bottom:1px solid #FFFFFF;}
+.table_row:hover span{border-top:1px solid #AAAAAA; border-bottom:1px solid #AAAAAA;}
+.table_cell { display: table-cell;}
+.popup, .index_popup {display: none;}
+.index_link { width: 95%; position: relative; vertical-align: middle; }
+.index_link_modicon { width: 50px; height: 50px; float:left; position: relative; }
+.index_link_itemimage {float: left; margin-left: 2em; position: relative; }
+.index_link_item {float:left; margin-left: 2em; position: relative; }
+.index_link_teaser {float:left; margin-left: 2em; width:70%; height: 10em; overflow: auto; position: relative; }
+.icon_middle {vertical-align: middle;}
+.icon_small {width: 16px; height: 16px;}
+.index_cats { margin: 1.5em auto; display: table; width: 100%; padding: 5px; }
+.index_scat { margin: 1.5em 0; }
+.category_row {width: 100%;}
+.index_cat_frame { display: inline-block; width: 30%; position: relative; }
+.index_category { width: 100%; }
+div.index_subcatlist { position: relative; height: auto; width: 100%; margin: 0.5em 0; padding: 0.5em; }
+.category_row { width: 100%; }
+.index_cat_img { vertical-align: middle; }
+.index_cat_desc { margin: 0em 0em 1em; }
 	.album_clear_both {
 		clear: both;
 		height: 1px;

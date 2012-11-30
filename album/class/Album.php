@@ -397,6 +397,9 @@ class mod_album_Album extends icms_ipf_seo_Object {
 	}
 
 	public function sendMessageApproved() {
+		global $icmsConfig;
+		$user = $this->getVar("album_uid", "e");
+		if($user == 0) return TRUE;
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$file = "album_approved.tpl";
 		$lang = "language/" . $icmsConfig['language'] . "/mail_template";
@@ -405,7 +408,6 @@ class mod_album_Album extends icms_ipf_seo_Object {
 			$lang = 'language/english/mail_template';
 			$tpl = ALBUM_ROOT_PATH . "$lang/$file";
 		}
-		$user = $this->getVar("album_uid", "e");
 		$uname = icms::handler('icms_member_user')->get($user)->getVar("uname");
 		$message = file_get_contents($tpl);
 		$message = str_replace("{X_UNAME}", $uname, $message);
