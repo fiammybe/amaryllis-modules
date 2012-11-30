@@ -115,7 +115,7 @@ class mod_portfolio_Portfolio extends icms_ipf_seo_Object {
 	}
 
 	public function getTechniques() {
-		$techniques = $this->getVar("portfolio_techniques", "e");// str_replace("<!-- Input Filtered -->", "", $this->getVar("portfolio_techniques"));
+		$techniques = icms_core_DataFilter::undoHtmlSpecialChars($this->getVar("portfolio_techniques", "e"));// str_replace("<!-- Input Filtered -->", "", $this->getVar("portfolio_techniques"));
 		return (!$techniques == "") ? explode("|", $techniques) : FALSE;
 	}
 	
