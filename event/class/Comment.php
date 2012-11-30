@@ -84,7 +84,7 @@ class mod_event_Comment extends icms_ipf_Object {
 		global $icmsConfig;
 		$uid = $this->getVar('comment_uid', 'e');
 		$users = $this->handler->loadUsers();
-		$user = (count(array_intersect(array($uid), $users) > 0) && $uid > 0 ) ? $users[$uid] : FALSE;
+		$user = (count(array_intersect_key(array($uid => $uid), $users)) && $uid > 0 ) ? $users[$uid] : FALSE;
 		if($user) return $user;
 		$userinfo = array();
 		$userinfo['uid'] = 0;
@@ -106,7 +106,7 @@ class mod_event_Comment extends icms_ipf_Object {
 	public function getLink() {
 		$eid = $this->getVar("comment_eid", "e");
 		$events = $this->handler->loadEventLinks();
-		if(count(array_intersect_key(array($eid), $events) > 0)) return $events[$eid].'#event_comment_'.$this->id();
+		if(count(array_intersect_key(array($eid => $eid), $events))) return $events[$eid].'#event_comment_'.$this->id();
 		return FALSE;
 	}
 	

@@ -132,7 +132,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 		foreach (array_keys($comments) as $key) {
 			if($limit > 0 && count($ret) == $limit) continue;
 			$eid = $comments[$key]->getVar("comment_eid", "e");
-			if(count(array_intersect_key(array($eid), $events) > 0) && $events[$eid]->accessGranted())
+			if(count(array_intersect_key(array($eid => $eid), $events) > 0) && $events[$eid]->accessGranted())
 			$ret[$key] = (!$forBlock) ? $comments[$key]->renderComment(FALSE) : $comments[$key]->renderComment(TRUE);
 		}
 		unset($events, $criteria, $comments);
