@@ -49,6 +49,7 @@
 .album_image {display: inline-block; margin: 2px; width: 30%; height: 183px;}
 .portfolio_scat_title {margin: 2em 0em 0em 0em;}
 .portfolio_scat_img {float: left;margin-right: 1em;margin-bottom: .5em;}
+.portfolio_cat_title{margin-top: 17px; font-weight: bold;}
 .single_portfolio {margin: 2em 0em;}
 .portfolio_customer {font-size: smaller;}
 .contact_date, .contact_mail, .contact_phone, .contact_submitter {display: block;margin: 0.5em 0em;}
