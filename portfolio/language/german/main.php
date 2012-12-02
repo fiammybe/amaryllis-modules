@@ -25,7 +25,7 @@ define("_MD_PORTFOLIO_ADMIN_PAGE", ":: Admin :: ");
 define("_MD_PORTFOLIO_CONTACT_PERM", "Zugriff verweigert");
 define("_MD_PORTFOLIO_CONTACT_PERMISSON", "Sorry, Sie haben nicht die erforderlichen Rechte, um dieses Formular zu verwenden. Bitte loggen Sie sich ein oder registrieren Sie sich");
 //constants used on module home
-define("_MD_PORTFOLIO_MY_SKILLS", "Meine Fähigkeiten");
+define("_MD_PORTFOLIO_MY_SKILLS", "Meine Fähigkeiten:");
 define("_MD_PORTFOLIO_VIEW_ALL", "Alle meine Referenzobjekte");
 define("_MD_PORTFOLIO_OR", " oder ");
 define("_MD_PORTFOLIO_CONTACT_ME", "über das Formular können Sie mit mir in Kontakt treten");
@@ -46,4 +46,4 @@ define("_MD_PORTFOLIO_CONTACTS_BC", "Nachrichten Liste");
  */
 define("_MD_PORTFOLIO_ERROR_STORING", "Es gab einen Fehler beim Speichern der Daten");
 define("_THANKS_SUBMISSION_REV", "Vielen Dank, dass Sie uns kontaktiert haben. Wir werden uns schnellstmöglich mit Ihnen in Verbindung setzen.");
-define("_MD_PORTFOLIO_USED_TECHNIQUES", "Genutzte Techniken");
+define("_MD_PORTFOLIO_USED_TECHNIQUES", "Genutzte Techniken:");
