@@ -55,7 +55,7 @@ define("_MD_EVENT_FREE", "Frei");
 define("_MD_EVENT_REGISTERED", "registriert");
 define("_MD_EVENT_PARTICIPATE", "Teilnahme");
 define("_MD_EVENT_PARTICIPATE_EVENT", "Sie k&ouml;nnen an dieser Veranstaltung teilnehmen");
-define("_MD_EVENT_JOINERS_LIST", "Andere Benutzer, die Sie dort treffen k&ouml;nnen");
+define("_MD_EVENT_JOINERS_LIST", "Andere User, die Sie dort treffen k&ouml;nnen");
 /**
  * added in 1.1
  */
@@ -63,5 +63,5 @@ define("_MD_EVENT_REGISTER", "Sorry, Sie haben keine Berechtigung zum Übermitte
 /**
  * added in 1.2
  */
-define("_MD_EVENT_SUCCESSFUL_COMMENTED", "Thanks for submit comment.");
-define("_MD_EVENT_SUCCESSFUL_COMMENTED_APPROVAL", "Thanks for submit comment. Your Comment is currently awaiting approval.");
+define("_MD_EVENT_SUCCESSFUL_COMMENTED", "Vielen Dank für das Eintragen einens Kommentar.");
+define("_MD_EVENT_SUCCESSFUL_COMMENTED_APPROVAL", "Vielen Dank für einzureichten Kommentar. Ihr Kommentar wartet derzeit auf Genehmigung.");
