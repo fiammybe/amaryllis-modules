@@ -23,7 +23,7 @@ define("_MB_EVENT_TIMERANGE", "W&auml;hlen Sie den Zeitbereich der angezeigt wer
 define("_MB_EVENT_CURRENT_DAY", "Aktueller Tag");
 define("_MB_EVENT_CURRENT_WEEK", "Aktuelle Woche");
 define("_MB_EVENT_CURRENT_MONTH", "Aktueller Monat");
-define("_MB_EVENT_NO_EVENTS", "Keine Termine f&uuml;r den ausgew	&auml;hlten Bereich gefunden.");
+define("_MB_EVENT_NO_EVENTS", "Keine Termine f&uuml;r den ausgew &auml;hlten Bereich gefunden.");
 define("_MB_EVENT_START", "Startdatum");
 define("_MB_EVENT_END", "Enddatum");
 define("_MB_EVENT_CATEGORY", "Kategorie");
