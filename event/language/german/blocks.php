@@ -23,7 +23,7 @@ define("_MB_EVENT_TIMERANGE", "W&auml;hlen Sie den Zeitbereich der angezeigt wer
 define("_MB_EVENT_CURRENT_DAY", "Aktueller Tag");
 define("_MB_EVENT_CURRENT_WEEK", "Aktuelle Woche");
 define("_MB_EVENT_CURRENT_MONTH", "Aktueller Monat");
-define("_MB_EVENT_NO_EVENTS", "Keine Termine f�r den ausgew�hlten Bereich gefunden.");
+define("_MB_EVENT_NO_EVENTS", "Keine Termine f&uuml;r den ausgew	&auml;hlten Bereich gefunden.");
 define("_MB_EVENT_START", "Startdatum");
 define("_MB_EVENT_END", "Enddatum");
 define("_MB_EVENT_CATEGORY", "Kategorie");
@@ -41,6 +41,6 @@ define("_MB_EVENT_DISPLAY", "Zeige");
  * added in 1.2
  */
 define("_MB_EVENT_LIMIT", "Limit");
-define("_MB_EVENT_RECENT_COMMENTS", "Recently submitted comments on Events");
-define("_MB_EVENT_MY_RECENT_COMMENTS", "Recently submitted comments on my Events");
-define("_MB_EVENT_ADMIN_COMMENTS", "Recently submitted comments awaiting approval");
+define("_MB_EVENT_RECENT_COMMENTS", "K&uuml;rzlich eingereichte Kommentare zu Events");
+define("_MB_EVENT_MY_RECENT_COMMENTS", "K&uuml;rzlich eingereicht Kommentar zu meiner Veranstaltung");
+define("_MB_EVENT_ADMIN_COMMENTS", "Kürzlich einreichter Kommentar wartet auf Genehmigung");
