@@ -22,7 +22,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS Basispfad wurde nicht definiert");
 define("_CO_EVENT_CATEGORY_CATEGORY_NAME", "Kategoriename");
 define("_CO_EVENT_CATEGORY_CATEGORY_NAME_DSC", "Name der Kategorie ");
 define("_CO_EVENT_CATEGORY_CATEGORY_DSC", "Beschreibung");
-define("_CO_EVENT_CATEGORY_CATEGORY_DSC_DSC", "Hier k�nnen Sie eine Beschreibung Ihrer Veranstaltung eintragen");
+define("_CO_EVENT_CATEGORY_CATEGORY_DSC_DSC", "Hier k &ouml;nnen Sie eine Beschreibung Ihrer Veranstaltung eintragen");
 define("_CO_EVENT_CATEGORY_CATEGORY_ICON", "Icon");
 define("_CO_EVENT_CATEGORY_CATEGORY_ICON_DSC", "");
 define("_CO_EVENT_CATEGORY_CATEGORY_COLOR", "Hintergrund Farbe");
@@ -45,7 +45,7 @@ define("_CO_EVENT_CALENDAR_CALENDAR_COLOR_DSC", "Hintergrundfarbe des zugeordnet
 define("_CO_EVENT_CALENDAR_CALENDAR_TXTCOLOR", "Text Farbe");
 define("_CO_EVENT_CALENDAR_CALENDAR_TXTCOLOR_DSC", "Text Farbe der zugeordneten Ereignisse dieses Kalenders");
 define("_CO_EVENT_CALENDAR_CALENDAR_TZ", "Standard Zeitzone");
-define("_CO_EVENT_CALENDAR_CALENDAR_TZ_DSC", "Google Kalender Zeitzone. Schauen Sie im Handbuch f�r weitere Informationen");
+define("_CO_EVENT_CALENDAR_CALENDAR_TZ_DSC", "Google Kalender Zeitzone. Schauen Sie im Handbuch f&uuml;r weitere Informationen");
 // event
 define("_CO_EVENT_EVENT_EVENT_NAME", "Eventname");
 define("_CO_EVENT_EVENT_EVENT_NAME_DSC", "");
@@ -162,18 +162,18 @@ define("_CO_EVENT_UNJOIN", "Nicht registrierte Veranstaltung");
 /**
  * added in 1.1
  */
-define("_CO_EVENT_BIRTHDAY", "Birthday");
-define("_CO_EVENT_BIRTHDAY_OF", "Birthday of %s");
-define("_CO_EVENT_SUBMIT", "Submit Event");
+define("_CO_EVENT_BIRTHDAY", "Geburtstag");
+define("_CO_EVENT_BIRTHDAY_OF", "Geburtstag von %s");
+define("_CO_EVENT_SUBMIT", "Event erstellen");
 /**
  * added in 1.2
  */
-define("_CO_EVENT_SUCCESSFUL_COMMENTED_APPROVAL", "Thanks for submit comment. Your Comment is currently awaiting approval.");
+define("_CO_EVENT_SUCCESSFUL_COMMENTED_APPROVAL", "Vielen Dank für eingereichten Kommentar. Ihr Kommentar wartet derzeit noch auf Genehmigung.");
 //comment table
-define("_CO_EVENT_COMMENT_COMMENT_APPROVE", "Approved?");
-define("_CO_EVENT_COMMENT_COMMENT_BODY", "Comment");
+define("_CO_EVENT_COMMENT_COMMENT_APPROVE", "Zulassen?");
+define("_CO_EVENT_COMMENT_COMMENT_BODY", "Kommentar");
 define("_CO_EVENT_COMMENT_COMMENT_FPRINT", "Fingerprint");
 define("_CO_EVENT_COMMENT_COMMENT_IP", "IP");
-define("_CO_EVENT_COMMENT_COMMENT_PDATE", "Submitted on");
-define("_CO_EVENT_COMMENT_COMMENT_UID", "Submitted By");
-define("_CO_EVENT_COMMENT_COMMENT_EID", "Submitted in");
+define("_CO_EVENT_COMMENT_COMMENT_PDATE", "Eingesendet am");
+define("_CO_EVENT_COMMENT_COMMENT_UID", "Verfasst von");
+define("_CO_EVENT_COMMENT_COMMENT_EID", "Verfasst in");
