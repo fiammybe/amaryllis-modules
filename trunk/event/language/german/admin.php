@@ -38,7 +38,7 @@ define("_AM_EVENT_EVENT_VIEW", "Veranstaltungs Info");
 define("_AM_EVENT_EVENT_VIEW_DSC", "Hier sind die Informationen zu dieser Veranstaltung.");
 define("_AM_EVENT_NO_CATEGORY_FOUND", "Es wurde keine Kategorie gefunden. Bitte erstellen Sie zuerst eine Kategorie");
 define("_AM_EVENTS_EVENT_DELETE_RANGE", "L&ouml;schen von abgelaufenen Veranstaltungen");
-define("_AM_EVENTS_EVENT_DELETE_BEFORE", "L&ouml;schen aller abgelaufen Veranstaltungen die &auml;lter sin als (Monate )");
+define("_AM_EVENTS_EVENT_DELETE_BEFORE", "L&ouml;schen aller abgelaufen Veranstaltungen die &auml;lter sind als (Monate )");
 define("_AM_EVENTS_EVENTS_DELETED", "Veranstaltungen l&ouml;schen");
 // Category
 define("_AM_EVENT_CATEGORYS", "Kategorien");
@@ -67,9 +67,9 @@ define("_AM_EVENT_CALENDAR_VIEW_DSC", "Hier sind die Information &uuml;ber diese
 /**
  * added in 1.1
  */
-define("_AM_EVENT_EVENT_DENIED", "Denied");
-define("_AM_EVENT_EVENT_APPROVED", "Approved");
+define("_AM_EVENT_EVENT_DENIED", "Verweigert");
+define("_AM_EVENT_EVENT_APPROVED", "Genehmigt");
 /**
  * added in 1.2
  */
-define("_AM_EVENT_EVENT_COMMENT", "Comments");
+define("_AM_EVENT_EVENT_COMMENT", "Kommentare");
