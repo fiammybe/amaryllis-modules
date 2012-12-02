@@ -36,7 +36,7 @@ define("_MD_PORTFOLIO_HIRE_ME", "Ihnen haben meine Arbeiten gefallen ...?");
 define("_MD_PORTFOLIO_VIEW_DETAIL", "Lesen Sie mehr &uuml;ber ...");
 define("_MD_PORTFOLIO_VIEW_MORE_IMAGES", "Hier sehen Sie einige weitere Vorschaubilder:");
 define("_MD_PORTFOLIO_VIEW_DEMO", "Referenzobjekte Live");
-define("_MD_PORTFOLIO_CUSTOMER", "Auftraggeber");
+  define("_MD_PORTFOLIO_CUSTOMER", "Auftraggeber:");
 define("_MD_PORTFOLIO_TWITTER", "Twitter");
 
 // constants for contact.php
