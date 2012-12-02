@@ -29,7 +29,7 @@ define("_MI_EVENT_MENU_MANUAL", "Anleitung");
 define("_MI_EVENT_MENU_TEMPLATES", "Templates");
 // config
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW", "Ansicht");
-define("_MI_EVENT_CONFIG_DEFAULT_VIEW_DSC", "W&auml;hlen Sie die Standardansicht f�r den Kalender.");
+define("_MI_EVENT_CONFIG_DEFAULT_VIEW_DSC", "W&auml;hlen Sie die Standardansicht f &uuml;r den Kalender.");
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW_MONTH", "Monat");
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW_DAY", "Tag");
 define("_MI_EVENT_CONFIG_FIRST_DAY", "Der erste Tag welcher in der Woche angezeigt werden soll");
@@ -74,7 +74,7 @@ define("_MI_EVENT_BLOCK_MINICAL_DSC", "Mini Kalendar f&uuml;r Bl&ouml;cke");
 define("_MI_EVENT_BLOCK_LIST", "Veranstaltungen");
 define("_MI_EVENT_BLOCK_LIST_DSC", "Liste der Veranstaltungen in einem Zeitraum");
 define("_MI_EVENT_BLOCK_SELECT", "Veranstaltungssuche");
-define("_MI_EVENT_BLOCK_SELECT_DSC", "Ein Block, um den Zeitintervall w�hlen, um Events zu erhalten");
+define("_MI_EVENT_BLOCK_SELECT_DSC", "Ein Block, um den Zeitintervall w &auml;hlen, um Events zu erhalten");
 // notifications
 define('_MI_EVENT_GLOBAL_NOTIFY', 'Global');
 define('_MI_EVENT_GLOBAL_NOTIFY_DSC', 'Globale Event Benachrichtigungsoptionen.');
@@ -84,16 +84,16 @@ define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY', 'Neue Veranstaltung');
 define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_CAP', 'Benachrichtigen Sie mich, wenn eine Neue Veranstaltung erstellt wurde.');
 define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_DSC', 'Erhalten einer Benachrichtigung, wenn eine Neue Veranstaltung wird.');
 define('_MI_EVENT_GLOBAL_EVENT_PUBLISHED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Neue Veranstaltung');
-define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY', 'Veranstaltung Ge�ndert');
-define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_CAP', 'Benachrichtigen Sie mich, wenn eine Veranstaltung ge�ndert wurde.');
-define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_DSC', 'Erhalten einer Benachrichtigung, wenn eine Veranstaltung ge�ndert wurde.');
-define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Veranstaltung Ge�ndert');
+define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY', 'Veranstaltung Ge &auml;ndert');
+define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_CAP', 'Benachrichtigen Sie mich, wenn eine Veranstaltung ge&auml;ndert wurde.');
+define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_DSC', 'Erhalten einer Benachrichtigung, wenn eine Veranstaltung ge&auml;ndert wurde.');
+define('_MI_EVENT_GLOBAL_EVENT_MODIFIED_NOTIFY_SBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Veranstaltung Ge&auml;ndert');
 /**
  * added in 1.1
  */
 //config
-define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY", "Field name of the birthday field");
-define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_DSC", "The Birthday Field needs to be a date Field and 'Profile' module is required!");
+define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY", "Feldname des Geburtstages Feldes");
+define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_DSC", "Für das Geburtstagsfeld Feld muss ein Datum Feld im 'Profil'-Modul angelegt sein!");
 define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_CAL", "Select the Calendar for User Birthdays");
 define("_MI_EVENT_CONFIG_PROFILE_BIRTHDAY_CAL_DSC", "");
 define("_MI_EVENT_CONFIG_USE_CHECKBOXES", "Use a checkbox-Form to select, which Categories/Calendars should be loaded?");
@@ -107,7 +107,7 @@ define("_MI_EVENT_BLOCK_CALENDARS_DSC", "Display Categories/Calendars in a Block
  * added in 1.2
  */
 //config
-define("_MI_EVENT_CONFIG_DATE_FORMAT", "Date Format");
+define("_MI_EVENT_CONFIG_DATE_FORMAT", "Datums Format");
 define("_MI_EVENT_CONFIG_DATE_FORMAT_DSC", "PHP Date Format, used in comments");
 define("_MI_EVENT_CONFIG_USER_CAN_COMMENT", "Use the comment system for Events?");
 define("_MI_EVENT_CONFIG_USER_CAN_COMMENT_DSC", "");
@@ -117,4 +117,4 @@ define("_MI_EVENT_CONFIG_COMMENTS_NEED_APPROVAL_DSC", "");
 define("_MI_EVENT_BLOCK_COMMENTS", "Recent Comments");
 define("_MI_EVENT_BLOCK_COMMENTS_DSC", "");
 // ACP Menu
-define("_MI_EVENT_MENU_COMMENTS", "Comments");
+define("_MI_EVENT_MENU_COMMENTS", "Kommentare");
