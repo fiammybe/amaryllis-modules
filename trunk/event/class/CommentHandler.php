@@ -63,8 +63,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 			$online_handler = icms::handler('icms_core_online');
 			$users = $online_handler->getAll(NULL);
 			foreach (array_keys($users) as $key) {
-				$uid = $users["online_uid"];
-				$this->_onlineUsers[$uid] = $uid;
+				$this->_onlineUsers[$users[$key]['online_uid']] = $users[$key];
 			}
 		}
 		return $this->_onlineUsers;
