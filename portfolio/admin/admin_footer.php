@@ -22,7 +22,7 @@ $version = !substr($version, -1, 1) ? substr($version, 0, 3) : $version;
 
 $footer = "<div style='margin: 2em auto; text-align: center; font-size: .9em;'>";
 //$footer .= "If you need help with the module, please check the <a href='manual.php' title='manual' style='color: #336699;'>manual</a>.";
-$footer .= "&nbsp;Powered by <a href='about.php'>Potfolio ".$version."</a>";
+$footer .= "&nbsp;Powered by <a href='about.php'>Portfolio ".$version."</a>";
 $footer .= "</div>";
 echo $footer;
 icms_cp_footer();
