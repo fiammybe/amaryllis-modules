@@ -159,7 +159,7 @@ class GuestbookGuestbook extends icms_ipf_Object {
 	function getPublisher() {
 		$uid = $this->getVar('guestbook_uid', 'e');
 		$users = $this->handler->loadUsers();
-		$user = (array_key_exists($uid, $users) && $uid > 0 ) ? $users[$uid] : FALSE;
+		$user = (isset($users[$uid]) && $uid > 0 ) ? $users[$uid] : FALSE;
 		if($user) return $user;
 		$userinfo = array();
 		$userinfo['link'] = ucwords($this->getVar("guestbook_name"));
