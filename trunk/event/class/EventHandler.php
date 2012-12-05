@@ -228,7 +228,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			if(!$events) return TRUE;
 			foreach (array_keys($events) as $key) {
 				$uid = $events[$key]->getVar("event_submitter", "e");
-				if(!array_key_exists($uid, $users)) $this->delete($events[$key]);
+				if(!isset($users[$uid])) $this->delete($events[$key]);
 			}
 		}
 		return TRUE;
