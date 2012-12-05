@@ -40,7 +40,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 			$users = $member_handler->getObjects($criteria, TRUE);
 			$this->_usersArray[0] = $icmsConfig['anonymous'];
 			foreach (array_keys($users) as $key) {
-				$isOnline = ($onlineUsers && count(array_intersect_key(array($key => $key), $onlineUsers))) ? TRUE : FALSE;
+				$isOnline = ($onlineUsers && isset($onlineUsers[$key])) ? TRUE : FALSE;
 				$arr = array();
 				$arr['uid'] = $key;
 				$arr['link'] = '<a class="user_link" href="'.ICMS_URL.'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'</a>';
@@ -63,7 +63,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 			$online_handler = icms::handler('icms_core_online');
 			$users = $online_handler->getAll(NULL);
 			foreach (array_keys($users) as $key) {
-				$this->_onlineUsers[$users[$key]['online_uid']] = $users[$key];
+				$this->_onlineUsers[$users[$key]['online_uid']] = $users[$key]['online_uid'];
 			}
 		}
 		return $this->_onlineUsers;
@@ -130,7 +130,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 		foreach (array_keys($comments) as $key) {
 			if($limit > 0 && count($ret) == $limit) continue;
 			$eid = $comments[$key]->getVar("comment_eid", "e");
-			if(count(array_intersect_key(array($eid => $eid), $events) > 0) && $events[$eid]->accessGranted())
+			if(isset($events[$eid]) && $events[$eid]->accessGranted())
 			$ret[$key] = (!$forBlock) ? $comments[$key]->renderComment(FALSE) : $comments[$key]->renderComment(TRUE);
 		}
 		//unset($events, $criteria, $comments);
