@@ -21,7 +21,7 @@
 .event_clear_both { clear: both; height: 1px;}
 .event_clear_left { clear: left; height: 1px;}
 .event_clear_right { clear: right; height: 1px;}
-.index_indeximage { text-align: center;}    
+.index_indeximage { text-align: center;}
 .index_indexheader { text-align: center; font-size: 2em; margin: 2em auto;}    
 .index_indexheading, .index_indexfooter { margin: 1em auto;}
 .event_adminlinks { text-align: center;}
@@ -42,7 +42,7 @@ span.event_contact img.icon_middle {margin-right: .5em;}
 div#event_join, div#event_unjoin {width: 7.5em; height: 2em; text-align: center; background-color: #6699FF; -moz-border-radius: 10px; border-radius: 10px; cursor: pointer; margin: 1em 0;padding-bottom: 1em !important;}
 div#event_unjoin {background-color: #336699 ;}
 div#event_join p, div#event_unjoin p {color: white;}
-.event_buttonbar {float:left; vertical-align: middle;}
+.event_buttonbar {float:left; vertical-align: middle; position: relative;}
 .event_buttonbar:hover {cursor:pointer; }
 .awaiting_approval {font-weight: bold; color: red;}
 .timeline {position: absolute;left: 59px;border: none;border-top: 1px solid red;width: 100%;margin: 0;padding: 0;z-index: 999;}
@@ -50,9 +50,10 @@ div#event_join p, div#event_unjoin p {color: white;}
 #event_loading img {vertical-align: middle;}
 #event_comment_tarea {display: block; width: 100%;}
 .highlighted {background-color: #c9d1fe;}
-div.single_comment {position: relative; display:block; background-color: #d9dbf7; margin: 0 0 .750em;}
-div.comment_user{float: left; width: 30px; height: 100%;}
-div.comment_body {float: left; margin-left: 1em; height: auto;}
-div#event_comment_container {margin: 2em 0;}
+div.single_comment {position: relative; display:block; background-color: #A2A5F9; margin: 0 0 .750em; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; border: 1px solid #121AED;}
+div.comment_user{float: left; width: 30px; height: 100%; position: relative;padding: 10px;}
+div.comment_body {padding-top: 5px; position: relative;}
+span.comment_published_on {display: inline-block; margin: .5em .2em;}
+div#event_comment_container {margin: 2em 0; position: relative;}
 div.comment_approve {background-color: #FC8383 !important;}
 .comment_approval_link {cursor: pointer; float: right; position: relative; top:0; right:0;}
