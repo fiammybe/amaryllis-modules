@@ -21,10 +21,12 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 function b_event_mincal_show($options) {
-	global $eventConfig, $icmsTheme;
+	global $eventConfig, $xoTheme;
 	icms_loadCommonLanguageFile("event");
 	$block['event_url'] = ICMS_MODULES_URL . "/" . EVENT_DIRNAME . "/" ;
 	$block['isRTL'] = (defined("_ADM_USE_RTL") && _ADM_USE_RTL) ? 'true' : 'false';
+	
+	$xoTheme->addStylesheet(ICMS_MODULES_URL . '/' . EVENT_DIRNAME . '/scripts/module_event_blocks.css');
 	return $block;
 }
 
