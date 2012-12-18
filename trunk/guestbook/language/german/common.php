@@ -25,7 +25,7 @@ define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_URL", "Webseite");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_URL_DSC", "Sie haben eine Webseite und m&ouml;chten diese uns mitteilen? Geben Sie eine g&uuml;ltige URL hier und beginnen Sie mit 'http://'");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_ENTRY", "Nachricht");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_ENTRY_DSC", "Sie k&ouml;nnen einige HTML Tags f&uuml;r Ihre Eintrag verwenden: <b> f&uuml;r <b> fett </ b> und <i> f&uuml;r <i> kursiv </ i> Text. <a> f&uuml;r einen Link. Alle anderen HTML Tags werden komplett aus der Nachricht entfernt.");
-define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_PID", "&&uuml;uml;bergeordneter-Eintrag");
+define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_PID", "&Uuml;uml;bergeordneter-Eintrag");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_PID_DSC", "Die ID des &Uuml;bergeordneten damit moderieren");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_PUBLISHED_DATE", "Ver&ouml;ffentlicht am");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_APPROVE", "Genehmigt?");
