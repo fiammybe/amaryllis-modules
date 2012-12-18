@@ -13,7 +13,7 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 define("_MI_VISITORVOICE_NAME", "Kundenmeinungen");
-define("_MI_VISITORVOICE_DSC", "Einfaches Kundenmeinungsmodul f&Uuml;r ImpressCMS ");
+define("_MI_VISITORVOICE_DSC", "Einfaches Kundenmeinungsmodul f&uuml;r ImpressCMS ");
 // Templates
 define("_MI_VISITORVOICE_VISITORVOICE_TPL", "Kundenmeinung Index Seite");
 define("_MI_VISITORVOICE_ADMIN_TPL", "Kundenmeinung admin Template");
@@ -40,7 +40,7 @@ define("_MI_VISITORVOICE_IMAGE_UPLOAD_WIDTH", "Max Image Upload Breite");
 define("_MI_VISITORVOICE_IMAGE_UPLOAD_WIDTH_DSC", "");
 define("_MI_VISITORVOICE_IMAGE_UPLOAD_HEIGHT", "Max Image Upload H&ouml;he");
 define("_MI_VISITORVOICE_IMAGE_UPLOAD_HEIGHT_DSC", "");
-define("_MI_VISITORVOICE_IMAGE_FILE_SIZE", "Maximal zul&auml;ssige Upload Gr&ouml;ße");
+define("_MI_VISITORVOICE_IMAGE_FILE_SIZE", "Maximal zul&auml;ssige Upload Gr&ouml;ÃŸe");
 define("_MI_VISITORVOICE_IMAGE_FILE_SIZE_DSC", "");
 define("_MI_VISITORVOICE_THUMBNAIL_WIDTH", "Miniaturbild Breite");
 define("_MI_VISITORVOICE_THUMBNAIL_WIDTH_DSC", "Breite des Miniaturbild zur Anzeige hochgeladenen Bilder");
