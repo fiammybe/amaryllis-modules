@@ -27,7 +27,7 @@ define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_ENTRY", "Message");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_ENTRY_DSC", "You can use some HTML for your message: &lt;b&gt; for <b>bold</b> and &lt;i&gt; for <i>italic</i> Text. &lt;a&gt; for a link. ALL other tags will completly be stripped from message.");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_PID", "Parent entry");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_PID_DSC", "The ID of the parent to allow moderating");
-define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_PUBLISHED_DATE", "Publisched on");
+define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_PUBLISHED_DATE", "Published on");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_APPROVE", "Approved?");
 define("_CO_GUESTBOOK_GUESTBOOK_GUESTBOOK_IMAGE", "Attach Image");
 
