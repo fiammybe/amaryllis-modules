@@ -60,13 +60,12 @@ class mod_album_Indexpage extends icms_ipf_Object {
 		return false;
 	}
 
-	public function getIndexHeading() {
-		$indexheading = '';
-		$indexheading = $this->getVar('index_heading', 's');
-		if($indexheading != "") {
-			$indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
-			return '<div class="album_indexheading">' . icms_core_DataFilter::undoHtmlSpecialChars($indexheading) . '</div>';
-		}
+  public function getIndexHeading() {
+        $indexheading = '';
+        $indexheading = $this->getVar('index_heading', 's');
+        if($indexheading != "") {
+        $indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
+        return '<div class="album_indexheading">' . $indexheading . '</div>'; }    }
 	}
 	
 	public function getIndexFooter() {
