@@ -17,7 +17,7 @@ define("_AM_VISITORVOICE_MODIFIED", "Modifizieren");
 
 // Requirements
 define("_AM_VISITORVOICE_REQUIREMENTS", "VisitorVoice Richtlinien");
-define("_AM_VISITORVOICE_REQUIREMENTS_INFO", "Wir haben Ihr System überpr&uuml;ft, leider erf&uuml;llt es nicht alle Anforderungen die VisitorVoice Modul ben&ouml;tigt. Hier sind die Anforderungen die das Modul ben&ouml;tigt.");
+define("_AM_VISITORVOICE_REQUIREMENTS_INFO", "Wir haben Ihr System überpr&uuml;ft, leider erf&uuml;llt es nicht alle Anforderungen die das VisitorVoice Modul ben&ouml;tigt. Hier sind die Anforderungen die das Modul ben&ouml;tigt.");
 define("_AM_VISITORVOICE_REQUIREMENTS_ICMS_BUILD", "VisitorVoice ben&ouml;tigt ImpressCMS 1.3");
 define("_AM_VISITORVOICE_REQUIREMENTS_SUPPORT", "Sollten Sie irgendwelche Fragen haben oder Anregungen, besuchen Sie bitte unsere Foren auf<a href='http://community.impresscms.org'>http://community.impresscms.org</a>.");
 
