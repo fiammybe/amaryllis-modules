@@ -74,7 +74,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$guestbookObj->setVar("guestbook_approve", TRUE);
 			}
 			if(!$guestbook_handler->insert($guestbookObj)) {echo json_encode(array("status" => "error", "message" => $guestbookObj->getHtmlErrors())); unset($_POST); exit;}
-			$message = ($guestbookConfig["needs_approval"] && !$guestbook_isAdmin) ? _THANKS_SUBMISSION_APPROVAL : _THANKS_SUBMISSION;
+			$message = ($guestbookConfig["needs_approval"] && !$guestbook_isAdmin) ? _THANKS_SUBMISSION_APPROVAL : _THANKS_SUBMISSION ;
 			echo json_encode(array("status" => "success", "message" => '<p>'.$message.'</p>')); unset($_POST); exit;
 			break;
 		case 'approve':
