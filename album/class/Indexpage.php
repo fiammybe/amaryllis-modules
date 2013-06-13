@@ -65,7 +65,7 @@ class mod_album_Indexpage extends icms_ipf_Object {
         $indexheading = $this->getVar('index_heading', 's');
         if($indexheading != "") {
         $indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
-        return '<div class="album_indexheading">' . $indexheading . '</div>'; }    }
+        return '<div class="album_indexheading">' . $indexheading . '</div>'; }
 	}
 	
 	public function getIndexFooter() {
