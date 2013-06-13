@@ -1,12 +1,7 @@
-/*
- * FullCalendar v1.5.4 Google Calendar Plugin
- *
- * Copyright (c) 2011 Adam Shaw
- * Dual licensed under the MIT and GPL licenses, located in
- * MIT-LICENSE.txt and GPL-LICENSE.txt respectively.
- *
- * Date: Tue Sep 4 23:38:33 2012 -0700
- *
+/*!
+ * FullCalendar v1.6.1 Google Calendar Plugin
+ * Docs & License: http://arshaw.com/fullcalendar/
+ * (c) 2013 Adam Shaw
  */
  
 (function($) {
@@ -82,42 +77,12 @@ function transformOptions(sourceOptions, start, end) {
 					events.push({
 						id: entry['gCal$uid']['value'],
 						title: entry['title']['$t'],
-						//url: url,
+						url: url,
 						start: start,
 						end: end,
 						allDay: allDay,
 						location: entry['gd$where'][0]['valueString'],
-						description: entry['content']['$t'],
-						cat: "google",
-                        contact: "",
-                        street: "",
-                        zip: "",
-                        city: "",
-                        phone: "",
-                        author: "",
-                        pubdate: "",
-                        editable: false,
-                        itemURL: "",
-                        seo: "",
-                        cid: "",
-                        contact_name: "",
-                        contact_mail: "",
-                        urllink: false,
-                        url_url: "",
-                        url_dsc: "",
-                        url_cap: "",
-                        url_tar: "",
-                        url_mid: "",
-                        event_public: "",
-						approval: "",
-						can_join: false,
-						event_can_joint: 0,
-						event_joiners: "",
-						joiner_max: "",
-						has_joint: false,
-						joint_friends: false,
-						joiners :false,
-						comments: ''
+						description: entry['content']['$t']
 					});
 				});
 			}

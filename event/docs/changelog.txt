@@ -1,6 +1,14 @@
 = *Event* Changelog =
+== Version 1.3 => Release Date: 12.04.2013 ==
+- added Multilanguage support for events
+- added option for displaying week-numbers
+- updated external scripts to latest Version (fullcalendar, form-plugin, datetimepicker-addon)
+- updated cal-configuration to prevent errors on newer jquery versions
+- added possibility to join/unjoin events
+- updated all lang files
+- fixed ui-dialog-title for jquery ui 1.10+
 
-== Version 1.2 => Release Date: XX.XX.2012 ==
+== Version 1.2 => Release Date: 24.12.2012 ==
 - added comments to single events
 - updates for displaying events:
 -- removing start/endtime if the event is an allDay-Event

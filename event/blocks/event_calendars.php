@@ -7,7 +7,7 @@
  * Block holding the events for selected timezone
  * 
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.1.0

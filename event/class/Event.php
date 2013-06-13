@@ -3,11 +3,11 @@
  * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /class/Event.php
- * 
+ *
  * Class representing event event objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.2.0
@@ -21,10 +21,10 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class mod_event_Event extends icms_ipf_seo_Object {
-	
+
 	public $_updating = FALSE;
 	public $_updatingBdays = FALSE;
-	
+
 	private $_joinerArray;
 	/**
 	 * Constructor
@@ -32,6 +32,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	 * @param mod_event_Event $handler Object handler
 	 */
 	public function __construct(&$handler) {
+		global $icmsConfigMultilang;
 		parent::__construct($handler);
 
 		$this->quickInitVar("event_id", XOBJ_DTYPE_INT, TRUE);
@@ -57,13 +58,14 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$this->quickInitVar("event_approve", XOBJ_DTYPE_INT, TRUE, FALSE, FALSE, 1);
 		$this->quickInitVar("event_isbirthday", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
         $this->quickInitVar("event_notif_sent", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 0);
+		$this->quickInitVar("language", XOBJ_DTYPE_TXTBOX, FALSE, FALSE, FALSE, "all");
 		$this->initCommonVar("counter", FALSE, 0);
 		$this->initCommonVar("dohtml", FALSE, TRUE);
 		$this->initCommonVar("dobr", FALSE, FALSE);
 		$this->initCommonVar("doimage", FALSE, TRUE);
 		$this->initCommonVar("dosmiley", FALSE, TRUE);
 		$this->initCommonVar("docxode", FALSE, TRUE);
-		
+
 		$this->setControl("event_cid", array("name" => "select", "itemHandler" => "event", "method" => "getCategoryList", "module" => "event"));
 		$this->setControl("event_public", "yesno");
 		$this->setControl("event_allday", "yesno");
@@ -75,6 +77,13 @@ class mod_event_Event extends icms_ipf_seo_Object {
 			$this->hideFieldFromForm("event_tags");
 			$this->hideFieldFromSingleView("event_tags");
 		}
+
+		if($icmsConfigMultilang['ml_enable'] == TRUE) {
+			$this->setControl("language", array("name" => "language", "all" => TRUE));
+		} else {
+			$this->hideFieldFromForm("language");
+		}
+
 		$this->initiateSEO();
 		$this->hideFieldFromForm(array("event_isbirthday", "short_url", "meta_description", "meta_keywords", "event_submitter", "event_created_on", "event_approve", "event_notif_sent"));
 	}
@@ -98,8 +107,8 @@ class mod_event_Event extends icms_ipf_seo_Object {
         unset($category_handler, $cat);
         return $title;
     }
-    
-	public function accessGranted() {
+
+	public function accessGranted($perm_name ="") {
 		if ($this->userCanEditAndDelete()) return TRUE;
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
@@ -108,14 +117,14 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		if ($viewperm && $this->isApproved()) return TRUE;
 		return FALSE;
 	}
-	
+
     function userCanEditAndDelete() {
 		global $event_isAdmin;
 		if (!is_object(icms::$user)) return FALSE;
 		if ($event_isAdmin) return TRUE;
 		return $this->getVar("event_submitter", "e") == icms::$user->getVar("uid", "e");
 	}
-	
+
 	public function getContact() {
 		$ret = FALSE;
 		$con = $this->getVar("event_contact", "s");
@@ -152,9 +161,9 @@ class mod_event_Event extends icms_ipf_seo_Object {
 	}
 
 	public function getValue($value) {
-		return ($this->getVar("$value", "s") != "0") ? $this->getVar("$value", "s") : ""; 
+		return ($this->getVar("$value", "s") != "0") ? $this->getVar("$value", "s") : "";
 	}
-	
+
 	public function getMaxJoiners() {
 		$joiners = $this->getVar("event_joiner", "e");
 		$curr_joiners = $this->getJoinersCount();
@@ -169,19 +178,19 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$joiners = $joiner_handler->getRegistredJoinersCount($this->id());
 		return $joiners;
 	}
-	
+
 	public function getUnregistredJoinersCount() {
 		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
 		$joiners = $joiner_handler->getUnregistredJoinersCount($this->id());
 		return $joiners;
 	}
-	
+
 	public function getJoinersCount() {
 		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
 		$joiners = $joiner_handler->getJoinersCount($this->id(), FALSE, FALSE, FALSE);
 		return $joiners;
 	}
-	
+
 	public function getJoiners() {
 		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
 		$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("joiner_eid", $this->id()));
@@ -203,14 +212,14 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		unset($users, $criteria);
 		return implode("&nbsp;", $ret);
 	}
-	
+
 	public function hasJoint() {
 		$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
 		$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
 		$joining = $joiner_handler->getJoinersCount($this->id(), $uid, $_SERVER['REMOTE_ADDR'], $_SESSION['icms_fprint']);
 		return ($joining > 0) ? TRUE : FALSE;
 	}
-	
+
 	public function getEventUrl($urllink = TRUE) {
 		if($this->getVar("event_url") == 0) return FALSE;
 		$urlObj = $this->getUrlLinkObj("event_url");
@@ -222,24 +231,28 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$urllink['mid'] = $urlObj->getVar("mid");
 		return $urllink;
 	}
-	
+
 	public function isApproved() {
 		return ($this->getVar("event_approve", "e") == 1) ? TRUE : FALSE;
 	}
-	
+
 	public function notifSent() {
 		return ($this->getVar("event_notif_sent", "e") == 1) ? TRUE : FALSE;
 	}
-	
+
 	public function getItemLink($urlOnly = FALSE) {
 		$start = $this->getVar("event_startdate", "e");
 		$date = $this->formatDate($start, "Y-m-j");
 		$time = $this->formatDate($start, "H");
-		$url = ICMS_MODULES_URL . "/" . EVENT_DIRNAME . '/index.php?date=' . $date . "&time=" . $time.'&event='.$this->short_url();
+		$url = $this->handler->_moduleUrl.$this->handler->_page.'?date=' . $date . "&time=" . $time.'&event='.$this->short_url();
 		if($urlOnly) return $url;
 		return '<a href="' . $url . '" title="' . $this->title() . '">' . $this->title() . '</a>';
 	}
-	
+
+	public function language() {
+		return $this->getVar("language");
+	}
+
 	public function getEventDsc() {
 		$dsc = $this->getVar("event_dsc", "s");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "output");
@@ -281,17 +294,17 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$ret['comments'] = $this->getEventComments();
         return $ret;
 	}
-	
+
 	public function sendNotification() {
 		$valid_case = array("event_published", "event_modified");
 		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
 		$tags ['EVENT_TITLE'] = $this->title();
 		$tags ['EVENT_URL'] = $this->getItemLink(TRUE);
 		$tags ['EVENT_CAT'] = $this->getCategory(TRUE);
-		
+
 		return icms::handler('icms_data_notification')->triggerEvent('global', 0, 'event_published', $tags, array(), $module->getVar('mid'));
 	}
-	
+
 	public function sendModNotification() {
 		$module = icms::handler('icms_module')->getByDirname(basename(dirname(dirname(__FILE__))));
 		$tags ['EVENT_TITLE'] = $this->title();
@@ -299,11 +312,11 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$tags ['EVENT_CAT'] = $this->getCategory(TRUE);
 		return icms::handler('icms_data_notification')->triggerEvent('global', 0, 'event_modified', $tags, array(), $module->getVar('mid'));
 	}
-	
+
 	public function formatDate($timestamp, $format) {
 		return date("$format", $timestamp);
 	}
-	
+
 	public function getEventComments() {
 		global $eventConfig;
 		if($eventConfig['user_can_comment'] == 1) {
@@ -313,13 +326,13 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		}
 		return FALSE;
 	}
-	
+
 	public function getSubmitter() {
 		$user = $this->getVar("event_submitter", "e");
 		$users = $this->handler->getUsers();
 		return $users[$user];
 	}
-	
+
 	public function canJoin() {
 		$start = $this->getVar("event_startdate", "e");
 		if($start <= time()) return FALSE;
@@ -338,7 +351,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		if($limit == 0 && $can_joint >= 1) return TRUE;
 		return FALSE;
 	}
-	
+
 	public function joinEvent() {
 		if($this->canJoin()) {
 			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
@@ -348,7 +361,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 			return $joiner_handler->joinEvent($this->id(), $uid, $ip, $fprint, time());
 		}
 	}
-	
+
 	public function unjoinEvent() {
 		if($this->hasJoint()) {
 			$uid = is_object(icms::$user) ? icms::$user->getVar("uid") : 0;
@@ -358,7 +371,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 			return $joiner_handler->unjoinEvent($this->id(), $uid, $ip, $fprint);
 		}
 	}
-	
+
 	public function getJoinedFriends() {
 		$friends = FALSE;
 		if(icms_get_module_status("profile")) {
@@ -366,7 +379,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 			$friendship_handler = icms_getModuleHandler("friendship", $profile_module->getVar("dirname"), "profile");
 			$uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : FALSE;
 			if(!$uid) return $friends;
-			
+
 			$joiner_handler = icms_getModuleHandler("joiner", EVENT_DIRNAME, "event");
 			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("joiner_eid", $this->id()));
 			$crit->add(new icms_db_criteria_Item("joiner_uid", 0, '!='));
@@ -404,7 +417,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		}
 		return $friends;
 	}
-	
+
 	public function sendMessageAwaiting() {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$user = $this->getVar("event_submitter", "e");
@@ -419,7 +432,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$pmObj->setVar("msg_text", $message);
 		$pm_handler->insert($pmObj, TRUE);
 	}
-	
+
 	public function sendMessageApproved() {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$file = "event_approved.tpl";
@@ -460,7 +473,7 @@ class mod_event_Event extends icms_ipf_seo_Object {
 		$pmObj->setVar("msg_text", $message);
 		$pm_handler->insert($pmObj, TRUE);
 	}
-	
+
 	public function sendMessageUnjoined($uid) {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$user = $this->getVar("event_submitter", "e");

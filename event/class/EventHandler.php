@@ -3,11 +3,11 @@
  * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /class/EventHandler.php
- * 
+ *
  * Classes responsible for managing event event objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -21,20 +21,43 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class mod_event_EventHandler extends icms_ipf_Handler {
-    
+
     private $_catArray;
 	private $_usersArray;
 	private $_joinersArray;
-	
+
+	public $_moduleID;
+	public $_moduleUseMain;
+
+	public $_index_module_status = FALSE;
+	public $_index_module_dirname = FALSE;
+	public $_index_module_mid = FALSE;
+
 	/**
 	 * Constructor
 	 *
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
+		global $eventConfig;
 		parent::__construct($db, "event", "event_id", "event_name", "event_dsc", "event");
+		$this->_index_module_status = icms_get_module_status("index");
+		if($this->_index_module_status) {
+			$indexModule = icms_getModuleInfo("index");
+			$this->_index_module_dirname = $indexModule->getVar("dirname");
+			$this->_index_module_mid = $indexModule->getVar("mid");
+			unset($indexModule);
+		}
+		$eModule = icms::handler('icms_module')->getByDirname(EVENT_DIRNAME);
+		$this->_moduleID = $eModule->getVar("mid");
+		unset($eModule);
+
+		$this->_moduleUseMain = (($eventConfig['use_main'] == 1) || (isset($GLOBALS['MODULE_'.strtoupper(EVENT_DIRNAME).'_USE_MAIN']) &&
+									$GLOBALS['MODULE_'.strtoupper(EVENT_DIRNAME).'_USE_MAIN'] === TRUE)) ? TRUE : FALSE;
+		$this->_moduleUrl = ($this->_moduleUseMain) ? ICMS_URL.'/' : ICMS_MODULES_URL.'/'.EVENT_DIRNAME.'/';
+		$this->_page = ($this->_moduleUseMain) ? EVENT_DIRNAME.'.php' : "index.php";
 	}
-    
+
     public function getCategoryList($showNull = FALSE) {
         if(!count($this->_catArray)) {
             $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
@@ -46,7 +69,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
             }
         } return $this->_catArray;
     }
-    
+
     public function getJoinersArray() {
     	if(!count($this->_joinersArray)) {
     		$this->_joinersArray[0] = _NO;
@@ -55,7 +78,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
     	}
 		return $this->_joinersArray;
     }
-	
+
 	/**
 	 * event criterias
 	 * @param $cat_id can be int cid or an array of cids
@@ -63,7 +86,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	 * @param $start => int UNIX Timestamp
 	 * @param $end => int UNIX Timestamp
 	 */
-	public function getEventCriterias( $cat_id, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE, $public = TRUE) {
+	public function getEventCriterias( $cat_id, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE, $public = TRUE, $lang = FALSE) {
 		global $event_isAdmin;
 		$criteria = new icms_db_criteria_Compo();
 		if($limit) $criteria->setLimit((int)$limit);
@@ -78,27 +101,33 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			}
 			$criteria->add($tray);
 		}
-		
+
 		if($public) {
 			if(is_null($uid)) $uid = 0;
 			$crit = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_public", 1));
 			$crit->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
 			$criteria->add($crit);
 		}
-		
+
 		if(!$event_isAdmin) {
 			$critTray = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_approve", 1));
 			if(is_object(icms::$user)) $critTray->add(new icms_db_criteria_Item("event_submitter", $uid), 'OR');
 			$criteria->add($critTray);
 		}
-		
+
+		if($lang && is_string($lang) && $icmsConfigMultilang['ml_enable'] == TRUE) {
+			$critTray = new icms_db_criteria_Compo(new icms_db_criteria_Item("language", $lang));
+			$critTray->add(new icms_db_criteria_Item("language", "all"), "OR");
+			$criteria->add($critTray);
+		}
+
 		if($start > 0) $criteria->add(new icms_db_criteria_Item("event_startdate", $start, '>='));
 		if($end > 0) $criteria->add(new icms_db_criteria_Item("event_enddate", $end, '<='));
 		return $criteria;
 	}
 
-	public function getEvents($cat_id = FALSE, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE) {
-		$criteria = $this->getEventCriterias($cat_id, $start, $end, $uid, $order, $sort, $limit);
+	public function getEvents($cat_id = FALSE, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE, $lang = FALSE) {
+		$criteria = $this->getEventCriterias($cat_id, $start, $end, $uid, $order, $sort, $limit, TRUE, $lang);
 		$events = $this->getObjects($criteria, TRUE, FALSE);
 		$ret = array();
 		foreach ($events as $event) {
@@ -106,15 +135,15 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
-	
+
 	public function getRenderedEvents($cat_id, $start = 0, $end = 0, $uid = 0, $order = "event_name", $sort = "ASC", $limit = FALSE, $zip = FALSE, $city = FALSE) {
-		
-		$criteria = $this->getEventCriterias($cat_id, 0, 0, $uid, $order, $sort, $limit);
+		global $icmsConfig;
+		$criteria = $this->getEventCriterias($cat_id, 0, 0, $uid, $order, $sort, $limit, TRUE, $icmsConfig['language']);
 		$criteria->add(new icms_db_criteria_Item("event_startdate", (int)$start, '>='));
 		$criteria->add(new icms_db_criteria_Item("event_startdate", (int)$end, '<='));
 		if($zip) $criteria->add(new icms_db_criteria_Item("event_zip", $zip));
 		if($city) $criteria->add(new icms_db_criteria_Item("event_city", $city));
-		$events =& $this->getObjects($criteria, TRUE, TRUE);
+		$events = $this->getObjects($criteria, TRUE, TRUE);
 		if(!$events) return FALSE;
 		$ret = array();
 		foreach (array_keys($events) as $key) {
@@ -138,7 +167,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		if($events) return $events[0];
 		return $event;
 	}
-	
+
 	public function getUsers() {
 		if(!count($this->_usersArray)) {
 			$users = icms::handler('icms_member')->getUserList();
@@ -163,18 +192,22 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	}
 
 	public function getProfileBirthdays() {
+		global $icmsModule;
 		$eventConfig = icms_getModuleConfig(EVENT_DIRNAME);
 		$bday_field = $eventConfig['profile_birthday'];
 		$bday_cal = $eventConfig['profile_birthday_cal'];
 		if(icms_get_module_status("profile") && ($bday_field !== "") && ($bday_cal > 0)) {
+			$realIcmsModule = $icmsModule;
+			$icmsModule = icms::handler("icms_module")->getByDirname(EVENT_DIRNAME);
 			$profileModule = icms_getModuleInfo("profile");
 			$profile_handler = icms_getModuleHandler("profile", $profileModule->getVar("dirname"), "profile");
 			$member_handler = icms::handler("icms_member_user");
 			$users = $member_handler->getObjects(FALSE, TRUE);
-			$profiles = $profile_handler->getObjects(NULL, TRUE, TRUE);
+			$profiles = $profile_handler->getObjects(FALSE, TRUE, TRUE);
 			$time = time();
 			$year = date("Y", $time);
 			foreach (array_keys($users) as $key) {
+				if(!isset($profiles[$key])) continue;
 				$bday = $profiles[$key]->getVar("$bday_field", "e");
 				if($bday == 0) continue;
 				$month = date("m", $bday);
@@ -182,10 +215,17 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 				$nbday = mktime(0,0,0,$month, $day, $year);
 				$nbday2 = mktime(0,0,0,$month, $day, $year+1);
 				$criteria = $this->getEventCriterias($bday_cal, $nbday, FALSE, $key, FALSE, FALSE, FALSE);
+				$title = sprintf(_CO_EVENT_BIRTHDAY_OF, $users[$key]->getVar("uname"));
+				$seo = self::generateSeoTitle($title);
+				$seo = urldecode($seo);
+				$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß");
+				$replace = array("ae","oe","ue","Ae","Oe","Ue","ss");
+				$seo = str_ireplace($umlaute, $replace, $seo);
 				if(!$this->getCount($criteria)) {
 					unset($criteria);
 					$event = $this->create(TRUE);
-					$event->setVar("event_name", sprintf(_CO_EVENT_BIRTHDAY_OF, $users[$key]->getVar("uname")));
+					$event->setVar("event_name", $title);
+					$event->setVar("short_url", $seo.'_'.time());
 					$event->setVar("event_dsc", '<a class="ulink" href="'.ICMS_URL .'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'s</a>'._CO_EVENT_BIRTHDAY);
 					$event->setVar("event_startdate", $nbday);
 					$event->setVar("event_enddate", $nbday + 200);
@@ -194,14 +234,17 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 					$event->setVar("event_created_on", time());
 					$event->setVar("event_cid", $bday_cal);
 					$event->setVar("event_isbirthday", TRUE);
+					$event->setVar("language", "all");
 					$event->_updatingBdays = TRUE;
-					$this->insert($event, true);
+					$event->_updating = TRUE;
+					$this->insert($event, TRUE);
 				}
 				$criteria2 = $this->getEventCriterias($bday_cal, $nbday2, FALSE, $key, FALSE, FALSE, FALSE);
 				if($this->getCount($criteria2)) continue;
 				unset($criteria2);
 				$event = $this->create(TRUE);
-				$event->setVar("event_name", sprintf(_CO_EVENT_BIRTHDAY_OF, $users[$key]->getVar("uname")));
+				$event->setVar("event_name", $title);
+				$event->setVar("short_url", $seo.'_'.time());
 				$event->setVar("event_dsc", '<a class="ulink" href="'.ICMS_URL .'/userinfo.php?uid='.$key.'">'.$users[$key]->getVar("uname").'s</a>'._CO_EVENT_BIRTHDAY);
 				$event->setVar("event_startdate", $nbday2);
 				$event->setVar("event_enddate", $nbday2 + 200);
@@ -209,10 +252,13 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 				$event->setVar("event_submitter", $key);
 				$event->setVar("event_created_on", time());
 				$event->setVar("event_cid", $bday_cal);
+				$event->setVar("language", "all");
 				$event->_updatingBdays = TRUE;
-				$this->insert($event, true);
+				$event->_updating = TRUE;
+				$this->insert($event, TRUE);
 			}
 			unset($users, $member_handler, $profileModule, $profile_handler);
+			$icmsModule = $realIcmsModule;
 		}
 	}
 
@@ -222,7 +268,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		$bday_cal = $eventConfig['profile_birthday_cal'];
 		if(icms_get_module_status("profile") && ($bday_field !== "") && ($bday_cal > 0)) {
 			$member_handler = icms::handler("icms_member_user");
-			$users = $member_handler->getObjects(NULL, TRUE);
+			$users = $member_handler->getObjects(FALSE, TRUE);
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("event_isbirthday", TRUE));
 			$events = $this->getObjects($criteria, TRUE, TRUE);
 			if(!$events) return TRUE;
@@ -232,6 +278,26 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			}
 		}
 		return TRUE;
+	}
+
+	private static function generateSeoTitle($title='') {
+		$title   = rawurlencode(strtolower($title));
+		$pattern = array("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./");
+		$rep_pat = array(  "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-"  , "-100" ,   "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-"  ,  "-"   ,   "-"  ,   "-"  ,   "-"  ,  "-"   ,   "-"  , "-at-" ,   "-"  ,   "-"   ,  "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-"  ,   "-" );
+		$title   = preg_replace($pattern, $rep_pat, $title);
+		$pattern = array("/%B0/", "/%E8/", "/%E9/", "/%EA/", "/%EB/", "/%E7/", "/%E0/", "/%E2/", "/%E4/", "/%EE/", "/%EF/", "/%F9/", "/%FC/", "/%FB/", "/%F4/", "/%F6/");
+		$rep_pat = array(  "-"  ,   "e"  ,   "e"  ,   "e"  ,   "e"  ,   "c"  ,   "a"  ,   "a"  ,   "a"  ,   "i"  ,   "i"  ,   "u"  ,   "u"  ,   "u"  ,   "o"  ,   "o"  );
+		$title   = preg_replace($pattern, $rep_pat, $title);
+
+		//$tableau = explode("-", $title);
+		//$tableau = array_filter($tableau, array($this, "emptyString"));
+		//$title   = implode("-", $tableau);
+
+		if (sizeof($title) > 0) {
+			return $title;
+		}
+		else
+		return '';
 	}
 
 	/**
@@ -254,11 +320,11 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 	public function filterApprove() {
 		return array(0 => 'Denied', 1 => 'Approved');
 	}
-	
+
 	public function filterCid() {
 		return $this->getCategoryList();
 	}
-	
+
 	public function filterUser(){
 		$sql = "SELECT DISTINCT event_submitter FROM " . $this->table;
 		if ($result = icms::$xoopsDB->query($sql)) {
@@ -270,7 +336,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 			return $bids;
 		}
 	}
-	
+
 	public function filterZip() {
 		$criteria = new icms_db_criteria_Item("event_zip", 0, '!=');
 		$sql = "SELECT DISTINCT event_zip FROM ".$this->table." ".$criteria->renderWhere() ;
@@ -282,7 +348,7 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
-	
+
 	public function filterCity() {
 		$criteria = new icms_db_criteria_Item("event_city", "", '!=');
 		$sql = "SELECT DISTINCT event_city FROM ".$this->table." ".$criteria->renderWhere() ;
@@ -295,12 +361,11 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
-	
+
 	protected function beforeInsert(&$obj) {
-		if($obj->_updating)
-		return TRUE;
+		if($obj->_updating || $obj->_updatingBdays) return TRUE;
 		$seo = trim($obj->getVar("short_url", "e"));
-		if($seo == "") $seo = icms_ipf_Metagen::generateSeoTitle(trim($obj->title()), FALSE);
+		if($seo == "") $seo = self::generateSeoTitle(trim($obj->title()), FALSE);
 		$seo = urldecode($seo);
 		$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß", "%C3%84", "%C3%96", "%C3%9C");
 		$replace = array("ae","oe","ue","Ae","Oe","Ue","ss", "Ae", "Oe", "Ue");
@@ -314,10 +379,10 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
 		$dsc = str_replace("'",'"', $dsc);
 		$obj->setVar("event_dsc", $dsc);
-		
+
 		if($obj->_updatingBdays)
 		return TRUE;
-		
+
 		$start = $obj->getVar("event_startdate", "e");
 		$end = $obj->getVar("event_enddate", "e");
 		if($start < time()) {
@@ -330,9 +395,9 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		}
 		return TRUE;
 	}
-	
+
 	protected function afterInsert(&$obj) {
-		if($obj->_updating) return TRUE;
+		if($obj->_updating || $obj->_updatingBdays) return TRUE;
 		if($obj->isApproved() && !$obj->notifSent()) {
 			$obj->sendNotification();
 			$obj->setVar('event_notif_sent', TRUE);
@@ -341,58 +406,72 @@ class mod_event_EventHandler extends icms_ipf_Handler {
 		}
 		return TRUE;
 	}
-	
+
 	protected function afterUpdate(&$obj) {
+		if($obj->_updating || $obj->_updatingBdays) return TRUE;
 		if($obj->isApproved()) {
-			
 			$obj->sendModNotification();
 		}
 		return TRUE;
 	}
-	
+
 	protected function beforeSave(&$obj) {
-		if($obj->_updating)
-		return TRUE;
-		$tags = trim($obj->getVar("event_tags"));
-		if($tags != "" && $tags != "0" && icms_get_module_status("index")) {
-			$indexModule = icms_getModuleInfo("index");
-			$tag_handler = icms_getModuleHandler("tag", $indexModule->getVar("dirname"), "index");
-			$tagarray = explode(",", $tags);
-			$tagarray = array_map('strtolower', $tagarray);
+		if($obj->_updating || $obj->_updatingBdays) return TRUE;
+		$labels = trim($obj->getVar("event_tags", "e"));
+		if(($labels !== "") && $this->_index_module_status && $obj->isApproved()) {
+			$title = $obj->title();$teaser = $obj->getVar("event_dsc", "e");$lang = $obj->language();
+			$start = $obj->getVar("event_startdate", "e");
+			$date = $obj->formatDate($start, "Y-m-j");
+			$time = $obj->formatDate($start, "H");
+			$url = 'date=' . $date . "&time=" . $time.'&event='.$obj->short_url();
+			/*
+			 * @TODO add config if autopublisher has been optimized
+			if($eventConfig['tutorials_autopost_twitter'] == 1  && $obj->isNew()) {
+			    $auto_publisher_hander = new mod_index_AutopublisherHandler($this->db);
+			    $auto_publisher = $auto_publisher_hander->get(1);
+				$auto_publisher->sendPosts($obj, FALSE);
+			}
+			 *
+			 */
+
+			$label_handler = icms_getModuleHandler("label", $this->_index_module_dirname, "index");
+			$labels = explode(",", $labels);
+			$labelarray = array_map('strtolower', $labels);
 			$newArray = array();
-			foreach ($tagarray as $key => $tag) {
-				$intersection = array_intersect($tagarray, array($tag));
+			foreach ($labels as $key => $label) {
+				$intersection = array_intersect($labelarray, array(strtolower($label)));
 				$count = count($intersection);
 				if($count > 1) {
-					unset($tagarray[$key]);
+					unset($labels[$key]);
+					$needUpdate = TRUE;
 				} else {
-					$tag_id = $tag_handler->addTag($tag, FALSE, $obj, $obj->getVar("event_created_on", "e"), $obj->getVar("event_submitter", "e"), "event_dsc", FALSE);
-					$newArray[] = $tag_id;
+					$labelname = $label_handler->addLabel($label, FALSE, $this->_moduleID, $this->_itemname, $url, $obj->id(), FALSE, $teaser, $title, FALSE, $lang);
+					$newArray[] = $labelname;
+					if($labelname != $label) $needUpdate = TRUE;
 				}
 				unset($intersection, $count);
 			}
-			$obj->setVar("event_tags", implode(",", $newArray));
-			unset($tags, $indexModule, $tag_handler, $tags, $tagarray);
+			$obj->setVar("labels", implode(",", $newArray));
+			unset($labels, $label_handler, $labelarray);
+		} elseif ($this->_index_module_status && !$obj->isApproved()) {
+			$link_handler = icms_getModuleHandler("link", $this->_index_module_dirname, "index");
+			$link_handler->deleteAllByCriteria(FALSE, FALSE, $this->_moduleID, $this->_itemname, $obj->id());
 		}
 		return TRUE;
 	}
-	
+
 	protected function afterDelete(& $obj) {
 		$notification_handler = icms::handler( 'icms_data_notification' );
-		$module_handler = icms::handler('icms_module');
-		$module = $module_handler->getByDirname(EVENT_DIRNAME);
-		$module_id = $module->getVar('mid');
 		$category = 'global';
-		$event_id = $obj->id();
 		// delete global notifications
-		$notification_handler->unsubscribeByItem($module_id, $category, $event_id);
+		$notification_handler->unsubscribeByItem($this->_moduleID, $category, $obj->id());
 		if(icms_get_module_status("index")) {
 			//delete all linked tags
-			$link_handler = icms_getModuleHandler("link", "index");
-			$link_handler->deleteAllByCriteria(FALSE, FALSE, $module_id, $this->_itemname, $obj->id());
+			$link_handler = icms_getModuleHandler("link", $this->_index_module_dirname, "index");
+			$link_handler->deleteAllByCriteria(FALSE, FALSE, $this->_moduleID, $this->_itemname, $obj->id());
 			unset($link_handler);
 		}
-		unset($notification_handler, $module_handler, $module);
+		unset($notification_handler);
 		return TRUE;
 	}
 }

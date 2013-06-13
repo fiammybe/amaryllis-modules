@@ -3,11 +3,11 @@
  * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
  * File: /language/german/modinfo.php
- * 
+ *
  * german modinfo language file
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -29,7 +29,7 @@ define("_MI_EVENT_MENU_MANUAL", "Anleitung");
 define("_MI_EVENT_MENU_TEMPLATES", "Templates");
 // config
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW", "Ansicht");
-define("_MI_EVENT_CONFIG_DEFAULT_VIEW_DSC", "W&auml;hlen Sie die Standardansicht f &uuml;r den Kalender.");
+define("_MI_EVENT_CONFIG_DEFAULT_VIEW_DSC", "W&auml;hlen Sie die Standardansicht f&uuml;r den Kalender.");
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW_MONTH", "Monat");
 define("_MI_EVENT_CONFIG_DEFAULT_VIEW_DAY", "Tag");
 define("_MI_EVENT_CONFIG_FIRST_DAY", "Der erste Tag welcher in der Woche angezeigt werden soll");
@@ -118,3 +118,11 @@ define("_MI_EVENT_BLOCK_COMMENTS", "Recent Comments");
 define("_MI_EVENT_BLOCK_COMMENTS_DSC", "");
 // ACP Menu
 define("_MI_EVENT_MENU_COMMENTS", "Kommentare");
+/**
+ * added in 1.3
+ */
+// config
+define("_MI_EVENT_CONFIG_USE_MAIN", "Nutze nur die Hauptseite, ohne '/modules/".EVENT_DIRNAME."/' in der URL?");
+define("_MI_EVENT_CONFIG_USE_MAIN_DSC", "Das Modul hat eine Haupt-Fronseite. Du kannst hier direkt auf diese Seite umleiten Schau bitte <b>ERST</b> in die Anleitung!!.");
+define("_MI_EVENT_CONFIG_DISPLAY_WEEKNUMBER", "Zeige Wochennummern?");
+define("_MI_EVENT_CONFIG_DISPLAY_WEEKNUMBER_DSC", "");

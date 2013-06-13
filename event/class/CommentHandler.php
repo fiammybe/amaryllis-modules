@@ -3,11 +3,11 @@
  * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /class/CommentHandler.php
- * 
+ *
  * Classes responsible for managing event comment objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.2.0
@@ -21,16 +21,29 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class mod_event_CommentHandler extends icms_ipf_Handler {
-	
+
 	private $_usersArray;
 	private $_eventsArray;
 	private $_eventsObjArray;
 	private $_onlineUsers;
-	
+
+	public $_moduleID;
+	public $_moduleUseMain;
+
 	public function __construct(&$db) {
+		global $eventConfig;
 		parent::__construct($db, "comment", "comment_id", "comment_fprint", "comment_body", EVENT_DIRNAME);
+
+		$eModule = icms::handler('icms_module')->getByDirname(EVENT_DIRNAME);
+		$this->_moduleID = $eModule->getVar("mid");
+		unset($eModule);
+
+		$this->_moduleUseMain = (($eventConfig['use_main'] == 1) || (isset($GLOBALS['MODULE_'.strtoupper(EVENT_DIRNAME).'_USE_MAIN']) &&
+									$GLOBALS['MODULE_'.strtoupper(EVENT_DIRNAME).'_USE_MAIN'] === TRUE)) ? TRUE : FALSE;
+		$this->_moduleUrl = ($this->_moduleUseMain) ? ICMS_URL.'/' : ICMS_MODULES_URL.'/'.EVENT_DIRNAME.'/';
+		$this->_page = ($this->_moduleUseMain) ? EVENT_DIRNAME.'.php' : "index.php";
 	}
-	
+
 	public function loadUsers() {
 		global $icmsConfig;
 		if(!count($this->_usersArray)) {
@@ -51,13 +64,13 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 				$arr['icq'] = $users[$key]->getVar("user_icq");
 				$arr['msn'] = $users[$key]->getVar("user_msnm");
 				$arr['yim'] = $users[$key]->getVar("user_yim");
-				$arr['regdate'] = date("d/m/Y", $users[$key]->getVar("user_regdate", "e")); 
+				$arr['regdate'] = date("d/m/Y", $users[$key]->getVar("user_regdate", "e"));
 				$this->_usersArray[$key] = $arr;
 			}
 		}
 		return $this->_usersArray;
 	}
-	
+
 	private function loadOnlineUsers() {
 		if(!count($this->_onlineUsers)) {
 			$online_handler = icms::handler('icms_core_Online');
@@ -68,12 +81,12 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 		}
 		return $this->_onlineUsers;
 	}
-	
+
 	public function userCanComment() {
 		global $eventConfig;
 		return (is_object(icms::$user) && $eventConfig['user_can_comment'] == 1) ? TRUE : FALSE;
 	}
-	
+
 	public function getCommentCriterias($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start=0, $limit = 0, $order = "comment_pdate", $sort = "DESC", $admin_approve = FALSE) {
 		global $event_isAdmin;
 		$criteria = new icms_db_criteria_Compo();
@@ -93,6 +106,13 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 				$criteria->add($crit);
 			}
 		}
+
+		if($icmsConfigMultilang['ml_enable'] == TRUE) {
+			$critTray = new icms_db_criteria_Compo(new icms_db_criteria_Item("language", $lang));
+			$critTray->add(new icms_db_criteria_Item("language", "all"), "OR");
+			$criteria->add($critTray);
+		}
+
 		if($admin_approve) $criteria->add(new icms_db_criteria_Item("comment_approve", 0));
 		if($event_id) $criteria->add(new icms_db_criteria_Item("comment_eid", $event_id));
 		if($uid) $criteria->add(new icms_db_criteria_Item("comment_uid", $uid));
@@ -110,7 +130,7 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 		}
 		return $this->_eventsArray;
 	}
-	
+
 	private function loadEventObjects() {
 		if(!count($this->_eventsObjArray)) {
 			$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
@@ -121,27 +141,28 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 		}
 		return $this->_eventsObjArray;
 	}
-	
+
 	public function getComments($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start = 0, $limit = 0, $order = "comment_pdate", $sort = "DESC", $admin_approve = FALSE, $forBlock = FALSE) {
 		$criteria = $this->getCommentCriterias($approve, $event_id, $uid, $puid, $start, $limit, $order, $sort, $admin_approve);
 		$comments = $this->getObjects($criteria, TRUE, TRUE);
 		$events = $this->loadEventObjects();
 		$ret = array();
+
 		foreach (array_keys($comments) as $key) {
 			if($limit > 0 && count($ret) == $limit) continue;
 			$eid = $comments[$key]->getVar("comment_eid", "e");
 			if(isset($events[$eid]) && $events[$eid]->accessGranted())
 			$ret[$key] = (!$forBlock) ? $comments[$key]->renderComment(FALSE) : $comments[$key]->renderComment(TRUE);
 		}
-		//unset($events, $criteria, $comments);
+		unset($events, $criteria, $comments);
 		return $ret;
 	}
-	
+
 	public function getCommentsCount($approve = FALSE, $event_id = FALSE, $uid = FALSE, $puid = FALSE, $start = 0, $limit = 0, $order = FALSE, $sort = FALSE, $admin_approve = FALSE) {
 		$criteria = $this->getCommentCriterias($approve, $event_id, $uid, $puid, $start, $limit, $order, $sort, $admin_approve);
 		return $this->getCount($criteria);
 	}
-	
+
 	/**
 	 * handling some functions to easily switch some fields
 	 */
@@ -162,12 +183,12 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 	public function filterApprove() {
 		return array(0 => 'Denied', 1 => 'Approved');
 	}
-	
+
 	public function filterEid() {
 		$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 		return $event_handler->getList();
 	}
-	
+
 	public function filterUser(){
 		$sql = "SELECT DISTINCT comment_uid FROM " . $this->table;
 		if ($result = icms::$xoopsDB->query($sql)) {
@@ -179,11 +200,11 @@ class mod_event_CommentHandler extends icms_ipf_Handler {
 			return $bids;
 		}
 	}
-	
+
 	protected function beforeInsert(&$obj) {
 		$ip = $obj->getVar("comment_ip", "e");
 		$ip = icms_core_DataFilter::checkVar($ip, "ip", "ipv4");
-		
+
 		return TRUE;
 	}
 }

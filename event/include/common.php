@@ -3,11 +3,11 @@
  * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
  * File: /include/common.php
- * 
+ *
  * module common file
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -56,6 +56,6 @@ $eventModule->registerClassPath(TRUE);
 $eventConfig = icms_getModuleConfig( EVENT_DIRNAME );
 
 if(icms_get_module_status("index")) {
-	icms_loadLanguageFile("index", "common");
-	include_once ICMS_ROOT_PATH . '/modules/index/include/common.php';
+	$indexModule = icms_getModuleInfo("index");
+	include_once ICMS_ROOT_PATH . '/modules/'.$indexModule->getVar("dirname").'/include/common.php';
 }
