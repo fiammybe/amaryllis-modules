@@ -3,11 +3,11 @@
  * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /feeds.php
- * 
+ *
  * render events
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -59,7 +59,7 @@ if(!$clean_cat == FALSE){
 	$catObj = $category_handler->get($clean_cat);
 	if(is_object($catObj) && !$catObj->isNew() && $catObj->accessGranted($clean_uid)) {
 		$event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
-		$events = $event_handler->getEvents($catObj->id(), $clean_start, $clean_end, $clean_uid);
+		$events = $event_handler->getEvents($catObj->id(), $clean_start, $clean_end, $clean_uid, 'event_name', 'ASC', FALSE, $icmsConfig['language']);
 		$feeds = array();
 		foreach ($events as $event) {
 			$feeds[] = array (

@@ -3,11 +3,11 @@
  * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /class/Category.php
- * 
+ *
  * Class representing event category objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -41,15 +41,15 @@ class mod_event_Category extends icms_ipf_seo_Object {
         $this->quickInitVar("category_pubcal", XOBJ_DTYPE_INT, FALSE, FALSE, FALSE, 1);
         $this->initCommonVar("dohtml", FALSE, TRUE);
 		$this->initCommonVar("dobr", FALSE, TRUE);
-        
+
         $this->setControl('category_dsc', array("name" => "textarea"));
         $this->setControl("category_color", "color");
 		$this->setControl("category_txtcolor", "color");
 		$this->setControl("category_approve", "yesno");
         $this->setControl("category_pubcal", "yesno");
-        
+
 		$this->initiateSEO();
-        
+
         $this->hideFieldFromForm(array("short_url", "meta_description", "meta_keywords", "category_approve", "category_submitter", "category_created_on", "category_pubcal"));
         $this->hideFieldFromSingleView(array("category_approve", "category_submitter", "category_created_on", "category_pubcal"));
 	}
@@ -64,15 +64,15 @@ class mod_event_Category extends icms_ipf_seo_Object {
 				<img src="' . EVENT_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
 		}
 	}
-	
+
 	function category_color() {
 		return "<div style='background-color:" . $this->getColor() . "; border: 1px solid black; width:30px; height:20px;'>&nbsp;</div>";
 	}
-	
+
 	function category_txtcolor() {
 		return "<div style='background-color:" . $this->getTextColor() . "; border: 1px solid black; width:30px; height:20px;'>&nbsp;</div>";
 	}
-    
+
     public function getCatDsc() {
 		$dsc = $this->getVar("category_dsc", "s");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "output");
@@ -87,11 +87,11 @@ class mod_event_Category extends icms_ipf_seo_Object {
 	public function getColor() {
         return $this->getVar("category_color");
     }
-	
+
 	public function getTextColor() {
         return $this->getVar("category_txtcolor");
     }
-	
+
     function submitAccessGranted() {
 		global $event_isAdmin;
 		if($event_isAdmin) return TRUE;
@@ -124,13 +124,13 @@ class mod_event_Category extends icms_ipf_seo_Object {
 		if(!is_object(icms::$user)) return FALSE;
 		return (icms::$user->getVar("uid")) == ($this->getVar("category_submitter", "e"));
 	}
-	
+
 	public function isApproved() {
 		return ($this->getVar("category_approve", "e") == 1) ? TRUE : FALSE;
 	}
 
 	public function getItemLink($urlOnly = FALSE) {
-		$url = EVENT_URL.'index.php?cat='.$this->short_url();
+		$url = $this->handler->_moduleUrl.$this->handler->_page.'?cat='.$this->short_url();
 		if($urlOnly) return $url;
 		return '<a href="'.$url.'"title="'.$this->title().'">'.$this->title().'</a>';
 	}

@@ -3,11 +3,11 @@
  * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
  * File: /icms_version.php
- * 
+ *
  * holds the module informations
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -36,41 +36,41 @@ $modversion = array(
                         "official"                  => 1,
                         "dirname"                   => basename(dirname(__FILE__)),
                         "modname"                   => "event",
-                    
+
                     /**  Images information  */
                         "iconsmall"                 => "images/icon_small.png",
                         "iconbig"                   => "images/icon_big.png",
                         "image"                     => "images/icon_big.png", /* for backward compatibility */
-                    
+
                     /**  Development information */
-                        "status_version"            => "1.2",
+                        "status_version"            => "1.3",
                         "status"                    => "beta",
                         "date"                      => "01:13 21.11.2012",
                         "author_word"               => "",
                         "warning"                   => _CO_ICMS_WARNING_BETA,
-                    
+
                     /** Contributors */
                         "developer_website_url"     => "http://code.google.com/p/amaryllis-modules/",
                         "developer_website_name"    => "Amaryllis Modules",
                         "developer_email"           => "qm-b@hotmail.de",
-                    
+
                     /** Administrative information */
                         "hasAdmin"                  => 1,
                         "adminindex"                => "admin/index.php",
                         "adminmenu"                 => "admin/menu.php",
-                    
+
                     /** Install and update informations */
                         "onInstall"                 => "include/onupdate.inc.php",
                         "onUpdate"                  => "include/onupdate.inc.php",
                         "onUninstall"               => "include/onupdate.inc.php",
-                    
+
                     /** Search information */
                         "hasSearch"                 => 0,
                         "search"                    => array("file" => "include/search.inc.php", "func" => "event_search"),
-                    
+
                     /** Menu information */
                         "hasMain"                   => 1,
-                    
+
                     /** Notification and comment information */
                         "hasNotification"           => 1,
                         "hasComments"               => 0
@@ -188,13 +188,24 @@ $modversion['blocks'][$i]['can_clone']		= TRUE;
 //////////////////////////////////////////// CONFIGURATION ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 icms_loadLanguageFile("event", "common");
-if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'event') {
-	$category_handler = icms_getModuleHandler("category", $modversion['dirname'], "event");
-	$cat_list = $category_handler->getCategoryListForConfig();
+global $icmsModule;
+if (is_object($icmsModule) && ($icmsModule->getVar('modname') == 'event' || $icmsModule->getVar('modname') == 'system' )) {
+	$mod = icms::handler('icms_module')->getByDirname($modversion['dirname']);
+	if(is_object($mod)){
+		$category_handler = icms_getModuleHandler("category", $modversion['dirname'], "event");
+		$cat_list = $category_handler->getCategoryListForConfig();
+	}
 } else {
 	$cat_list = "";
 }
 $i = 0;
+$i++;
+$modversion['config'][$i]['name']			= 'use_main';
+$modversion['config'][$i]['title']			= '_MI_EVENT_CONFIG_USE_MAIN';
+$modversion['config'][$i]['description']	= '_MI_EVENT_CONFIG_USE_MAIN_DSC';
+$modversion['config'][$i]['formtype'] 		= 'yesno';
+$modversion['config'][$i]['valuetype'] 		= 'int';
+$modversion['config'][$i]['default'] 		= 0;
 $i++;
 $modversion['config'][$i] = array(
                                 'name'          => 'default_view',
@@ -215,6 +226,15 @@ $modversion['config'][$i] = array(
                                 'default'       => 1,
                                 'options'       => array( _CO_EVENT_MONDAY => 1, _CO_EVENT_SUNDAY => 0)
                             );
+$i++;
+$modversion['config'][$i] = array(
+								'name' 			=> 'display_weeknumber',
+								'title' 		=> '_MI_EVENT_CONFIG_DISPLAY_WEEKNUMBER',
+								'description' 	=> '_MI_EVENT_CONFIG_DISPLAY_WEEKNUMBER_DSC',
+								'formtype' 		=> 'yesno',
+								'valuetype' 	=> 'int',
+								'default' 		=> 1
+							);
 $i++;
 $modversion['config'][$i] = array(
 								'name' 			=> 'display_weekend',

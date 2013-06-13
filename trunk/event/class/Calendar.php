@@ -3,11 +3,11 @@
  * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /class/Calendar.php
- * 
+ *
  * Class representing event calendar objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -41,12 +41,12 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 		$this->initCommonVar("dobr", FALSE, TRUE);
 		$this->setControl("calendar_color", "color");
 		$this->setControl("calendar_txtcolor", "color");
-		
+
 		$this->initiateSEO();
-		
+
 		$this->hideFieldFromForm(array("short_url", "meta_description", "meta_keywords"));
 	}
-	
+
 	public function calendar_active() {
 		$active = $this->getVar('calendar_active', 'e');
 		if ($active == FALSE) {
@@ -57,15 +57,15 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 				<img src="' . EVENT_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
 		}
 	}
-	
+
 	function calendar_color() {
 		return "<div style='background-color:" . $this->getColor() . "; border: 1px solid black; width:30px; height:20px;'>&nbsp;</div>";
 	}
-	
+
 	function calendar_txtcolor() {
 		return "<div style='background-color:" . $this->getTextColor() . "; border: 1px solid black; width:30px; height:20px;'>&nbsp;</div>";
 	}
-	
+
 	public function getCalendarDsc() {
 		$dsc = $this->getVar("calendar_dsc", "s");
 		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "output");
@@ -76,25 +76,25 @@ class mod_event_Calendar extends icms_ipf_seo_Object {
 		}
 		return $dsc;
 	}
-	
+
 	public function getColor() {
         return $this->getVar("calendar_color");
     }
-	
+
 	public function getTextColor() {
         return $this->getVar("calendar_txtcolor");
     }
-	
+
 	public function getItemLink($urlOnly = FALSE) {
-		$url = EVENT_URL.'index.php?cal='.$this->short_url();
+		$url = $this->handler->_moduleUrl.$this->handler->_page.'?cal='.$this->short_url();
 		if($urlOnly) return $url;
 		return '<a href="'.$url.'"title="'.$this->title().'">'.$this->title().'</a>';
 	}
-	
+
 	public function isActive() {
 		return ($this->getVar("calendar_active", "e") == 1) ? TRUE : FALSE;
 	}
-	
+
 	public function toArray() {
 		$ret = parent::toArray();
 		$ret['id'] = $this->id();

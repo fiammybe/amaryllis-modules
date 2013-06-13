@@ -3,11 +3,11 @@
  * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
  * File: /submit.php
- * 
+ *
  * handle user actions from frontend
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -57,7 +57,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$urllink = 0;
 			}
 			$allday = ($_POST['event_allday'] == "false") ? FALSE : TRUE;
-			
+
             $event->setVar("event_name", $eventname);
 			$event->setVar("event_cid", filter_input(INPUT_POST, "event_cid", FILTER_SANITIZE_NUMBER_INT));
 			$event->setVar("event_dsc", $_POST['event_dsc']);
@@ -91,7 +91,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			unset($_POST, $event, $event_handler);
 			exit;
             break;
-        
+
         case 'resizeevent':
 			$allday = $dayDelta = $minDelta = $end = $new_end = $clean_event = $event = "" ;
 			$clean_event = isset($_POST['event_id']) ? filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT) : 0;
@@ -153,7 +153,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			echo json_encode(array('status' => 'success','message'=> _MD_EVENT_SUCCESSFUL_JOINED));
 			unset($_POST); exit;
 			break;
-		
+
 		case 'unjoin':
 			$event_id = filter_input(INPUT_POST, "event_id", FILTER_SANITIZE_NUMBER_INT);
 			if($event_id == 0){ echo json_encode(array( 'status' => 'error', 'message'=> _NOPERM));unset($_POST); exit; }
@@ -189,6 +189,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$comment->setVar("comment_pdate", time());
 			$comment->setVar("comment_body", $body);
 			$comment->setVar("comment_approve", $approve);
+			$comment->setVar("language", $event->language());
 			if(!$comment_handler->insert($comment)) { echo json_encode(array('status' => 'error','message'=> _MD_EVENT_STORING_FAILED . " " . implode("<br />", $comment->getErrors())));unset($_POST);exit;}
 			$message = ($approve) ? _MD_EVENT_SUCCESSFUL_COMMENTED : _MD_EVENT_SUCCESSFUL_COMMENTED_APPROVAL;
 			echo json_encode(array('status' => 'success','message'=> $message, 'comments' => $event->getEventComments()));
@@ -212,8 +213,8 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			unset($_POST); exit;
 			break;
     }
-    
-    
+
+
 } else {
 	echo json_encode(array('status' => 'error','message'=> _MD_EVENT_ACCESS_FAILED)); exit;
 }

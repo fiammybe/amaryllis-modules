@@ -5,7 +5,7 @@
 
 <div id="calendar_legend">
 	<{if $use_checkboxes}><form id="event_catselect" name="event_catselect" action="feeds.php" method="POST"><{/if}>
-		<fieldset style="border: #e8e8e8 1px solid;">
+		<fieldset class="calendar_fieldset">
 			<legend><{$smarty.const._MD_EVENT_LEGEND}></legend>
 			<{if $category}>
 				<div class="legend_item" original-title="<{$category.name}>">
@@ -37,7 +37,7 @@
 						</div>
 					<{/if}>
 				<{/foreach}>
-				
+
 				<{foreach item=cal from=$calendars name=calendar}>
 					<div class="legend_item" original-title="<{$cal.name}>">
 						<{if $use_checkboxes}><input type="checkbox" name="event_cal[]" data-group='2' checked="checked" value="<{$cal.id}>" /><{/if}>
@@ -50,9 +50,9 @@
 					<{/if}>
 				<{/foreach}>
 			<{/if}>
-			
+
 		</fieldset>
-	
+
 	<{if $use_checkboxes}></form><{/if}>
 </div>
 
@@ -72,3 +72,24 @@
 <{includeq file='db:event_event.html'}>
 
 <{includeq file='db:event_footer.html'}>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var string = "jQuery";
+		var n1 = string.length; // Ausgabe: 6
+		var n2 = string[3]; // Ausgabe: "e"
+		//var n3 = string.fontcolor("rgb(0,205,102)"); // Ausgabe: <font color="rgb(255, 0, 0, 0, 50)">jQuery - Write less, do more!</font>
+		//var n3 = string.split("");
+		// Gibt ["j","Q","u","e","r","y"," ","-"," ","w","r","i","t","e"," ","l","e","s","s",","," ","d","o"," ","m","o","r","e","!"] zur&uuml;ck
+		//var n4 = string.split("e"); // Gibt ["jQu","ry - writ"," l","ss, do mor","!"] zur&uuml;ck
+		//var n5 = string.split("e", 1); // Gibt ["jQu"] zur&uuml;ck
+		//var n6 = string.split(); // Gibt ["jQuery - write less, do more!"] zur&uuml;ck
+		console.log(n1);
+		console.log(n2);
+		//console.log(n3);
+		//console.log(n4);
+		//console.log(n5);
+		//console.log(n6);
+	});
+</script>

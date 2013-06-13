@@ -3,11 +3,11 @@
  * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /rss.php
- * 
+ *
  * module rss feeds
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -18,9 +18,7 @@
  */
 
 include_once 'header.php';
-
-include_once ICMS_ROOT_PATH . '/header.php';
-include_once dirname(__FILE__) . '/include/common.php';
+icms::$logger->disableLogger();
 
 $eventModule = icms_getModuleInfo(EVENT_DIRNAME);
 $event_feed = new icms_feeds_Rss();
@@ -30,12 +28,16 @@ $event_feed->description = $icmsConfig['slogan'];
 $event_feed->language = _LANGCODE;
 $event_feed->charset = _CHARSET;
 $event_feed->category = $eventModule->getVar("name");
+$event_feed->image = array(
+			'title' => $event_feed->title,
+			'url' => ICMS_URL . '/'.$eventConfig['print_logo'],
+		);
 
 $category_handler = icms_getModuleHandler("category", EVENT_DIRNAME, "event");
 $event_handler = icms_getModuleHandler("event", EVENT_DIRNAME, "event");
 $cat_ids = $category_handler->userView();
 $uid = (is_object(icms::$user)) ? icms::$user->getVar("uid") : 0;
-$events = $event_handler->getEvents($cat_ids, 0, 0, $uid, "event_created_on", "DESC", 30);
+$events = $event_handler->getEvents($cat_ids, 0, 0, $uid, "event_created_on", "DESC", 30, $icmsConfig['language']);
 
 foreach($events as $event) {
 	$event_feed->feeds[] = array (

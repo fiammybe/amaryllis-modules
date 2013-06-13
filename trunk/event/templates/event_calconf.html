@@ -28,6 +28,7 @@
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
+			weekNumbers: <{$display_weeknumber}>,
 			slotMinutes: <{$agenda_slot}>,
             firstHour: <{$agenda_start}>,
 			axisFormat: 'HH:mm',
@@ -139,21 +140,21 @@
         		element.qtip({
 		            content: {
 		                title: { text: event.title },
-		                text: (!event.allDay) ? '<span class="start">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'HH:mm')) + 
-		                		'<br /><span class="End">End: </span>' + ($.fullCalendar.formatDate(event.end, 'HH:mm')) + 
+		                text: (!event.allDay) ? '<span class="start">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'HH:mm')) +
+		                		'<br /><span class="End">End: </span>' + ($.fullCalendar.formatDate(event.end, 'HH:mm')) +
 		                		'<br /><span class="dsc">Description: </span><p>' + event.description +
 		                		'</p><br />' + event.approval : '<span class="start">Start: </span><{$smarty.const._CO_EVENT_ALLDAY}><br /><span class="dsc">Description: </span><p>' + event.description +
-		                		'</p><br />' + event.approval 
+		                		'</p><br />' + event.approval
 					},
 					show: { solo: true },
-		            style: { 
+		            style: {
 		                width: 500,
 		                padding: 5,
-		                classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
+		                classes: 'qtip-dark qtip-rounded qtip-shadow',
 		                tip: 'topLeft',
 						textAlign:'left',
 						tip:'bottomLeft',
-		                classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow'
+		                classes: 'qtip-dark qtip-rounded qtip-shadow'
 		            },
 		            position: {
 						target: 'mouse',
@@ -173,7 +174,7 @@
 				} catch(err) { }
 			},
 			loading: function(isLoading, view) {
-				var view = $('#calendar').fullCalendar('getView');
+				//var view = $('#calendar').fullCalendar('getView');
 				if(!isLoading) {
 					$("#event_loading").hide();
 					<{if $smarty.get.event}>
@@ -183,7 +184,7 @@
 					$("#event_loading").show();
 				}
 			},
-			
+
     		<{if $cat_submit}>
 	    		dropAccept: '*',
 				selectable: true,
@@ -295,7 +296,7 @@
 				}
 			<{/if}>
 		});
-		
+
 		<{if $gotoDate }>
 			/**
 			 * jump to a submitted date
@@ -303,12 +304,12 @@
 			$('#calendar').fullCalendar('changeView', 'agendaDay')
     				.fullCalendar('gotoDate', <{$gotoDate}>);
 		<{/if}>
-		
+
 		/**
 		 * adding new calendar button to submit events
 		 */
 		addCalButton("left", "<{$smarty.const._CO_EVENT_SUBMIT}>", "submit_button");
-		
+
 		<{if $cat_submit}>
 			/**
 			 * ui dialog for submitting events
@@ -326,9 +327,9 @@
 							url: $("#addevent").attr('action'),
 							type: "POST",
 							data: {event_id: $("#event_id").val(), event_name: $("#event_name").val(), event_startdate: $("#event_startdate").val(), event_enddate: $("#event_enddate").val(), event_allday: $("#event_allday").val(),
-									event_cid: $("#event_cid").val(), event_dsc: $("#event_dsc_tarea").val(), event_contact: $("#event_contact").val(), event_cemail: $("#event_cemail").val(), 
+									event_cid: $("#event_cid").val(), event_dsc: $("#event_dsc_tarea").val(), event_contact: $("#event_contact").val(), event_cemail: $("#event_cemail").val(),
 									event_phone: $("#event_phone").val(), event_street: $("#event_street").val(), event_city: $("#event_city").val(), event_zip: $("#event_zip").val(),
-									event_public: $('input:radio[name=event_public]:checked').val(), mid_event_url: $("#mid_event_url").val(), caption_event_url: $("#caption_event_url").val(), 
+									event_public: $('input:radio[name=event_public]:checked').val(), mid_event_url: $("#mid_event_url").val(), caption_event_url: $("#caption_event_url").val(),
 									desc_event_url: $("#desc_event_url").val(), url_event_url: $("#url_event_url").val(), target_event_url: $("#target_event_url").val(),
 									event_can_joint: $('#event_can_joint').val(), event_joiners: $("#event_joiners").val(), op: $("#op").val()
 								},
@@ -353,7 +354,7 @@
 					$(this).dialog( "close" );
 				}
 			});
-	       
+
 		    $("#event_startdate, #event_enddate").datetimepicker({
 				isRTL: <{$event_rtl}>,
 				monthNames: ['<{$smarty.const._CO_EVENT_JANUARY}>','<{$smarty.const._CO_EVENT_FEBRUARY}>','<{$smarty.const._CO_EVENT_MARCH}>','<{$smarty.const._CO_EVENT_APRIL}>','<{$smarty.const._CO_EVENT_MAY}>',
@@ -370,44 +371,44 @@
 				dateFormat: "yy/mm/dd"
 				//, timeFormat: "HH:mm",
 			})
-			
+
 			$("#event_startdate").datetimepicker({
 				defaultDate: $("#event_startdate").datetimepicker('getDate'),
 				onClose: function(dateText, inst) {
-					var eventStartDate = $("#event_enddate").datetimepicker('getDate');
-					var eventEndDate = $("#event_enddate").datetimepicker('getDate');
-					if ($("#event_enddate").val() != '') {
+					var eventStartDate = $("#event_startdate").datetimepicker("getDate");
+					var eventEndDate = $("#event_enddate").datetimepicker("getDate");
+					if ($("#event_enddate").val() != "") {
 						if (eventStartDate > eventEndDate)
-							$("#event_enddate").datetimepicker('setDate', eventStartDate);
+							$("#event_enddate").datetimepicker("setDate", eventStartDate);
 					} else {
 						$("#event_enddate").val(dateText);
 					}
 				},
 				onSelect: function (selectedDateTime){
-					var eventStartDate = $("#event_startdate").datetimepicker('getDate');
-					var eventEndDate = $("#event_enddate").datetimepicker('getDate');
+					var eventStartDate = $("#event_startdate").datetimepicker("getDate");
+					var eventEndDate = $("#event_enddate").datetimepicker("getDate");
 					if (eventStartDate > eventEndDate)
-					$("#event_enddate").datetimepicker('option', 'minDateTime', $("#event_startdate").datetimepicker('getDate') );
+					$("#event_enddate").datetimepicker("option", "minDateTime", $("#event_startdate").datetimepicker("getDate") );
 				}
 			});
-			
+
 			$("#event_enddate").datetimepicker({
 				defaultDate: $("#event_enddate").datetimepicker('getDate'),
 				onClose: function(dateText, inst) {
-					var eventStartDate = $("#event_startdate").datetimepicker('getDate');
-					var eventEndDate = $("#event_enddate").datetimepicker('getDate');
-					if ($("#event_startdate").val() != '') {
-						if (eventStartDate > eventEndDate)
-							$("#event_startdate").datetimepicker('setDate', eventEndDate);
-					} else {
-						$("#event_startdate").val(dateText);
-					}
+						var eventStartDate = $("#event_startdate").datetimepicker("getDate");
+						var eventEndDate = $("#event_enddate").datetimepicker("getDate");
+						if ($("#event_startdate").val() != "") {
+							if (eventStartDate > eventEndDate)
+								$("#event_startdate").datetimepicker("setDate", eventEndDate);
+						} else {
+							$("#event_startdate").val(dateText);
+						}
 				},
 				onSelect: function (selectedDateTime){
-					var eventStartDate = $("#event_startdate").datetimepicker('getDate');
-					var eventEndDate = $("#event_enddate").datetimepicker('getDate');
-					if (eventStartDate > eventEndDate)
-					$("#event_startdate").datetimepicker('option', 'maxDateTime', $("#event_enddate").datetimepicker('getDate') );
+						var eventStartDate = $("#event_startdate").datetimepicker("getDate");
+						var eventEndDate = $("#event_enddate").datetimepicker("getDate");
+						if (eventStartDate > eventEndDate)
+						$("#event_startdate").datetimepicker("setDate", eventStartDate);
 				}
 			});
 			/**
@@ -417,7 +418,7 @@
 	    		var title = prompt('<{$smarty.const._MD_EVENT_TITLE}>');
 				title = title;
 				$("#event_name").val(title);
-	    		$("#submit_form").dialog("open") 
+	    		$("#submit_form").dialog("open")
 	    	});
 	    <{elseif !$cat_submit && !$icms_isUser}>
 	    	$("#submit_button").click(function () {
@@ -440,7 +441,7 @@
 	    	$("#event_alert").html("<{$smarty.const._NOPERM}>");
 	    	$("#event_alert").dialog("open");
 	    <{/if}>
-	    
+
 	    /**
 	     * initializing dialog on form success/redirect messages
 	     */
@@ -459,7 +460,7 @@
 				}
 			}
 		});
-		
+
 		/**
 		 * helps resizing calendars content in small themes
 		 */
@@ -480,7 +481,7 @@
 			width: 800,
 			height: "auto"
 		});
-		
+
 		/**
 		 * replacement for old alert - makes div#event_alert a dialog box to return html content
 		 */
@@ -499,7 +500,7 @@
 				}
 			}
 		});
-		
+
 		/**
 		 * make use of qtip for legend description
 		 */
@@ -514,7 +515,7 @@
 					viewport: $(window),
 					textAlign:'left',
 					tip:'bottomLeft',
-					classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
+					classes: 'qtip-dark qtip-rounded qtip-shadow',
 				},
 				position:   {
 					target: 'mouse',
@@ -557,7 +558,7 @@
 			});
 			return false;
 		});
-		
+
 		/**
 		 * submitting  legend onChange checkboxes
 		 */
@@ -565,7 +566,7 @@
 			$('#event_catselect').submit();
 			return false;
 		});
-		
+
 		/**
 		 * additional functions
 		 */
@@ -574,13 +575,13 @@
 		 * @param curTime -> date object of the current time
 		 * @return returns and refreshes a small time line in the current time slot all 5 minutes
 		 */
-		function setTimeline() {
+		function setTimeline(calendar) {
 			var curTime = new Date();
 			if (curTime.getHours() == 0 && curTime.getMinutes() <= 5) {
 				var todayElem = $(".fc-today");
 				todayElem.removeClass("fc-today");
 				todayElem.removeClass("fc-state-highlight");
-				
+
 				todayElem.next().addClass("fc-today");
 				todayElem.next().addClass("fc-state-highlight");
 			}
@@ -591,8 +592,8 @@
 				timeline = $("<hr>").addClass("timeline");
 				parentDiv.prepend(timeline);
 			}
-		    
-			var curCalView = calendar.fullCalendar("getView");
+
+			var curCalView = $('#calendar').fullCalendar("getView");
 			if (curCalView.visStart < curTime && curCalView.visEnd > curTime) {
 				timeline.show();
 			} else {
@@ -604,7 +605,7 @@
 			var topLoc = Math.floor(parentDiv.height() * percentOfDay);
 
 			timeline.css("top", topLoc + "px");
-		    
+
 			if (curCalView.name == "agendaWeek") {
 				var dayCol = $(".fc-today:visible");
 				if (dayCol.position() != null) {
@@ -626,7 +627,7 @@
 			$("td.fc-header-" + where).append(my_button);
 			$("#" + id).button();
 		}
-		
+
 		/**
 		 * checks for seo input for opening an event
 		 * @param seo - check if corrent seo is in available events
@@ -637,7 +638,7 @@
 			var events = $('#calendar').fullCalendar('clientEvents',function(event) {return event.seo == eventSeo;});
 			clickEvent(events[0]);
 		};
-		
+
 		/**
 		 * clickEvent fires a clicked event to dialog and opens dialog box for single Event view
 		 * @param event -> single js-event Object to be opened
@@ -654,9 +655,9 @@
 				} else {
 					var printButton = "";
 				}
-				
+
 				if(event.editable == true) {
-					var buttons = "<span class='event_buttonbar'>" + 
+					var buttons = "<span class='event_buttonbar'>" +
 										"<img id='event_delete' src='<{$event_images_url}>delete.png' alt='delete' />" +
 										"<img id='event_edit' src='<{$event_images_url}>edit.png' alt='edit' />" +
 										"<img id='event_clone' src='<{$event_images_url}>clone.png' alt='edit' />" +
@@ -675,8 +676,8 @@
 					}
 				}
 				$("div#show_event_dsc").html(event.description);
-				$("div#cal_event").attr("original-id", event.id);
-				
+				$("div#cal_event").attr("data-id", event.id);
+
 				var divClone = $("#event_date").clone();
 				if(!event.allDay) {
 					$("span#show_event_startdate").html(startDate);
@@ -684,7 +685,7 @@
 					$("#event_date").show();
 					$("#event_alldayevent").html("");
 					$("#event_alldayevent").hide();
-					
+
 				} else {
 					$("div#event_alldayevent").html("<{$smarty.const._CO_EVENT_ALLDAY}>");
 					$("#event_alldayevent").show();
@@ -707,6 +708,7 @@
 				<{/if}>
 				if(event.comments !== "") {
 					$("div#event_comment_container").html(event.comments);
+					createToolTip();
 				} else {
 					$("div#event_comment_container").html("");
 				}
@@ -774,9 +776,9 @@
 					$("div#event_join_info").html("");
 					$("div#event_join_info").hide();
 				}
-				
+
 				$("div#event_success").html("");
-				
+
 				if(event.joint_friends !== false) {
 					$("div#joined_friends").html("<h3><{$smarty.const._MD_EVENT_JOINED_FRIENDS}></h3>"+ event.joint_friends);
 					$("div#joined_friends").show();
@@ -795,8 +797,8 @@
 				<{else}>
 					$("div#joiners_list").parent("div").hide();
 				<{/if}>
-				
-				
+
+
 				$("div#cal_event").dialog({
 					title: buttons + event.title,
 					buttons: [
@@ -810,7 +812,7 @@
 					]
 				});
 				$("div#cal_event").dialog("open");
-				
+
 				$('#event_delete').click(function(){
 					var button = $(this);
 					$("#event_alert").html("<{$smarty.const._MD_EVENT_SURE_DELETE}>");
@@ -833,7 +835,7 @@
 													$("div#cal_event").dialog("destroy");
 													$('#calendar').fullCalendar('refetchEvents');
 													$("#error_messages").text(response.message);
-													
+
 												} else if(response.status === "error") {
 													$("#error_messages").text("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 													return false;
@@ -843,16 +845,16 @@
 												}
 									}
 								});
-								
+
 								$(this).dialog( "close" );
 								$(this).dialog("empty");
-								
+
 							}}
 					});
 					$("#event_alert").dialog("open");
-					
+
 				});
-				
+
 				$('#event_join').click(function(){
 					var button = $(this);
 					$.ajax({
@@ -865,9 +867,9 @@
 										//$("div#cal_event").dialog("destroy");
 										$('#calendar').fullCalendar('refetchEvents');
 										$("#event_joining").html("");
-										
+
 										$("#event_success").html(response.message);
-										
+
 									} else if(response.status === "error") {
 										$("#event_success").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 										return false;
@@ -878,7 +880,7 @@
 						}
 					});
 				});
-				
+
 				$('#event_unjoin').click(function(){
 					var button = $(this);
 					$.ajax({
@@ -890,9 +892,9 @@
 									if(response.status === "success") {
 										$('#calendar').fullCalendar('refetchEvents');
 										$("#event_joining").html("");
-										
+
 										$("#event_success").html(response.message);
-										
+
 									} else if(response.status === "error") {
 										$("#event_success").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 										return false;
@@ -903,7 +905,7 @@
 						}
 					});
 				});
-				
+
 				<{if $can_comment}>
 					/**
 					 * comment functions
@@ -915,10 +917,11 @@
 					});
 					$("#event_comment_form").unbind("submit").bind("submit", function(e) {
 						e.preventDefault();
+						e.stopPropagation();
 						$.ajax({
 							url: "<{$event_url}>submit.php",
 							type: "POST",
-							data: {op: "addcomment", comment_body: $("#event_comment_tarea").val(), event_id: $("div#cal_event").attr("original-id")},
+							data: {op: "addcomment", comment_body: $("#event_comment_tarea").val(), event_id: $("div#cal_event").attr("data-id")},
 							dataType: "json",
 							success: function(response) {
 								if(response.status === "success") {
@@ -926,39 +929,14 @@
 									$('#calendar').fullCalendar('refetchEvents');
 									$("#event_success").html(response.message);
 									$("#event_comment_container").html(response.comments);
+									createToolTip();
 								} else if(response.status == "error") {
 									$("#event_success").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 								}
 							}
 						});
-						
+						return false;
 					});
-					
-					$(".comment_user").live("mouseover", function() {
-						$(this).qtip({
-							content: {
-								text: $(this).next('div.event_popup').html(),
-								title: $(this).attr('original-title')
-							},
-							show: {ready: true},
-							style: {
-								width:500,
-								viewport: $(window),
-								textAlign:'left',
-								tip:'bottomLeft',
-								classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow',
-							},
-							position:   {
-								target: 'mouse',
-								my:'bottomLeft',
-								adjust: {
-									x: 0,  y: -5
-								}
-							},
-							
-						});
-					});
-					
 					$("body").delegate(".comment_approval_link", "click", function(e) {
 						e.preventDefault();
 						var link = $(this);
@@ -966,13 +944,14 @@
 							url: "<{$event_url}>submit.php",
 							type: "POST",
 							dataType: "json",
-							data: {event_id: $("div#cal_event").attr("original-id"), op: "approve_comment", comment_id: link.attr("original-id")},
+							data: {event_id: $("div#cal_event").attr("data-id"), op: "approve_comment", comment_id: link.attr("data-id")},
 							success: function(response) {
 								if(response.status === "success") {
 									$('#calendar').fullCalendar('refetchEvents');
 									$("#event_success").html(response.message);
 									$("#event_comment_container").html("");
 									$("#event_comment_container").html(response.comments);
+									createToolTip();
 								} else if(response.status === "error") {
 									$("#event_success").html("<{$smarty.const._MD_EVENT_FAILURE}>: " + response.message);
 								}
@@ -982,7 +961,6 @@
 				<{/if}>
 				var hash = window.location.hash;
 				if(hash != "") {
-					//$(hash).css('background-color', '#c9d1fe');
 					changeColorScheme("highlighted");
 				}
 				$('#event_edit').click(function(){
@@ -993,7 +971,7 @@
 					$("#event_enddate").val(end);
 					$("#event_id").val(event.id);
 					$("#event_name").val(event.title);
-					
+
 					$("#event_allday").val(event.allDay);
 					$("#event_cid").val(event.cid);
 					$("#event_dsc_tarea").val(event.description);
@@ -1014,14 +992,14 @@
 					$("div#cal_event").dialog("close");
 					$("#submit_form").dialog("open");
 				});
-				
+
 				$('#event_clone').click(function(){
 					var button = $(this);
 					start = $.fullCalendar.formatDate( event.start, "yyyy/MM/dd HH:mm");
 					end = $.fullCalendar.formatDate( event.end, "yyyy/MM/dd HH:mm");
 					$("#event_startdate").val(start);
 					$("#event_enddate").val(end);
-					
+
 					$("#event_id").val("0");
 					$("#event_name").val(event.title);
 					$("#event_allday").val(event.allDay);
@@ -1045,12 +1023,77 @@
 					$("#submit_form").dialog("open");
 				});
 			};
-			
+
 			function changeColorScheme(text){
 				var hash = window.location.hash.slice(1);
 				setTimeout(function(){$('#'+hash).addClass(text);},500);
 				setTimeout(function(){$('#'+hash).removeClass(text);},5000);
 				var hash = location.hash.replace('#','');
-};
+			};
+
+			function createToolTip() {
+				$(document).ready(function(){
+						$(".comment_user").on("mouseover click", function() {
+							$(this).qtip({
+								content: {
+									text: $(this).next('div.event_popup').html(),
+									title: $(this).attr('original-title')
+								},
+								show: {
+									ready: true,
+									event: 'click mouseenter',
+									solo: true
+								},
+								hide: 'unfocus mouseleave',
+								style: {
+									width:500,
+									viewport: $(window),
+									textAlign:'left',
+									tip:'bottomLeft',
+									classes: 'qtip-dark qtip-rounded qtip-shadow',
+								},
+								position:   {
+									target: 'mouse',
+									my:'bottomLeft',
+									adjust: {
+										x: 0,  y: -5
+									}
+								},
+								events: {
+						             render: function(event, api) {
+						                 api.elements.target.click(function(e) {
+						                     if (api.wasClicked) {
+						                         api.hide();
+						                         api.wasClicked = false;
+						                     }
+						                     else {
+						                         api.wasClicked = !api.wasClicked;
+						                     }
+						                 });
+						             },
+						             hide: function(event, api) {
+						                 if(api.wasClicked && event.originalEvent.type === 'mouseleave') {
+						                     try{ event.preventDefault(); } catch(e) {}
+						                 }
+						                 else {
+						                     api.wasClicked = false;
+						                 }
+						             }
+						         }
+							});
+						});
+					})
+				};
+
 	});
+
+	$.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+	    _title: function(title) {
+	        if (!this.options.title ) {
+	            title.html("&#160;");
+	        } else {
+	            title.html(this.options.title);
+	        }
+	    }
+	}));
 </script>

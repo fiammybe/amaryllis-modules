@@ -3,11 +3,11 @@
  * 'Event' is an event/category module for ImpressCMS, which can display google calendars, too
  *
  * File: /class/CalendarHandler.php
- * 
+ *
  * Classes responsible for managing event calendar objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -18,16 +18,29 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+if(!defined("EVENT_DIRNAME")) define("EVENT_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class mod_event_CalendarHandler extends icms_ipf_Handler {
+
+	public $_moduleID;
+	public $_moduleUseMain;
+
 	/**
 	 * Constructor
 	 *
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
-		parent::__construct($db, "calendar", "calendar_id", "calendar_name", "calendar_dsc", "event");
+		global $eventConfig;
+		parent::__construct($db, "calendar", "calendar_id", "calendar_name", "calendar_dsc", EVENT_DIRNAME);
+		$eModule = icms::handler('icms_module')->getByDirname(EVENT_DIRNAME);
+		$this->_moduleID = $eModule->getVar("mid");
+		unset($eModule);
 
+		$this->_moduleUseMain = (($eventConfig['use_main'] == 1) || (isset($GLOBALS['MODULE_'.strtoupper(EVENT_DIRNAME).'_USE_MAIN']) &&
+									$GLOBALS['MODULE_'.strtoupper(EVENT_DIRNAME).'_USE_MAIN'] === TRUE)) ? TRUE : FALSE;
+		$this->_moduleUrl = ($this->_moduleUseMain) ? ICMS_URL.'/' : ICMS_MODULES_URL.'/'.EVENT_DIRNAME.'/';
+		$this->_page = ($this->_moduleUseMain) ? EVENT_DIRNAME.'.php' : "index.php";
 	}
 
 	public function getCalendarBySeo($seo) {
@@ -40,7 +53,7 @@ class mod_event_CalendarHandler extends icms_ipf_Handler {
 	public function filterActive() {
 		return array(0 => 'Inactive', 1 => 'Active');
 	}
-	
+
 	/**
 	 * handling some functions to easily switch some fields
 	 */
@@ -57,7 +70,7 @@ class mod_event_CalendarHandler extends icms_ipf_Handler {
 		$this->insert($calObj, TRUE);
 		return $value;
 	}
-	
+
 
 	protected function beforeInsert(&$obj) {
 		if($obj->_updating)

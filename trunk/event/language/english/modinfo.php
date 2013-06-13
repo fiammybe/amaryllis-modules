@@ -3,11 +3,11 @@
  * 'Event' is an event/event module for ImpressCMS, which can display google events, too
  *
  * File: /language/english/modinfo.php
- * 
+ *
  * english modinfo language file
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Event
  * @since		1.00
@@ -118,3 +118,11 @@ define("_MI_EVENT_BLOCK_COMMENTS", "Recent Comments");
 define("_MI_EVENT_BLOCK_COMMENTS_DSC", "");
 // ACP Menu
 define("_MI_EVENT_MENU_COMMENTS", "Comments");
+/**
+ * added in 1.3
+ */
+// config
+define("_MI_EVENT_CONFIG_USE_MAIN", "Use main page only, without having '/modules/".EVENT_DIRNAME."/' in URL?");
+define("_MI_EVENT_CONFIG_USE_MAIN_DSC", "The module has a seperated frontend for visitors. You can redirect directly to this page.");
+define("_MI_EVENT_CONFIG_DISPLAY_WEEKNUMBER", "Display Weeknumbers?");
+define("_MI_EVENT_CONFIG_DISPLAY_WEEKNUMBER_DSC", "");
