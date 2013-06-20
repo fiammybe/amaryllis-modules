@@ -16,7 +16,7 @@
 * @package		album
 *
 */
-
+if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(dirname(__FILE__)))));
 // general informations
 define("_MI_ALBUM_NAME", "Album");
 define("_MI_ALBUM_DSC", "'Album' ist ein Gallerie-Modul, welches den Bild upload ermöglicht und diese in Alben kategorisiert. Alben nutzen die Rechte-Verwaltung von ImpressCMS und Bilder können mit Kommentaren von Besuchern versehen werden.");

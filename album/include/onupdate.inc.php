@@ -201,7 +201,7 @@ function createIndexpage(&$module) {
 		$album_indexpage_handler = icms_getModuleHandler( 'indexpage', ALBUM_DIRNAME, 'album' );
 		$indexpageObj = $album_indexpage_handler -> get(1);
 		if(is_object($indexpageObj) && !$indexpageObj->isNew()) return;
-		$path = ICMS_ROOT_PATH . '/uploads/'.$indexModule->getVar("dirname").'/indexpage/';
+		$path = ICMS_ROOT_PATH . '/uploads/'.ALBUM_DIRNAME.'/indexpage/';
 		$image = 'album_indeximage.png';
 		if(!is_file($path . $image)) {
 			if(icms_core_Filesystem::copyStream(ICMS_ROOT_PATH . '/modules/' . ALBUM_DIRNAME . '/images/' . $image, $path . $image)) {
