@@ -1,11 +1,11 @@
 <?php
 /**
  * 'Album' is a light weight gallery module
- * 
+ *
  * File: /icms_version.php
- * 
+ *
  * module informations
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * --------------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@
  * @author		QM-B <qm-b@hotmail.de>
  * @package		album
  * @version		$Id$
- * 
+ *
  */
 
 
@@ -36,41 +36,42 @@ $modversion = array(
 						"official"					=> 1,
 						"dirname"					=> basename(dirname(__FILE__)),
 						"modname"					=> "album",
-					
+
 					/**  Images information  */
 						'iconsmall'					=> "images/album_icon_small.png",
 						'iconbig'					=> "images/album_icon.png",
 						'image'						=> "images/album_icon.png", /* for backward compatibility */
-					
+
 					/**  Development information */
 						"status_version"			=> "1.3",
 						"status"					=> "Beta",
 						"date"						=> "01:46 05.02.2012",
 						"author_word"				=> "",
 						"warning"					=> _CO_ICMS_WARNING_BETA,
-					
+
 					/** Contributors */
 						"developer_website_url"		=> "http://code.google.com/p/amaryllis-modules/",
 						"developer_website_name"	=> "Amaryllis Modules",
 						"developer_email"			=> "qm-b@hotmail.de",
-					
+
 					/** Administrative information */
 						"hasAdmin"					=> 1,
 						"adminindex"				=> "admin/index.php",
 						"adminmenu"					=> "admin/menu.php",
-					
+
 					/** Install and update informations */
 						"onInstall"					=> "include/onupdate.inc.php",
 						"onUpdate"					=> "include/onupdate.inc.php",
 						"onUninstall"				=> "include/onupdate.inc.php",
-					
+
 					/** Search information */
 						"hasSearch"					=> 1,
 						"search"					=> array("file" => "include/search.inc.php", "func" => "album_search"),
-					
+
 					/** Menu information */
 						"hasMain"					=> 1,
-					
+						"mainpage"					=> "index.php",
+
 					/** Notification and comment information */
 						"hasNotification"			=> 1,
 						"hasComments"				=> 1
@@ -102,39 +103,39 @@ $i++;
 $modversion['object_items'][$i] = 'images';
 $i++;
 $modversion['object_items'][$i] = 'message';
-if(!icms_get_module_status("index")) {
 	$i++;
 	$modversion['object_items'][$i] = 'indexpage';
-}
 $modversion['tables'] = icms_getTablesArray( $modversion['dirname'], $modversion['object_items'] );
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////// MAINMENU INFORMATION ///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-if (is_object(icms::$module) && icms::$module->getVar('dirname') == 'album') {
+if (is_object(icms::$module) && icms::$module->getVar('dirname') == $modversion['dirname']) {
 	global $album_isAdmin;
-	$album_handler = icms_getModuleHandler('album', basename(dirname(__FILE__)), 'album');
-	$images_handler = icms_getModuleHandler('images', basename(dirname(__FILE__)), 'album');
+	$album_handler = icms_getModuleHandler('album', $modversion['dirname'], 'album');
+	$images_handler = icms_getModuleHandler('images', $modversion['dirname'], 'album');
 	$i = 0;
 	$imagesbyuser = $images_handler->filterUsers(FALSE);
 	if($imagesbyuser !== "") {
 		foreach ($imagesbyuser as $link => $value) {
 			$i++;
 			$modversion['sub'][$i]['name'] = _MD_ALBUM_GET_BY_PUBLISHER . " " . $value;
-			$modversion['sub'][$i]['url'] = 'index.php?op=getByPublisher&uid=' . $link;
+			$modversion['sub'][$i]['url'] = 'index.php?view=byPublisher&uid=' . $link;
 		}
+		unset($imagesbyuser, $images_handler);
 	}
 	if ($album_handler->userCanSubmit()) {
 		$i++;
 		$modversion['sub'][$i]['name'] = _MI_ALBUM_MENUMAIN_ADDALBUM;
-		$modversion['sub'][$i]['url'] = 'album.php?op=mod';
+		$modversion['sub'][$i]['url'] = 'index.php?view=modAlbum';
 	}
 	if($album_isAdmin) {
 		$i++;
 		$modversion['sub'][$i]['name'] = _MI_ALBUM_MENUMAIN_ADDIMAGES;
-		$modversion['sub'][$i]['url'] = 'images.php?op=mod';
+		$modversion['sub'][$i]['url'] = 'index.php?view=modImages';
 	}
+	unset($album_handler);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,6 +150,16 @@ $modversion['templates'][$i] = array(
 								);
 $i++;
 $modversion['templates'][$i] = array(
+										'file'			=> 'album_label.html',
+										'description'	=> 'Albums and Images by label'
+								);
+$i++;
+$modversion['templates'][$i] = array(
+										'file'			=> 'album_slabel.html',
+										'description'	=> 'front-end label select'
+								);
+$i++;
+$modversion['templates'][$i] = array(
 										'file'			=> 'album_header.html',
 										'description'	=> _MI_ALBUM_HEADER_TPL
 								);
@@ -160,6 +171,11 @@ $modversion['templates'][$i] = array(
 $i++;
 $modversion['templates'][$i] = array(
 										'file'			=> 'album_album.html',
+										'description'	=> _MI_ALBUM_ALBUM_TPL
+								);
+$i++;
+$modversion['templates'][$i] = array(
+										'file'			=> 'album_salbum.html',
 										'description'	=> _MI_ALBUM_ALBUM_TPL
 								);
 $i++;
@@ -231,6 +247,7 @@ $modversion['blocks'][$i]['can_clone']		= TRUE;
 // Comments
 $modversion['comments']['pageName'] = 'index.php';
 $modversion['comments']['itemName'] = 'album_id';
+$modversion['comments']['extraParams'][] = 'album';
 
 // Comment callback functions
 $modversion['comments']['callbackFile'] = 'include/comment.inc.php';
@@ -244,18 +261,20 @@ $modversion['comments']['callback']['update'] = 'album_com_update';
 global $icmsConfig;
 
 $i=0;
-/**
 $i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'need_cats',
-								'title' 		=> '_MI_ALBUM_NEED_CATS',
-								'description' 	=> '_MI_ALBUM_NEED_CATS_DSC',
-								'formtype' 		=> 'yesno',
-								'valuetype' 	=> 'int',
-								'default' 		=>  1
-							);
- * 
- */
+$modversion['config'][$i]['name']			= 'use_main';
+$modversion['config'][$i]['title']			= '_MI_ALBUM_CONFIG_USE_MAIN';
+$modversion['config'][$i]['description']	= '_MI_ALBUM_CONFIG_USE_MAIN_DSC';
+$modversion['config'][$i]['formtype'] 		= 'yesno';
+$modversion['config'][$i]['valuetype'] 		= 'int';
+$modversion['config'][$i]['default'] 		= 0;
+$i++;
+$modversion['config'][$i]['name']			= 'use_rewrite';
+$modversion['config'][$i]['title']			= '_MI_ALBUM_CONFIG_USE_REWRITE';
+$modversion['config'][$i]['description']	= '_MI_ALBUM_CONFIG_USE_REWRITE_DSC';
+$modversion['config'][$i]['formtype'] 		= 'hidden';
+$modversion['config'][$i]['valuetype'] 		= 'int';
+$modversion['config'][$i]['default'] 		= 0;
 $i++;
 $modversion['config'][$i] = array(
 								'name'			=> 'uploader_groups',
@@ -331,31 +350,12 @@ $modversion['config'][$i] = array(
 							);
 $i++;
 $modversion['config'][$i] = array(
-								'name'			=> 'show_album_columns',
-								'title'			=> '_MI_ALBUM_SHOW_ALBUM_COLUMNS',
-								'description' 	=> '_MI_ALBUM_SHOW_ALBUM_COLUMNS_DSC',
-								'formtype' 		=> 'select',
-								'valuetype'		=> 'int',
-								'options'		=> array('1' => 1, '2' => 2, '3' => 3, '4' => 4),
-								'default' 		=> 2
-							);
-$i++;
-$modversion['config'][$i] = array(
 								'name' 			=> 'show_images',
 								'title' 		=> '_MI_ALBUM_SHOW_IMAGES',
 								'description'	=> '_MI_ALBUM_SHOW_IMAGES_DSC',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 20
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'show_images_per_row',
-								'title' 		=> '_MI_ALBUM_SHOW_IMAGES_ROW',
-								'description' 	=> '_MI_ALBUM_SHOW_IMAGES_ROW_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=>  4
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -374,42 +374,6 @@ $modversion['config'][$i] = array(
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'int',
 								'default' 		=> 150
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name'			=> 'thumbnail_margin_top',
-								'title' 		=> '_MI_ALBUM_THUMBNAIL_MARGIN_TOP',
-								'description' 	=> '_MI_ALBUM_THUMBNAIL_MARGIN_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> 10
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'thumbnail_margin_right',
-								'title' 		=> '_MI_ALBUM_THUMBNAIL_MARGIN_RIGHT',
-								'description' 	=> '_MI_ALBUM_THUMBNAIL_MARGIN_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> 15
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name' 			=> 'thumbnail_margin_bottom',
-								'title' 		=> '_MI_ALBUM_THUMBNAIL_MARGIN_BOTTOM',
-								'description'	=> '_MI_ALBUM_THUMBNAIL_MARGIN_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> 10
-							);
-$i++;
-$modversion['config'][$i] = array(
-								'name'			=> 'thumbnail_margin_left',
-								'title' 		=> '_MI_ALBUM_THUMBNAIL_MARGIN_LEFT',
-								'description'	=> '_MI_ALBUM_THUMBNAIL_MARGIN_DSC',
-								'formtype' 		=> 'textbox',
-								'valuetype' 	=> 'int',
-								'default' 		=> 15
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -472,7 +436,7 @@ $modversion['config'][$i] = array(
 								'description' 	=> '',
 								'formtype' 		=> 'textbox',
 								'valuetype' 	=> 'text',
-								'default' 		=> "&copy; 2012 "
+								'default' 		=> "&copy; ".date("Y")
 							);
 $i++;
 $modversion['config'][$i] = array(
@@ -546,7 +510,7 @@ $modversion['config'][$i] = array(
 								'formtype'		=> 'select',
 								'valuetype'		=> 'text',
 								'default'		=>"weight",
-								'options'		=> array( _MI_ALBUM_CONF_DEFAULT_ORDER_WEIGHT => "weight", 
+								'options'		=> array( _MI_ALBUM_CONF_DEFAULT_ORDER_WEIGHT => "weight",
 													_MI_ALBUM_CONF_DEFAULT_ORDER_CREATIONDATE => "album_published_date",
 													_MI_ALBUM_CONF_DEFAULT_ORDER_TITLE => "album_title" )
 							);
@@ -568,7 +532,7 @@ $modversion['config'][$i] = array(
 								'formtype'		=> 'select',
 								'valuetype'		=> 'text',
 								'default'		=> "weight",
-								'options'		=> array( _MI_ALBUM_CONF_DEFAULT_ORDER_WEIGHT => "weight", 
+								'options'		=> array( _MI_ALBUM_CONF_DEFAULT_ORDER_WEIGHT => "weight",
 													_MI_ALBUM_CONF_DEFAULT_ORDER_CREATIONDATE => "img_published_date",
 													_MI_ALBUM_CONF_DEFAULT_ORDER_TITLE => "img_title" )
 							);

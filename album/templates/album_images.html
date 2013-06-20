@@ -1,75 +1,60 @@
-<a class="single_image" href="#image-<{$album_images.id}>" title="<{$album_images.title}>" rel="lightbox" id="imglink-<{$album_images.id}>" 
-	 <{$album_image_margins}> maxheight="<{$album_images.max_height}>px" maxwidth="<{$album_images.max_width}>px" innerwidth="<{$album_images.display_width}>" innerheight="<{$album_images.display_height}>" >
-	<img src="<{$album_images.thumb}>" alt"<{$album_images.title}>" />
+<a class="single_image" href="#image-<{$image.img_id}>" title="<{$image.images_title}>" rel="lightbox" id="imglink-<{$image.img_id}>"
+	data-maxheight="<{$image.max_height}>px" data-maxwidth="<{$image.max_width}>px" data-innerwidth="<{$image.display_width}>" data-innerheight="<{$image.display_height}>" >
+	<img class="image-thumb" src="<{$image.thumb}>" alt="<{$image.images_title}>" title="<{$image.images_title}>" />
 </a>
 
 <div style="display: none">
-	<div class="img_content" id="image-<{$album_images.id}>">
-		<title><{$album_images.title}></title>
-		<img src="<{$album_images.img}>" alt"<{$album_images.title}>" />
+	<div class="img_content" id="image-<{$image.img_id}>">
+		<h3><{$image.images_title}></h3>
+		<img class="image-full" src="<{$image.img}>" alt="<{$image.images_title}>" title="<{$image.images_title}>" />
 		<div class="img_info">
-			<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$album_images.publisher}>&nbsp;
-			(<a href="<{$album_url}>index.php?op=getByPublisher&uid=<{$album_images.img_publisher}>" title="<{$smarty.const._MD_ALBUM_GET_BY_PUBLISHER}>&nbsp;<{$album_images.uname}>">
-				<{$smarty.const._MD_ALBUM_GET_BY_PUBLISHER}>&nbsp;<{$album_images.uname}>
+			<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;:&nbsp;<{$image.publisher.link}>&nbsp;
+			(<a href="<{$album_real_url}><{$album_page}>?view=byPublisher&amp;uid=<{$image.publisher.uid}>" title="<{$smarty.const._MD_ALBUM_GET_BY_PUBLISHER}>&nbsp;<{$image.publisher.uname}>">
+				<{$smarty.const._MD_ALBUM_GET_BY_PUBLISHER}>&nbsp;<{$image.publisher.uname}>
 			</a>)<br />
-				
-			<{if $album_images.updated_on}>
-				<{$smarty.const._MD_ALBUM_UPDATED_ON}>&nbsp;:&nbsp;<{$album_images.updated_on}>
+
+			<{if $image.img_updated_date}>
+				<{$smarty.const._MD_ALBUM_UPDATED_ON}>&nbsp;:&nbsp;<{$image.img_updated_date}>
 			<{else}>
-				<{$smarty.const._MD_ALBUM_PUBLISHED_ON}>&nbsp;:&nbsp;<{$album_images.published_on}>
+				<{$smarty.const._MD_ALBUM_PUBLISHED_ON}>&nbsp;:&nbsp;<{$image.img_published_date}>
 			<{/if}>
-			<{if $album_images.userCanEditAndDelete}>
-				&nbsp;|&nbsp;<{$album_images.editItemLink}><{$album_images.deleteItemLink}>
+			<{if $image.userCanEditAndDelete}>
+				&nbsp;|&nbsp;<{$image.editItemLink}><{$image.deleteItemLink}>
 			<{/if}>
-			<{if $album_images.urllink}>
-				<br /><{$album_images.urllink}>
+			<{if $image.urllink}>
+				<br /><{$image.urllink}>
 			<{/if}>
 		</div>
-		
-		<{if $album_images.tags}>
-			(&nbsp;<{$smarty.const._MD_ALBUM_TAGS}>&nbsp;:&nbsp;
-				<div class="album_tags">
-					<{foreach item=tag from=$album_images.tags name=tags}>
-						<span class="image_tag" original-title="<{$tag.name}>">
-							<{if $tag.icon}>
-								<img width=16px height=16px src="<{$tag.icon}>" title="<{$tag.name}>" alt="<{$tag.name}>" />
-							<{/if}>
-							<a href="<{$tag.seoURL}>" title="<{$tag.name}>">
-								<{$tag.name}>
-							</a>
-							<{if !$smarty.foreach.tags.last}>&nbsp;|&nbsp;<{/if}>
-						</span>
-						<{if $tag.dsc}>
-							<span class="popup_tag"><{$tag.dsc}></span>
-						<{/if}>
-					<{/foreach}>
-				</div>
-			&nbsp;)
+
+		<{if $image.labels}>
+			<div class="label_links">
+				<{foreach item=label from=$image.labels name=labels}>
+					<a rel="label" class="label" href="<{$label.itemURL}>" title="<{$label.title}>"><{$label.title}></a>
+				<{/foreach}>
+			</div>
 		<{/if}>
-		
-		<div class="img_desc" style="width: <{$album_images.display_width}>px" >
-			<{$album_images.dsc}>
+
+		<div class="img_desc" style="width: <{$image.display_width}>px" >
+			<{$image.img_description}>
 		</div>
-		
-		<{if $album_images.messages}>
+
+		<{if $image.messages}>
 			<div class="img_comments">
-				<{foreach item=message from=$album_images.messages}>
+				<{foreach item=message from=$image.messages}>
 					<{if $message.accessGranted}>
 						<div class="img_comment <{if !$message.is_approved && $message.mycomment}>img_comment_waiting<{/if}> ">
-							<div class="img_avatar">
-								<img src="<{$message.avatar}>" width="32px" height="32px" alt="avatar" />
-							</div>
+							<img src="<{$message.user.avatar}>" width="32px" height="32px" alt="avatar" />
 							<div class="comment_info">
 								<div class="message_ulink">
-									<{$message.ulink}>&nbsp;<span class="message_date">(<{$message.date}>)</span>
+									<{$message.user.link}>&nbsp;<span class="message_date">(<{$message.message_date}>)</span>
 								</div>
 							</div>
 							<div class="album_clear_left"></div>
 							<div class="message_body">
-								<p><{$message.body}></p>
+								<p><{$message.message_body}></p>
 								<{if !$message.is_approved && $message.mycomment}>
 									<span class="message_waiting"><p><{$smarty.const._MD_IMG_WAITING_APPROVAL}></p> </span>
-								<{/if}> 
+								<{/if}>
 							</div>
 						</div>
 					<{/if}>
@@ -78,16 +63,16 @@
 		<{/if}>
 		<{if $icms_isuser && $use_image_comments}>
 			<div class="img_comment_form">
-				<{if $smarty.get.op == getByTags}>
-					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addmycomment&img_id=<{$album_images.id}>&tag=<{$tag_id}>" method="post">
-				<{elseif $smarty.get.op == getByPublisher}>
-					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addcommentByPublisher&img_id=<{$album_images.id}>&uid=<{$album_images.img_publisher}>" method="post">
+				<{if $smarty.get.view == byLabels}>
+					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addmycomment" method="post">
+				<{elseif $smarty.get.view == byPublisher}>
+					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addcommentByPublisher" method="post">
 				<{else}>
-					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addcomment&img_id=<{$album_images.id}>&album_id=<{$album_images.a_id}>" method="post">
+					<form id="img_comment_form" action="<{$album_url}>submit.php?op=addcomment" method="post">
 				<{/if}>
-					<input type="hidden" name="name" value="<{$icms_userid}>" />
-					<input type="hidden" name="item" value="<{$album_images.id}>" />
-					
+					<input type="hidden" name="img_id" value="<{$image.img_id}>" />
+					<input type="hidden" name="op" value="addcomment" />
+
 					<textarea name="img_comment" class="comment" cols="40" rows="4"></textarea>
 					<input class="formButton" type="submit" value="<{$smarty.const._MD_ALBUM_SUBMIT}>" />
 				</form>
@@ -95,13 +80,9 @@
 					<script type="text/javascript">
 						$(document).ready(function(){
 							// use colorbox for screenshots
-							$('a#imglink-<{$smarty.get.imglink}>').each(function(){
-								var $link = $(this);
-								var maxH = $link.attr("maxheight");
-								var maxW = $link.attr("maxwidth");
-								var innerH = $link.attr("innerheight");
-								var innerW = $link.attr("innerwidth");
-								$link.colorbox({
+							$('#imglink-<{$smarty.get.imglink}>').each(function(){
+								var link = $(this), maxH = link.data("maxheight"), maxW = link.data("maxwidth"), innerH = link.data("innerheight"),innerW = link.data("innerwidth");
+								link.colorbox({
 									open: true,
 									transition:'fade',
 									speed:500,

@@ -1,5 +1,13 @@
 = *Album* Changelog =
 
+== Version 1.3 => Release Date: XX.07.2013 ==
+* code refactoring part 1
+* !! IMPORTANT removed sprockets support !!
+* added index labels
+* added additional front end (check manual for usage)
+* updated manual
+* updated all language files to aply changes above
+
 == Version 1.2 => Release Date: XX.07.2012 ==
 * added copyrights to image upload
 * added copyright color and copyright position to image upload

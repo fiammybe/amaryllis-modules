@@ -1,51 +1,26 @@
-<div class="album_album table_cell" original-title="<{$album.title}>">
-			
+<div class="album_album table_cell" data-title="<{$album.title}>">
 	<!-- Album image -->
-	<span style="float: left; padding-right: 10px; vertical-align: top;font-size: 1.1em; font-weight: bold;">
+	<span class="float_left" style="padding-right: 10px; vertical-align: top;font-size: 1.1em; font-weight: bold;">
 		<a href="<{$album.itemURL}>">
 			<img src="<{$album.icon}>" alt="<{$album.title}>" class="icon_middle" />
 		</a>
-	
-	
+
 	<!-- Album title -->
 		<{$album.itemLink}>&nbsp;&nbsp;
 		<{if $album.album_is_updated}>
-			<img style="vertical-align: middle; width:16px; height:16px" src="<{$album.album_is_updated}>" />
+			<img class="icon_middle icon_small" src="<{$album.album_is_updated}>" />
 		<{elseif $album.album_is_new}>
-			<img style="vertical-align: middle; width:16px; height:16px" src="<{$album.album_is_new}>" />
+			<img class="icon_middle icon_small" src="<{$album.album_is_new}>" />
 		<{/if}>
 		<{if $album.album_popular}>
-			<img style="vertical-align: middle; width:16px; height:16px" src="<{$album.album_popular}>" />
+			<img class="icon_middle icon_small" src="<{$album.album_popular}>" />
 		<{/if}>
 		<{if $album.userCanEditAndDelete}>
 			<{$album.editItemLink}><{$album.deleteItemLink}>
 		<{/if}>
 		<{if $user_submit}>
-			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_1" href="<{$album_url}>album.php?op=mod&album_pid=<{$album.id}>" title="<{$smarty.const._MD_DOWNLOADS_SUBMIT_CAT}>">
-				<img style="vertical-align: middle; width:16px; height:16px" src="<{$album_images_url}>add_cat.png" alt="<{$smarty.const._MD_ALBUM_SUBMIT_CAT}>" />
-			</a>
-		<{/if}>
-		<{if $album.user_upload}>
-			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=2}>" href="<{$album_url}>images.php?op=mod&album_id=<{$album.id}>" title="<{$smarty.const._MD_ALBUM_UPLOAD}>">
-				<img style="vertical-align: middle; width:16px; height:16px" src="<{$album_images_url}>add_file.png" title="<{$smarty.const._MD_ALBUM_UPLOAD}>" alt="<{$smarty.const._MD_ALBUM_UPLOAD}>" />
-			</a>
-			<a class="<{if $album_upl_disclaimer}>upl_disclaimer<{/if}>" id="upl_<{counter start=20}>" href="<{$album_url}>batchupload.php?op=addzip&album_id=<{$album.id}>" title="<{$smarty.const._MD_ALBUM_BATCHUPLOAD}>">
-				<img style="vertical-align: middle; width:16px; height:16px" src="<{$album_images_url}>add_zip.png" title="<{$smarty.const._MD_ALBUM_BATCHUPLOAD}>" alt="<{$smarty.const._MD_ALBUM_BATCHUPLOAD}>" />
-			</a>
+			<{$album.submit_img_link}>
 		<{/if}>
 	</span>
 </div>
-
-<div class="popup">
-	<span class="album_album_info">
-		(&nbsp;<{$smarty.const._MD_ALBUM_PUBLISHED_BY}>&nbsp;
-		:&nbsp;<{$album.publisher}>&nbsp;
-		|&nbsp;<{$smarty.const._MD_ALBUM_PUBLISHED_ON}>&nbsp;
-		:&nbsp;<{$album.published_on}>&nbsp;)
-	</span>
-	<span class="album_album_dsc">
-		<{$album.dsc}>
-	</span>
-</div>
-
-<div class="album_clear_both">&nbsp;</div>
+<div class="clear_both">&nbsp;</div>

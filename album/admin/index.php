@@ -3,9 +3,9 @@
  * 'Album' is a light weight gallery module
  *
  * File: /admin/index.php
- * 
+ *
  * ACP-Index
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -57,7 +57,6 @@ $folder = ALBUM_UPLOAD_ROOT . "batch/";
 $batchfiles = count(icms_core_Filesystem::getFileList($folder, '', array('gif', 'jpg', 'png')));
 $batchfiles = ($batchfiles > 0) ? '<span style="font-weight: bold; color: red;">' . $batchfiles . '</span>' : $batchfiles;
 
-
 $sitemapModule = icms_get_module_status("sitemap");
 if($sitemapModule) {
 	$sitemap_module = _AM_ALBUM_SITEMAP_INSTALLED;
@@ -81,9 +80,9 @@ if (extension_loaded('gd') && function_exists('gd_info')) {
 
 echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 			<legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_ALBUM_INDEX . '</legend>
-			
+
 			<div style="display: table; padding: 8px;">
-				
+
 				<div style="display: table-row;">
 					<div style="display: table-cell; width: 250px;">'
 						. _AM_ALBUM_INDEX_TOTAL .
@@ -92,7 +91,7 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 						. $total_albums  .
 					'</div>
 				</div>
-				
+
 				<div style="display: table-row;">
 					<div style="display: table-cell;">'
 						. _AM_ALBUM_INDEX_INACTIVE_ALBUMS .
@@ -101,16 +100,16 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 						. $inactive_albums .
 					'</div>
 				</div>
-				
+
 				<div style="display: table-row;">
 					<div style="display: table-cell;">'
 						. _AM_ALBUM_INDEX_DENIED_ALBUMS .
 					'</div>
 					<div style="display: table-cell;">'
-						. $denied_albums . 
+						. $denied_albums .
 					'</div>
 				</div>
-				
+
 				<div style="display: table-row;">
 					<div style="display: table-cell;">'
 						. _AM_ALBUM_INDEX_TOTAL_IMAGES .
@@ -119,7 +118,7 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 						. $total_images .
 					'</div>
 				</div>
-				
+
 				<div style="display: table-row;">
 					<div style="display: table-cell;">'
 						. _AM_ALBUM_INDEX_INACTIVE_IMAGES .
@@ -128,16 +127,16 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 						. $inactive_images .
 					'</div>
 				</div>
-				
+
 				<div style="display: table-row;">
 					<div style="display: table-cell;">'
 						. _AM_ALBUM_INDEX_DENIED_IMAGES .
 					'</div>
 					<div style="display: table-cell;">'
-						. $denied_images . 
+						. $denied_images .
 					'</div>
 				</div>
-				
+
 				<div style="display: table-row;">
 					<div style="display: table-cell;">'
 						. _AM_ALBUM_INDEX_TOTAL_MESSAGES .
@@ -146,16 +145,16 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 						. $total_comments .
 					'</div>
 				</div>
-				
+
 				<div style="display: table-row;">
 					<div style="display: table-cell;">'
 						. _AM_ALBUM_INDEX_DENIED_MESSAGES .
 					'</div>
 					<div style="display: table-cell;">'
-						. $denied_comments . 
+						. $denied_comments .
 					'</div>
 				</div>
-				
+
 				<div style="display: table-row;">
 					<div style="display: table-cell;">'
 						. _AM_ALBUM_INDEX_BATCHFILES .
@@ -164,17 +163,17 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 						. $batchfiles .
 					'</div>
 				</div>
-				
+
 			</div>
 		</fieldset>
 		<br />';
-		
+
 echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 			<legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_ALBUM_ADDITIONAL . '</legend>
-			
+
 			<div style="display: table; padding: 8px;">
-				
-				
+
+
 				<div style="display: table-row;">
 					<div style="display: table-cell; width: 250px;">'
 						. _AM_ALBUM_SITEMAP_MODULE .
@@ -183,18 +182,18 @@ echo '	<fieldset style="border: #E8E8E8 1px solid; width: 550px;">
 						. $sitemap_module  . ' ' . $sitemap_plugin .
 					'</div>
 				</div>
-				
+
 				<div style="display: table-row;">
 					<div style="display: table-cell; width: 250px;">'
 						. _AM_ALBUM_INDEX_GDLIB .
 					'</div>
 					<div style="display: table-cell;">'
-						. $gdlib  . 
+						. $gdlib  .
 					'</div>
 				</div>
-				
+
 			</div>
 		</fieldset>
 		<br />';
-		
+
 include_once 'admin_footer.php';

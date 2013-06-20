@@ -1,16 +1,36 @@
 <link href="<{$icms_url}>/modules/<{$dirname}>/module_album.css" rel="stylesheet" type="text/css" />
-
-<{if $album_show_breadcrumb}>
-	<!-- module breadcrumb -->
-	<div class="album_headertable">
-		<{if $module_home}><span class="album_modulename"><{$module_home}></span><{/if}>
-		<{if $album_cat_path}>
-			<span class="album_breadcrumb">
-				<{if $module_home}>&nbsp;:&nbsp;<{/if}><{$album_cat_path}>
-			</span>
+<header>
+	<div class="module_header album_clear">
+		<{if $config.show_breadcrumbs}>
+			<div class="module_headertable float_left">
+				<ul class="module_breadcrumb">
+				<{if $module_home}>
+					<li><{$module_home}></li>
+				<{/if}>
+				<{if $category_path}>
+					<{$category_path}>
+				<{/if}>
+				</ul>
+			</div>
 		<{/if}>
+		<div class="album_rss float_right">
+			<a href="<{$album_url}>rss.php" class="rss_feeds" title="RSS-Feeds" target="_blank">
+				<img class="icon_middle" src="<{$album_images_url}>rss.png" title="RSS-Feeds" alt="RSS-Feeds" />
+			</a>
+		</div>
 	</div>
-<{/if}>
-<div class="index_indeximage">
-	<img src="<{$index_index.image}>" alt="indeximage" />
-</div>
+
+	<{if !$single_album}>
+		<div class="index_header">
+			<{if $index_index.image}>
+					<img src="<{$index_index.image}>" class="index_image icon_middle" alt="<{$module_name}>" />
+			<{/if}>
+			<{if $index_index.title}>
+				<h1><{$index_index.title}></h1>
+			<{/if}>
+		</div>
+		<{if $index_index.body}>
+			<{$index_index.body}>
+		<{/if}>
+	<{/if}>
+</header>

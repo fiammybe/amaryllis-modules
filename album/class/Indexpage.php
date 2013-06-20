@@ -3,9 +3,9 @@
  * 'Album' is a light weight gallery module
  *
  * File: /class/Indexpage.php
- * 
+ *
  * Class representing Album indexpage objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -18,9 +18,10 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class mod_album_Indexpage extends icms_ipf_Object {
-	
+
 	public function __construct(&$handler) {
 		parent::__construct($handler);
 
@@ -36,54 +37,40 @@ class mod_album_Indexpage extends icms_ipf_Object {
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		$this->initCommonVar("docxode", FALSE,  1);
 
-		$this->setControl( 'index_img_upload', 'imageupload' );
-		$this -> setControl( 'index_heading','dhtmltextarea' );
-		$this -> setControl( 'index_footer', 'textarea' );
-		$this -> setControl( 'index_image', array( 'name' => 'select', 'itemHandler' => 'indexpage', 'method' => 'getImageList', 'module' => 'album' ) );
-		
+		$this->setControl('index_img_upload', 'imageupload');
+		$this->setControl('index_heading','dhtmltextarea');
+		$this->setControl('index_footer', 'textarea');
+		$this->setControl('index_image', array( 'name' => 'select', 'itemHandler' => 'indexpage', 'method' => 'getImageList', 'module' => 'album' ) );
+
 	}
 
 	public function getIndexImg() {
-		$indeximage = $image_tag = '';
 		$indeximage = $this->getVar('index_image', 'e');
-		if (!$indeximage == 0 && !$indeximage == "") {
-			$image_tag = ALBUM_UPLOAD_URL . 'indexpage/' . $indeximage;
-			return $image_tag;
-		}
-	}
-	
-	public function getIndexHeader() {
-		$indexheader = $this->getVar('index_header', 's');
-		if($indexheader != "") {
-			return '<div class="album_indexheader">' . icms_core_DataFilter::undoHtmlSpecialChars($indexheader) . '</div>';
-		}
-		return false;
+		return (!$indeximage == 0 && !$indeximage == "") ? ALBUM_UPLOAD_URL.'indexpage/'.$indeximage : FALSE;
 	}
 
-  public function getIndexHeading() {
-        $indexheading = '';
-        $indexheading = $this->getVar('index_heading', 's');
-        if($indexheading != "") {
-        $indexheading = icms_core_DataFilter::checkVar($indexheading, "html", "output");
-        return '<div class="album_indexheading">' . $indexheading . '</div>'; }
+	public function getIndexHeader() {
+		$indexheader = $this->getVar('index_header');
+		return $indexheader;
 	}
-	
+
+	public function getIndexHeading() {
+        $indexheading = $this->getVar('index_heading');
+        return $indexheading;
+	}
+
 	public function getIndexFooter() {
-		$indexfooter = '';
-		$indexfooter = $this->getVar('index_footer', 's');
-		if($indexfooter != "") {
-			$indexfooter = icms_core_DataFilter::checkVar($indexfooter, "html", "output");
-			return '<div class="album_indexfooter">' . icms_core_DataFilter::undoHtmlSpecialChars($indexfooter) . '</div>';
-		}
+		$indexfooter = $this->getVar('index_footer');
+		return $indexfooter;
 	}
 
 	function toArray() {
 		$ret = parent::toArray();
 		$ret['image'] = $this->getIndexImg();
-		$ret['header'] = $this->getIndexHeader();
-		$ret['heading'] = $this->getIndexHeading();
+		$ret['title'] = $this->getIndexHeader();
+		$ret['body'] = $this->getIndexHeading();
 		$ret['footer'] = $this->getIndexFooter();
 		return $ret;
 	}
-	
+
 }

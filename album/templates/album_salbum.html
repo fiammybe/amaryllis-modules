@@ -1,0 +1,64 @@
+	<!-- album title -->
+	<h2><{$single_album.album_title}>
+		<{if $single_album.album_is_updated}>
+			<img class="icon_middle icon_small" src="<{$single_album.album_is_updated}>" />
+		<{elseif $single_album.album_is_new}>
+			<img class="icon_middle icon_small" src="<{$single_album.album_is_new}>" />
+		<{/if}>
+		<{if $single_album.album_popular}>
+			<img class="icon_middle icon_small" src="<{$single_album.album_popular}>" />
+		<{/if}>
+		<{if $single_album.userCanEditAndDelete}>
+			<{$single_album.editItemLink}><{$single_album.deleteItemLink}>
+		<{/if}>
+		<{if $user_submit}>
+			<{$single_album.submit_img_link}>
+		<{/if}>
+		<{if $user_submit_images}>
+			<{$single_album.images_submit_img_link}>
+			<{$single_album.batch_submit_img_link}>
+		<{/if}>
+	</h2>
+
+	<{if $single_album.labels}>
+		<div class="label_links">
+			<{foreach item=label from=$single_album.labels name=labels}>
+					<a rel="label" class="label" href="<{$label.itemURL}>" title="<{$label.title}>">
+						<{$label.title}>
+					</a>
+			<{/foreach}>
+		</div>
+	<{/if}>
+
+	<!-- album description -->
+	<div class="album_album_desc"> <{$single_album.album_description}> </div>
+	<!-- start image loop -->
+	<{if $album_images}>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+		<!-- image rows -->
+		<div class="album_images">
+			<{foreach item=image from=$album_images}>
+				<div class="album_image">
+					<{includeq file='db:album_images.html'}>
+				</div>
+			<{/foreach}>
+		</div>
+		<{if $imgnav}> <!-- page navigation -->
+			<div class="images_pagenav"><{$imgnav}></div>
+		<{/if}>
+	<{/if}>
+	<{if $subalbums}> <!-- subalbums -->
+		<!-- pagination control -->
+		<{if $album_pagenav }><{$album_pagenav}><{/if}>
+		<div class="album_row table_row">
+			<{foreach item=album from=$subalbums}>
+				<{includeq file='db:album_album.html'}>
+			<{/foreach}>
+		</div>
+		<!-- pagination control -->
+		<{if $album_pagenav }><{$album_pagenav}><{/if}>
+	<!-- E N D subalbums -->
+	<{/if}>
+<!-- E N D single_album -->

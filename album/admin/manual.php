@@ -3,9 +3,9 @@
  * 'Album' is a light weight gallery module
  *
  * File: /class/AlbumHandler.php
- * 
+ *
  * Classes responsible for managing album album objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -32,6 +32,9 @@ if (!file_exists($manual)) {
 	$lang = 'language/english';
 	$manual = ALBUM_ROOT_PATH . "$lang/$file";
 }
-$icmsAdminTpl->assign("manual_path", $manual);
+$man = file_get_contents($manual);
+$icmsAdminTpl->assign("album_manual", $man);
+$icmsAdminTpl->assign("manual_path", ALBUM_ROOT_PATH.'templates/album_manual.html');
+
 $icmsAdminTpl->display('db:album_admin.html');
 icms_cp_footer();

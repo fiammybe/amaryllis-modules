@@ -1,0 +1,62 @@
+<{if $album_label}>
+	<{if $labeled_albums}>
+		<header>
+			<h2><{$smarty.const._MD_ALBUM_ALBUMS_BY_TAGS}>&nbsp;"<{$tag.title}>"</h2>
+		</header>
+		<section>
+			<{if $album_pagenav }><!-- pagination control -->
+				<{$album_pagenav}>
+			<{/if}>
+			<!-- album rule -->
+			<div class="album_row table_row">
+				<!-- album rule -->
+				<{foreach item=album from=$labeled_albums}>
+					<{includeq file='db:album_album.html'}>
+				<{/foreach}>
+			</div>
+			<div class="images_row table_row">
+				<!-- album rule -->
+				<{foreach item=image from=$labeled_images}>
+					<{includeq file='db:album_images.html'}>
+				<{/foreach}>
+			</div>
+			<!-- page navigation -->
+			<{if $album_pagenav }>
+				<{$album_pagenav}>
+			<{/if}>
+		</section>
+	<{/if}>
+	<!-- start image loop -->
+	<{if $labeled_images}>
+		<header>
+			<h2><{$smarty.const._MD_ALBUM_IMAGES_BY_TAGS}>&nbsp;&raquo;<{$tag.name}>&laquo;</h2>
+		</header>
+		<section>
+			<!-- page navigation -->
+			<{if $imgnav}>
+				<div class="images_pagenav"><{$imgnav}></div>
+			<{/if}>
+			<!-- image rows -->
+			<div class="images">
+				<div class="images_row" <{$album_row_margins}> >
+					<{foreach item=image from=$album_row}>
+						<{includeq file='db:album_images.html'}>
+					<{/foreach}>
+				</div>
+			</div>
+			<{if $imgnav}> <!-- page navigation -->
+				<div class="images_pagenav"><{$imgnav}></div>
+			<{/if}>
+		</section>
+	<{/if}>
+<{elseif $album_labels}>
+	<header>
+		<h2><{$smarty.const._MD_ALBUM_LABELED}></h2>
+	</header>
+	<section>
+		<{foreach item=label from=$album_labels}>
+			<{includeq file='db:album_label.html'}>
+		<{/foreach}>
+	</section>
+<{/if}>
+

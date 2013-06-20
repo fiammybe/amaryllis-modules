@@ -21,10 +21,11 @@ function editform($indexkey = 1, $indeximage = TRUE) {
 
 	global $album_indexpage_handler, $icmsAdminTpl;
 
-	$indexpageObj = $album_indexpage_handler->get($indexkey);	
+	$indexpageObj = $album_indexpage_handler->get($indexkey);
+	if(is_object($indexpageObj)){
 	$sform = $indexpageObj -> getForm(_AM_ALBUM_INDEXPAGE_EDIT, 'addindexpage');
 	$sform->assign($icmsAdminTpl);
-
+	}
 	$icmsAdminTpl->display('db:album_admin.html');
 	
 }
@@ -42,7 +43,7 @@ $valid_op = array ( 'mod','addindexpage' );
 
 $clean_indexkey = isset($_GET['indexkey']) ? (int) $_GET['indexkey'] : 1 ;
 
-if(in_array( $clean_op, $valid_op, TRUE) && !icms_get_module_status("index") ) {
+if(in_array( $clean_op, $valid_op, TRUE)) {
   switch ($clean_op) {
   	case "mod":
 		icms_cp_header();
@@ -54,26 +55,5 @@ if(in_array( $clean_op, $valid_op, TRUE) && !icms_get_module_status("index") ) {
   		$controller->storeFromDefaultForm( _AM_ALBUM_INDEXPAGE_MODIFIED, _AM_ALBUM_INDEXPAGE_MODIFIED );
   		break;
   }
-} elseif (in_array($clean_op, $valid_op, TRUE) && icms_get_module_status("index")) {
-	global $icmsAdminTpl;
-	$indexModule = icms_getModuleInfo("index");
-	include_once ICMS_MODULES_PATH.'/'.$indexModule->getVar("dirname").'/include/common.php';
-	$index_indexpage_handler = icms_getModuleHandler("indexpage", $indexModule->getVar("dirname"), "index");
-	switch ($clean_op) {
-		case 'mod':
-			icms_cp_header();
-			icms::$module->displayAdminmenu( 5, _MI_ALBUM_MENU_INDEXPAGE );
-			$indexpageObj = $index_indexpage_handler->getIndexByMid(icms::$module->getVar("mid", "e"));
-			$sform = $indexpageObj->getForm(_AM_ALBUM_INDEXPAGE_EDIT, 'addindexpage');
-			$sform->assign($icmsAdminTpl);
-			$icmsAdminTpl->display('db:album_admin.html');
-			break;
-		
-		default:
-			case "addindexpage":
-			$controller = new icms_ipf_Controller($index_indexpage_handler);
-	  		$controller->storeFromDefaultForm( _AM_ALBUM_INDEXPAGE_MODIFIED, _AM_ALBUM_INDEXPAGE_MODIFIED );
-	  		break;
-	}
 }
 include_once 'admin_footer.php';

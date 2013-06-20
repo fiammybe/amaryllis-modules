@@ -12,5 +12,7 @@
  * @version		$Id$
  */
 
-include_once "header.php";
+if(file_exists("../../mainfile.php")) include_once "../../mainfile.php";
+else if (file_exists("mainfile.php")) include_once "mainfile.php";
+include_once ICMS_ROOT_PATH."/modules/".basename(dirname(__FILE__))."/include/common.php";
 include_once ICMS_ROOT_PATH . "/include/comment_edit.php";
