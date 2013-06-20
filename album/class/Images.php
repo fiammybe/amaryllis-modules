@@ -267,11 +267,11 @@ class mod_album_Images extends icms_ipf_Object {
 		global $albumConfig;
 		$img = $this->getVar('img_url', 'e');
 		$cached_image_url = $this->_images_images_url . $img;
-		$cached_img = ALBUM_UPLOAD_ROOT.$this->handler->_itemname."/".$img;
+		$cached_img = $this->_images_images.$img;
 		if(is_file($cached_img) === FALSE) {
 			$srcpath = ALBUM_UPLOAD_ROOT.$this->handler->_itemname."/";
-			$image = new mod_album_Image($img, $srcpath);
-			$image->resizeImage($albumConfig['image_display_width'], $albumConfig['image_display_height'], $this->_images_images, "100");
+			$image2 = new mod_album_Image($img, $srcpath);
+			$image2->resizeImage($albumConfig['image_display_width'], $albumConfig['image_display_height'], $this->_images_images, "100");
 		}
 		return $cached_image_url;
 	}
