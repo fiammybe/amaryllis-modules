@@ -5,7 +5,7 @@
  * File: /language/english/common.php
  *
  * english language constants commonly used in the module
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
  * @package		album
- * 
+ *
  */
 
 // language constants for adding new album
@@ -118,3 +118,16 @@ define("_CO_ALBUM_IMAGES_WATERMARKCOLOR_RED", "red");
 define("_CO_ALBUM_HAS_APPROVED", "Your submitted Album has been approved");
 define("_CO_ALBUM_ALBUM_ALBUM_CID", "Category");
 define("_CO_ALBUM_ALBUM_ALBUM_CID_DSC", "If needed select a Category");
+/**
+ * added in 1.3
+ */
+define("_CO_ALBUM_OFFLINE", "Offline");
+define("_CO_ALBUM_ONLINE", "Online");
+define("_CO_ALBUM_DENIED", "Denied");
+define("_CO_ALBUM_APPROVED", "Approved");
+define("_CO_ALBUM_ON_INDEX", "Visible in index");
+define("_CO_ALBUM_OFF_INDEX", "Hidden in index");
+define("_CO_ALBUM_IN_BLOCKS", "Visible in blocks");
+define("_CO_ALBUM_OFF_BLOCKS", "Hidden in blocks");
+define("_CO_ALBUM_SUBMIT_ALBUM", "Submit new album");
+define("_CO_ALBUM_SUBMIT_IMAGES", "Submit new images");

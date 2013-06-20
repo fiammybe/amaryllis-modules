@@ -3,9 +3,9 @@
  * 'Album' is a light weight gallery module
  *
  * File: /include/notification_update.php
- * 
+ *
  * notifivation updates
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -17,5 +17,6 @@
  *
  */
 
-include_once '../../mainfile.php';
+if(file_exists("../../mainfile.php")) include_once "../../mainfile.php";
+else if (file_exists("mainfile.php")) include_once "mainfile.php";
 include ICMS_ROOT_PATH . '/include/notification_update.php';

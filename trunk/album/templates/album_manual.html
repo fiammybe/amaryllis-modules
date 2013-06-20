@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Album Manual</title>
+        <style type="text/css">
+        	#album_manual {margin: 2em;}
+        	#album_manual h1, h2, h3 {font-family: Georgia, "Times New Roman", Times, serif; padding-bottom: 1em; padding-top: 1em; line-height: 1.7em; font-weight: bold;}
+        	#album_manual h1 {text-align: center; font-size: 1.5em; font-variant: small caps; color: #336699;}
+        	#album_manual h2 {font-size: 1.250em; color: #6699CC;}
+        	#album_manual h3 {font-size: 1.1em; color: #6699FF;}
+        	#album_manual p {font-size: .9em; margin: 0; padding: 5px;}
+        	#album_manual ul li {list-style-type: square; margin-left: 10px; line-height: 1.5em; font-weight: bolder; }
+        	#album_manual ul li ul li {list-style-type: disc; font-weight: normal; }
+        	#album_manual a, #album_manual a:visited {color: #336699}
+        	#album_manual a:hover {color: #336699; text-decoration: underline;}
+        	#album_footer {margin: 2em auto; padding: 0 1em 2em;background-color: #0255A7; color: white;}
+        	#album_footer h2 {padding: .5em 0 0; color: white;}
+        	#album_footer a,#album_footer a:visited, #album_footer a:hover  {padding: .5em 0 0; color: #090909;}
+        	#album_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
+        	#icms-uptopmessage a {display: block; display: none; z-index: 999; opacity: .7; position: fixed; top: 100%; margin-top: -80px; left: 50%; margin-left: -160px;
+							width: 200px; line-height: 32px; height: 32px; padding: 5px; background-color: #000; font-size: 14px; text-align: center; color: #fff;}
+			#credit {font-weight: bold;color: #336699;}
+			#album_manual .important {background-color:#FC8383; border: 1px dashed #FF0000; padding: 1em 0;}
+			#album_manual .important p {font-size: 1em; padding: 0 1em; color: #FF0000;}
+        </style>
+    </head>
+		<{eval var="$album_manual"}>
+		<div id="icms-uptopmessage"><a href="#top">back top</a></div>
+		<div id="credit">
+			<p class="copyright">
+				<script id="manual-year" type="text/javascript">
+					DatumAktuell = new Date(); JahrAktuell = DatumAktuell.getFullYear();
+					document.write("| &copy; 2011-"+ JahrAktuell + " ");
+				</script>
+				<a href="http://code.google.com/p/amaryllis-modules/" title="Amaryllis Modules" target="_blank" rel="external">Amaryllis Modules</a> |
+				<a class="print-manual" href="print.php?print=manual" target="_blank" rel="external"><img src="../images/print.png" alt="print" /></a>
+				<a class="print-manual" href="print.php?print=pdf" target="_blank" rel="external"><img src="../images/print.png" alt="print" /></a>
+			</p>
+		</div>
+       <!-- script for uptop-link -->
+		<script id="manual-top-script" type="text/javascript">
+			$(function () {
+				var scroll_timer, displayed = false, $message = $('#icms-uptopmessage a'), $window = $(window);
+				var top = $(document.body).children(0).position().top;
+				$window.scroll(function () {
+					window.clearTimeout(scroll_timer);
+					scroll_timer = window.setTimeout(function () {
+						if($window.scrollTop() <= top) {
+							displayed = false;
+							$message.fadeOut(500);
+						} else if(displayed == false) {
+							displayed = true;
+							$message.stop(true, true).show().click(function () { $message.fadeOut(500); });
+						}
+					}, 100);
+				});
+			});
+		</script>
+	</body>
+</html>

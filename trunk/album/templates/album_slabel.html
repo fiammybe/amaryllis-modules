@@ -1,0 +1,38 @@
+<script src="<{$icms_url}>/modules/index/scripts/blocks/jquery.tagcanvas.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var gradient = {
+ 0:    '#f00', // red
+ 0.33: '#ff0', // yellow
+ 0.66: '#0f0', // green
+ 1:    '#00f'  // blue
+};
+			if(!$('#index_label_canvas').tagcanvas({
+				shape: "sphere", //possible: sphere, hcylinder, vcylinder
+				textFont: '"Droid serif", Georgia, Arial, serif',
+ 				textColour: '#00f',
+ 				weight: true,
+				weightMode: 'both',
+				weightFrom: 'data-weight',
+				weightGradient: gradient,
+				shuffleLabels: true,
+				reverse: true,
+				depth: 0.8,
+				maxSpeed: 0.01
+			},'index_label_cloud')) {
+				// something went wrong, hide the canvas container
+				$('#index_canvas_container').hide();
+			}
+		});
+	</script>
+
+	<div id="index_canvas_container">
+		<canvas width="300" height="300" id="index_label_canvas"></canvas>
+	</div>
+	<div id="index_label_cloud">
+		<ul class="weighted">
+			<{foreach item=label from=album_labels name=label}>
+				<li><a href="<{$label.itemURL}>" title="<{$label.title}>" data-weight="<{$label.frequency}>"><{$label.title}></a></li>
+			<{/foreach}>
+		</ul>
+	</div>

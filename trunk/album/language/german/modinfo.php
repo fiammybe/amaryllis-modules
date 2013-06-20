@@ -5,7 +5,7 @@
 * File: /language/english/modinfo.php
 *
 * English language constants related to module information
-* 
+*
 * @copyright	Copyright QM-B (Steffen Flohrer) 2011
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * ----------------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@
 * @author		QM-B <qm-b@hotmail.de>
 * @version		$Id$
 * @package		album
-* 
+*
 */
 
 // general informations
@@ -51,9 +51,9 @@ define("_MI_ALBUM_UPL_DISCLAIMER_TEXT", "<h1>Terms of Service for {X_SITENAME}:<
 												<p>By uploading images to {X_SITENAME} you give permission for the owners of {X_SITENAME} to publish your images in any way or form, meaning websites, print, etc. You will not be compensated by {X_SITENAME} for any loss what ever!</p>
 												<p>We reserve the right to ban any individual uploader or website from using our services for any reason.</p>
 												<p>All images uploaded are copyright © their respective owners.</p>
-												<h2>Privacy Policy :</h2> 
+												<h2>Privacy Policy :</h2>
 												<p>{X_SITENAME} collects user's IP address, the time at which user uploaded a file, and the file's URL. This data is not shared with any third party companies or individuals (unless the file in question is deemed to be in violation of these Terms of Service, in which case this data may be shared with law enforcement entities), and is used to enforce these Terms of Service as well as to resolve any legal matters that may arise due to violations of the Terms of Service. </p>
-												<h2>Legal Policy:</h2> 
+												<h2>Legal Policy:</h2>
 												<p>These Terms of Service are subject to change without prior warning to its users. By using {X_SITENAME}, user agrees not to involve {X_SITENAME} in any type of legal action. {X_SITENAME} directs full legal responsibility of the contents of the files that are uploaded to {X_SITENAME} to individual users, and will cooperate with law enforcement entities in the case that uploaded files are deemed to be in violation of these Terms of Service. </p>
 												<p>All files are © to their respective owners · All other content © {X_SITENAME}. {X_SITENAME} is not responsible for the content any uploaded files, nor is it in affiliation with any entities that may be represented in the uploaded files.</p>");
 
@@ -162,3 +162,10 @@ define("_MI_ALBUM_NEED_CATS_DSC", "");
 // added to mainmenu
 define("_MI_ALBUM_MENUMAIN_ADDALBUM", "Submit Album");
 define("_MI_ALBUM_MENUMAIN_ADDIMAGES", "Submit image");
+/**
+ * added in 1.3
+ */
+define("_MI_ALBUM_CONFIG_USE_MAIN", "Nutze nur die Hauptseite, ohne '/modules/".ALBUM_DIRNAME."/' in der URL?");
+define("_MI_ALBUM_CONFIG_USE_MAIN_DSC", "Das Modul hat eine Haupt-Fronseite (aktuell nicht für das Übermitteln neuer Tutorials!). Du kannst hier direkt auf diese Seite umleiten Schau bitte <b>ERST</b> in die Anleitung!!.");
+define("_MI_ALBUM_CONFIG_USE_REWRITE", "Nutze schöne URL's?");
+define("_MI_ALBUM_CONFIG_USE_REWRITE_DSC", "Bitte ERST die Anleitung lesen!! ('Nutze nur die Hauptseite...' sollte aktiviert sein..)");

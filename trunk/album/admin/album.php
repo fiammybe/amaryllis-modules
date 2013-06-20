@@ -6,7 +6,7 @@
  *
  * List, add, edit and delete album objects
  *
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -23,14 +23,13 @@ function editalbum($album_id = 0) {
 
 	$albumObj = $album_handler->get($album_id);
 	$album_uid = icms::$user->getVar("uid");
-	
+
 	if (!$albumObj->isNew()){
 		$albumObj->hideFieldFromForm(array("album_approve", "meta_keywords", "meta_description", "album_updated"));
 		$albumObj->makeFieldReadOnly("short_url");
 		$albumObj->setVar( 'album_updated_date', (time() - 100) );
 		$albumObj->setVar('album_updated', TRUE);
-		$albumObj->setVar('album_tags', $albumObj->getAlbumTags(TRUE));
-		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_ALBUM . ' > ' . _MI_ALBUM_ALBUM_EDITING . ' &raquo;' . $albumObj->getVar("album_title", "e") . "&laquo;");
+		icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_ALBUM.' > '._MI_ALBUM_ALBUM_EDITING.' &raquo;'.$albumObj->getVar("album_title", "e")."&laquo;");
 		$sform = $albumObj->getForm(_AM_ALBUM_ALBUM_EDIT, 'addalbum');
 		$sform->assign($icmsAdminTpl);
 	} else {
@@ -86,13 +85,13 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$red_message = ($visibility == 0) ? _AM_ALBUM_OFFLINE : _AM_ALBUM_ONLINE;
 			redirect_header(ALBUM_ADMIN_URL . 'album.php', 2, $red_message);
 			break;
-			
+
 		case 'changeIndex':
 			$visibility = $album_handler->changeField($clean_album_id, "album_onindex");
 			$red_message = ($visibility == 0) ? _AM_ALBUM_OFFLINE : _AM_ALBUM_ONLINE;
 			redirect_header(ALBUM_ADMIN_URL . 'album.php', 2, $red_message);
 			break;
-			
+
 		case 'changeApprove':
 			$approve = $album_handler->changeField($clean_album_id, "album_approve");
 			if($approve == 1) {
@@ -102,13 +101,13 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$red_message = ($approve == 0) ? _AM_ALBUM_OFFLINE : _AM_ALBUM_ONLINE;
 			redirect_header(ALBUM_ADMIN_URL . 'album.php', 2, $red_message);
 			break;
-			
+
 		case 'changeShow':
 			$visibility = $album_handler->changeField($clean_album_id, "album_inblocks");
 			$red_message = ($visibility == 0) ? _AM_ALBUM_OFFLINE : _AM_ALBUM_ONLINE;
 			redirect_header(ALBUM_ADMIN_URL . 'album.php', 2, $red_message);
 			break;
-			
+
 		case "changeWeight":
 			foreach ($_POST['mod_album_Album_objects'] as $key => $value) {
 				$changed = FALSE;
@@ -125,7 +124,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$ret = 'album.php';
 			redirect_header( ALBUM_ADMIN_URL . $ret, 2, _AM_ALBUM_WEIGHT_UPDATED);
 			break;
-			
+
 		default:
 			icms_cp_header();
 			icms::$module->displayAdminmenu( 1, _MI_ALBUM_MENU_ALBUM );
@@ -151,6 +150,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_published_date', 'center', 100, TRUE ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'album_uid', 'center', FALSE, 'getPublisher' ) );
 			$objectTable->addColumn( new icms_ipf_view_Column( 'weight', 'center', TRUE, 'getWeightControl' ) );
+			$objectTable->addColumn( new icms_ipf_view_Column( 'album_tags', 'center', 70 ) );
 			$objectTable->setDefaultOrder("DESC");
 			$objectTable->setDefaultSort("album_published_date");
 			$objectTable->addFilter( 'album_active', 'album_active_filter' );
@@ -158,12 +158,12 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addFilter( 'album_inblocks', 'album_inblocks_filter' );
 			$objectTable->addFilter( 'album_pid', 'getAlbumListForPid' );
 			$objectTable->addFilter( 'album_onindex', 'album_onindex_filter' );
-			
+
 			$objectTable->addIntroButton( 'addalbum', 'album.php?op=mod', _AM_ALBUM_ALBUM_ADD );
 			$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
-			
+
 			$objectTable->addCustomAction( 'getViewItemLink' );
-			
+
 			$icmsAdminTpl->assign( 'album_album_table', $objectTable->fetch() );
 			$icmsAdminTpl->display( 'db:album_admin.html' );
 			break;

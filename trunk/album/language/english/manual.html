@@ -1,31 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Album Manual</title>
-        <style>
-        	#album_manual {margin: 2em;}
-        	#album_manual h1, h2, h3 {font-family: Georgia, "Times New Roman", Times, serif; padding-bottom: 1em; padding-top: 1em; line-height: 1.7em; font-weight: bold;}
-        	#album_manual h1 {text-align: center; font-size: 1.5em; font-variant: small caps; color: #336699;}
-        	#album_manual h2 {font-size: 1.250em; color: #6699CC;}
-        	#album_manual h3 {font-size: 1.1em; color: #6699FF;}
-        	#album_manual p {font-size: .9em; margin: 0; padding: 5px;}
-        	#album_manual ul li {list-style-type: square; margin-left: 20px; line-height: 1.5em; font-weight: bolder; }
-        	#album_manual ul li ul li {list-style-type: disc; margin-left: 30px; font-weight: normal; }
-        	#album_footer {border: 1px dotted; margin: 2em auto; padding: 0 1em 2em; --moz-border-radius: 1.5em; -webkit-border-radius: 1.5em; border-radius: 1.5em;}
-        	#album_footer h2 {padding: .5em 0 0;}
-        	#album_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
-        	#album_manual a, #album_manual a:visited {color: #336699}
-        	#album_manual a:hover {color: #336699; text-decoration: underline;}
-        	#icms-uptopmessage a {display: block; display: none; z-index: 999; opacity: .9; position: fixed; top: 100%; margin-top: -80px; left: 50%; margin-left: -160px;
-							border-radius: 24px; -moz-border-radius: 24px; -webkit-border-radius: 24px; -o-border-radius: 24px; -khtml-border-radius:24px; -icab-border-radius:24px; -ms-border-radius:24px;
-							width: 300px; line-height: 48px; height: 48px; padding: 10px; background-color: #000; font-size: 24px; text-align: center; color: #fff;}
-			#credit {font-weight: bold;color: #336699;}
-        </style>
-    </head>
-    <body>
-    	<div id="top">&nbsp;</div>
     	<div id="album_manual">
 	        <h1>Album Manual</h1>
 	        	<p>Album is a gallery module for ImpressCMS.</p>
@@ -59,9 +31,9 @@
 	        <h3 id="preferences">Preferences</h3>
 	        <ul>
 	        	<li>Use Sprockets
-	        		<ul>
-	      				<li>This needs to be enabled, if you have Sprockets installed and you like to use it with Album module, be sure to have enabled Sprockets here.</li>
-	        		</ul>
+	        		<div class="important">
+	        			<p>NOTE: Sprockets support has been removed.. please check for another solution like "index"-Module!!</p>
+	        		</div>
 	        	</li>
 	        	<li>uploader groups
 	        		<ul>
@@ -88,9 +60,12 @@
 	      				<li>This option will display/hide the breadcrumb on the top of the module site in frontend</li>
 	        		</ul>
 	        	</li>
-	        	<li>show Albums/How many columns.../show Images/Show images per reow
+	        	<li>show Albums/show Images
+	        		<div class="important">
+	        			<p>NOTE: The setting for album/images rows has been removed.</p>
+	        		</div>
 	        		<ul>
-	      				<li>Here you can set the amount of Albums/Images to be displayed in a single Row on a single page in frontend. These options can help you to adjust the layout to your theme.</li>
+	      				<li>Here you can set the amount of Albums/Images to be displayed in a single page before page rendering appears</li>
 	        		</ul>
 	        	</li>
 	        	<li>Thumbnail width/height
@@ -99,9 +74,9 @@
 	        		</ul>
 	        	</li>
 	        	<li>margin top/right/bottom/left
-	        		<ul>
-	      				<li>Set the margins for a single image on index view</li>
-	        		</ul>
+	        		<div class="important">
+	        			<p>NOTE: Sprockets support has been removed.. please check for another solution like "index"-Module!!</p>
+	        		</div>
 	        	</li>
 	        	<li>Display width/height
 	        		<ul>
@@ -120,22 +95,22 @@
 	        	</li>
 	        	<li>Calls of an Album, before it's popular
 	        		<ul>
-	      				<li>The module counts the hits of Guests/users (not module admins or creators of a single album) if an Album is clicked. 
-	      					Here you can choose, how often an album needs to be clicked, before it will marked as popular. If an Album is popular, 
+	      				<li>The module counts the hits of Guests/users (not module admins or creators of a single album) if an Album is clicked.
+	      					Here you can choose, how often an album needs to be clicked, before it will marked as popular. If an Album is popular,
 	      					you will see a small popular Icon and you can see it in the popular block. You can turn off this functionality by setting to 0</li>
 	        		</ul>
 	        	</li>
-	        	<li>Use copyright <img style="vertical-align: middle" src="../images/new.png" alt="new!" />
+	        	<li>Use copyright
 	        		<ul>
 	        			<li>Allow/disalow copyrights for images</li>
 	        		</ul>
 	        	</li>
-	        	<li>Default copyright <img style="vertical-align: middle" src="../images/new.png" alt="new!" />
+	        	<li>Default copyright
 	        		<ul>
 	        			<li>Default copyright. You can enter a default one, but copyright can be changed on upload site.</li>
 	        		</ul>
 	        	</li>
-	        	<li>Allow users to add theier own copyrights <img style="vertical-align: middle" src="../images/new.png" alt="new!" />
+	        	<li>Allow users to add theier own copyrights
 	        		<ul>
 	        			<li>Allow/disalow users to change the default copyright for images</li>
 	        		</ul>
@@ -162,6 +137,7 @@
 	        			<li>If set to yes, you will see a new field in images upload form, where you can enter a link to an external/internal site (product page, eternal shop etc.)</li>
 	        		</ul>
 	        	</li>
+
 	        </ul>
 	        <p>Perfectly! Preferences are done. The last preferences are system related: use the system comment system/notification system or even not. The system comment system will only be displayed for single Albums, to allow users/guests leave a comment for an Album.</p>
 	        <h3 id="adjustindex">Adjust index page</h3>
@@ -200,7 +176,7 @@
         				<li>Select the image related tags. A random notice: Tags will allways be displayed as a link, to filter all albums/images assigned to this tag.</li>
         			</ul>
         		</li>
-        		<li>Image Copyright <img style="vertical-align: middle" src="../images/new.png" alt="new!" />
+        		<li>Image Copyright
         			<ul>
         				<li>If enabled in preferences you can enter a copyright text per image or use default one (both together is possible, too.. just allow default copyright and change if needed)
         					Select the Position and the color of the copyright and you're done. The copyright will be added by uploading/adding new images</li>
@@ -221,7 +197,7 @@
         	<p>Here you can set several Permissions: View Permissions for single Albums will set the view permissions per user group to each album. Just select -> submit -> done.</p>
         	<p>The same for Images and Image submit permissions. Image submit permissions will allow each group, to upload images into a single album. On front end you can see a submit icon behind each album, where you have permissions to submit. Just click the icon, if you're using the Disclaimer -> accept. Now you can enter all informations. Album id will be set by the module related on the Album, where you're submitting.</p>
         	<p>Now the only Permissions, which are handled different and can not be set here: Album submit permissions. You need to enable this in Module Preferences -> "uploader groups". All selected groups will have permissions to create theier own albums.</p>
-        	<h2 id="batchupload">Batchupload <img style="vertical-align: middle" src="../images/new.png" alt="new!" /></h2>
+        	<h2 id="batchupload">Batchupload </h2>
         	<p>Currently the module has the possibility to upload multiple files via ftp into "uploads/album/batch/" or add multiple images with zip file upload. Go to ACP Tab "Batchupload". At First select the target Album.
         		 If you selected to add images from batch, check all images to add, otherwise upload a zip folder. Enter a description, select tags, if sprockets module is installed and enabled, enter copyright text or use default, enter the urllink.</p>
         	<p>Click on "Submit" to apply batch. All images will now be moved to "uploads/album/images/" and added to database. If copyrights, urrlink, tags are enabled, it will all be done at once.</p>
@@ -251,7 +227,7 @@
         				</li>
         				<li>Currently the image Block doesn't display all image informations. You need some more? No problem, just use the smarty-variables like I used in /album/templates/album_images.html.
         					 This is the template for single images on frontend. All smartys begin here with a <code>$album_images.</code> and in block template the same can be used within the foreach.
-        					  Just replace <code>$album_images. </code> with <code>$image. </code> and just keep the phrase behind the point. E.g.: <code>$album_images.title</code> goes to be 
+        					  Just replace <code>$album_images. </code> with <code>$image. </code> and just keep the phrase behind the point. E.g.: <code>$album_images.title</code> goes to be
         					  <code>$image.title</code></li>
         			</ul>
         		</li>
@@ -301,55 +277,10 @@
         			</ul>
         		</li>
         	</ul>
-        	
+
         	<div id="album_footer">
 				<h2>Conclusion</h2>
-				<p>Thank you for using 'Album' module. If you have some trouble while using Album Module, please visit <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>. You have some suggestions, what you'd like to change or add to the module? No problem! We can talk about. Please, use also <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a> for this!</p>  
+				<p>Thank you for using 'Album' module. If you have some trouble while using Album Module, please visit <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>. You have some suggestions, what you'd like to change or add to the module? No problem! We can talk about. Please, use also <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a> for this!</p>
 				<p>You might also like to follow the recent changes in Album Module? Please, have a look at <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/album/trunk/" title="'Album' SVN on Assembla" rel="external">'Album' SVN on Assembla</a> or make a checkout of my <a href="http://code.google.com/p/amaryllis-modules/" title="Album" rel="external">module svn on google code</a>.</p>
 			</div>
         </div>
-        
-        <div id="icms-uptopmessage"><a href="#top">back top</a></div>
-        
-        <div id="credit">
-			<p class="copyright">
-				<script type="text/javascript" language="JavaScript">
-					DatumAktuell = new Date(); JahrAktuell = DatumAktuell.getFullYear();
-					document.write("| &copy; 2011-"+ JahrAktuell + " "); 
-				</script>
-				<a href="http://code.google.com/p/amaryllis-modules/" title="Amaryllis Modules" target="_blank" rel="external">Amaryllis Modules</a> |
-				<a href="print.php?print=manual" target="_blank" rel="external"><img src="../images/print.png" alt="print" /></a>
-			</p>
-		</div>
-        
-        <!-- script for uptop-link -->
-		<script type="text/javascript">
-			$(function () { // run this code on page load (AKA DOM load)
-	 
-				/* set variables locally for increased performance */
-				var scroll_timer;
-				var displayed = false;
-				var $message = $('#icms-uptopmessage a');
-				var $window = $(window);
-				var top = $(document.body).children(0).position().top;
-	 
-				/* react to scroll event on window */
-				$window.scroll(function () {
-					window.clearTimeout(scroll_timer);
-					scroll_timer = window.setTimeout(function () { // use a timer for performance
-						if($window.scrollTop() <= top) // hide if at the top of the page
-							{
-							displayed = false;
-							$message.fadeOut(500);
-							}
-						else if(displayed == false) // show if scrolling down
-							{
-							displayed = true;
-							$message.stop(true, true).show().click(function () { $message.fadeOut(500); });
-							}
-					}, 100);
-				});
-			});
-		</script>
-	</body>
-</html>

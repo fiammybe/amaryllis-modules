@@ -1,0 +1,98 @@
+/**
+ * album is a light weight album module
+ *
+ * File: /module_album.css
+ *
+ * contains some module specific styles
+ *
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2011
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				album
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id: module_album.css 980 2012-11-30 14:35:52Z st.flohrer $
+ * @package		album
+ * @version		$Id: module_album.css 980 2012-11-30 14:35:52Z st.flohrer $
+ *
+ */
+/**
+.index_headertable { margin-bottom: 2em; float: left;}
+.index_rss { float: right;}
+.index_clear_both { clear: both; height: 1px;}
+.index_clear_left { clear: left; height: 1px;}
+.index_clear_right { clear: right; height: 1px;}
+.index_indeximage { text-align: center;}
+.index_indexheader { text-align: center; font-size: 2em; margin: 2em auto;}
+.index_indexheading, .index_indexfooter { margin: 1em auto;}
+.index_no_items { font-size: 1.2em; margin: 1.5em 0; color: red;}
+.index_adminlinks { text-align: center;}
+
+.index_table {display: table; width: 100%;}
+.table_row {display: table-row; padding: .250em; line-height: 3em;}
+.table_row span{border-top:1px solid #FFFFFF; border-bottom:1px solid #FFFFFF;}
+.table_row:hover span{border-top:1px solid #AAAAAA; border-bottom:1px solid #AAAAAA;}
+.table_cell { display: table-cell;}
+.index_link { width: 95%; position: relative; vertical-align: middle; }
+.index_link_modicon { width: 50px; height: 50px; float:left; position: relative; }
+.index_link_itemimage {float: left; margin-left: 2em; position: relative; }
+.index_link_item {float:left; margin-left: 2em; position: relative; }
+.index_link_teaser {float:left; margin-left: 2em; width:70%; height: 10em; overflow: auto; position: relative; }
+.icon_middle {vertical-align: middle;}
+.icon_small {width: 16px; height: 16px;}
+.index_cats { margin: 1.5em auto; display: table; width: 100%; padding: 5px; }
+.index_scat { margin: 1.5em 0; }
+.category_row {width: 100%;}
+.index_cat_frame { display: inline-block; width: 30%; position: relative; }
+.index_category { width: 100%; }
+div.index_subcatlist { position: relative; height: auto; width: 100%; margin: 0.5em 0; padding: 0.5em; }
+.category_row { width: 100%; }
+.index_cat_img { vertical-align: middle; }
+.index_cat_desc { margin: 0em 0em 1em; }
+.album_clear_both {clear: both;	height: 1px;}
+.album_clear_left {clear: left;height: 1px;}
+.album_clear_right {clear: right;height: 1px;}
+.album_indeximage {text-align: center;}
+.album_indexheader {text-align: center;font-size: 2em;margin: 2em auto;}
+.album_indexheading, .album_indexfooter {margin: 1em auto;}
+.album_album {margin: 1.5em auto;padding: 5px;}
+.table_cell {display: table-cell;padding-left: 1em;}
+.album_album_info {font-size: .8em;font-weight: normal;margin: .5em 0;}
+.album_album_dsc {font-size: .9em;margin: 1em 0;}
+.album_album_desc {font-size: 1em;margin: 1em .9375em;}
+.album_headertable {}
+.album_album_title {font-size: 1.5em;margin: 2em 0;text-align: center;}
+.album_images {margin: 1.5em auto;display: table;width: 95%;padding: 5px;}
+.popup  {display: none;}
+.album_adminlinks {text-align: center;}
+.table_row {display: table-row;padding: .250em;line-height: 3em;}
+.img_info {margin: 2em auto;}
+.img_desc{margin: 1em 0;}
+.img_comment {display: block;margin: .5em auto;background-color: #ECF7FD;}
+.img_avatar {float: left;margin-right: 1em;}
+.message_date {font-size: .8em;}
+.album_tags {display: inline;}
+.comment {display: block;}
+.album_image {margin: 10px 5px; display: inline-block; padding: 10px 0;}
+*/
+.float_left {float: left;}.float_right {float: right;}
+.clear_both {clear: both;visibility: hidden;line-height: 0;height: 0;}
+.clear_left {clear: left;visibility: hidden;line-height: 0;height: 0;}
+.clear_right {clear: right;visibility: hidden;line-height: 0;height: 0;}
+.album_clear{display:block; clear:both;}
+.album_clear:after{content:" "; display:block; height:1px; clear:both; visibility:hidden; line-height:0;}
+.popup  {display: none;}
+.icon_middle {vertical-align: middle;}
+.icon_small {height: 16px; width: 16px;}
+/**module header */
+.module_headertable ul.module_breadcrumb {display: inline; margin: 0; padding:0;}.module_headertable ul.module_breadcrumb li {list-style: none; margin: 0; padding: 0; display: inline-block;}
+.module_headertable ul.module_breadcrumb li:after {content: " : ";}.module_headertable ul.module_breadcrumb li:last-child:after {content: " "}.module_header {margin: 1em 0;}
+.index_header {margin: 1em 0; text-align: center; vertical-align: middle;}
+.index_header h1 {margin-top: 1em;}
+/** single album view */
+.album_image {margin: 10px 5px; display: inline-block; padding: 10px 0;}
+.comment {display: block; width: 100%;}
+.img_desc{margin: 1em 0;}
+/**module footer */
+.album_adminlinks {text-align: center;}
+img[rel="avatar"] {height: 22px;width: 22px;}

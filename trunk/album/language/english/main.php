@@ -5,7 +5,7 @@
  * File: /language/english/main.php
  *
  * English language constants used in the user side of the module
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@
  * @author		QM-B <qm-b@hotmail.de>
  * @version		$Id$
  * @package		album
- * 
+ *
  */
 
 define("_MD_ALBUM_DELETE", "Delete Album");
@@ -63,5 +63,9 @@ define("_MD_ALBUM_BATCHUPLOAD_IMAGES", "Add images from batch folder");
 define("_MD_ALBUM_BATCHUPLOAD_SELECT_SOURCE", "Select the source of your batchupload");
 define("_MD_ALBUM_BATCHUPLOAD_ZIPUPL", "Add images from an zipfile to upload");
 define("_MD_ALBUM_BATCHUPLOAD_UPLOAD_ZIP", "Upload a new zip file");
-
 define("_MD_IMG_WAITING_APPROVAL", "Your message has been submitted ans is awaiting approval. Thanks for submitting.");
+/**
+ * added in 1.3
+ *
+ */
+define("_MD_ALBUM_LABELED", "Find labels assigned to albums/images");

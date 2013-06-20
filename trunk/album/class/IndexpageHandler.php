@@ -3,9 +3,9 @@
  * 'Album' is a light weight gallery module
  *
  * File: /class/IndexpageHandler.php
- * 
+ *
  * Classes responsible for managing album indexpage objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -18,11 +18,12 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
+if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class mod_album_IndexpageHandler extends icms_ipf_Handler {
 
 	public $_moduleName;
-	
+
 	public $_uploadPath;
 
 	/**
@@ -31,10 +32,18 @@ class mod_album_IndexpageHandler extends icms_ipf_Handler {
 	 * @param icms_db_legacy_Database $db database connection object
 	 */
 	public function __construct(&$db) {
-		parent::__construct($db, "indexpage", "index_key", "index_header", "index_heading", "album");
+		parent::__construct($db, "indexpage", "index_key", "index_header", "index_heading", ALBUM_DIRNAME);
 		$mimetypes = array('image/jpeg', 'image/png', 'image/gif');
 		$this->enableUpload($mimetypes, 2000000, 500, 500);
-		
+
+	}
+
+	public function getImagePath() {
+		$dir = $this->_uploadPath.$this->_itemname;
+		if (!is_dir($dir)) {
+			mkdir($dir, 0777, TRUE);
+		}
+		return $dir."/";
 	}
 
 	static public function getImageList() {
@@ -47,14 +56,8 @@ class mod_album_IndexpageHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
-	
+
 	protected function beforeInsert(&$obj) {
-		$heading = $obj->getVar("index_heading", "e");
-		$heading = icms_core_DataFilter::checkVar($heading, "html", "input");
-		$obj->setVar("index_heading", $heading);
-		$footer = $obj->getVar("index_footer", "e");
-		$footer = icms_core_DataFilter::checkVar($footer, "html", "input");
-		$obj->setVar("index_footer", $footer);
 		if ($obj->getVar('index_img_upload') != '') {
 			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
 			$obj->setVar('index_img_upload', "" );
@@ -63,18 +66,10 @@ class mod_album_IndexpageHandler extends icms_ipf_Handler {
 	}
 
 	protected function beforeUpdate(&$obj) {
-		$heading = $obj->getVar("index_heading", "e");
-		$heading = icms_core_DataFilter::checkVar($heading, "html", "input");
-		$obj->setVar("index_heading", $heading);
-		$footer = $obj->getVar("index_footer", "e");
-		$footer = icms_core_DataFilter::checkVar($footer, "html", "input");
-		$obj->setVar("index_footer", $footer);
 		if ($obj->getVar('index_img_upload') != '') {
 			$obj->setVar('index_image', $obj->getVar('index_img_upload') );
 			$obj->setVar('index_img_upload', "" );
 		}
 		return TRUE;
 	}
-
-
 }

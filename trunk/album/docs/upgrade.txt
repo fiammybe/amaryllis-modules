@@ -1,0 +1,1 @@
+For upgrading from Version < 1.3 it might be the fastest solution to remove old folder, replace with new and run upgrade in modules admin.. otherwise check folders scripts and album root. some files has been moved to subfolders or even removed.
