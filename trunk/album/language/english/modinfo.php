@@ -17,6 +17,7 @@
 *
 */
 
+if(!defined("ALBUM_DIRNAME")) define("ALBUM_DIRNAME", basename(dirname(dirname(dirname(__FILE__)))));
 // general informations
 define("_MI_ALBUM_NAME", "Album");
 define("_MI_ALBUM_DSC", "'Album' is a light weight photo-album module, which can handle image-uploads and categorize them to albums.");
