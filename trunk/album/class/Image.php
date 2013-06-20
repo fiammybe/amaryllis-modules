@@ -94,13 +94,13 @@ class mod_album_Image {
 	
 	private function openImage($file) {
 		switch($this->imageType) {
-			case 1:
+			case IMAGETYPE_GIF:
 				$img = @imagecreatefromgif($this->inputPath . $file);
 				break;
-			case 2:
+			case IMAGETYPE_JPEG:
 				$img = @imagecreatefromjpeg($this->inputPath . $file);
 				break;
-			case 3:
+			case IMAGETYPE_PNG:
 				$img = @imagecreatefrompng($this->inputPath . $file);
 				break;
 		}
@@ -196,7 +196,7 @@ class mod_album_Image {
 		$this->outputPath = $outputPath;
 		$this->newName = $newName;
 		$this->resizedImage = imagecreatetruecolor($this->width, $this->height);
-		if($this->imageType == 3) {
+		if($this->imageType == IMAGETYPE_PNG) {
 			imagealphablending($this->resizedImage, FALSE);
 			imagesavealpha($this->resizedImage, TRUE);
 		}
@@ -377,22 +377,23 @@ class mod_album_Image {
 	
 	public function saveImage($imageQuality="100") {
 		switch($this->imageType) {
-			case 1:
+			case IMAGETYPE_GIF:
 				//header ('content-type: image/gif');
 				imagegif($this->resizedImage, $this->outputPath . $this->newName);
 				//imagejpeg ($this->resizedImage, $this->outputPath . $this->newName, 100);
 				break;
 			
-			case 2:
+			case IMAGETYPE_JPEG:
+			case IMAGETYPE_JPEG2000:
 				//header ('content-type: image/jpeg');
 				imagejpeg($this->resizedImage, $this->outputPath . $this->newName, $imageQuality);
 				break;
 				
-			case 3:
+			case IMAGETYPE_PNG:
 				$scaleQuality = round(($imageQuality/100) * 9);
 				$invertScaleQuality = 9 - $scaleQuality;
 				//header ('content-type: image/png');
-				imagepng($this->resizedImage, $this->outputPath . $this->newName , $invertScaleQuality);
+				imagepng($this->resizedImage, $this->outputPath . $this->newName);
 				break;
 		}
 		imagedestroy($this->resizedImage);
