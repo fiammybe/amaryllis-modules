@@ -3,9 +3,9 @@
  * 'Portfolio' is an portfolio management module for ImpressCMS
  *
  * File: /class/Image.php
- * 
+ *
  * Class representing Portfolio image Objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -20,10 +20,10 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 /**
- * 
+ *
  */
 class mod_album_Image {
-	
+
 	// new created image
 	protected $image;
 	// width of the original image
@@ -39,10 +39,10 @@ class mod_album_Image {
     protected $imageType;
     //mime type of the image
     protected $mimetype;
-    
+
 	// resized image
 	protected $resizedImage;
-	
+
 	/**
 	 * path to the image to be resized
 	 */
@@ -53,32 +53,32 @@ class mod_album_Image {
 	protected $fileName;
 	// new name if needed
 	protected $newName;
-    
+
     public $layers = array();
-    
+
     protected $lastLayerId = 0;
-	
+
 	/**
 	 * constructor
 	 * @param str $filename - image filename
 	 * @param str $filepPath - path to image
-	 * 
+	 *
 	 */
 	function __construct($fileName = "", $filePath = "") {
 	    $this->cleanVars();
 	    if(!$fileName == "" && !$filePath == "") {
     		$this->inputPath = $filePath;
     		list($width, $height, $img_type, $attribute) = getimagesize($this->inputPath . $fileName);
-    		$this->width  = $width;
-    		$this->height = $height;
-    		$this->imageType = $img_type;
+    		$this->imageType = exif_imagetype($this->inputPath . $fileName);
             $this->mimetype = $attribute['mime'];
-            
+
     		$this->fileName = $fileName;
     		$this->image = $this->openImage($fileName);
+			$this->width  = imagesx($this->image);
+    		$this->height = imagesy($this->image);
         }
 	}
-    
+
     private function cleanVars() {
         $this->image = "";
         $this->width = "";
@@ -91,7 +91,7 @@ class mod_album_Image {
         $this->inputPath = "";
         return TRUE;
     }
-	
+
 	private function openImage($file) {
 		switch($this->imageType) {
 			case IMAGETYPE_GIF:
@@ -106,14 +106,14 @@ class mod_album_Image {
 		}
 		return $img;
 	}
-	
+
     /**
      * dealing with layers
      */
     protected function addLayer() {
-        
+
     }
-    
+
     /**
      * resizing methods
      */
@@ -137,18 +137,18 @@ class mod_album_Image {
             return FALSE;
         }
 	}
-	
+
 	public function resizeByPixel() {
-		
+
 	}
-	
+
 	public function resizeByPercent() {
-		
+
 	}
-	
+
     public static function getPosition($imageWidth, $imageHeight, $layerWidth, $layerHeight, $layerPosX, $layerPosY, $pos = "TL") {
         $pos = strtoupper($pos);
-        
+
         if($pos == "TL") {
             $layerPosX = $layerPosX;
             $layerPosY = $layerPosY;
@@ -172,8 +172,8 @@ class mod_album_Image {
         } elseif ($pos == "BR") {
             $layerPosX = $imageWidth - $layerWidth - $layerPosX;
             $layerPosY = $imageHeight - $layerHeight - $layerPosY;
-        } 
-        
+        }
+
         return array(
             "x" => $layerPosX,
             "y" => $layerPosY,
@@ -182,7 +182,7 @@ class mod_album_Image {
 
 	/**
 	 * watermarking images with text
-	 * 
+	 *
 	 * @param $source - is source of the image file to be watermarked
 	 * @param $watermarkText - is the text of the watermark
 	 * @param $dest - is the destination location where the watermarked images will be placed
@@ -190,7 +190,7 @@ class mod_album_Image {
 	 * @param $pos - position of the watermark
 	 * @param $font - font to be used should be in index/extras/fonts/
 	 * @param $font_size - font size of watermark
-	 * 
+	 *
 	 */
 	public function watermarkImage ($watermarkText, $outputPath, $newName, $color, $pos, $font = "arial.ttf", $font_size = 20) {
 		$this->outputPath = $outputPath;
@@ -200,7 +200,7 @@ class mod_album_Image {
 			imagealphablending($this->resizedImage, FALSE);
 			imagesavealpha($this->resizedImage, TRUE);
 		}
-		imagecopyresampled($this->resizedImage, $this->image, 0, 0, 0, 0, $this->width, $this->height, $this->width, $this->height); 
+		imagecopyresampled($this->resizedImage, $this->image, 0, 0, 0, 0, $this->width, $this->height, $this->width, $this->height);
 		switch ($color) {
 			case 'black':
 				$font_color = imagecolorallocate($this->resizedImage, 0, 0, 0);
@@ -220,11 +220,11 @@ class mod_album_Image {
 		}
 		$font = '../extras/fonts/' . $font;
 		$font_shadow = imagecolorallocate($this->resizedImage, 128, 128, 128);
-		
+
 		$box = @ImageTTFBBox($font_size,0,$font,$watermarkText);
 		$t_width = abs($box[4] - $box[0]) + 10;
 		$t_height = abs($box[5] - $box[1]) + 10;
-		
+
 		if($pos == "TL") {
 	    	$dest_x = 0;
 	    	$dest_y = 0 + $t_height;
@@ -262,7 +262,7 @@ class mod_album_Image {
 			return FALSE;
 		}
 	}
-	
+
 	private function getSize($newWidth, $newHeight) {
 		if ($this->height < $this->width) {
 			$optimalWidth = $newWidth;
@@ -286,7 +286,7 @@ class mod_album_Image {
 		}
 		return array('optimalWidth' => $optimalWidth, 'optimalHeight' => $optimalHeight);
 	}
-	
+
 	private function getSizeByFixedHeight($newHeight) {
 		$ratio = $this->width / $this->height;
 		$newWidth = $newHeight * $ratio;
@@ -298,7 +298,7 @@ class mod_album_Image {
 		$newHeight = $newWidth * $ratio;
 		return $newHeight;
 	}
-	
+
 	/**
      * get the dimensions of the watermark text
      *
@@ -320,7 +320,7 @@ class mod_album_Image {
 		$height = ($maxY - $minY);
 		$left = abs($minX) + $width;
 		$top = abs($minY) + $height;
-		
+
 		$img = @imagecreatetruecolor($width << 2, $height << 2);
 		$white = imagecolorallocate($img, 255, 255, 255);
 		$black = imagecolorallocate($img, 0, 0, 0);
@@ -341,7 +341,7 @@ class mod_album_Image {
 				}
 			}
 		}
-        // destroy img 
+        // destroy img
         imagedestroy($img);
         return array(
             "left"	=> $left - $rleft,
@@ -350,7 +350,7 @@ class mod_album_Image {
             "height"=> $rbottom - $rtop + 1,
         );
     }
-	
+
 	/**
      * Convert Hex color to RGB color format
      *
@@ -365,7 +365,7 @@ class mod_album_Image {
             "B" => base_convert(substr($hex, 4, 2), 16, 10),
         );
     }
-	
+
 	private function createPaths() {
 		if(!is_dir($this->outputPath)){
 			mkdir($this->outputPath, '0777', TRUE);
@@ -374,7 +374,7 @@ class mod_album_Image {
 			chmod($this->outputPath, "0777");
 		}
 	}
-	
+
 	public function saveImage($imageQuality="100") {
 		switch($this->imageType) {
 			case IMAGETYPE_GIF:
@@ -382,13 +382,13 @@ class mod_album_Image {
 				imagegif($this->resizedImage, $this->outputPath . $this->newName);
 				//imagejpeg ($this->resizedImage, $this->outputPath . $this->newName, 100);
 				break;
-			
+
 			case IMAGETYPE_JPEG:
 			case IMAGETYPE_JPEG2000:
 				//header ('content-type: image/jpeg');
 				imagejpeg($this->resizedImage, $this->outputPath . $this->newName, $imageQuality);
 				break;
-				
+
 			case IMAGETYPE_PNG:
 				$scaleQuality = round(($imageQuality/100) * 9);
 				$invertScaleQuality = 9 - $scaleQuality;
@@ -402,14 +402,14 @@ class mod_album_Image {
         $this->cleanVars();
 		return TRUE;
 	}
-	
+
     /**
      * getters
      */
      public function getWidth() {
          return $this->width;
      }
-     
+
      public function getHeight() {
          return $this->height;
      }
