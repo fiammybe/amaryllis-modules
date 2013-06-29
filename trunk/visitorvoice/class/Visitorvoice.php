@@ -3,11 +3,11 @@
  * 'Visitorvoice' is a small, light weight visitorvoice module for ImpressCMS
  *
  * File: /class/Visitorvoice.php
- * 
+ *
  * Class representing visitorvoice visitorvoice objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Visitorvoice
  * @since		1.00
@@ -19,14 +19,14 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("VISITORVOICE_DIRNAME")) define("VISITORVOICE_DIRNAME", basename(dirname(dirname(__FILE__))));
-class VisitorvoiceVisitorvoice extends icms_ipf_Object {
-	
+class mod_visitorvoice_Visitorvoice extends icms_ipf_Object {
+
 	public $_updating = FALSE;
 	public $_visitorvoice_thumbs;
 	public $_visitorvoice_images;
 	public $_visitorvoice_images_url;
 	public $_visitorvoice_thumbs_url;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -37,7 +37,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		parent::__construct($handler);
 
 		$this->quickInitVar("visitorvoice_id", XOBJ_DTYPE_INT, TRUE);
-		
+
 		$this->quickInitVar("visitorvoice_title", XOBJ_DTYPE_TXTBOX, TRUE);
 		$this->quickInitVar("visitorvoice_uid", XOBJ_DTYPE_INT, FALSE);
 		$this->quickInitVar("visitorvoice_name", XOBJ_DTYPE_TXTBOX, TRUE);
@@ -55,7 +55,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$this->initCommonVar("doxcode", FALSE, 1);
 		$this->initCommonVar("doimage", FALSE, 1);
 		$this->initCommonVar("dosmiley", FALSE, 1);
-		
+
 		$this->setControl("visitorvoice_approve", "yesno");
 		if($visitorvoiceConfig['allow_imageupload'] == 0) {
 			$this->hideFieldFromForm("visitorvoice_image");
@@ -80,7 +80,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		}
 		return parent::getVar($key, $format);
 	}
-	
+
 	public function visitorvoice_approve() {
 		$active = $this->getVar('visitorvoice_approve', 'e');
 		if ($active == FALSE) {
@@ -91,7 +91,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 				<img src="' . VISITORVOICE_IMAGES_URL . 'approved.png" alt="Approved" /></a>';
 		}
 	}
-	
+
 	public function getVisitorvoiceImage($thumb = FALSE) {
 		global $visitorvoiceConfig;
 		$visitorvoice_img = $cached_img = $cached_image_url = $srcpath = $image = "";
@@ -103,7 +103,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 			    require_once ICMS_MODULES_PATH.'/'.VISITORVOICE_DIRNAME.'/class/Image.php';
 				$srcpath = VISITORVOICE_UPLOAD_ROOT . $this->handler->_itemname . "/";
 				$image = new mod_visitorvoice_Image($visitorvoice_img, $srcpath);
-				$resized = $image->resizeImage( ($thumb == FALSE) ? $visitorvoiceConfig['display_width'] : $visitorvoiceConfig['thumbnail_width'], 
+				$resized = $image->resizeImage( ($thumb == FALSE) ? $visitorvoiceConfig['display_width'] : $visitorvoiceConfig['thumbnail_width'],
 										($thumb == FALSE) ? $visitorvoiceConfig['display_height'] : $visitorvoiceConfig['thumbnail_height'],
 										($thumb == FALSE) ? $this->_visitorvoice_images : $this->_visitorvoice_thumbs, "100");
 				unset($srcpath, $image, $resized);
@@ -119,12 +119,12 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$ret = icms_core_DataFilter::icms_substr(icms_cleanTags($ret, array()), 0, 120);
 		return $ret;
 	}
-	
+
 	public function getMessage() {
 		$message = icms_core_DataFilter::checkVar($this->getVar("visitorvoice_entry"), 'html', 'output');
 		return $message;
 	}
-	
+
 	public function getImageTag() {
 		$visitorvoice_img = $image_tag = '';
 		$visitorvoice_img = $this->getVar('visitorvoice_image', 'e');
@@ -133,12 +133,12 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		}
 		return $image_tag;
 	}
-	
+
 	public function getIP() {
 		global $visitorvoice_isAdmin;
 		return ($visitorvoice_isAdmin) ? $this->getVar("visitorvoice_ip") : FALSE;
 	}
-	
+
 	public function getVisitorvoiceEmail() {
 		global $visitorvoiceConfig, $visitorvoice_isAdmin;
 		if($visitorvoiceConfig['show_email'] == 0 && !$visitorvoice_isAdmin) return FALSE;
@@ -154,7 +154,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		}
 		return $email;
 	}
-	
+
 	// get publisher for frontend
 	function getPublisher() {
 		$uid = $this->getVar('visitorvoice_uid', 'e');
@@ -167,25 +167,25 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 		$userinfo['avatar'] = ($email) ? "http://www.gravatar.com/avatar/" . md5(strtolower($email)) . "?d=identicon" : VISITORVOICE_URL."images/blank_gravatar.png";
 		return $userinfo;
 	}
-	
+
 	public function getPublishedDate() {
 		global $visitorvoiceConfig;
 		$date = $this->getVar('visitorvoice_published_date', 'e');
 		return date($visitorvoiceConfig['visitorvoice_dateformat'], $date);
 	}
-	
+
 	public function isApproved() {
 		return ($this->getVar("visitorvoice_approve") == 1) ? TRUE : FALSE;
 	}
-	
+
 	public function getApproved() {
 		return (!$this->isApproved()) ? "visitorvoice_approval" : "";
 	}
-	
+
 	public function hasSubs() {
 		return ($this->getVar("visitorvoice_hassub")) ? TRUE : FALSE;
 	}
-	
+
 	public function getSubEntries($toArray = FALSE) {
 		global $visitorvoiceConfig;
 		if(($visitorvoiceConfig['use_moderation'] == 1) && $this->hasSubs()) {
@@ -193,7 +193,7 @@ class VisitorvoiceVisitorvoice extends icms_ipf_Object {
 			return $this->handler->getSubEntries(TRUE, $pid, $toArray);
 		}
 	}
-	
+
 	public function getItemLink($urlonly = FALSE) {
 		$id = $this->id();
 		$title = $this->title();

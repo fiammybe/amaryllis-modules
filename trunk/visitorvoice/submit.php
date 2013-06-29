@@ -3,11 +3,11 @@
  * 'Visitorvoice' is a small, light weight visitorvoice module for ImpressCMS
  *
  * File: /submit.php
- * 
+ *
  * submit entries
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Visitorvoice
  * @since		1.00
@@ -35,7 +35,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			if($visitorvoice_pid != 0 && !$visitorvoice_handler->canModerate()) {echo json_encode(array("status" => "error", "message" => _NOPERM));unset($_POST); exit;}
 			//$captcha = icms_form_elements_captcha_Object::instance();
 			//if(!$captcha->verify(TRUE)) {echo json_encode(array("status" => "error", "message" => "Verification Failed"));unset($_POST); exit;}
-			
+
 			$val = "";
 			if(isset($_POST['xoops_upload_file']) && !empty($_FILES) && $visitorvoiceConfig['allow_imageupload'] == 1) {
 				$path = ICMS_UPLOAD_PATH.'/'.VISITORVOICE_DIRNAME.'/'.$visitorvoice_handler->_itemname;
@@ -52,13 +52,13 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 						echo json_encode(array("status" => "error", "message" => $uploader->getErrors())); unset($_POST); exit;
 					}
 			}
-			
+
 			$entry = filter_input(INPUT_POST, "visitorvoice_entry");
 			$entry = strip_tags(icms_core_DataFilter::undoHtmlSpecialChars($entry),'<b><i><a><br>');
-			
+
 			$visitorvoiceObj = $visitorvoice_handler->create(TRUE);
-			$visitorvoiceObj->setVar("visitorvoice_title", filter_input(INPUT_POST, "visitorvoice_title"));
-			$visitorvoiceObj->setVar("visitorvoice_name", filter_input(INPUT_POST, "visitorvoice_name"));
+			$visitorvoiceObj->setVar("visitorvoice_title", StopXSS(filter_input(INPUT_POST, "visitorvoice_title", FILTER_SANITIZE_STRING)));
+			$visitorvoiceObj->setVar("visitorvoice_name", StopXSS(filter_input(INPUT_POST, "visitorvoice_name", FILTER_SANITIZE_STRING)));
 			$visitorvoiceObj->setVar("visitorvoice_email", filter_input(INPUT_POST, "visitorvoice_email", FILTER_VALIDATE_EMAIL));
 			$visitorvoiceObj->setVar("visitorvoice_url", filter_input(INPUT_POST, "visitorvoice_url"));
 			$visitorvoiceObj->setVar("visitorvoice_entry", $entry);
