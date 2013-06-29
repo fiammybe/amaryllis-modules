@@ -3,11 +3,11 @@
  * 'Visitorvoice' is a small, light weight visitorvoice module for ImpressCMS
  *
  * File: /class/VisitorvoiceHandler.php
- * 
+ *
  * Classes responsible for managing Visitorvoice visitorvoice objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2011
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Visitorvoice
  * @since		1.00
@@ -19,15 +19,15 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("VISITORVOICE_DIRNAME")) define("VISITORVOICE_DIRNAME", basename(dirname(dirname(__FILE__))));
-class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
-	
+class mod_visitorvoice_VisitorvoiceHandler extends icms_ipf_Handler {
+
 	private $_usersArray;
 	private $_entryArray;
-	
+
 	public $_visitorvoice_cache_path;
 	public $_visitorvoice_thumbs_path;
 	public $_visitorvoice_images_path;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -42,7 +42,7 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 		$this->_visitorvoice_thumbs_path = $this->_visitorvoice_cache_path . "/thumbs";
 		$this->_visitorvoice_images_path = $this->_visitorvoice_cache_path . "/images";
 	}
-	
+
 	public function getVisitorvoiceThumbsPath() {
 		$dir = $this->_visitorvoice_thumbs_path;
 		if (!file_exists($dir)) {
@@ -50,7 +50,7 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 		}
 		return $dir . "/";
 	}
-	
+
 	public function getVisitorvoiceImagesPath() {
 		$dir = $this->_visitorvoice_images_path;
 		if (!file_exists($dir)) {
@@ -58,7 +58,7 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 		}
 		return $dir . "/";
 	}
-	
+
 	public function changeApprove($visitorvoice_id) {
 		$approve = '';
 		$visitorvoiceObj = $this->get($visitorvoice_id);
@@ -74,11 +74,11 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 		if($approve == 1) $visitorvoiceObj->sendMessageApproved();
 		return $approve;
 	}
-	
+
 	public function visitorvoice_approve_filter() {
 		return array(0 => 'Denied', 1 => 'Approved');
 	}
-	
+
 	public function loadUsers() {
 		global $icmsConfig;
 		if(!count($this->_usersArray)) {
@@ -97,7 +97,7 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 		}
 		return $this->_usersArray;
 	}
-	
+
 	public function getEntryCriterias($approve = FALSE, $visitorvoice_pid = 0, $start = 0, $limit = 0, $order = 'visitorvoice_published_date', $sort = 'DESC') {
 		global $visitorvoice_isAdmin;
 		$criteria = new icms_db_criteria_Compo();
@@ -124,7 +124,7 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 		$criteria->add(new icms_db_criteria_Item('visitorvoice_pid', $visitorvoice_pid));
 		return $criteria;
 	}
-	
+
 	public function getEntries($approve = FALSE, $visitorvoice_pid = 0, $start = 0, $limit = 0, $order = 'visitorvoice_published_date', $sort = 'DESC') {
 		$criteria = $this->getEntryCriterias($approve, $visitorvoice_pid, $start, $limit, $order, $sort);
 		$entries = $this->getObjects($criteria, TRUE, FALSE);
@@ -134,7 +134,7 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
-	
+
 	public function getSubEntries($approve = FALSE, $visitorvoice_pid = 0, $toArray = FALSE) {
 		$criteria = new icms_db_criteria_Compo();
 		if($approve) {
@@ -157,7 +157,7 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
-	
+
 	public function canModerate() {
 		global $visitorvoice_isAdmin, $visitorvoiceConfig;
 		if($visitorvoiceConfig['use_moderation'] == 0) return FALSE;
@@ -165,29 +165,25 @@ class VisitorvoiceVisitorvoiceHandler extends icms_ipf_Handler {
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		return count(array_intersect($visitorvoiceConfig['can_moderate'], $groups));
 	}
-	
+
 	public function canUpload() {
 		global $visitorvoice_isAdmin, $visitorvoiceConfig;
 		if($visitorvoiceConfig['allow_imageupload'] == 0) return FALSE;
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		return count(array_intersect($visitorvoiceConfig['can_upload'], $groups));
 	}
-	
+
 	protected function beforeInsert(& $obj) {
 		if($obj->_updating) return TRUE;
 		global $visitorvoiceConfig;
 		$member_handler = icms::handler("icms_member_user");
 		$user_sig = ($obj->getVar("visitorvoice_uid", "e") > 0) ? $member_handler->get($obj->getVar("visitorvoice_uid", "e"))->getVar("user_sig", "N") : FALSE;
 		unset($member_handler);
-		// filter and store entry
-		$message = $obj->getVar("visitorvoice_entry", "s");
-		$smessage = strip_tags(icms_core_DataFilter::undoHtmlSpecialChars($message),'<b><i><a><br>');
-		$smessage = icms_core_DataFilter::checkVar($smessage, "html", "input");
 		if($user_sig) $smessage = $smessage.'<br />'.$user_sig;
 		$obj->setVar("visitorvoice", $smessage);
 		// filter and store e-mail
 		$email = $obj->getVar("visitorvoice_email", "e");
-		$email = icms_core_DataFilter::checkVar($email, 'email', 0, 0);
+		$email = icms_core_DataFilter::checkVar($email, 'email', 0, 1);
 		$obj->setVar("visitorvoice_email", $email);
 		// validate and store ip
 		$ip = $obj->getVar("visitorvoice_ip");
