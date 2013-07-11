@@ -1,0 +1,92 @@
+<div id="tools_manual">
+    <h1>Tools Manual</h1>
+    	<p>"Tools" is a small module to provide autotasks for clearing cache, optimizing DB-Tabels and some more</p>
+    <h2 id="index">Index</h2>
+    <ul>
+    	<li><a href="#keyfeatures">Kernfunktionen</a></li>
+    	<li><a href="#firsstart">First Start</a></li>
+    	<li><a href="#tools_cron_job">Cron-Jobs</a></li>
+    	<li><a href="#module_upload">Module upload</a></li>
+    	<li><a href="#tools_footer">Abschluss</a></li>
+    </ul>
+    <h2 id="keyfeatures">Kernfunktionen</h2>
+		<ul>
+			<li>Optimierung, Reparatur und Analyse der Datenbank-Tabellen als Cron-Job und Autotask</li>
+			<li>"templates_c" und "cache" Verzeichnis mittels Cron-Job oder Auto Task bereinigen</li>
+			<li>Bereinigen der Sessions in einem Autotask</li>
+			<li>Datenbank-Sicherung sowie volles Backup inklusive Trust und Uploads-Verzeichnis aus dem Backend oder via Cron-Job (Wahlweise mit FTP-Sicherung)</li>
+		</ul>
+	<h2 id="firsstart">Start-Hilfe</h2>
+	<h3>Wie benutze ich die Tools</h3>
+		<p>
+			Die "Tools" sind kleine Helfer zur Wartung der Webseite oder auch als Unterst&uuml;tzung beim "basteln" und stellen dafür verschiedene Kleinigkeiten bereit:
+		</p>
+			<ul>
+				<li><b>Optimierung, Reperatur und Analyze der Datenbank-Tabellen:</b>
+					Diese Funktion triggert auf allen icms-Tabellen die Abfragen "CHECK TABLE", "REPAIR TABLE",
+					"ANALYZE TABLE" und "OPTIMIZE TABLE". Dies hält die ImpressCMS-Tabellen sauber und schnell ;-)
+				</li>
+				<li>
+					<b>"templates_c" und "cache" leeren:</b>
+					Leert beide Ordner vollständig. Im templates_c Ordner gerade kann sich im Laufe der Zeit viel ansammeln. Es erleichtert auch jedem das aufziehen einer neuen Seite.
+				</li>
+				<li>
+					<b>"sessions" bereinigen:</b>
+					Leert die Tabelle "sessions" vollständig.
+				</li>
+			</ul>
+
+			<p>
+				Die Tools können einfach via Auto Tasks ausgeführt werden. Gehen Sie dazu bitte im ACP zu: System &raquo; System Tools &raquo; Auto Tasks.
+				Dort finden Sie nach der Installation ein paar neue Auto Tasks. Letzten Endes entscheiden Sie, ob sie alle auf einmal ausführen wollen, oder ob
+				Sie die Auto Tasks lieber seperat laufen lassen.
+			</p>
+	<h3>Das Backup</h3>
+		<p>Die Backup-Funktion gibt es in 2 Stufen:</p>
+		<ul>
+			<li>
+				<b>Datensicherung erstellen:</b>
+				Triggert ein vollständiges DB-Backup und speichert dieses gepackt in ein Zip-File im Trust-Verzeichnis unter &laquo;modules/tools/backup/backup_sql.zip&raquo;
+			</li>
+			<li><b>Volle Datensicherung erstellen:</b>
+				Triggert ein vollständiges DB-Backup und speichert dieses mitsamt dem Trust-Pfad sowie dem Upload-Verzeichnis gepackt in ein Zip-File im Trust-Verzeichnis
+				unter &laquo;modules/tools/backup/backup_sql.zip&raquo; oder überträgt die Daten Via FTP auf einen anderen Server.
+				<div class="tools_attention">
+					<p>ACHTUNG: Dies sollte NICHT aus dem Backend heraus ausgeführt werden, sondern als <a href="#tools_cron_job" title="Cron-Job">Cron-Job</a>! Es gibt zwar auch
+						die Möglichkeit, dies Via Button zu triggern, dies sollte aber wenn mit ausgeschaltetem FTP genutzt werden, aus Sicherheitsgründen.</p>
+				</div>
+			</li>
+		</ul>
+	<h2 id="tools_cron_job">Cron Jobs</h2>
+		<p>Cron-Jobs werden beim Webhoster eingerichtet, um Aufgaben automatisch vom Server ausführen zu lassen. Bei Backups ist das A: sicher und B: weniger Ressourcen-Lastig wie ein
+			Backup via Auto Task. Um den Cron-Job ausführen zu können bitte beim Webhost nachschauen. In das Ziel des Cronjobs muss die Url des gewüschten Jobs eingegeben werden und
+			die Parameter: username=user&password=password mit angehängt. Username und password bitte mit denen eines Users ersetzen, der administrativen Zugriff auf das Tools-Modul hat</p>
+			<p><b><i>www.meine-seite.de/modules/tools/include/cron/backup.php?username=user&password=password</i></b> <span class="tools_highlighted">Führt ein Datenbank-backup OHNE die Ordner Trust und uploads aus</span></p>
+			<p><b><i>www.meine-seite.de/modules/tools/include/cron/full_backup.php?username=user&password=password</i></b> <span class="tools_highlighted">Führt ein Datenbank-backup MIT den Ordner Trust und uploads aus</span></p>
+			<p><b><i>www.meine-seite.de/modules/tools/include/cron/tools.php?username=user&password=password</i></b> <span class="tools_highlighted">Führt alle Tools aus</span></p>
+	<h2 id="module_upload">Module hochladen</h2>
+		<p>
+			Die Modul-upload funktion kann genutzt werden, um Module zu installieren bzw. zu aktualisieren. Wenn man auf den Tab "Module hochladen" klickt, sollte man im Regelfall
+			zum upload-Formular kommen. Ist der Modul-Ordner nicht beschreibbar und dies lääst sich nicht ändern erscheint eine Fehlermeldung und man muss erst die Berechtigungen angleichen.
+			Dazu bitte ein FTP-Programm nutzen und die Rechte des Modul-Ordners angleichen.
+		</p>
+		<p>
+			Um Module hochladen zu können, müssen diese im Format "zip" gepackt sein. Diese Zip-Datei sollte nur den modul ordner des gewünschten Moduls enthalen! Bitte nicht mehrere
+			Module zeitgleich packen und die module bitte auch nicht in Unterordner verstecken. Nun das Modul über das Upload-Formular hochladen (dieser Vorgang kann je nach
+			Modul-Größe auch etwas dauern) und anschließend dem Link folgen, um das modul sofort zu installieren/aktualisieren.
+		</p>
+	<div id="tools_footer">
+		<h2>Abschluss</h2>
+			<p>
+				Vielen Dank, dass Sie das 'Tools' Modul benutzen. Wenn Sie bei der Benutzung einen Fehler finden, berichten Sie dies bitte im
+				<a href="http://www.impresscms.de/modules/forum/viewforum.php?forum=30" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>.
+				Sie haben vorschläge für zusätzliche Funktionalität oder Verbesserungs-Vorschläge bezüglich der benutzbarkeit? Kein Problem! Wir können drüber reden.
+				Bitte nutzen Sie hierfür ebenfalls das <a href="http://www.impresscms.de/modules/forum/viewforum.php?forum=30" title="ImpressCMS Community Forum" rel="external">
+				ImpressCMS Community Forum</a>!
+			</p>
+			<p>
+				Vielleicht wollen Sie auch den letzten Änderungen/updates folgen? Bitte besuchen Sie hierfür
+				<a href="https://code.google.com/p/amaryllis-modules/source/browse/#svn%2Ftrunk%2Ftools"
+				title="'Tools' SVN bei Google Code" rel="external">'Tools' SVN bei Google Code</a>.</p>
+	</div>
+</div>
