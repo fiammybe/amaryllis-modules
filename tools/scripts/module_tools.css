@@ -1,0 +1,33 @@
+/**
+ * 'Tools' is a small admin-tool-module to provide some autotasks for icms and some more..
+ *
+ * File: /scripts/module_tools.css
+ *
+ * tools stylesheet
+ *
+ * @copyright	Copyright QM-B (Steffen Flohrer) 2013
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * ----------------------------------------------------------------------------------------------------------
+ * 				Tools
+ * @since		1.00
+ * @author		QM-B <qm-b@hotmail.de>
+ * @version		$Id$
+ * @version		$Revision$
+ * @package		tools
+ *
+ */
+
+.tools_attention, .tools_ok {width: 90%;display: block; height: auto; margin: 1em 0;padding: 1em;}
+.tools_attention {background: #CD5C5C url(../images/attention_big.png) no-repeat scroll .5em center; color:#CD0A0A; border: 1px solid #CD0A0A;}
+.tools_ok {background: #b6fbbf url(../images/check.png) no-repeat scroll .5em center; color:#0bda28; border: 1px solid #0bda28;}
+.tools_attention p, .tools_ok p {padding-left: 40px;}
+a.tools_backup, a.tools_backup:visited, a.tools_backup:active, a.tools_backup:focus {
+	font-size: 1em;background: none repeat scroll 0 0 #0254A6;color: white;display: inline-block;margin: 1em 0;padding: 4px 10px;transition: background 750ms ease 0s;
+}
+a.tools_backup:focus {outline-style: none;}
+a.tools_backup.tools_warning:hover, a.tools_backup:hover, a.tools_delete:hover {background: none repeat scroll 0 0 #333333; text-decoration: none;}
+a.tools_delete, a.tools_delete:visited, a.tools_backup.tools_warning, a.tools_backup.tools_warning:visited, a.tools_backup.tools_warning:active, a.tools_backup.tools_warning:focus {
+	background: none repeat scroll 0 0 #CD0A0A;font-size: 1em;color: white;display: inline-block;margin: 1em 0;padding: 4px 10px;transition: background 750ms ease 0s;
+}
+.tools_attention p, p.tools_warning_old {color: #CD0A0A; font-weight: bold;}
+.tools_highlighted {background-color: #FFFF00;}

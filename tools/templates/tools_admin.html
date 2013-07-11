@@ -1,0 +1,78 @@
+<link rel="stylesheet" type="text/css" href="<{$tools_url}>scripts/module_tools.css" />
+<{if $tools_title}><h1><{$tools_title}></h1><{/if}>
+<{if $tools_backup}>
+	<{if $tools_backup_ok}>
+		<div class="tools_ok">
+			<p><{$tools_lastChanged}></p>
+			<{if $tools_warning}><p class="tools_warning_old"><{$smarty.const._AM_TOOLS_LAST_BACKUP_OLD}></p><{/if}>
+			<p>
+				<a class="tools_backup <{if $tools_warning}>tools_warning<{/if}>" href="<{$tools_admin_url}>backup.php?op=backup_all"><{$smarty.const._AM_TOOLS_BACKUP_NOW}></a>
+				<a class="tools_backup tools_download" href="<{$tools_admin_url}>download.php?file=backup" title="<{$smarty.const._AM_TOOLS_BACKUP_DOWNLOAD}>" target="_blank">
+					<{$smarty.const._AM_TOOLS_BACKUP_DOWNLOAD}>
+				</a>
+				<a class="tools_delete" title="<{$smarty.const._BACK}>" href="<{$tools_admin_url}>backup.php?op=delete_backup"><{$smarty.const._AM_TOOLS_BACKUP_DELETE}></a>
+			</p>
+		</div>
+	<{elseif $tools_backup_warning}>
+		<div class="tools_attention">
+			<p><{$smarty.const._AM_TOOLS_NO_BACKUP}></p>
+			<p><a class="tools_backup tools_warning" href="<{$tools_admin_url}>backup.php?op=backup_all"><{$smarty.const._AM_TOOLS_BACKUP_NOW}></a></p>
+		</div>
+	<{elseif $tools_delete_ok}>
+		<div class="tools_ok">
+			<h4><{$smarty.const._AM_TOOLS_DELETE_OK}></h4>
+			<p><a href="<{$tools_admin_url}>backup.php" title="<{$smarty.const._BACK}>"><{$smarty.const._BACK}></a></p>
+		</div>
+	<{elseif $tools_delete_failed}>
+		<div class="tools_attention">
+			<h4><{$smarty.const._AM_TOOLS_DELETE_FAILED}></h4>
+			<p><a href="<{$tools_admin_url}>backup.php" title="<{$smarty.const._BACK}>"><{$smarty.const._BACK}></a></p>
+		</div>
+	<{/if}>
+	<{if !$tools_delete_failed && !$tools_delete_ok}>
+		<div class="tools_buttons">
+			<p>
+				<a class="tools_backup" href="<{$tools_admin_url}>backup.php?op=backup_db"><{$smarty.const._AM_TOOLS_BACKUP_NOW}></a>
+				<a class="tools_backup" href="<{$tools_admin_url}>backup.php?op=backup_all"><{$smarty.const._AM_TOOLS_FULL_BACKUP_NOW}></a>
+			</p>
+		</div>
+	<{/if}>
+<{elseif $tools_tool}>
+	<{if $tools_tool_ok}>
+		<div class="tools_ok">
+			<p><{$tools_lastChanged}></p>
+			<{if $tools_warning}><p class="tools_warning_old"><{$smarty.const._AM_TOOLS_LAST_MAINTENANCE_OLD}></p><{/if}>
+			<p>
+				<a class="tools_backup <{if $tools_warning}>tools_warning<{/if}>" href="<{$tools_admin_url}>tools.php?op=trigger_all"><{$smarty.const._AM_TOOLS_MAINTAIN_NOW}></a>
+				<a class="tools_delete" title="<{$smarty.const._BACK}>" href="<{$tools_admin_url}>tools.php?op=delete_log"><{$smarty.const._AM_TOOLS_BACKUP_DELETE}></a>
+			</p>
+		</div>
+	<{elseif $tools_tool_warning}>
+		<div class="tools_attention">
+			<p><{$smarty.const._AM_TOOLS_NO_BACKUP}></p>
+			<p><a class="tools_backup tools_warning" href="<{$tools_admin_url}>tools.php?op=trigger_all"><{$smarty.const._AM_TOOLS_MAINTAIN_NOW}></a></p>
+		</div>
+	<{elseif $tools_delete_ok}>
+		<div class="tools_ok">
+			<h4><{$smarty.const._AM_TOOLS_DELETE_OK}></h4>
+			<p><a href="<{$tools_admin_url}>tools.php" title="<{$smarty.const._BACK}>"><{$smarty.const._BACK}></a></p>
+		</div>
+	<{elseif $tools_delete_failed}>
+		<div class="tools_attention">
+			<h4><{$smarty.const._AM_TOOLS_DELETE_FAILED}></h4>
+			<p><a href="<{$tools_admin_url}>tools.php" title="<{$smarty.const._BACK}>"><{$smarty.const._BACK}></a></p>
+		</div>
+	<{/if}>
+	<{if !$tools_delete_failed && !$tools_delete_ok}>
+		<div class="tools_buttons">
+			<p>
+				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_cache"><{$smarty.const._AM_TOOLS_CLEAR_CACHE}></a>
+				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_templates"><{$smarty.const._AM_TOOLS_CLEAR_TEMPLATES}></a>
+				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_optimize"><{$smarty.const._AM_TOOLS_MAINTAIN_NOW}></a>
+				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_session"><{$smarty.const._AM_TOOLS_CLEAR_SESSION}></a>
+			</p>
+		</div>
+	<{/if}>
+<{/if}>
+
+<{if $manual_path}><{includeq file="$manual_path"}><{/if}>
