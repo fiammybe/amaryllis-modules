@@ -7,6 +7,7 @@
     	<li><a href="#firsstart">First Start</a></li>
     	<li><a href="#tools_cron_job">Cron-Jobs</a></li>
     	<li><a href="#module_upload">Module upload</a></li>
+    	<li><a href="#ftp_backup">FTP-Backup einrichten</a></li>
     	<li><a href="#tools_footer">Abschluss</a></li>
     </ul>
     <h2 id="keyfeatures">Kernfunktionen</h2>
@@ -58,12 +59,25 @@
 			</li>
 		</ul>
 	<h2 id="tools_cron_job">Cron Jobs</h2>
-		<p>Cron-Jobs werden beim Webhoster eingerichtet, um Aufgaben automatisch vom Server ausführen zu lassen. Bei Backups ist das A: sicher und B: weniger Ressourcen-Lastig wie ein
+		<p>Cron-Jobs werden beim Webhoster eingerichtet, um Aufgaben automatisch vom Server ausführen zu lassen. Bei Backups ist das A: sicher(er) und B: weniger Ressourcen-Lastig wie ein
 			Backup via Auto Task. Um den Cron-Job ausführen zu können bitte beim Webhost nachschauen. In das Ziel des Cronjobs muss die Url des gewüschten Jobs eingegeben werden und
 			die Parameter: username=user&password=password mit angehängt. Username und password bitte mit denen eines Users ersetzen, der administrativen Zugriff auf das Tools-Modul hat</p>
 			<p><b><i>www.meine-seite.de/modules/tools/include/cron/backup.php?username=user&password=password</i></b> <span class="tools_highlighted">Führt ein Datenbank-backup OHNE die Ordner Trust und uploads aus</span></p>
 			<p><b><i>www.meine-seite.de/modules/tools/include/cron/full_backup.php?username=user&password=password</i></b> <span class="tools_highlighted">Führt ein Datenbank-backup MIT den Ordner Trust und uploads aus</span></p>
 			<p><b><i>www.meine-seite.de/modules/tools/include/cron/tools.php?username=user&password=password</i></b> <span class="tools_highlighted">Führt alle Tools aus</span></p>
+			<p>Wenn Probleme auftreten (z.B. nicht ausgeführter Cron), kann man jeweilils noch "&debug=1" aufrufen</p>
+			<p>
+				Je nach Server/Webhost kann man auch den Cron-Job via Console/SSH ausführen. in diesem Fall bisste die parameter in der gleichen Reihenfolge übergeben.
+				(<b>ssh user@localhost /path/to/my/root/modules/tools/include/cron/full_backup.php -username=user -password=password -debug=1</b>). Bitte in diesem Fall in der Config einstellen, dass die Cron-Jobs
+				nur via SSH laufen dürfen!
+			</p>
+			<div class="tools_attention">
+				<p>
+					Für den Fall, dass die Cron-Jobs <span class="tools_highlighted">nicht</span> via SSH ausgeführt werden können, wird empfohlen einen Verzeichnisschutz anzulegen!
+					Beispieldateien sind im Ordner <b>tools/include/cron/</b> enthalten. Einfach an die eigenen Daten angleichen und hochladen. Nicht vergessen, die Daten im
+					Cron Job bei dem Webhoster mit anzugeben! Die meisten Webhoster bieten an, diesen Verzeichnisschutz zu generieren. Ansonsten nutzen Sie	google.de ;-)
+				</p>
+			</div>
 	<h2 id="module_upload">Module hochladen</h2>
 		<p>
 			Die Modul-upload funktion kann genutzt werden, um Module zu installieren bzw. zu aktualisieren. Wenn man auf den Tab "Module hochladen" klickt, sollte man im Regelfall
@@ -71,10 +85,14 @@
 			Dazu bitte ein FTP-Programm nutzen und die Rechte des Modul-Ordners angleichen.
 		</p>
 		<p>
-			Um Module hochladen zu können, müssen diese im Format "zip" gepackt sein. Diese Zip-Datei sollte nur den modul ordner des gewünschten Moduls enthalen! Bitte nicht mehrere
-			Module zeitgleich packen und die module bitte auch nicht in Unterordner verstecken. Nun das Modul über das Upload-Formular hochladen (dieser Vorgang kann je nach
-			Modul-Größe auch etwas dauern) und anschließend dem Link folgen, um das modul sofort zu installieren/aktualisieren.
+			Um Module hochladen zu können, müssen diese im Format "zip" gepackt sein. Diese Zip-Datei sollte nur den Modul-Ordner des gewünschten Moduls enthalen! Bitte nicht mehrere
+			Module zeitgleich packen und die Module bitte auch nicht in Unterordner verstecken. Nun das Modul über das Upload-Formular hochladen (dieser Vorgang kann je nach
+			Modul-Größe auch etwas dauern) und anschließend dem Link folgen, um das Modul sofort zu installieren/aktualisieren.
 		</p>
+	<h2 id="ftp_backup">FTP-Backup einrichten</h2>
+		<p>Um ein FTP-Backup einzurichten, gehen Sie bitte zu den Einstellungen des Moduls und stellen <b>FTP erlauben</b> auf Ja, geben die URL zum FTP-Server an sowie einen Benutzer-
+			Namen und Passwort. Der FTP-Pfad sollte direkt auf den Ordner führen, in dem das Backup abgelegt werden soll, als absoluter Pfad vom FTP-Login gesehen.</p>
+		<p>Volle Datenbank-Backups mit Trust und Upload-Verzeichnis sollten nun nach dem Backup auf den FTP-Server übertragen werden</p>
 	<div id="tools_footer">
 		<h2>Abschluss</h2>
 			<p>
@@ -87,6 +105,7 @@
 			<p>
 				Vielleicht wollen Sie auch den letzten Änderungen/updates folgen? Bitte besuchen Sie hierfür
 				<a href="https://code.google.com/p/amaryllis-modules/source/browse/#svn%2Ftrunk%2Ftools"
-				title="'Tools' SVN bei Google Code" rel="external">'Tools' SVN bei Google Code</a>.</p>
+				title="'Tools' SVN bei Google Code" rel="external">'Tools' SVN bei Google Code</a>.
+			</p>
 	</div>
 </div>

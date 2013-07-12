@@ -46,8 +46,13 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 					$zipfile = $uploader->getSavedDestination();
 					mod_tools_Zip::instance();
 					mod_tools_Zip::openZip($zipfile, FALSE);
-					mod_tools_Zip::extractZip(ICMS_MODULES_PATH.'/');
 					$module = mod_tools_Zip::getNameIndex(0);
+					if($module[strlen($module)-1] == "/") $moddir = substr($module, 0, -1);
+					else $moddir = $module;
+					$path = ICMS_MODULES_PATH.'/';
+					$path = str_replace("\\","/",$path);
+					$update = (is_dir($path.$moddir) === TRUE && icms_get_module_status($moddir) === TRUE) ? "update" : "install";
+					mod_tools_Zip::extractZip($path);
 					mod_tools_Zip::closeZip();
 					$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(ICMS_MODULES_PATH.'/'.$module), RecursiveIteratorIterator::SELF_FIRST);
 					foreach ($files as $k => $mfile) {
@@ -55,7 +60,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 					}
 					@unlink($uploader->getSavedDestination());
 					if($module[strlen($module)-1] == "/") $module = substr($module, 0, -1);
-					redirect_header("modulesadd.php?op=module_ok&module=".$module);
+					redirect_header("modulesadd.php?op=module_ok&module=".$module."&trigger=".$update);
 				} else {
 					redirect_header("modulesadd.php", 5, $uploader->getErrors());
 				}
@@ -68,14 +73,13 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$icmsAdminTpl->display("db:tools_admin.html");
 			if($clean_op == "module_ok") {
 				$clean_module = isset($_GET['module']) ? filter_input(INPUT_GET, "module", FILTER_SANITIZE_STRING) : "";
-				//http://dev.impresscms-manual.org/modules/system/admin.php?fct=modulesadmin&op=install&module=portfolio
+				$clean_trigger = isset($_GET['trigger']) ? filter_input(INPUT_GET, "trigger", FILTER_SANITIZE_STRING) : "";
 				echo '<div class="tools_ok"><p>'.
 							_AM_TOOLS_MODULES_INSTALL_OK.
-							'</p><p><a class="tools_backup" href="'.ICMS_MODULES_URL.'/system/admin.php?fct=modulesadmin&op=install&module='.$clean_module.'" title="'._AM_TOOLS_MODULES_GOTO.
+							'</p><p><a class="tools_backup" href="'.ICMS_MODULES_URL.'/system/admin.php?fct=modulesadmin&op='.$clean_trigger.'&module='.$clean_module.'" title="'._AM_TOOLS_MODULES_GOTO.
 							'">'._AM_TOOLS_MODULES_GOTO.' &raquo;</a></p>'.
 					'</p></div>';
 			}
-			//icms_core_Filesystem::deleteRecursive(ICMS_MODULES_PATH.'/manual/', TRUE);
 			if(!is_writable(ICMS_ROOT_PATH.'/modules')) {
 				if(@chmod(ICMS_MODULES_PATH, 0777) === FALSE)
 				echo "<div class='tools_attention'>"._AM_TOOLS_MODULES_FAIL_WRITABLE.'</div>';

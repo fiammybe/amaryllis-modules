@@ -44,3 +44,5 @@ define("_MI_TOOLS_CONFIG_FTP_PASS", "FTP-Password");
 define("_MI_TOOLS_CONFIG_FTP_PASS_DSC", "Password for FTP-User");
 define("_MI_TOOLS_CONFIG_FTP_PATH", "FTP-Path");
 define("_MI_TOOLS_CONFIG_FTP_PATH_DSC", "path to Backup-Directory. ATTENTION: This folder MUST exist and the User MUST have write permissions!");
+define("_MI_TOOLS_CONFIG_REQUIRE_CLI", "Require triggering Cron from CLI?");
+define("_MI_TOOLS_CONFIG_REQUIRE_CLI_DSC", "Enable only, if you know, what you do..");

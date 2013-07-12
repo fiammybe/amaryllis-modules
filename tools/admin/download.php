@@ -19,6 +19,29 @@
  *
  */
 
+#checks the referer of the script
+function getReferer() {
+	preg_match('@^(?:http://)?([^/]+)@i',$_SERVER['HTTP_REFERER'], $match);
+	return $match[1];
+}
+
+#checks if referer domain is okay
+function hotlink_check() {
+	global $allowed_domains;
+	$allowed_domains.=','.$_SERVER['HTTP_HOST'];
+	$domains=explode(',',str_replace(' ','',$allowed_domains));
+	$referer=getReferer();
+	$site=array();
+	foreach ($domains as $value) {
+		$site[] = '^'.str_replace('*','([0-9a-zA-Z]|\-|\_)+',str_replace('.','\.',$value)).'$';
+	}
+	foreach ($site as $pattern) {
+		if(eregi($pattern,$referer)) $MATCH=TRUE;
+		if($MATCH==TRUE) break;
+	}
+	return ($MATCH==TRUE) ? TRUE : FALSE;
+}
+
 include_once 'admin_header.php';
 icms::$logger->disableLogger();
 
@@ -45,31 +68,10 @@ $allowed_ext = icms_Utils::mimetypes();
 
 if(!is_object(icms::$user) || !icms_userIsAdmin(TOOLS_DIRNAME)) die("Access denied");
 
-$file = TOOLS_TRUST_PATH.'backup/db_backup.zip';
-icms_core_Debug::message($file);
+if(in_array($clean_file, array("backup", "db_backup"), FALSE)) {$folder = 'backup';$ext = 'zip';}
+else {$folder = 'logs';$ext = 'php';}
 
-#checks the referer of the script
-function getReferer() {
-	preg_match('@^(?:http://)?([^/]+)@i',$_SERVER['HTTP_REFERER'], $match);
-	return $match[1];
-}
-
-#checks if referer domain is okay
-function hotlink_check() {
-	global $allowed_domains;
-	$allowed_domains.=','.$_SERVER['HTTP_HOST'];
-	$domains=explode(',',str_replace(' ','',$allowed_domains));
-	$referer=getReferer();
-	$site=array();
-	foreach ($domains as $value) {
-		$site[] = '^'.str_replace('*','([0-9a-zA-Z]|\-|\_)+',str_replace('.','\.',$value)).'$';
-	}
-	foreach ($site as $pattern) {
-		if(eregi($pattern,$referer)) $MATCH=TRUE;
-		if($MATCH==TRUE) break;
-	}
-	return ($MATCH==TRUE) ? TRUE : FALSE;
-}
+$file = TOOLS_TRUST_PATH."$folder/$clean_file.$ext";
 
 define('HOTLINK_PASS',hotlink_check());
 if(HOTLINK_PROTECTION&&!HOTLINK_PASS) {

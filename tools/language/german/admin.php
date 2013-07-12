@@ -20,6 +20,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
+define("_AM_TOOLS_ADMIN_FOOTER", "Wenn Sie Hilfe zu dem Modul benötigen, schauen Sie bitte in das <a href='manual.php' title='Handbuch' style='color: #336699;'>Handbuch</a>.");
 // Requirements
 define("_AM_TOOLS_REQUIREMENTS", "Tools Voraussetzungen");
 define("_AM_TOOLS_REQUIREMENTS_INFO", "We've reviewed your system, unfortunately it doesn't meet all the requirements needed for Tutorials to function. Below are the requirements needed.");
@@ -40,6 +41,7 @@ define("_AM_TOOLS_LAST_MAINTENANCE_OLD", "Letzte Wartung wurde vor mehr als eine
 define("_AM_TOOLS_MAINTAIN_NOW", "Jetzt warten!");
 define("_AM_TOOLS_RUN_ALL_NOW", "Jetzt alle ausführen!");
 define("_AM_TOOLS_NO_MAINTAIN", "Kein Log file gefunden");
+define("_AM_TOOLS_DOWN_LOG", "Log herunterladen");
 //backup
 define("_AM_TOOLS_BACKUP_NOW", "Datensicherung jetzt durchführen");
 define("_AM_TOOLS_FULL_BACKUP_NOW", "Volle Datensicherung jetzt durchführen");
@@ -52,8 +54,12 @@ define("_AM_TOOLS_DELETE_FAILED", "Datensicherungen konnten nicht gelöscht werd
 define("_AM_TOOLS_SECURITY_CHECK_FAILED", "ICMS-Sicherheitsprüfung nicht bestanden..");
 define("_AM_TOOLS_NO_BACKUP", "ACHTUNG: Keine Datensicherung gefunden");
 define("_AM_TOOLS_BACKUP_DOWNLOAD", "Datensicherung herunterladen");
+define("_AM_TOOLS_BACKUP_DOWNLOAD_FULL", "Vollst. Datensicherung herunterladen");
 define("_AM_TOOLS_BACKUP_SUCCESS", "Datensicherung erfolgreich abgeschlossen");
 define("_AM_TOOLS_BACKUP_FILE_NOT_FOUND", "Datei '%s' nicht gefunden, um sie zu packen");
+define("_AM_TOOLS_BACKUP_DOWN_FTP_LOG", "FTP-Log herunterladen");
+define("_AM_TOOLS_BACKUP_DOWN_ZIP_LOG", "Zip-Log herunterladen");
+define("_AM_TOOLS_BACKUP_DOWN_BACK_LOG", "Sicherungs-Log herunterladen");
 // Zip
 define("_AM_TOOLS_ZIP_EXTENSION_FAILED", "Zip-Erweiterung in PHP nicht geladen");
 define("_AM_TOOLS_ZIP_FAILED_OPEN", "Zip-Archiv konnte nicht geöffnet werden. Fehler Code: %d");

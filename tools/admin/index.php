@@ -27,5 +27,4 @@ icms::$module->setVar("ipf", TRUE);
 icms::$module->registerClassPath(TRUE);
 $logPath = TOOLS_TRUST_PATH.'logs/';
 
-
 include_once 'admin_footer.php';

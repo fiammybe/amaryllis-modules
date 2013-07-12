@@ -26,7 +26,7 @@ icms::$module->registerClassPath(TRUE);
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, "op", FILTER_SANITIZE_STRING) : "";
 $clean_op = isset($_POST['op']) ? filter_input(INPUT_POST, "op", FILTER_SANITIZE_STRING) : $clean_op;
 
-$valid_op = array("backup_all", "backup_ok", "delete_backup", "confirm_delete", "");
+$valid_op = array("backup_all", "backup_db", "backup_ok", "delete_backup", "confirm_delete", "");
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	$icmsAdminTpl->assign("tools_title", _MI_TOOLS_MENU_BACKUP);
@@ -39,14 +39,26 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'backup_all':
 			//require_once TOOLS_ROOT_PATH.'class/Backup.php';
 			mod_tools_Backup::instance();
-			while($backup = mod_tools_Backup::runFullBackup()) {}
-			redirect_header(TOOLS_ADMIN_URL.'backup.php', 3, _AM_TOOLS_BACKUP_SUCCESS);
+			ob_start();
+			while(mod_tools_Backup::runFullBackup()) {
+				sleep(1);
+				flush();
+				ob_flush();
+			}
+			ob_end_flush();
+			redirect_header(TOOLS_ADMIN_URL.'backup.php', 3);
 			break;
 		case 'backup_db':
 			//require_once TOOLS_ROOT_PATH.'class/Backup.php';
 			mod_tools_Backup::instance();
-			while($backup = mod_tools_Backup::runBackup()) {}
-			redirect_header(TOOLS_ADMIN_URL.'backup.php', 3, _AM_TOOLS_BACKUP_SUCCESS);
+			ob_start();
+			while(mod_tools_Backup::runBackup()) {
+				sleep(1);
+				flush();
+				ob_flush();
+			}
+			ob_end_flush();
+			redirect_header(TOOLS_ADMIN_URL.'backup.php', 3);
 			break;
 		case 'delete_backup':
 		case 'confirm_delete':
@@ -70,13 +82,27 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			break;
 		default:
 			$backupFile = TOOLS_TRUST_PATH.'backup/backup_db.sql';
-
-			if(is_file($backupFile)) {
+			$backupZip = TOOLS_TRUST_PATH.'backup/db_backup.zip';
+			$backupZip2 = TOOLS_TRUST_PATH.'backup/backup.zip';
+			$ftp_log_file = TOOLS_TRUST_PATH.'logs/log_ftp.php';
+			$zip_log_file = TOOLS_TRUST_PATH.'logs/log_pack.php';
+			$backup_log_file = TOOLS_TRUST_PATH.'logs/log_backup.php';
+			if(is_file($backupFile) || is_file($backupZip) || is_file($backupZip2)) {
 				$filectime = $toolsConfig['last_backup'];
 				$warning = ($filectime <= (time()-(60*60*24*7))) ? TRUE : FALSE;
 				$created = date("M d, Y ".strtolower("\a\T")." H:i:s \G\M\T P", $filectime);
 				$icmsAdminTpl->assign('tools_warning', $warning);
 				$icmsAdminTpl->assign('tools_backup_ok', TRUE);
+				$zip1 = (is_file($backupZip) === TRUE) ? TRUE : FALSE;
+				$zip2 = (is_file($backupZip2) === TRUE) ? TRUE : FALSE;
+				$ftp_log = (is_file($ftp_log_file) === TRUE) ? TRUE : FALSE;
+				$zip_log = (is_file($zip_log_file) === TRUE) ? TRUE : FALSE;
+				$backup_log = (is_file($backup_log_file) === TRUE) ? TRUE : FALSE;
+				$icmsAdminTpl->assign('tools_zip1', $zip1);
+				$icmsAdminTpl->assign('tools_zip2', $zip2);
+				$icmsAdminTpl->assign('tools_log_ftp', $ftp_log);
+				$icmsAdminTpl->assign('tools_log_zip', $zip_log);
+				$icmsAdminTpl->assign('tools_log_backup', $backup_log);
 				$icmsAdminTpl->assign("tools_lastChanged", sprintf(_AM_TOOLS_LAST_BACKUP, $created));
 				$icmsAdminTpl->assign("last_files", icms_core_Filesystem::getFileList($backupPath, '', array('zip')));
 			} else {

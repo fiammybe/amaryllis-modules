@@ -30,26 +30,24 @@ class mod_tools_Zip {
 	private static $backupfile = NULL;
 	private static $zip = NULL;
 	private static $zipFile = NULL;
+	private static $debug = FALSE;
+	private static $clear_instance = FALSE;
 
 	private function __construct() {}
 
-	public static function &instance($dest = NULL) {
-		static $instance;
+	public static function &instance($dest = NULL, $debug = FALSE) {
+		static $instance = NULL;
 		if(!isset( $instance )) {
+			$instance = new mod_tools_Zip();
+			if($debug) self::$debug = $debug;
 			self::$logpath = ICMS_TRUST_PATH.'/modules/'.TOOLS_DIRNAME.'/logs';
 			self::$logfile = self::$logpath.'/log_pack.php';
-			if (!extension_loaded('zip')) {
-				self::addLog(_AM_TOOLS_ZIP_EXTENSION_FAILED);
-				self::writeLog();
-				self::cleanLog();
-				return FALSE;
-			}
-			$instance = new mod_tools_Zip();
 			self::$backuppath = (is_null($dest)) ? ICMS_TRUST_PATH.'/modules/'.TOOLS_DIRNAME.'/backup' : $dest;
 			self::$backupfile = self::$backuppath.'/backup.zip';
 			self::checkPaths();
 			self::$zip = new ZipArchive();
 		}
+		if(self::$debug) icms_core_Debug::vardump($instance);
 		return $instance;
 	}
 
@@ -138,11 +136,14 @@ class mod_tools_Zip {
 		$file = (is_null($file)) ? self::$backupfile : $file;
 		if($create && ($zipFile = self::$zip->open($file, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE)) === TRUE) {
 			self::$zipFile = TRUE;
+			if(self::$debug) icms_core_Debug::message("Zip created");
 		} elseif(!$create && ($zipFile = self::$zip->open($file)) === TRUE) {
 			self::$zipFile = TRUE;
+			if(self::$debug) icms_core_Debug::message("Zip opened");
 		} else {
 			self::addLog(sprintf(_AM_TOOLS_ZIP_FAILED_OPEN, $zipFile));
 			self::$zipFile = FALSE;
+			if(self::$debug) icms_core_Debug::message(_AM_TOOLS_ZIP_FAILED_OPEN);
 		}
 	}
 

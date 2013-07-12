@@ -1,0 +1,5 @@
+AuthUserFile /absolute/path/to/your/root/modules/tools/include/cron//.htpasswd
+AuthGroupFile /dev/null
+AuthName 'Bitte Zugangsdaten eingeben'
+AuthType Basic
+require valid-user

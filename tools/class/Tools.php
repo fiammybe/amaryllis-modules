@@ -57,7 +57,7 @@ class mod_tools_Tools {
 	}
 
 	static public function clearSessions() {
-		self::clearSessions();
+		self::_clearSessions();
 		self::writeLog();
 		self::cleanLog();
 	}
@@ -177,19 +177,19 @@ class mod_tools_Tools {
 
 	private static function _clearTemplates() {
 		self::addLog('** '._AM_TOOLS_CLEAR_TEMPLATES.' **');
-		$files = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH.'/templates_c/', '', array('php'));
-		foreach ($files as $k => $file) {
-			unlink(ICMS_ROOT_PATH.'/templates_c/'.$file);
-			self::addLog('-- '._AM_TOOLS_DELETED.' '.$file);
-			unset($files[$k]);
+		if(icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH.'/templates_c', FALSE)) {
+			icms_core_Filesystem::writeIndexFile(ICMS_ROOT_PATH.'/templates_c/');
+			self::addLog(_AM_TOOLS_CLEAR_TEMPLATES_SUCCESS);
+		} else {
+			self::addLog(_AM_TOOLS_CLEAR_TEMPLATES_FAIL);
 		}
-		unset($files);
 	}
 
 	private static function _clearCache() {
 		self::addLog('** '._AM_TOOLS_CLEAR_CACHE.' **');
 		if(icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH.'/cache/', FALSE) !== FALSE) {
 			self::addLog('-- '._AM_TOOLS_CLEAR_CACHE_SUCCESS);
+			icms_core_Filesystem::writeIndexFile(ICMS_ROOT_PATH.'/cache/');
 		} else {
 			self::addLog('-- '._AM_TOOLS_CLEAR_CACHE_FAIL);
 		}

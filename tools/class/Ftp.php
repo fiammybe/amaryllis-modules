@@ -27,22 +27,26 @@ class mod_tools_Ftp {
 	private static $log = array();
 	private static $logpath = NULL;
 	private static $logfile = NULL;
+	private static $debug = FALSE;
 
 	private function __construct(){ }
 
-	public static function &instance() {
+	public static function &instance($debug = FALSE) {
 		static $instance;
 		if(!isset( $instance )) {
 			$instance = new mod_tools_Ftp();
+			self::$debug = $debug;
 			self::$logpath = ICMS_TRUST_PATH.'/modules/'.TOOLS_DIRNAME.'/logs';
 			self::$logfile = self::$logpath.'/log_ftp.php';
 			self::checkPaths();
 			self::addLog("FTP Successfully initiated");
 		}
+		if(self::$debug) icms_core_Debug::vardump($instance);
 		return $instance;
 	}
 
 	public static function ftpLogin($url, $uname, $password, $dir = FALSE) {
+		if(self::$debug) icms_core_Debug::message("FTP-Login triggered");
 		return self::_ftpLogin($url, $uname, $password, $dir);
 	}
 
@@ -98,13 +102,18 @@ class mod_tools_Ftp {
 
 	private static function _ftpLogin($url, $uname, $password, $dir) {
 		self::$con_id = ftp_connect($url);
-		if(self::$con_id === FALSE) self::addLog("Connection failed");
+		if(self::$con_id === FALSE) {
+			self::addLog("Connection failed");
+			if(self::$debug) icms_core_Debug::message("Connection failed");
+		}
 		if(ftp_login(self::$con_id, $uname, $password) === FALSE) {
-			self::addLog("Connection Failed");
+			self::addLog("Login Failed");
+			if(self::$debug) icms_core_Debug::message("Login failed");
 		} else {
 			self::addLog("Connection successfully established");
+			if(self::$debug) icms_core_Debug::message("Connection successfully established");
 		}
-		if($dir !== FALSE) {
+		if($dir != FALSE) {
 			self::_changeDir($dir);
 		}
 	}
@@ -118,23 +127,30 @@ class mod_tools_Ftp {
 			ftp_chmod(self::$con_id, $mode, $dir);
 		}
 		if($chDir) {
+			if(self::$debug) icms_core_Debug::message("Triggered changing dir");
 			self::_changeDir($dir);
 		}
 	}
 
 	private static function _changeDir($dir) {
 		if(ftp_chdir(self::$con_id, $dir) === FALSE) {
-			self::addLog("Could't change to new directory"); return FALSE;
+			self::addLog("Couldn't change to new directory");
+			if(self::$debug) icms_core_Debug::message("Couldn't change to new directory");
+			return FALSE;
 		}
 	}
 
 	private static function _moveFile($file) {
+		if(self::$debug) icms_core_Debug::message("Triggered moving File");
 		$path = strlen(dirname($file).'/');
 		$remote_file = substr($file, $path);
-		if(ftp_put(self::$con_id, $remote_file, $file, FTP_BINARY) === TRUE) {
-			self::addLog("Datei $file erfolgreich übertragen!");
+		$put = ftp_put(self::$con_id, $remote_file, $file, FTP_BINARY);
+		if($put === TRUE) {
+			return TRUE;
 		} else {
 			self::addLog("Datei $file konnte nicht übertragen werden!");
+			if(self::$debug) icms_core_Debug::message("Datei $file konnte nicht übertragen werden!");
+			return FALSE;
 		}
 	}
 

@@ -33,23 +33,26 @@ class mod_tools_Backup {
 	private static $logfile = NULL;
 	private static $backuppath = NULL;
 	private static $backupfile = NULL;
-	private static $toolsConfig = NULL;
+	private static $toolsConfig = array();
 	private static $zipFile = NULL;
+	private static $debug = FALSE;
 
 	private function __construct() {}
 
 	/** instance of mod_tools_Tools */
-	static public function &instance() {
+	static public function &instance($debug = FALSE) {
 		static $instance;
 		if (!isset( $instance )) {
 			$instance = new mod_tools_Backup();
 			self::$db = icms::$xoopsDB;
+			self::$debug = $debug;
 			self::$logpath = ICMS_TRUST_PATH.'/modules/'.TOOLS_DIRNAME.'/logs';
 			self::$logfile = self::$logpath.'/log_backup.php';
 			self::$backuppath = ICMS_TRUST_PATH.'/modules/'.TOOLS_DIRNAME.'/backup';
 			self::$backupfile = self::$backuppath.'/backup_db.sql';
 			self::checkPaths();
 		}
+		if(self::$debug) icms_core_Debug::vardump($instance);
 		return $instance;
 	}
 
@@ -58,6 +61,7 @@ class mod_tools_Backup {
 	}
 
 	public static function runFullBackup($file = NULL) {
+		if(self::$debug) icms_core_Debug::message("Full Backup triggered");
 		return self::_runFullBackup($file);
 	}
 
@@ -137,9 +141,10 @@ class mod_tools_Backup {
 		return implode("\n", $footers);
 	}
 
-	private static function _runBackup($backupFile = NULL){
+	private static function _runBackup($backupFile = NULL, $pack = TRUE){
+		if(self::$debug) icms_core_Debug::message("Backup Started at ".formatTimestamp(time()));
 		if(is_null($backupFile)) $backupFile = self::$backupfile;
-		if(is_file($backupFile)) unlink($backupFile);
+		if(is_file($backupFile)) @unlink($backupFile);
 		$tables = array(); $db_name = XOOPS_DB_NAME;
 		$prefix = self::$db->prefix();
 		$sql = "SHOW TABLES LIKE '".$prefix."_%' ";
@@ -198,35 +203,51 @@ class mod_tools_Backup {
 		$headers .= "# Dumping data of $db_name took : ". $diff .  " Sec\n\n";
 		$headers .= "# ---------------------------------------------------------\n";
 		$datadump = $headers.$outputdata.$footers;
+		if(self::$debug) icms_core_Debug::message("Backup finished after ".$diff.' Sek.');
 		$len = file_put_contents($backupFile, $datadump, LOCK_EX);
 		if($len === FALSE) self::addLog("Error on writing dump file");
-		self::_packBackup($backupFile);
+		if(self::$debug) icms_core_Debug::vardump(self::$log);
+		if($pack) self::_packBackup($backupFile);
 		self::updateConfig();
 	}
 
 	private static function _runFullBackup($file) {
-		self::_runBackup($file);
-		if(($zip = mod_tools_Zip::instance()) !== FALSE) {
+		while(self::_runBackup($file, FALSE)) {}
+		if(self::$debug) icms_core_Debug::message("DB Backup complete");
+		try {
+			if(self::$debug) icms_core_Debug::message("Trying to get zip instance");
+			mod_tools_Zip::instance(NULL, self::$debug);
+			self::addLog("Zipping has been triggered!");
 			mod_tools_Zip::openZip(NULL, TRUE);
-			mod_tools_Zip::compress(ICMS_TRUST_PATH.'/', TRUE);
-			mod_tools_Zip::compress(ICMS_UPLOAD_PATH.'/', TRUE);
-			mod_tools_Zip::compress(self::$backupfile);
+			while(mod_tools_Zip::compress(ICMS_TRUST_PATH.'/', TRUE)) {}
+			while(mod_tools_Zip::compress(ICMS_UPLOAD_PATH.'/', TRUE)) {}
+			while(mod_tools_Zip::compress(ICMS_ROOT_PATH.'/themes/', TRUE)) {}
+			while(mod_tools_Zip::compress(self::$backupfile)){}
 			self::$zipFile = mod_tools_Zip::closeZip();
-			self::_moveToFtp(TRUE);
+			if(self::$debug) icms_core_Debug::message("Zip-File: ".self::$zipFile);
+			while($move = self::_moveToFtp(TRUE)) {}
+		} catch (Exception $e) {
+		    if(self::$debug) icms_core_Debug::vardump($e->getMessage());
+		    self::addLog("Zipping has not been triggered!");
+			foreach ($e->getMessage() as $k => $msg) {
+				self::addLog($msg);
+			}
 		}
 		self::writeLog();
 	}
 
 	private static function _moveToFtp($rmv = FALSE) {
-		self::_loadConfig();
+		while(self::_loadConfig()) {}
+		if(self::$debug) icms_core_Debug::vardump(self::$toolsConfig);
 		if(self::$toolsConfig['enable_ftp'] == 1 && self::$toolsConfig['ftp_pass'] !== "") {
 			self::addLog("FTP triggered");
-			if(mod_tools_Ftp::instance()) {
+			if(mod_tools_Ftp::instance(self::$debug)) {
 				self::addLog("FTP instance successfully");
-				mod_tools_Ftp::ftpLogin(self::$toolsConfig['ftp_url'], self::$toolsConfig['ftp_user'], self::$toolsConfig['ftp_pass'], self::$toolsConfig['ftp_path']);
+				mod_tools_Ftp::ftpLogin(trim(self::$toolsConfig['ftp_url']), trim(self::$toolsConfig['ftp_user']), trim(self::$toolsConfig['ftp_pass']), trim(self::$toolsConfig['ftp_path']));
 				mod_tools_Ftp::getPassive(TRUE);
 				mod_tools_Ftp::ftpMkdir("tools_backup_".date('Y-m-d--H:i:s'), TRUE);
-				if(mod_tools_Ftp::moveFile(self::$zipFile) !== FALSE && $rmv !== FALSE) @unlink(self::$zipFile);
+
+				if(($up = mod_tools_Ftp::moveFile(self::$zipFile))!==FALSE && $rmv !== FALSE) @unlink(self::$zipFile);
 				mod_tools_Ftp::disconnect();
 				self::$zipFile = FALSE;
 			}
@@ -235,7 +256,12 @@ class mod_tools_Backup {
 	}
 
 	private static function _loadConfig() {
-		self::$toolsConfig = icms_getModuleConfig(TOOLS_DIRNAME);
+		global $toolsModule;
+		if(isset($toolsModule) && is_object($toolsModule)) {
+			self::$toolsConfig = $toolsModule->config;
+		} else {
+			self::$toolsConfig = icms_getModuleConfig(TOOLS_DIRNAME);
+		}
 	}
 
 	private static function updateConfig() {

@@ -44,3 +44,5 @@ define("_MI_TOOLS_CONFIG_FTP_PASS", "FTP-Password des Backup-Servers");
 define("_MI_TOOLS_CONFIG_FTP_PASS_DSC", "Passwort für den FTP-Nutzer");
 define("_MI_TOOLS_CONFIG_FTP_PATH", "FTP-Pfad des FTP-Servers");
 define("_MI_TOOLS_CONFIG_FTP_PATH_DSC", "pfad zum Sicherungs-Ordner. ACHTUNG: Dieser MUSS exisitieren und der User MUSS schreibrechte haben!");
+define("_MI_TOOLS_CONFIG_REQUIRE_CLI", "Erlaube Cron-Jobs nur, wenn sie vom Server ausgeführt werden?");
+define("_MI_TOOLS_CONFIG_REQUIRE_CLI_DSC", "Erlauben Sie das nur, wenn Sie wissen, was sie machen..");

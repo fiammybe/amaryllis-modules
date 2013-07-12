@@ -23,9 +23,9 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 $version = number_format(icms::$module->getVar('version')/100, 2);
 $version = !substr($version, -1, 1) ? substr($version, 0, 3) : $version;
 
-$footer = "<div style='margin: 2em auto; text-align: center; font-size: .9em;'>";
-$footer .= "If you need help with the module, please check the <a href='manual.php' title='Manual' style='color: #336699;'>Manual</a>.";
-$footer .= "Powered by <a href='about.php'>Tools ".$version."</a>";
-$footer .= "</div>";
+$footer = "<div style='margin: 2em auto; text-align: center; font-size: .9em;'><p>";
+$footer .= _AM_TOOLS_ADMIN_FOOTER;
+$footer .= " Powered by <a href='about.php'>Tools ".$version."</a>";
+$footer .= "</p></div>";
 echo $footer;
 icms_cp_footer();
