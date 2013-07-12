@@ -6,17 +6,43 @@
 			<p><{$tools_lastChanged}></p>
 			<{if $tools_warning}><p class="tools_warning_old"><{$smarty.const._AM_TOOLS_LAST_BACKUP_OLD}></p><{/if}>
 			<p>
-				<a class="tools_backup <{if $tools_warning}>tools_warning<{/if}>" href="<{$tools_admin_url}>backup.php?op=backup_all"><{$smarty.const._AM_TOOLS_BACKUP_NOW}></a>
-				<a class="tools_backup tools_download" href="<{$tools_admin_url}>download.php?file=backup" title="<{$smarty.const._AM_TOOLS_BACKUP_DOWNLOAD}>" target="_blank">
-					<{$smarty.const._AM_TOOLS_BACKUP_DOWNLOAD}>
-				</a>
+				<a class="tools_backup <{if $tools_warning}>tools_warning<{/if}>" href="<{$tools_admin_url}>backup.php?op=backup_db"><{$smarty.const._AM_TOOLS_BACKUP_NOW}></a>
+				<{if $tools_zip1}>
+					<a class="tools_backup tools_download" href="<{$tools_admin_url}>download.php?file=db_backup" title="<{$smarty.const._AM_TOOLS_BACKUP_DOWNLOAD}>" target="_blank">
+						<{$smarty.const._AM_TOOLS_BACKUP_DOWNLOAD}>
+					</a>
+				<{/if}>
+				<{if $tools_zip2}>
+					<a class="tools_backup tools_download" href="<{$tools_admin_url}>download.php?file=backup" title="<{$smarty.const._AM_TOOLS_BACKUP_DOWNLOAD}>" target="_blank">
+						<{$smarty.const._AM_TOOLS_BACKUP_DOWNLOAD_FULL}>
+					</a>
+				<{/if}>
 				<a class="tools_delete" title="<{$smarty.const._BACK}>" href="<{$tools_admin_url}>backup.php?op=delete_backup"><{$smarty.const._AM_TOOLS_BACKUP_DELETE}></a>
 			</p>
 		</div>
+		<p>
+			<{if $tools_log_ftp}>
+				<a href="<{$tools_admin_url}>download.php?file=log_ftp" title="<{$smarty.const._AM_TOOLS_BACKUP_DOWN_FTP_LOG}>" target="_blank">
+					<{$smarty.const._AM_TOOLS_BACKUP_DOWN_FTP_LOG}>
+				</a>
+				<{if $tools_log_zip || $tools_log_backup}> | <{/if}>
+			<{/if}>
+			<{if $tools_log_zip}>
+				<a href="<{$tools_admin_url}>download.php?file=log_pack" title="<{$smarty.const._AM_TOOLS_BACKUP_DOWN_ZIP_LOG}>" target="_blank">
+					<{$smarty.const._AM_TOOLS_BACKUP_DOWN_ZIP_LOG}>
+				</a>
+				<{if $tools_log_backup}> | <{/if}>
+			<{/if}>
+			<{if $tools_log_backup}>
+				<a href="<{$tools_admin_url}>download.php?file=log_backup" title="<{$smarty.const._AM_TOOLS_BACKUP_DOWN_BACK_LOG}>" target="_blank">
+					<{$smarty.const._AM_TOOLS_BACKUP_DOWN_BACK_LOG}>
+				</a>
+			<{/if}>
+		</p>
 	<{elseif $tools_backup_warning}>
 		<div class="tools_attention">
 			<p><{$smarty.const._AM_TOOLS_NO_BACKUP}></p>
-			<p><a class="tools_backup tools_warning" href="<{$tools_admin_url}>backup.php?op=backup_all"><{$smarty.const._AM_TOOLS_BACKUP_NOW}></a></p>
+			<p><a class="tools_backup tools_warning" href="<{$tools_admin_url}>backup.php?op=backup_db"><{$smarty.const._AM_TOOLS_BACKUP_NOW}></a></p>
 		</div>
 	<{elseif $tools_delete_ok}>
 		<div class="tools_ok">
@@ -63,13 +89,20 @@
 			<p><a href="<{$tools_admin_url}>tools.php" title="<{$smarty.const._BACK}>"><{$smarty.const._BACK}></a></p>
 		</div>
 	<{/if}>
+	<{if $tools_tool_ok}>
+		<p>
+			<a href="<{$tools_admin_url}>download.php?file=log_tool" title="<{$smarty.const._AM_TOOLS_DOWN_LOG}>" target="_blank">
+				<{$smarty.const._AM_TOOLS_DOWN_LOG}>
+			</a>
+		</p>
+	<{/if}>
 	<{if !$tools_delete_failed && !$tools_delete_ok}>
 		<div class="tools_buttons">
 			<p>
 				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_cache"><{$smarty.const._AM_TOOLS_CLEAR_CACHE}></a>
 				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_templates"><{$smarty.const._AM_TOOLS_CLEAR_TEMPLATES}></a>
 				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_optimize"><{$smarty.const._AM_TOOLS_MAINTAIN_NOW}></a>
-				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_session"><{$smarty.const._AM_TOOLS_CLEAR_SESSION}></a>
+				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_sessions"><{$smarty.const._AM_TOOLS_CLEAR_SESSION}></a>
 			</p>
 		</div>
 	<{/if}>

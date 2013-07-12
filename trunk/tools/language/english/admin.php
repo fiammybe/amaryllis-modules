@@ -20,6 +20,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
+define("_AM_TOOLS_ADMIN_FOOTER", "If you need help with the module, please check the <a href='manual.php' title='Manual' style='color: #336699;'>Manual</a>.");
 // Requirements
 define("_AM_TOOLS_REQUIREMENTS", "Tools Requirements");
 define("_AM_TOOLS_REQUIREMENTS_INFO", "We've reviewed your system, unfortunately it doesn't meet all the requirements needed for Tutorials to function. Below are the requirements needed.");
@@ -40,6 +41,7 @@ define("_AM_TOOLS_LAST_MAINTENANCE_OLD", "Last maintenance older than 1 week!");
 define("_AM_TOOLS_MAINTAIN_NOW", "Maintain now!");
 define("_AM_TOOLS_RUN_ALL_NOW", "Run now!");
 define("_AM_TOOLS_NO_MAINTAIN", "No Log file found");
+define("_AM_TOOLS_DOWN_LOG", "Download Log");
 // backup
 define("_AM_TOOLS_BACKUP_NOW", "Backup Now!");
 define("_AM_TOOLS_FULL_BACKUP_NOW", "Run full backup now");
@@ -52,8 +54,12 @@ define("_AM_TOOLS_DELETE_FAILED", "Backup couldn't been deleted");
 define("_AM_TOOLS_SECURITY_CHECK_FAILED", "ICMS-Security-check failed..");
 define("_AM_TOOLS_NO_BACKUP", "ATTENTION: No backup found!");
 define("_AM_TOOLS_BACKUP_DOWNLOAD", "Download backup");
+define("_AM_TOOLS_BACKUP_DOWNLOAD_FULL", "Download full backup");
 define("_AM_TOOLS_BACKUP_SUCCESS", "Backup successfully finished");
 define("_AM_TOOLS_BACKUP_FILE_NOT_FOUND", "File '%s' not found, to add to zip");
+define("_AM_TOOLS_BACKUP_DOWN_FTP_LOG", "Download FTP-Log");
+define("_AM_TOOLS_BACKUP_DOWN_ZIP_LOG", "Download Zip-Log");
+define("_AM_TOOLS_BACKUP_DOWN_BACK_LOG", "Download Backup-Log");
 // Zip
 define("_AM_TOOLS_ZIP_EXTENSION_FAILED", "Zip-Extension in php.ini not loaded");
 define("_AM_TOOLS_ZIP_FAILED_OPEN", "Zip-Archiv konnte nicht geöffnet werden. Fehler Code: %d");

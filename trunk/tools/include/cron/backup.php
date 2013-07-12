@@ -21,18 +21,34 @@
 include_once '../../../../mainfile.php';
 define("TOOLS_DIRNAME", basename(dirname(dirname(dirname(__FILE__)))));
 include_once  ICMS_MODULES_PATH.'/'.TOOLS_DIRNAME.'/include/common.php';
-icms::$logger->disableLogger();
+icms_loadLanguageFile("tools", "admin");
+if (!empty($argc) && strstr($argv[0], basename(__FILE__))) {
+	$uname = filter_var(trim($argv[1]), FILTER_SANITIZE_STRING);
+	$password = filter_var(trim($argv[2]), FILTER_SANITIZE_STRING);
+	$debug = (isset($argv[3]) && filter_var($argv[3], FILTER_SANITIZE_NUMBER_INT) == 1) ? TRUE : FALSE;
+	if($debug) icms_core_Debug::$_SERVER['argv'];
+} else {
+	parse_str($_SERVER['QUERY_STRING'], $args);
+	$uname = filter_var(trim($args["uname"]), FILTER_SANITIZE_STRING);
+	$password = filter_var(trim($args["password"]), FILTER_SANITIZE_STRING);
+	$debug = (isset($args["debug"]) && filter_var($args["debug"], FILTER_SANITIZE_NUMBER_INT) == 1) ? TRUE : FALSE;
+	$uname = trim($args["uname"]);
+	$password = trim($args["password"]);
+	$debug = (isset($args["debug"]) && filter_var($args["debug"], FILTER_SANITIZE_NUMBER_INT) == 1) ? TRUE : FALSE;
+	if($debug) icms_core_Debug::vardump($args);
+}
 
-parse_str($_SERVER['QUERY_STRING'], $args);
+if(!$debug) icms::$logger->disableLogger();
 
-$uname = trim($args["uname"]);
-$password = trim($args["password"]);
-
-$module_handler = icms::handler('icms_module');
-$module = $module_handler->getByDirname(TOOLS_DIRNAME);
-if(!is_object($module)) die("Access denied");
-$module_id = $module->getVar("mid");
-
+$toolsModule_handler = icms::handler('icms_module');
+$toolsModule = $toolsModule_handler->getByDirname(TOOLS_DIRNAME, TRUE);
+if(!is_object($toolsModule)) die("Access denied");
+$toolsModule_id = $toolsModule->getVar("mid");
+if($toolsModule->config["require_cli"] == 1 && !defined('STDIN'))die("Access Denied - You can not call this script directly!");
+$require_cli = ($toolsModule->config["require_cli"] == 1) ? "Script requires to be triggered from SSH" : "Script does not require to be triggered from SSH";
+if($debug) {
+	icms_core_Debug::message("Tools Module loaded ".$require_cli);
+}
 $icmsAuth = icms_auth_Factory::getAuthConnection(icms_core_DataFilter::addSlashes($uname));
 
 $uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($uname));
@@ -40,11 +56,9 @@ $pass4sql = icms_core_DataFilter::stripSlashesGPC($password);
 
 $user = $icmsAuth->authenticate($uname4sql, $pass4sql);
 
-if(!$user || !is_object($user) || !$user->isAdmin($module_id)) die("Access denied");
+if(!$user || !is_object($user) || !$user->isAdmin($toolsModule_id)) die("Access denied");
 
-$module->setVar("ipf", TRUE);
-$module->registerClassPath();
-require_once TOOLS_ROOT_PATH.'class/Backup.php';
-require_once TOOLS_ROOT_PATH.'class/Ftp.php';
+$toolsModule->setVar("ipf", TRUE);
+$toolsModule->registerClassPath();
 mod_tools_Backup::instance();
 mod_tools_Backup::runBackup();

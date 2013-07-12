@@ -30,4 +30,4 @@ a.tools_delete, a.tools_delete:visited, a.tools_backup.tools_warning, a.tools_ba
 	background: none repeat scroll 0 0 #CD0A0A;font-size: 1em;color: white;display: inline-block;margin: 1em 0;padding: 4px 10px;transition: background 750ms ease 0s;
 }
 .tools_attention p, p.tools_warning_old {color: #CD0A0A; font-weight: bold;}
-.tools_highlighted {background-color: #FFFF00;}
+.tools_highlighted {background-color: #FFFF00;padding: 2px;}

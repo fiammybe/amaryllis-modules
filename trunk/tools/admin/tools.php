@@ -37,27 +37,57 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'trigger_all':
 			mod_tools_Tools::instance();
-			mod_tools_Tools::runTools();
+			ob_start();
+			while(mod_tools_Tools::runTools()) {
+				sleep(1);
+				flush();
+				ob_flush();
+			}
+			ob_end_flush();
 			redirect_header(TOOLS_ADMIN_URL.'tools.php', 3);
 			break;
 		case 'trigger_cache':
 			mod_tools_Tools::instance();
-			mod_tools_Tools::clearCache();
+			ob_start();
+			while(mod_tools_Tools::clearCache()) {
+				sleep(1);
+				flush();
+				ob_flush();
+			}
+			ob_end_flush();
 			redirect_header(TOOLS_ADMIN_URL.'tools.php', 3);
 			break;
 		case 'trigger_sessions':
 			mod_tools_Tools::instance();
-			mod_tools_Tools::clearSessions();
+			ob_start();
+			while(mod_tools_Tools::clearSessions()) {
+				sleep(1);
+				flush();
+				ob_flush();
+			}
+			ob_end_flush();
 			redirect_header(TOOLS_ADMIN_URL.'tools.php', 3);
 			break;
 		case 'trigger_templates':
 			mod_tools_Tools::instance();
-			mod_tools_Tools::clearTemplates();
+			ob_start();
+			while(mod_tools_Tools::clearTemplates()) {
+				sleep(1);
+				flush();
+				ob_flush();
+			}
+			ob_end_flush();
 			redirect_header(TOOLS_ADMIN_URL.'tools.php', 3);
 			break;
 		case 'trigger_optimize':
 			mod_tools_Tools::instance();
-			mod_tools_Tools::maintainDB();
+			ob_start();
+			while(mod_tools_Tools::maintainDB()) {
+				sleep(1);
+				flush();
+				ob_flush();
+			}
+			ob_end_flush();
 			redirect_header(TOOLS_ADMIN_URL.'tools.php', 3);
 			break;
 		case 'delete_log':
