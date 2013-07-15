@@ -30,7 +30,7 @@ define("_MI_TOOLS_AUTOTASK_ALL_TOOLS", "Führe alle Tools aus");
 // ACP Menu
 define("_MI_TOOLS_MENU_INDEX", "Start");
 define("_MI_TOOLS_MENU_TOOLS", "Tools");
-define("_MI_TOOLS_MENU_MODULESADD", "Module hochladen");
+define("_MI_TOOLS_MENU_MODULESADD", "Module/Themes hochladen");
 define("_MI_TOOLS_MENU_BACKUP", "Datensicherung");
 define("_MI_TOOLS_MENU_MANUAL", "Handbuch");
 // configs
