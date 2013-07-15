@@ -7,7 +7,7 @@
  * English modinfo language file
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		CC Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -19,7 +19,15 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
+//index
+define("_AM_TOOLS_INDEX_SYS_INFO", "System Informations");
+define("_AM_TOOLS_INDEX_TRUST_WRITABLE", "Tools trusted directory is writable.");
+define("_AM_TOOLS_INDEX_TRUST_NOT_WRITABLE", "Tools trusted directory is <b>NOT</b> writable!");
+define("_AM_TOOLS_INDEX_FTP_LOADED", "PHP FTP extension loaded");
+define("_AM_TOOLS_INDEX_FTP_NOT_LOADED", "PHP FTP extension is <b>NOT</b> loaded! No FTP-Backup possible!");
+define("_AM_TOOLS_INDEX_ZIP_LOADED", "PHP ZIP Extension is loaded");
+define("_AM_TOOLS_INDEX_ZIP_NOT_LOADED", "PHP ZIP extension is <b>NOT</b> loaded! Tools might not be usable for you!");
+//general
 define("_AM_TOOLS_ADMIN_FOOTER", "If you need help with the module, please check the <a href='manual.php' title='Manual' style='color: #336699;'>Manual</a>.");
 // Requirements
 define("_AM_TOOLS_REQUIREMENTS", "Tools Requirements");

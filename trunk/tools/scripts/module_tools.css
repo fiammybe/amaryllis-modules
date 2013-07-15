@@ -6,7 +6,7 @@
  * tools stylesheet
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -31,3 +31,4 @@ a.tools_delete, a.tools_delete:visited, a.tools_backup.tools_warning, a.tools_ba
 }
 .tools_attention p, p.tools_warning_old {color: #CD0A0A; font-weight: bold;}
 .tools_highlighted {background-color: #FFFF00;padding: 2px;}
+li.tools_error {color:#CD0A0A;}

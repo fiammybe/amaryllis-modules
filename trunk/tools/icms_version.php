@@ -7,7 +7,7 @@
  * holds module informations
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		CC Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -33,7 +33,7 @@ $modversion = array(
 						"author_realname"			=> "Steffen Flohrer",
 						"credits"					=> "<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Amaryllis Modules</a>",
 						"help"						=> "admin/manual.php",
-						"license"					=> "GNU General Public License (GPL)",
+						"license"					=> "CC BY-SA 3.0",
 						"official"					=> 0,
 						"dirname"					=> basename(dirname(__FILE__)),
 						"modname"					=> "tools",

@@ -7,7 +7,7 @@
  * holds module ACP-Menu
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		CC Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -19,14 +19,11 @@
  */
 
 $i = 0;
-/**
 $adminmenu[$i]['title'] = _MI_TOOLS_MENU_INDEX;
 $adminmenu[$i]['link'] = 'admin/index.php';
 $adminmenu[$i]['icon'] = 'images/info_big.png';
 $adminmenu[$i]['small'] = 'images/info_small.png';
 $i++;
- *
- */
 $adminmenu[$i]['title'] = _MI_TOOLS_MENU_TOOLS;
 $adminmenu[$i]['link'] = 'admin/tools.php';
 $adminmenu[$i]['icon'] = 'images/tools_big.png';

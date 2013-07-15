@@ -1,3 +1,8 @@
+<!--
+The license needs to be kept in the module! 
+
+This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/.
+-->
 <link rel="stylesheet" type="text/css" href="<{$tools_url}>scripts/module_tools.css" />
 <{if $tools_title}><h1><{$tools_title}></h1><{/if}>
 <{if $tools_backup}>
@@ -70,7 +75,7 @@
 			<{if $tools_warning}><p class="tools_warning_old"><{$smarty.const._AM_TOOLS_LAST_MAINTENANCE_OLD}></p><{/if}>
 			<p>
 				<a class="tools_backup <{if $tools_warning}>tools_warning<{/if}>" href="<{$tools_admin_url}>tools.php?op=trigger_all"><{$smarty.const._AM_TOOLS_MAINTAIN_NOW}></a>
-				<a class="tools_delete" title="<{$smarty.const._BACK}>" href="<{$tools_admin_url}>tools.php?op=delete_log"><{$smarty.const._AM_TOOLS_BACKUP_DELETE}></a>
+				<a class="tools_delete" title="<{$smarty.const._BACK}>" href="<{$tools_admin_url}>tools.php?op=delete_log"><{$smarty.const._AM_TOOLS_DEL_LOG}></a>
 			</p>
 		</div>
 	<{elseif $tools_tool_warning}>
@@ -101,7 +106,7 @@
 			<p>
 				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_cache"><{$smarty.const._AM_TOOLS_CLEAR_CACHE}></a>
 				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_templates"><{$smarty.const._AM_TOOLS_CLEAR_TEMPLATES}></a>
-				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_optimize"><{$smarty.const._AM_TOOLS_MAINTAIN_NOW}></a>
+				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_optimize"><{$smarty.const._AM_TOOLS_MAINTAIN_DB}></a>
 				<a class="tools_backup" href="<{$tools_admin_url}>tools.php?op=trigger_sessions"><{$smarty.const._AM_TOOLS_CLEAR_SESSION}></a>
 			</p>
 		</div>

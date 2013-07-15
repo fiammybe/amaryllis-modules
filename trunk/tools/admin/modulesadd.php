@@ -7,7 +7,7 @@
  * Admin backup
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		CC Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -20,7 +20,7 @@
 
 include_once 'admin_header.php';
 icms_cp_header();
-icms::$module->displayAdminMenu( 2, _MI_TOOLS_MENU_MODULESADD);
+icms::$module->displayAdminMenu( 3, _MI_TOOLS_MENU_MODULESADD);
 icms::$module->setVar("ipf", TRUE);
 icms::$module->registerClassPath(TRUE);
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, "op", FILTER_SANITIZE_STRING) : "";
@@ -44,23 +44,38 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$uploader->setPrefix('tmod');
 				if ($uploader->upload()) {
 					$zipfile = $uploader->getSavedDestination();
-					mod_tools_Zip::instance();
-					mod_tools_Zip::openZip($zipfile, FALSE);
-					$module = mod_tools_Zip::getNameIndex(0);
+					$toolsZip = mod_tools_Zip::instance();
+					$toolsZip::openZip($zipfile, FALSE);
+					$module = $toolsZip::getNameIndex(0);
 					if($module[strlen($module)-1] == "/") $moddir = substr($module, 0, -1);
 					else $moddir = $module;
 					$path = ICMS_MODULES_PATH.'/';
 					$path = str_replace("\\","/",$path);
-					$update = (is_dir($path.$moddir) === TRUE && icms_get_module_status($moddir) === TRUE) ? "update" : "install";
-					mod_tools_Zip::extractZip($path);
-					mod_tools_Zip::closeZip();
+					if($moddir == "modules") {
+						$tmpDir = TOOLS_TRUST_PATH.'tmp';
+						if(!is_dir($tmpDir))
+						mkdir(TOOLS_TRUST_PATH.'tmp', 755);
+						$toolsZip::extractZip($tmpDir);
+						$dirs = icms_core_Filesystem::getDirList($tmpDir.'/modules/');
+						icms_core_Debug::vardump($dirs);
+						$moddir = array_shift($dirs);
+						icms_core_Debug::vardump($moddir);
+						$update = (is_dir(ICMS_MODULES_PATH.'/'.$moddir) === TRUE && icms_get_module_status($moddir) === TRUE) ? "update" : "install";
+						if(!is_dir(ICMS_MODULES_PATH.'/'.$moddir)) mkdir(ICMS_MODULES_PATH.'/'.$moddir, 0755);
+						icms_core_Filesystem::copyRecursive($tmpDir.'/modules/'.$moddir.'/', ICMS_MODULES_PATH.'/');
+						$module = $moddir.'/';
+						icms_core_Filesystem::deleteRecursive($tmpDir, FALSE);
+					} else {
+						$update = (is_dir($path.$moddir) === TRUE && icms_get_module_status($moddir) === TRUE) ? "update" : "install";
+						$toolsZip::extractZip($path);
+					}
+					$toolsZip::closeZip();
 					$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(ICMS_MODULES_PATH.'/'.$module), RecursiveIteratorIterator::SELF_FIRST);
 					foreach ($files as $k => $mfile) {
 						@chmod($mfile, 0777);
 					}
 					@unlink($uploader->getSavedDestination());
-					if($module[strlen($module)-1] == "/") $module = substr($module, 0, -1);
-					redirect_header("modulesadd.php?op=module_ok&module=".$module."&trigger=".$update);
+					redirect_header("modulesadd.php?op=module_ok&module=".$moddir."&trigger=".$update);
 				} else {
 					redirect_header("modulesadd.php", 5, $uploader->getErrors());
 				}

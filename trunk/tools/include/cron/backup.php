@@ -7,7 +7,7 @@
  * Admin backup as cron job
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		CC Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -23,17 +23,14 @@ define("TOOLS_DIRNAME", basename(dirname(dirname(dirname(__FILE__)))));
 include_once  ICMS_MODULES_PATH.'/'.TOOLS_DIRNAME.'/include/common.php';
 icms_loadLanguageFile("tools", "admin");
 if (!empty($argc) && strstr($argv[0], basename(__FILE__))) {
-	$uname = filter_var(trim($argv[1]), FILTER_SANITIZE_STRING);
-	$password = filter_var(trim($argv[2]), FILTER_SANITIZE_STRING);
+	$uname = urldecode(filter_var(trim($argv[1]), FILTER_SANITIZE_STRING));
+	$password = urldecode(filter_var(trim($argv[2]), FILTER_SANITIZE_STRING));
 	$debug = (isset($argv[3]) && filter_var($argv[3], FILTER_SANITIZE_NUMBER_INT) == 1) ? TRUE : FALSE;
 	if($debug) icms_core_Debug::$_SERVER['argv'];
 } else {
 	parse_str($_SERVER['QUERY_STRING'], $args);
-	$uname = filter_var(trim($args["uname"]), FILTER_SANITIZE_STRING);
-	$password = filter_var(trim($args["password"]), FILTER_SANITIZE_STRING);
-	$debug = (isset($args["debug"]) && filter_var($args["debug"], FILTER_SANITIZE_NUMBER_INT) == 1) ? TRUE : FALSE;
-	$uname = trim($args["uname"]);
-	$password = trim($args["password"]);
+	$uname = urldecode(filter_var(trim($args["uname"]), FILTER_SANITIZE_STRING));
+	$password = urldecode(filter_var(trim($args["password"]), FILTER_SANITIZE_STRING));
 	$debug = (isset($args["debug"]) && filter_var($args["debug"], FILTER_SANITIZE_NUMBER_INT) == 1) ? TRUE : FALSE;
 	if($debug) icms_core_Debug::vardump($args);
 }

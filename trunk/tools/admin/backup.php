@@ -7,7 +7,7 @@
  * Admin backup
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		CC Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -20,7 +20,7 @@
 
 include_once 'admin_header.php';
 icms_cp_header();
-icms::$module->displayAdminMenu( 1, _MI_TOOLS_MENU_BACKUP);
+icms::$module->displayAdminMenu( 2, _MI_TOOLS_MENU_BACKUP);
 icms::$module->setVar("ipf", TRUE);
 icms::$module->registerClassPath(TRUE);
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, "op", FILTER_SANITIZE_STRING) : "";
@@ -38,21 +38,25 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'backup_all':
 			//require_once TOOLS_ROOT_PATH.'class/Backup.php';
-			mod_tools_Backup::instance();
+			$backup = mod_tools_Backup::instance(TRUE);
+			$uname = icms::$user->getVar("uname");
+			$backup::setCase("Button-Trigger by ".$uname);
 			ob_start();
-			while(mod_tools_Backup::runFullBackup()) {
+			while($backup::runFullBackup()) {
 				sleep(1);
 				flush();
 				ob_flush();
 			}
 			ob_end_flush();
-			redirect_header(TOOLS_ADMIN_URL.'backup.php', 3);
+			//redirect_header(TOOLS_ADMIN_URL.'backup.php', 3);
 			break;
 		case 'backup_db':
 			//require_once TOOLS_ROOT_PATH.'class/Backup.php';
-			mod_tools_Backup::instance();
+			$backup = mod_tools_Backup::instance();
+			$uname = icms::$user->getVar("uname");
+			$backup::setCase("Button-Trigger by ".$uname);
 			ob_start();
-			while(mod_tools_Backup::runBackup()) {
+			while($backup::runBackup()) {
 				sleep(1);
 				flush();
 				ob_flush();
@@ -104,7 +108,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$icmsAdminTpl->assign('tools_log_zip', $zip_log);
 				$icmsAdminTpl->assign('tools_log_backup', $backup_log);
 				$icmsAdminTpl->assign("tools_lastChanged", sprintf(_AM_TOOLS_LAST_BACKUP, $created));
-				$icmsAdminTpl->assign("last_files", icms_core_Filesystem::getFileList($backupPath, '', array('zip')));
 			} else {
 				$icmsAdminTpl->assign('tools_backup_warning', TRUE);
 			}
