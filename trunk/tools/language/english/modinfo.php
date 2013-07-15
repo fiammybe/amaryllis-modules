@@ -31,7 +31,7 @@ define("_MI_TOOLS_AUTOTASK_ALL_TOOLS", "Run all Tools");
 define("_MI_TOOLS_MENU_INDEX", "Index");
 define("_MI_TOOLS_MENU_TOOLS", "Tools");
 define("_MI_TOOLS_MENU_BACKUP", "Backup");
-define("_MI_TOOLS_MENU_MODULESADD", "Upload Modules");
+define("_MI_TOOLS_MENU_MODULESADD", "Upload Modules/Themes");
 define("_MI_TOOLS_MENU_MANUAL", "Manual");
 // configs
 define("_MI_TOOLS_CONFIG_ENABLE_FTP", "Enable FTP-Backup?");

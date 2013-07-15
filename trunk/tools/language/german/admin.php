@@ -50,7 +50,7 @@ define("_AM_TOOLS_MAINTAIN_NOW", "Jetzt volle Wartung durchführen!");
 define("_AM_TOOLS_RUN_ALL_NOW", "Jetzt alle ausführen!");
 define("_AM_TOOLS_NO_MAINTAIN", "Kein Log file gefunden");
 define("_AM_TOOLS_DOWN_LOG", "Log herunterladen");
-define("_AM_TOOLS_DEL_LOG", "Delete Log File");
+define("_AM_TOOLS_DEL_LOG", "Log File löschen");
 //backup
 define("_AM_TOOLS_BACKUP_NOW", "Datensicherung jetzt durchführen");
 define("_AM_TOOLS_FULL_BACKUP_NOW", "Volle Datensicherung jetzt durchführen");
@@ -80,3 +80,10 @@ define("_AM_TOOLS_MODULES_UPLOAD_FILE", "Zip-Datei mit dem Modul");
 define("_AM_TOOLS_MODULES_FAIL_WRITABLE", "Achtung! Der Modules-Ordner ist nicht beschreibbar! bitte erst die Berechtigungen angleichen!");
 define("_AM_TOOLS_MODULES_INSTALL_OK", "Modul wurde erfolgreich hochgeladen.");
 define("_AM_TOOLS_MODULES_GOTO", "Zur Modul-Administration");
+// Themes upload
+define("_AM_TOOLS_THEMES_UPLOAD_FORM", "Lade ein neues Theme hoch");
+define("_AM_TOOLS_THEMES_UPLOAD_FILE", "Zip-Datei mit dem Theme");
+define("_AM_TOOLS_THEMES_FAIL_WRITABLE", "Achtung! Der Themes-Ordner ist nicht beschreibbar! bitte erst die Berechtigungen angleichen bevor Sie Themes hochladen können!");
+define("_AM_TOOLS_THEMES_INSTALL_OK", "Theme wurde erfolgreich hochgeladen.");
+define("_AM_TOOLS_THEMES_GOTO", "Theme jetzt erlauben");
+define("_AM_TOOLS_THEMES_OK", "Theme(s) erfolgreich hochgeladen");

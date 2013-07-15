@@ -57,7 +57,7 @@ $modversion = array(
 
 					/** Administrative information */
 						"hasAdmin"					=> 1,
-						"adminindex"				=> "admin/tools.php",
+						"adminindex"				=> "admin/index.php",
 						"adminmenu"					=> "admin/admin_menu.php",
 
 					/** Install and update informations */

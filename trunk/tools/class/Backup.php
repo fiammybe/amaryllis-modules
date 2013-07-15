@@ -271,7 +271,6 @@ class mod_tools_Backup {
 				$toolsFtp::ftpLogin(trim(self::$toolsConfig['ftp_url']), trim(self::$toolsConfig['ftp_user']), trim(self::$toolsConfig['ftp_pass']), trim(self::$toolsConfig['ftp_path']));
 				$toolsFtp::getPassive(TRUE);
 				$toolsFtp::ftpMkdir("tools_backup_".date('Y-m-d--H:i:s'), TRUE);
-
 				if(($up = $toolsFtp::moveFile(self::$zipFile))!==FALSE && $rmv !== FALSE) @unlink(self::$zipFile);
 				$toolsFtp::disconnect();
 				self::$zipFile = FALSE;

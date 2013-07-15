@@ -50,6 +50,7 @@ define("_AM_TOOLS_MAINTAIN_NOW", "Maintain now!");
 define("_AM_TOOLS_RUN_ALL_NOW", "Run now!");
 define("_AM_TOOLS_NO_MAINTAIN", "No Log file found");
 define("_AM_TOOLS_DOWN_LOG", "Download Log");
+define("_AM_TOOLS_DEL_LOG", "Delete Log File");
 // backup
 define("_AM_TOOLS_BACKUP_NOW", "Backup Now!");
 define("_AM_TOOLS_FULL_BACKUP_NOW", "Run full backup now");
@@ -79,3 +80,10 @@ define("_AM_TOOLS_MODULES_UPLOAD_FILE", "packed module");
 define("_AM_TOOLS_MODULES_FAIL_WRITABLE", "ATTENTION! Modules folder is not writable! please first adjust permissons!");
 define("_AM_TOOLS_MODULES_INSTALL_OK", "Module successfully uploaded.");
 define("_AM_TOOLS_MODULES_GOTO", "Go to Module-Administration");
+// Themes upload
+define("_AM_TOOLS_THEMES_UPLOAD_FORM", "Upload a new theme");
+define("_AM_TOOLS_THEMES_UPLOAD_FILE", "Zipped Theme");
+define("_AM_TOOLS_THEMES_FAIL_WRITABLE", "Attention! Themes-directory is not writable! Please adjust folder permissions first!");
+define("_AM_TOOLS_THEMES_INSTALL_OK", "Theme successfully uploaded.");
+define("_AM_TOOLS_MODULES_GOTO", "Enable Theme now");
+define("_AM_TOOLS_THEMES_OK", "Theme(s) successfully uploaded");
