@@ -7,7 +7,7 @@
  * admin tool triggering
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		CC Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -20,7 +20,7 @@
 
 include_once 'admin_header.php';
 icms_cp_header();
-icms::$module->displayAdminMenu( 0, _MI_TOOLS_MENU_TOOLS);
+icms::$module->displayAdminMenu( 1, _MI_TOOLS_MENU_TOOLS);
 icms::$module->setVar("ipf", TRUE);
 icms::$module->registerClassPath(TRUE);
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, "op", FILTER_SANITIZE_STRING) : "";
@@ -36,9 +36,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	$logPath = TOOLS_TRUST_PATH.'logs/log_tool.php';
 	switch ($clean_op) {
 		case 'trigger_all':
-			mod_tools_Tools::instance();
+			$tools = mod_tools_Tools::instance();
 			ob_start();
-			while(mod_tools_Tools::runTools()) {
+			while($tools::runTools()) {
 				sleep(1);
 				flush();
 				ob_flush();
@@ -47,9 +47,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			redirect_header(TOOLS_ADMIN_URL.'tools.php', 3);
 			break;
 		case 'trigger_cache':
-			mod_tools_Tools::instance();
+			$tools = mod_tools_Tools::instance();
 			ob_start();
-			while(mod_tools_Tools::clearCache()) {
+			while($tools::clearCache()) {
 				sleep(1);
 				flush();
 				ob_flush();
@@ -58,9 +58,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			redirect_header(TOOLS_ADMIN_URL.'tools.php', 3);
 			break;
 		case 'trigger_sessions':
-			mod_tools_Tools::instance();
+			$tools = mod_tools_Tools::instance();
 			ob_start();
-			while(mod_tools_Tools::clearSessions()) {
+			while($tools::clearSessions()) {
 				sleep(1);
 				flush();
 				ob_flush();
@@ -69,9 +69,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			redirect_header(TOOLS_ADMIN_URL.'tools.php', 3);
 			break;
 		case 'trigger_templates':
-			mod_tools_Tools::instance();
+			$tools = mod_tools_Tools::instance();
 			ob_start();
-			while(mod_tools_Tools::clearTemplates()) {
+			while($tools::clearTemplates()) {
 				sleep(1);
 				flush();
 				ob_flush();
@@ -80,9 +80,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			redirect_header(TOOLS_ADMIN_URL.'tools.php', 3);
 			break;
 		case 'trigger_optimize':
-			mod_tools_Tools::instance();
+			$tools = mod_tools_Tools::instance();
 			ob_start();
-			while(mod_tools_Tools::maintainDB()) {
+			while($tools::maintainDB()) {
 				sleep(1);
 				flush();
 				ob_flush();

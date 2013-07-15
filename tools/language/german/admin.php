@@ -7,7 +7,7 @@
  * german modinfo language file
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		CC Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -19,7 +19,15 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
-
+//index
+define("_AM_TOOLS_INDEX_SYS_INFO", "System Informationen");
+define("_AM_TOOLS_INDEX_TRUST_WRITABLE", "Tools gesichertes Verzeichnis ist beschreibbar.");
+define("_AM_TOOLS_INDEX_TRUST_NOT_WRITABLE", "Tools gesichertes Verzeichnis ist <b>NICHT</b> beschreibbar!");
+define("_AM_TOOLS_INDEX_FTP_LOADED", "FTP Erweiterung von PHP ist geladen");
+define("_AM_TOOLS_INDEX_FTP_NOT_LOADED", "FTP Erweiterung von PHP ist nicht geladen! Kein FTP-Backup möglich!");
+define("_AM_TOOLS_INDEX_ZIP_LOADED", "ZIP Erweiterung von PHP ist geladen");
+define("_AM_TOOLS_INDEX_ZIP_NOT_LOADED", "ZIP Erweiterung von PHP ist nicht geladen! Benutzung von Tools nicht möglich!");
+//general
 define("_AM_TOOLS_ADMIN_FOOTER", "Wenn Sie Hilfe zu dem Modul benötigen, schauen Sie bitte in das <a href='manual.php' title='Handbuch' style='color: #336699;'>Handbuch</a>.");
 // Requirements
 define("_AM_TOOLS_REQUIREMENTS", "Tools Voraussetzungen");
@@ -38,10 +46,11 @@ define("_AM_TOOLS_CLEAR_TEMPLATES_FAIL", "templates_c Verzeichnis konnte nicht g
 define("_AM_TOOLS_DELETED", "Gelöscht:");
 define("_AM_TOOLS_LAST_MAINTENANCE", "Wartung wurde zuletzt am %s ausgeführt");
 define("_AM_TOOLS_LAST_MAINTENANCE_OLD", "Letzte Wartung wurde vor mehr als einer Woche ausgeführt!");
-define("_AM_TOOLS_MAINTAIN_NOW", "Jetzt warten!");
+define("_AM_TOOLS_MAINTAIN_NOW", "Jetzt volle Wartung durchführen!");
 define("_AM_TOOLS_RUN_ALL_NOW", "Jetzt alle ausführen!");
 define("_AM_TOOLS_NO_MAINTAIN", "Kein Log file gefunden");
 define("_AM_TOOLS_DOWN_LOG", "Log herunterladen");
+define("_AM_TOOLS_DEL_LOG", "Delete Log File");
 //backup
 define("_AM_TOOLS_BACKUP_NOW", "Datensicherung jetzt durchführen");
 define("_AM_TOOLS_FULL_BACKUP_NOW", "Volle Datensicherung jetzt durchführen");

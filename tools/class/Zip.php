@@ -7,7 +7,7 @@
  * class for DB-Backup
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		CC Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -23,6 +23,7 @@ defined("TOOLS_DIRNAME") or define("TOOLS_DIRNAME", basename(dirname(dirname(__F
 
 class mod_tools_Zip {
 
+	private static $version = NULL;
 	private static $log = array();
 	private static $logpath = NULL;
 	private static $logfile = NULL;
@@ -35,19 +36,26 @@ class mod_tools_Zip {
 
 	private function __construct() {}
 
-	public static function &instance($dest = NULL, $debug = FALSE) {
+	public static function &instance($dest = NULL, $file = NULL, $debug = FALSE) {
 		static $instance = NULL;
 		if(!isset( $instance )) {
 			$instance = new mod_tools_Zip();
 			if($debug) self::$debug = $debug;
 			self::$logpath = ICMS_TRUST_PATH.'/modules/'.TOOLS_DIRNAME.'/logs';
 			self::$logfile = self::$logpath.'/log_pack.php';
+
 			self::$backuppath = (is_null($dest)) ? ICMS_TRUST_PATH.'/modules/'.TOOLS_DIRNAME.'/backup' : $dest;
-			self::$backupfile = self::$backuppath.'/backup.zip';
+			self::$backupfile = (is_null($file)) ? self::$backuppath.'/backup.zip' : self::$backuppath.'/'.$file;
 			self::checkPaths();
 			self::$zip = new ZipArchive();
+			if(!is_object(icms::$module) || (is_object(icms::$module) && icms::$module->getVar("dirname") !== TOOLS_DIRNAME)) {
+				$module = icms::handler('icms_module')->getByDirname(TOOLS_DIRNAME);
+				$version = number_format($module->getVar('version')/100, 2);
+				$version = !substr($version, -1, 1) ? substr($version, 0, 3) : $version;
+				self::$version = "Zip File Generator: Tools".$version;
+				unset($module);
+			}
 		}
-		if(self::$debug) icms_core_Debug::vardump($instance);
 		return $instance;
 	}
 
@@ -78,6 +86,14 @@ class mod_tools_Zip {
 		return self::_getNameByIndex($index);
 	}
 
+	public static function statIndex($index) {
+		return self::$zip->statIndex($index, ZIPARCHIVE::FL_UNCHANGED);
+	}
+
+	public static function statName($name) {
+		return self::$zip->statName($name, ZIPARCHIVE::FL_UNCHANGED);
+	}
+
 	public static function closeZip() {
 		self::$zip->close();
 		if(!empty(self::$log)) {self::writeLog();self::cleanLog();}
@@ -97,7 +113,11 @@ class mod_tools_Zip {
 				self::addLog("Zip File couldn't be extracted to Destination.");
 			}
 		}
+	}
 
+	public static function setArchiveComment($comment = NULL) {
+		if(!isset($comment)) return FALSE;
+		return self::_addArchiveComment($comment);
 	}
 
 	public static function compress($source, $include_dir = FALSE) {
@@ -134,8 +154,9 @@ class mod_tools_Zip {
 
 	private static function _openZip($file = NULL, $create = FALSE) {
 		$file = (is_null($file)) ? self::$backupfile : $file;
-		if($create && ($zipFile = self::$zip->open($file, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE)) === TRUE) {
+		if($create && ($zipFile = self::$zip->open($file, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) === TRUE)) {
 			self::$zipFile = TRUE;
+			self::_setArchiveComment(self::$version);
 			if(self::$debug) icms_core_Debug::message("Zip created");
 		} elseif(!$create && ($zipFile = self::$zip->open($file)) === TRUE) {
 			self::$zipFile = TRUE;
@@ -149,6 +170,10 @@ class mod_tools_Zip {
 
 	private static function _getNameByIndex($index) {
 		return self::$zip->getNameIndex((int)$index, ZIPARCHIVE::FL_UNCHANGED);
+	}
+
+	private static function _setArchiveComment($comment) {
+		self::$zip->setArchiveComment($comment);
 	}
 
 	private static function _compress($source, $include_dir) {

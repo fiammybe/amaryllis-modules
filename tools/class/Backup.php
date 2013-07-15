@@ -7,7 +7,7 @@
  * class for DB-Backup
  *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2013
- * @license		http://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License (GPL)
+ * @license		CC Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
  * ----------------------------------------------------------------------------------------------------------
  * 				Tools
  * @since		1.00
@@ -36,6 +36,7 @@ class mod_tools_Backup {
 	private static $toolsConfig = array();
 	private static $zipFile = NULL;
 	private static $debug = FALSE;
+	private static $case = FALSE;
 
 	private function __construct() {}
 
@@ -43,6 +44,7 @@ class mod_tools_Backup {
 	static public function &instance($debug = FALSE) {
 		static $instance;
 		if (!isset( $instance )) {
+			self::_reset();
 			$instance = new mod_tools_Backup();
 			self::$db = icms::$xoopsDB;
 			self::$debug = $debug;
@@ -50,9 +52,10 @@ class mod_tools_Backup {
 			self::$logfile = self::$logpath.'/log_backup.php';
 			self::$backuppath = ICMS_TRUST_PATH.'/modules/'.TOOLS_DIRNAME.'/backup';
 			self::$backupfile = self::$backuppath.'/backup_db.sql';
-			self::checkPaths();
+			self::_checkPaths();
+			self::$log[] = 'Backup-File: '.self::$backupfile;
+			self::$log[] = 'Log-File: '.self::$logfile;
 		}
-		if(self::$debug) icms_core_Debug::vardump($instance);
 		return $instance;
 	}
 
@@ -65,15 +68,31 @@ class mod_tools_Backup {
 		return self::_runFullBackup($file);
 	}
 
+	public static function setCase($case) {
+		self::$case = $case;
+	}
+
 	/**
 	 * private methods
 	 */
 
 	/** check, if the log path and file are available and create if not */
-	private static function checkPaths() {
+	private static function _checkPaths() {
 		if(!is_dir (self::$logpath)) mkdir(self::$logpath, 0777);
 		if(!is_dir (self::$backuppath)) mkdir(self::$backuppath, 0777);
 		if(!is_file(self::$logfile)) file_put_contents(self::$logfile, "<?\n/**\n#\n# Tools Backup Log file\n#\n*/\n\n");
+	}
+
+	private static function _reset() {
+		self::$backupfile = NULL;
+		self::$backuppath = NULL;
+		self::$case = NULL;
+		self::$db = NULL;
+		self::$debug = FALSE;
+		self::$log = array();
+		self::$logfile = NULL;
+		self::$toolsConfig = array();
+		self::$zipFile = NULL;
 	}
 
 	/** adding new log messages */
@@ -88,7 +107,8 @@ class mod_tools_Backup {
 
 	/** write log file */
 	private static function writeLog() {
-		file_put_contents(self::$logfile, join("\n",self::$log)."\n", FILE_APPEND | LOCK_EX);
+		if(($file = file_put_contents(self::$logfile, join("\n",self::$log)."\n", FILE_APPEND | LOCK_EX)) === FALSE)
+		if(self::$debug) icms_core_Debug::vardump("Trying to write Log: ". $file);
 	}
 
 	/** fetch log result and add to log */
@@ -207,7 +227,11 @@ class mod_tools_Backup {
 		$len = file_put_contents($backupFile, $datadump, LOCK_EX);
 		if($len === FALSE) self::addLog("Error on writing dump file");
 		if(self::$debug) icms_core_Debug::vardump(self::$log);
-		if($pack) self::_packBackup($backupFile);
+		if($pack) {
+			self::_packBackup($backupFile);
+			self::_sendAdminmail();
+			self::writeLog();
+		}
 		self::updateConfig();
 	}
 
@@ -216,14 +240,14 @@ class mod_tools_Backup {
 		if(self::$debug) icms_core_Debug::message("DB Backup complete");
 		try {
 			if(self::$debug) icms_core_Debug::message("Trying to get zip instance");
-			mod_tools_Zip::instance(NULL, self::$debug);
+			$toolsZip = mod_tools_Zip::instance(NULL, NULL, self::$debug);
 			self::addLog("Zipping has been triggered!");
-			mod_tools_Zip::openZip(NULL, TRUE);
-			while(mod_tools_Zip::compress(ICMS_TRUST_PATH.'/', TRUE)) {}
-			while(mod_tools_Zip::compress(ICMS_UPLOAD_PATH.'/', TRUE)) {}
-			while(mod_tools_Zip::compress(ICMS_ROOT_PATH.'/themes/', TRUE)) {}
-			while(mod_tools_Zip::compress(self::$backupfile)){}
-			self::$zipFile = mod_tools_Zip::closeZip();
+			$toolsZip::openZip(NULL, TRUE);
+			while($toolsZip::compress(ICMS_TRUST_PATH.'/', TRUE)) {}
+			while($toolsZip::compress(ICMS_UPLOAD_PATH.'/', TRUE)) {}
+			while($toolsZip::compress(ICMS_ROOT_PATH.'/themes/', TRUE)) {}
+			while($toolsZip::compress(self::$backupfile)){}
+			self::$zipFile = $toolsZip::closeZip();
 			if(self::$debug) icms_core_Debug::message("Zip-File: ".self::$zipFile);
 			while($move = self::_moveToFtp(TRUE)) {}
 		} catch (Exception $e) {
@@ -233,6 +257,7 @@ class mod_tools_Backup {
 				self::addLog($msg);
 			}
 		}
+		self::_sendAdminmail(TRUE);
 		self::writeLog();
 	}
 
@@ -241,14 +266,14 @@ class mod_tools_Backup {
 		if(self::$debug) icms_core_Debug::vardump(self::$toolsConfig);
 		if(self::$toolsConfig['enable_ftp'] == 1 && self::$toolsConfig['ftp_pass'] !== "") {
 			self::addLog("FTP triggered");
-			if(mod_tools_Ftp::instance(self::$debug)) {
+			if($toolsFtp = mod_tools_Ftp::instance(self::$debug)) {
 				self::addLog("FTP instance successfully");
-				mod_tools_Ftp::ftpLogin(trim(self::$toolsConfig['ftp_url']), trim(self::$toolsConfig['ftp_user']), trim(self::$toolsConfig['ftp_pass']), trim(self::$toolsConfig['ftp_path']));
-				mod_tools_Ftp::getPassive(TRUE);
-				mod_tools_Ftp::ftpMkdir("tools_backup_".date('Y-m-d--H:i:s'), TRUE);
+				$toolsFtp::ftpLogin(trim(self::$toolsConfig['ftp_url']), trim(self::$toolsConfig['ftp_user']), trim(self::$toolsConfig['ftp_pass']), trim(self::$toolsConfig['ftp_path']));
+				$toolsFtp::getPassive(TRUE);
+				$toolsFtp::ftpMkdir("tools_backup_".date('Y-m-d--H:i:s'), TRUE);
 
-				if(($up = mod_tools_Ftp::moveFile(self::$zipFile))!==FALSE && $rmv !== FALSE) @unlink(self::$zipFile);
-				mod_tools_Ftp::disconnect();
+				if(($up = $toolsFtp::moveFile(self::$zipFile))!==FALSE && $rmv !== FALSE) @unlink(self::$zipFile);
+				$toolsFtp::disconnect();
 				self::$zipFile = FALSE;
 			}
 		}
@@ -261,6 +286,45 @@ class mod_tools_Backup {
 			self::$toolsConfig = $toolsModule->config;
 		} else {
 			self::$toolsConfig = icms_getModuleConfig(TOOLS_DIRNAME);
+		}
+	}
+
+	private static function _sendAdminmail($fullBackup = FALSE) {
+		global $icmsConfigMailer, $icmsConfig;
+		$mail_handler = new icms_messaging_Handler();
+		if($icmsConfigMailer['from'] == "") {
+			self::$log[] = "Your Mail-Configuration is not set. Missing \"from email\"";
+			if(self::$debug) icms_core_Debug::message("Your Mail-Configuration is not set");
+			return FALSE;
+		}
+		if($icmsConfigMailer['fromname'] == "") {
+			self::$log[] = "Your Mail-Configuration is not set. Missing 'from name' ";
+			if(self::$debug) icms_core_Debug::message("Your Mail-Configuration is not set");
+			return FALSE;
+		}
+		if($icmsConfig['adminmail'] == "") {
+			self::$log[] = "Your Main Configuration is not complete. Missing 'Admin-E-Mail' ";
+			if(self::$debug) icms_core_Debug::message("Your Mail-Configuration is not set");
+			return FALSE;
+		}
+		$mail_handler->setFromEmail($icmsConfigMailer['from']);
+		$mail_handler->setFromName($icmsConfigMailer['fromname']);
+		$mail_handler->setToEmails($icmsConfig['adminmail']);
+		$mail_handler->setSubject(icms_core_DataFilter::undoHtmlSpecialChars("Tools Backup Notification"));
+		if($fullBackup) {
+			$body = "Tools Full backup was triggered on ".formatTimestamp(time())." by ";
+		} else {
+			$body = "Tools Simple backup was triggered on ".formatTimestamp(time())." by ";
+		}
+		$body .= self::$case.'<br />';
+		$body .= implode("<br />", self::$log);
+		$mail_handler->useMail();
+		$mail_handler->addHeaders("Content-type: text/html; charset=utf-8");
+		$mail_handler->addHeaders("MIME-Version: 1.0");
+		$mail_handler->setBody(icms_core_DataFilter::undoHtmlSpecialChars($body));
+		$mail_handler->send(self::$debug);
+		if(self::$debug /*&& $mail_handler->getErrors()*/) {
+			self::$log[] = "** Mailer Errors **\n". implode("\n", $mail_handler->getErrors(FALSE));
 		}
 	}
 
@@ -279,20 +343,15 @@ class mod_tools_Backup {
 	}
 
 	private static function _packBackup($file) {
-		$zip = new ZipArchive();
-		$path = self::$backuppath;
-		if(is_file($path.'/db_backup.zip')) unlink($path.'/db_backup.zip');
-		$archive = $zip->open($path.'/db_backup.zip', ZipArchive::CREATE);
-		if($archive === TRUE) {
-			if(is_file($file)) {
-				$zip->addFile($file, "backup_db.sql");
-			} else {
-				self::addLog(sprintf(_AM_TOOLS_BACKUP_FILE_NOT_FOUND, $file));
-			}
-			$zip->close();
+		$toolsZip = mod_tools_Zip::instance(NULL, 'db_backup.zip', self::$debug);
+		$archive = $toolsZip::openZip(NULL, TRUE);
+		if(is_file($file)) {
+			$toolsZip::compress($file);
 		} else {
-			$time = date("Y-m-d H:i:s");
-			self::addLog("Message: Zip could not be opened! ERROR-CODE: $archive \n File: $file\nPath: $path\nTime: $time\n");
+			self::addLog(sprintf(_AM_TOOLS_BACKUP_FILE_NOT_FOUND, $file));
 		}
+		self::$zipFile = $toolsZip::closeZip();
+		if(self::$debug) icms_core_Debug::message("Zip-File: ".self::$zipFile);
+		while($move = self::_moveToFtp(TRUE)) {}
 	}
 }
