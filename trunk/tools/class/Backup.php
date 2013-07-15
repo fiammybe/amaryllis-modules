@@ -323,7 +323,7 @@ class mod_tools_Backup {
 		$mail_handler->addHeaders("MIME-Version: 1.0");
 		$mail_handler->setBody(icms_core_DataFilter::undoHtmlSpecialChars($body));
 		$mail_handler->send(self::$debug);
-		if(self::$debug /*&& $mail_handler->getErrors()*/) {
+		if(self::$debug && $mail_handler->getErrors()) {
 			self::$log[] = "** Mailer Errors **\n". implode("\n", $mail_handler->getErrors(FALSE));
 		}
 	}

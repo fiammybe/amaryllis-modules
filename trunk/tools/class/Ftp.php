@@ -113,7 +113,7 @@ class mod_tools_Ftp {
 			self::addLog("Connection successfully established");
 			if(self::$debug) icms_core_Debug::message("Connection successfully established");
 		}
-		if($dir != FALSE) {
+		if($dir != FALSE && $dir !== "" && $dir !== "/") {
 			self::_changeDir($dir);
 		}
 	}
