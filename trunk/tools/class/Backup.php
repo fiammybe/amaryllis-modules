@@ -64,7 +64,7 @@ class mod_tools_Backup {
 	}
 
 	public static function runFullBackup($file = NULL) {
-		if(self::$debug) icms_core_Debug::message("Full Backup triggered");
+		if(self::$debug) icms_core_Debug::message(_AM_TOOLS_BACKUP_TRIGGERED);
 		return self::_runFullBackup($file);
 	}
 
@@ -162,7 +162,7 @@ class mod_tools_Backup {
 	}
 
 	private static function _runBackup($backupFile = NULL, $pack = TRUE){
-		if(self::$debug) icms_core_Debug::message("Backup Started at ".formatTimestamp(time()));
+		if(self::$debug) icms_core_Debug::message(sprintf(_AM_TOOLS_BACKUP_STARTED, formatTimestamp(time())));
 		if(is_null($backupFile)) $backupFile = self::$backupfile;
 		if(is_file($backupFile)) @unlink($backupFile);
 		$tables = array(); $db_name = XOOPS_DB_NAME;
@@ -170,7 +170,7 @@ class mod_tools_Backup {
 		$sql = "SHOW TABLES LIKE '".$prefix."_%' ";
 		$result = self::$db->queryF($sql);
 		if(!$result) {
-			self::addLog('Could not retrieve tables: ' . self::$db->error());
+			self::addLog(_AM_TOOLS_BACKUP_NO_TABLES.': ' . self::$db->error());
 		} else {
 			while ($myrow = self::$db->fetchArray($result)) {
 				$value = array_values($myrow);
@@ -292,30 +292,30 @@ class mod_tools_Backup {
 		global $icmsConfigMailer, $icmsConfig;
 		$mail_handler = new icms_messaging_Handler();
 		if($icmsConfigMailer['from'] == "") {
-			self::$log[] = "Your Mail-Configuration is not set. Missing \"from email\"";
-			if(self::$debug) icms_core_Debug::message("Your Mail-Configuration is not set");
+			self::$log[] = _AM_TOOLS_BACKUP_MAIL_FAILED_CONFIG_FROM;
+			if(self::$debug) icms_core_Debug::message(_AM_TOOLS_BACKUP_MAIL_FAILED_CONFIG_FROM);
 			return FALSE;
 		}
 		if($icmsConfigMailer['fromname'] == "") {
-			self::$log[] = "Your Mail-Configuration is not set. Missing 'from name' ";
-			if(self::$debug) icms_core_Debug::message("Your Mail-Configuration is not set");
+			self::$log[] = _AM_TOOLS_BACKUP_MAIL_FAILED_CONFIG_FROM_NAME;
+			if(self::$debug) icms_core_Debug::message(_AM_TOOLS_BACKUP_MAIL_FAILED_CONFIG_FROM_NAME);
 			return FALSE;
 		}
 		if($icmsConfig['adminmail'] == "") {
-			self::$log[] = "Your Main Configuration is not complete. Missing 'Admin-E-Mail' ";
-			if(self::$debug) icms_core_Debug::message("Your Mail-Configuration is not set");
+			self::$log[] = _AM_TOOLS_BACKUP_MAIL_FAILED_CONFIG_ADMIN_MAIL;
+			if(self::$debug) icms_core_Debug::message(_AM_TOOLS_BACKUP_MAIL_FAILED_CONFIG_ADMIN_MAIL);
 			return FALSE;
 		}
 		$mail_handler->setFromEmail($icmsConfigMailer['from']);
 		$mail_handler->setFromName($icmsConfigMailer['fromname']);
 		$mail_handler->setToEmails($icmsConfig['adminmail']);
-		$mail_handler->setSubject(icms_core_DataFilter::undoHtmlSpecialChars("Tools Backup Notification"));
+		$mail_handler->setSubject(icms_core_DataFilter::undoHtmlSpecialChars(_AM_TOOLS_BACKUP_MAIL_SUBJ));
 		if($fullBackup) {
-			$body = "Tools Full backup was triggered on ".formatTimestamp(time())." by ";
+			$body = sprintf(_AM_TOOLS_BACKUP_FULL_TRIGGERED_ON, formatTimestamp(time()));
 		} else {
-			$body = "Tools Simple backup was triggered on ".formatTimestamp(time())." by ";
+			$body = sprintf(_AM_TOOLS_BACKUP_SIMPLE_TRIGGERED_ON, formatTimestamp(time()));
 		}
-		$body .= self::$case.'<br />';
+		$body .= '<br />'.self::$case.'<br />';
 		$body .= implode("<br />", self::$log);
 		$mail_handler->useMail();
 		$mail_handler->addHeaders("Content-type: text/html; charset=utf-8");

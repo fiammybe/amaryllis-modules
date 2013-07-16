@@ -69,11 +69,29 @@ define("_AM_TOOLS_BACKUP_FILE_NOT_FOUND", "Datei '%s' nicht gefunden, um sie zu 
 define("_AM_TOOLS_BACKUP_DOWN_FTP_LOG", "FTP-Log herunterladen");
 define("_AM_TOOLS_BACKUP_DOWN_ZIP_LOG", "Zip-Log herunterladen");
 define("_AM_TOOLS_BACKUP_DOWN_BACK_LOG", "Sicherungs-Log herunterladen");
+define("_AM_TOOLS_BACKUP_TRIGGERED", "Vollständige Datensicherung eingeleitet");
+define("_AM_TOOLS_BACKUP_ACCESS_DENIED_CLI", "Zugriff verweigert - Sie können das Skript nicht direkt aufrufen!");
+define("_AM_TOOLS_BACKUP_REQUIRE_CLI", "Das Skript muss via shell aufgerufen werden (SSH)");
+define("_AM_TOOLS_BACKUP_REQUIRE_NOT_CLI", "Das Skript muss nicht via shell aufgerufen werden (SSH)");
+define("_AM_TOOLS_BACKUP_TOOLS_LOADED", "Tools Modul geladen");
+define("_AM_TOOLS_BACKUP_NO_TABLES", "Tabellen konnten nicht geladen werden");
+define("_AM_TOOLS_BACKUP_STARTED", "Datensicherung wurde am %s gestartet");
+define("_AM_TOOLS_BACKUP_MAIL_FAILED_CONFIG_FROM", "Ihre E-Mail-Konfiguration ist nicht eingerichtet. \"Von-E-Mail Adresse\" ist leer");
+define("_AM_TOOLS_BACKUP_MAIL_FAILED_CONFIG_FROM_NAME", "Ihre E-Mail-Konfiguration ist nicht eingerichtet. \"Von-Name\" ist leer");
+define("_AM_TOOLS_BACKUP_MAIL_FAILED_CONFIG_ADMIN_MAIL", "Ihre Haupt-Konfiguration ist nicht komplett. \"Admin-E-Mail\" ist leer");
+define("_AM_TOOLS_BACKUP_MAIL_SUBJ", "Tools Datensicherungs-Benachrichtigung");
+define("_AM_TOOLS_BACKUP_FULL_TRIGGERED_ON", "Vollständige Datensicherung wurde am %s ausgeführt");
+define("_AM_TOOLS_BACKUP_SIMPLE_TRIGGERED_ON", "Einfache Datensicherung wurde am %s ausgeführt");
+define("_AM_TOOLS_BACKUP_TRIGGERED_BY", "Die Datensicherung wurde durch %s eingeleitet");
+define("_AM_TOOLS_BACKUP_TRIGGERED_BY_BUTTON_CLICK", "Button-Klick von %s");
 // Zip
 define("_AM_TOOLS_ZIP_EXTENSION_FAILED", "Zip-Erweiterung in PHP nicht geladen");
 define("_AM_TOOLS_ZIP_FAILED_OPEN", "Zip-Archiv konnte nicht geöffnet werden. Fehler Code: %d");
 define("_AM_TOOLS_ZIP_FAILED_ADD_FILE", "Datei %s konnte nicht gefunden werden");
 define("_AM_TOOLS_ZIP_FAILED_ADD_DIR", "Verzeichnis %s konnte nicht gefunden werden");
+define("_AM_TOOLS_ZIP_FAILED_EXTRACT_ZIP", "Zip Datei konnte nicht zum Zielort extrahiert werden.");
+define("_AM_TOOLS_ZIP_FAILED_EXTRACT_ZIPFILES", "Die Dateien %s konnten nicht zum Ziel entpackt werden.");
+define("_AM_TOOLS_ZIP_FAILED_DESTINATION", "Sie müssen einen Zielort für das entpacken angeben.");
 // Modules upload
 define("_AM_TOOLS_MODULES_UPLOAD_FORM", "Lade ein neues Modul hoch");
 define("_AM_TOOLS_MODULES_UPLOAD_FILE", "Zip-Datei mit dem Modul");

@@ -26,7 +26,7 @@ icms::$module->registerClassPath(TRUE);
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, "op", FILTER_SANITIZE_STRING) : "";
 $clean_op = isset($_POST['op']) ? filter_input(INPUT_POST, "op", FILTER_SANITIZE_STRING) : $clean_op;
 
-$valid_op = array("add_module", "add_theme", "theme_ok", "module_ok", "");
+$valid_op = array("add_module", "add_theme", "theme_ok", "module_ok", "del_module", "");
 
 if(in_array($clean_op, $valid_op, TRUE)) {
 	$icmsAdminTpl->assign("tools_title", _MI_TOOLS_MENU_MODULESADD);
@@ -124,7 +124,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				redirect_header("modulesadd.php", 5, $uploader->getErrors());
 			}
 			break;
-
 		case 'theme_ok':
 		case 'module_ok':
 		default:
@@ -136,6 +135,13 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 							_AM_TOOLS_MODULES_INSTALL_OK.
 							'</p><p><a class="tools_backup" href="'.ICMS_MODULES_URL.'/system/admin.php?fct=modulesadmin&op='.$clean_trigger.'&module='.$clean_module.'" title="'._AM_TOOLS_MODULES_GOTO.
 							'">'._AM_TOOLS_MODULES_GOTO.' &raquo;</a></p>'.
+					'</p></div>';
+			}
+			if($clean_op == "theme_ok") {
+				echo '<div class="tools_ok"><p>'.
+							_AM_TOOLS_THEMES_GOTO.
+							'</p><p><a class="tools_backup" href="'.ICMS_MODULES_URL.'/system/admin.php?fct=preferences&op=show&confcat_id=1" title="'._AM_TOOLS_THEMES_GOTO.
+							'">'._AM_TOOLS_THEMES_GOTO.' &raquo;</a></p>'.
 					'</p></div>';
 			}
 			if(!is_writable(ICMS_ROOT_PATH.'/modules')) {
@@ -153,12 +159,12 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				if(@chmod(ICMS_ROOT_PATH.'/themes', 0777) === FALSE)
 				echo "<div class='tools_attention'>"._AM_TOOLS_THEMES_FAIL_WRITABLE.'</div>';
 			} else {
-				$form = new icms_form_Theme(_AM_TOOLS_THEMES_UPLOAD_FORM, "addtheme", $_SERVER['PHP_SELF'], "post", TRUE);
-				$form->setExtra('enctype="multipart/form-data"');
-				$form->addElement(new icms_form_elements_File(_AM_TOOLS_THEMES_UPLOAD_FILE, "add_tfile", 20000000));
-				$form->addElement(new icms_form_elements_Hidden("op", "add_theme"));
-				$form->addElement(new icms_form_elements_Button("", "submit", _SUBMIT, 'submit'));
-				$form->display();
+				$form3 = new icms_form_Theme(_AM_TOOLS_THEMES_UPLOAD_FORM, "addtheme", $_SERVER['PHP_SELF'], "post", TRUE);
+				$form3->setExtra('enctype="multipart/form-data"');
+				$form3->addElement(new icms_form_elements_File(_AM_TOOLS_THEMES_UPLOAD_FILE, "add_tfile", 20000000));
+				$form3->addElement(new icms_form_elements_Hidden("op", "add_theme"));
+				$form3->addElement(new icms_form_elements_Button("", "submit", _SUBMIT, 'submit'));
+				$form3->display();
 			}
 			break;
 	}
