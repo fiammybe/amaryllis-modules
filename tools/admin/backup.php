@@ -40,7 +40,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			//require_once TOOLS_ROOT_PATH.'class/Backup.php';
 			$backup = mod_tools_Backup::instance(TRUE);
 			$uname = icms::$user->getVar("uname");
-			$backup::setCase("Button-Trigger by ".$uname);
+			$backup::setCase(sprintf(_AM_TOOLS_BACKUP_TRIGGERED_BY_BUTTON_CLICK, $uname));
 			ob_start();
 			while($backup::runFullBackup()) {
 				sleep(1);
@@ -54,7 +54,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			//require_once TOOLS_ROOT_PATH.'class/Backup.php';
 			$backup = mod_tools_Backup::instance();
 			$uname = icms::$user->getVar("uname");
-			$backup::setCase("Button-Trigger by ".$uname);
+			$backup::setCase(sprintf(_AM_TOOLS_BACKUP_TRIGGERED_BY_BUTTON_CLICK, $uname));
 			ob_start();
 			while($backup::runBackup()) {
 				sleep(1);

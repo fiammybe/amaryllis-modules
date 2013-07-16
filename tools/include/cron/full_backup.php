@@ -41,10 +41,11 @@ $toolsModule_handler = icms::handler('icms_module');
 $toolsModule = $toolsModule_handler->getByDirname(TOOLS_DIRNAME, TRUE);
 if(!is_object($toolsModule)) die("Access denied");
 $toolsModule_id = $toolsModule->getVar("mid");
-if($toolsModule->config["require_cli"] == 1 && !defined('STDIN'))die("Access Denied - You can not call this script directly!");
-$require_cli = ($toolsModule->config["require_cli"] == 1) ? "Script requires to be triggered from SSH" : "Script does not require to be triggered from SSH";
+if($toolsModule->config["require_cli"] == 1 && !defined('STDIN'))die(_AM_TOOLS_BACKUP_ACCESS_DENIED_CLI);
+
 if($debug) {
-	icms_core_Debug::message("Tools Module loaded ".$require_cli);
+	$require_cli = ($toolsModule->config["require_cli"] == 1) ? _AM_TOOLS_BACKUP_REQUIRE_CLI : _AM_TOOLS_BACKUP_REQUIRE_NOT_CLI;
+	icms_core_Debug::message(_AM_TOOLS_BACKUP_TOOLS_LOADED." ".$require_cli);
 }
 $icmsAuth = icms_auth_Factory::getAuthConnection(icms_core_DataFilter::addSlashes($uname));
 
@@ -58,10 +59,6 @@ if(!$user || !is_object($user) || !$user->isAdmin($toolsModule_id)) die("Access 
 $toolsModule->setVar("ipf", TRUE);
 $toolsModule->registerClassPath();
 
-mod_tools_Backup::instance($debug);
-mod_tools_Backup::runFullBackup();
-if($debug) {
-	icms::$logger->dump("errors");
-}
-echo "Backup successfully triggered";
-exit;
+$toolsBackup = mod_tools_Backup::instance($debug);
+$toolsBackup::setCase("Cron Job by ".$user->getVar("uname"));
+$toolsBackup::runFullBackup();

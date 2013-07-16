@@ -38,7 +38,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'trigger_all':
 			$tools = mod_tools_Tools::instance();
 			ob_start();
-			while($tools::runTools()) {
+			while($run = $tools::runTools()) {
 				sleep(1);
 				flush();
 				ob_flush();
@@ -49,7 +49,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'trigger_cache':
 			$tools = mod_tools_Tools::instance();
 			ob_start();
-			while($tools::clearCache()) {
+			while($cache = $tools::clearCache()) {
 				sleep(1);
 				flush();
 				ob_flush();
@@ -60,7 +60,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'trigger_sessions':
 			$tools = mod_tools_Tools::instance();
 			ob_start();
-			while($tools::clearSessions()) {
+			while($sess = $tools::clearSessions()) {
 				sleep(1);
 				flush();
 				ob_flush();
@@ -71,7 +71,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		case 'trigger_templates':
 			$tools = mod_tools_Tools::instance();
 			ob_start();
-			while($tools::clearTemplates()) {
+			while($temp = $tools::clearTemplates()) {
 				sleep(1);
 				flush();
 				ob_flush();

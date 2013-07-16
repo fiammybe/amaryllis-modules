@@ -52,7 +52,7 @@ class mod_tools_Zip {
 				$module = icms::handler('icms_module')->getByDirname(TOOLS_DIRNAME);
 				$version = number_format($module->getVar('version')/100, 2);
 				$version = !substr($version, -1, 1) ? substr($version, 0, 3) : $version;
-				self::$version = "Zip File Generator: Tools".$version;
+				self::$version = "Zip File Generator: Tools ".$version;
 				unset($module);
 			}
 		}
@@ -102,15 +102,15 @@ class mod_tools_Zip {
 	}
 
 	public static function extractZip($dest = "", $files = array()) {
-		if($dest == "") self::addLog("You need to give a Destination where to extrakt");
+		if($dest == "") self::addLog(_AM_TOOLS_ZIP_FAILED_DESTINATION);
 		if(!empty($files)) {
 			if(self::$zip->extractTo($dest, $files) === FALSE) {
 				$files = implode(", ", $files);
-				self::addLog("Files $files couldn't be extracted to Destination.");
+				self::addLog(sprintf(_AM_TOOLS_ZIP_FAILED_EXTRACT_ZIPFILES, $files));
 			}
 		} else {
 			if(self::$zip->extractTo($dest) === FALSE) {
-				self::addLog("Zip File couldn't be extracted to Destination.");
+				self::addLog(_AM_TOOLS_ZIP_FAILED_EXTRACT_ZIP);
 			}
 		}
 	}
