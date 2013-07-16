@@ -83,7 +83,7 @@ define("_AM_TOOLS_BACKUP_MAIL_SUBJ", "Tools Datensicherungs-Benachrichtigung");
 define("_AM_TOOLS_BACKUP_FULL_TRIGGERED_ON", "Vollständige Datensicherung wurde am %s ausgeführt");
 define("_AM_TOOLS_BACKUP_SIMPLE_TRIGGERED_ON", "Einfache Datensicherung wurde am %s ausgeführt");
 define("_AM_TOOLS_BACKUP_TRIGGERED_BY", "Die Datensicherung wurde durch %s eingeleitet");
-define("_AM_TOOLS_BACKUP_TRIGGERED_BY_BUTTON_CLICK", "Button-Klick von %s");
+define("_AM_TOOLS_BACKUP_TRIGGERED_BY_BUTTON_CLICK", "Backup wurde aufgerufen durch Button-Klick von %s");
 // Zip
 define("_AM_TOOLS_ZIP_EXTENSION_FAILED", "Zip-Erweiterung in PHP nicht geladen");
 define("_AM_TOOLS_ZIP_FAILED_OPEN", "Zip-Archiv konnte nicht geöffnet werden. Fehler Code: %d");

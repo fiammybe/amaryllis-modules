@@ -83,7 +83,7 @@ define("_AM_TOOLS_BACKUP_MAIL_SUBJ", "Tools Backup Notification");
 define("_AM_TOOLS_BACKUP_FULL_TRIGGERED_ON", "Full Backup triggered on %s");
 define("_AM_TOOLS_BACKUP_SIMPLE_TRIGGERED_ON", "Simple Backup triggered on %s");
 define("_AM_TOOLS_BACKUP_TRIGGERED_BY", "Backup triggered by %s");
-define("_AM_TOOLS_BACKUP_TRIGGERED_BY_BUTTON_CLICK", "Button-Trigger by %s");
+define("_AM_TOOLS_BACKUP_TRIGGERED_BY_BUTTON_CLICK", "Backup triggered by Button-Trigger by %s");
 // Zip
 define("_AM_TOOLS_ZIP_EXTENSION_FAILED", "Zip-Extension in php.ini not loaded");
 define("_AM_TOOLS_ZIP_FAILED_OPEN", "Zip-Archiv couldn't been opened. Error Code: %d");
