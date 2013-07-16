@@ -162,7 +162,7 @@ class mod_tools_Backup {
 	}
 
 	private static function _runBackup($backupFile = NULL, $pack = TRUE){
-		if(self::$debug) icms_core_Debug::message(sprintf(_AM_TOOLS_BACKUP_STARTED, formatTimestamp(time())));
+		if(self::$debug) {icms_core_Debug::message(sprintf(_AM_TOOLS_BACKUP_STARTED, formatTimestamp(time())));}
 		if(is_null($backupFile)) $backupFile = self::$backupfile;
 		if(is_file($backupFile)) @unlink($backupFile);
 		$tables = array(); $db_name = XOOPS_DB_NAME;
@@ -237,7 +237,7 @@ class mod_tools_Backup {
 
 	private static function _runFullBackup($file) {
 		while(self::_runBackup($file, FALSE)) {}
-		if(self::$debug) icms_core_Debug::message("DB Backup complete");
+		if(self::$debug) {icms_core_Debug::message("DB Backup complete");}
 		try {
 			if(self::$debug) icms_core_Debug::message("Trying to get zip instance");
 			$toolsZip = mod_tools_Zip::instance(NULL, NULL, self::$debug);
