@@ -1,21 +1,153 @@
 <div id="tools_manual">
     <h1>Tools Manual</h1>
-    	<p>"Tools" is a small module to provide autotasks for clearing cache, optimizing DB-Tabels and some more</p>
+    	<p>
+    		"Tools" is a small Module to provide Auto Tasks to clear cache-/templates_c directory, maintain Database tables and clear sessions. Also
+    		it can run simple (only Database) and full (Database with TRUST, themes und uploads-directory) Backup. All funktions
+    		can also triggered by Button-click or as Cron Job. Both with possibility to move the backup via ftp to another destination.
+    	</p>
     <h2 id="index">Index</h2>
     <ul>
     	<li><a href="#keyfeatures">Keyfeatures</a></li>
     	<li><a href="#firsstart">First Start</a></li>
+    	<li><a href="#tools_cron_job">Cron-Jobs</a></li>
+    	<li><a href="#module_upload">Module upload</a></li>
+    	<li><a href="#theme_upload">Theme upload</a></li>
+    	<li><a href="#ftp_backup">FTP-Backup</a></li>
+    	<li><a href="#mail_notif">E-Mail Notifications</a></li>
     	<li><a href="#tools_footer">Conclusion</a></li>
     </ul>
-    <h2>Keyfeatures</h2>
+    <h2 id="keyfeatures">Keyfeatures</h2>
 		<ul>
-			<li>Optimizing, Repairing and analyzing DB-Tables in an autotask</li>
-			<li>Clear templates_c folder in an autotask</li>
-			<li>Clear sessions in an autotask</li>
+			<li>Optimizing, repairing and analyze your Database tables as Cron-Job and Auto task</li>
+			<li>"templates_c" and/or "cache" clean-up</li>
+			<li>Sessions clean-up</li>
+			<li>Database-Backup and full Backup including Trust, themes and Uploads-directory from back end or via Cron-Job (additional FTP-Backup possible)</li>
+			<li>Themes and modules can be uploaded to default destination</li>
 		</ul>
+	<h2 id="firsstart">First Start</h2>
 	<h3>How to use Tools</h3>
 		<p>
-			Tools can easily setup your autotasks. Please, go to system &raquo; System Tools &raquo; Auto Tasks. There you'll find some new auto tasks. At least, you can decide yourself,
-			if you prefer running them seperatly or even all at once by using the samled tools-autotask to run all at once to the same time.
+			The "Tools" are small helper tu trigger maintenance of your Webseite or as a little help while developing and designing ImpressCMS using following features:
 		</p>
+			<ul>
+				<li><b>Maintain Database:</b>
+					This button triggers "CHECK TABLE", "REPAIR TABLE",
+					"ANALYZE TABLE" and "OPTIMIZE TABLE" to keep your icms-tables clean and fast ;-)
+				</li>
+				<li>
+					<b>"templates_c" and "cache" clean-up:</b>
+					cleans each of the folders.
+				</li>
+				<li>
+					<b>"sessions" clean-up:</b>
+					Truncate "sessions" table.
+				</li>
+			</ul>
+
+			<p>
+				The tools can easily be triggered by Auto Tasks. Please call in ACP: System &raquo; System Tools &raquo; Auto Tasks.
+				There you can find a few new Auto Tasks. At least you can decide, if you like to trigger all tools at once or even some of them.
+			</p>
+	<h3>The Backup</h3>
+		<p>You have two options to trigger backups:</p>
+		<ul>
+			<li>
+				<b>Simple backup</b>
+				Triggers a full DB-Backup and stores this packed in a Zip-File in your Trust-directory in &laquo;modules/tools/backup/db_backup.zip&raquo;
+			</li>
+			<li><b>full backup:</b>
+				Triggers a full DB-Backup and stores including Trust-Path, Upload-and themes directory in a Zip-File into your Trust
+				 &laquo;modules/tools/backup/backup_sql.zip&raquo; or submit your data via FTP to another Server.
+				<div class="tools_attention">
+					<p>
+						ATTENTION: This should NOT be called from Backend, only as <a href="#tools_cron_job" title="Cron-Job">Cron-Job</a>! You might run for
+						test the backup with ftp, but it's highly recommanded to use this feature only without ftp or as Cron Job!</p>
+				</div>
+			</li>
+		</ul>
+	<h2 id="tools_cron_job">Cron Jobs</h2>
+		<p>Cron-Jobs werden beim Webhoster eingerichtet, um Aufgaben automatisch vom Server ausführen zu lassen. Bei Backups ist das A: sicher(er) und B: weniger Ressourcen-Lastig wie ein
+			Backup via Auto Task. Um den Cron-Job ausführen zu können bitte beim Webhost nachschauen. In das Ziel des Cronjobs muss die Url des gewüschten Jobs eingegeben werden und
+			die Parameter: uname=user&password=password mit angehängt. Username und password bitte mit denen eines Users ersetzen, der administrativen Zugriff auf das Tools-Modul hat</p>
+			<p><b><i>www.meine-seite.de/modules/tools/include/cron/backup.php?uname=user&password=password</i></b> <span class="tools_highlighted">Führt ein Datenbank-backup OHNE die Ordner Trust und uploads aus</span></p>
+			<p><b><i>www.meine-seite.de/modules/tools/include/cron/full_backup.php?uname=user&password=password</i></b> <span class="tools_highlighted">Führt ein Datenbank-backup MIT den Ordner Trust, themes und uploads aus</span></p>
+			<p><b><i>www.meine-seite.de/modules/tools/include/cron/tools.php?uname=user&password=password</i></b> <span class="tools_highlighted">Führt alle Tools aus</span></p>
+			<p>Wenn Probleme auftreten (z.B. nicht ausgeführter Cron), kann man jeweils noch "&debug=1" aufrufen</p>
+			<p>
+				Je nach Server/Webhost kann man auch den Cron-Job via Console/SSH ausführen. in diesem Fall bisste die parameter in der gleichen Reihenfolge übergeben.
+				(<b>ssh user@localhost /path/to/my/root/modules/tools/include/cron/full_backup.php -username=user -password=password -debug=1</b>). Bitte in diesem Fall in der Config einstellen, dass die Cron-Jobs
+				nur via SSH laufen dürfen!
+			</p>
+			<div class="tools_attention">
+				<p>
+					Für den Fall, dass die Cron-Jobs <span class="tools_highlighted">nicht</span> via SSH ausgeführt werden können, wird empfohlen einen Verzeichnisschutz anzulegen!
+					Beispieldateien sind im Ordner <b>tools/include/cron/</b> enthalten. Einfach an die eigenen Daten angleichen und hochladen. Nicht vergessen, die Daten im
+					Cron Job bei dem Webhoster mit anzugeben! Die meisten Webhoster bieten an, diesen Verzeichnisschutz zu generieren. Ansonsten nutzen Sie	google.de ;-)
+				</p>
+			</div>
+	<h2 id="module_upload">Module hochladen</h2>
+		<p>
+			Die Modul-upload funktion kann genutzt werden, um Module zu installieren bzw. zu aktualisieren. Wenn man auf den Tab "Module/Themes hochladen" klickt, sollte man im Regelfall
+			zum upload-Formular kommen. Ist der Modul-Ordner nicht beschreibbar und dies lässt sich nicht ändern erscheint eine Fehlermeldung und man muss erst die Berechtigungen angleichen.
+			Dazu bitte ein FTP-Programm nutzen und die Rechte des Modul-Ordners angleichen.
+		</p>
+		<p>
+			Um Module hochladen zu können, müssen diese im Format "zip" gepackt sein. Diese Zip-Datei sollte:
+		</p>
+		<ul>
+			<li>nur den Modul-Ordner des gewünschten Moduls enthalen ODER</li>
+			<li>1 Modul gepackt als /modules/modul-ordner</li>
+		</ul>
+		<p>
+			Bitte nicht mehrere Module zeitgleich packen! Nun das Modul über das Upload-Formular hochladen (dieser Vorgang kann je nach
+			Modul-Größe auch etwas dauern) und anschließend dem Link folgen, um das Modul sofort zu installieren/aktualisieren.
+		</p>
+		<div class="tools_attention">
+			<p>
+				Für den Fall, dass das Modul auch eine eigene Bibliothek enthält (Ordner "libraries") oder sonst einen zusätzlichen Orner wird dieser ignoriert!
+			</p>
+		</div>
+	<h2 id="theme_upload">Themes hochladen</h2>
+		<p>
+			Die Theme-upload funktion kann genutzt werden, um Themes zu installieren bzw. zu aktualisieren. Wenn man auf den Tab "Module/Themes hochladen" klickt, sollte man im Regelfall
+			zum upload-Formular kommen. Ist der Themes-Ordner nicht beschreibbar und dies lässt sich nicht ändern erscheint eine Fehlermeldung und man muss erst die Berechtigungen angleichen.
+			Dazu bitte ein FTP-Programm nutzen und die Rechte des Themes-Ordners angleichen.
+		</p>
+		<p>
+			Um Themes hochladen zu können, müssen diese im Format "zip" gepackt sein. Diese Zip-Datei sollte:
+		</p>
+		<ul>
+			<li>nur den Theme-Ordner des gewünschten Themes enthalen ODER</li>
+			<li>1 Theme gepackt als /themes/theme-ordner ODER</li>
+			<li>Mehrere Themes gepackt als /themes/mehrere-theme-ordner</li>
+		</ul>
+		<div class="tools_attention">
+			<p>
+				Beim hochladen bitte beachten, dass die Zip-Datei nicht über 2mb beträgt!
+			</p>
+		</div>
+	<h2 id="ftp_backup">FTP-Backup einrichten</h2>
+		<p>Um ein FTP-Backup einzurichten, gehen Sie bitte zu den Einstellungen des Moduls und stellen <b>FTP erlauben</b> auf Ja, geben die URL zum FTP-Server an sowie einen Benutzer-
+			Namen und Passwort. Der FTP-Pfad sollte direkt auf den Ordner führen, in dem das Backup abgelegt werden soll, als absoluter Pfad vom FTP-Login gesehen.</p>
+		<p>Volle Datenbank-Backups mit Trust und Upload-Verzeichnis sollten nun nach dem Backup auf den FTP-Server übertragen werden</p>
+	<h2 id="mail_notif">Benachrichtigung via E-Mail</h2>
+		<p>
+			Das Modul schickt im Falle eines vollen Backups auch eine Benachrichtigung an die Admin-E-Mail in System &raquo; Konfiguration &raquo; Haupteinstellungen. Um diese
+			E-Mail verschicken zu können bitte unter System &raquo; Konfiguration &raquo; Einstellungen &raquo; E-Mail-Setup die E-Mail-Konfiguration vornehmen.
+		</p>
+	<div id="tools_footer">
+		<h2>Abschluss</h2>
+			<p>
+				Vielen Dank, dass Sie das 'Tools' Modul benutzen. Wenn Sie bei der Benutzung einen Fehler finden, berichten Sie dies bitte im
+				<a href="http://www.impresscms.de/modules/forum/viewforum.php?forum=30" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>.
+				Sie haben vorschläge für zusätzliche Funktionalität oder Verbesserungs-Vorschläge bezüglich der benutzbarkeit? Kein Problem! Wir können drüber reden.
+				Bitte nutzen Sie hierfür ebenfalls das <a href="http://www.impresscms.de/modules/forum/viewforum.php?forum=30" title="ImpressCMS Community Forum" rel="external">
+				ImpressCMS Community Forum</a>!
+			</p>
+			<p>
+				Vielleicht wollen Sie auch den letzten Änderungen/updates folgen? Bitte besuchen Sie hierfür
+				<a href="https://code.google.com/p/amaryllis-modules/source/browse/#svn%2Ftrunk%2Ftools"
+				title="'Tools' SVN bei Google Code" rel="external">'Tools' SVN bei Google Code</a>.
+			</p>
+	</div>
 </div>

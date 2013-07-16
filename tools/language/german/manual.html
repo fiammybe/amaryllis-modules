@@ -1,13 +1,19 @@
 <div id="tools_manual">
     <h1>Tools Manual</h1>
-    	<p>"Tools" is a small module to provide autotasks for clearing cache, optimizing DB-Tabels and some more</p>
+    	<p>
+    		"Tools" ist ein kleines Modul um Auto Tasks f&uuml;r Cache-/templates_c Ordner leeren, Datenbank-Tabellen zu warten und sessions zu bereinigen. Au&szlig;erdem
+    		kann es auch Einfache (nur die Datenbank) sowie vollständige (Datenbank zzgl. TRUST, themes und uploads-Verzeichnis) Datensicherung vornehmen. Alle Funktionen
+    		kann man außerdem via Button-Klick herbeiführen oder als Cron Job laufen lassen. Danach kann die Datensicherung komplett via FTP an einen anderen Server übertragen werden.
+    	</p>
     <h2 id="index">Index</h2>
     <ul>
     	<li><a href="#keyfeatures">Kernfunktionen</a></li>
     	<li><a href="#firsstart">First Start</a></li>
     	<li><a href="#tools_cron_job">Cron-Jobs</a></li>
     	<li><a href="#module_upload">Module upload</a></li>
+    	<li><a href="#theme_upload">Theme upload</a></li>
     	<li><a href="#ftp_backup">FTP-Backup einrichten</a></li>
+    	<li><a href="#mail_notif">E-Mail Benachrichtigungen</a></li>
     	<li><a href="#tools_footer">Abschluss</a></li>
     </ul>
     <h2 id="keyfeatures">Kernfunktionen</h2>
@@ -16,6 +22,11 @@
 			<li>"templates_c" und "cache" Verzeichnis mittels Cron-Job oder Auto Task bereinigen</li>
 			<li>Bereinigen der Sessions in einem Autotask</li>
 			<li>Datenbank-Sicherung sowie volles Backup inklusive Trust und Uploads-Verzeichnis aus dem Backend oder via Cron-Job (Wahlweise mit FTP-Sicherung)</li>
+		</ul>
+		<p>Folgende Voraussetzungen m&uuml;ssen f&uuml;r Tools erf&uuml;llt sein:</p>
+		<ul>
+			<li>ImpressCMS 1.3+</li>
+			<li>PHP 5.3 oder 5.4</li>
 		</ul>
 	<h2 id="firsstart">Start-Hilfe</h2>
 	<h3>Wie benutze ich die Tools</h3>
@@ -47,11 +58,11 @@
 		<ul>
 			<li>
 				<b>Datensicherung erstellen:</b>
-				Triggert ein vollständiges DB-Backup und speichert dieses gepackt in ein Zip-File im Trust-Verzeichnis unter &laquo;modules/tools/backup/backup_sql.zip&raquo;
+				Triggert ein vollständiges DB-Backup und speichert dieses gepackt in ein Zip-File im Trust-Verzeichnis unter &laquo;modules/tools/backup/db_backup.zip&raquo;
 			</li>
 			<li><b>Volle Datensicherung erstellen:</b>
-				Triggert ein vollständiges DB-Backup und speichert dieses mitsamt dem Trust-Pfad sowie dem Upload-Verzeichnis gepackt in ein Zip-File im Trust-Verzeichnis
-				unter &laquo;modules/tools/backup/backup_sql.zip&raquo; oder überträgt die Daten Via FTP auf einen anderen Server.
+				Triggert ein vollständiges DB-Backup und speichert dieses mitsamt dem Trust-Pfad sowie dem Upload/Themes-Verzeichnis gepackt in ein Zip-File im Trust-Verzeichnis
+				unter &laquo;modules/tools/backup/backup.zip&raquo; oder überträgt die Daten Via FTP auf einen anderen Server.
 				<div class="tools_attention">
 					<p>ACHTUNG: Dies sollte NICHT aus dem Backend heraus ausgeführt werden, sondern als <a href="#tools_cron_job" title="Cron-Job">Cron-Job</a>! Es gibt zwar auch
 						die Möglichkeit, dies Via Button zu triggern, dies sollte aber wenn mit ausgeschaltetem FTP genutzt werden, aus Sicherheitsgründen.</p>
@@ -61,11 +72,11 @@
 	<h2 id="tools_cron_job">Cron Jobs</h2>
 		<p>Cron-Jobs werden beim Webhoster eingerichtet, um Aufgaben automatisch vom Server ausführen zu lassen. Bei Backups ist das A: sicher(er) und B: weniger Ressourcen-Lastig wie ein
 			Backup via Auto Task. Um den Cron-Job ausführen zu können bitte beim Webhost nachschauen. In das Ziel des Cronjobs muss die Url des gewüschten Jobs eingegeben werden und
-			die Parameter: username=user&password=password mit angehängt. Username und password bitte mit denen eines Users ersetzen, der administrativen Zugriff auf das Tools-Modul hat</p>
-			<p><b><i>www.meine-seite.de/modules/tools/include/cron/backup.php?username=user&password=password</i></b> <span class="tools_highlighted">Führt ein Datenbank-backup OHNE die Ordner Trust und uploads aus</span></p>
-			<p><b><i>www.meine-seite.de/modules/tools/include/cron/full_backup.php?username=user&password=password</i></b> <span class="tools_highlighted">Führt ein Datenbank-backup MIT den Ordner Trust und uploads aus</span></p>
-			<p><b><i>www.meine-seite.de/modules/tools/include/cron/tools.php?username=user&password=password</i></b> <span class="tools_highlighted">Führt alle Tools aus</span></p>
-			<p>Wenn Probleme auftreten (z.B. nicht ausgeführter Cron), kann man jeweilils noch "&debug=1" aufrufen</p>
+			die Parameter: uname=user&password=password mit angehängt. Username und password bitte mit denen eines Users ersetzen, der administrativen Zugriff auf das Tools-Modul hat</p>
+			<p><b><i>www.meine-seite.de/modules/tools/include/cron/backup.php?uname=user&password=password</i></b> <span class="tools_highlighted">Führt ein Datenbank-backup OHNE die Ordner Trust und uploads aus</span></p>
+			<p><b><i>www.meine-seite.de/modules/tools/include/cron/full_backup.php?uname=user&password=password</i></b> <span class="tools_highlighted">Führt ein Datenbank-backup MIT den Ordner Trust, themes und uploads aus</span></p>
+			<p><b><i>www.meine-seite.de/modules/tools/include/cron/tools.php?uname=user&password=password</i></b> <span class="tools_highlighted">Führt alle Tools aus</span></p>
+			<p>Wenn Probleme auftreten (z.B. nicht ausgeführter Cron), kann man jeweils noch "&debug=1" aufrufen</p>
 			<p>
 				Je nach Server/Webhost kann man auch den Cron-Job via Console/SSH ausführen. in diesem Fall bisste die parameter in der gleichen Reihenfolge übergeben.
 				(<b>ssh user@localhost /path/to/my/root/modules/tools/include/cron/full_backup.php -username=user -password=password -debug=1</b>). Bitte in diesem Fall in der Config einstellen, dass die Cron-Jobs
@@ -80,19 +91,54 @@
 			</div>
 	<h2 id="module_upload">Module hochladen</h2>
 		<p>
-			Die Modul-upload funktion kann genutzt werden, um Module zu installieren bzw. zu aktualisieren. Wenn man auf den Tab "Module hochladen" klickt, sollte man im Regelfall
-			zum upload-Formular kommen. Ist der Modul-Ordner nicht beschreibbar und dies lääst sich nicht ändern erscheint eine Fehlermeldung und man muss erst die Berechtigungen angleichen.
+			Die Modul-upload funktion kann genutzt werden, um Module zu installieren bzw. zu aktualisieren. Wenn man auf den Tab "Module/Themes hochladen" klickt, sollte man im Regelfall
+			zum upload-Formular kommen. Ist der Modul-Ordner nicht beschreibbar und dies lässt sich nicht ändern erscheint eine Fehlermeldung und man muss erst die Berechtigungen angleichen.
 			Dazu bitte ein FTP-Programm nutzen und die Rechte des Modul-Ordners angleichen.
 		</p>
 		<p>
-			Um Module hochladen zu können, müssen diese im Format "zip" gepackt sein. Diese Zip-Datei sollte nur den Modul-Ordner des gewünschten Moduls enthalen! Bitte nicht mehrere
-			Module zeitgleich packen und die Module bitte auch nicht in Unterordner verstecken. Nun das Modul über das Upload-Formular hochladen (dieser Vorgang kann je nach
+			Um Module hochladen zu können, müssen diese im Format "zip" gepackt sein. Diese Zip-Datei sollte:
+		</p>
+		<ul>
+			<li>nur den Modul-Ordner des gewünschten Moduls enthalen ODER</li>
+			<li>1 Modul gepackt als /modules/modul-ordner</li>
+		</ul>
+		<p>
+			Bitte nicht mehrere Module zeitgleich packen! Nun das Modul über das Upload-Formular hochladen (dieser Vorgang kann je nach
 			Modul-Größe auch etwas dauern) und anschließend dem Link folgen, um das Modul sofort zu installieren/aktualisieren.
 		</p>
+		<div class="tools_attention">
+			<p>
+				Für den Fall, dass das Modul auch eine eigene Bibliothek enthält (Ordner "libraries") oder sonst einen zusätzlichen Orner wird dieser ignoriert!
+			</p>
+		</div>
+	<h2 id="theme_upload">Themes hochladen</h2>
+		<p>
+			Die Theme-upload funktion kann genutzt werden, um Themes zu installieren bzw. zu aktualisieren. Wenn man auf den Tab "Module/Themes hochladen" klickt, sollte man im Regelfall
+			zum upload-Formular kommen. Ist der Themes-Ordner nicht beschreibbar und dies lässt sich nicht ändern erscheint eine Fehlermeldung und man muss erst die Berechtigungen angleichen.
+			Dazu bitte ein FTP-Programm nutzen und die Rechte des Themes-Ordners angleichen.
+		</p>
+		<p>
+			Um Themes hochladen zu können, müssen diese im Format "zip" gepackt sein. Diese Zip-Datei sollte:
+		</p>
+		<ul>
+			<li>nur den Theme-Ordner des gewünschten Themes enthalen ODER</li>
+			<li>1 Theme gepackt als /themes/theme-ordner ODER</li>
+			<li>Mehrere Themes gepackt als /themes/mehrere-theme-ordner</li>
+		</ul>
+		<div class="tools_attention">
+			<p>
+				Beim hochladen bitte beachten, dass die Zip-Datei nicht über 2mb beträgt!
+			</p>
+		</div>
 	<h2 id="ftp_backup">FTP-Backup einrichten</h2>
 		<p>Um ein FTP-Backup einzurichten, gehen Sie bitte zu den Einstellungen des Moduls und stellen <b>FTP erlauben</b> auf Ja, geben die URL zum FTP-Server an sowie einen Benutzer-
 			Namen und Passwort. Der FTP-Pfad sollte direkt auf den Ordner führen, in dem das Backup abgelegt werden soll, als absoluter Pfad vom FTP-Login gesehen.</p>
 		<p>Volle Datenbank-Backups mit Trust und Upload-Verzeichnis sollten nun nach dem Backup auf den FTP-Server übertragen werden</p>
+	<h2 id="mail_notif">Benachrichtigung via E-Mail</h2>
+		<p>
+			Das Modul schickt im Falle eines vollen Backups auch eine Benachrichtigung an die Admin-E-Mail in System &raquo; Konfiguration &raquo; Haupteinstellungen. Um diese
+			E-Mail verschicken zu können bitte unter System &raquo; Konfiguration &raquo; Einstellungen &raquo; E-Mail-Setup die E-Mail-Konfiguration vornehmen.
+		</p>
 	<div id="tools_footer">
 		<h2>Abschluss</h2>
 			<p>
