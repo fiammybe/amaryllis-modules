@@ -46,18 +46,16 @@ global $icmsConfig;
 $i = 0;
 $i++;
 $headermenu[$i]['title'] = _PREFERENCES;
-$headermenu[$i]['link'] = '../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $module->getVar('mid');
+$headermenu[$i]['link'] = '../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod='.$module->getVar('mid');
 $i++;
 $headermenu[$i]['title'] = "phpinfo";
 $headermenu[$i]['link'] = ICMS_URL.'/modules/'.$moddir.'/admin/phpinfo.php';
 $i++;
 $headermenu[$i]['title'] = _MI_TOOLS_MENU_MANUAL;
 $headermenu[$i]['link'] = ICMS_URL.'/modules/'.$moddir.'/admin/manual.php';
-
 $i++;
 $headermenu[$i]['title'] = _CO_ICMS_UPDATE_MODULE;
 $headermenu[$i]['link'] = ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $moddir;
-
 $i++;
 $headermenu[$i]['title'] = _MODABOUT_ABOUT;
 $headermenu[$i]['link'] = ICMS_URL.'/modules/'.$moddir.'/admin/about.php';

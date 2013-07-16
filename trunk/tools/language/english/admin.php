@@ -103,5 +103,5 @@ define("_AM_TOOLS_THEMES_UPLOAD_FORM", "Upload a new theme");
 define("_AM_TOOLS_THEMES_UPLOAD_FILE", "Zipped Theme");
 define("_AM_TOOLS_THEMES_FAIL_WRITABLE", "Attention! Themes-directory is not writable! Please adjust folder permissions first!");
 define("_AM_TOOLS_THEMES_INSTALL_OK", "Theme successfully uploaded.");
-define("_AM_TOOLS_MODULES_GOTO", "Enable Theme now");
+define("_AM_TOOLS_THEMES_GOTO", "Enable Theme now");
 define("_AM_TOOLS_THEMES_OK", "Theme(s) successfully uploaded");

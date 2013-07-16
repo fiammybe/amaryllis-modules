@@ -38,7 +38,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'backup_all':
 			//require_once TOOLS_ROOT_PATH.'class/Backup.php';
-			$backup = mod_tools_Backup::instance(TRUE);
+			$backup = mod_tools_Backup::instance();
 			$uname = icms::$user->getVar("uname");
 			$backup::setCase(sprintf(_AM_TOOLS_BACKUP_TRIGGERED_BY_BUTTON_CLICK, $uname));
 			ob_start();
