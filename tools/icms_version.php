@@ -45,10 +45,10 @@ $modversion = array(
 
 					/**  Development information */
 						"status_version"			=> "1.0",
-						"status"					=> "beta",
-						"date"						=> "19:09 15.07.2013",
+						"status"					=> "RC",
+						"date"						=> "11:09 17.07.2013",
 						"author_word"				=> "",
-						"warning"					=> _CO_ICMS_WARNING_BETA,
+						"warning"					=> _CO_ICMS_WARNING_RC,
 
 					/** Contributors */
 						"developer_website_url"		=> "http://code.google.com/p/amaryllis-modules/",
@@ -81,8 +81,6 @@ $modversion['people']['documenters'][] = "<a href='http://www.impresscms.de/user
 
 $modversion['people']['translators'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=264' target='_blank'>QM-B</a>";
 $modversion['people']['testers'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=243' target='_blank'>optimistdd</a>";
-$modversion['people']['testers'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=67' target='_blank'>lotus</a>";
-$modversion['people']['testers'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=36' target='_blank'>bleekk</a>";
 $modversion['people']['testers'][] = "<a href='http://www.impresscms.de/userinfo.php?uid=2' target='_blank'>sato-san</a>";
 /** Manual */
 $modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=event' target='_blank'>English</a>";

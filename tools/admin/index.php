@@ -48,7 +48,12 @@ if(in_array("zip", $extensions)) {
 } else {
 	echo "<li class=\"tools_error\">"._AM_TOOLS_INDEX_ZIP_NOT_LOADED."</li>";
 }
-echo "<li>"."DB-Type: ".ucfirst(XOOPS_DB_TYPE)."</li>";
+if(XOOPS_DB_TYPE == "mysql") {
+	echo "<li>"."DB-Type: ".mysql_get_server_info()."</li>";
+} else {
+	echo "<li>"."DB-Type: ".XOOPS_DB_TYPE."</li>";
+}
+
 
 echo "</ul>";
 echo "</div>";
