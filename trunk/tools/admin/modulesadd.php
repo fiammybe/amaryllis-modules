@@ -34,10 +34,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 	$icmsAdminTpl->assign("tools_admin_url", TOOLS_ADMIN_URL);
 	switch ($clean_op) {
 		case 'add_module':
-			if (!icms::$security->check()) {
-				redirect_header('modulesadd.php',3,_AM_TOOLS_SECURITY_CHECK_FAILED."<br />".implode('<br />', icms::$security->getErrors()));
-				break;
-			}
 			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('application/zip'), 2000000);
 			if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 				$uploader->setPrefix('tmod');
@@ -81,10 +77,6 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			}
 			break;
 		case 'add_theme':
-			if (!icms::$security->check()) {
-				redirect_header('modulesadd.php',3,_AM_TOOLS_SECURITY_CHECK_FAILED."<br />".implode('<br />', icms::$security->getErrors()));
-				break;
-			}
 			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('application/zip'), 2000000);
 			if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 				$uploader->setPrefix('ttheme');
