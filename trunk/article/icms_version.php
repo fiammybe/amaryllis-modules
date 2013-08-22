@@ -71,6 +71,7 @@ $modversion['people']['developers'][] = "[url=http://community.impresscms.org/us
 $modversion['people']['documenters'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' title='QM-B'>QM-B</a>";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
 $modversion['people']['translators'][] = "[url=http://community.impresscms.org/userinfo.php?uid=1295]Lotus[/url]";
+$modversion['people']['translators'][] = "[url=http://community.impresscms.org/userinfo.php?uid=97]debianus[/url]";
 
 /** Wiki */
 $modversion['manual']['wiki'][] = "<a href='" . ICMS_URL  . "/modules/article/admin/manual.php' target='_self'>Module Manual</a>";
