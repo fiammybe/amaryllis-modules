@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Manual del módulo Article</title>
+        <style>
+        	#article_manual {margin: 2em;}
+        	#article_manual h1, h2, h3 {font-family: Georgia, "Times New Roman", Times, serif; padding-bottom: 1em; padding-top: 1em; line-height: 1.7em; font-weight: bold;}
+        	#article_manual h1 {text-align: center; font-size: 1.5em; font-variant: small caps; color: #336699;}
+        	#article_manual h2 {font-size: 1.250em; color: #6699CC;}
+        	#article_manual h3 {font-size: 1.1em; color: #6699FF;}
+        	#article_manual p {font-size: .9em; margin: 0; padding: 5px;}
+        	#article_manual ul li {list-style-type: square; margin-left: 20px; line-height: 1.5em; font-weight: bolder; }
+        	#article_manual ul li ul li {list-style-type: disc; margin-left: 30px; font-weight: normal; }
+        	#article_footer {border: 1px dotted; margin: 2em auto; padding: 0 1em 2em; --moz-border-radius: 1.5em; -webkit-border-radius: 1.5em; border-radius: 1.5em;}
+        	#article_footer h2 {padding: .5em 0 0;}
+        	#article_footer p {font-family: Georgia, "Times New Roman", Times, serif; font-size: 1em; }
+        	#article_manual a, #article_manual a:visited {color: #336699}
+        	#article_manual a:hover {color: #336699; text-decoration: underline;}
+        </style>
+    </head>
+    <body>
+    	<div id="article_manual">
+	        <h1>Manual del módulo <em>Article</em></h1>
+	        	<p><em>Article</em> es un módulo para la gestión de artículos para ImpressCMS. Admite categorías, adjuntar archivos, usar etiquetas e incluir artículos relacionados, entre otras muchas características.</p>
+	        <h2>Características</h2>
+				<ul>
+					<li>Crear y gestionar artículos</li>
+					<li>Crear categorías o secciones para agruparlos y usar también etiquetas para ello con el módulo <em>Sprockets</em></li>
+					<li>Adjuntar archivos a los artículos.</li>
+					<li>Fácil paginación de los artículos largos</li>
+					<li>Establecer imágenes para los artículos, que pueden ser añadidas al servidor desde el formulario de envío del artículo</li>
+				</ul>
+	        <h2>Primeros pasos</h2>
+				<p>Es necesario que <b>antes</b> de empezar a crear artículos se establezcan ciertos parámetros.</p>
+				
+				<h3>Determinar los tipos de archivos permitidos para ser adjuntados a los artículos</h3>
+				
+					<p>Para ello, vaya a Panel de Control > Sistema > Medios > Tipos de archivos</p>
+					<p>Elija los tipos de archivos permitidos (hay una útil caja de búsqueda para ello) añadiendo <em>Article</em> como módulo autorizado y determinando los grupos que pueden adjuntar los archivos en los artículos que creen.</p>
+					<p>No olvide establecer como permitidos también los tipos de archivos para las imágenes (png, jpeg, etc.) para que puedan ser usadas en los artículos.</p>
+			
+				<h3>Preferencias</h3>
+					<p>Antes de empezar a usar el módulo puede ser muy útil ajustar algunas de las características del módulo en función de sus necesidades. En la administración del módulo vaya a <em>Preferencias</em></p>
+					<ul>
+						<li>Permisos de Grupos
+							<ul>
+								<li>Los mismos se refieren a la posibilidad de crear nuevas categorías desde la página, no en la administración del sistema. Los Grupos que determine podrán crearlas en tal caso.</li>
+							</ul>
+						</li>
+						<li>Formato de fecha
+							<ul>
+								<li>El mismo determinará cómo se mostrará la fecha a los visitantes. Para más información consulte el <a href="http://php.net/manual/es/function.date.php">Manual de PHP</a>.</li>
+							</ul>
+						</li>
+						<li>En cuanto al resto de las preferencias a ajustar, muchas de ellas tienen textos de ayuda para comprender mejor su contenido</li>
+					</ul>
+				<h3>Crear una categoría o sección</h3>
+					<p>Si no crea una categoría no podrá usarse el formulario de envío de artículos. Para ello basta con completar el formulario existente para ello en la administración del módulo. Tenga en cuenta que puede añadir las imágenes para las categorías que desee añadiéndolas al servidor en la carpeta /uploads/article/category/images/. No es necesario hacer nada más: el módulo tendrá en cuenta las imágenes que existan en dicha carpeta y las mostrará en la caja de selección correspondiente.</p>
+				<h3>Enviar artículos</h3>
+					<p>En la administración del módulo haga clic en la solapa Artículos y verá el botón para añadirlos; aparecerá el formulario correspondiente y basta con completar los campos.</p>
+				<h2>Bloques</h2>
+				<p>Hay nada menos que diez disponibles:</p>
+				<ul>
+					<li>Artículos recientes
+						<ul>
+							<li>Bloque que contiene una lista de los artículos recientes ordenados según la fecha de publicación.</li>
+						</ul>
+					</li>
+					<li>Artículos actualizados recientemente
+						<ul>
+							<li>Bloque que contiene una lista de los artículos actualizados ordenados según la fecha de la misma.</li>
+						</ul>
+					</li>
+					<li>Artículos más leídos
+						<ul>
+							<li>Contiene una lista de los artículos con más lecturas; el número de las necesarias para aparecer en el mismo se establece en las Preferencias del módulo.</li>
+						</ul>
+					</li>
+					<li>Menú de categorías
+						<ul>
+							<li>Bloque con la lista de las categorías; es posible seleccionar alguna de ellas para que se muestren también sus subcategorías.</li>
+						</ul>
+					</li>
+					<li>Artículos aleatorios
+						<ul>
+							<li>Bloque con artículos seleccionados aleatoriamente. Es posible seleccionar alguna categoría concreta para mostrar todos los incluidos en ella.</li>
+						</ul>
+					</li>
+					<li>Titular
+						<ul>
+							<li>Bloque con el artículo publicado en último lugar.</li>
+						</ul>
+					</li>
+					<li>Galería
+						<ul>
+							<li>Bloque con las imágenes de los artículos.</li>
+						</ul>
+					</li>
+					<li>Lista de artículos
+						<ul>
+							<li>Bloque con una lista de los artículos.</li>
+						</ul>
+					</li>
+					<li>Más comentados
+						<ul>
+							<li>Muestra una lista de los artículos con más comentarios ordenados según las categorías.</li>
+						</ul>
+					</li>
+				</ul>
+				<p>Recuerde que todos los bloques pueden ser duplicados, si es necesario; y que puede seleccionar la página concreta donde se mostrarán usando la característica de Enlaces simbólocos.</p>
+	 
+			<div id="article_footer">
+			<h2>Conclusión</h2>
+				<p>Gracias por usar el módulo 'Article'. En caso de existir problemas el sitio para obtener soporte o para hacer sugerencias es <a href="http://community.impresscms.org/modules/newbb/viewforum.php?forum=9" title="ImpressCMS Community Forum" rel="external">ImpressCMS Community Forum</a>.</p>  
+				<p>Para estar al día sobre el desarrollo del mismo, visite <a href="https://impresscmsdev.assembla.com/code/impresscmsaddons/subversion/nodes/modules/article/trunk/" title="'Article' SVN on Assembla" rel="external">'Article' SVN on Assembla</a> u obtenga el último código disponible en <a href="http://code.google.com/p/amaryllis-modules/" title="Article" rel="external">module svn on google code</a>.</p>
+			</div>
+		</div>
+    </body>
+</html>
