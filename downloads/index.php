@@ -71,11 +71,11 @@ if(in_array($clean_op, $valid_op)) {
 			break;
 		
 		case 'viewRecentDownloads':
-			$downloads = $downloads_download_handler->getDownloads($clean_files_start, icms::$module->config['show_downloads'], FALSE, FALSE, FALSE,  $clean_category_id);
+			$downloads = $downloads_download_handler->getDownloads($clean_files_start, icms::$module->config['show_downloads'], FALSE, FALSE, FALSE,  $clean_category_id, 'downloads_published_date', 'DESC');
 			$icmsTpl->assign('downloads', $downloads);
 			$icmsTpl->assign("byRecentDownloads", TRUE);
 			$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$count = $downloads_download_handler->getCountCriteria(TRUE, TRUE, $groups,'download_grpperm',FALSE,FALSE, $clean_category_id);
+			$count = $downloads_download_handler->getCountCriteria(TRUE, TRUE, $groups,'download_grpperm',FALSE,FALSE, $clean_category_id, , 'downloads_published_date', 'DESC');
 			if (!empty($clean_category_id)) {
 				$extra_arg = 'op=viewRecentDownloads&category_id=' . $clean_category_id;
 			} else {
