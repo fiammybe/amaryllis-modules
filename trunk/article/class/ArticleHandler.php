@@ -323,27 +323,8 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 		}
 	}
 	
-	protected function beforeInsert(&$obj) {
-		$teaser = $obj->getVar("article_teaser", "e");
-		$teaser = icms_core_DataFilter::checkVar($teaser, "html", "input");
-		$obj->setVar("article_teaser", $teaser);
-		$seo = trim($obj->short_url());
-		$title = $obj->title();
-		if(!$seo == "") {
-			$seotitle = str_replace(" ", "_", $seo);
-			$seotitle = icms_ipf_Metagen::generateSeoTitle($seo, FALSE);
-		} else {
-			$seotitle = icms_ipf_Metagen::generateSeoTitle($title, FALSE);
-		}
-		$obj->setVar("short_url", $seotitle);
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seotitle));
-		if($this->getCount($criteria) > 0) {
-			$obj->setVar("short_url", $seotitle.'_'.time());
-		}
-		return TRUE;
-	}
-	
 	protected function beforeSave(&$obj) {
+		if ($obj->updating_counter) return TRUE;
 		$body = $obj->getVar("article_body", "e");
 		$body_parts = explode('[pagebreak]', $body);
 		$obj->setVar("article_pagescount", count($body_parts));
@@ -351,6 +332,22 @@ class ArticleArticleHandler extends icms_ipf_Handler {
 			$obj->setVar('article_img', $obj->getVar('article_img_upl') );
 			$obj->setVar('article_img_upl', "");
 		}
+		$seo = trim($obj->getVar("short_url", "e"));
+		$meta = new icms_ipf_Metagen($obj->title(), $obj->meta_keywords(), $obj->meta_description());
+		if($seo == "") {
+			$seo = $meta->generateSeoTitle($obj->title(), FALSE);
+		} else {
+			$seo = $meta->generateSeoTitle($seo, FALSE);
+		}
+		$seo = urldecode($seo);
+		$umlaute = array("ä","ö","ü","Ä","Ö","Ü","ß");
+		$replace = array("ae","oe","ue","Ae","Oe","Ue","ss");
+		$seo = str_ireplace($umlaute, $replace, $seo);
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("short_url", $seo));
+		if($this->getCount($criteria)) {
+			$seo = $seo . '_' . time();
+		}
+		$obj->setVar("short_url", $seo);
 		return TRUE;
 	}
 	
