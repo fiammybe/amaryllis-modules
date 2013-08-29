@@ -1,5 +1,9 @@
 = *Article* Changelog =
 
+== Release: Version 1.x => Release Date: XX.XX.20XX ==
+
+* Fixed: Permissions problem opening articles #96
+
 == Release: Version 1.1 => Release Date: XX.XX.2012 ==
 
 * Changed way of files output for attachments
