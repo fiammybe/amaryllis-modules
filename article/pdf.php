@@ -42,7 +42,6 @@ $version = !substr($version, -1, 1) ? substr($version, 0, 3) : $version;
 $powered_by = " Powered by &nbsp;<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Article</a>";
 
 $article = $articleObj->toArray();
-
 require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 
 			class NewsPDF extends TCPDF {
@@ -134,7 +133,7 @@ require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 				}
 				// Page footer
 				public function Footer() {
-					global $manualConfig, $powered_by, $version, $icmsModule, $icmsConfig;
+					global $articleConfig, $powered_by, $version, $icmsModule, $icmsConfig;
 
 					$cur_y = $this->y;
 					$this->SetTextColorArray($this->footer_text_color);
@@ -177,7 +176,7 @@ require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 						//$this->Cell(0, 0, $this->getAliasRightShift().$pagenumtxt, 'T', 0, 'R');
 					}
 					$tbl = '<table border="0" cellpadding="0" cellspacing="0" align="center"><tr nobr="true"><td>'.$pagenumtxt.'</td><td>'.$powered_by.' '.$version.'</td></tr><tr nobr="true">'.
-							str_replace(array("<!-- input filtered -->", "<!-- filtered with htmlpurifier -->"), array("", ""), $manualConfig['print_footer']).'</tr></table>';
+							str_replace(array("<!-- input filtered -->", "<!-- filtered with htmlpurifier -->"), array("", ""), $articleConfig['article_print_footer']).'</tr></table>';
 					$this->SetFont('helvetica', 'I', 8);
 					//$this->writeHTMLCell(0, 30, '', '', $tbl, array('T' => array('width' => 1, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0))), 0, false, TRUE, "C", true);
 					$this->writeHTML($tbl, true, false, TRUE, TRUE, 'C');
@@ -195,7 +194,7 @@ require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 			$sitename = $icmsConfig['sitename'];
 			$siteslogan = $icmsConfig['slogan'];
 			$pdfheader = "<p><a href='".ICMS_URL."' title='".$sitename."'>".$sitename."</a> - ".$siteslogan."</p><br><p>".$icmsModule->getVar("name").":<br>".$articleObj->title()."</p><br>";
-			$printlogo = ($articleConfig['print_logo'] !== "") ? ICMS_ROOT_PATH.'/'.$articleConfig['article_print_logo'] : "";
+			$printlogo = ($articleConfig['article_print_logo'] !== "") ? $articleConfig['article_print_logo'] : "";
 			$pdf->SetHeaderData($printlogo, PDF_HEADER_LOGO_WIDTH, $pdfheader, ICMS_URL);
 			// set header and footer fonts
 			$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -231,11 +230,6 @@ require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 			$content .= implode("<br pagebreak='true' />", $article['body_array']);
 			$content .= $article['conclusion'];
 			$content .= icms_core_DataFilter::undoHtmlSpecialChars($articleConfig['article_print_footer'] . $powered_by . "&nbsp;" . $version);
-			if($submitter['attachsig']) {
-				$content .= '<hr /><p><img src="'.$submitter['avatar'].'" width="20px" height="20px" class="icon_middle" /> '.$submitter['link'].'</p>';
-				$content .= '<div id="article_user_sig">'.$submitter['user_sig'].'</div>';
-			}
-
 			include_once ICMS_INCLUDE_PATH. '/im_multilanguage.php';
 			$content = easiestml($content);
 			$content = str_replace(array("<em>", "</em>"), array("<b>", "</b>"), $content);
