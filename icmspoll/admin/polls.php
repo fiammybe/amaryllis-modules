@@ -3,9 +3,9 @@
  * 'Icmspoll' is a poll module for ImpressCMS and iforum
  *
  * File: /admin/polls.php
- * 
+ *
  * Add, edit and delete poll objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -24,16 +24,17 @@
 */
 function editpoll($poll_id = 0) {
 	global $polls_handler, $icmsAdminTpl, $clean_op;
-	
+
 	$pollObj = $polls_handler->get($poll_id);
 	$user_id = icms::$user->getVar("uid", "e");
-	
+
 	if(!$pollObj->isNew()) {
 		if($clean_op == "reset") {
 			$pollObj->setVar( "start_time", (time() + 1200) );
         	$pollObj->setVar("end_time", (time() + (7 * 24 * 60 * 60)));
 			$pollObj->setVar("started", 0);
 			$pollObj->setVar("expired", 0);
+			$pollObj->setVar("question", $pollObj->getVar("question", "e"));
 		}
 		icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS . ' > ' . _MI_ICMSPOLL_MENU_POLLS_EDITING . "&raquo;" . $pollObj->getQuestion() . "&laquo;");
 		$sform = $pollObj->getForm(_MI_ICMSPOLL_MENU_POLLS_EDITING . "&raquo;" . $pollObj->getQuestion() . "&laquo;", 'addpoll');
@@ -127,7 +128,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 		default:
 			icms_cp_header();
 			icms::$module->displayAdminmenu( 1, _MI_ICMSPOLL_MENU_POLLS );
-			
+
 			$objectTable = new icms_ipf_view_Table($polls_handler, FALSE);
 			$objectTable->addColumn(new icms_ipf_view_Column("expired", "center", FALSE, "displayExpired"));
 			$objectTable->addColumn(new icms_ipf_view_Column("started", "center", FALSE, "displayStarted"));
@@ -139,17 +140,17 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", FALSE, FALSE, "getWeightControl"));
 			$objectTable->setDefaultOrder("DESC");
 			$objectTable->setDefaultSort("created_on");
-			
+
 			$objectTable->addCustomAction( 'getResetItemLink' );
-			
+
 			$objectTable->addFilter("expired", "filterExpired");
 			$objectTable->addFilter("started", "filterStarted");
 			$objectTable->addFilter("user_id", "filterUsers");
-			
+
 			$objectTable->addIntroButton( 'addpoll', 'polls.php?op=mod', _AM_ICMSPOLL_POLLS_ADD );
 			$objectTable->addActionButton( 'changeWeight', FALSE, _SUBMIT );
 			$icmsAdminTpl->assign( 'icmspoll_polls_table', $objectTable->fetch() );
-			
+
 			$icmsAdminTpl->display( 'db:icmspoll_admin.html' );
 			break;
 	}
