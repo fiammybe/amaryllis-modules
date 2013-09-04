@@ -15,7 +15,7 @@
 				<fieldset>
 					<{foreach item=option from=$block.options name=options}>
 						<div class="icmspoll_option_<{$option.color}>">
-							<input id="poll_option_block_<{$option.id}>" class="icmspoll_option_<{$option.inputtype}>" type="<{$block.icmspoll_singlepoll.inputtype}>" name="poll_option_block<{if $block.icmspoll_singlepoll.isMultiple}>[]<{/if}>" 
+							<input id="poll_option_block_<{$option.id}>" class="icmspoll_option_<{$option.inputtype}>" type="<{$block.icmspoll_singlepoll.inputtype}>" name="poll_option_block<{if $block.icmspoll_singlepoll.isMultiple}>[]<{/if}>"
 									value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
 							<{$option.text}>
 						</div>
@@ -23,14 +23,14 @@
 					<{/foreach}>
 				</fieldset>
 				<input type="hidden" name="user_id" value="<{$user_id}>" />
-				<{if !$block.icmspoll_singlepoll.hasVoted}>
-					<div class="box">
-						<input type="label" readonly size="50" class="btn icmspoll" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
-					</div>
-				<{elseif !$block.icmspoll_singlepoll.hasVoted && $block.icmspoll_singlepoll.voteAccessGranted}>
+				<{if !$block.icmspoll_singlepoll.hasVoted  && $block.icmspoll_singlepoll.voteAccessGranted}>
 					<div class="box">
 						<input id="submit_poll_block_<{$block.icmspoll_singlepoll.id}>" name="submit_poll_block_<{$block.icmspoll_singlepoll.id}>" type="submit" class="btn icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" />
 						<span class="helper"></span>
+					</div>
+				<{elseif !$block.icmspoll_singlepoll.hasVoted}>
+					<div class="box">
+						<input type="label" readonly size="50" class="btn icmspoll" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 					</div>
 				<{else}>
 				<{/if}>
@@ -49,12 +49,12 @@
 		<div class="singlepoll_description">
 			<{$block.icmspoll_singlepoll.dsc}>
 		</div>
-		
+
 		<div class="icmspoll_morelink">
 			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
 		    <span class="more_polls_by">(<{$block.icmspoll_singlepoll.more_polls_by_user}>)</span>
 		</div>
-		
+
 		<div class="singlepoll_form">
 		    <div class="poll_result">
 		    	<div class="icmspoll_result_options">
@@ -92,17 +92,17 @@
 			$("#pollform_block_<{$block.icmspoll_singlepoll.id}>").submit();
 			return false;
 		});
-		
+
 		$("#pollform_block_<{$block.icmspoll_singlepoll.id}>").submit(function(e) {
 			e.preventDefault();
 			$.ajax({
-				url: $("#submit_poll_block_<{$block.icmspoll_singlepoll.id}>").attr("action"),
+				url: "<{$icmspoll_url}>submitpoll.php",
 				type: "POST",
 				dataType: "json",
 				data: {
 					poll_id: '<{$block.icmspoll_singlepoll.id}>',
 					op: 'vote',
-					poll_option: $("input:<{$block.icmspoll_singlepoll.inputtype}>[name=poll_option_block<{if $block.icmspoll_singlepoll.isMultiple}>[]<{/if}>]:checked").map(function(){return this.value;}).get().join(",")
+					poll_option: $("form#pollform_block_<{$block.icmspoll_singlepoll.id}> input[type=<{$block.icmspoll_singlepoll.inputtype}>]:checked").map(function(){return this.value;}).get().join(",")
 				},
 				success: function(response) {
 					if(response.status === "success") {
@@ -115,10 +115,10 @@
 						$("#icmspoll_balert").dialog("open");
 					}
 				}
-				
+
 			})
 		});
-		
+
 		$("#icmspoll_balert").dialog({
 			autoOpen: false,
 			modal: true,

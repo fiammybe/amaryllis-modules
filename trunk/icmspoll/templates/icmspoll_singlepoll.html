@@ -10,7 +10,7 @@
 		<div class="singlepoll_description">
 			<{$poll.dsc}>
 		</div>
-		
+
 		<div class="icmspoll_morelink">
 			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$poll.user}>
 		    <span class="more_polls_by">(<{$poll.more_polls_by_user}>)</span>
@@ -57,12 +57,12 @@
 		<div class="singlepoll_description">
 			<{$poll.dsc}>
 		</div>
-		
+
 		<div class="icmspoll_morelink">
 			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$poll.user}>
 		    <span class="more_polls_by">(<{$poll.more_polls_by_user}>)</span>
 		</div>
-		
+
 		<div class="singlepoll_form">
 		    <div class="poll_result">
 		    	<div class="icmspoll_result_options">
@@ -100,7 +100,7 @@
 			$("#pollform_<{$poll.id}>").submit();
 			return false;
 		});
-		
+
 		$("#pollform_<{$poll.id}>").submit(function(e) {
 			e.preventDefault();
 			$.ajax({
@@ -110,7 +110,7 @@
 				data: {
 					poll_id: '<{$poll.id}>',
 					op: 'vote',
-					poll_option: $("input:<{$poll.inputtype}>[name=poll_option<{if $poll.isMultiple}>[]<{/if}>]:checked").map(function(){return this.value;}).get().join(",")
+					poll_option: $("#pollform_<{$poll.id}> input[type=<{$poll.inputtype}>]:checked").map(function(){return this.value;}).get().join(",")
 				},
 				success: function(response) {
 					var pollform = "pollform_<{$poll.id}>";
@@ -124,10 +124,10 @@
 						$("#icmspoll_alert").dialog("open");
 					}
 				}
-				
+
 			})
 		});
-		
+
 		$("#icmspoll_alert").dialog({
 			autoOpen: false,
 			modal: true,
@@ -138,7 +138,7 @@
 			height: "auto",
 			buttons: {
 				Ok: function() {
-					$(this).dialog("empty");
+					$("#icmspoll_alert").html("");
 					$(this).dialog( "close" );
 					window.location.reload();
 				}
