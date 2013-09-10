@@ -3,9 +3,9 @@
  * 'Icmspoll' is a poll module for ImpressCMS and iforum
  *
  * File: /results.php
- * 
+ *
  * main index file
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$polls_count = $polls_handler->getPollsCount(TRUE, FALSE);
 			$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
 			$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
-			
+
 			/**
 			 * breadcrumb
 			 */
@@ -71,9 +71,9 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			 */
 			$uname = icms_member_user_Object::getUnameFromId($clean_uid);
 			$icmsTpl->assign("username", $uname);
-				
+
 			break;
-		
+
 		default:
 			/**
 			 * check, if a single poll is requested and retrieve Object, if so
@@ -81,25 +81,25 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$pollObj = ($clean_poll) ? $polls_handler->getPollBySeo($clean_poll) : FALSE;
 			if(is_object($pollObj) && !$pollObj->isNew() && $pollObj->viewAccessGranted()) {
 				$poll = $pollObj->toArray();
-				$totalVotes = $log_handler->getTotalVotesByPollId($clean_poll);
-				$totalVoters = $log_handler->getTotalVotersByPollId($clean_poll);
-				$totalAnons = $log_handler->getTotalAnonymousVoters($clean_poll);
-				$totalUserVotes = $log_handler->getTotalRegistredVoters($clean_poll);
+				$totalVotes = $log_handler->getTotalVotesByPollId($pollObj->id());
+				$totalVoters = $log_handler->getTotalVotersByPollId($pollObj->id());
+				$totalAnons = $log_handler->getTotalAnonymousVoters($pollObj->id());
+				$totalUserVotes = $log_handler->getTotalRegistredVoters($pollObj->id());
 				$icmsTpl->assign("poll", $poll);
 				$icmsTpl->assign("total_votes", $totalVotes);
 				$icmsTpl->assign("total_voters", $totalVoters);
 				$icmsTpl->assign("total_anonymous", $totalAnons);
 				$icmsTpl->assign("total_registred", $totalUserVotes);
-				
-				$options = $options_handler->getAllByPollId($clean_poll, "weight", "ASC");
+
+				$options = $options_handler->getAllByPollId($pollObj->id(), "weight", "ASC");
 				$icmsTpl->assign("options", $options);
-				
+
 				$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
 				$icmsTpl->assign("user_id", $user_id);
-				
+
 				$resultLink = '<a href="' . ICMSPOLL_URL . 'results.php" title="' . _MD_ICMSPOLL_POLL_RESULTS . '">' . _MD_ICMSPOLL_POLL_RESULTS . '</a>';
 				$icmsTpl->assign("icmspoll_cat_path", $resultLink);
-				
+
 				/**
 				 * include the comment rules
 				 */
@@ -108,7 +108,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 					$_GET['poll_id'] = $pollObj->id();
 					include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 				}
-				
+
 			} elseif (!$clean_poll) {
 				$polls = $polls_handler->getPolls($clean_start, $icmspollConfig['show_polls'], $icmspollConfig['polls_default_order'], $icmspollConfig['polls_default_sort'], FALSE, TRUE, FALSE);
 				$icmsTpl->assign('resultlist', $polls);
@@ -118,7 +118,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$polls_count = $polls_handler->getPollsCount(TRUE, FALSE);
 				$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
 				$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
-				
+
 				$resultLink = '<a href="' . ICMSPOLL_URL . 'results.php" title="' . _MD_ICMSPOLL_POLL_RESULTS . '">' . _MD_ICMSPOLL_POLL_RESULTS . '</a>';
 				$icmsTpl->assign("icmspoll_cat_path", $resultLink);
 			} else {
