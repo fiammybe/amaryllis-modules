@@ -245,7 +245,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 	}
 
 	function getPreviewLink() {
-		$url = ICMSPOLL_URL . 'index.php?poll_id=' . $this->id();
+		$url = ICMSPOLL_URL . 'index.php?poll=' . $this->short_url();
 		$question = $this->getQuestion();
 		return '<a href="' . $url . '" title="' . $question . '" target="_blank" >' . $question . '</a>';
 	}
@@ -256,7 +256,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 	}
 
 	function getResultLink() {
-		$url = ICMSPOLL_URL . 'results.php?poll_id=' . $this->short_url();
+		$url = ICMSPOLL_URL . 'results.php?poll=' . $this->short_url();
 		$question = $this->getQuestion();
 		return '<a href="' . $url . '" title="' . $question . '">' . $question . '</a>';
 	}
