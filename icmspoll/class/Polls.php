@@ -3,9 +3,9 @@
  * 'Icmspoll' is a poll module for ImpressCMS and iforum
  *
  * File: /class/Polls.php
- * 
+ *
  * Class representing icmspoll poll objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -16,21 +16,21 @@
  * @package		icmspoll
  *
  */
- 
+
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("ICMSPOLL_DIRNAME")) define("ICMSPOLL_DIRNAME", basename(dirname(dirname(__FILE__))));
 
 class IcmspollPolls extends icms_ipf_seo_Object {
-	
+
 	public $updating_expired = FALSE;
-	
+
 	/**
 	 * constructor
-	 * 
+	 *
 	 * @param IcmspollPolls $handler PollsHandler
 	 */
 	public function __construct(&$handler) {
-	
+
 		parent::__construct($handler);
 		$this->quickInitVar("poll_id", XOBJ_DTYPE_INT, NULL, FALSE);
 		$this->quickInitVar("question", XOBJ_DTYPE_TXTBOX, TRUE);
@@ -57,7 +57,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$this->initCommonVar("doimage", FALSE, 1);
 		$this->initCommonVar("dosmiley", FALSE, 1);
 		$this->initCommonVar("docxode", FALSE, 1);
-		
+
 		$this->setControl("description", array('name' => 'textarea', 'form_editor' => 'htmlarea'));
 		$this->setControl("delimeter", array("name" => "select", "itemHandler" => "polls", "method" => "getDelimeters", "module" => "icmspoll"));
 		$this->setControl("user_id", "user");
@@ -66,9 +66,9 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$this->setControl("multiple", "yesno");
 		$this->setControl("expired", "yesno");
 		$this->setControl("started", "yesno");
-		
+
 		$this->initiateSEO();
-		
+
 		$this->hideFieldFromForm(array("total_init_value", "message_sent", "notification_sent", "started", "expired", "created_on", "poll_comments", "user_id", "votes", "voters", "short_url",
 										"meta_description", "meta_keywords"));
 		$this->hideFieldFromSingleView(array("started", "expired"));
@@ -84,13 +84,13 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$date = $this->getVar('created_on', 'e');
 		return date($icmspollConfig['icmspoll_dateformat'], $date);
 	}
-	
+
 	public function getStartDate() {
 		global $icmspollConfig;
 		$date = $this->getVar('start_time', 'e');
 		return date($icmspollConfig['icmspoll_dateformat'], $date);
 	}
-	
+
 	public function getEndDate() {
 		global $icmspollConfig;
 		$date = $this->getVar('end_time', 'e');
@@ -103,24 +103,24 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$question = icms_core_DataFilter::undoHtmlSpecialChars($question);
 		return $question;
 	}
-	
+
 	public function getDescription() {
 		$description = $this->getVar("description", "s");
 		$description = icms_core_DataFilter::checkVar($description, "html", "output");
 		$description = icms_core_DataFilter::undoHtmlSpecialChars($description);
 		return $description;
 	}
-	
+
 	public function getDelimeter() {
 		return ($this->getVar("delimeter", "e") == 1) ? "<br />" : "&nbsp;";
 	}
-	
+
 	public function getWeightControl() {
 		$control = new icms_form_elements_Text('', 'weight[]', 5, 7,$this->getVar('weight', 'e'));
 		$control->setExtra( 'style="text-align:center;"' );
 		return $control->render();
 	}
-    
+
 	public function hasVoted() {
 		$icmspoll_log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
 		$user_id = is_object(icms::$user) ? icms::$user->getVar("uid", "e") : 0;
@@ -129,7 +129,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		if(!$voted) return FALSE;
 		return TRUE;
 	}
-	
+
 	public function hasStarted() {
 		if($this->getVar("started", "e") == 1) return TRUE;
 		$end_time = $this->getVar("end_time", "e");
@@ -139,7 +139,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$this->handler->setStarted($this->id());
 		return TRUE;
 	}
-	
+
 	public function displayStarted() {
 		if($this->hasStarted()) {
 			return '<img src="' . ICMSPOLL_IMAGES_URL . 'approved.png" alt="Started" />';
@@ -147,7 +147,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 			return '<img src="' . ICMSPOLL_IMAGES_URL . 'denied.png" alt="Inactive" />';
 		}
 	}
-	
+
 	public function hasExpired() {
 		if($this->getVar("expired", "e") == 1) {
 			return TRUE;
@@ -158,7 +158,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 			return TRUE;
 		}
 	}
-	
+
 	public function displayExpired() {
 		if($this->hasExpired()) {
 			return '<img src="' . ICMSPOLL_IMAGES_URL . 'hidden.png" alt="Expired" />';
@@ -176,7 +176,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		if ($viewperm && $this->hasStarted()) return TRUE;
 		return FALSE;
 	}
-	
+
 	public function voteAccessGranted() {
 		$gperm_handler = icms::handler('icms_member_groupperm');
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
@@ -230,7 +230,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 				}
 			}
 		}
-		
+
 		return TRUE;
 	}
 
@@ -243,51 +243,51 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$question = $this->getQuestion();
 		return '<a href="' . $url . '" title="' . $question . ' ">' . $question . '</a>';
 	}
-	
+
 	function getPreviewLink() {
 		$url = ICMSPOLL_URL . 'index.php?poll_id=' . $this->id();
 		$question = $this->getQuestion();
 		return '<a href="' . $url . '" title="' . $question . '" target="_blank" >' . $question . '</a>';
 	}
-	
+
 	public function getResetItemLink() {
 		$ret = '<a href="' . ICMSPOLL_ADMIN_URL . 'polls.php?op=reset&amp;poll_id=' . $this->id() . '" title="' . _CO_ICMSPOLL_RESET . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/reload.png" /></a>';
 		return $ret;
 	}
-	
+
 	function getResultLink() {
-		$url = ICMSPOLL_URL . 'results.php?poll_id=' . $this->id();
+		$url = ICMSPOLL_URL . 'results.php?poll_id=' . $this->short_url();
 		$question = $this->getQuestion();
 		return '<a href="' . $url . '" title="' . $question . '">' . $question . '</a>';
 	}
-	
+
 	function getMorePollsByCreator() {
 		$url = ICMSPOLL_URL . 'index.php?op=getPollsByCreator&uid=' . $this->getVar("user_id", "e");
 		$uname = icms_member_user_Object::getUnameFromId($this->getVar("user_id", "e"));
 		return '<a href="' . $url . '" title="' . _CO_ICMSPOLL_POLLS_GET_MORE_BY_USER . $uname . '">' . _CO_ICMSPOLL_POLLS_GET_MORE_BY_USER . $uname . '</a>';
 	}
-	
+
 	function getMoreResultsByCreator() {
 		$url = ICMSPOLL_URL . 'results.php?op=getPollsByCreator&uid=' . $this->getVar("user_id", "e");
 		$uname = icms_member_user_Object::getUnameFromId($this->getVar("user_id", "e"));
 		return '<a href="' . $url . '" title="' . _CO_ICMSPOLL_POLLS_GET_MORE_RESULTS_BY_USER . $uname . '" >' . _CO_ICMSPOLL_POLLS_GET_MORE_RESULTS_BY_USER . $uname . '</a>';
 	}
-	
+
 	public function isMultiple() {
 		return ($this->getVar("multiple")) ? TRUE : FALSE;
 	}
-	
+
 	public function getInputType() {
 		return ($this->isMultiple()) ? "checkbox" : "radio";
 	}
-	
+
 	function userCanEditAndDelete() {
 		global $icmspoll_isAdmin;
 		if(!is_object(icms::$user)) return FALSE;
 		if($icmspoll_isAdmin) return TRUE;
 		return $this->getVar('user_id', 'e') == icms::$user->getVar("uid", "e");
 	}
-	
+
 	/**
 	 * send polls toArray
 	 */
@@ -298,15 +298,15 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$ret['dsc'] = $this->getDescription();
 		$ret['user'] = $this->getUser();
 		$ret['delimeter'] = $this->getDelimeter();
-		
+
 		$ret['start_time'] = $this->getStartDate();
 		$ret['end_time'] = $this->getEndDate();
 		$ret['created_on'] = $this->getCreatedDate();
-		
+
 		$ret['comments'] = $this->getVar("poll_comments", "e");
 		$ret['inputtype'] = $this->getInputType();
 		$ret['isMultiple'] = $this->isMultiple();
-		
+
 		$ret['viewAccessGranted'] = $this->viewAccessGranted();
 		$ret['voteAccessGranted'] = $this->voteAccessGranted();
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
@@ -315,7 +315,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$ret['hasExpired'] = $this->hasExpired();
 		$ret['hasVoted'] = $this->hasVoted();
 		$ret['hasStarted'] = $this->hasStarted();
-		
+
 		$ret['itemLink'] = $this->getItemLink(FALSE);
 		$ret['itemURL'] = $this->getItemLink(TRUE);
 		$ret['resultLink'] = $this->getResultLink();
@@ -330,7 +330,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 		$tags ['POLL_URL'] = $this->getItemLink(TRUE);
 		icms::handler('icms_data_notification')->triggerEvent('global', 0, 'poll_published', $tags, array(), $module->getVar('mid'));
 	}
-	
+
 	public function sendMessageExpired() {
 		global $icmsConfig;
 		$user = $this->getVar("user_id", "e");
@@ -343,7 +343,7 @@ class IcmspollPolls extends icms_ipf_seo_Object {
 			$lang = 'language/english/mail_template';
 			$tpl = ICMSPOLL_ROOT_PATH . "$lang/$file";
 		}
-		
+
 		$uname = icms::handler('icms_member_user')->get($user)->getVar("uname");
 		$message = file_get_contents($tpl);
 		$message = str_replace("{X_UNAME}", $uname, $message);

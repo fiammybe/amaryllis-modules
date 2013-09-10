@@ -3,9 +3,9 @@
  * 'Icmspoll' is a poll module for ImpressCMS and iforum
  *
  * File: /index.php
- * 
+ *
  * main index file
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
- 
+
 include_once 'header.php';
 
 $xoopsOption['template_main'] = 'icmspoll_index.html';
@@ -46,7 +46,7 @@ $valid_op = array('getPollsByCreator', '');
 $clean_op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
 
 $clean_poll = isset($_GET['poll']) ? filter_input(INPUT_GET, "poll") : FALSE;
-$clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, "uid", FILTER_SANITIZE_NUMBER_INT) : FALSE; 
+$clean_uid = isset($_GET['uid']) ? filter_input(INPUT_GET, "uid", FILTER_SANITIZE_NUMBER_INT) : FALSE;
 $clean_start = isset($_GET['start']) ? filter_input(INPUT_GET, "start", FILTER_SANITIZE_NUMBER_INT) : 0;
 
 $polls_handler = icms_getModuleHandler("polls", ICMSPOLL_DIRNAME, "icmspoll");
@@ -64,7 +64,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 			$polls_pagenav = new icms_view_PageNav($polls_count, $icmspollConfig['show_polls'], $clean_start, 'start', FALSE);
 			$icmsTpl->assign('polls_pagenav', $polls_pagenav->renderNav());
 			break;
-		
+
 		default:
 			/**
 			 * check, if a single poll is requested and retrieve Object, if so
@@ -81,6 +81,10 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$icmsTpl->assign("options", $options);
 				$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
 				$icmsTpl->assign("user_id", $user_id);
+				$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
+				$totalVotes = $log_handler->getTotalVotesByPollId($clean_poll);
+				$icmsTpl->assign("total_votes", $totalVotes);
+				unset($log_handler);
 			/**
 			 * if not a single poll is requested, display poll list
 			 */
