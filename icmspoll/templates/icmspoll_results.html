@@ -28,47 +28,46 @@
 			<{$poll.dsc}>
 		</div>
 		<div class="icmspoll_morelink">
-            <{$poll.more_results_by_user}>
+            <{$poll.more_results_by_user}> <br />
+            <{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES}> &nbsp;:&nbsp; <b><{$total_voters}></b>
+            
+	    <{if $icmspoll_is_admin}><br />
+		<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_REGISTERED}> &nbsp;:&nbsp; <b><{$total_registred}></b> <br />
+		<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_ANONS}> &nbsp;:&nbsp; <b><{$total_anonymous}></b> <br />
+		<a href="#icmspoll_option_adminview" name="icmspoll_option_adminview" style="line-height:auto;" onclick ="jQuery('div.icmspoll_option_adminview').toggle(400);"><h6><{$smarty.const._CO_ICMSPOLL_ADMIN_SHOW_DETAILS}></h6></a>
+	    <{/if}>
+            
         </div>
 		<div class="singlepoll_form">
 		    <div class="poll_result">
 		    	<div class="icmspoll_result_options">
 	    			<{foreach item=option from=$options name=options}>
+				    <div class="poll_option_sum">
+	    				<div class="poll_option_txt">
+	    					<{$option.text}> <small class="span_poll_result">(<{$option.endresult}>, <{$option.total_votes}> <{$smarty.const._CO_ICMSPOLL_OPTION_TOTALVOTES}>)</small>
+	    				</div>
+	    				
+					<div class="icmspoll_clear_both">&nbsp;</div>
 	    				<div class="result_option">
 	    				   <div class="icmspoll_option_<{$option.color}> icmspoll_option_color" style="width:<{$option.endresult}>" >
 	    				       &nbsp;
 	    				   </div>
-	    				   <div class="option_result_value">
-	    				   		<{$option.endresult}>
-	    				   </div>
-	                    </div>
-	                    <div class="icmspoll_clear_both">&nbsp;</div>
-	    				<div class="poll_option_txt">
-	    					<{$option.text}>
-	    				</div>
+					</div>
 	    				<{$poll.delimeter}>
+	    				<{if $icmspoll_is_admin}>
+	    				<div class="icmspoll_clear_both">&nbsp;</div>
+					    <div style="display:none;border-radius: 4px 4px 4px 4px;" class="icmspoll_option_adminview">
+						<div class="result_option_info">
+						      <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_ANON}> &nbsp;:&nbsp; <{$option.anon_votes}> <br />
+						      <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_USERS}> &nbsp;:&nbsp; <{$option.user_votes}> <br />
+						      <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_TOTAL}> &nbsp;:&nbsp; <{$option.total_votes}> <br />
+						</div>
+					    </div>
+	    				<{/if}>
+				    </div>
 	    			<{/foreach}>
     			</div>
-    			<{if $icmspoll_is_admin}>
-    				<div class="icmspoll_more_results">
-    					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES}> &nbsp;:&nbsp; <b><{$total_voters}></b> <br />
-    					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_REGISTERED}> &nbsp;:&nbsp; <b><{$total_registred}></b> <br />
-    					<{$smarty.const._MD_ICMSPOLL_RESULTS_TOTALVOTES_ANONS}> &nbsp;:&nbsp; <b><{$total_anonymous}></b> <br />
-    					<{foreach item=option from=$options name=options}>
-			    			<div class="result_option_set">
-			    				<div class="result_option_txt">
-			    					<{$option.text}>
-			    				</div>
-			    				<div class="result_option_info">
-			    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_ANON}> &nbsp;:&nbsp; <{$option.anon_votes}> <br />
-			    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_USERS}> &nbsp;:&nbsp; <{$option.user_votes}> <br />
-			    				    <{$smarty.const._MD_ICMSPOLL_RESULTS_BY_OPTION_TOTAL}> &nbsp;:&nbsp; <{$option.total_votes}> <br />
-			                    </div>
-							</div>
-		    			<{/foreach}>
-    				</div>
-    			<{/if}>
-    			<div class="icmspoll_clear_left">&nbsp;</div>
+
 			</div>
 		</div>
 	</div>

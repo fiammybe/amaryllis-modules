@@ -19,26 +19,27 @@
 			<form id="pollform_<{$poll.id}>" name="pollform_<{$poll.id}>" class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php" method="post">
 				    <div class="option_set">
     					<{foreach item=option from=$options name=options}>
-    						<div class="icmspoll_option_<{$option.color}>">
-    							<input id="poll_option_<{$option.id}>" class="icmspoll_option_<{$option.inputtype}>" type="<{$poll.inputtype}>" name="poll_option<{if $poll.isMultiple}>[]<{/if}>" value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
-    							<{$option.text}>
+    						<div class="icmspoll_option_<{$option.color}> icmspoll_option_design">
+    							<label><input style="float:left;" id="poll_option_<{$option.id}>" class="icmspoll_option_<{$option.inputtype}>" type="<{$poll.inputtype}>" name="poll_option<{if $poll.isMultiple}>[]<{/if}>" value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
+    							<span style="float:left;padding-top:6px;padding-left: 3px;"><{$option.text}></span>
 	    						<{if $option.userCanEditAndDelete}>
-									<span class="options_buttonbar">
+									<span style="float:left;padding-top:6px;padding-left: 3px;" class="options_buttonbar">
 										(<{$option.editItemLink}>
 										<{$option.deleteItemLink}>)
 									</span>
 								<{/if}>
 								<{$poll.delimeter}>
-							</div>
+							</label>
+						</div>
     					<{/foreach}>
     				</div>
 				<{if $poll.hasVoted}>
 					<div class="box">
-						<input type="label" readonly size="50" class="btn icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+						<input type="label" readonly size="50" class="btnpoll icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 					</div>
 				<{elseif !$poll.hasVoted && $poll.voteAccessGranted}>
 					<div class="box">
-						<input id="submit_poll_<{$poll.id}>" name="submit_poll_<{$poll.id}>" type="submit" class="btn icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" /><span class="helper"></span>
+						<input id="submit_poll_<{$poll.id}>" name="submit_poll_<{$poll.id}>" type="submit" class="btnpoll icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" /><span class="helper"></span>
 					</div>
 				<{else}>
 				<{/if}>
@@ -67,18 +68,15 @@
 		    <div class="poll_result">
 		    	<div class="icmspoll_result_options">
 	    			<{foreach item=option from=$options name=options}>
+				<div class="poll_option_txt">
+					<{$option.text}> <small class="span_poll_result">(<{$option.result}>, <{$option.total_votes}> <{$smarty.const._CO_ICMSPOLL_OPTION_TOTALVOTES}>)</small>
+				</div>
+				<div class="icmspoll_clear_left">&nbsp;</div>
 	    				<div class="result_option">
 	    				   <div class="icmspoll_option_<{$option.color}> icmspoll_option_color" style="width:<{$option.result}>" >
 	    				       &nbsp;
 	    				   </div>
-	    				   <div class="option_result_value">
-	    				   		<{$option.result}>
-	    				   </div>
 	                    </div>
-	                    <div class="icmspoll_clear_left">&nbsp;</div>
-	    				<div class="poll_option_txt">
-	    					<{$option.text}>
-	    				</div>
 	    				<{$poll.delimeter}>
 	    			<{/foreach}>
     			</div>
@@ -86,7 +84,7 @@
     		<div class="icmspoll_clear_left">&nbsp;</div>
 			<{if $poll.hasVoted && !$poll.hasExpired}>
 				<div class="box">
-					<input id="submit_poll_<{$poll.id}>" type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+					<input id="submit_poll_<{$poll.id}>" type="text" readonly size="50" class="btnpoll voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 				</div>
 			<{/if}>
 		</div>
