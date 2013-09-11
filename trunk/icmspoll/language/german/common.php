@@ -111,3 +111,10 @@ define("_CO_ICMSPOLL_INDEXPAGE_INDEX_HEADING", "Index Heading");
 define("_CO_ICMSPOLL_INDEXPAGE_INDEX_HEADING_DSC", "");
 define("_CO_ICMSPOLL_INDEXPAGE_INDEX_FOOTER", "Index footer");
 define("_CO_ICMSPOLL_INDEXPAGE_INDEX_FOOTER_DSC", "");
+
+/**
+ * added in 2.2
+ */
+define("_CO_ICMSPOLL_ADMIN_SHOW_DETAILS", "Zeige Admin-Details");
+define("_CO_ICMSPOLL_POLL_HAS_EXPIRED", "Eine Umfrage ist abgelaufen.");
+define("_CO_ICMSPOLL_OPTION_TOTALVOTES", "Stimmen");

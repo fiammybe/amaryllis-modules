@@ -11,17 +11,18 @@
 		    <span class="more_polls_by">(<{$block.icmspoll_singlepoll.more_polls_by_user}>)</span>
 		</div>
 		<div class="singlepoll_form">
-			<form id="pollform_block_<{$block.icmspoll_singlepoll.id}>" name="pollform_block_<{$block.icmspoll_singlepoll.id}>" class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php" method="post">
-				<fieldset>
+			<form id="pollform_block_<{$block.icmspoll_singlepoll.id}>" name="pollform_block_<{$block.icmspoll_singlepoll.id}>" class="icmspoll_pollform" action="<{$block.icmspoll_url}>submitpoll.php" method="post">
+				<div class="option_set">
 					<{foreach item=option from=$block.options name=options}>
-						<div class="icmspoll_option_<{$option.color}>">
-							<input id="poll_option_block_<{$option.id}>" class="icmspoll_option_<{$option.inputtype}>" type="<{$block.icmspoll_singlepoll.inputtype}>" name="poll_option_block<{if $block.icmspoll_singlepoll.isMultiple}>[]<{/if}>"
+						<div class="icmspoll_option_<{$option.color}> icmspoll_option_design">
+							<label><input style="float:left;"  id="poll_option_block_<{$option.id}>" class="icmspoll_option_<{$option.inputtype}>" type="<{$block.icmspoll_singlepoll.inputtype}>" name="poll_option_block<{if $block.icmspoll_singlepoll.isMultiple}>[]<{/if}>"
 									value="<{$option.id}>" <{if $smarty.foreach.options.first}>checked<{/if}> />
-							<{$option.text}>
+							<span style="float:left;padding-top:6px;padding-left: 3px;"><{$option.text}></span>
+							</label>
 						</div>
 						<{$block.icmspoll_singlepoll.delimeter}>
 					<{/foreach}>
-				</fieldset>
+				</div>
 				<input type="hidden" name="user_id" value="<{$user_id}>" />
 				<{if !$block.icmspoll_singlepoll.hasVoted  && $block.icmspoll_singlepoll.voteAccessGranted}>
 					<div class="box">
@@ -51,7 +52,7 @@
 		</div>
 
 		<div class="icmspoll_morelink">
-			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
+			<{$smarty.const._MB_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
 		    <span class="more_polls_by">(<{$block.icmspoll_singlepoll.more_polls_by_user}>)</span>
 		</div>
 
@@ -78,7 +79,7 @@
     		<div class="icmspoll_clear_left">&nbsp;</div>
 			<{if $block.icmspoll_singlepoll.hasVoted && !$block.icmspoll_singlepoll.hasExpired}>
 				<div class="box">
-					<input id="submit_poll_<{$block.icmspoll_singlepoll.id}>" type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+					<input id="submit_poll_<{$block.icmspoll_singlepoll.id}>" type="text" readonly size="50" class="btn voted icmspoll_voted" value="<{$smarty.const._MB_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 				</div>
 			<{/if}>
 		</div>
@@ -96,7 +97,7 @@
 		$("#pollform_block_<{$block.icmspoll_singlepoll.id}>").submit(function(e) {
 			e.preventDefault();
 			$.ajax({
-				url: "<{$icmspoll_url}>submitpoll.php",
+				url: "<{$block.icmspoll_url}>submitpoll.php",
 				type: "POST",
 				dataType: "json",
 				data: {
@@ -129,7 +130,7 @@
 			height: "auto",
 			buttons: {
 				Ok: function() {
-					$(this).dialog("empty");
+					$(this).html("");
 					$(this).dialog( "close" );
 					window.location.reload();
 				}

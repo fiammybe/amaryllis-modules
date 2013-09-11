@@ -56,13 +56,14 @@ define("_MD_ICMSPOLL_END_ON", "Endzeit");
 define("_MD_ICMSPOLL_CREATED_ON", "Erstellt am");
 define("_MD_ICMSPOLL_PRINT_NO_POLL", "Es wurde keine Umfrage zum drucken ausgewählt. Bitte wählen Sie erst eine Umfrage.");
 define("_MD_ICMSPOLL_SUBMIT_POLL", "Erstelle eine neue Umfrage");
-define("_MD_ICMSPOLL_LOGPRINT_TITLE", "Log printout der Umfrage");
-define("_MD_ICMSPOLL_LOGPRINT_TIME", "Gedruckt am:");
-define("_MD_ICMSPOLL_LOGPRINT_USER", "Gedruckt von:");
-define("_MD_ICMSPOLL_MAILTO", "Mailto");
-define("_MD_ICMSPOLL_MAILTO_SBJ", "Interessante%20Umfrage");
-define("_MD_ICMSPOLL_MAILTO_BDY", "Hallo,%20ich%20habe%20eine%20interessante%20Umfrage%20gefunden:%20");
-define("_MD_ICMSPOLL_PRINT", "Drucken");
-define("_MD_ICMSPOLL_PRINT_LOG", "Drucke mit Log");
-define("_MD_ICMSPOLL_PRINT_PDF", "Drucke PDF");
-define("_MD_ICMSPOLL_RESULTS_BY_OPTION", "Ergebnisse per Option");
+
+/**
+ * added in 2.2
+ */
+define("_MD_ICMSPOLL_LOGPRINT_USER", "User");
+define("_MD_ICMSPOLL_LOGPRINT_TIME", "Zeit");
+define("_MD_ICMSPOLL_LOGPRINT_TITLE", "Umfrage: ");
+define("_MD_ICMSPOLL_RESULTS_BY_OPTION", "Ergebnisse nach Option:");
+define("_MD_ICMSPOLL_MAILTO", "Empfehlen");
+define("_MD_ICMSPOLL_MAILTO_SBJ", "Interessante Umfrage");
+define("_MD_ICMSPOLL_MAILTO_BDY", "Hallo, ich habe eine Interessante Umfrage gefunden:");
