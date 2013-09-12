@@ -7,7 +7,7 @@
  * batchupload to add images from batch folder (uploaded via ftp) or to upload a new set via zip file
  *
  *
- * @copyright	Copyright QM-B (Steffen Flohrer) 2012
+ * @copyright	Copyright QM-B (Steffen QMB) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
  * 				Album
