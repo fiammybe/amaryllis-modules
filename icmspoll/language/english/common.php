@@ -114,3 +114,4 @@ define("_CO_ICMSPOLL_INDEXPAGE_INDEX_FOOTER_DSC", "");
 
 define("_CO_ICMSPOLL_POLL_HAS_EXPIRED", "Your Poll has Expired");
 define("_CO_ICMSPOLL_OPTION_TOTALVOTES", "votes");
+define("_CO_ICMSPOLL_ADMIN_SHOW_DETAILS", "Show more informations");

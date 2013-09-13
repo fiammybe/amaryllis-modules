@@ -118,3 +118,4 @@ define("_CO_ICMSPOLL_INDEXPAGE_INDEX_FOOTER_DSC", "");
 define("_CO_ICMSPOLL_ADMIN_SHOW_DETAILS", "Zeige Admin-Details");
 define("_CO_ICMSPOLL_POLL_HAS_EXPIRED", "Eine Umfrage ist abgelaufen.");
 define("_CO_ICMSPOLL_OPTION_TOTALVOTES", "Stimmen");
+define("_CO_ICMSPOLL_ADMIN_SHOW_DETAILS", "Show more informations");
