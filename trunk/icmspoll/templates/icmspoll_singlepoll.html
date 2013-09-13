@@ -35,7 +35,7 @@
     				</div>
 				<{if $poll.hasVoted}>
 					<div class="box">
-						<input type="label" readonly size="50" class="btnpoll icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+						<input type="submit" readonly class="btnpoll icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 					</div>
 				<{elseif !$poll.hasVoted && $poll.voteAccessGranted}>
 					<div class="box">
@@ -84,7 +84,7 @@
     		<div class="icmspoll_clear_left">&nbsp;</div>
 			<{if $poll.hasVoted && !$poll.hasExpired}>
 				<div class="box">
-					<input id="submit_poll_<{$poll.id}>" type="text" readonly size="50" class="btnpoll voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+					<input id="submit_poll_<{$poll.id}>" type="submit" readonly class="btnpoll voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 				</div>
 			<{/if}>
 		</div>
