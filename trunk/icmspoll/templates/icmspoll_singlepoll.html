@@ -8,9 +8,12 @@
 			<{/if}>
 		    </h2>
 		<div class="singlepoll_description">
+			<{if $icms_isuser}>
 			<p style="font-size:80%;"><{$smarty.const._CO_ICMSPOLL_PRESENT_BY_USERPROFILE}> : <a href="<{$icms_url}>userinfo.php?uid=<{$icms_userid}>" title="<{$smarty.const._CO_ICMSPOLL_POLLS_VISIT_USERPROFILE}>"><{$icms_uname}></a></p>
 			<p>&nbsp;</p>
+			<{/if}>
 			<p><{$poll.dsc}></p>
+			<p>&nbsp;</p>
 		</div>
 
 		<div class="singlepoll_form">
@@ -54,9 +57,12 @@
 			<{/if}>
 		</h2>
 		<div class="singlepoll_description">
-			<p style="font-size:80%;"><{$smarty.const._CO_ICMSPOLL_PRESENT_BY_USERPROFILE}> : <a href="<{$icms_url}>userinfo.php?uid=<{$icms_userid}>" title="<{$smarty.const._CO_ICMSPOLL_POLLS_VISIT_USERPROFILE}>"><{$icms_uname}></a></p>
+			
+			<p style="font-size:80%;"><{if $icms_isuser}><{$smarty.const._CO_ICMSPOLL_PRESENT_BY_USERPROFILE}> : <a href="<{$icms_url}>userinfo.php?uid=<{$icms_userid}>" title="<{$smarty.const._CO_ICMSPOLL_POLLS_VISIT_USERPROFILE}>"><{$icms_uname}></a> |  <{/if}><{$smarty.const._CO_ICMSPOLL_POLLS_VOTES_UNTIL_NOW}> : <{$total_votes}></p>
 			<p>&nbsp;</p>
+			
 			<p><{$poll.dsc}></p>
+			<p>&nbsp;</p>
 		</div>
 
 		<div class="singlepoll_form">
@@ -81,14 +87,16 @@
 				<div class="box">
 					<input id="submit_poll_<{$poll.id}>" type="submit" readonly class="btnpoll voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
 					<div class="icmspoll_morelink">
-					<span class="more_polls_by"><a href="<{$icmspoll_url}>index.php?op=getPollsByCreator&uid=<{$poll.user_id}>"><img src="<{$icmspoll_images_url}>other-user-poll.png" title="<{$smarty.const._CO_ICMSPOLL_POLLS_GET_MORE_BY_USER}> <{$icms_uname}>" /></a>&nbsp;&nbsp;</span>
-					<span class="more_polls_by">
-					<{if $user_can_submit}>
-					    <a href="<{$icmspoll_url}>polls.php?op=mod" title="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>">
-						    <img src="<{$icmspoll_images_url}>add_poll_now.png" alt="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>" title="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>" />
-					    </a>
+					<{if $icms_isuser}>
+					    <span class="more_polls_by"><a href="<{$icmspoll_url}>index.php?op=getPollsByCreator&uid=<{$poll.user_id}>"><img src="<{$icmspoll_images_url}>other-user-poll.png" title="<{$smarty.const._CO_ICMSPOLL_POLLS_GET_MORE_BY_USER}> <{$icms_uname}>" /></a>&nbsp;&nbsp;</span>
 					<{/if}>
+					<{if $user_can_submit}>
+					    <span class="more_polls_by">
+						<a href="<{$icmspoll_url}>polls.php?op=mod" title="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>">
+							<img src="<{$icmspoll_images_url}>add_poll_now.png" alt="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>" title="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>" />
+						</a>
 					</span>
+					<{/if}>
 					</div>
 				</div>
 			<{/if}>

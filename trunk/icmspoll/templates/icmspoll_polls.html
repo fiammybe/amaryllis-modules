@@ -1,11 +1,11 @@
 <div class="poll_loop">
-	<div class="poll_question">
-		<{if $resultlist || $results_by_creator}><{$poll.resultLink}><{else}><h2><img style="vertical-align: middle;" src="<{$icmspoll_images_url}>poll.png" alt="" title="" /> <{$poll.itemLink}><{/if}>
+	<h2>
+		<{if $resultlist || $results_by_creator}><img style="vertical-align: middle;" src="<{$icmspoll_images_url}>poll.png" alt="" title="" /> <{$poll.resultLink}><{else}><img style="vertical-align: middle;" src="<{$icmspoll_images_url}>poll.png" alt="" title="" /> <{$poll.itemLink}><{/if}>
 		<{if $poll.userCanEditAndDelete}>
 			(<{$poll.editItemLink}>
 			<{$poll.deleteItemLink}>)
-		<{/if}></h2>
-	</div>
+		<{/if}>
+	</h2>
 	<div class="poll_description">
 		<p><{$poll.dsc}></p>
 	</div>
