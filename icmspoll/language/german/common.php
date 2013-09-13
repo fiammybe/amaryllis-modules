@@ -120,3 +120,4 @@ define("_CO_ICMSPOLL_OPTION_TOTALVOTES", "Stimmen");
 define("_CO_ICMSPOLL_ADMIN_SHOW_DETAILS", "Zeige Admin-Details");
 define("_CO_ICMSPOLL_PRESENT_BY_USERPROFILE", "Diese Umfrage wurde erstellt von");
 define("_CO_ICMSPOLL_POLLS_VISIT_USERPROFILE", "Benutzerkonto ansehen");
+define("_CO_ICMSPOLL_POLLS_VOTES_UNTIL_NOW", "Bisherige Stimmen");

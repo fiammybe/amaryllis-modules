@@ -82,7 +82,7 @@ if(in_array($clean_op, $valid_op, TRUE)) {
 				$user_id = (is_object(icms::$user)) ? icms::$user->getVar("uid", "e") : 0;
 				$icmsTpl->assign("user_id", $user_id);
 				$log_handler = icms_getModuleHandler("log", ICMSPOLL_DIRNAME, "icmspoll");
-				$totalVotes = $log_handler->getTotalVotesByPollId($clean_poll);
+				$totalVotes = $log_handler->getTotalVotesByPollId($pollObj->id());
 				$icmsTpl->assign("total_votes", $totalVotes);
 				unset($log_handler);
 			/**
