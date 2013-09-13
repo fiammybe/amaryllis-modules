@@ -1,20 +1,18 @@
 <{if $poll && !$poll.hasExpired && !$poll.hasVoted && $poll.hasStarted}>
 	<div class="icmspoll_singlepoll">
-		<div class="singlepoll_question">
+		    <h2>
 			<{$poll.question}>
 			<{if $poll.userCanEditAndDelete}>
 				(<{$poll.editItemLink}>
 				<{$poll.deleteItemLink}>)
 			<{/if}>
-		</div>
+		    </h2>
 		<div class="singlepoll_description">
-			<{$poll.dsc}>
+			<p style="font-size:80%;"><{$smarty.const._CO_ICMSPOLL_PRESENT_BY_USERPROFILE}> : <a href="<{$icms_url}>userinfo.php?uid=<{$icms_userid}>" title="<{$smarty.const._CO_ICMSPOLL_POLLS_VISIT_USERPROFILE}>"><{$icms_uname}></a></p>
+			<p>&nbsp;</p>
+			<p><{$poll.dsc}></p>
 		</div>
 
-		<div class="icmspoll_morelink">
-			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$poll.user}>
-		    <span class="more_polls_by">(<{$poll.more_polls_by_user}>)</span>
-		</div>
 		<div class="singlepoll_form">
 			<form id="pollform_<{$poll.id}>" name="pollform_<{$poll.id}>" class="icmspoll_pollform" action="<{$icmspoll_url}>submitpoll.php" method="post">
 				    <div class="option_set">
@@ -48,20 +46,17 @@
 	</div>
 <{elseif $poll && $poll.hasExpired || $poll.hasVoted}>
 	<div class="icmspoll_singlepoll">
-		<div class="singlepoll_question">
+		<h2>
 			<{$poll.question}>
 			<{if $poll.userCanEditAndDelete}>
 				(<{$poll.editItemLink}>
 				<{$poll.deleteItemLink}>)
 			<{/if}>
-		</div>
+		</h2>
 		<div class="singlepoll_description">
-			<{$poll.dsc}>
-		</div>
-
-		<div class="icmspoll_morelink">
-			<{$smarty.const._MD_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$poll.user}>
-		    <span class="more_polls_by">(<{$poll.more_polls_by_user}>)</span>
+			<p style="font-size:80%;"><{$smarty.const._CO_ICMSPOLL_PRESENT_BY_USERPROFILE}> : <a href="<{$icms_url}>userinfo.php?uid=<{$icms_userid}>" title="<{$smarty.const._CO_ICMSPOLL_POLLS_VISIT_USERPROFILE}>"><{$icms_uname}></a></p>
+			<p>&nbsp;</p>
+			<p><{$poll.dsc}></p>
 		</div>
 
 		<div class="singlepoll_form">
@@ -85,10 +80,21 @@
 			<{if $poll.hasVoted && !$poll.hasExpired}>
 				<div class="box">
 					<input id="submit_poll_<{$poll.id}>" type="submit" readonly class="btnpoll voted icmspoll_voted" value="<{$smarty.const._MD_ICMSPOLL_POLLS_ALREADYVOTED}>" />
+					<div class="icmspoll_morelink">
+					<span class="more_polls_by"><a href="<{$icmspoll_url}>index.php?op=getPollsByCreator&uid=<{$poll.user_id}>"><img src="<{$icmspoll_images_url}>other-user-poll.png" title="<{$smarty.const._CO_ICMSPOLL_POLLS_GET_MORE_BY_USER}> <{$icms_uname}>" /></a>&nbsp;&nbsp;</span>
+					<span class="more_polls_by">
+					<{if $user_can_submit}>
+					    <a href="<{$icmspoll_url}>polls.php?op=mod" title="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>">
+						    <img src="<{$icmspoll_images_url}>add_poll_now.png" alt="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>" title="<{$smarty.const._MD_ICMSPOLL_SUBMIT_POLL}>" />
+					    </a>
+					<{/if}>
+					</span>
+					</div>
 				</div>
 			<{/if}>
 		</div>
 	</div>
+
 <{/if}>
 <div id="icmspoll_alert" style="display: none;">&nbsp;</div>
 <script type="text/javascript">
