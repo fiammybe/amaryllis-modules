@@ -156,9 +156,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .result_option_set {margin: 1em 0; border: 1px solid silver; width: auto !important; padding: 10px}
 .icmspoll_result_options {font-weight: 600;}
 .icmspoll_more_results{float: left; margin: 0em 2em; width: auto !important;}
-.singlepoll_question {font:Georgia,Arial,sans-serif; font-size: 1.5em; margin: 1em 0em;}
+.singlepoll_question {}
 .more_polls_by {font-size: smaller}
-.icmspoll_morelink, .icmspoll_singlepoll, .poll_loop {margin: 1em 0em;}
+.icmspoll_morelink, .poll_loop {margin: 0 0 1em;}
+.icmspoll_singlepoll {margin: 1em 0;}
 .btnpoll {cursor: pointer;display: inline-block; height: 44px; line-height: 44px; background: white url("images/vote2.png") no-repeat center left;	color: #999;text-shadow: 0 1px 0 #fff;position: relative; border: 1px solid #DFDFDF;}
 .btnpoll:hover {border-color:#cacaca;background: #F8F8F8 url("images/vote2.png") no-repeat center left;padding-left: 35px;text-decoration: none;}
 .icmspoll {width: auto; padding-left: 35px;}
@@ -168,3 +169,4 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .box {display: block;}
 .icmspoll_option_adminview {font-weight: normal;margin-bottom: 2em;}
 .result_option_info {margin:5px;}
+.icmspoll_h2_block{}
