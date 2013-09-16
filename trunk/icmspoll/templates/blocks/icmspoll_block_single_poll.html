@@ -1,14 +1,19 @@
 <{if $block.icmspoll_singlepoll && !$block.icmspoll_singlepoll.hasVoted && $block.icmspoll_singlepoll.hasStarted }>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
-			<{$block.icmspoll_singlepoll.question}>
+			<h2><span class="icmspoll_h2_block"><{$block.icmspoll_singlepoll.question}>
+			<{if $block.icmspoll_singlepoll.userCanEditAndDelete}>
+				(<{$block.icmspoll_singlepoll.editItemLink}>
+				<{$block.icmspoll_singlepoll.deleteItemLink}>)
+			<{/if}></span></h2>
 		</div>
 		<div class="singlepoll_description">
 			<{$block.icmspoll_singlepoll.dsc}>
 		</div>
 		<div class="icmspoll_morelink">
-			<{$smarty.const._MB_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
-		    <span class="more_polls_by">(<{$block.icmspoll_singlepoll.more_polls_by_user}>)</span>
+		    <{if $icms_isuser}>
+			<span class="more_polls_by"><{$smarty.const._MB_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<a href="<{$icmspoll_url}>index.php?op=getPollsByCreator&uid=<{$block.icmspoll_singlepoll.user_id}>"><{$icms_uname}></a>&nbsp;&nbsp;</span>
+		    <{/if}>
 		</div>
 		<div class="singlepoll_form">
 			<form id="pollform_block_<{$block.icmspoll_singlepoll.id}>" name="pollform_block_<{$block.icmspoll_singlepoll.id}>" class="icmspoll_pollform" action="<{$block.icmspoll_url}>submitpoll.php" method="post">
@@ -26,7 +31,7 @@
 				<input type="hidden" name="user_id" value="<{$user_id}>" />
 				<{if !$block.icmspoll_singlepoll.hasVoted  && $block.icmspoll_singlepoll.voteAccessGranted}>
 					<div class="box">
-						<input id="submit_poll_block_<{$block.icmspoll_singlepoll.id}>" name="submit_poll_block_<{$block.icmspoll_singlepoll.id}>" type="submit" class="btn icmspoll" value="<{$smarty.const._MD_ICMSPOLL_POLLS_SUBMIT}>" />
+						<input id="submit_poll_block_<{$block.icmspoll_singlepoll.id}>" name="submit_poll_block_<{$block.icmspoll_singlepoll.id}>" type="submit" class="btn icmspoll" value="<{$smarty.const._MB_ICMSPOLL_POLLS_SUBMIT}>" />
 						<span class="helper"></span>
 					</div>
 				<{elseif !$block.icmspoll_singlepoll.hasVoted}>
@@ -41,19 +46,28 @@
 <{elseif $block.icmspoll_singlepoll.hasVoted || $block.icmspoll_singlepoll.hasExpired}>
 	<div class="icmspoll_singlepoll">
 		<div class="singlepoll_question">
-			<{$block.icmspoll_singlepoll.question}>
+			<h2><span class="icmspoll_h2_block"><{$block.icmspoll_singlepoll.question}>
 			<{if $block.icmspoll_singlepoll.userCanEditAndDelete}>
 				(<{$block.icmspoll_singlepoll.editItemLink}>
 				<{$block.icmspoll_singlepoll.deleteItemLink}>)
-			<{/if}>
+			<{/if}></span></h2>
 		</div>
 		<div class="singlepoll_description">
-			<{$block.icmspoll_singlepoll.dsc}>
+			<p style="font-size:80%;"><{$smarty.const._CO_ICMSPOLL_POLL_HAS_ENDED}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.end_time}></p>
+			<{if $block.icmspoll_singlepoll.dsc}>
+			    <p>&nbsp;</p>
+			    <{$block.icmspoll_singlepoll.dsc}>
+			    <p>&nbsp;</p>
+			<{/if}>
+			<{if $block.icmspoll_singlepoll.hasExpired}>
+			    <{$smarty.const._CO_ICMSPOLL_POLL_HAS_EXPIRED_VISITOR}> &nbsp;<{$block.icmspoll_singlepoll.resultLink}>.
+			<{/if}>
 		</div>
 
 		<div class="icmspoll_morelink">
-			<{$smarty.const._MB_ICMSPOLL_PUBLISHER}>&nbsp;:&nbsp;<{$block.icmspoll_singlepoll.user}>
-		    <span class="more_polls_by">(<{$block.icmspoll_singlepoll.more_polls_by_user}>)</span>
+		    <{if $icms_isuser}>
+			<span class="more_polls_by"><a href="<{$icmspoll_url}>index.php?op=getPollsByCreator&uid=<{$block.icmspoll_singlepoll.user_id}>"><img src="<{$icmspoll_images_url}>other-user-poll.png" title="<{$smarty.const._CO_ICMSPOLL_POLLS_GET_MORE_BY_USER}> <{$icms_uname}>" /></a>&nbsp;&nbsp;</span>
+		    <{/if}>
 		</div>
 
 		<div class="singlepoll_form">

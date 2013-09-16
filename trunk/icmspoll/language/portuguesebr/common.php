@@ -117,4 +117,7 @@ define("_CO_ICMSPOLL_OPTION_TOTALVOTES", "votes");
 define("_CO_ICMSPOLL_ADMIN_SHOW_DETAILS", "Show more informations");
 define("_CO_ICMSPOLL_PRESENT_BY_USERPROFILE", "This Poll was created by");
 define("_CO_ICMSPOLL_POLLS_VISIT_USERPROFILE", "Visit the profile");
-define("_CO_ICMSPOLL_POLLS_VOTES_UNTIL_NOW", "Until now votes");
+define("_CO_ICMSPOLL_POLLS_VOTES_UNTIL_NOW", "Votes until now");
+define("_CO_ICMSPOLL_POLL_HAS_ENDED", "Completed on");
+define("_CO_ICMSPOLL_POLL_ENDS_ON", "Ends on");
+define("_CO_ICMSPOLL_POLL_HAS_EXPIRED_VISITOR", "This poll has expired, you can see the results now:");

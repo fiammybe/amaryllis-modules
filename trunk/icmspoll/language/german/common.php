@@ -121,3 +121,6 @@ define("_CO_ICMSPOLL_ADMIN_SHOW_DETAILS", "Zeige Admin-Details");
 define("_CO_ICMSPOLL_PRESENT_BY_USERPROFILE", "Diese Umfrage wurde erstellt von");
 define("_CO_ICMSPOLL_POLLS_VISIT_USERPROFILE", "Benutzerkonto ansehen");
 define("_CO_ICMSPOLL_POLLS_VOTES_UNTIL_NOW", "Bisherige Stimmen");
+define("_CO_ICMSPOLL_POLL_HAS_ENDED", "Endet am");
+define("_CO_ICMSPOLL_POLL_ENDS_ON", "Beendet am");
+define("_CO_ICMSPOLL_POLL_HAS_EXPIRED_VISITOR", "This poll has expired, you can see the results now:");

@@ -8,12 +8,15 @@
 			<{/if}>
 		    </h2>
 		<div class="singlepoll_description">
-			<{if $icms_isuser}>
-			<p style="font-size:80%;"><{$smarty.const._CO_ICMSPOLL_PRESENT_BY_USERPROFILE}> : <a href="<{$icms_url}>userinfo.php?uid=<{$icms_userid}>" title="<{$smarty.const._CO_ICMSPOLL_POLLS_VISIT_USERPROFILE}>"><{$icms_uname}></a></p>
+			<p style="font-size:80%;">
+			    <{if $icms_isuser}><{$smarty.const._CO_ICMSPOLL_PRESENT_BY_USERPROFILE}> : <a href="<{$icms_url}>userinfo.php?uid=<{$icms_userid}>" title="<{$smarty.const._CO_ICMSPOLL_POLLS_VISIT_USERPROFILE}>"><{$icms_uname}></a>&nbsp;|&nbsp;<{/if}>
+			<{$smarty.const._CO_ICMSPOLL_POLL_ENDS_ON}>&nbsp;:&nbsp;<{$poll.end_time}>
+			</p>
 			<p>&nbsp;</p>
+			<{if $poll.dsc}>
+			    <p><{$poll.dsc}></p>
+			    <p>&nbsp;</p>
 			<{/if}>
-			<p><{$poll.dsc}></p>
-			<p>&nbsp;</p>
 		</div>
 
 		<div class="singlepoll_form">
@@ -58,11 +61,12 @@
 		</h2>
 		<div class="singlepoll_description">
 			
-			<p style="font-size:80%;"><{if $icms_isuser}><{$smarty.const._CO_ICMSPOLL_PRESENT_BY_USERPROFILE}> : <a href="<{$icms_url}>userinfo.php?uid=<{$icms_userid}>" title="<{$smarty.const._CO_ICMSPOLL_POLLS_VISIT_USERPROFILE}>"><{$icms_uname}></a> |  <{/if}><{$smarty.const._CO_ICMSPOLL_POLLS_VOTES_UNTIL_NOW}> : <{$total_votes}></p>
-			<p>&nbsp;</p>
-			
-			<p><{$poll.dsc}></p>
-			<p>&nbsp;</p>
+			<p style="font-size:80%;"><{if $icms_isuser}><{$smarty.const._CO_ICMSPOLL_PRESENT_BY_USERPROFILE}> : <a href="<{$icms_url}>userinfo.php?uid=<{$icms_userid}>" title="<{$smarty.const._CO_ICMSPOLL_POLLS_VISIT_USERPROFILE}>"><{$icms_uname}></a>&nbsp;|&nbsp; <{/if}><{$smarty.const._CO_ICMSPOLL_POLLS_VOTES_UNTIL_NOW}> : <{$total_votes}>&nbsp;|&nbsp; <{$smarty.const._CO_ICMSPOLL_POLL_ENDS_ON}>&nbsp;:&nbsp;<{$poll.end_time}></p>
+			<{if $poll.dsc}>
+			    <p>&nbsp;</p>
+			    <p><{$poll.dsc}></p>
+			    <p>&nbsp;</p>
+			<{/if}>
 		</div>
 
 		<div class="singlepoll_form">
