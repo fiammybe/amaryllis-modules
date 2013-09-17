@@ -6,3 +6,5 @@ If the smarty plugin has successfully been copied to the smarty plugin folder (s
 edit your theme and add the smarty below:
 	<{menu name="mymenu"}>
 
+to override the given menu id from menu-object you might like to add the ID-Parameter:
+	<{menu name="mymenu" id='myid'}>
