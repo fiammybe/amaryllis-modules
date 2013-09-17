@@ -1,5 +1,5 @@
 <{if $block.megamenu}>
-		<li <{if class="menu-item <{if $smarty.foreach.menuitems.last}>last<{elseif !$block.menu_menu.menu_home && $smarty.foreach.menuitems.first}>first<{elseif $item.isCurrent}>active<{/if}>" <{if $block.display_images == 1 && $item.item_pid && $item.hassub > "0"}> style="background: url(<{$item.img}>) no-repeat; padding: <{$block.megamenu.img_width}>px 0 0;"<{/if}>>
+		<li class="menu-item <{if $smarty.foreach.menuitems.last}>last<{elseif !$block.menu_menu.menu_home && $smarty.foreach.menuitems.first}>first<{elseif $item.isCurrent}>active<{/if}>" <{if $block.display_images == 1 && $item.item_pid && $item.hassub > "0"}> style="background: url(<{$item.img}>) no-repeat;"<{/if}>>
 			<a class="menu_menulink" href="<{$item.url}>" title="<{$item.item_name}>"<{if $item.item_target == 3}> target="_blank" rel="external"<{/if}>>
 				<{if $block.megamenu.menu_images == 1 || $block.megamenu.menu_images == 2 }>
 					<span class="item-name"><{$item.item_name}></span>

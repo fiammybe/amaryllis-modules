@@ -26,7 +26,8 @@ icms_loadLanguageFile("menu", "install");
 
 function menu_db_upgrade_2() {
 	$item_handler = icms_getModuleHandler("item", MENU_DIRNAME, "menu");
-	$items = $item_handler->getObjects(NULL, TRUE, FALSE);
+	$items = $item_handler->getObjects(NULL, TRUE, TRUE);
+	if(!count($items)) return;
 	foreach (array_keys($items) as $k) {
 		$url = $items[$k]->getVar('item_url');
 		if(strpos($url, ICMS_MODULES_URL) !== FALSE) {
@@ -48,6 +49,7 @@ function menu_db_upgrade_2() {
 		$items[$k]->setVar("item_target", $target);
 		$item_handler->insert($items[$k], TRUE);
 	}
+	return TRUE;
 }
 
 function icms_module_update_menu($module) {
