@@ -96,6 +96,7 @@ class mod_menu_MenuHandler extends icms_ipf_Handler {
 		$this->_itemObjects = $this->_iHandler->getObjects($criteria, TRUE, TRUE);
 		unset($criteria);
 		$id = (isset($params['id']) && $params['id'] !== "") ? $params['id'] : $menu->getVar("menu_ulid");
+		$id = ($id == "") ? "icms-menu" : $id;
 		$menuClasses = ($menu->getVar("classes") !== "") ? ' class="'.$menu->getVar("classes").'"' : '';
 		$ret = '<ul id="'.$id.'"'.$menuClasses.'>';
 		if($menu->displayHomeLink()) {
