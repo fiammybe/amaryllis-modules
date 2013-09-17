@@ -35,9 +35,9 @@ function menu_db_upgrade_2() {
 		} elseif (strpos($url, ICMS_URL) !== FALSE) {
 			$target = 1;
 			$url = str_replace(ICMS_URL, '', $url);
-		} elseif (strpos($url, "{MOD_URL}") !== FALSE) {
+		} elseif (strpos($url, "{MOD_URL%7D") !== FALSE) {
 			$target = 2;
-			$url = str_replace("{MOD_URL}", '', $url);
+			$url = str_replace("%7BMOD_URL%7D", '', $url);
 		}  elseif (strpos($url, "{ICMS_URL}") !== FALSE) {
 			$target = 1;
 			$url = str_replace("{ICMS_URL}", '', $url);
