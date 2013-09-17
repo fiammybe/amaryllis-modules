@@ -36,10 +36,10 @@ function menu_db_upgrade_2() {
 		} elseif (strpos($url, ICMS_URL) !== FALSE) {
 			$target = 1;
 			$url = str_replace(ICMS_URL, '', $url);
-		} elseif (strpos($url, "{MOD_URL}")) {
+		} elseif (strpos($url, "{MOD_URL}") !== FALSE) {
 			$target = 2;
 			$url = str_replace("{MOD_URL}", '', $url);
-		}  elseif (strpos($url, "{ICMS_URL}")) {
+		}  elseif (strpos($url, "{ICMS_URL}") !== FALSE) {
 			$target = 1;
 			$url = str_replace("{ICMS_URL}", '', $url);
 		} else {
