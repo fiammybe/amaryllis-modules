@@ -3,9 +3,9 @@
  * 'Menu' is a menu module for ImpressCMS
  *
  * File: /admin/menu.php
- * 
+ *
  * add, edit and delete menu objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -90,12 +90,11 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable = new icms_ipf_view_Table($menu_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column("menu_name", FALSE, FALSE, "title"));
 			$objectTable->addColumn(new icms_ipf_view_Column("menu_dsc", FALSE, FALSE, "summary"));
-			$objectTable->addColumn(new icms_ipf_view_Column("menu_kind", FALSE, FALSE, "getMenuKind"));
 			$objectTable->addColumn(new icms_ipf_view_Column("menu_ulid", "center", 75, ""));
+			$objectTable->addColumn(new icms_ipf_view_Column("menu_name", FALSE, FALSE, "getSmarty", FALSE, "Smarty"));
 			$objectTable->addColumn(new icms_ipf_view_Column("menu_images", "center", FALSE, "getMenuImgDisplay"));
-			
 			$objectTable->addIntroButton("addmenu", "menu.php?op=mod", _ADD);
-			
+
 			$icmsAdminTpl->assign("menu_menu_table", $objectTable->fetch());
 			$icmsAdminTpl->display("db:menu_admin.html");
 			break;
