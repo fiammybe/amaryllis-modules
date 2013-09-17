@@ -24,6 +24,32 @@ define("SUCCESS_SPAN", "<span style='font-weight:normal;'>%s</span><br />");
 define('MENU_DB_VERSION', 2);
 icms_loadLanguageFile("menu", "install");
 
+function menu_db_upgrade_2() {
+	$item_handler = icms_getModuleHandler("item", MENU_DIRNAME, "menu");
+	$items = $item_handler->getObjects(NULL, TRUE, FALSE);
+	foreach (array_keys($items) as $k) {
+		$url = $items[$k]->getVar('item_url');
+		if(strpos($url, ICMS_MODULES_URL) !== FALSE) {
+			$target = 2;
+			$url = str_replace(ICMS_MODULES_URL, '', $url);
+		} elseif (strpos($url, ICMS_URL) !== FALSE) {
+			$target = 1;
+			$url = str_replace(ICMS_URL, '', $url);
+		} elseif (strpos($url, "{MOD_URL}")) {
+			$target = 2;
+			$url = str_replace("{MOD_URL}", '', $url);
+		}  elseif (strpos($url, "{ICMS_URL}")) {
+			$target = 1;
+			$url = str_replace("{ICMS_URL}", '', $url);
+		} else {
+			$target = 3;
+		}
+		$items[$k]->setVar("item_url", $url);
+		$items[$k]->setVar("item_target", $target);
+		$item_handler->insert($items[$k], TRUE);
+	}
+}
+
 function icms_module_update_menu($module) {
 	if(icms_core_Filesystem::copyStream(ICMS_MODULES_PATH.'/'.MENU_DIRNAME.'/extras/function.menu.php', ICMS_LIBRARIES_PATH.'/smarty/icms_plugins/function.menu.php') === FALSE) {
 		$module->messages = sprintf(ERROR_SPAN, _MENU_INSTALL_ERROR_MOVE_PLUGIN);
