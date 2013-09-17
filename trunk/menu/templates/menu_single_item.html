@@ -1,48 +1,40 @@
 <{if $block.megamenu}>
-	<{if $item.accessGranted}>
-		<li <{if $block.display_images == 1 && $item.item_pid && $item.hassub > "0"}> style="background: url(<{$item.img}>) no-repeat; padding: <{$block.megamenu.img_width}>px 0 0;"<{/if}>>
-			<a class="menu_menulink" href="<{$item.url}>" title="<{$item.title}>" target="<{$item.target}>" <{if $item.target == "_blank"}> rel="external" <{/if}> >
-				<{if $block.megamenu.display_img == 1 || $block.megamenu.display_img == 2 }>
-					<{$item.title}>
+		<li <{if class="menu-item <{if $smarty.foreach.menuitems.last}>last<{elseif !$block.menu_menu.menu_home && $smarty.foreach.menuitems.first}>first<{elseif $item.isCurrent}>active<{/if}>" <{if $block.display_images == 1 && $item.item_pid && $item.hassub > "0"}> style="background: url(<{$item.img}>) no-repeat; padding: <{$block.megamenu.img_width}>px 0 0;"<{/if}>>
+			<a class="menu_menulink" href="<{$item.url}>" title="<{$item.item_name}>"<{if $item.item_target == 3}> target="_blank" rel="external"<{/if}>>
+				<{if $block.megamenu.menu_images == 1 || $block.megamenu.menu_images == 2 }>
+					<span class="item-name"><{$item.item_name}></span>
 				<{/if}>
 			</a>
-			<{if $block.megamenu.display_dsc}>
-				<div class="item_dsc">
-					<{$item.title}>
-				</div>
+			<{if $block.megamenu.menu_items_dsc}>
+				<span class="item-description"><{$item.item_dsc}></span>
 			<{/if}>
-			<{if $item.hassub}>
-				<ul>
+			<{if $item.hassub && $item.subs}>
+				<ul class="submenu">
 					<{foreach item=item from=$item.subs name=subs}>
 						<{includeq file="db:menu_single_item.html"}>
 					<{/foreach}>
 				</ul>
 			<{/if}>
 		</li>
-	<{/if}>
 <{elseif $block.menu_menu}>
-	<{if $item.accessGranted}>
-		<li>
-			<a class="menu_menulink <{if $item.item_pid == 0 }>menu_heading<{/if}>" href="<{$item.url}>" title="<{$item.title}>" target="<{$item.target}>" <{if $item.target == "_blank"}> rel="external" <{/if}> >
-				<{if $block.menu_menu.display_img == 1 || $block.menu_menu.display_img == 2 }>
-					<{$item.title}>
-				<{/if}>
-				<{if $block.menu_menu.display_img == 1 || $block.menu_menu.display_img == 3 }>
-					<img class="item_image" id="item_icon_<{$item.id}>" src="<{$item.img}>" width="img_width" alt="<{$item.title}>" />
-				<{/if}>
-			</a>
-			<{if $block.menu_menu.display_dsc}>
-				<div class="item_dsc">
-					<{$item.title}>
-				</div>
+	<li class="menu-item <{if $smarty.foreach.menuitems.last}>last<{elseif !$block.menu_menu.menu_home && $smarty.foreach.menuitems.first}>first<{elseif $item.isCurrent}>active<{/if}>">
+		<a href="<{$item.url}>" title="<{$item.item_name}>"<{if $item.item_target == 3}> target="_blank" rel="external"<{/if}>>
+			<{if $block.menu_menu.menu_images == 1 || $block.menu_menu.menu_images == 2 }>
+				<span class="item-name"><{$item.item_name}></span>
 			<{/if}>
-			<{if $item.hassub}>
-				<ul>
-					<{foreach item=item from=$item.subs}>
-						<{includeq file="db:menu_single_item.html"}>
-					<{/foreach}>
-				</ul>
+			<{if $item.img &&  ($block.menu_menu.menu_images == 1 || $block.menu_menu.menu_images == 3) }>
+				<img class="item-image" src="<{$item.img}>" width="img_width" alt="<{$item.item_name}>" />
 			<{/if}>
-		</li>
-	<{/if}>
+		</a>
+		<{if $block.menu_menu.menu_items_dsc}>
+			<span class="item-description"><{$item.item_dsc}></span>
+		<{/if}>
+		<{if $item.hassub && $item.subs}>
+			<ul class="submenu">
+				<{foreach item=item from=$item.subs name=menuitems}>
+					<{includeq file="db:menu_single_item.html"}>
+				<{/foreach}>
+			</ul>
+		<{/if}>
+	</li>
 <{/if}>

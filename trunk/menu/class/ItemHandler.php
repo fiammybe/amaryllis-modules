@@ -3,9 +3,9 @@
  * 'Menu' is a menu module for ImpressCMS
  *
  * File: /class/ItemHandler.php
- * 
+ *
  * Classes responsible for managing menu items objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -16,17 +16,20 @@
  * @package		menu
  *
  */
- 
+
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 if(!defined("MENU_DIRNAME")) define("MENU_DIRNAME", basename(dirname(dirname(__FILE__))));
 
-class MenuItemHandler extends icms_ipf_Handler {
-	
+class mod_menu_ItemHandler extends icms_ipf_Handler {
+
+	public $_urls;
+	public $_withSubs = FALSE;
+	public $_currentMenu;
+
 	private $_targets;
-	
 	private $_items;
-	
 	private $_menusForItem;
+
 	/**
 	 * Constructor
 	 *
@@ -35,33 +38,43 @@ class MenuItemHandler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 		global $MENU_ITEM_ORDER, $MENU_ITEM_SORT;
 		parent::__construct($db, "item", "item_id", "item_name", "item_dsc", MENU_DIRNAME);
-		$this->enableUpload(array("image/gif", "image/jpeg", "image/pjpeg", "image/png"), 512000, 500, 500);
+		$this->enableUpload(array("image/gif", "image/jpeg", "image/pjpeg", "image/png"), 512000, 250, 250);
 		$this->addPermission("item_view", _CO_MENU_ITEM_PERM_VIEW, _CO_MENU_ITEM_PERM_VIEW_DSC);
+
+		$this->_urls = icms_getCurrentUrls();
 	}
-	
-	public function getItemCriterias($act = FALSE, $item_pid = NULL, $menu_id = FALSE, $start=0,$limit=0,$perm="item_view" ) {
-		global $MENU_ITEM_ORDER, $MENU_ITEM_SORT;
+
+	public function getItemCriterias($act = FALSE, $item_pid = NULL, $menu_id = FALSE, $start=0,$limit=0,$perm="item_view", $order ="weight" , $sort ="DESC", $lang = FALSE ) {
+		global $MENU_ITEM_ORDER, $MENU_ITEM_SORT, $icmsConfigMultilang, $icmsConfig;
 		$criteria = new icms_db_criteria_Compo();
 		if($start) $criteria->setStart((int)$start);
 		if($limit) $criteria->setLimit((int)$limit);
 		$criteria->setSort($MENU_ITEM_ORDER);
 		$criteria->setOrder($MENU_ITEM_SORT);
 		if($act) $criteria->add(new icms_db_criteria_Item('item_active', TRUE));
-		if (is_null($item_pid)) $item_pid = 0;
-		$criteria->add(new icms_db_criteria_Item('item_pid', $item_pid));
+		if($item_pid || $item_pid === 0) {
+			if (is_null($item_pid)) $item_pid = 0;
+			$criteria->add(new icms_db_criteria_Item('item_pid', $item_pid));
+		}
 		if($menu_id) $criteria->add(new icms_db_criteria_Item('item_menu', $menu_id));
 		$this->setGrantedObjectsCriteria($criteria, $perm);
+		if($icmsConfigMultilang['ml_enable'] == TRUE) {
+			$tray = new icms_db_criteria_Compo(new icms_db_criteria_Item("language", "all"));
+			$tray->add(new icms_db_criteria_Item("language", $icmsConfig['language']), 'OR');
+			$criteria->add($tray);
+		}
 		return $criteria;
 	}
-	
+
 	public function getTargets() {
 		if(!count($this->_targets)) {
-			$this->_targets["_blank"] = "_blank";
-			$this->_targets["_self"] = "_self";
+			$this->_targets[1] = _CO_MENU_ITEM_ITEM_TARGET_BASE;
+			$this->_targets[2] = _CO_MENU_ITEM_ITEM_TARGET_MODULE;
+			$this->_targets[3] = _CO_MENU_ITEM_ITEM_TARGET_EXTERNAL;
 		}
 		return $this->_targets;
 	}
-	
+
 	public function getMenuList() {
 		if (!count($this->_menusForItem)) {
 			$menus = $this->getMenuArray();
@@ -71,12 +84,12 @@ class MenuItemHandler extends icms_ipf_Handler {
 		}
 		return $this->_menusForItem;
 	}
-	
+
 	public function getMenuArray() {
 		$menu_handler = icms_getModuleHandler("menu", MENU_DIRNAME, "menu");
 		return $menu_handler->getMenuList();
 	}
-	
+
 	public function getItemListForPid($act=FALSE, $item_id=NULL, $menu_id = MENU_MENU_ID, $start=0,$limit=0,$perm="item_view",$showNull = TRUE) {
 		$menu_handler = icms_getModuleHandler("menu", MENU_DIRNAME, "menu");
 		$criteria = $this->getItemCriterias($act, $item_id, $menu_id, $start, $limit, $order, $sort, $perm);
@@ -98,23 +111,31 @@ class MenuItemHandler extends icms_ipf_Handler {
 		}
 		return $ret;
 	}
-	
-	public function getItems($act = FALSE, $item_pid = NULL, $menu_id = FALSE, $start=0,$limit=0,$perm="item_view") {
-		global $MENU_ITEM_ORDER, $MENU_ITEM_SORT;
-		$criteria = $this->getItemCriterias($act, $item_pid, $menu_id, $start, $limit, $perm);
+
+	public function setMenu(&$menu) {
+		$this->_currentMenu = $menu;
+	}
+
+	public function getItems($act = FALSE, $item_pid = NULL, $menu_id = FALSE, $start=0,$limit=0,$perm="item_view",$order = "weight", $sort = "ASC", $lang = FALSE) {
+		$criteria = $this->getItemCriterias($act, $item_pid, $menu_id, $start, $limit, $perm, $lang);
+		$this->_withSubs = TRUE;
 		$items = $this->getObjects($criteria, TRUE, FALSE);
+		unset($criteria);
 		$ret = array();
-		foreach ($items as $item){
-			$ret[$item['item_id']] = $item;
+		foreach ($items as $key => $item){
+			$ret[$key] = $item;
+			unset($items[$key]);
 		}
+		$this->_withSubs = FALSE;
+		unset($items);
 		return $ret;
 	}
-	
+
 	public function getItemsCount ($act = FALSE, $item_pid = NULL, $menu_id = FALSE, $start=0,$limit=0,$order='item_name',$sort='ASC',$perm="item_view") {
 		$criteria = $this->getItemCriterias($act, $item_pid, $menu_id, $start, $limit, $order, $sort, $perm);
 		return $this->getCount($criteria);
 	}
-	
+
 	public function changeField($item_id, $field) {
 		$itemObj = $this->get($item_id);
 		if ($itemObj->getVar("$field", 'e') == TRUE) {
@@ -128,49 +149,69 @@ class MenuItemHandler extends icms_ipf_Handler {
 		$this->insert($itemObj, TRUE);
 		return $value;
 	}
-	
+
 	public function filterMenu() {
 		$menu_handler = icms_getModuleHandler("menu", MENU_DIRNAME, "menu");
 		return $menu_handler->getMenuList(TRUE);
 	}
-	
+
 	public function filterActive() {
 		return array(1 => "Active", 2 => "Inactive");
 	}
-	
-	protected function beforeInsert(&$obj) {
+
+	protected function beforeSave(&$obj) {
 		if($obj->_updating == TRUE) return TRUE;
-		$pid = $obj->getVar("item_pid", "e");
-		if($pid > 0) {
-			$parent = $this->get($pid);
-			if(!$parent->getVar("item_menu") == $obj->getVar("item_menu")) {
-				$obj->setErrors(_CO_MENU_ITEM_WRONG_MENU);
-				return FALSE;
-			}
+		$target = $obj->getVar("item_target", "e");
+		$url = $obj->getVar("item_url"); $changed = FALSE;
+		switch ($target) {
+			case 1:
+				if(substr($url, 0, 4) == "http") {
+					$url = str_replace(ICMS_URL, '', $url);
+					$changed = TRUE;
+				}
+				break;
+			case 2:
+				if(substr($url, 0, 4) == "http") {
+					$url = str_replace(ICMS_MODULES_URL, '', $url);
+					$changed = TRUE;
+				}
+				break;
+			case 3:
+				if(substr($url, 0, 4) != "http")
+					$obj->setErrors();
+					return FALSE;
+				break;
 		}
-		if($pid == $obj->id()) {
-			$obj->setVar("item_pid", 0);
-		}
-		$dsc = $obj->getVar("item_dsc", "s");
-		$dsc = icms_core_DataFilter::checkVar($dsc, "html", "input");
-		$obj->setVar("item_dsc", $dsc);
+		if($changed)
+		$obj->setVar("item_url", $url);
+
 		return TRUE;
 	}
-	
+
 	protected function afterSave(&$obj) {
 		if($obj->_updating == TRUE) return TRUE;
 		$pid = $obj->getVar("item_pid", "e");
 		if($pid > 0 && $obj->getVar("item_active", "e") == 1) {
-			$item = $this->get($pid);
-			$item->setVar("item_hassub", TRUE);
-			$item->_updating = TRUE;
-			$this->insert($item, TRUE);
+			$parent = $this->get($pid);
+			if(!is_object($parent) || $parent->isNew() || $parent->getVar("item_menu") !== $obj->getVar("item_menu")) {
+				$obj->setErrors(_CO_MENU_ITEM_WRONG_MENU);
+				return FALSE;
+			}
+			if($pid == $obj->id()) {
+				$obj->setVar("item_pid", 0);
+				$pid = 0;
+			}
+			if($pid) {
+				$parent->setVar("item_hassub", TRUE);
+				$parent->_updating = TRUE;
+				$this->insert($parent, TRUE);
+			}
 		}
 		return TRUE;
 	}
-	
+
 	protected function afterDelete(&$obj) {
-		$image = $this->getVar("item_image", "e");
+		$image = $obj->getVar("item_image", "e");
 		if(($image != "") && ($image != "0")) {
 			$path = $this->handler->_uploadUrl . 'item/' . $image;
 			icms_core_Filesystem::deleteFile($path);

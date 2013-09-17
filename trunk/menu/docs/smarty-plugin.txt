@@ -1,0 +1,8 @@
+If the smarty plugin has successfully been copied to the smarty plugin folder (see install.txt) it can be used in the templates like:
+
+* Go to ACP->Menu->Menu->Add Menu
+* Add a menu with name "mymenu"
+* Add links to the menu
+edit your theme and add the smarty below:
+	<{menu name="mymenu"}>
+

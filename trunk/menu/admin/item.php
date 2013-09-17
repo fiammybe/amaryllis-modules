@@ -3,9 +3,9 @@
  * 'Menu' is a menu module for ImpressCMS
  *
  * File: /admin/item.php
- * 
+ *
  * add, edit and delete item objects
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -19,14 +19,14 @@
 
 function edititem($item_id = 0, $menu_id = 0, $clone = FALSE) {
 	global $item_handler, $icmsAdminTpl;
-	
+
 	$itemObj = $item_handler->get($item_id);
-	
+
 	if (isset($_POST['op']) && $_POST['op'] == 'changedField' && in_array($_POST['changedField'], array('item_menu', 'item_target'))) {
 		$controller = new icms_ipf_Controller($item_handler);
 		$controller->postDataToObject($itemObj);
 	}
-	($menu_id && $menu_id != '' &&!$_POST['op'] == 'changedField') ? $itemObj->setVar("item_menu", $menu_id) : $itemObj->getVar("item_menu", "e"); 
+	($menu_id && $menu_id != '' &&!$_POST['op'] == 'changedField') ? $itemObj->setVar("item_menu", $menu_id) : $itemObj->getVar("item_menu", "e");
 	define("MENU_MENU_ID", $itemObj->getVar("item_menu", "e"));
 	if (!$itemObj->isNew() && !$clone){
 		icms::$module->displayAdminMenu(1, _MI_MENU_MENU_ITEM . " > " . _CO_ICMS_EDITING);
@@ -46,7 +46,7 @@ function edititem($item_id = 0, $menu_id = 0, $clone = FALSE) {
 		$sform->assign($icmsAdminTpl);
 
 	}
-	
+
 	$icmsAdminTpl->display("db:menu_admin.html");
 }
 
@@ -74,7 +74,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			icms_cp_header();
 			edititem($clean_item_id,$clean_menu_id, TRUE);
 			break;
-		
+
 		case "mod":
 		case "changedField":
 			icms_cp_header();
@@ -102,7 +102,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			redirect_header(MENU_ADMIN_URL . 'item.php', 2, $red_message);
 			break;
 		case 'changeWeight':
-			foreach ($_POST['MenuItem_objects'] as $key => $value) {
+			foreach ($_POST['mod_menu_Item_objects'] as $key => $value) {
 				$changed = FALSE;
 				$itemObj = $item_handler->get($value);
 
@@ -128,13 +128,16 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column("item_menu", FALSE, FALSE, "getItemMenu"));
 			$objectTable->addColumn(new icms_ipf_view_Column("item_pid", FALSE, FALSE, "getParentItem"));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
+			if($icmsCofigMultilang['ml_enable'] == TRUE) {
+				$objectTable->addColumn(new icms_ipf_view_Column("language", FALSE, FALSE));
+			}
 			$objectTable->setDefaultOrder("ASC");
 			$objectTable->setDefaultSort("weight");
 			$objectTable->addCustomAction('getCloneItemLink');
 			$objectTable->addIntroButton("additem", "item.php?op=mod", _ADD);
 			$objectTable->addFilter("item_active", "filterActive");
 			$objectTable->addFilter("item_menu", "filterMenu");
-			
+
 			$objectTable->addActionButton('changeWeight', FALSE, _SUBMIT);
 			$icmsAdminTpl->assign("menu_item_table", $objectTable->fetch());
 			$icmsAdminTpl->display("db:menu_admin.html");

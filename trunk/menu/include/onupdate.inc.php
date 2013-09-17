@@ -3,9 +3,9 @@
  * 'Menu' is a menu module for ImpressCMS
  *
  * File: /include/onupdate.inc.php
- * 
+ *
  * menu update informations
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -19,7 +19,45 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 define("MENU_DIRNAME", basename(dirname(dirname(__FILE__))));
-define('MENU_DB_VERSION', 1);
+define("ERROR_SPAN", "<span style='color: red; font-weight:bold;'>%s</span><br />");
+define("SUCCESS_SPAN", "<span style='font-weight:normal;'>%s</span><br />");
+define('MENU_DB_VERSION', 2);
+icms_loadLanguageFile("menu", "install");
+
+function icms_module_update_menu($module) {
+	if(icms_core_Filesystem::copyStream(ICMS_MODULES_PATH.'/'.MENU_DIRNAME.'/extras/function.menu.php', ICMS_LIBRARIES_PATH.'/smarty/icms_plugins/function.menu.php') === FALSE) {
+		$module->messages = sprintf(ERROR_SPAN, _MENU_INSTALL_ERROR_MOVE_PLUGIN);
+	} else {
+		$module->messages = sprintf(SUCCESS_SPAN, _MENU_INSTALL_SUCCESS_MOVE_PLUGIN);
+	}
+    return TRUE;
+}
+
+function icms_module_install_menu($module) {
+	// create own block position
+	if(create_block_pos()) $module->messages = sprintf(SUCCESS_SPAN, _MENU_INSTALL_SUCCESS_BLOCK_CREATED);
+	else $module->messages = sprintf(ERROR_SPAN, _MENU_INSTALL_ERROR_BLOCK_CREATED);
+	if(icms_core_Filesystem::copyStream(ICMS_MODULES_PATH.'/'.MENU_DIRNAME.'/extras/function.menu.php', ICMS_LIBRARIES_PATH.'/smarty/icms_plugins/function.menu.php') === FALSE) {
+		$module->messages .= sprintf(ERROR_SPAN, _MENU_INSTALL_ERROR_MOVE_PLUGIN);
+	} else {
+		$module->messages .= sprintf(SUCCESS_SPAN, _MENU_INSTALL_SUCCESS_MOVE_PLUGIN);
+	}
+	return TRUE;
+}
+
+function icms_module_uninstall_menu($module) {
+	// remove menu block pos
+	if(remove_block_pos()) $module->messages = sprintf(SUCCESS_SPAN, _MENU_INSTALL_SUCCESS_BLOCK_REMOVED);
+	else $module->messages = sprintf(ERROR_SPAN, _MENU_INSTALL_ERROR_BLOCK_REMOVED);
+	// delete uploaded files
+	$path = ICMS_UPLOAD_PATH . "/" . MENU_DIRNAME;
+	if(icms_core_Filesystem::deleteRecursive($path) === FALSE) {
+		$module->messages .= sprintf(ERROR_SPAN, _MENU_INSTALL_ERROR_UPLOADS_REMOVED);
+	} else {
+		$module->messages .= sprintf(SUCCESS_SPAN, _MENU_INSTALL_SUCCESS_UPLOADS_REMOVED);
+	}
+	return TRUE;
+}
 
 function create_block_pos() {
 	$block_pos_handler = icms::handler("icms_view_block_position");
@@ -27,7 +65,8 @@ function create_block_pos() {
 	$blockposObj->setVar("pname", "menu_block");
 	$blockposObj->setVar("title", "Menu Block");
 	$blockposObj->setVar("description", "Menu Block created by Menu module");
-	$block_pos_handler->insert($blockposObj, TRUE);
+	if($block_pos_handler->insert($blockposObj, TRUE)) return TRUE;
+	return FALSE;
 }
 
 function remove_block_pos() {
@@ -37,26 +76,6 @@ function remove_block_pos() {
 	if (!$result = icms::$xoopsDB->query($sql)) return FALSE;
 	list($myrow) = icms::$xoopsDB->fetchRow($result);
 	$blockposObj = $block_pos_handler->get($myrow);
-	$block_pos_handler->delete($blockposObj);
-}
-
-function icms_module_update_menu($module) {
-	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-	$icmsDatabaseUpdater -> moduleUpgrade($module, TRUE);
-    return TRUE;
-}
-
-function icms_module_install_menu($module) {
-	// create own block position
-	create_block_pos();
-	return TRUE;
-}
-
-function icms_module_uninstall_menu($module) {
-	// remove menu block pos
-	remove_block_pos();
-	// delete uploaded files
-	$path = ICMS_UPLOAD_PATH . "/" . MENU_DIRNAME;
-	icms_core_Filesystem::deleteRecursive($path);
-	return TRUE;
+	if($block_pos_handler->delete($blockposObj)) return TRUE;
+	return FALSE;
 }

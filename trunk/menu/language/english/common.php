@@ -3,9 +3,9 @@
  * 'Menu' is a menu module for ImpressCMS
  *
  * File: /language/english/common.php
- * 
+ *
  * english common language file
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -20,12 +20,10 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 // menu
-define("_CO_MENU_MENU_MENU_NAME", "Title");
-define("_CO_MENU_MENU_MENU_NAME_DSC", "");
+define("_CO_MENU_MENU_MENU_NAME", "Name");
+define("_CO_MENU_MENU_MENU_NAME_DSC", "The name of the Menu to be used in the smarty function");
 define("_CO_MENU_MENU_MENU_DSC", "Description");
 define("_CO_MENU_MENU_MENU_DSC_DSC", "This will NOT be displayed. It's only to keep different menus better in mind");
-define("_CO_MENU_MENU_MENU_KIND", "Kind of Menu");
-define("_CO_MENU_MENU_MENU_KIND_DSC", "IMPORTANT: This might not be used. The value is only for a few scripts important, which can handle both, vertical and horizontal menus.");
 define("_CO_MENU_MENU_MENU_HOME", "Display &quot;Home&quot; Link?");
 define("_CO_MENU_MENU_MENU_HOME_DSC", "");
 define("_CO_MENU_MENU_MENU_IMAGES", "Display images");
@@ -39,12 +37,7 @@ define("_CO_MENU_MENU_MENU_IMAGES_WIDTH_DSC", "Set the width of the menu icons t
 define("_CO_MENU_MENU_MENU_ITEMS_DSC", "Display item Description");
 define("_CO_MENU_MENU_MENU_ITEMS_DSC_DSC", "");
 define("_CO_MENU_MENU_MENU_ULID", "ID of the ul-tag");
-define("_CO_MENU_MENU_MENU_ULID_DSC", "Predefine the id of the ul tag of the menu. Currently there are four possibilities: <br /> 'horiznav' for horizontal nav and <br /> 
-										 'accordion' for vertical accordion <br />'sf-v-menu' for vertical superfish <br />'sf-h-menu' for horizontal superfish <br />  Megamenu uses it's own id");
-define("_CO_MENU_MENU_KIND_HORIZONTAL", "Horizontal");
-define("_CO_MENU_MENU_KIND_VERTICAL", "Vertical");
-define("_CO_MENU_MENU_KIND_DYNAMIC", "Dynamic");
-
+define("_CO_MENU_MENU_MENU_ULID_DSC", "");
 define("_CO_MENU_MENU_DISPLAY_WITH_IMGS", "Display With images");
 define("_CO_MENU_MENU_DISPLAY_WITHOUT_IMGS", "Without images");
 define("_CO_MENU_MENU_DISPLAY_ONLY_IMGS", "Only Images");
@@ -69,3 +62,15 @@ define("_CO_MENU_ITEM_ITEM_HASSUB_DSC", "");
 define("_CO_MENU_ITEM_PERM_VIEW", "View Permissions");
 define("_CO_MENU_ITEM_PERM_VIEW_DSC", "");
 define("_CO_MENU_ITEM_WRONG_MENU", "Your current selected parent link is linked to another menu. Please select another pid");
+/**
+ * added in 1.2
+ */
+define("_CO_MENU_ITEM_ITEM_TARGET_BASE", 'Base-URL');
+define("_CO_MENU_ITEM_ITEM_TARGET_MODULE", 'Module-URL');
+define("_CO_MENU_ITEM_ITEM_TARGET_EXTERNAL", 'external URL');
+define("_CO_MENU_MENU_CLASSES", "CSS-Classes");
+define("_CO_MENU_MENU_CLASSES_DSC", "");
+define("_CO_MENU_MENU_ITEM_ORDER", "Sort by");
+define("_CO_MENU_MENU_ITEM_ORDER_DSC", "");
+define("_CO_MENU_MENU_ITEM_SORT", "Order");
+define("_CO_MENU_MENU_ITEM_SORT_DSC", "");

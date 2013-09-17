@@ -1,4 +1,17 @@
 = *Menu* Changelog =
+== Version 1.2 => Release Date: 20.09.2013 ==
+=== Removed Files ===
+- /templates/menu_index.html => not needed
+- /index.php, /header.php, /footer.php => not needed
+- all example menus and images excepting the megamenu
+- /language/../main.php => not needed
+=== Improvements ===
+- template files have all been improved
+-
+=== NEW features ===
+- smarty plugin (/extras/function.menu.php)
 
+== Version 1.1 => Release Date: 11.12.2012 ==
+- minor bug fixes
 == Version 1.0 => Release Date: 10.11.2012 ==
 - First public release of the module.

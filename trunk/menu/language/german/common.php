@@ -3,9 +3,9 @@
  * 'Menu' is a menu module for ImpressCMS
  *
  * File: /language/english/common.php
- * 
+ *
  * english common language file
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -20,12 +20,10 @@
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 // menu
-define("_CO_MENU_MENU_MENU_NAME", "Titel");
+define("_CO_MENU_MENU_MENU_NAME", "Name");
 define("_CO_MENU_MENU_MENU_NAME_DSC", "");
 define("_CO_MENU_MENU_MENU_DSC", "Beschreibung");
 define("_CO_MENU_MENU_MENU_DSC_DSC", "Die Beschreibung wird nicht angezeigt.");
-define("_CO_MENU_MENU_MENU_KIND", "Art des Menüs");
-define("_CO_MENU_MENU_MENU_KIND_DSC", "Wichtig: Dies wird möglicherweise nicht benutzt. Der Wert ist lediglich für einige scripte, welche horizontale und verticale Menüs unterstützen.");
 define("_CO_MENU_MENU_MENU_HOME", "&quot;Startseiten&quot;-Link anzeigen?");
 define("_CO_MENU_MENU_MENU_HOME_DSC", "");
 define("_CO_MENU_MENU_MENU_IMAGES", "Bilder anzeigen?");
@@ -39,14 +37,8 @@ define("_CO_MENU_MENU_MENU_IMAGES_WIDTH_DSC", "Legen Sie die Breite des Icons fe
 define("_CO_MENU_MENU_MENU_ITEMS_DSC", "Display item Description");
 define("_CO_MENU_MENU_MENU_ITEMS_DSC_DSC", "");
 define("_CO_MENU_MENU_MENU_ULID", "ID des ul-tag");
-define("_CO_MENU_MENU_MENU_ULID_DSC", "Legen sie die id des ul-Tags für das Menü fest. Momentan gibt es folgende Möglichkeit: <br />'horiznav' für eine horizontale Navigation<br />'accordion' für eine vertikale 'Akkordeon-Navigation' <br />
-										'sf-v-menu' für das 'vertikale-superfish-Menü' und 'sf-h-menu' für das 'horizontale-superfish-Menü'.<br />Das Megamenu verwendet eine eigene id");
-
-define("_CO_MENU_MENU_KIND_HORIZONTAL", "Horizontal");
-define("_CO_MENU_MENU_KIND_VERTICAL", "Vertikal");
-define("_CO_MENU_MENU_KIND_DYNAMIC", "Dynamisch");
-
-define("_CO_MENU_MENU_DISPLAY_WITH_IMGS", "Bildbreite");
+define("_CO_MENU_MENU_MENU_ULID_DSC", "");
+define("_CO_MENU_MENU_DISPLAY_WITH_IMGS", "Mit Bildern");
 define("_CO_MENU_MENU_DISPLAY_WITHOUT_IMGS", "Ohne Bilder");
 define("_CO_MENU_MENU_DISPLAY_ONLY_IMGS", "Nur Bilder");
 // items
@@ -57,10 +49,10 @@ define("_CO_MENU_ITEM_ITEM_DSC_DSC", "");
 define("_CO_MENU_ITEM_ITEM_MENU", "Menü");
 define("_CO_MENU_ITEM_ITEM_MENU_DSC", "Wählen Sie ein Menü");
 define("_CO_MENU_ITEM_ITEM_URL", "Url des Links");
-define("_CO_MENU_ITEM_ITEM_URL_DSC", "Sie können eine vollständige URL angeben, oder <br /> {ICMS_URL} für die Hauptdomain <br /> {MOD_URL} für das Modulverzeichnis /modules/ oder <br /> {UID} für die User-id");
+define("_CO_MENU_ITEM_ITEM_URL_DSC", "Geben Sie den Pfad zum Ziel an, abhängig von der oben gewählten Basis. Sie können {UID} für die User-id einsetzen");
 define("_CO_MENU_ITEM_ITEM_IMAGE", "Bild");
-define("_CO_MENU_ITEM_ITEM_TARGET", "Ziel");
-define("_CO_MENU_ITEM_ITEM_IMAGE_DSC", "");
+define("_CO_MENU_ITEM_ITEM_TARGET", "Wählen Sie das Ziel der URL");
+define("_CO_MENU_ITEM_ITEM_IMAGE_DSC", "Die URL-Basis geht zur Homepage-URL: '".ICMS_URL."/', Modul-URL zum Modul-Ordner: '".ICMS_MODULES_URL."/' und extern benötigt den vollen Link inklusive http://");
 define("_CO_MENU_ITEM_ITEM_PID", "Übergeordneter Link");
 define("_CO_MENU_ITEM_ITEM_PID_DSC", "Wählen Sie den Link, der diesem übergeordnet ist.");
 define("_CO_MENU_ITEM_ITEM_ACTIVE", "Aktive?");
@@ -70,3 +62,17 @@ define("_CO_MENU_ITEM_ITEM_HASSUB_DSC", "");
 define("_CO_MENU_ITEM_PERM_VIEW", "Benutzerberechtigungen");
 define("_CO_MENU_ITEM_PERM_VIEW_DSC", "");
 define("_CO_MENU_ITEM_WRONG_MENU", "Der ausgewählte übergeordnete Link wird in einem anderen Menü verwendet. Bitte wählen Sie einen anderen Link aus!");
+/**
+ * added in 1.2
+ */
+define("_CO_MENU_ITEM_ITEM_TARGET_BASE", 'Basis-URL');
+define("_CO_MENU_ITEM_ITEM_TARGET_MODULE", 'Modul-URL');
+define("_CO_MENU_ITEM_ITEM_TARGET_EXTERNAL", 'externe URL');
+define("_CO_MENU_MENU_CLASSES", "CSS-Klassen");
+define("_CO_MENU_MENU_CLASSES_DSC", "");
+define("_CO_MENU_MENU_ITEM_ORDER", "Ordne nach");
+define("_CO_MENU_MENU_ITEM_ORDER_DSC", "");
+define("_CO_MENU_MENU_ITEM_SORT", "Sortiere nach");
+define("_CO_MENU_MENU_ITEM_SORT_DSC", "");
+//define("_CO_MENU_MENU_CLASSES_DSC", "");
+//define("_CO_MENU_MENU_CLASSES_DSC", "");

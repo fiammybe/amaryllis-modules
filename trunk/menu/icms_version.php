@@ -3,9 +3,9 @@
  * 'Menu' is a menu module for ImpressCMS
  *
  * File: /icms_version.php
- * 
+ *
  * menu version infomation
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -16,7 +16,7 @@
  * @package		menu
  *
  */
- 
+
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,7 +26,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 						"name"						=> _MI_MENU_MD_NAME,
-						"version"					=> 1.0,
+						"version"					=> 1.2,
 						"description"				=> _MI_MENU_MD_DESC,
 						"author"					=> "QM-B",
 						"author_realname"			=> "Steffen Flohrer",
@@ -36,41 +36,41 @@ $modversion = array(
 						"official"					=> 1,
 						"dirname"					=> basename(dirname(__FILE__)),
 						"modname"					=> "menu",
-					
+
 					/**  Images information  */
 						"iconsmall"					=> "images/icon_small.png",
 						"iconbig"					=> "images/icon_big.png",
 						"image"						=> "images/icon_big.png", /* for backward compatibility */
-					
+
 					/**  Development information */
-						"status_version"			=> "1.0",
-						"status"					=> "FINAL",
-						"date"						=> "12:44 10.11.2012",
+						"status_version"			=> "1.2",
+						"status"					=> "ALPHA",
+						"date"						=> "12:44 17.09.2013",
 						"author_word"				=> "",
-						"warning"					=> _CO_ICMS_WARNING_FINAL,
-					
+						"warning"					=> _CO_ICMS_WARNING_ALPHA,
+
 					/** Contributors */
 						"developer_website_url"		=> "http://code.google.com/p/amaryllis-modules/",
 						"developer_website_name"	=> "Amaryllis Modules",
 						"developer_email"			=> "qm-b@hotmail.de",
-					
+
 					/** Administrative information */
 						"hasAdmin"					=> 1,
 						"adminindex"				=> "admin/menu.php",
 						"adminmenu"					=> "admin/acp_menu.php",
-					
+
 					/** Install and update informations */
 						"onInstall"					=> "include/onupdate.inc.php",
 						"onUpdate"					=> "include/onupdate.inc.php",
 						"onUninstall"				=> "include/onupdate.inc.php",
-					
+
 					/** Search information */
 						"hasSearch"					=> 0,
 						"search"					=> array(),
-					
+
 					/** Menu information */
 						"hasMain"					=> 0,
-					
+
 					/** Notification and comment information */
 						"hasNotification"			=> 0,
 						"hasComments"				=> 0
@@ -109,11 +109,6 @@ $modversion['tables'] = icms_getTablesArray( $modversion['dirname'], $modversion
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $i = 0;
-$i++;
-$modversion['templates'][$i] = array(
-										'file'			=> 'menu_index.html',
-										'description'	=> _MI_MENU_TPL_INDEX
-								);
 $i++;
 $modversion['templates'][$i] = array(
 										'file'			=> 'menu_single_item.html',

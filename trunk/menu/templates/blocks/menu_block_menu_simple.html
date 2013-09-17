@@ -1,32 +1,20 @@
-<script src="<{$block.script_url}><{$block.jsfile}>"></script>
-
+<{if $block.jsfile}><script src="<{$block.script_url}><{$block.jsfile}>"></script><{/if}>
 <div>
-	<{if $block.menu_menu.ul_id == horiznav}>
-		<div id="<{$block.menu_menu.ul_id}>">
-	<{/if}>
-	<ul id="<{$block.menu_menu.ul_id}>">
-		<{if $block.menu_menu.display_home}>
-			<li>
-				<a class="menu_heading" href="<{$icms_url}>" title="<{$block.menu_menu.home_title}>">
-					<{if $block.menu_menu.display_img == 1 || $block.menu_menu.display_img == 2 }>
-						<{$block.menu_menu.home_title}>
+	<ul <{if $block.menu_menu.menu_ulid}>id="<{$block.menu_menu.menu_ulid}>"<{/if}> <{if $block.menu_menu.classes}>class="<{$block.menu_menu.classes}>"<{/if}> >
+		<{if $block.menu_menu.menu_home == 1}>
+			<li class="first <{if $block.is_home}>active<{/if}>" >
+				<a href="<{$icms_url}>" title="<{$block.menu_menu.menu_home_txt}>">
+					<{if $block.menu_menu.menu_images == 1 || $block.menu_menu.menu_images == 2 }>
+						<span class="item-title"><{$block.menu_menu.menu_home_txt}></span>
 					<{/if}>
-					<{if $block.menu_menu.display_img == 1 || $block.menu_menu.display_img == 3 }>
-						<img class="item_image" id="item_icon_<{$block.menu_menu.id}>" src="<{$block.menu_menu.home_img}>" alt="<{$block.menu_menu.home_title}>" />
+					<{if $block.menu_menu.menu_images == 1 || $block.menu_menu.menu_images == 3 }>
+						<img class="item-image" src="<{$block.menu_menu.home_img}>" alt="<{$block.menu_menu.menu_home_txt}>" title="<{$block.menu_menu.menu_home_txt}>" />
 					<{/if}>
 				</a>
 			</li>
 		<{/if}>
-		<{foreach item=item from=$block.menu_items}>
+		<{foreach item=item from=$block.menu_items name=menuitems}>
 			<{includeq file="db:menu_single_item.html"}>
 		<{/foreach}>
 	</ul>
-	<{if $block.menu_menu.ul_id == horiznav}>
-		</div>
-	<{/if}>
 </div>
-<{if $block.menu_menu.kind == vertical}>
-	<script type="text/javascript">
-			initSlideDownMenu();
-	</script>
-<{/if}>

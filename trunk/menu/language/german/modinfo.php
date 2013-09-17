@@ -3,9 +3,9 @@
  * 'Menu' is a menu module for ImpressCMS
  *
  * File: /language/english/modinfo.php
- * 
+ *
  * english modinfo language file
- * 
+ *
  * @copyright	Copyright QM-B (Steffen Flohrer) 2012
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * ----------------------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
-define("_MI_MENU_MD_NAME", "menu");
+define("_MI_MENU_MD_NAME", "Menu");
 define("_MI_MENU_MD_DESC", "ImpressCMS Simple menu");
 // ACP-Menu
 define("_MI_MENU_MENU_MENU", "Menüs");
