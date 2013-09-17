@@ -35,9 +35,9 @@ function menu_db_upgrade_2() {
 		} elseif (strpos($url, ICMS_URL) !== FALSE) {
 			$target = 1;
 			$url = str_replace(ICMS_URL, '', $url);
-		} elseif (strpos($url, "%7BMOD_URL%7D") !== FALSE) {
+		} elseif (strpos($url, "{MOD_URL}") !== FALSE) {
 			$target = 2;
-			$url = str_replace("%7BMOD_URL%7D", '', $url);
+			$url = str_replace("{MOD_URL}", '', $url);
 		}  elseif (strpos($url, "{ICMS_URL}") !== FALSE) {
 			$target = 1;
 			$url = str_replace("{ICMS_URL}", '', $url);
@@ -46,6 +46,7 @@ function menu_db_upgrade_2() {
 		}
 		$items[$k]->setVar("item_url", $url);
 		$items[$k]->setVar("item_target", $target);
+		$items[$k]->_updating = TRUE;
 		$item_handler->insert($items[$k], TRUE);
 	}
 	return TRUE;
