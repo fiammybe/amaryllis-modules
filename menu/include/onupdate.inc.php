@@ -27,7 +27,6 @@ icms_loadLanguageFile("menu", "install");
 function menu_db_upgrade_2() {
 	$item_handler = icms_getModuleHandler("item", MENU_DIRNAME, "menu");
 	$items = $item_handler->getObjects(NULL, TRUE, TRUE);
-	if(!count($items)) return;
 	foreach (array_keys($items) as $k) {
 		$url = urldecode($items[$k]->getVar('item_url', "e"));
 		if(strpos($url, ICMS_MODULES_URL) !== FALSE) {
