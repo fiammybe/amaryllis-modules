@@ -61,6 +61,7 @@ $modversion['people']['other'][] = "Templates by: <a href='http://community.impr
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1314' target='_blank'>QM-B</a> &nbsp;&nbsp;<span style='font-size: smaller;'>( qm-b [at] hotmail [dot] de )</span>";
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=462' target='_blank'>David</a>";
 $modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=1295' target='_blank'>Lotus</a>";
+$modversion['people']['translators'][] = "<a href='http://community.impresscms.org/userinfo.php?uid=97' target='_blank'>debianus</a>";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// ADMINISTRATIVE INFORMATION ////////////////////////////////////////////
