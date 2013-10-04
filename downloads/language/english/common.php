@@ -18,15 +18,15 @@
  */
 
 //some general language constants
-define("_CO_DOWNLOADS_PREVIEW", "preview");
-define("_CO_DOWNLOADS_EDIT", "edit");
-if(!defined("_CO_SUBMIT")) define("_CO_SUBMIT", "submit");
-define("_CO_DOWNLOADS_DELETE", "delete");
-define("_CO_DOWNLOADS_VIEW", "view");
+define("_CO_DOWNLOADS_PREVIEW", "Preview");
+define("_CO_DOWNLOADS_EDIT", "Edit");
+if(!defined("_CO_SUBMIT")) define("_CO_SUBMIT", "Submit");
+define("_CO_DOWNLOADS_DELETE", "Delete");
+define("_CO_DOWNLOADS_VIEW", "View");
 if(!defined("_NO_PERM")) define("_NO_PERM", "No permissions");
 
 define("_CO_DOWNLOADS_MODIFIED", "Modified");
-if(!defined("_ER_UP_UNKNOWNFILETYPEREJECTED")) define("_ER_UP_UNKNOWNFILETYPEREJECTED", "unknown Filetype");
+if(!defined("_ER_UP_UNKNOWNFILETYPEREJECTED")) define("_ER_UP_UNKNOWNFILETYPEREJECTED", "Unknown Filetype");
 // language constants for adding new file
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TITLE", "Title");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TITLE_DSC", " Set Title of the File ");
@@ -90,7 +90,7 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_LIMITATIONS", "File limitations");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_LIMITATIONS_DSC", " ");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_LICENSE", "File License");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_LICENSE_DSC", "Select the license of your file");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PLATFORM", "platform");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PLATFORM", "Platform");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_PLATFORM_DSC", "Select the required platform of the file");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_URL", "Download Mirror");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_URL_DSC", "Enter the full url to your file on the mirror. e.g.: 'http://www.myhomepage.de/files/file.rar'");
@@ -98,7 +98,7 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_TITLE", "Mirror title");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_TITLE_DSC", "Enter the title of the mirror. This will be displayed in Frontend instead of url");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEV_HP", "Developers Homepage");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEV_HP_DSC", "Enter the full url to publishers homepage(or owners hp) e.g: 'http://www.example.com/' ");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEMO", "demo Homepage");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEMO", "Demo Homepage");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_DEMO_DSC", "Enter the full url to publishers homepage(or owners hp) e.g: 'http://www.example.com/'");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_UPDATED", "Set Updated?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_UPDATED_DSC", "Set 'YES' to display the file as updated");
@@ -108,7 +108,7 @@ define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_ALBUM", "Select an Album");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_ALBUM_DSC", "This appears, because you selected in preferences to use &#039;Album&#039; module for an image gallery. All images from the selected Album will be displayed in the frontend");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_BROKEN", "Broken?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_BROKEN_DSC", "This will be 'YES' if the download link was reported as broken");
-define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HAS_MIRROR", "Has Mirror?");
+define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_HAS_MIRROR", "Has it Mirror?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_MIRROR_APPROVE", "Mirror approved?");
 define("_CO_DOWNLOADS_DOWNLOAD_DOWNLOAD_TAGS", "Tags");
 
@@ -134,7 +134,7 @@ define("_CO_DOWNLOADS_INDEXPAGE_INDEX_FOOTER", "footer on indexpage");
 define("_CO_DOWNLOADS_INDEXPAGE_INDEX_FOOTER_DSC", " Set the footer displayed on Indexpage ");
 // language constants for adding new categories
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_TITLE", "Title");
-define("_CO_DOWNLOADS_CATEGORY_WEIGHT", "weight");
+define("_CO_DOWNLOADS_CATEGORY_WEIGHT", "Weight");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_PID", "Parent category");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_PID_DSC", "Select a parent category");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_IMG", "Select an image");
@@ -156,8 +156,8 @@ define("_CO_DOWNLOADS_CATEGORY_CATEGORY_SUBMITTER", "Submitter");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM", "Upload Permission");
 define("_CO_DOWNLOADS_CATEGORY_CATEGORY_UPLPERM_DSC", "Select which groups will have upload permission for this Category. This means that a user belonging to one of these groups will be able to upload new Files to the Category when it is activated in the site.' ");
 // review system
-define("_CO_DOWNLOADS_REVIEW_REVIEW_ITEM_ID", "item");
-define("_CO_DOWNLOADS_REVIEW_REVIEW_UID", "user");
+define("_CO_DOWNLOADS_REVIEW_REVIEW_ITEM_ID", "Item");
+define("_CO_DOWNLOADS_REVIEW_REVIEW_UID", "User");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_NAME", "Name");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_CASE", "Review Case");
 define("_CO_DOWNLOADS_REVIEW_REVIEW_EMAIL", "E-Mail");
@@ -172,6 +172,6 @@ define("_CO_DOWNLOADS_REVIEW_QUESTION", "Question");
 define("_CO_DOWNLOADS_LOG_LOG_ITEM_ID", "Item Name");
 define("_CO_DOWNLOADS_LOG_LOG_ITEM", "Item");
 define("_CO_DOWNLOADS_LOG_LOG_IP", "IP");
-define("_CO_DOWNLOADS_LOG_LOG_UID", "user");
+define("_CO_DOWNLOADS_LOG_LOG_UID", "User");
 define("_CO_DOWNLOADS_LOG_LOG_CASE", "Log case");
 define("_CO_DOWNLOADS_LOG_LOG_DATE", "Log Date");
