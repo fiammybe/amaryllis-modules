@@ -32,7 +32,7 @@ define("_MD_DOWNLOADS_SUBCATS", "Subcategories");
 define("_MD_DOWNLOADS_SUBMIT_CAT", "Submit a new category");
 define("_MD_DOWNLOADS_UPLOAD", "Upload a new File");
 define("_MD_DOWNLOADS_NOFILES", "Sorry, currently there are no files in this category.");
-define("_MD_DOWNLOADS_READ_MORE", "info & download");
+define("_MD_DOWNLOADS_READ_MORE", "Info & download");
 define("_MD_DOWNLOADS_NO_CATEGORY_DSC", "Sorry, no category Description available yet.");
 define("_MD_DOWNLOADS_NO_TEASER_TEXT", "Sorry, no short summary available");
 
@@ -53,13 +53,13 @@ define("_MD_DOWNLOADS_FILE_LIMITS", "Limitations:");
 define("_MD_DOWNLOADS_FILE_LANGUAGE", "Language:");
 define("_MD_DOWNLOADS_SURE_BROKEN", "Are you sure, the download link is broken?");
 define("_MD_DOWNLOADS_REPORT_BROKEN", "Report Broken Link");
-define("_MD_DOWNLOADS_FILE_UPDATED", "updated");
-define("_MD_DOWNLOADS_FILE_NEW", "new");
+define("_MD_DOWNLOADS_FILE_UPDATED", "Updated");
+define("_MD_DOWNLOADS_FILE_NEW", "New");
 define("_MD_DOWNLOADS_DOWNLOAD_INPROGRESS", "Download in progress...");
 define("_MD_DOWNLOADS_DOWNLOAD_START_IN", "Your download should start in 3 seconds...<b>please wait</b>.");
 define("_MD_DOWNLOADS_DOWNLOAD_START_NOT", "If your download does not start, ");
-define("_MD_DOWNLOADS_CLICK_HERE", "please click here");
-define("_MD_DOWNLOADS_MAILTO", "advise");
+define("_MD_DOWNLOADS_CLICK_HERE", "lease click here");
+define("_MD_DOWNLOADS_MAILTO", "Advise");
 define("_MD_DOWNLOADS_MAILTO_SBJ", "I%20found%20a%20nice%20File%20to%20download");
 define("_MD_DOWNLOADS_MAILTO_BDY", "I%20found%20a%20nice%20File%20to%20download"); // @DAVID Please have a look for Mail body
 define("_MD_DOWNLOADS_REVIEW", "Submit Review");
