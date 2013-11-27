@@ -128,7 +128,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			$objectTable->addColumn(new icms_ipf_view_Column("item_menu", FALSE, FALSE, "getItemMenu"));
 			$objectTable->addColumn(new icms_ipf_view_Column("item_pid", FALSE, FALSE, "getParentItem"));
 			$objectTable->addColumn(new icms_ipf_view_Column("weight", "center", 50, "getWeightControl"));
-			if($icmsCofigMultilang['ml_enable'] == TRUE) {
+			if($icmsConfigMultilang['ml_enable'] == TRUE) {
 				$objectTable->addColumn(new icms_ipf_view_Column("language", FALSE, FALSE));
 			}
 			$objectTable->setDefaultOrder("ASC");
