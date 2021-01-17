@@ -24,6 +24,7 @@ icms_cp_header();
 icms::$module->displayAdminMenu( 0, _MI_TOOLS_MENU_TOOLS);
 
 $file = isset($_GET['file']) ? filter_input(INPUT_GET, "file", FILTER_SANITIZE_SPECIAL_CHARS) : "manual.html";
+$file = mb_ereg_replace("([\.]{2,})", '_', $file);
 $lang = "language/" . $icmsConfig['language'];
 $manual = TOOLS_ROOT_PATH . "$lang/$file";
 if (!file_exists($manual)) {
