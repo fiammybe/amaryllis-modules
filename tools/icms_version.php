@@ -27,10 +27,10 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 						"name"						=> _MI_TOOLS_MD_NAME,
-						"version"					=> 1.0,
+						"version"					=> "1.0",
 						"description"				=> _MI_TOOLS_MD_DESC,
-						"author"					=> "QM-B",
-						"author_realname"			=> "Steffen Flohrer",
+						"author"					=> "fiammybe",
+						"author_realname"			=> "David Janssens",
 						"credits"					=> "<a href='http://code.google.com/p/amaryllis-modules/' title='Amaryllis Modules'>Amaryllis Modules</a>",
 						"help"						=> "admin/manual.php",
 						"license"					=> "CC BY-SA 3.0",
@@ -45,15 +45,15 @@ $modversion = array(
 
 					/**  Development information */
 						"status_version"			=> "1.0",
-						"status"					=> "RC",
-						"date"						=> "11:09 17.07.2013",
+						"status"					=> "RC2",
+						"date"						=> "17.01.2021",
 						"author_word"				=> "",
 						"warning"					=> _CO_ICMS_WARNING_RC,
 
 					/** Contributors */
-						"developer_website_url"		=> "http://code.google.com/p/amaryllis-modules/",
+						"developer_website_url"		=> "http://github.com/fiammybe/amaryllis-modules/",
 						"developer_website_name"	=> "Amaryllis Modules",
-						"developer_email"			=> "qm-b@hotmail.de",
+						"developer_email"			=> "david.j@impresscms.org",
 
 					/** Administrative information */
 						"hasAdmin"					=> 1,
@@ -89,9 +89,8 @@ $modversion['manual'][][] = "<a href='manual.php' target='_blank'>Manual</a>";
 /////////////////////////////////////////////// SUPPORT //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$modversion['submit_bug'] = 'http://code.google.com/p/amaryllis-modules/issues/entry?template=Defect%20report%20from%20user';
-$modversion['submit_feature'] = 'http://code.google.com/p/amaryllis-modules/issues/entry?template=Defect%20report%20from%20user';
-$modversion['support_site_url'] = 'http://www.impresscms.de/modules/forum/viewforum.php?forum=30';
+$modversion['submit_bug'] = 'http://github.com/fiammybe/amaryllis-modules/issues/new';
+$modversion['support_site_url'] = 'http://www.impresscms.org';
 $modversion['support_site_name']= 'ImpressCMS Community Forum';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
